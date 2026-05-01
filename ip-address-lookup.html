@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ip-address-lookup - 我的IP地址查看器</title>
+  <meta name="description" content="ip-address-lookup 是一款免费的在线公网 IP 地址查看器，可快速检测当前公网 IP，并展示大致地理位置、运营商、时区等信息，纯前端运行，安全便捷。" />
+  <meta name="keywords" content="IP地址查询,公网IP查看器,我的IP地址,IP地理位置查询,ip-address-lookup,在线IP查询,IPv4查询,IPv6查询" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <div class="pointer-events-none fixed inset-0 overflow-hidden">
+    <div class="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
+  </div>
+
+  <header class="relative border-b border-white/10 bg-slate-950/80 backdrop-blur">
+    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+        <div>
+          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+            Free Online IP Address Lookup
+          </p>
+          <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl">ip-address-lookup</h1>
+          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">
+            我的 IP 地址查看器：一键检测当前公网 IP 地址，并显示大致地理位置、网络运营商与时区信息。
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-4 shadow-2xl">
+          <div class="text-sm text-slate-400">当前状态</div>
+          <div id="statusBadge" class="mt-2 inline-flex items-center gap-2 rounded-full bg-slate-800 px-4 py-2 text-sm font-semibold text-slate-200">
+            <span class="h-2.5 w-2.5 rounded-full bg-slate-400"></span>
+            等待检测
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-5">
+      <div class="lg:col-span-2 rounded-3xl border border-white/10 bg-slate-900/80 p-6 shadow-2xl backdrop-blur">
+        <h2 class="text-xl font-bold text-white">输入与操作</h2>
+        <p class="mt-2 text-sm leading-6 text-slate-400">
+          点击按钮自动查看你的公网 IP，或输入指定 IPv4 / IPv6 地址进行地理位置查询。
+        </p>
+
+        <div class="mt-6 space-y-4">
+          <button
+            id="detectBtn"
+            type="button"
+            class="flex w-full items-center justify-center gap-2 rounded-xl bg-cyan-500 px-5 py-3 font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            <span id="detectIcon">⚡</span>
+            <span id="detectText">检测我的公网 IP</span>
+          </button>
+
+          <div class="relative">
+            <label for="ipInput" class="mb-2 block text-sm font-medium text-slate-300">指定 IP 地址（可选）</label>
+            <input
+              id="ipInput"
+              type="text"
+              inputmode="text"
+              autocomplete="off"
+              placeholder="例如：8.8.8.8 或 2001:4860:4860::8888"
+              class="w-full rounded-xl border border-white/10 bg-slate-950 px-4 py-3 text-slate-100 outline-none ring-0 transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
+            />
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <button
+              id="lookupBtn"
+              type="button"
+              class="rounded-xl bg-indigo-500 px-4 py-3 font-semibold text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-400 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              查询指定 IP
+            </button>
+            <button
+              id="clearBtn"
+              type="button"
+              class="rounded-xl border border-white/10 bg-white/5 px-4 py-3 font-semibold text-slate-200 transition hover:bg-white/10 active:scale-[0.98]"
+            >
+              清空
+            </button>
+          </div>
+
+          <div id="messageBox" class="hidden rounded-xl border px-4 py-3 text-sm leading-6"></div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-3 rounded-3xl border border-cyan-400/20 bg-gradient-to-br from-slate-900 to-slate-950 p-6 shadow-2xl">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <h2 class="text-xl font-bold text-white">查询结果</h2>
+            <p class="mt-2 text-sm text-slate-400">结果来自公开 IP 查询接口，地理位置为网络出口的大致位置。</p>
+          </div>
+          <button
+            id="copyBtn"
+            type="button"
+            class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:bg-white/10 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
+            disabled
+          >
+            复制 IP
+          </button>
+        </div>
+
+        <div class="mt-6 rounded-2xl border border-white/10 bg-slate-950/70 p-5">
+          <div class="text-sm text-slate-400">公网 IP 地址</div>
+          <div id="ipValue" class="mt-3 break-all text-3xl font-black tracking-tight text-cyan-300 sm:text-4xl">--</div>
+        </div>
+
+        <div class="mt-5 grid gap-4 sm:grid-cols-2">
+          <div class="rounded-2xl bg-white/[0.04] p-4 ring-1 ring-white/10">
+            <div class="text-xs uppercase tracking-wider text-slate-500">国家 / 地区</div>
+            <div id="countryValue" class="mt-2 font-semibold text-slate-100">--</div>
+          </div>
+          <div class="rounded-2xl bg-white/[0.04] p-4 ring-1 ring-white/10">
+            <div class="text-xs uppercase tracking-wider text-slate-500">城市</div>
+            <div id="cityValue" class="mt-2 font-semibold text-slate-100">--</div>
+          </div>
+          <div class="rounded-2xl bg-white/[0.04] p-4 ring-1 ring-white/10">
+            <div class="text-xs uppercase tracking-wider text-slate-500">运营商 / ISP</div>
+            <div id="ispValue" class="mt-2 font-semibold text-slate-100">--</div>
+          </div>
+          <div class="rounded-2xl bg-white/[0.04] p-4 ring-1 ring-white/10">
+            <div class="text-xs uppercase tracking-wider text-slate-500">时区</div>
+            <div id="timezoneValue" class="mt-2 font-semibold text-slate-100">--</div>
+          </div>
+          <div class="rounded-2xl bg-white/[0.04] p-4 ring-1 ring-white/10 sm:col-span-2">
+            <div class="text-xs uppercase tracking-wider text-slate-500">经纬度</div>
+            <div id="locationValue" class="mt-2 font-semibold text-slate-100">--</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-10 rounded-3xl border border-white/10 bg-white/[0.04] p-6 leading-8 text-slate-300 shadow-2xl">
+      <h2 class="text-2xl font-bold text-white">关于我的 IP 地址查看器</h2>
+      <p class="mt-4">
+        ip-address-lookup 是一个免费、轻量、无需安装的在线公网 IP 地址查看器，适合需要快速确认网络出口地址的个人用户、站长、运维工程师与跨境办公人员。很多时候，本机显示的内网地址并不能代表互联网上看到的真实地址，而本工具会通过纯前端调用公开 IP API，帮助你立即查看我的公网 IP 地址，并展示大致国家地区、城市、运营商、时区和经纬度信息。使用方法非常简单：打开页面后点击“检测我的公网 IP”，即可自动完成查询；如果你需要进行指定 IPv4 或 IPv6 地址地理位置查询，也可以在输入框中填入 IP 后点击查询。该在线 IP 查询工具无需注册账号，不会依赖后端服务器，适合排查代理、VPN、CDN、远程办公网络异常以及验证网站访问来源等场景。
+      </p>
+    </article>
+  </main>
+
+  <footer class="relative border-t border-white/10 py-6 text-center text-sm text-slate-500">
+    <p>© <span id="year"></span> ip-address-lookup. 仅显示公开网络查询结果，地理位置可能存在偏差。</p>
+  </footer>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const $ = (id) => document.getElementById(id);
+
+      const els = {
+        detectBtn: $("detectBtn"),
+        lookupBtn: $("lookupBtn"),
+        clearBtn: $("clearBtn"),
+        copyBtn: $("copyBtn"),
+        ipInput: $("ipInput"),
+        messageBox: $("messageBox"),
+        statusBadge: $("statusBadge"),
+        detectIcon: $("detectIcon"),
+        detectText: $("detectText"),
+        ipValue: $("ipValue"),
+        countryValue: $("countryValue"),
+        cityValue: $("cityValue"),
+        ispValue: $("ispValue"),
+        timezoneValue: $("timezoneValue"),
+        locationValue: $("locationValue"),
+        year: $("year")
+      };
+
+      let lastIP = "";
+      els.year.textContent = new Date().getFullYear();
+
+      function setStatus(type, text) {
+        const map = {
+          idle: ["bg-slate-800", "text-slate-200", "bg-slate-400"],
+          loading: ["bg-cyan-500/10", "text-cyan-200", "bg-cyan-300 animate-pulse"],
+          success: ["bg-emerald-500/10", "text-emerald-200", "bg-emerald-300"],
+          error: ["bg-rose-500/10", "text-rose-200", "bg-rose-300"]
+        };
+        const [bg, color, dot] = map[type] || map.idle;
+        els.statusBadge.className = `mt-2 inline-flex items-center gap-2 rounded-full ${bg} px-4 py-2 text-sm font-semibold ${color}`;
+        els.statusBadge.innerHTML = `<span class="h-2.5 w-2.5 rounded-full ${dot}"></span>${escapeHtml(text)}`;
+      }
+
+      function showMessage(type, text) {
+        if (!text) {
+          els.messageBox.className = "hidden rounded-xl border px-4 py-3 text-sm leading-6";
+          els.messageBox.textContent = "";
+          return;
+        }
+        const classes = type === "error"
+          ? "rounded-xl border border-rose-400/30 bg-rose-500/10 px-4 py-3 text-sm leading-6 text-rose-200"
+          : type === "success"
+            ? "rounded-xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm leading-6 text-emerald-200"
+            : "rounded-xl border border-cyan-400/30 bg-cyan-500/10 px-4 py-3 text-sm leading-6 text-cyan-200";
+        els.messageBox.className = classes;
+        els.messageBox.textContent = text;
+      }
+
+      function setLoading(isLoading) {
+        els.detectBtn.disabled = isLoading;
+        els.lookupBtn.disabled = isLoading;
+        els.detectIcon.textContent = isLoading ? "⏳" : "⚡";
+        els.detectText.textContent = isLoading ? "正在检测..." : "检测我的公网 IP";
+      }
+
+      function resetResult() {
+        lastIP = "";
+        els.ipValue.textContent = "--";
+        els.countryValue.textContent = "--";
+        els.cityValue.textContent = "--";
+        els.ispValue.textContent = "--";
+        els.timezoneValue.textContent = "--";
+        els.locationValue.textContent = "--";
+        els.copyBtn.disabled = true;
+      }
+
+      function renderResult(data) {
+        lastIP = data.ip || "";
+        els.ipValue.textContent = data.ip || "--";
+        els.countryValue.textContent = data.country || "--";
+        els.cityValue.textContent = data.city || "--";
+        els.ispValue.textContent = data.isp || "--";
+        els.timezoneValue.textContent = data.timezone || "--";
+        els.locationValue.textContent = data.latitude !== null && data.longitude !== null
+          ? `${data.latitude}, ${data.longitude}`
+          : "--";
+        els.copyBtn.disabled = !lastIP;
+      }
+
+      function escapeHtml(str) {
+        return String(str).replace(/[&<>"']/g, (m) => ({
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#039;"
+        }[m]));
+      }
+
+      function isValidIPv4(ip) {
+        const parts = ip.split(".");
+        if (parts.length !== 4) return false;
+        return parts.every((part) => {
+          if (!/^\d{1,3}$/.test(part)) return false;
+          if (part.length > 1 && part.startsWith("0")) return false;
+          const num = Number(part);
+          return Number.isInteger(num) && num >= 0 && num <= 255;
+        });
+      }
+
+      function isValidIPv6(ip) {
+        if (!ip || ip.length > 45 || /\s/.test(ip)) return false;
+        if ((ip.match(/::/g) || []).length > 1) return false;
+        const hasDouble = ip.includes("::");
+        const parts = ip.split(":");
+        if (!hasDouble && parts.length !== 8) return false;
+        if (hasDouble && parts.length > 8) return false;
+
+        let ipv4Part = false;
+        for (let i = 0; i < parts.length; i++) {
+          const part = parts[i];
+          if (part === "") continue;
+          if (part.includes(".")) {
+            if (i !== parts.length - 1 || !isValidIPv4(part)) return false;
+            ipv4Part = true;
+          } else if (!/^[0-9a-fA-F]{1,4}$/.test(part)) {
+            return false;
+          }
+        }
+
+        const nonEmpty = parts.filter(Boolean).length;
+        if (hasDouble) return ipv4Part ? nonEmpty <= 7 : nonEmpty <= 7;
+        return ipv4Part ? parts.length === 7 : parts.length === 8;
+      }
+
+      function isValidIP(ip) {
+        return isValidIPv4(ip) || isValidIPv6(ip);
+      }
+
+      async function fetchWithTimeout(url, options = {}, timeout = 8000) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), timeout);
+        try {
+          const response = await fetch(url, {
+            ...options,
+            signal: controller.signal,
+            headers: {
+              "Accept": "application/json",
+              ...(options.headers || {})
+            }
+          });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          return await response.json();
+        } finally {
+          clearTimeout(timer);
+        }
+      }
+
+      async function getCurrentIP() {
+        const endpoints = [
+          "https://api.ipify.org?format=json",
+          "https://api64.ipify.org?format=json"
+        ];
+
+        let lastError = null;
+        for (const url of endpoints) {
+          try {
+            const data = await fetchWithTimeout(url);
+            if (data && typeof data.ip === "string" && isValidIP(data.ip.trim())) {
+              return data.ip.trim();
+            }
+          } catch (err) {
+            lastError = err;
+          }
+        }
+        throw lastError || new Error("无法获取公网 IP");
+      }
+
+      function normalizeIpapi(data, ip) {
+        if (!data || data.error) throw new Error(data && data.reason ? data.reason : "ipapi 查询失败");
+        return {
+          ip: data.ip || ip,
+          country: [data.country_name, data.country_code ? `(${data.country_code})` : ""].filter(Boolean).join(" "),
+          city: [data.region, data.city].filter(Boolean).join(" / "),
+          isp: data.org || data.asn || "--",
+          timezone: data.timezone || "--",
+          latitude: typeof data.latitude === "number" ? data.latitude : null,
+          longitude: typeof data.longitude === "number" ? data.longitude : null
+        };
+      }
+
+      function normalizeIpwho(data, ip) {
+        if (!data || data.success === false) throw new Error(data && data.message ? data.message : "ipwho.is 查询失败");
+        return {
+          ip: data.ip || ip,
+          country: [data.country, data.country_code ? `(${data.country_code})` : ""].filter(Boolean).join(" "),
+          city: [data.region, data.city].filter(Boolean).join(" / "),
+          isp: data.connection && (data.connection.isp || data.connection.org) ? (data.connection.isp || data.connection.org) : "--",
+          timezone: data.timezone && data.timezone.id ? data.timezone.id : "--",
+          latitude: typeof data.latitude === "number" ? data.latitude : null,
+          longitude: typeof data.longitude === "number" ? data.longitude : null
+        };
+      }
+
+      async function getGeo(ip) {
+        const endpoints = [
+          {
+            url: `https://ipapi.co/${encodeURIComponent(ip)}/json/`,
+            normalize: normalizeIpapi
+          },
+          {
+            url: `https://ipwho.is/${encodeURIComponent(ip)}`,
+            normalize: normalizeIpwho
+          }
+        ];
+
+        let lastError = null;
+        for (const endpoint of endpoints) {
+          try {
+            const data = await fetchWithTimeout(endpoint.url);
+            return endpoint.normalize(data, ip);
+          } catch (err) {
+            lastError = err;
+          }
+        }
+
+        return {
+          ip,
+          country: "--",
+          city: "--",
+          isp: "--",
+          timezone: "--",
+          latitude: null,
+          longitude: null,
+          partial: true,
+          message: lastError ? lastError.message : "地理位置接口暂不可用"
+        };
+      }
+
+      async function detectMyIP() {
+        setLoading(true);
+        setStatus("loading", "正在检测");
+        showMessage("info", "正在连接公开 IP API，请稍候...");
+        resetResult();
+
+        try {
+          const ip = await getCurrentIP();
+          const geo = await getGeo(ip);
+          renderResult(geo);
+          setStatus("success", "检测完成");
+          if (geo.partial) {
+            showMessage("success", `已获取公网 IP：${ip}。地理位置信息暂时不可用，可稍后重试。`);
+          } else {
+            showMessage("success", "查询成功：已显示你的公网 IP 与大致地理位置。");
+          }
+        } catch (err) {
+          setStatus("error", "检测失败");
+          showMessage("error", "无法获取公网 IP。请检查网络连接、浏览器隐私设置，或稍后再试。");
+        } finally {
+          setLoading(false);
+        }
+      }
+
+      async function lookupSpecifiedIP() {
+        const ip = els.ipInput.value.trim();
+
+        if (!ip) {
+          showMessage("error", "请输入要查询的 IPv4 或 IPv6 地址，或点击“检测我的公网 IP”。");
+          setStatus("error", "输入为空");
+          els.ipInput.focus();
+          return;
+        }
+
+        if (!isValidIP(ip)) {
+          showMessage("error", "IP 地址格式不正确。请检查是否为有效 IPv4（如 8.8.8.8）或 IPv6 地址。");
+          setStatus("error", "格式错误");
+          els.ipInput.focus();
+          return;
+        }
+
+        setLoading(true);
+        setStatus("loading", "正在查询");
+        showMessage("info", "正在查询指定 IP 的公开地理位置信息...");
+        resetResult();
+
+        try {
+          const geo = await getGeo(ip);
+          renderResult(geo);
+          setStatus("success", "查询完成");
+          if (geo.partial) {
+            showMessage("success", `已显示 IP：${ip}。地理位置接口暂不可用或未返回完整信息。`);
+          } else {
+            showMessage("success", "查询成功：已显示指定 IP 的大致地理位置。");
+          }
+        } catch (err) {
+          setStatus("error", "查询失败");
+          showMessage("error", "查询失败。请确认 IP 地址可公开查询，并稍后重试。");
+        } finally {
+          setLoading(false);
+        }
+      }
+
+      async function copyIP() {
+        if (!lastIP) return;
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(lastIP);
+          } else {
+            const temp = document.createElement("textarea");
+            temp.value = lastIP;
+            temp.setAttribute("readonly", "");
+            temp.style.position = "fixed";
+            temp.style.opacity = "0";
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand("copy");
+            document.body.removeChild(temp);
+          }
+          showMessage("success", "IP 地址已复制到剪贴板。");
+        } catch (err) {
+          showMessage("error", "复制失败，请手动选择 IP 地址进行复制。");
+        }
+      }
+
+      els.detectBtn.addEventListener("click", detectMyIP);
+      els.lookupBtn.addEventListener("click", lookupSpecifiedIP);
+      els.copyBtn.addEventListener("click", copyIP);
+      els.clearBtn.addEventListener("click", () => {
+        els.ipInput.value = "";
+        resetResult();
+        showMessage("", "");
+        setStatus("idle", "等待检测");
+        els.ipInput.focus();
+      });
+
+      els.ipInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") lookupSpecifiedIP();
+      });
+
+      setStatus("idle", "等待检测");
+      window.addEventListener("load", () => {
+        setTimeout(detectMyIP, 350);
+      });
+    })();
+  </script>
+</body>
+</html>

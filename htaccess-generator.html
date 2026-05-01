@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>htaccess-generator - .htaccess 重定向代码生成器</title>
+  <meta name="description" content="htaccess-generator 是一个免费的 .htaccess 重定向代码生成器，可快速生成 Apache 301 重定向、强制 HTTPS、www 跳转、尾斜杠规范化等常用配置代码。" />
+  <meta name="keywords" content=".htaccess生成器, htaccess-generator, Apache重定向代码生成器, 301重定向生成器, 强制HTTPS配置, RewriteRule生成器, 网站SEO重定向工具" />
+  <meta name="robots" content="index,follow" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
+    <div class="absolute inset-0 opacity-30">
+      <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500 blur-3xl"></div>
+      <div class="absolute right-0 bottom-0 h-56 w-56 rounded-full bg-blue-600 blur-3xl"></div>
+    </div>
+    <div class="relative mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center rounded-full border border-cyan-300/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+          Apache SEO Redirect Toolkit
+        </span>
+        <h1 class="mt-5 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+          htaccess-generator
+        </h1>
+        <p class="mt-5 text-lg leading-8 text-slate-300">
+          快速生成可用于 Apache 服务器的 .htaccess 301 重定向、强制 HTTPS、www 规范化与常见 Rewrite 配置代码。
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-2">
+      <div class="rounded-2xl border border-slate-700/70 bg-slate-900/80 p-5 shadow-2xl shadow-cyan-950/30 backdrop-blur sm:p-6">
+        <div class="mb-5 flex items-center justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-bold text-white">输入配置</h2>
+            <p class="mt-1 text-sm text-slate-400">选择需要的规则并填写域名或路径，系统将自动生成代码。</p>
+          </div>
+          <button id="resetBtn" type="button" class="rounded-lg border border-slate-600 px-3 py-2 text-sm text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-95">
+            重置
+          </button>
+        </div>
+
+        <div id="errorBox" class="mb-5 hidden rounded-xl border border-red-400/50 bg-red-500/10 p-4 text-sm text-red-200"></div>
+
+        <form id="generatorForm" class="space-y-6">
+          <div class="rounded-xl bg-slate-800/80 p-4">
+            <label class="flex cursor-pointer items-start gap-3">
+              <input id="enableBase" type="checkbox" class="mt-1 h-4 w-4 rounded border-slate-500 text-cyan-500 focus:ring-cyan-500" checked />
+              <span>
+                <span class="block font-semibold text-white">启用 RewriteEngine</span>
+                <span class="block text-sm text-slate-400">生成 .htaccess 重写规则通常需要开启 RewriteEngine。</span>
+              </span>
+            </label>
+          </div>
+
+          <div class="rounded-xl bg-slate-800/80 p-4">
+            <label class="flex cursor-pointer items-start gap-3">
+              <input id="forceHttps" type="checkbox" class="mt-1 h-4 w-4 rounded border-slate-500 text-cyan-500 focus:ring-cyan-500" checked />
+              <span>
+                <span class="block font-semibold text-white">强制 HTTPS</span>
+                <span class="block text-sm text-slate-400">将所有 HTTP 请求 301 跳转到 HTTPS。</span>
+              </span>
+            </label>
+          </div>
+
+          <div class="rounded-xl bg-slate-800/80 p-4">
+            <label for="wwwMode" class="block font-semibold text-white">www 规范化</label>
+            <select id="wwwMode" class="mt-3 w-full rounded-lg border border-slate-600 bg-slate-950 px-3 py-2 text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30">
+              <option value="none">不处理 www</option>
+              <option value="to_www">非 www 跳转到 www</option>
+              <option value="to_non_www">www 跳转到非 www</option>
+            </select>
+            <label for="domain" class="mt-4 block text-sm font-medium text-slate-300">主域名（用于 www 规则）</label>
+            <input id="domain" type="text" inputmode="url" placeholder="example.com" class="mt-2 w-full rounded-lg border border-slate-600 bg-slate-950 px-3 py-2 text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30" />
+            <p class="mt-2 text-xs text-slate-500">仅填写域名，不要包含 http://、https:// 或路径。</p>
+          </div>
+
+          <div class="rounded-xl bg-slate-800/80 p-4">
+            <label for="slashMode" class="block font-semibold text-white">尾斜杠处理</label>
+            <select id="slashMode" class="mt-3 w-full rounded-lg border border-slate-600 bg-slate-950 px-3 py-2 text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30">
+              <option value="none">不处理尾斜杠</option>
+              <option value="add">为目录式 URL 添加尾斜杠</option>
+              <option value="remove">移除 URL 尾斜杠</option>
+            </select>
+          </div>
+
+          <div class="rounded-xl bg-slate-800/80 p-4">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <h3 class="font-semibold text-white">301 单页重定向</h3>
+                <p class="mt-1 text-sm text-slate-400">添加旧地址到新地址的永久重定向规则。</p>
+              </div>
+              <button id="addRedirectBtn" type="button" class="rounded-lg bg-cyan-500 px-3 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300 active:scale-95">
+                添加
+              </button>
+            </div>
+            <div id="redirectList" class="mt-4 space-y-3"></div>
+          </div>
+
+          <div class="rounded-xl bg-slate-800/80 p-4">
+            <label for="customRules" class="block font-semibold text-white">自定义附加规则（可选）</label>
+            <textarea id="customRules" rows="4" placeholder="# 可粘贴额外 .htaccess 配置" class="mt-3 w-full resize-y rounded-lg border border-slate-600 bg-slate-950 px-3 py-2 font-mono text-sm text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30"></textarea>
+          </div>
+
+          <button id="generateBtn" type="submit" class="w-full rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 px-5 py-3 font-bold text-slate-950 shadow-lg shadow-cyan-900/30 transition hover:from-cyan-300 hover:to-blue-400 active:scale-[0.99]">
+            生成 .htaccess 代码
+          </button>
+        </form>
+      </div>
+
+      <div class="rounded-2xl border border-cyan-400/20 bg-cyan-950/20 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
+        <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 class="text-xl font-bold text-white">输出代码</h2>
+            <p class="mt-1 text-sm text-slate-400">复制后保存为 <code class="rounded bg-slate-800 px-1 py-0.5 text-cyan-200">.htaccess</code> 并上传到站点根目录。</p>
+          </div>
+          <div class="flex gap-2">
+            <button id="copyBtn" type="button" class="rounded-lg border border-cyan-400/50 px-3 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/10 active:scale-95">
+              复制
+            </button>
+            <button id="downloadBtn" type="button" class="rounded-lg border border-slate-600 px-3 py-2 text-sm font-semibold text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-95">
+              下载
+            </button>
+          </div>
+        </div>
+
+        <div id="successBox" class="mb-4 hidden rounded-xl border border-emerald-400/50 bg-emerald-500/10 p-3 text-sm text-emerald-200"></div>
+
+        <textarea id="output" readonly rows="22" class="h-[520px] w-full resize-none rounded-xl border border-slate-700 bg-slate-950 p-4 font-mono text-sm leading-6 text-cyan-100 outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30"></textarea>
+
+        <div class="mt-4 rounded-xl border border-amber-400/30 bg-amber-400/10 p-4 text-sm leading-6 text-amber-100">
+          <strong>提示：</strong>上传前建议备份原 .htaccess 文件。不同主机环境可能存在模块限制，如规则未生效，请确认 Apache 已启用 mod_rewrite。
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-10 rounded-2xl border border-slate-700/70 bg-slate-900/70 p-6 leading-8 text-slate-300 shadow-xl">
+      <h2 class="mb-4 text-2xl font-bold text-white">关于 .htaccess 重定向代码生成器</h2>
+      <p>
+        htaccess-generator 是一款面向站长、SEO 优化人员和前端开发者的在线 .htaccess 重定向代码生成器，主要用于快速创建 Apache 服务器常见的 301 永久重定向、强制 HTTPS 访问、www 与非 www 域名规范化以及 URL 尾斜杠处理规则。很多网站在改版、迁移目录、更换域名或部署 SSL 证书后，都需要正确配置 RewriteRule，否则容易出现重复页面、权重分散、收录异常和用户访问旧链接失败等问题。本工具通过清晰的表单把复杂的 Apache Rewrite 语法转换为可复制的配置代码，降低手写规则出错的风险。使用时只需勾选所需功能，填写主域名或旧 URL、新 URL，点击生成即可得到完整的 .htaccess 配置。对于需要“Apache 301 重定向生成器”“强制 HTTPS .htaccess 配置工具”“网站 SEO 重定向规则生成”等长尾关键词场景的用户，本工具能够帮助快速完成标准化配置，提高搜索引擎友好度与访问体验。
+      </p>
+    </article>
+  </main>
+
+  <footer class="border-t border-slate-800 py-6 text-center text-sm text-slate-500">
+    <p>htaccess-generator · Free Apache Redirect Code Generator</p>
+  </footer>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const form = document.getElementById('generatorForm');
+      const errorBox = document.getElementById('errorBox');
+      const successBox = document.getElementById('successBox');
+      const output = document.getElementById('output');
+      const redirectList = document.getElementById('redirectList');
+      const addRedirectBtn = document.getElementById('addRedirectBtn');
+      const resetBtn = document.getElementById('resetBtn');
+      const copyBtn = document.getElementById('copyBtn');
+      const downloadBtn = document.getElementById('downloadBtn');
+
+      const enableBase = document.getElementById('enableBase');
+      const forceHttps = document.getElementById('forceHttps');
+      const wwwMode = document.getElementById('wwwMode');
+      const domain = document.getElementById('domain');
+      const slashMode = document.getElementById('slashMode');
+      const customRules = document.getElementById('customRules');
+
+      let redirectCounter = 0;
+
+      const defaultCode = [
+        '# .htaccess rules generated by htaccess-generator',
+        '# 请在左侧配置规则并点击“生成 .htaccess 代码”',
+        ''
+      ].join('\\n');
+
+      output.value = defaultCode;
+
+      function showError(messages) {
+        const list = Array.isArray(messages) ? messages : [String(messages)];
+        errorBox.innerHTML = '<ul class="list-disc pl-5">' + list.map(msg => '<li>' + escapeHtml(msg) + '</li>').join('') + '</ul>';
+        errorBox.classList.remove('hidden');
+        successBox.classList.add('hidden');
+        errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+
+      function showSuccess(message) {
+        successBox.textContent = message;
+        successBox.classList.remove('hidden');
+        errorBox.classList.add('hidden');
+        window.setTimeout(() => successBox.classList.add('hidden'), 2600);
+      }
+
+      function clearMessages() {
+        errorBox.classList.add('hidden');
+        successBox.classList.add('hidden');
+        errorBox.innerHTML = '';
+        successBox.textContent = '';
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      function normalizeDomain(value) {
+        return String(value || '')
+          .trim()
+          .replace(/^https?:\\/\\//i, '')
+          .replace(/^\\/\\//, '')
+          .replace(/\\/.*$/, '')
+          .replace(/:80$|:443$/i, '')
+          .toLowerCase();
+      }
+
+      function isValidDomain(value) {
+        const d = normalizeDomain(value);
+        if (!d || d.length > 253) return false;
+        if (d.includes('_') || d.includes('..')) return false;
+        const domainRegex = /^(?!-)(?:[a-z0-9-]{1,63}\\.)+[a-z]{2,63}$/i;
+        return domainRegex.test(d);
+      }
+
+      function isAbsoluteUrl(value) {
+        const str = String(value || '').trim();
+        try {
+          const url = new URL(str);
+          return (url.protocol === 'http:' || url.protocol === 'https:') && Boolean(url.hostname);
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function isRelativePath(value) {
+        const str = String(value || '').trim();
+        if (!str) return false;
+        if (/^https?:\\/\\//i.test(str)) return false;
+        if (!str.startsWith('/')) return false;
+        if (/[\\r\\n]/.test(str)) return false;
+        return true;
+      }
+
+      function sanitizeRelativePath(value) {
+        const str = String(value || '').trim();
+        return str.replace(/^\\/+/, '');
+      }
+
+      function validateNoDangerousLineBreak(value) {
+        return !/[\\r\\n]/.test(String(value || ''));
+      }
+
+      function addRedirectRow(oldValue = '', newValue = '') {
+        redirectCounter += 1;
+        const row = document.createElement('div');
+        row.className = 'rounded-lg border border-slate-700 bg-slate-950/80 p-3';
+        row.dataset.redirectRow = String(redirectCounter);
+        row.innerHTML = `
+          <div class="grid gap-3">
+            <div>
+              <label class="block text-xs font-medium text-slate-400">旧地址（相对路径，如 /old-page.html）</label>
+              <input type="text" data-old-url class="mt-1 w-full rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30" placeholder="/old-page.html" value="${escapeHtml(oldValue)}">
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-400">新地址（完整 URL 或相对路径）</label>
+              <input type="text" data-new-url class="mt-1 w-full rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30" placeholder="https://example.com/new-page.html" value="${escapeHtml(newValue)}">
+            </div>
+            <div class="flex justify-end">
+              <button type="button" data-remove-row class="rounded-md border border-red-400/40 px-3 py-1.5 text-xs font-semibold text-red-200 transition hover:bg-red-500/10 active:scale-95">删除此条</button>
+            </div>
+          </div>
+        `;
+        redirectList.appendChild(row);
+      }
+
+      function getRedirectRows() {
+        return Array.from(redirectList.querySelectorAll('[data-redirect-row]')).map(row => ({
+          row,
+          oldUrl: row.querySelector('[data-old-url]').value.trim(),
+          newUrl: row.querySelector('[data-new-url]').value.trim()
+        }));
+      }
+
+      function generateCode() {
+        clearMessages();
+        const errors = [];
+        const lines = [];
+
+        const selectedWwwMode = wwwMode.value;
+        const selectedSlashMode = slashMode.value;
+        const cleanDomain = normalizeDomain(domain.value);
+        const rows = getRedirectRows();
+
+        if ((selectedWwwMode === 'to_www' || selectedWwwMode === 'to_non_www') && !isValidDomain(cleanDomain)) {
+          errors.push('请选择 www 规范化时，必须填写合法主域名，例如 example.com。');
+        }
+
+        rows.forEach((item, index) => {
+          const rowNumber = index + 1;
+          const oldEmpty = item.oldUrl === '';
+          const newEmpty = item.newUrl === '';
+          if (oldEmpty && newEmpty) return;
+
+          if (oldEmpty || newEmpty) {
+            errors.push('第 ' + rowNumber + ' 条 301 重定向需要同时填写旧地址和新地址。');
+            return;
+          }
+
+          if (!isRelativePath(item.oldUrl)) {
+            errors.push('第 ' + rowNumber + ' 条旧地址必须是以 / 开头的相对路径，不能填写完整 URL。');
+          }
+
+          if (!(isRelativePath(item.newUrl) || isAbsoluteUrl(item.newUrl))) {
+            errors.push('第 ' + rowNumber + ' 条新地址必须是完整 http/https URL，或以 / 开头的相对路径。');
+          }
+
+          if (!validateNoDangerousLineBreak(item.oldUrl) || !validateNoDangerousLineBreak(item.newUrl)) {
+            errors.push('第 ' + rowNumber + ' 条重定向地址不能包含换行符。');
+          }
+        });
+
+        if (errors.length) {
+          showError(errors);
+          return null;
+        }
+
+        lines.push('# BEGIN generated by htaccess-generator');
+
+        if (enableBase.checked) {
+          lines.push('<IfModule mod_rewrite.c>');
+          lines.push('RewriteEngine On');
+        }
+
+        if (forceHttps.checked) {
+          lines.push('');
+          lines.push('# Force HTTPS');
+          lines.push('RewriteCond %{HTTPS} !=on');
+          lines.push('RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]');
+        }
+
+        if (selectedWwwMode === 'to_www') {
+          lines.push('');
+          lines.push('# Redirect non-www to www');
+          lines.push('RewriteCond %{HTTP_HOST} ^' + escapeRegexForApache(cleanDomain) + '$ [NC]');
+          lines.push('RewriteRule ^ https://www.' + cleanDomain + '%{REQUEST_URI} [L,R=301]');
+        }
+
+        if (selectedWwwMode === 'to_non_www') {
+          lines.push('');
+          lines.push('# Redirect www to non-www');
+          lines.push('RewriteCond %{HTTP_HOST} ^www\\.' + escapeRegexForApache(cleanDomain) + '$ [NC]');
+          lines.push('RewriteRule ^ https://' + cleanDomain + '%{REQUEST_URI} [L,R=301]');
+        }
+
+        if (selectedSlashMode === 'add') {
+          lines.push('');
+          lines.push('# Add trailing slash to directory-like URLs');
+          lines.push('RewriteCond %{REQUEST_FILENAME} !-f');
+          lines.push('RewriteCond %{REQUEST_URI} !(.*)/$');
+          lines.push('RewriteCond %{REQUEST_URI} !\\.[a-zA-Z0-9]{1,8}$');
+          lines.push('RewriteRule ^(.*)$ %{REQUEST_URI}/ [L,R=301]');
+        }
+
+        if (selectedSlashMode === 'remove') {
+          lines.push('');
+          lines.push('# Remove trailing slash except site root');
+          lines.push('RewriteCond %{REQUEST_FILENAME} !-d');
+          lines.push('RewriteCond %{REQUEST_URI} .+/$');
+          lines.push('RewriteRule ^(.+)/$ /$1 [L,R=301]');
+        }
+
+        const validRows = rows.filter(item => item.oldUrl !== '' && item.newUrl !== '');
+        if (validRows.length) {
+          lines.push('');
+          lines.push('# 301 redirects');
+          validRows.forEach(item => {
+            const oldPath = sanitizeRelativePath(item.oldUrl);
+            lines.push('Redirect 301 /' + oldPath + ' ' + item.newUrl);
+          });
+        }
+
+        const custom = customRules.value.trim();
+        if (custom) {
+          lines.push('');
+          lines.push('# Custom rules');
+          lines.push(custom);
+        }
+
+        if (enableBase.checked) {
+          lines.push('</IfModule>');
+        }
+
+        lines.push('# END generated by htaccess-generator');
+
+        return lines.join('\\n').replace(/\\n{3,}/g, '\\n\\n') + '\\n';
+      }
+
+      function escapeRegexForApache(value) {
+        return String(value).replace(/[.*+?^${}()|[\\]\\\\]/g, '\\\\$&');
+      }
+
+      addRedirectBtn.addEventListener('click', () => {
+        addRedirectRow();
+      });
+
+      redirectList.addEventListener('click', (event) => {
+        const btn = event.target.closest('[data-remove-row]');
+        if (!btn) return;
+        const row = btn.closest('[data-redirect-row]');
+        if (row) row.remove();
+      });
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const code = generateCode();
+        if (code !== null) {
+          output.value = code;
+          showSuccess('代码已生成，可复制或下载。');
+        }
+      });
+
+      resetBtn.addEventListener('click', () => {
+        enableBase.checked = true;
+        forceHttps.checked = true;
+        wwwMode.value = 'none';
+        domain.value = '';
+        slashMode.value = 'none';
+        customRules.value = '';
+        redirectList.innerHTML = '';
+        addRedirectRow('/old-page.html', 'https://example.com/new-page.html');
+        output.value = defaultCode;
+        clearMessages();
+        showSuccess('表单已重置。');
+      });
+
+      copyBtn.addEventListener('click', async () => {
+        clearMessages();
+        const text = output.value || '';
+        if (!text.trim()) {
+          showError('当前没有可复制的代码，请先生成 .htaccess 代码。');
+          return;
+        }
+
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+          } else {
+            output.focus();
+            output.select();
+            const ok = document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+            if (!ok) throw new Error('copy failed');
+          }
+          showSuccess('代码已复制到剪贴板。');
+        } catch (e) {
+          showError('复制失败，请手动选中输出框中的代码并复制。');
+        }
+      });
+
+      downloadBtn.addEventListener('click', () => {
+        clearMessages();
+        const text = output.value || '';
+        if (!text.trim()) {
+          showError('当前没有可下载的代码，请先生成 .htaccess 代码。');
+          return;
+        }
+
+        try {
+          const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = '.htaccess';
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(url);
+          showSuccess('文件下载已开始。');
+        } catch (e) {
+          showError('下载失败，请手动复制代码并保存为 .htaccess 文件。');
+        }
+      });
+
+      addRedirectRow('/old-page.html', 'https://example.com/new-page.html');
+    })();
+  </script>
+</body>
+</html>

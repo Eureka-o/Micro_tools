@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>svg-to-base64｜SVG 代码转 Base64 背景图工具</title>
+  <meta name="description" content="svg-to-base64 是一款面向前端开发者的在线 SVG 代码转 Base64 背景图工具，可将 SVG 源码快速转换为 CSS background-image 可直接使用的 Data URI 代码。" />
+  <meta name="keywords" content="svg-to-base64, SVG转Base64, SVG背景图, CSS background-image, Data URI, SVG代码转换, 前端开发工具, Base64编码" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <div class="pointer-events-none fixed inset-0 overflow-hidden">
+    <div class="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl"></div>
+  </div>
+
+  <header class="relative border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
+    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+        <div>
+          <div class="mb-3 inline-flex items-center rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm text-cyan-200">
+            Front-end SVG Utility
+          </div>
+          <h1 class="text-4xl font-black tracking-tight text-white sm:text-5xl">svg-to-base64</h1>
+          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">
+            将 SVG 代码转换为可直接用于 CSS <code class="rounded bg-white/10 px-1 py-0.5 text-cyan-200">background-image</code> 的 Base64 Data URI。
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 shadow-2xl">
+          <p class="text-sm text-slate-400">输出格式</p>
+          <p class="mt-1 font-mono text-sm text-cyan-200">url("data:image/svg+xml;base64,...")</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-2" aria-label="SVG 转换工具">
+      <div class="rounded-3xl border border-white/10 bg-slate-900/90 p-5 shadow-2xl">
+        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 class="text-xl font-bold text-white">输入 SVG 代码</h2>
+            <p class="mt-1 text-sm text-slate-400">粘贴完整的 SVG 源码，系统会自动校验格式。</p>
+          </div>
+          <button id="sampleBtn" type="button" class="rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">
+            插入示例
+          </button>
+        </div>
+
+        <label for="svgInput" class="sr-only">SVG 代码输入框</label>
+        <textarea id="svgInput" spellcheck="false" class="h-80 w-full resize-y rounded-2xl border border-slate-700 bg-slate-950 p-4 font-mono text-sm leading-6 text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder='例如：<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">...</svg>'></textarea>
+
+        <div id="message" class="mt-4 hidden rounded-2xl border px-4 py-3 text-sm" role="alert"></div>
+
+        <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+          <button id="convertBtn" type="button" class="inline-flex flex-1 items-center justify-center rounded-2xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-[0.98]">
+            转换为 Base64 背景图
+          </button>
+          <button id="clearBtn" type="button" class="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-slate-200 transition hover:bg-white/10 active:scale-[0.98]">
+            清空
+          </button>
+        </div>
+      </div>
+
+      <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/20 p-5 shadow-2xl">
+        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 class="text-xl font-bold text-white">输出 CSS 代码</h2>
+            <p class="mt-1 text-sm text-slate-400">复制后可直接粘贴到 CSS、Tailwind arbitrary value 或内联样式中。</p>
+          </div>
+          <button id="copyBtn" type="button" disabled class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-slate-400 transition enabled:border-emerald-400/30 enabled:bg-emerald-400/10 enabled:text-emerald-100 enabled:hover:bg-emerald-400/20 enabled:active:scale-95 disabled:cursor-not-allowed">
+            复制结果
+          </button>
+        </div>
+
+        <label for="outputCss" class="sr-only">CSS 输出框</label>
+        <textarea id="outputCss" readonly spellcheck="false" class="h-52 w-full resize-y rounded-2xl border border-slate-700 bg-slate-950/90 p-4 font-mono text-sm leading-6 text-cyan-100 outline-none placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder='background-image: url("data:image/svg+xml;base64,...");'></textarea>
+
+        <div class="mt-5 rounded-2xl border border-white/10 bg-white/5 p-4">
+          <div class="mb-3 flex items-center justify-between">
+            <h3 class="font-semibold text-white">背景图预览</h3>
+            <span id="sizeInfo" class="text-xs text-slate-400">等待转换</span>
+          </div>
+          <div class="overflow-hidden rounded-xl border border-white/10 bg-slate-950">
+            <div id="preview" class="flex h-48 items-center justify-center bg-[linear-gradient(45deg,rgba(255,255,255,.06)_25%,transparent_25%),linear-gradient(-45deg,rgba(255,255,255,.06)_25%,transparent_25%),linear-gradient(45deg,transparent_75%,rgba(255,255,255,.06)_75%),linear-gradient(-45deg,transparent_75%,rgba(255,255,255,.06)_75%)] bg-[length:24px_24px] bg-[position:0_0,0_12px,12px_-12px,-12px_0px] text-sm text-slate-500">
+              转换成功后将在此显示
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-10 rounded-3xl border border-white/10 bg-white/[0.04] p-6 leading-8 text-slate-300 shadow-2xl">
+      <h2 class="mb-4 text-2xl font-bold text-white">关于 SVG 代码转 Base64 背景图工具</h2>
+      <p>
+        svg-to-base64 是一款专为前端开发者设计的 SVG 代码转 Base64 背景图工具，适用于需要把矢量图标、装饰图形或品牌元素快速嵌入 CSS 的场景。传统做法通常需要保存独立 SVG 文件并维护资源路径，在组件化开发、邮件模板、落地页制作或静态页面交付时容易出现路径错误、跨域限制和资源丢失等问题。本工具可将 SVG 源码转换为标准的 Data URI，并生成可直接用于 CSS background-image 的代码，减少额外网络请求，让样式文件更易迁移和复用。使用方法非常简单：将完整 SVG 代码粘贴到输入框，点击转换按钮，即可得到 Base64 编码后的背景图 CSS。工具会自动校验 SVG 格式，遇到非法标签或空内容会给出清晰提示。对于搜索“SVG转Base64背景图”“CSS内联SVG Data URI”“background-image 使用 SVG 代码”的开发者来说，这是一个轻量、快速且无需安装依赖的在线转换方案。
+      </p>
+    </article>
+  </main>
+
+  <footer class="relative mx-auto max-w-6xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
+    <p>svg-to-base64 · 原生 HTML / JavaScript 单页工具</p>
+  </footer>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const svgInput = document.getElementById("svgInput");
+      const outputCss = document.getElementById("outputCss");
+      const convertBtn = document.getElementById("convertBtn");
+      const clearBtn = document.getElementById("clearBtn");
+      const sampleBtn = document.getElementById("sampleBtn");
+      const copyBtn = document.getElementById("copyBtn");
+      const message = document.getElementById("message");
+      const preview = document.getElementById("preview");
+      const sizeInfo = document.getElementById("sizeInfo");
+
+      const sampleSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+  <rect width="160" height="160" rx="36" fill="url(#g)"/>
+  <circle cx="80" cy="72" r="34" fill="white" opacity="0.92"/>
+  <path d="M55 96c14 18 36 18 50 0" fill="none" stroke="#0f172a" stroke-width="10" stroke-linecap="round"/>
+</svg>`;
+
+      function showMessage(type, text) {
+        message.className = "mt-4 rounded-2xl border px-4 py-3 text-sm";
+        if (type === "error") {
+          message.classList.add("border-red-400/30", "bg-red-500/10", "text-red-200");
+        } else {
+          message.classList.add("border-emerald-400/30", "bg-emerald-500/10", "text-emerald-200");
+        }
+        message.textContent = text;
+        message.classList.remove("hidden");
+      }
+
+      function hideMessage() {
+        message.classList.add("hidden");
+        message.textContent = "";
+      }
+
+      function resetOutput() {
+        outputCss.value = "";
+        copyBtn.disabled = true;
+        preview.removeAttribute("style");
+        preview.className = "flex h-48 items-center justify-center bg-[linear-gradient(45deg,rgba(255,255,255,.06)_25%,transparent_25%),linear-gradient(-45deg,rgba(255,255,255,.06)_25%,transparent_25%),linear-gradient(45deg,transparent_75%,rgba(255,255,255,.06)_75%),linear-gradient(-45deg,transparent_75%,rgba(255,255,255,.06)_75%)] bg-[length:24px_24px] bg-[position:0_0,0_12px,12px_-12px,-12px_0px] text-sm text-slate-500";
+        preview.textContent = "转换成功后将在此显示";
+        sizeInfo.textContent = "等待转换";
+      }
+
+      function validateSvg(input) {
+        const raw = String(input || "").trim();
+
+        if (!raw) {
+          return { ok: false, error: "请输入 SVG 代码，内容不能为空。" };
+        }
+
+        if (raw.length > 1024 * 1024) {
+          return { ok: false, error: "SVG 内容过大，请控制在 1MB 以内后再转换。" };
+        }
+
+        if (!/^<svg[\s>]/i.test(raw)) {
+          return { ok: false, error: "格式不正确：SVG 代码必须以 <svg> 标签开头。" };
+        }
+
+        if (!/<\/svg>\s*$/i.test(raw)) {
+          return { ok: false, error: "格式不正确：缺少结束标签 </svg>。" };
+        }
+
+        let doc;
+        try {
+          doc = new DOMParser().parseFromString(raw, "image/svg+xml");
+        } catch (err) {
+          return { ok: false, error: "SVG 解析失败，请检查标签嵌套和特殊字符。" };
+        }
+
+        const parserError = doc.querySelector("parsererror");
+        if (parserError) {
+          const detail = parserError.textContent ? parserError.textContent.replace(/\s+/g, " ").slice(0, 160) : "";
+          return { ok: false, error: "SVG XML 语法错误。" + (detail ? " 详情：" + detail : "") };
+        }
+
+        const root = doc.documentElement;
+        if (!root || root.nodeName.toLowerCase() !== "svg") {
+          return { ok: false, error: "解析结果不是有效的 SVG 根元素。" };
+        }
+
+        const scripts = root.querySelectorAll("script");
+        if (scripts.length > 0) {
+          return { ok: false, error: "为安全起见，请移除 SVG 中的 <script> 标签后再转换。" };
+        }
+
+        let normalized = raw;
+        if (!/\sxmlns\s*=\s*["']http:\/\/www\.w3\.org\/2000\/svg["']/i.test(normalized)) {
+          normalized = normalized.replace(/^<svg\b/i, '<svg xmlns="http://www.w3.org/2000/svg"');
+        }
+
+        return { ok: true, svg: normalized };
+      }
+
+      function utf8ToBase64(str) {
+        const bytes = new TextEncoder().encode(str);
+        let binary = "";
+        const chunkSize = 0x8000;
+        for (let i = 0; i < bytes.length; i += chunkSize) {
+          const chunk = bytes.subarray(i, i + chunkSize);
+          binary += String.fromCharCode.apply(null, chunk);
+        }
+        return btoa(binary);
+      }
+
+      function convert() {
+        hideMessage();
+        resetOutput();
+
+        try {
+          const result = validateSvg(svgInput.value);
+          if (!result.ok) {
+            showMessage("error", result.error);
+            return;
+          }
+
+          const base64 = utf8ToBase64(result.svg);
+          const dataUri = `data:image/svg+xml;base64,${base64}`;
+          const css = `background-image: url("${dataUri}");`;
+
+          outputCss.value = css;
+          copyBtn.disabled = false;
+
+          preview.textContent = "";
+          preview.className = "h-48 rounded-xl bg-center bg-no-repeat";
+          preview.style.backgroundImage = `linear-gradient(45deg, rgba(255,255,255,.06) 25%, transparent 25%), linear-gradient(-45deg, rgba(255,255,255,.06) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, rgba(255,255,255,.06) 75%), linear-gradient(-45deg, transparent 75%, rgba(255,255,255,.06) 75%), url("${dataUri}")`;
+          preview.style.backgroundSize = "24px 24px, 24px 24px, 24px 24px, 24px 24px, contain";
+          preview.style.backgroundPosition = "0 0, 0 12px, 12px -12px, -12px 0, center";
+          preview.style.backgroundRepeat = "repeat, repeat, repeat, repeat, no-repeat";
+
+          const originalBytes = new TextEncoder().encode(result.svg).length;
+          const base64Bytes = base64.length;
+          sizeInfo.textContent = `SVG ${formatBytes(originalBytes)} / Base64 ${formatBytes(base64Bytes)}`;
+          showMessage("success", "转换成功！CSS background-image 代码已生成。");
+        } catch (err) {
+          showMessage("error", "转换过程中发生异常，请检查输入内容后重试。");
+        }
+      }
+
+      function formatBytes(bytes) {
+        if (!Number.isFinite(bytes) || bytes < 0) return "0 B";
+        if (bytes < 1024) return `${bytes} B`;
+        if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+        return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+      }
+
+      async function copyOutput() {
+        const value = outputCss.value;
+        if (!value) {
+          showMessage("error", "当前没有可复制的转换结果。");
+          return;
+        }
+
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(value);
+          } else {
+            outputCss.focus();
+            outputCss.select();
+            const success = document.execCommand("copy");
+            if (!success) throw new Error("copy failed");
+            window.getSelection().removeAllRanges();
+          }
+
+          const oldText = copyBtn.textContent;
+          copyBtn.textContent = "已复制";
+          showMessage("success", "已复制到剪贴板。");
+          setTimeout(() => {
+            copyBtn.textContent = oldText;
+          }, 1200);
+        } catch (err) {
+          showMessage("error", "复制失败，请手动选中输出框内容后复制。");
+        }
+      }
+
+      convertBtn.addEventListener("click", convert);
+
+      clearBtn.addEventListener("click", () => {
+        svgInput.value = "";
+        hideMessage();
+        resetOutput();
+        svgInput.focus();
+      });
+
+      sampleBtn.addEventListener("click", () => {
+        svgInput.value = sampleSvg;
+        hideMessage();
+        resetOutput();
+        svgInput.focus();
+      });
+
+      copyBtn.addEventListener("click", copyOutput);
+
+      svgInput.addEventListener("input", () => {
+        hideMessage();
+        if (!svgInput.value.trim()) {
+          resetOutput();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

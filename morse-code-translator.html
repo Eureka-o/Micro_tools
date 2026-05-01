@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="morse-code-translator 是一款在线摩斯密码双向翻译器，支持英文文本与摩斯电码互转，并可通过 Web Audio API 播放点划提示音，适合学习、编码和通信练习。" />
+  <meta name="keywords" content="morse-code-translator, 摩斯密码翻译器, 摩斯电码转换, 英文转摩斯密码, 摩斯密码转英文, 在线摩斯密码工具, Morse Code Translator, Web Audio 摩斯音频" />
+  <meta name="robots" content="index, follow" />
+  <title>morse-code-translator｜摩斯密码双向翻译器</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#0f172a',
+            neon: '#22d3ee',
+            glow: '#38bdf8'
+          },
+          boxShadow: {
+            soft: '0 20px 60px rgba(15, 23, 42, 0.12)',
+            neon: '0 0 30px rgba(34, 211, 238, 0.25)'
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+  <div class="fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute left-1/2 top-[-10rem] h-[32rem] w-[32rem] -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute bottom-[-12rem] right-[-8rem] h-[30rem] w-[30rem] rounded-full bg-blue-600/20 blur-3xl"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_35%),linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[length:auto,36px_36px,36px_36px]"></div>
+  </div>
+
+  <header class="px-4 py-10 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-6xl rounded-3xl border border-white/10 bg-white/10 p-6 shadow-neon backdrop-blur-md sm:p-10">
+      <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+        <div>
+          <p class="mb-3 inline-flex items-center rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-1 text-sm font-medium text-cyan-200">
+            在线工具 · Web Audio API · 零依赖
+          </p>
+          <h1 class="text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">morse-code-translator</h1>
+          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg">
+            摩斯密码双向翻译器：将英文文本转换为点和划组成的摩斯密码，也可将摩斯电码快速还原为英文，并支持播放清晰的摩斯提示音。
+          </p>
+        </div>
+        <div class="rounded-2xl border border-cyan-200/20 bg-slate-900/70 px-5 py-4 text-center shadow-soft">
+          <div class="text-3xl font-black text-cyan-300">· −</div>
+          <div class="mt-1 text-sm text-slate-400">DOT & DASH</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="px-4 pb-14 sm:px-6 lg:px-8">
+    <section class="mx-auto max-w-6xl">
+      <div id="alert" class="mb-5 hidden rounded-2xl border px-4 py-3 text-sm font-medium" role="alert" aria-live="polite"></div>
+
+      <div class="grid gap-5 lg:grid-cols-2">
+        <section class="rounded-3xl border border-white/10 bg-slate-900/90 p-5 shadow-soft backdrop-blur sm:p-6">
+          <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 class="text-xl font-bold text-white">输入区</h2>
+              <p class="mt-1 text-sm text-slate-400">输入英文文本或摩斯密码，选择模式后开始转换。</p>
+            </div>
+            <select id="mode" class="rounded-xl border border-white/10 bg-slate-950 px-3 py-2 text-sm text-slate-100 outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/30">
+              <option value="auto">自动识别</option>
+              <option value="text-to-morse">英文 → 摩斯密码</option>
+              <option value="morse-to-text">摩斯密码 → 英文</option>
+            </select>
+          </div>
+
+          <textarea id="inputText" rows="11" class="w-full resize-y rounded-2xl border border-white/10 bg-slate-950/90 p-4 font-mono text-base leading-7 text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" placeholder="示例：HELLO WORLD&#10;或：.... . .-.. .-.. --- / .-- --- .-. .-.. -.."></textarea>
+
+          <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <button id="translateBtn" class="rounded-xl bg-cyan-400 px-4 py-3 font-bold text-slate-950 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-95 focus:outline-none focus:ring-4 focus:ring-cyan-300/30">翻译</button>
+            <button id="swapBtn" class="rounded-xl border border-white/10 bg-white/10 px-4 py-3 font-bold text-white transition hover:bg-white/15 active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/10">交换</button>
+            <button id="clearBtn" class="rounded-xl border border-white/10 bg-white/10 px-4 py-3 font-bold text-white transition hover:bg-white/15 active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/10">清空</button>
+            <button id="sampleBtn" class="rounded-xl border border-white/10 bg-white/10 px-4 py-3 font-bold text-white transition hover:bg-white/15 active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/10">示例</button>
+          </div>
+
+          <div class="mt-5 rounded-2xl border border-white/10 bg-slate-950/70 p-4">
+            <div class="mb-3 flex items-center justify-between">
+              <h3 class="font-semibold text-slate-100">播放设置</h3>
+              <span id="speedValue" class="text-sm text-cyan-200">80 ms / 点</span>
+            </div>
+            <input id="speed" type="range" min="45" max="180" value="80" class="w-full accent-cyan-300" />
+            <p class="mt-2 text-xs leading-5 text-slate-500">点为 1 个单位，划为 3 个单位，字符间与单词间自动留白。</p>
+          </div>
+        </section>
+
+        <section class="rounded-3xl border border-cyan-300/20 bg-cyan-950/30 p-5 shadow-soft backdrop-blur sm:p-6">
+          <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 class="text-xl font-bold text-white">输出区</h2>
+              <p id="detectedMode" class="mt-1 text-sm text-cyan-100/80">等待输入内容。</p>
+            </div>
+            <div class="flex gap-2">
+              <button id="copyBtn" class="rounded-xl border border-cyan-200/20 bg-cyan-200/10 px-4 py-2 text-sm font-bold text-cyan-100 transition hover:bg-cyan-200/20 active:scale-95 focus:outline-none focus:ring-4 focus:ring-cyan-300/20">复制</button>
+              <button id="playBtn" class="rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-950 transition hover:bg-cyan-100 active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/30">播放</button>
+              <button id="stopBtn" class="rounded-xl border border-red-300/20 bg-red-400/10 px-4 py-2 text-sm font-bold text-red-100 transition hover:bg-red-400/20 active:scale-95 focus:outline-none focus:ring-4 focus:ring-red-300/20">停止</button>
+            </div>
+          </div>
+
+          <textarea id="outputText" rows="11" readonly class="w-full resize-y rounded-2xl border border-cyan-200/20 bg-slate-950/80 p-4 font-mono text-base leading-7 text-cyan-50 outline-none placeholder:text-slate-600" placeholder="翻译结果会显示在这里"></textarea>
+
+          <div class="mt-4 grid gap-3 sm:grid-cols-3">
+            <div class="rounded-2xl border border-white/10 bg-slate-950/60 p-4">
+              <div class="text-sm text-slate-400">输入字符</div>
+              <div id="inputCount" class="mt-1 text-2xl font-black text-white">0</div>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-slate-950/60 p-4">
+              <div class="text-sm text-slate-400">输出字符</div>
+              <div id="outputCount" class="mt-1 text-2xl font-black text-white">0</div>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-slate-950/60 p-4">
+              <div class="text-sm text-slate-400">状态</div>
+              <div id="statusText" class="mt-1 truncate text-lg font-bold text-cyan-200">就绪</div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <article class="mt-8 rounded-3xl border border-white/10 bg-white/10 p-6 leading-8 text-slate-200 shadow-soft backdrop-blur sm:p-8">
+        <h2 class="mb-4 text-2xl font-black text-white">关于在线摩斯密码双向翻译器</h2>
+        <p>
+          morse-code-translator 是一款面向学习、通信练习与内容编码场景的在线摩斯密码翻译器。它可以将常见英文文本、数字和标点快速转换为由点和划组成的摩斯电码，也能把规范输入的摩斯密码还原为可读英文，解决手动查询编码表效率低、容易出错的问题。对于正在学习 Morse Code 的用户，这个工具不仅提供英文转摩斯密码、摩斯密码转英文的双向转换，还内置基于 Web Audio API 的摩斯密码提示音播放功能，便于通过听觉记忆点划节奏。使用方法非常简单：在输入区粘贴英文句子或摩斯代码，选择自动识别或指定转换方向，点击“翻译”即可获得结果；如需练习听写，可点击“播放”并调节点时长控制速度。本工具采用响应式设计，手机和桌面浏览器均可直接使用，适合作为在线摩斯电码转换工具、摩斯密码学习辅助工具以及轻量级 Morse Code Translator。
+        </p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="px-4 pb-8 text-center text-sm text-slate-500">
+    <p>morse-code-translator · Fast, private, browser-based Morse code conversion.</p>
+  </footer>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const MORSE = Object.freeze({
+        'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
+        'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
+        'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.',
+        'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
+        'Y': '-.--', 'Z': '--..',
+        '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-',
+        '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.',
+        '.': '.-.-.-', ',': '--..--', '?': '..--..', "'": '.----.', '!': '-.-.--',
+        '/': '-..-.', '(': '-.--.', ')': '-.--.-', '&': '.-...', ':': '---...',
+        ';': '-.-.-.', '=': '-...-', '+': '.-.-.', '-': '-....-', '_': '..--.-',
+        '"': '.-..-.', '$': '...-..-', '@': '.--.-.'
+      });
+
+      const REVERSE = Object.freeze(Object.fromEntries(Object.entries(MORSE).map(([k, v]) => [v, k])));
+
+      const $ = (id) => document.getElementById(id);
+      const inputText = $('inputText');
+      const outputText = $('outputText');
+      const mode = $('mode');
+      const alertBox = $('alert');
+      const detectedMode = $('detectedMode');
+      const inputCount = $('inputCount');
+      const outputCount = $('outputCount');
+      const statusText = $('statusText');
+      const speed = $('speed');
+      const speedValue = $('speedValue');
+
+      let audioCtx = null;
+      let oscillators = [];
+      let gainNodes = [];
+      let stopTimer = null;
+
+      function showAlert(message, type = 'error') {
+        alertBox.className = 'mb-5 rounded-2xl border px-4 py-3 text-sm font-medium';
+        if (type === 'error') {
+          alertBox.classList.add('border-red-300/30', 'bg-red-500/15', 'text-red-100');
+        } else if (type === 'success') {
+          alertBox.classList.add('border-emerald-300/30', 'bg-emerald-500/15', 'text-emerald-100');
+        } else {
+          alertBox.classList.add('border-cyan-300/30', 'bg-cyan-500/15', 'text-cyan-100');
+        }
+        alertBox.textContent = message;
+        alertBox.classList.remove('hidden');
+      }
+
+      function hideAlert() {
+        alertBox.classList.add('hidden');
+        alertBox.textContent = '';
+      }
+
+      function setStatus(text) {
+        statusText.textContent = text;
+      }
+
+      function updateCounts() {
+        inputCount.textContent = String(inputText.value.length);
+        outputCount.textContent = String(outputText.value.length);
+      }
+
+      function normalizeMorseSymbols(value) {
+        return value
+          .replace(/[·•]/g, '.')
+          .replace(/[–—−]/g, '-')
+          .replace(/[｜|]/g, '/')
+          .replace(/\u3000/g, ' ');
+      }
+
+      function isLikelyMorse(value) {
+        const normalized = normalizeMorseSymbols(value).trim();
+        if (!normalized) return false;
+        return /^[.\-\s/]+$/.test(normalized);
+      }
+
+      function resolveMode(value) {
+        if (mode.value !== 'auto') return mode.value;
+        return isLikelyMorse(value) ? 'morse-to-text' : 'text-to-morse';
+      }
+
+      function textToMorse(text) {
+        const unsupported = new Set();
+        const words = text.toUpperCase().trim().split(/\s+/).filter(Boolean);
+
+        if (words.length === 0) {
+          throw new Error('请输入需要翻译的英文文本。');
+        }
+
+        const resultWords = words.map(word => {
+          const letters = [];
+          for (const ch of word) {
+            if (MORSE[ch]) {
+              letters.push(MORSE[ch]);
+            } else {
+              unsupported.add(ch);
+            }
+          }
+          return letters.join(' ');
+        }).filter(Boolean);
+
+        if (unsupported.size > 0) {
+          throw new Error('文本中包含暂不支持的字符：' + Array.from(unsupported).join(' ') + '。请使用英文字母、数字或常见英文标点。');
+        }
+
+        if (!resultWords.length) {
+          throw new Error('没有可转换的有效英文字符。');
+        }
+
+        return resultWords.join(' / ');
+      }
+
+      function morseToText(morse) {
+        const normalized = normalizeMorseSymbols(morse).trim();
+        if (!normalized) {
+          throw new Error('请输入需要翻译的摩斯密码。');
+        }
+        if (!/^[.\-\s/]+$/.test(normalized)) {
+          throw new Error('摩斯密码只能包含点 "."、划 "-"、空格和单词分隔符 "/"。');
+        }
+
+        const compact = normalized.replace(/\s*\/\s*/g, ' / ').replace(/\s{3,}/g, ' / ').replace(/\s+/g, ' ').trim();
+        const tokens = compact.split(' ');
+        const words = [];
+        let current = [];
+
+        for (const token of tokens) {
+          if (!token) continue;
+          if (token === '/') {
+            if (current.length) {
+              words.push(current.join(''));
+              current = [];
+            } else if (words.length && words[words.length - 1] !== '') {
+              words.push('');
+            }
+            continue;
+          }
+          if (!/^[.-]+$/.test(token)) {
+            throw new Error('发现非法摩斯片段：' + token);
+          }
+          if (!REVERSE[token]) {
+            throw new Error('无法识别的摩斯编码：' + token + '。请检查点划组合是否正确。');
+          }
+          current.push(REVERSE[token]);
+        }
+
+        if (current.length) words.push(current.join(''));
+        const result = words.filter((word, index, arr) => !(word === '' && arr[index - 1] === '')).join(' ').trim();
+
+        if (!result) {
+          throw new Error('没有可转换的有效摩斯编码。');
+        }
+
+        return result;
+      }
+
+      function translate() {
+        try {
+          hideAlert();
+          stopPlayback();
+          const value = inputText.value;
+          if (!value.trim()) {
+            outputText.value = '';
+            detectedMode.textContent = '等待输入内容。';
+            setStatus('就绪');
+            updateCounts();
+            showAlert('请输入英文文本或摩斯密码后再翻译。', 'error');
+            return;
+          }
+
+          const activeMode = resolveMode(value);
+          let result = '';
+
+          if (activeMode === 'text-to-morse') {
+            result = textToMorse(value);
+            detectedMode.textContent = mode.value === 'auto' ? '已自动识别：英文 → 摩斯密码' : '当前模式：英文 → 摩斯密码';
+          } else {
+            result = morseToText(value);
+            detectedMode.textContent = mode.value === 'auto' ? '已自动识别：摩斯密码 → 英文' : '当前模式：摩斯密码 → 英文';
+          }
+
+          outputText.value = result;
+          setStatus('翻译完成');
+          updateCounts();
+          showAlert('翻译成功。', 'success');
+        } catch (err) {
+          outputText.value = '';
+          detectedMode.textContent = '输入格式需要修正。';
+          setStatus('错误');
+          updateCounts();
+          showAlert(err && err.message ? err.message : '发生未知错误，请检查输入内容。', 'error');
+        }
+      }
+
+      function swapContent() {
+        const out = outputText.value;
+        const input = inputText.value;
+        inputText.value = out;
+        outputText.value = input;
+        if (mode.value === 'text-to-morse') mode.value = 'morse-to-text';
+        else if (mode.value === 'morse-to-text') mode.value = 'text-to-morse';
+        hideAlert();
+        setStatus('已交换');
+        updateCounts();
+        if (inputText.value.trim()) translate();
+      }
+
+      async function copyOutput() {
+        try {
+          if (!outputText.value.trim()) {
+            showAlert('当前没有可复制的输出结果。', 'error');
+            return;
+          }
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(outputText.value);
+          } else {
+            outputText.focus();
+            outputText.select();
+            const ok = document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+            if (!ok) throw new Error('copy failed');
+          }
+          setStatus('已复制');
+          showAlert('结果已复制到剪贴板。', 'success');
+        } catch (err) {
+          showAlert('复制失败，请手动选中输出内容复制。', 'error');
+        }
+      }
+
+      function getPlayableMorse() {
+        const out = outputText.value.trim();
+        const inp = inputText.value.trim();
+
+        if (isLikelyMorse(out)) return normalizeMorseSymbols(out);
+        if (isLikelyMorse(inp)) return normalizeMorseSymbols(inp);
+
+        if (out) return textToMorse(out);
+        if (inp) return textToMorse(inp);
+        throw new Error('没有可播放的摩斯密码，请先输入并翻译内容。');
+      }
+
+      function stopPlayback() {
+        if (stopTimer) {
+          clearTimeout(stopTimer);
+          stopTimer = null;
+        }
+        oscillators.forEach(osc => {
+          try { osc.stop(); } catch (e) {}
+          try { osc.disconnect(); } catch (e) {}
+        });
+        gainNodes.forEach(gain => {
+          try { gain.disconnect(); } catch (e) {}
+        });
+        oscillators = [];
+        gainNodes = [];
+        setStatus(outputText.value ? '就绪' : '就绪');
+      }
+
+      async function playMorse() {
+        try {
+          hideAlert();
+          stopPlayback();
+
+          const morse = getPlayableMorse();
+          const unit = Math.max(45, Math.min(180, Number(speed.value) || 80)) / 1000;
+          audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+
+          if (audioCtx.state === 'suspended') {
+            await audioCtx.resume();
+          }
+
+          const now = audioCtx.currentTime + 0.08;
+          let cursor = now;
+          const frequency = 650;
+          const volume = 0.16;
+
+          function beep(start, duration) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = frequency;
+            gain.gain.setValueAtTime(0.0001, start);
+            gain.gain.exponentialRampToValueAtTime(volume, start + 0.01);
+            gain.gain.setValueAtTime(volume, Math.max(start + 0.01, start + duration - 0.02));
+            gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(start);
+            osc.stop(start + duration + 0.03);
+            oscillators.push(osc);
+            gainNodes.push(gain);
+          }
+
+          const normalized = morse.replace(/\s*\/\s*/g, ' / ').replace(/\s+/g, ' ').trim();
+          for (const token of normalized.split(' ')) {
+            if (!token) continue;
+            if (token === '/') {
+              cursor += unit * 4;
+              continue;
+            }
+            for (const symbol of token) {
+              if (symbol === '.') {
+                beep(cursor, unit);
+                cursor += unit * 2;
+              } else if (symbol === '-') {
+                beep(cursor, unit * 3);
+                cursor += unit * 4;
+              }
+            }
+            cursor += unit * 2;
+          }
+
+          const totalMs = Math.max(0, (cursor - audioCtx.currentTime) * 1000 + 150);
+          stopTimer = setTimeout(() => {
+            oscillators = [];
+            gainNodes = [];
+            stopTimer = null;
+            setStatus('播放完成');
+          }, totalMs);
+
+          setStatus('播放中');
+          showAlert('正在播放摩斯密码提示音。', 'info');
+        } catch (err) {
+          setStatus('播放失败');
+          showAlert(err && err.message ? err.message : '播放失败，请检查浏览器是否支持 Web Audio API。', 'error');
+        }
+      }
+
+      $('translateBtn').addEventListener('click', translate);
+      $('swapBtn').addEventListener('click', swapContent);
+      $('clearBtn').addEventListener('click', () => {
+        stopPlayback();
+        inputText.value = '';
+        outputText.value = '';
+        detectedMode.textContent = '等待输入内容。';
+        setStatus('已清空');
+        updateCounts();
+        hideAlert();
+      });
+      $('sampleBtn').addEventListener('click', () => {
+        stopPlayback();
+        inputText.value = 'HELLO WORLD 2026';
+        mode.value = 'text-to-morse';
+        translate();
+      });
+      $('copyBtn').addEventListener('click', copyOutput);
+      $('playBtn').addEventListener('click', playMorse);
+      $('stopBtn').addEventListener('click', () => {
+        stopPlayback();
+        showAlert('播放已停止。', 'info');
+      });
+
+      inputText.addEventListener('input', () => {
+        updateCounts();
+        if (!inputText.value.trim()) {
+          outputText.value = '';
+          detectedMode.textContent = '等待输入内容。';
+          setStatus('就绪');
+          hideAlert();
+          updateCounts();
+        }
+      });
+
+      inputText.addEventListener('keydown', (event) => {
+        if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+          event.preventDefault();
+          translate();
+        }
+      });
+
+      speed.addEventListener('input', () => {
+        speedValue.textContent = `${speed.value} ms / 点`;
+      });
+
+      mode.addEventListener('change', () => {
+        hideAlert();
+        if (inputText.value.trim()) translate();
+      });
+
+      window.addEventListener('beforeunload', stopPlayback);
+      updateCounts();
+    })();
+  </script>
+</body>
+</html>

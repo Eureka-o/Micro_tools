@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>xml-formatter - XML 美化与压缩工具</title>
+  <meta name="description" content="xml-formatter 是一款在线 XML 美化与压缩工具，可快速修复错乱的 XML 标签缩进，将 XML 格式化为易读结构，或压缩为单行代码，适合开发调试、接口排查与数据清理。" />
+  <meta name="keywords" content="xml-formatter, XML格式化, XML美化工具, XML压缩工具, XML缩进修复, 在线XML格式化, XML单行压缩, XML校验工具" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
+    <div class="absolute inset-0 opacity-30">
+      <div class="absolute left-1/4 top-0 h-56 w-56 rounded-full bg-cyan-500 blur-3xl"></div>
+      <div class="absolute right-1/4 bottom-0 h-56 w-56 rounded-full bg-blue-600 blur-3xl"></div>
+    </div>
+    <div class="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-1 text-sm text-cyan-200">在线开发者工具</p>
+          <h1 class="text-4xl font-black tracking-tight text-white sm:text-5xl">xml-formatter</h1>
+          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">XML 美化与压缩工具：快速修复错乱的 XML 标签缩进，或将 XML 压缩为单行，适合接口调试、日志分析与数据整理。</p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 shadow-2xl backdrop-blur">
+          <p class="text-sm text-slate-300">零依赖 · 本地处理 · 即开即用</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-2">
+      <div class="rounded-3xl border border-slate-700 bg-slate-900/80 p-5 shadow-xl">
+        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <h2 class="text-xl font-bold text-white">输入 XML</h2>
+          <div class="flex flex-wrap gap-2">
+            <button id="sampleBtn" type="button" class="rounded-xl border border-cyan-400/40 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">示例</button>
+            <button id="clearBtn" type="button" class="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:bg-slate-700 active:scale-95">清空</button>
+          </div>
+        </div>
+        <textarea id="inputXml" spellcheck="false" class="h-96 w-full resize-y rounded-2xl border border-slate-700 bg-slate-950 p-4 font-mono text-sm leading-6 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="请粘贴 XML 内容，例如：&#10;<root><item id=&quot;1&quot;>Hello</item></root>"></textarea>
+
+        <div class="mt-4 grid gap-3 sm:grid-cols-2">
+          <label class="block">
+            <span class="mb-2 block text-sm font-medium text-slate-300">缩进空格数</span>
+            <select id="indentSize" class="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-slate-100 outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
+              <option value="2" selected>2 个空格</option>
+              <option value="4">4 个空格</option>
+              <option value="1">1 个空格</option>
+              <option value="tab">Tab</option>
+            </select>
+          </label>
+          <label class="block">
+            <span class="mb-2 block text-sm font-medium text-slate-300">处理模式</span>
+            <select id="mode" class="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-slate-100 outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
+              <option value="format" selected>美化 / 修复缩进</option>
+              <option value="minify">压缩为单行</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="errorBox" class="mt-4 hidden rounded-2xl border border-red-400/40 bg-red-500/10 p-4 text-sm leading-6 text-red-200"></div>
+
+        <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+          <button id="formatBtn" type="button" class="flex-1 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 px-5 py-3 font-bold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:brightness-110 active:scale-[0.98]">开始处理</button>
+          <button id="swapBtn" type="button" class="rounded-2xl border border-slate-600 bg-slate-800 px-5 py-3 font-bold text-slate-100 transition hover:bg-slate-700 active:scale-[0.98]">输出转输入</button>
+        </div>
+      </div>
+
+      <div class="rounded-3xl border border-cyan-500/30 bg-cyan-950/30 p-5 shadow-xl">
+        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <h2 class="text-xl font-bold text-white">输出结果</h2>
+          <div class="flex flex-wrap gap-2">
+            <button id="copyBtn" type="button" class="rounded-xl border border-emerald-400/40 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-400/20 active:scale-95">复制</button>
+            <button id="downloadBtn" type="button" class="rounded-xl border border-blue-400/40 bg-blue-400/10 px-4 py-2 text-sm font-semibold text-blue-100 transition hover:bg-blue-400/20 active:scale-95">下载</button>
+          </div>
+        </div>
+        <textarea id="outputXml" readonly spellcheck="false" class="h-96 w-full resize-y rounded-2xl border border-cyan-500/20 bg-slate-950/90 p-4 font-mono text-sm leading-6 text-cyan-50 outline-none placeholder:text-slate-500" placeholder="处理后的 XML 将显示在这里"></textarea>
+
+        <div class="mt-4 grid gap-3 sm:grid-cols-3">
+          <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+            <p class="text-xs text-slate-400">输入字符</p>
+            <p id="inputCount" class="mt-1 text-2xl font-black text-white">0</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+            <p class="text-xs text-slate-400">输出字符</p>
+            <p id="outputCount" class="mt-1 text-2xl font-black text-white">0</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+            <p class="text-xs text-slate-400">状态</p>
+            <p id="statusText" class="mt-1 text-lg font-bold text-slate-300">等待输入</p>
+          </div>
+        </div>
+
+        <div id="toast" class="mt-4 hidden rounded-2xl border border-emerald-400/40 bg-emerald-500/10 p-4 text-sm text-emerald-200"></div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-slate-700 bg-slate-900/70 p-6 leading-8 text-slate-300 shadow-xl">
+      <h2 class="mb-4 text-2xl font-bold text-white">关于 xml-formatter 在线 XML 美化与压缩工具</h2>
+      <p>
+        xml-formatter 是面向开发者、测试工程师和数据处理人员的在线 XML 格式化工具，专注解决接口返回内容难读、XML 标签缩进混乱、日志片段无法快速排查等常见痛点。你只需将 XML 文本粘贴到输入区，选择“美化 / 修复缩进”即可把紧凑或错乱排版的内容整理成层级清晰、便于阅读的结构；选择“压缩为单行”则可去除多余换行和缩进，生成适合传输、存储或嵌入配置的精简 XML。工具会在浏览器本地完成 XML 校验、格式化和压缩处理，不上传数据，适用于 API 调试、SOAP 报文整理、配置文件检查、在线 XML 缩进修复、XML 单行压缩等场景。当输入存在未闭合标签、非法字符或结构错误时，页面会给出友好的错误提示，帮助你更快定位问题并提升排查效率。
+      </p>
+    </article>
+  </main>
+
+  <footer class="border-t border-slate-800 py-6 text-center text-sm text-slate-500">
+    <p>xml-formatter · XML 美化与压缩工具</p>
+  </footer>
+
+  <script>
+    const inputXml = document.getElementById('inputXml');
+    const outputXml = document.getElementById('outputXml');
+    const indentSize = document.getElementById('indentSize');
+    const mode = document.getElementById('mode');
+    const formatBtn = document.getElementById('formatBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const sampleBtn = document.getElementById('sampleBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const swapBtn = document.getElementById('swapBtn');
+    const errorBox = document.getElementById('errorBox');
+    const toast = document.getElementById('toast');
+    const inputCount = document.getElementById('inputCount');
+    const outputCount = document.getElementById('outputCount');
+    const statusText = document.getElementById('statusText');
+
+    function updateCounts() {
+      inputCount.textContent = String(inputXml.value.length);
+      outputCount.textContent = String(outputXml.value.length);
+    }
+
+    function showError(message) {
+      errorBox.textContent = message;
+      errorBox.classList.remove('hidden');
+      statusText.textContent = '处理失败';
+      statusText.className = 'mt-1 text-lg font-bold text-red-300';
+    }
+
+    function clearError() {
+      errorBox.textContent = '';
+      errorBox.classList.add('hidden');
+    }
+
+    function showToast(message, type = 'success') {
+      toast.textContent = message;
+      toast.classList.remove('hidden');
+      toast.className = type === 'success'
+        ? 'mt-4 rounded-2xl border border-emerald-400/40 bg-emerald-500/10 p-4 text-sm text-emerald-200'
+        : 'mt-4 rounded-2xl border border-red-400/40 bg-red-500/10 p-4 text-sm text-red-200';
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => toast.classList.add('hidden'), 2200);
+    }
+
+    function escapeText(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function escapeAttr(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function getIndentUnit() {
+      return indentSize.value === 'tab' ? '\t' : ' '.repeat(Number(indentSize.value) || 2);
+    }
+
+    function parseXml(xmlText) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(xmlText, 'application/xml');
+      const parserError = doc.getElementsByTagName('parsererror')[0];
+      if (parserError) {
+        const message = parserError.textContent ? parserError.textContent.trim().replace(/\s+/g, ' ') : 'XML 格式不合法，请检查标签是否闭合、属性引号是否正确。';
+        throw new Error('XML 解析失败：' + message);
+      }
+      if (!doc.documentElement) {
+        throw new Error('XML 内容为空或缺少根节点，请输入完整的 XML 文档。');
+      }
+      return doc;
+    }
+
+    function getXmlDeclaration(xmlText) {
+      const match = xmlText.match(/^\s*(<\?xml\s+[^?]*\?>)/i);
+      return match ? match[1].trim() : '';
+    }
+
+    function attrsToString(node) {
+      if (!node.attributes || node.attributes.length === 0) return '';
+      return Array.from(node.attributes)
+        .map(attr => `${attr.name}="${escapeAttr(attr.value)}"`)
+        .join(' ');
+    }
+
+    function formatNode(node, level, indentUnit) {
+      const pad = indentUnit.repeat(level);
+
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        const attrs = attrsToString(node);
+        const openTag = attrs ? `<${node.nodeName} ${attrs}>` : `<${node.nodeName}>`;
+        const closeTag = `</${node.nodeName}>`;
+        const children = Array.from(node.childNodes);
+        const meaningful = children.filter(child => !(child.nodeType === Node.TEXT_NODE && child.textContent.trim() === ''));
+
+        if (meaningful.length === 0) {
+          const selfTag = attrs ? `<${node.nodeName} ${attrs}/>` : `<${node.nodeName}/>`;
+          return pad + selfTag;
+        }
+
+        const onlyText = meaningful.length === 1 && meaningful[0].nodeType === Node.TEXT_NODE;
+        const onlyCdata = meaningful.length === 1 && meaningful[0].nodeType === Node.CDATA_SECTION_NODE;
+
+        if (onlyText) {
+          return pad + openTag + escapeText(meaningful[0].textContent.trim()) + closeTag;
+        }
+
+        if (onlyCdata) {
+          return pad + openTag + `<![CDATA[${meaningful[0].data}]]>` + closeTag;
+        }
+
+        const inner = meaningful.map(child => formatNode(child, level + 1, indentUnit)).filter(Boolean).join('\n');
+        return pad + openTag + '\n' + inner + '\n' + pad + closeTag;
+      }
+
+      if (node.nodeType === Node.TEXT_NODE) {
+        const text = node.textContent.trim();
+        return text ? pad + escapeText(text) : '';
+      }
+
+      if (node.nodeType === Node.CDATA_SECTION_NODE) {
+        return pad + `<![CDATA[${node.data}]]>`;
+      }
+
+      if (node.nodeType === Node.COMMENT_NODE) {
+        return pad + `<!--${node.data}-->`;
+      }
+
+      if (node.nodeType === Node.PROCESSING_INSTRUCTION_NODE) {
+        return pad + `<?${node.target}${node.data ? ' ' + node.data : ''}?>`;
+      }
+
+      if (node.nodeType === Node.DOCUMENT_TYPE_NODE) {
+        let doctype = `<!DOCTYPE ${node.name}`;
+        if (node.publicId) doctype += ` PUBLIC "${node.publicId}"`;
+        if (node.systemId) doctype += node.publicId ? ` "${node.systemId}"` : ` SYSTEM "${node.systemId}"`;
+        doctype += '>';
+        return pad + doctype;
+      }
+
+      return '';
+    }
+
+    function formatXml(xmlText) {
+      const doc = parseXml(xmlText);
+      const declaration = getXmlDeclaration(xmlText);
+      const parts = [];
+      if (declaration) parts.push(declaration);
+
+      Array.from(doc.childNodes).forEach(node => {
+        if (node.nodeType === Node.PROCESSING_INSTRUCTION_NODE && /^xml$/i.test(node.target)) return;
+        const formatted = formatNode(node, 0, getIndentUnit());
+        if (formatted) parts.push(formatted);
+      });
+
+      return parts.join('\n');
+    }
+
+    function minifyNode(node) {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        const attrs = attrsToString(node);
+        const openTag = attrs ? `<${node.nodeName} ${attrs}>` : `<${node.nodeName}>`;
+        const children = Array.from(node.childNodes).filter(child => !(child.nodeType === Node.TEXT_NODE && child.textContent.trim() === ''));
+
+        if (children.length === 0) {
+          return attrs ? `<${node.nodeName} ${attrs}/>` : `<${node.nodeName}/>`;
+        }
+
+        return openTag + children.map(minifyNode).join('') + `</${node.nodeName}>`;
+      }
+
+      if (node.nodeType === Node.TEXT_NODE) {
+        return escapeText(node.textContent.trim());
+      }
+
+      if (node.nodeType === Node.CDATA_SECTION_NODE) {
+        return `<![CDATA[${node.data}]]>`;
+      }
+
+      if (node.nodeType === Node.COMMENT_NODE) {
+        return `<!--${node.data}-->`;
+      }
+
+      if (node.nodeType === Node.PROCESSING_INSTRUCTION_NODE) {
+        return `<?${node.target}${node.data ? ' ' + node.data : ''}?>`;
+      }
+
+      if (node.nodeType === Node.DOCUMENT_TYPE_NODE) {
+        let doctype = `<!DOCTYPE ${node.name}`;
+        if (node.publicId) doctype += ` PUBLIC "${node.publicId}"`;
+        if (node.systemId) doctype += node.publicId ? ` "${node.systemId}"` : ` SYSTEM "${node.systemId}"`;
+        return doctype + '>';
+      }
+
+      return '';
+    }
+
+    function minifyXml(xmlText) {
+      const doc = parseXml(xmlText);
+      const declaration = getXmlDeclaration(xmlText);
+      const parts = [];
+      if (declaration) parts.push(declaration);
+
+      Array.from(doc.childNodes).forEach(node => {
+        if (node.nodeType === Node.PROCESSING_INSTRUCTION_NODE && /^xml$/i.test(node.target)) return;
+        const minified = minifyNode(node);
+        if (minified) parts.push(minified);
+      });
+
+      return parts.join('');
+    }
+
+    function processXml() {
+      clearError();
+      const raw = inputXml.value || '';
+
+      if (!raw.trim()) {
+        outputXml.value = '';
+        updateCounts();
+        showError('请输入需要处理的 XML 内容。');
+        return;
+      }
+
+      try {
+        formatBtn.disabled = true;
+        formatBtn.textContent = '处理中...';
+        const result = mode.value === 'minify' ? minifyXml(raw) : formatXml(raw);
+        outputXml.value = result;
+        statusText.textContent = '处理成功';
+        statusText.className = 'mt-1 text-lg font-bold text-emerald-300';
+        showToast(mode.value === 'minify' ? 'XML 已压缩为单行。' : 'XML 已完成美化与缩进修复。');
+      } catch (error) {
+        outputXml.value = '';
+        showError(error && error.message ? error.message : '处理失败，请检查 XML 内容是否有效。');
+      } finally {
+        formatBtn.disabled = false;
+        formatBtn.textContent = '开始处理';
+        updateCounts();
+      }
+    }
+
+    async function copyOutput() {
+      clearError();
+      if (!outputXml.value) {
+        showToast('没有可复制的输出内容，请先处理 XML。', 'error');
+        return;
+      }
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(outputXml.value);
+        } else {
+          outputXml.focus();
+          outputXml.select();
+          document.execCommand('copy');
+          window.getSelection().removeAllRanges();
+        }
+        showToast('输出结果已复制到剪贴板。');
+      } catch (error) {
+        showToast('复制失败，请手动选择输出内容复制。', 'error');
+      }
+    }
+
+    function downloadOutput() {
+      if (!outputXml.value) {
+        showToast('没有可下载的输出内容，请先处理 XML。', 'error');
+        return;
+      }
+
+      try {
+        const blob = new Blob([outputXml.value], { type: 'application/xml;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        const now = new Date();
+        const stamp = [
+          now.getFullYear(),
+          String(now.getMonth() + 1).padStart(2, '0'),
+          String(now.getDate()).padStart(2, '0'),
+          String(now.getHours()).padStart(2, '0'),
+          String(now.getMinutes()).padStart(2, '0'),
+          String(now.getSeconds()).padStart(2, '0')
+        ].join('');
+        a.href = url;
+        a.download = `formatted-${stamp}.xml`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        showToast('XML 文件已开始下载。');
+      } catch (error) {
+        showToast('下载失败，请复制内容后手动保存。', 'error');
+      }
+    }
+
+    inputXml.addEventListener('input', updateCounts);
+    outputXml.addEventListener('input', updateCounts);
+    formatBtn.addEventListener('click', processXml);
+    copyBtn.addEventListener('click', copyOutput);
+    downloadBtn.addEventListener('click', downloadOutput);
+
+    clearBtn.addEventListener('click', () => {
+      inputXml.value = '';
+      outputXml.value = '';
+      clearError();
+      statusText.textContent = '等待输入';
+      statusText.className = 'mt-1 text-lg font-bold text-slate-300';
+      updateCounts();
+      showToast('内容已清空。');
+    });
+
+    sampleBtn.addEventListener('click', () => {
+      inputXml.value = `<?xml version="1.0" encoding="UTF-8"?>
+<catalog><book id="bk101"><author>Gambardella, Matthew</author><title>XML Developer Guide</title><genre>Computer</genre><price>44.95</price><publish_date>2024-01-18</publish_date><description>Useful guide for XML formatting.</description></book><book id="bk102"><author>Ralls, Kim</author><title>Midnight Rain</title><genre>Fantasy</genre><price>5.95</price></book></catalog>`;
+      clearError();
+      updateCounts();
+      showToast('示例 XML 已填入输入区。');
+    });
+
+    swapBtn.addEventListener('click', () => {
+      if (!outputXml.value) {
+        showToast('输出区为空，无法转入输入区。', 'error');
+        return;
+      }
+      inputXml.value = outputXml.value;
+      outputXml.value = '';
+      clearError();
+      statusText.textContent = '已转入输入';
+      statusText.className = 'mt-1 text-lg font-bold text-cyan-300';
+      updateCounts();
+      showToast('输出内容已转入输入区。');
+    });
+
+    updateCounts();
+  </script>
+</body>
+</html>

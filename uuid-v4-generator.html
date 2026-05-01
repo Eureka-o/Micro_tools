@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>uuid-v4-generator｜UUID v4 批量生成器</title>
+  <meta name="description" content="uuid-v4-generator 是一个在线 UUID v4 批量生成器，支持一次生成 1 到 100 个标准 UUID，并可一键复制所有结果，适合开发、测试、数据库主键和接口调试场景。" />
+  <meta name="keywords" content="uuid-v4-generator, UUID v4 批量生成器, 在线 UUID 生成器, 批量生成 UUID, UUID v4, 随机 UUID, 开发工具, 一键复制 UUID" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+  <div class="pointer-events-none fixed inset-0 overflow-hidden">
+    <div class="absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
+  </div>
+
+  <main class="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 py-6 sm:px-6 lg:px-8">
+    <header class="mb-8 rounded-3xl border border-white/10 bg-white/5 px-6 py-8 shadow-2xl shadow-cyan-950/30 backdrop-blur md:px-10 md:py-12">
+      <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+        <div>
+          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+            Online Developer Tool
+          </p>
+          <h1 class="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
+            uuid-v4-generator
+          </h1>
+          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">
+            UUID v4 批量生成器，支持一次性生成 1 到 100 个标准随机 UUID，并可一键复制全部结果。
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-slate-900/70 p-4 text-sm text-slate-300">
+          <div class="flex items-center gap-2">
+            <span class="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-lg shadow-emerald-400/50"></span>
+            <span>本地生成 · 不上传数据</span>
+          </div>
+          <div class="mt-2 flex items-center gap-2">
+            <span class="h-2.5 w-2.5 rounded-full bg-cyan-400 shadow-lg shadow-cyan-400/50"></span>
+            <span>标准格式 · RFC 4122 v4</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="grid gap-6 lg:grid-cols-5">
+      <div class="lg:col-span-2">
+        <div class="h-full rounded-3xl border border-white/10 bg-slate-900/90 p-6 shadow-xl shadow-black/20 backdrop-blur">
+          <h2 class="text-xl font-semibold text-white">输入设置</h2>
+          <p class="mt-2 text-sm leading-6 text-slate-400">请输入需要生成的 UUID 数量，范围为 1 到 100。</p>
+
+          <form id="uuidForm" class="mt-6 space-y-5" novalidate>
+            <div>
+              <label for="countInput" class="mb-2 block text-sm font-medium text-slate-200">生成数量</label>
+              <input
+                id="countInput"
+                name="count"
+                type="number"
+                inputmode="numeric"
+                min="1"
+                max="100"
+                step="1"
+                value="10"
+                autocomplete="off"
+                class="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-base text-white outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
+                aria-describedby="countHelp"
+              />
+              <p id="countHelp" class="mt-2 text-xs text-slate-500">仅允许整数，例如：1、10、100。</p>
+            </div>
+
+            <div id="errorBox" class="hidden rounded-2xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200" role="alert"></div>
+
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+              <button
+                type="submit"
+                id="generateBtn"
+                class="rounded-2xl bg-cyan-400 px-5 py-3 font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-cyan-400/30"
+              >
+                生成 UUID
+              </button>
+              <button
+                type="button"
+                id="clearBtn"
+                class="rounded-2xl border border-slate-700 bg-slate-800 px-5 py-3 font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-700 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-slate-500/30"
+              >
+                清空结果
+              </button>
+            </div>
+          </form>
+
+          <div class="mt-6 rounded-2xl border border-cyan-400/20 bg-cyan-400/5 p-4 text-sm leading-6 text-cyan-100">
+            <strong class="text-cyan-200">提示：</strong>
+            UUID v4 使用随机数生成，常用于数据库主键、分布式系统标识、测试数据和接口请求追踪。
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-3">
+        <div class="rounded-3xl border border-white/10 bg-slate-800/80 p-6 shadow-xl shadow-black/20 backdrop-blur">
+          <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 class="text-xl font-semibold text-white">生成结果</h2>
+              <p id="resultSummary" class="mt-2 text-sm text-slate-400">尚未生成 UUID。</p>
+            </div>
+            <button
+              type="button"
+              id="copyBtn"
+              disabled
+              class="rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-5 py-3 font-semibold text-emerald-100 transition hover:bg-emerald-400/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:border-slate-700 disabled:bg-slate-900 disabled:text-slate-500 focus:outline-none focus:ring-4 focus:ring-emerald-400/20"
+            >
+              复制所有结果
+            </button>
+          </div>
+
+          <div id="copyFeedback" class="mt-4 hidden rounded-2xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm font-medium text-emerald-200" role="status"></div>
+
+          <div class="mt-5 rounded-2xl border border-slate-700 bg-slate-950/90">
+            <textarea
+              id="outputArea"
+              readonly
+              spellcheck="false"
+              placeholder="生成的 UUID 将显示在这里，每行一个。"
+              class="min-h-[360px] w-full resize-y rounded-2xl bg-transparent p-4 font-mono text-sm leading-7 text-slate-100 outline-none placeholder:text-slate-600"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-white/10 bg-white/[0.04] p-6 leading-8 text-slate-300 shadow-xl shadow-black/10 backdrop-blur md:p-8">
+      <h2 class="mb-4 text-2xl font-bold text-white">关于 UUID v4 批量生成器</h2>
+      <p>
+        uuid-v4-generator 是一款面向开发者、测试工程师与系统架构师的在线 UUID v4 批量生成器。它可以在浏览器本地快速生成 1 到 100 个符合 RFC 4122 标准的随机 UUID，适用于数据库主键、分布式服务唯一标识、日志链路追踪、接口调试参数以及测试数据构造等场景。相比手动编写脚本或逐个复制，使用这个在线 UUID 生成器能够显著减少重复操作，并避免格式错误带来的排查成本。使用方法非常简单：在输入框中填写需要生成的数量，点击“生成 UUID”，结果会按行展示；如需导入到代码、表格或数据库脚本中，只需点击“复制所有结果”即可。本工具采用本地生成方式，不会上传或保存任何数据，适合需要安全、快速、轻量的批量生成 UUID v4 长尾关键词场景。
+      </p>
+    </article>
+
+    <footer class="py-8 text-center text-sm text-slate-500">
+      <p>© <span id="year"></span> uuid-v4-generator · Zero Dependency Web Tool</p>
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const form = document.getElementById("uuidForm");
+      const countInput = document.getElementById("countInput");
+      const errorBox = document.getElementById("errorBox");
+      const outputArea = document.getElementById("outputArea");
+      const copyBtn = document.getElementById("copyBtn");
+      const clearBtn = document.getElementById("clearBtn");
+      const resultSummary = document.getElementById("resultSummary");
+      const copyFeedback = document.getElementById("copyFeedback");
+      const year = document.getElementById("year");
+
+      year.textContent = String(new Date().getFullYear());
+
+      let feedbackTimer = null;
+
+      function showError(message) {
+        errorBox.textContent = message;
+        errorBox.classList.remove("hidden");
+        countInput.classList.add("border-red-400", "focus:border-red-400", "focus:ring-red-400/20");
+        countInput.classList.remove("border-slate-700", "focus:border-cyan-400", "focus:ring-cyan-400/10");
+      }
+
+      function hideError() {
+        errorBox.textContent = "";
+        errorBox.classList.add("hidden");
+        countInput.classList.remove("border-red-400", "focus:border-red-400", "focus:ring-red-400/20");
+        countInput.classList.add("border-slate-700", "focus:border-cyan-400", "focus:ring-cyan-400/10");
+      }
+
+      function showFeedback(message, isSuccess = true) {
+        if (feedbackTimer) {
+          window.clearTimeout(feedbackTimer);
+        }
+        copyFeedback.textContent = message;
+        copyFeedback.classList.remove("hidden", "border-red-400/30", "bg-red-500/10", "text-red-200", "border-emerald-400/30", "bg-emerald-500/10", "text-emerald-200");
+        if (isSuccess) {
+          copyFeedback.classList.add("border-emerald-400/30", "bg-emerald-500/10", "text-emerald-200");
+        } else {
+          copyFeedback.classList.add("border-red-400/30", "bg-red-500/10", "text-red-200");
+        }
+        feedbackTimer = window.setTimeout(() => {
+          copyFeedback.classList.add("hidden");
+        }, 2600);
+      }
+
+      function validateCount(rawValue) {
+        const value = String(rawValue ?? "").trim();
+
+        if (value === "") {
+          return { valid: false, message: "请输入需要生成的 UUID 数量。" };
+        }
+
+        if (!/^\d+$/.test(value)) {
+          return { valid: false, message: "生成数量必须是 1 到 100 之间的整数，不能包含小数、负数或其他字符。" };
+        }
+
+        const count = Number(value);
+
+        if (!Number.isSafeInteger(count)) {
+          return { valid: false, message: "输入的数字过大，请输入 1 到 100 之间的整数。" };
+        }
+
+        if (count < 1 || count > 100) {
+          return { valid: false, message: "生成数量超出范围，请输入 1 到 100 之间的整数。" };
+        }
+
+        return { valid: true, count };
+      }
+
+      function getRandomBytes(length) {
+        const bytes = new Uint8Array(length);
+        if (window.crypto && typeof window.crypto.getRandomValues === "function") {
+          window.crypto.getRandomValues(bytes);
+        } else {
+          for (let i = 0; i < length; i += 1) {
+            bytes[i] = Math.floor(Math.random() * 256);
+          }
+        }
+        return bytes;
+      }
+
+      function generateUuidV4() {
+        const bytes = getRandomBytes(16);
+
+        bytes[6] = (bytes[6] & 0x0f) | 0x40;
+        bytes[8] = (bytes[8] & 0x3f) | 0x80;
+
+        const hex = Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0"));
+        return (
+          hex.slice(0, 4).join("") + "-" +
+          hex.slice(4, 6).join("") + "-" +
+          hex.slice(6, 8).join("") + "-" +
+          hex.slice(8, 10).join("") + "-" +
+          hex.slice(10, 16).join("")
+        );
+      }
+
+      function generateBatch(count) {
+        const results = [];
+        for (let i = 0; i < count; i += 1) {
+          results.push(generateUuidV4());
+        }
+        return results;
+      }
+
+      async function copyText(text) {
+        if (!text) {
+          throw new Error("没有可复制的内容。");
+        }
+
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return;
+        }
+
+        outputArea.focus();
+        outputArea.select();
+
+        const ok = document.execCommand("copy");
+        window.getSelection()?.removeAllRanges();
+
+        if (!ok) {
+          throw new Error("当前浏览器不支持自动复制，请手动选中结果复制。");
+        }
+      }
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        try {
+          const validation = validateCount(countInput.value);
+          if (!validation.valid) {
+            showError(validation.message);
+            outputArea.value = "";
+            copyBtn.disabled = true;
+            resultSummary.textContent = "输入有误，暂未生成 UUID。";
+            return;
+          }
+
+          hideError();
+          const list = generateBatch(validation.count);
+          outputArea.value = list.join("\n");
+          copyBtn.disabled = false;
+          resultSummary.textContent = `已生成 ${list.length} 个标准 UUID v4。`;
+          showFeedback("UUID 已成功生成。", true);
+        } catch (error) {
+          showError("生成过程中出现异常，请刷新页面后重试。");
+          resultSummary.textContent = "生成失败。";
+          copyBtn.disabled = true;
+        }
+      });
+
+      copyBtn.addEventListener("click", async () => {
+        const text = outputArea.value.trim();
+
+        if (!text) {
+          showFeedback("当前没有可复制的 UUID，请先生成结果。", false);
+          copyBtn.disabled = true;
+          return;
+        }
+
+        try {
+          await copyText(text);
+          copyBtn.textContent = "已复制";
+          showFeedback("所有 UUID 已复制到剪贴板。", true);
+          window.setTimeout(() => {
+            copyBtn.textContent = "复制所有结果";
+          }, 1200);
+        } catch (error) {
+          showFeedback(error && error.message ? error.message : "复制失败，请手动复制文本框内容。", false);
+        }
+      });
+
+      clearBtn.addEventListener("click", () => {
+        outputArea.value = "";
+        copyBtn.disabled = true;
+        resultSummary.textContent = "结果已清空。";
+        hideError();
+        showFeedback("已清空生成结果。", true);
+      });
+
+      countInput.addEventListener("input", () => {
+        if (!errorBox.classList.contains("hidden")) {
+          const validation = validateCount(countInput.value);
+          if (validation.valid) {
+            hideError();
+          }
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        try {
+          const initialList = generateBatch(10);
+          outputArea.value = initialList.join("\n");
+          copyBtn.disabled = false;
+          resultSummary.textContent = "已生成 10 个标准 UUID v4。";
+        } catch (error) {
+          outputArea.value = "";
+          copyBtn.disabled = true;
+          resultSummary.textContent = "请点击生成按钮创建 UUID。";
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

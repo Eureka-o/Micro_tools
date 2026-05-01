@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>bland-altman-plot｜极简 X/Y 数据绘图工具</title>
+  <meta name="description" content="bland-altman-plot 是一款纯前端极简数据绘图工具，支持输入两列 X/Y 坐标数据，快速生成散点图、折线图与 Bland-Altman 差异分析图，适合科研、统计、实验数据可视化。" />
+  <meta name="keywords" content="bland-altman-plot,Bland Altman 图,在线散点图工具,在线折线图工具,两列数据绘图,X Y 坐标绘图,实验数据可视化,纯前端图表工具" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+  <div class="absolute inset-0 -z-10 overflow-hidden">
+    <div class="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl"></div>
+  </div>
+
+  <header class="border-b border-white/10 bg-slate-950/80 backdrop-blur">
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+            Pure Frontend Data Visualization
+          </p>
+          <h1 class="text-4xl font-black tracking-tight text-white sm:text-5xl">bland-altman-plot</h1>
+          <p class="mt-3 max-w-2xl text-base leading-7 text-slate-300">
+            输入两列 X/Y 数据，实时绘制散点图、折线图或 Bland-Altman 分析图。
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-sm text-slate-300 shadow-2xl">
+          <div class="font-semibold text-white">本地计算 · 不上传数据</div>
+          <div class="mt-1">适合科研、质控、实验与快速探索分析</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-5">
+      <div class="lg:col-span-2">
+        <div class="rounded-3xl border border-white/10 bg-slate-900/90 p-5 shadow-2xl">
+          <div class="mb-5 flex items-center justify-between gap-3">
+            <div>
+              <h2 class="text-xl font-bold text-white">输入区</h2>
+              <p class="mt-1 text-sm text-slate-400">每行一组数据，支持空格、逗号、Tab、分号分隔。</p>
+            </div>
+            <span class="rounded-full bg-indigo-500/15 px-3 py-1 text-xs font-semibold text-indigo-200">实时解析</span>
+          </div>
+
+          <label for="dataInput" class="mb-2 block text-sm font-semibold text-slate-200">两列 X/Y 坐标数据</label>
+          <textarea id="dataInput" spellcheck="false" class="h-72 w-full resize-y rounded-2xl border border-slate-700 bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="例如：
+1, 1.2
+2, 2.4
+3, 2.9
+4, 4.1
+5, 5.3"></textarea>
+
+          <div id="errorBox" class="mt-4 hidden rounded-2xl border border-red-400/30 bg-red-500/10 p-4 text-sm leading-6 text-red-100"></div>
+          <div id="successBox" class="mt-4 rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-4 text-sm leading-6 text-emerald-100">
+            已载入示例数据，可直接绘图或粘贴自己的两列数据。
+          </div>
+
+          <div class="mt-5 grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="chartType" class="mb-2 block text-sm font-semibold text-slate-200">图表类型</label>
+              <select id="chartType" class="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 text-sm text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
+                <option value="scatter">散点图</option>
+                <option value="line">折线图</option>
+                <option value="ba">Bland-Altman 图</option>
+              </select>
+            </div>
+            <div>
+              <label for="pointColor" class="mb-2 block text-sm font-semibold text-slate-200">主题颜色</label>
+              <select id="pointColor" class="w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-3 text-sm text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
+                <option value="#22d3ee">科技青</option>
+                <option value="#818cf8">靛蓝紫</option>
+                <option value="#34d399">翡翠绿</option>
+                <option value="#fb7185">玫瑰红</option>
+                <option value="#fbbf24">琥珀黄</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <button id="drawBtn" type="button" class="rounded-xl bg-cyan-400 px-4 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-95">绘制</button>
+            <button id="sampleBtn" type="button" class="rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-bold text-white transition hover:bg-white/15 active:scale-95">示例</button>
+            <button id="clearBtn" type="button" class="rounded-xl border border-white/10 bg-white/10 px-4 py-3 text-sm font-bold text-white transition hover:bg-white/15 active:scale-95">清空</button>
+            <button id="downloadBtn" type="button" class="rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-3 text-sm font-bold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">下载</button>
+          </div>
+
+          <div class="mt-5 rounded-2xl bg-slate-950/70 p-4">
+            <h3 class="text-sm font-bold text-white">输入提示</h3>
+            <ul class="mt-2 space-y-1 text-sm leading-6 text-slate-400">
+              <li>支持格式：<code class="text-cyan-200">1,2</code>、<code class="text-cyan-200">1 2</code>、<code class="text-cyan-200">1;2</code>、<code class="text-cyan-200">1	2</code></li>
+              <li>空行会自动忽略，非数字内容会给出明确错误提示。</li>
+              <li>Bland-Altman 图会将 X/Y 视为两种测量方法，横轴为均值，纵轴为差值。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-3">
+        <div class="rounded-3xl border border-white/10 bg-white/[0.06] p-5 shadow-2xl">
+          <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 class="text-xl font-bold text-white">输出区</h2>
+              <p id="chartSubtitle" class="mt-1 text-sm text-slate-400">图表将在此处实时更新。</p>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span id="countBadge" class="rounded-full bg-white/10 px-3 py-1 font-semibold text-slate-200">0 点</span>
+              <span id="xRangeBadge" class="rounded-full bg-white/10 px-3 py-1 font-semibold text-slate-200">X: -</span>
+              <span id="yRangeBadge" class="rounded-full bg-white/10 px-3 py-1 font-semibold text-slate-200">Y: -</span>
+            </div>
+          </div>
+
+          <div class="relative h-[420px] rounded-3xl border border-slate-700/80 bg-slate-950/80 p-4 sm:h-[540px]">
+            <canvas id="chartCanvas" aria-label="数据绘图画布" role="img"></canvas>
+            <div id="chartFallback" class="pointer-events-none absolute inset-0 hidden items-center justify-center rounded-3xl bg-slate-950/90 p-6 text-center text-sm leading-6 text-red-100">
+              图表库加载失败，请检查网络连接后刷新页面。
+            </div>
+          </div>
+
+          <div class="mt-5 grid gap-4 sm:grid-cols-3">
+            <div class="rounded-2xl border border-white/10 bg-slate-900/70 p-4">
+              <div class="text-xs font-semibold uppercase tracking-wider text-slate-500">Mean X</div>
+              <div id="meanX" class="mt-2 text-2xl font-black text-white">-</div>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-slate-900/70 p-4">
+              <div class="text-xs font-semibold uppercase tracking-wider text-slate-500">Mean Y</div>
+              <div id="meanY" class="mt-2 text-2xl font-black text-white">-</div>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-slate-900/70 p-4">
+              <div class="text-xs font-semibold uppercase tracking-wider text-slate-500">Correlation</div>
+              <div id="corrValue" class="mt-2 text-2xl font-black text-white">-</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-white/10 bg-slate-900/80 p-6 leading-8 text-slate-300 shadow-2xl">
+      <h2 class="mb-4 text-2xl font-black text-white">关于 bland-altman-plot 在线绘图工具</h2>
+      <p>
+        bland-altman-plot 是一款面向科研人员、工程师、数据分析师和学生的极简在线数据绘图工具。很多实验数据只需要快速查看两列 X/Y 坐标之间的趋势、离散程度或两种测量方法的一致性，传统软件往往安装复杂、导入步骤繁琐。本工具基于浏览器纯前端运行，用户只需粘贴两列数字数据，即可生成在线散点图、在线折线图以及 Bland-Altman 一致性分析图。它特别适合用于医学检验方法比较、仪器测量误差评估、实验结果初筛、课堂统计演示和小规模数据可视化。使用时，将每组数据按行输入，选择图表类型并点击绘制即可；若选择 Bland-Altman 图，系统会自动计算均值、差值、偏倚和一致性限。整个过程无需上传文件，数据保留在本地浏览器中，兼顾效率与隐私，是快速完成两列数据绘图和 Bland Altman plot 在线分析的实用工具。
+      </p>
+    </article>
+  </main>
+
+  <footer class="mx-auto max-w-7xl px-4 pb-8 pt-2 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
+    © <span id="year"></span> bland-altman-plot · Client-side charting tool
+  </footer>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const $ = (id) => document.getElementById(id);
+      const dataInput = $('dataInput');
+      const chartType = $('chartType');
+      const pointColor = $('pointColor');
+      const errorBox = $('errorBox');
+      const successBox = $('successBox');
+      const drawBtn = $('drawBtn');
+      const sampleBtn = $('sampleBtn');
+      const clearBtn = $('clearBtn');
+      const downloadBtn = $('downloadBtn');
+      const countBadge = $('countBadge');
+      const xRangeBadge = $('xRangeBadge');
+      const yRangeBadge = $('yRangeBadge');
+      const meanXEl = $('meanX');
+      const meanYEl = $('meanY');
+      const corrValueEl = $('corrValue');
+      const chartSubtitle = $('chartSubtitle');
+      const chartFallback = $('chartFallback');
+      const canvas = $('chartCanvas');
+      const year = $('year');
+
+      year.textContent = new Date().getFullYear();
+
+      const sampleData = `1, 1.12
+2, 2.08
+3, 2.85
+4, 4.12
+5, 5.05
+6, 5.92
+7, 7.18
+8, 7.86
+9, 9.12
+10, 10.25
+11, 10.78
+12, 12.16`;
+
+      dataInput.value = sampleData;
+
+      let chart = null;
+      let debounceTimer = null;
+
+      function showError(message) {
+        errorBox.textContent = message;
+        errorBox.classList.remove('hidden');
+        successBox.classList.add('hidden');
+      }
+
+      function showSuccess(message) {
+        successBox.textContent = message;
+        successBox.classList.remove('hidden');
+        errorBox.classList.add('hidden');
+      }
+
+      function clearMessages() {
+        errorBox.classList.add('hidden');
+        successBox.classList.add('hidden');
+      }
+
+      function formatNumber(num, digits = 4) {
+        if (!Number.isFinite(num)) return '-';
+        const fixed = Number(num.toFixed(digits));
+        return String(fixed);
+      }
+
+      function parseInput(raw) {
+        const text = String(raw || '').trim();
+        if (!text) {
+          return { ok: false, message: '请输入至少两行或两组有效的 X/Y 数字数据。', points: [] };
+        }
+
+        const lines = text.split(/\r?\n/);
+        const points = [];
+        const errors = [];
+
+        lines.forEach((line, index) => {
+          const original = line.trim();
+          if (!original) return;
+
+          const normalized = original.replace(/[，；、]/g, ',');
+          const parts = normalized.split(/[\s,;]+/).filter(Boolean);
+
+          if (parts.length < 2) {
+            errors.push(`第 ${index + 1} 行缺少第二列数据：${original}`);
+            return;
+          }
+
+          if (parts.length > 2) {
+            const firstTwo = parts.slice(0, 2);
+            const rest = parts.slice(2).join(' ');
+            if (rest.length > 0) {
+              errors.push(`第 ${index + 1} 行包含多余字段，请仅保留两列：${original}`);
+              return;
+            }
+            parts.length = 2;
+          }
+
+          const x = Number(parts[0]);
+          const y = Number(parts[1]);
+
+          if (!Number.isFinite(x) || !Number.isFinite(y)) {
+            errors.push(`第 ${index + 1} 行存在非数字内容：${original}`);
+            return;
+          }
+
+          points.push({ x, y });
+        });
+
+        if (errors.length > 0) {
+          return { ok: false, message: errors.slice(0, 5).join('\n') + (errors.length > 5 ? `\n另有 ${errors.length - 5} 处错误。` : ''), points: [] };
+        }
+
+        if (points.length < 2) {
+          return { ok: false, message: '有效数据点不足。请至少输入 2 组 X/Y 数字数据。', points: [] };
+        }
+
+        return { ok: true, message: '', points };
+      }
+
+      function mean(values) {
+        return values.reduce((sum, v) => sum + v, 0) / values.length;
+      }
+
+      function sampleStd(values) {
+        if (values.length < 2) return 0;
+        const m = mean(values);
+        const variance = values.reduce((sum, v) => sum + Math.pow(v - m, 2), 0) / (values.length - 1);
+        return Math.sqrt(variance);
+      }
+
+      function correlation(points) {
+        const xs = points.map(p => p.x);
+        const ys = points.map(p => p.y);
+        const mx = mean(xs);
+        const my = mean(ys);
+        let numerator = 0;
+        let dx2 = 0;
+        let dy2 = 0;
+        points.forEach(p => {
+          const dx = p.x - mx;
+          const dy = p.y - my;
+          numerator += dx * dy;
+          dx2 += dx * dx;
+          dy2 += dy * dy;
+        });
+        const denom = Math.sqrt(dx2 * dy2);
+        return denom === 0 ? NaN : numerator / denom;
+      }
+
+      function getRange(values) {
+        const min = Math.min(...values);
+        const max = Math.max(...values);
+        return `${formatNumber(min)} ~ ${formatNumber(max)}`;
+      }
+
+      function updateStats(points) {
+        const xs = points.map(p => p.x);
+        const ys = points.map(p => p.y);
+        countBadge.textContent = `${points.length} 点`;
+        xRangeBadge.textContent = `X: ${getRange(xs)}`;
+        yRangeBadge.textContent = `Y: ${getRange(ys)}`;
+        meanXEl.textContent = formatNumber(mean(xs));
+        meanYEl.textContent = formatNumber(mean(ys));
+        const corr = correlation(points);
+        corrValueEl.textContent = Number.isFinite(corr) ? formatNumber(corr, 4) : '无法计算';
+      }
+
+      function resetStats() {
+        countBadge.textContent = '0 点';
+        xRangeBadge.textContent = 'X: -';
+        yRangeBadge.textContent = 'Y: -';
+        meanXEl.textContent = '-';
+        meanYEl.textContent = '-';
+        corrValueEl.textContent = '-';
+      }
+
+      function destroyChart() {
+        if (chart) {
+          chart.destroy();
+          chart = null;
+        }
+      }
+
+      function buildChart(points) {
+        if (typeof Chart === 'undefined') {
+          chartFallback.classList.remove('hidden');
+          chartFallback.classList.add('flex');
+          return;
+        }
+
+        chartFallback.classList.add('hidden');
+        chartFallback.classList.remove('flex');
+
+        const type = chartType.value;
+        const color = pointColor.value;
+        const gridColor = 'rgba(148, 163, 184, 0.18)';
+        const tickColor = 'rgba(226, 232, 240, 0.78)';
+
+        destroyChart();
+
+        let config;
+
+        if (type === 'ba') {
+          const baPoints = points.map(p => ({ x: (p.x + p.y) / 2, y: p.y - p.x }));
+          const diffs = baPoints.map(p => p.y);
+          const bias = mean(diffs);
+          const sd = sampleStd(diffs);
+          const upper = bias + 1.96 * sd;
+          const lower = bias - 1.96 * sd;
+          const means = baPoints.map(p => p.x);
+          const minMean = Math.min(...means);
+          const maxMean = Math.max(...means);
+          const pad = (maxMean - minMean) * 0.04 || 1;
+          const x1 = minMean - pad;
+          const x2 = maxMean + pad;
+
+          chartSubtitle.textContent = `Bland-Altman：偏倚 ${formatNumber(bias)}，95% 一致性限 ${formatNumber(lower)} 到 ${formatNumber(upper)}。`;
+
+          config = {
+            type: 'scatter',
+            data: {
+              datasets: [
+                {
+                  label: '差值点（Y - X）',
+                  data: baPoints,
+                  backgroundColor: color,
+                  borderColor: color,
+                  pointRadius: 5,
+                  pointHoverRadius: 7
+                },
+                {
+                  label: '偏倚 Mean Diff',
+                  data: [{ x: x1, y: bias }, { x: x2, y: bias }],
+                  type: 'line',
+                  borderColor: '#fbbf24',
+                  borderWidth: 2,
+                  pointRadius: 0,
+                  borderDash: [6, 4]
+                },
+                {
+                  label: '+1.96 SD',
+                  data: [{ x: x1, y: upper }, { x: x2, y: upper }],
+                  type: 'line',
+                  borderColor: '#fb7185',
+                  borderWidth: 2,
+                  pointRadius: 0,
+                  borderDash: [4, 4]
+                },
+                {
+                  label: '-1.96 SD',
+                  data: [{ x: x1, y: lower }, { x: x2, y: lower }],
+                  type: 'line',
+                  borderColor: '#fb7185',
+                  borderWidth: 2,
+                  pointRadius: 0,
+                  borderDash: [4, 4]
+                }
+              ]
+            },
+            options: baseOptions('均值（X 与 Y 的平均）', '差值（Y - X）', gridColor, tickColor)
+          };
+        } else if (type === 'line') {
+          const sorted = [...points].sort((a, b) => a.x - b.x);
+          chartSubtitle.textContent = '折线图：按 X 值升序连接数据点，适合观察连续趋势。';
+          config = {
+            type: 'line',
+            data: {
+              datasets: [{
+                label: 'X/Y 折线',
+                data: sorted,
+                borderColor: color,
+                backgroundColor: color + '33',
+                pointBackgroundColor: color,
+                pointBorderColor: '#ffffff',
+                pointBorderWidth: 1,
+                pointRadius: 4,
+                pointHoverRadius: 7,
+                borderWidth: 3,
+                tension: 0.25,
+                fill: true
+              }]
+            },
+            options: baseOptions('X', 'Y', gridColor, tickColor)
+          };
+        } else {
+          chartSubtitle.textContent = '散点图：展示两列 X/Y 坐标的分布关系，适合快速发现相关性与异常点。';
+          config = {
+            type: 'scatter',
+            data: {
+              datasets: [{
+                label: 'X/Y 散点',
+                data: points,
+                backgroundColor: color,
+                borderColor: '#ffffff',
+                borderWidth: 1,
+                pointRadius: 5,
+                pointHoverRadius: 8
+              }]
+            },
+            options: baseOptions('X', 'Y', gridColor, tickColor)
+          };
+        }
+
+        chart = new Chart(canvas, config);
+      }
+
+      function baseOptions(xTitle, yTitle, gridColor, tickColor) {
+        return {
+          responsive: true,
+          maintainAspectRatio: false,
+          parsing: false,
+          animation: {
+            duration: 420,
+            easing: 'easeOutQuart'
+          },
+          interaction: {
+            mode: 'nearest',
+            intersect: false
+          },
+          plugins: {
+            legend: {
+              labels: {
+                color: 'rgba(226, 232, 240, 0.9)',
+                usePointStyle: true,
+                boxWidth: 8,
+                boxHeight: 8
+              }
+            },
+            tooltip: {
+              backgroundColor: 'rgba(15, 23, 42, 0.96)',
+              titleColor: '#ffffff',
+              bodyColor: '#e2e8f0',
+              borderColor: 'rgba(34, 211, 238, 0.35)',
+              borderWidth: 1,
+              padding: 12,
+              callbacks: {
+                label: (ctx) => {
+                  const p = ctx.raw || {};
+                  return `${ctx.dataset.label || '数据'}：(${formatNumber(p.x)}, ${formatNumber(p.y)})`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              type: 'linear',
+              title: {
+                display: true,
+                text: xTitle,
+                color: tickColor,
+                font: { weight: 'bold' }
+              },
+              grid: { color: gridColor },
+              ticks: { color: tickColor }
+            },
+            y: {
+              title: {
+                display: true,
+                text: yTitle,
+                color: tickColor,
+                font: { weight: 'bold' }
+              },
+              grid: { color: gridColor },
+              ticks: { color: tickColor }
+            }
+          }
+        };
+      }
+
+      function draw() {
+        try {
+          const result = parseInput(dataInput.value);
+          if (!result.ok) {
+            destroyChart();
+            resetStats();
+            chartSubtitle.textContent = '请修正输入错误后重新绘制。';
+            showError(result.message);
+            return;
+          }
+          updateStats(result.points);
+          buildChart(result.points);
+          showSuccess(`成功解析 ${result.points.length} 个数据点，图表已更新。`);
+        } catch (err) {
+          destroyChart();
+          resetStats();
+          chartSubtitle.textContent = '发生异常，请检查输入后重试。';
+          showError('处理数据时出现异常，但应用仍可继续使用。请检查输入格式是否为两列数字。');
+        }
+      }
+
+      function scheduleDraw() {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(draw, 350);
+      }
+
+      function flashButton(btn) {
+        btn.classList.add('ring-4', 'ring-cyan-300/30');
+        setTimeout(() => btn.classList.remove('ring-4', 'ring-cyan-300/30'), 180);
+      }
+
+      drawBtn.addEventListener('click', () => {
+        flashButton(drawBtn);
+        draw();
+      });
+
+      sampleBtn.addEventListener('click', () => {
+        flashButton(sampleBtn);
+        dataInput.value = sampleData;
+        chartType.value = 'scatter';
+        draw();
+      });
+
+      clearBtn.addEventListener('click', () => {
+        flashButton(clearBtn);
+        dataInput.value = '';
+        destroyChart();
+        resetStats();
+        clearMessages();
+        chartSubtitle.textContent = '已清空数据，请输入两列 X/Y 坐标。';
+      });
+
+      downloadBtn.addEventListener('click', () => {
+        flashButton(downloadBtn);
+        try {
+          if (!chart) {
+            showError('当前没有可下载的图表。请先输入有效数据并绘制图表。');
+            return;
+          }
+          const link = document.createElement('a');
+          link.download = `bland-altman-plot-${Date.now()}.png`;
+          link.href = canvas.toDataURL('image/png', 1);
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          showSuccess('图表 PNG 已开始下载。');
+        } catch (err) {
+          showError('下载失败。请确认浏览器允许当前页面导出画布图片。');
+        }
+      });
+
+      dataInput.addEventListener('input', scheduleDraw);
+      chartType.addEventListener('change', draw);
+      pointColor.addEventListener('change', draw);
+
+      window.addEventListener('load', draw);
+    })();
+  </script>
+</body>
+</html>

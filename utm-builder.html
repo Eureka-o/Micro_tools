@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>utm-builder - 营销 URL UTM 参数构建器</title>
+  <meta name="description" content="utm-builder 是一款免费的营销 URL UTM 参数构建器，可快速为目标网址拼接 utm_source、utm_medium、utm_campaign 等追踪参数，适用于广告投放、社媒推广和邮件营销效果分析。" />
+  <meta name="keywords" content="utm-builder, UTM参数构建器, 营销URL生成器, UTM链接生成, utm_source, utm_medium, utm_campaign, 广告追踪链接, 营销数据分析工具" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <main class="min-h-screen">
+    <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
+      <div class="absolute inset-0 opacity-30">
+        <div class="absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-400 blur-3xl"></div>
+        <div class="absolute bottom-0 right-0 h-64 w-64 rounded-full bg-blue-500 blur-3xl"></div>
+      </div>
+      <section class="relative mx-auto max-w-6xl px-5 py-12 sm:py-16">
+        <div class="max-w-3xl">
+          <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-1 text-sm font-medium text-cyan-200">
+            免费在线营销追踪链接生成工具
+          </p>
+          <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">utm-builder</h1>
+          <p class="mt-5 text-lg leading-8 text-slate-300">
+            填入目标网址、来源、媒介和活动名称，一键生成带 UTM 追踪参数的完整营销链接，帮助你精准识别推广渠道效果。
+          </p>
+        </div>
+      </section>
+    </header>
+
+    <section class="mx-auto grid max-w-6xl gap-6 px-5 py-8 lg:grid-cols-5">
+      <div class="rounded-3xl border border-slate-700/70 bg-slate-900/80 p-5 shadow-2xl shadow-cyan-950/30 sm:p-7 lg:col-span-3">
+        <div class="mb-6 flex items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-bold text-white">输入参数</h2>
+            <p class="mt-1 text-sm text-slate-400">必填项会用于生成标准 UTM 追踪链接。</p>
+          </div>
+          <span class="rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-200 ring-1 ring-cyan-300/20">Builder</span>
+        </div>
+
+        <form id="utmForm" class="space-y-5" novalidate>
+          <div>
+            <label for="targetUrl" class="mb-2 block text-sm font-semibold text-slate-200">目标网址 <span class="text-rose-300">*</span></label>
+            <input id="targetUrl" name="targetUrl" type="url" autocomplete="url" placeholder="https://example.com/landing-page" class="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
+          </div>
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="source" class="mb-2 block text-sm font-semibold text-slate-200">来源 utm_source <span class="text-rose-300">*</span></label>
+              <input id="source" name="source" type="text" maxlength="120" placeholder="google / wechat / newsletter" class="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
+            </div>
+            <div>
+              <label for="medium" class="mb-2 block text-sm font-semibold text-slate-200">媒介 utm_medium <span class="text-rose-300">*</span></label>
+              <input id="medium" name="medium" type="text" maxlength="120" placeholder="cpc / social / email" class="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
+            </div>
+          </div>
+
+          <div>
+            <label for="campaign" class="mb-2 block text-sm font-semibold text-slate-200">活动名称 utm_campaign <span class="text-rose-300">*</span></label>
+            <input id="campaign" name="campaign" type="text" maxlength="160" placeholder="spring_sale_2026" class="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
+          </div>
+
+          <details class="rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
+            <summary class="cursor-pointer select-none text-sm font-semibold text-cyan-200">可选参数：关键词与内容标识</summary>
+            <div class="mt-4 grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="term" class="mb-2 block text-sm font-semibold text-slate-200">关键词 utm_term</label>
+                <input id="term" name="term" type="text" maxlength="160" placeholder="running_shoes" class="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
+              </div>
+              <div>
+                <label for="content" class="mb-2 block text-sm font-semibold text-slate-200">内容 utm_content</label>
+                <input id="content" name="content" type="text" maxlength="160" placeholder="banner_a / textlink_b" class="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
+              </div>
+            </div>
+          </details>
+
+          <div id="errorBox" class="hidden rounded-2xl border border-rose-400/40 bg-rose-500/10 px-4 py-3 text-sm font-medium text-rose-100"></div>
+
+          <div class="flex flex-col gap-3 sm:flex-row">
+            <button type="submit" id="buildBtn" class="rounded-2xl bg-cyan-400 px-6 py-3 font-bold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-cyan-300/30">
+              生成 UTM 链接
+            </button>
+            <button type="button" id="resetBtn" class="rounded-2xl border border-slate-600 px-6 py-3 font-bold text-slate-200 transition hover:border-slate-400 hover:bg-slate-800 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-slate-500/20">
+              清空
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="rounded-3xl border border-cyan-300/20 bg-cyan-950/30 p-5 shadow-2xl shadow-cyan-950/30 sm:p-7 lg:col-span-2">
+        <div class="mb-6">
+          <h2 class="text-2xl font-bold text-white">输出结果</h2>
+          <p class="mt-1 text-sm text-cyan-100/70">生成后的链接会保留原网址已有参数和锚点。</p>
+        </div>
+
+        <div class="rounded-2xl border border-cyan-300/20 bg-slate-950/80 p-4">
+          <label for="resultUrl" class="mb-2 block text-sm font-semibold text-cyan-100">完整 UTM 链接</label>
+          <textarea id="resultUrl" rows="8" readonly placeholder="生成结果将在这里显示..." class="w-full resize-none rounded-2xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm leading-6 text-cyan-50 outline-none placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10"></textarea>
+        </div>
+
+        <div id="successBox" class="mt-4 hidden rounded-2xl border border-emerald-400/40 bg-emerald-500/10 px-4 py-3 text-sm font-medium text-emerald-100"></div>
+
+        <div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+          <button type="button" id="copyBtn" class="rounded-2xl bg-white px-5 py-3 font-bold text-slate-950 transition hover:bg-cyan-100 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-white/20">
+            复制链接
+          </button>
+          <button type="button" id="openBtn" class="rounded-2xl border border-cyan-300/40 px-5 py-3 font-bold text-cyan-100 transition hover:bg-cyan-300/10 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-cyan-300/20">
+            打开链接
+          </button>
+        </div>
+
+        <div class="mt-6 rounded-2xl border border-slate-700 bg-slate-950/60 p-4 text-sm leading-6 text-slate-300">
+          <p class="font-semibold text-slate-100">命名建议</p>
+          <p class="mt-2">建议使用小写英文、数字、短横线或下划线，例如 <span class="text-cyan-200">summer_sale</span>，便于后续在 GA4、广告后台或 BI 报表中统一分析。</p>
+        </div>
+      </div>
+    </section>
+
+    <article class="mx-auto mb-12 max-w-6xl px-5">
+      <div class="rounded-3xl border border-slate-700 bg-slate-900/70 p-6 leading-8 text-slate-300 sm:p-8">
+        <h2 class="mb-4 text-2xl font-bold text-white">关于 utm-builder 营销 URL UTM 参数构建器</h2>
+        <p>
+          utm-builder 是一款面向市场运营、广告投放和增长团队的在线 UTM 参数构建器。很多企业在做搜索广告、社交媒体推广、邮件营销或 KOL 合作时，常常因为链接命名不统一，导致后续无法准确判断流量来自哪里、哪个媒介转化更好、哪场活动贡献最高。使用本工具，只需输入目标网址、utm_source 来源、utm_medium 媒介和 utm_campaign 活动名称，即可自动生成标准营销追踪链接，并兼容已有查询参数与页面锚点。你可以将生成的 UTM 链接用于微信文章、Google Ads、Facebook 广告、EDM 邮件或落地页按钮，从而在 Google Analytics、GA4 或其他数据分析平台中清晰识别推广效果。对于需要快速创建广告追踪链接、规范渠道归因、提升营销数据分析效率的团队来说，这个免费 UTM 链接生成工具简单、安全且无需安装。
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    (function () {
+      const form = document.getElementById('utmForm');
+      const targetUrl = document.getElementById('targetUrl');
+      const source = document.getElementById('source');
+      const medium = document.getElementById('medium');
+      const campaign = document.getElementById('campaign');
+      const term = document.getElementById('term');
+      const content = document.getElementById('content');
+      const resultUrl = document.getElementById('resultUrl');
+      const errorBox = document.getElementById('errorBox');
+      const successBox = document.getElementById('successBox');
+      const copyBtn = document.getElementById('copyBtn');
+      const openBtn = document.getElementById('openBtn');
+      const resetBtn = document.getElementById('resetBtn');
+      const buildBtn = document.getElementById('buildBtn');
+
+      function showError(message) {
+        errorBox.textContent = message;
+        errorBox.classList.remove('hidden');
+        successBox.classList.add('hidden');
+      }
+
+      function showSuccess(message) {
+        successBox.textContent = message;
+        successBox.classList.remove('hidden');
+        errorBox.classList.add('hidden');
+      }
+
+      function clearMessages() {
+        errorBox.classList.add('hidden');
+        successBox.classList.add('hidden');
+        errorBox.textContent = '';
+        successBox.textContent = '';
+      }
+
+      function normalizeUrl(input) {
+        const raw = String(input || '').trim();
+        if (!raw) return '';
+        if (/^https?:\/\//i.test(raw)) return raw;
+        if (/^[\w.-]+\.[a-z]{2,}([/:?#].*)?$/i.test(raw)) return 'https://' + raw;
+        return raw;
+      }
+
+      function isUnsafeValue(value) {
+        return /[\u0000-\u001F\u007F<>]/.test(value);
+      }
+
+      function validateText(value, label, required) {
+        const trimmed = String(value || '').trim();
+        if (required && !trimmed) {
+          return label + '不能为空。';
+        }
+        if (trimmed.length > 160) {
+          return label + '过长，请控制在 160 个字符以内。';
+        }
+        if (isUnsafeValue(trimmed)) {
+          return label + '包含不支持的特殊字符，请移除尖括号或控制字符。';
+        }
+        return '';
+      }
+
+      function buildUtmUrl() {
+        clearMessages();
+
+        const urlInput = normalizeUrl(targetUrl.value);
+        if (!urlInput) {
+          showError('请填写目标网址，例如 https://example.com/landing-page。');
+          targetUrl.focus();
+          return '';
+        }
+
+        let parsedUrl;
+        try {
+          parsedUrl = new URL(urlInput);
+        } catch (e) {
+          showError('目标网址格式不正确。请输入完整网址，例如 https://example.com，或输入 example.com 后自动补全。');
+          targetUrl.focus();
+          return '';
+        }
+
+        if (!/^https?:$/.test(parsedUrl.protocol)) {
+          showError('目标网址仅支持 http 或 https 协议。');
+          targetUrl.focus();
+          return '';
+        }
+
+        if (!parsedUrl.hostname || parsedUrl.hostname.length > 253) {
+          showError('目标网址的域名无效，请检查后重试。');
+          targetUrl.focus();
+          return '';
+        }
+
+        const validations = [
+          validateText(source.value, '来源 utm_source', true),
+          validateText(medium.value, '媒介 utm_medium', true),
+          validateText(campaign.value, '活动名称 utm_campaign', true),
+          validateText(term.value, '关键词 utm_term', false),
+          validateText(content.value, '内容 utm_content', false)
+        ].filter(Boolean);
+
+        if (validations.length) {
+          showError(validations[0]);
+          return '';
+        }
+
+        parsedUrl.searchParams.set('utm_source', source.value.trim());
+        parsedUrl.searchParams.set('utm_medium', medium.value.trim());
+        parsedUrl.searchParams.set('utm_campaign', campaign.value.trim());
+
+        if (term.value.trim()) {
+          parsedUrl.searchParams.set('utm_term', term.value.trim());
+        } else {
+          parsedUrl.searchParams.delete('utm_term');
+        }
+
+        if (content.value.trim()) {
+          parsedUrl.searchParams.set('utm_content', content.value.trim());
+        } else {
+          parsedUrl.searchParams.delete('utm_content');
+        }
+
+        return parsedUrl.toString();
+      }
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        buildBtn.classList.add('scale-[0.98]', 'bg-cyan-200');
+        window.setTimeout(function () {
+          buildBtn.classList.remove('scale-[0.98]', 'bg-cyan-200');
+        }, 140);
+
+        const built = buildUtmUrl();
+        if (built) {
+          resultUrl.value = built;
+          showSuccess('UTM 链接已成功生成。');
+        }
+      });
+
+      copyBtn.addEventListener('click', async function () {
+        clearMessages();
+        const value = resultUrl.value.trim();
+        if (!value) {
+          showError('暂无可复制的链接，请先生成 UTM 链接。');
+          return;
+        }
+
+        copyBtn.classList.add('scale-[0.98]');
+        window.setTimeout(function () {
+          copyBtn.classList.remove('scale-[0.98]');
+        }, 140);
+
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(value);
+          } else {
+            resultUrl.focus();
+            resultUrl.select();
+            const ok = document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+            if (!ok) throw new Error('copy failed');
+          }
+          showSuccess('链接已复制到剪贴板。');
+        } catch (e) {
+          showError('复制失败，请手动选中结果链接后复制。');
+        }
+      });
+
+      openBtn.addEventListener('click', function () {
+        clearMessages();
+        const value = resultUrl.value.trim();
+        if (!value) {
+          showError('暂无可打开的链接，请先生成 UTM 链接。');
+          return;
+        }
+
+        try {
+          const url = new URL(value);
+          if (!/^https?:$/.test(url.protocol)) {
+            showError('结果链接协议无效，无法打开。');
+            return;
+          }
+          openBtn.classList.add('scale-[0.98]');
+          window.setTimeout(function () {
+            openBtn.classList.remove('scale-[0.98]');
+          }, 140);
+          window.open(url.toString(), '_blank', 'noopener,noreferrer');
+        } catch (e) {
+          showError('结果链接格式异常，无法打开。请重新生成。');
+        }
+      });
+
+      resetBtn.addEventListener('click', function () {
+        form.reset();
+        resultUrl.value = '';
+        clearMessages();
+        targetUrl.focus();
+        resetBtn.classList.add('scale-[0.98]');
+        window.setTimeout(function () {
+          resetBtn.classList.remove('scale-[0.98]');
+        }, 140);
+      });
+
+      [targetUrl, source, medium, campaign, term, content].forEach(function (input) {
+        input.addEventListener('input', function () {
+          if (!errorBox.classList.contains('hidden')) {
+            clearMessages();
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

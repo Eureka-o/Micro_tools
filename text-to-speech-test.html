@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="text-to-speech-test 是一个浏览器原生 TTS 测试工具，基于 window.speechSynthesis API，将输入文本转为语音朗读，支持语速、音调、音量和语音角色调节。" />
+  <meta name="keywords" content="text-to-speech-test, 浏览器原生TTS测试工具, 在线文字转语音, speechSynthesis API, 文本转语音朗读, TTS语速音调测试, Web语音合成工具" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>text-to-speech-test｜浏览器原生 TTS 测试工具</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+  <div class="fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute right-0 top-40 h-96 w-96 rounded-full bg-indigo-500/10 blur-3xl"></div>
+    <div class="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+  </div>
+
+  <header class="border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
+    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+            Browser Native TTS Tester
+          </p>
+          <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+            text-to-speech-test
+          </h1>
+          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">
+            使用浏览器自带的 <code class="rounded bg-white/10 px-1.5 py-0.5 text-cyan-200">window.speechSynthesis</code> API，将文本即时转换为语音朗读。
+          </p>
+        </div>
+        <div id="supportBadge" class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-sm text-slate-300 shadow-2xl">
+          正在检测浏览器支持情况...
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-5" aria-label="TTS 测试工具主界面">
+      <div class="lg:col-span-3">
+        <div class="rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-6">
+          <div class="mb-5 flex items-center justify-between gap-4">
+            <div>
+              <h2 class="text-xl font-bold text-white">输入文本</h2>
+              <p class="mt-1 text-sm text-slate-400">请输入需要朗读的内容，建议不超过 5000 个字符。</p>
+            </div>
+            <span id="charCount" class="shrink-0 rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-300">0 字</span>
+          </div>
+
+          <label for="textInput" class="sr-only">需要转语音的文本</label>
+          <textarea
+            id="textInput"
+            class="min-h-64 w-full resize-y rounded-2xl border border-slate-700 bg-slate-950/70 p-4 text-base leading-7 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
+            placeholder="例如：你好，这是一个浏览器原生文字转语音测试工具。你可以调整语速和音调，体验不同的朗读效果。"
+            maxlength="5000"
+          ></textarea>
+
+          <div class="mt-4 flex flex-wrap gap-3">
+            <button id="sampleBtn" type="button" class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:bg-white/10 active:scale-95">
+              填入示例
+            </button>
+            <button id="clearBtn" type="button" class="rounded-xl border border-red-400/20 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-200 transition hover:bg-red-500/20 active:scale-95">
+              清空文本
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-2">
+        <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/30 p-5 shadow-2xl shadow-cyan-950/20 backdrop-blur-xl sm:p-6">
+          <h2 class="text-xl font-bold text-white">语音参数</h2>
+          <p class="mt-1 text-sm text-cyan-100/70">选择浏览器可用的语音并调整朗读效果。</p>
+
+          <div class="mt-5 space-y-5">
+            <div>
+              <label for="voiceSelect" class="mb-2 block text-sm font-medium text-slate-200">语音角色</label>
+              <select id="voiceSelect" class="w-full rounded-xl border border-slate-700 bg-slate-950/80 px-3 py-3 text-sm text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
+                <option value="">正在加载语音列表...</option>
+              </select>
+            </div>
+
+            <div>
+              <div class="mb-2 flex items-center justify-between">
+                <label for="rateRange" class="text-sm font-medium text-slate-200">语速</label>
+                <span id="rateValue" class="rounded-full bg-slate-900 px-2.5 py-1 text-xs text-cyan-200">1.0</span>
+              </div>
+              <input id="rateRange" type="range" min="0.1" max="2" step="0.1" value="1" class="w-full accent-cyan-400" />
+            </div>
+
+            <div>
+              <div class="mb-2 flex items-center justify-between">
+                <label for="pitchRange" class="text-sm font-medium text-slate-200">音调</label>
+                <span id="pitchValue" class="rounded-full bg-slate-900 px-2.5 py-1 text-xs text-cyan-200">1.0</span>
+              </div>
+              <input id="pitchRange" type="range" min="0" max="2" step="0.1" value="1" class="w-full accent-cyan-400" />
+            </div>
+
+            <div>
+              <div class="mb-2 flex items-center justify-between">
+                <label for="volumeRange" class="text-sm font-medium text-slate-200">音量</label>
+                <span id="volumeValue" class="rounded-full bg-slate-900 px-2.5 py-1 text-xs text-cyan-200">1.0</span>
+              </div>
+              <input id="volumeRange" type="range" min="0" max="1" step="0.1" value="1" class="w-full accent-cyan-400" />
+            </div>
+          </div>
+
+          <div class="mt-6 grid grid-cols-2 gap-3">
+            <button id="speakBtn" type="button" class="rounded-xl bg-cyan-400 px-4 py-3 text-sm font-extrabold text-slate-950 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-95 disabled:cursor-not-allowed disabled:bg-slate-600 disabled:text-slate-300">
+              开始朗读
+            </button>
+            <button id="stopBtn" type="button" class="rounded-xl border border-white/10 bg-slate-900 px-4 py-3 text-sm font-bold text-slate-100 transition hover:bg-slate-800 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
+              停止
+            </button>
+            <button id="pauseBtn" type="button" class="rounded-xl border border-white/10 bg-slate-900 px-4 py-3 text-sm font-bold text-slate-100 transition hover:bg-slate-800 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
+              暂停
+            </button>
+            <button id="resumeBtn" type="button" class="rounded-xl border border-white/10 bg-slate-900 px-4 py-3 text-sm font-bold text-slate-100 transition hover:bg-slate-800 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
+              继续
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-6 rounded-3xl border border-white/10 bg-white/[0.04] p-5 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-6" aria-label="输出状态区">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 class="text-xl font-bold text-white">输出状态</h2>
+          <p class="mt-1 text-sm text-slate-400">这里会显示朗读状态、错误提示和当前参数。</p>
+        </div>
+        <div id="statePill" class="inline-flex w-fit items-center rounded-full border border-slate-700 bg-slate-900 px-4 py-2 text-sm font-semibold text-slate-300">
+          空闲
+        </div>
+      </div>
+
+      <div id="messageBox" class="mt-5 rounded-2xl border border-slate-700 bg-slate-950/70 p-4 text-sm leading-6 text-slate-300">
+        请输入文本并点击“开始朗读”。
+      </div>
+
+      <div class="mt-4 grid gap-3 text-sm sm:grid-cols-3">
+        <div class="rounded-2xl bg-slate-950/50 p-4">
+          <p class="text-slate-500">当前语速</p>
+          <p id="summaryRate" class="mt-1 font-bold text-cyan-200">1.0</p>
+        </div>
+        <div class="rounded-2xl bg-slate-950/50 p-4">
+          <p class="text-slate-500">当前音调</p>
+          <p id="summaryPitch" class="mt-1 font-bold text-cyan-200">1.0</p>
+        </div>
+        <div class="rounded-2xl bg-slate-950/50 p-4">
+          <p class="text-slate-500">当前音量</p>
+          <p id="summaryVolume" class="mt-1 font-bold text-cyan-200">1.0</p>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-white/10 bg-slate-900/60 p-6 leading-8 text-slate-300 shadow-2xl shadow-black/20 backdrop-blur-xl">
+      <h2 class="mb-4 text-2xl font-bold text-white">关于 text-to-speech-test 浏览器原生 TTS 测试工具</h2>
+      <p>
+        text-to-speech-test 是一款面向开发者、内容创作者和产品测试人员的在线文字转语音工具。它直接调用浏览器内置的 window.speechSynthesis API，无需安装插件，也不需要上传文本到服务器，即可完成浏览器原生 TTS 测试。对于需要快速验证 Web 语音合成效果、检查不同语音角色、测试中文朗读清晰度以及调整朗读语速和音调的场景，本工具能够显著降低调试成本。
+      </p>
+      <p class="mt-3">
+        使用方法非常简单：在输入框中粘贴或输入需要朗读的文本，从语音角色列表中选择浏览器提供的声音，然后拖动语速、音调和音量滑块，最后点击“开始朗读”。如果朗读过程中需要中断、暂停或继续，也可以通过对应按钮实时控制。由于不同系统和浏览器内置的语音库不同，实际可选声音会有所差异。无论是进行在线文本转语音测试、Web TTS 功能兼容性验证，还是制作语音交互原型，text-to-speech-test 都能提供轻量、直观、隐私友好的测试体验。
+      </p>
+    </article>
+  </main>
+
+  <footer class="mx-auto max-w-6xl px-4 pb-8 pt-2 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
+    <p>基于浏览器原生 SpeechSynthesis API 构建，所有文本仅在本地浏览器中处理。</p>
+  </footer>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const $ = (id) => document.getElementById(id);
+
+      const elements = {
+        supportBadge: $('supportBadge'),
+        textInput: $('textInput'),
+        charCount: $('charCount'),
+        sampleBtn: $('sampleBtn'),
+        clearBtn: $('clearBtn'),
+        voiceSelect: $('voiceSelect'),
+        rateRange: $('rateRange'),
+        pitchRange: $('pitchRange'),
+        volumeRange: $('volumeRange'),
+        rateValue: $('rateValue'),
+        pitchValue: $('pitchValue'),
+        volumeValue: $('volumeValue'),
+        summaryRate: $('summaryRate'),
+        summaryPitch: $('summaryPitch'),
+        summaryVolume: $('summaryVolume'),
+        speakBtn: $('speakBtn'),
+        stopBtn: $('stopBtn'),
+        pauseBtn: $('pauseBtn'),
+        resumeBtn: $('resumeBtn'),
+        messageBox: $('messageBox'),
+        statePill: $('statePill')
+      };
+
+      const state = {
+        supported: 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window,
+        voices: [],
+        speaking: false,
+        paused: false,
+        currentUtterance: null,
+        voiceLoadAttempts: 0
+      };
+
+      const sampleText = '你好，这是 text-to-speech-test 浏览器原生 TTS 测试工具。你可以输入任意文本，并调整语速、音调和音量，快速测试当前浏览器的文字转语音朗读效果。';
+
+      function escapeText(value) {
+        return String(value ?? '').replace(/[<>&"']/g, (char) => {
+          const map = { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#39;' };
+          return map[char] || char;
+        });
+      }
+
+      function setMessage(type, text) {
+        const base = 'mt-5 rounded-2xl border p-4 text-sm leading-6';
+        const styles = {
+          info: 'border-slate-700 bg-slate-950/70 text-slate-300',
+          success: 'border-emerald-400/30 bg-emerald-500/10 text-emerald-100',
+          error: 'border-red-400/40 bg-red-500/10 text-red-100',
+          warning: 'border-amber-400/40 bg-amber-500/10 text-amber-100'
+        };
+        elements.messageBox.className = `${base} ${styles[type] || styles.info}`;
+        elements.messageBox.textContent = text;
+      }
+
+      function setStatePill(type, text) {
+        const base = 'inline-flex w-fit items-center rounded-full border px-4 py-2 text-sm font-semibold';
+        const styles = {
+          idle: 'border-slate-700 bg-slate-900 text-slate-300',
+          active: 'border-cyan-400/40 bg-cyan-400/10 text-cyan-100',
+          paused: 'border-amber-400/40 bg-amber-400/10 text-amber-100',
+          error: 'border-red-400/40 bg-red-500/10 text-red-100',
+          success: 'border-emerald-400/40 bg-emerald-500/10 text-emerald-100'
+        };
+        elements.statePill.className = `${base} ${styles[type] || styles.idle}`;
+        elements.statePill.textContent = text;
+      }
+
+      function updateButtons() {
+        const disabled = !state.supported;
+        elements.speakBtn.disabled = disabled;
+        elements.stopBtn.disabled = disabled || (!state.speaking && !window.speechSynthesis?.speaking);
+        elements.pauseBtn.disabled = disabled || !state.speaking || state.paused;
+        elements.resumeBtn.disabled = disabled || !state.paused;
+      }
+
+      function updateCounters() {
+        const len = elements.textInput.value.length;
+        elements.charCount.textContent = `${len} 字`;
+      }
+
+      function updateRangeLabels() {
+        const rate = Number(elements.rateRange.value).toFixed(1);
+        const pitch = Number(elements.pitchRange.value).toFixed(1);
+        const volume = Number(elements.volumeRange.value).toFixed(1);
+
+        elements.rateValue.textContent = rate;
+        elements.pitchValue.textContent = pitch;
+        elements.volumeValue.textContent = volume;
+
+        elements.summaryRate.textContent = rate;
+        elements.summaryPitch.textContent = pitch;
+        elements.summaryVolume.textContent = volume;
+      }
+
+      function validateText(rawText) {
+        const text = String(rawText ?? '').trim();
+        if (!text) {
+          return { ok: false, message: '请输入需要朗读的文本，文本不能为空。' };
+        }
+        if (text.length > 5000) {
+          return { ok: false, message: '文本过长，请将内容控制在 5000 个字符以内。' };
+        }
+        if (!/[\p{L}\p{N}]/u.test(text)) {
+          return { ok: false, message: '文本格式无效，请至少输入包含文字或数字的内容。' };
+        }
+        return { ok: true, text };
+      }
+
+      function validateNumber(value, min, max, label) {
+        const num = Number(value);
+        if (!Number.isFinite(num) || num < min || num > max) {
+          return { ok: false, message: `${label}参数异常，请刷新页面或重新调整滑块。` };
+        }
+        return { ok: true, value: num };
+      }
+
+      function populateVoices() {
+        if (!state.supported) return;
+
+        const voices = window.speechSynthesis.getVoices();
+        state.voices = Array.isArray(voices) ? voices : [];
+
+        elements.voiceSelect.innerHTML = '';
+
+        if (!state.voices.length) {
+          const option = document.createElement('option');
+          option.value = '';
+          option.textContent = '暂无可用语音，浏览器可能仍在加载';
+          elements.voiceSelect.appendChild(option);
+          return;
+        }
+
+        const preferred = state.voices
+          .map((voice, index) => ({ voice, index }))
+          .sort((a, b) => {
+            const aZh = /^zh|Chinese|Mandarin|普通话|中文/i.test(`${a.voice.lang} ${a.voice.name}`) ? 0 : 1;
+            const bZh = /^zh|Chinese|Mandarin|普通话|中文/i.test(`${b.voice.lang} ${b.voice.name}`) ? 0 : 1;
+            return aZh - bZh || a.voice.name.localeCompare(b.voice.name);
+          });
+
+        preferred.forEach(({ voice, index }) => {
+          const option = document.createElement('option');
+          option.value = String(index);
+          option.textContent = `${voice.name} (${voice.lang || '未知语言'})${voice.default ? ' - 默认' : ''}`;
+          elements.voiceSelect.appendChild(option);
+        });
+
+        const firstChinese = preferred.find(({ voice }) => /^zh/i.test(voice.lang || ''));
+        if (firstChinese) {
+          elements.voiceSelect.value = String(firstChinese.index);
+        }
+
+        setMessage('info', `已加载 ${state.voices.length} 个浏览器可用语音。不同系统和浏览器的语音列表可能不同。`);
+      }
+
+      function tryLoadVoices() {
+        if (!state.supported) return;
+        populateVoices();
+
+        if (!state.voices.length && state.voiceLoadAttempts < 10) {
+          state.voiceLoadAttempts += 1;
+          window.setTimeout(tryLoadVoices, 250);
+        }
+      }
+
+      function stopSpeech(silent = false) {
+        if (!state.supported) return;
+        try {
+          window.speechSynthesis.cancel();
+        } catch (error) {
+          setMessage('error', '停止朗读时发生异常，请刷新页面后重试。');
+        }
+        state.speaking = false;
+        state.paused = false;
+        state.currentUtterance = null;
+        setStatePill('idle', '空闲');
+        if (!silent) setMessage('info', '朗读已停止。');
+        updateButtons();
+      }
+
+      function speak() {
+        if (!state.supported) {
+          setStatePill('error', '不支持');
+          setMessage('error', '当前浏览器不支持 window.speechSynthesis API。请尝试使用最新版 Chrome、Edge、Safari 或 Firefox。');
+          return;
+        }
+
+        const textValidation = validateText(elements.textInput.value);
+        if (!textValidation.ok) {
+          setStatePill('error', '输入错误');
+          setMessage('error', textValidation.message);
+          elements.textInput.focus();
+          return;
+        }
+
+        const rateValidation = validateNumber(elements.rateRange.value, 0.1, 2, '语速');
+        const pitchValidation = validateNumber(elements.pitchRange.value, 0, 2, '音调');
+        const volumeValidation = validateNumber(elements.volumeRange.value, 0, 1, '音量');
+
+        const firstInvalid = [rateValidation, pitchValidation, volumeValidation].find((item) => !item.ok);
+        if (firstInvalid) {
+          setStatePill('error', '参数错误');
+          setMessage('error', firstInvalid.message);
+          return;
+        }
+
+        stopSpeech(true);
+
+        let utterance;
+        try {
+          utterance = new SpeechSynthesisUtterance(textValidation.text);
+        } catch (error) {
+          setStatePill('error', '创建失败');
+          setMessage('error', '创建语音朗读任务失败，请检查浏览器权限或刷新页面重试。');
+          return;
+        }
+
+        const selectedIndex = Number(elements.voiceSelect.value);
+        if (Number.isInteger(selectedIndex) && state.voices[selectedIndex]) {
+          utterance.voice = state.voices[selectedIndex];
+          utterance.lang = state.voices[selectedIndex].lang || 'zh-CN';
+        } else {
+          utterance.lang = navigator.language || 'zh-CN';
+        }
+
+        utterance.rate = rateValidation.value;
+        utterance.pitch = pitchValidation.value;
+        utterance.volume = volumeValidation.value;
+
+        utterance.onstart = () => {
+          state.speaking = true;
+          state.paused = false;
+          setStatePill('active', '正在朗读');
+          setMessage('success', `正在朗读：${escapeText(textValidation.text.slice(0, 80))}${textValidation.text.length > 80 ? '...' : ''}`);
+          updateButtons();
+        };
+
+        utterance.onpause = () => {
+          state.paused = true;
+          setStatePill('paused', '已暂停');
+          setMessage('warning', '朗读已暂停，可点击“继续”恢复。');
+          updateButtons();
+        };
+
+        utterance.onresume = () => {
+          state.paused = false;
+          setStatePill('active', '正在朗读');
+          setMessage('success', '朗读已继续。');
+          updateButtons();
+        };
+
+        utterance.onend = () => {
+          state.speaking = false;
+          state.paused = false;
+          state.currentUtterance = null;
+          setStatePill('success', '朗读完成');
+          setMessage('success', '文本朗读完成。');
+          updateButtons();
+          window.setTimeout(() => {
+            if (!state.speaking && !state.paused) setStatePill('idle', '空闲');
+          }, 1200);
+        };
+
+        utterance.onerror = (event) => {
+          state.speaking = false;
+          state.paused = false;
+          state.currentUtterance = null;
+          const errorName = event && event.error ? event.error : 'unknown';
+          setStatePill('error', '朗读错误');
+          setMessage('error', `语音合成失败：${errorName}。请尝试更换语音角色、缩短文本或刷新页面。`);
+          updateButtons();
+        };
+
+        try {
+          state.currentUtterance = utterance;
+          window.speechSynthesis.speak(utterance);
+          window.setTimeout(updateButtons, 50);
+        } catch (error) {
+          state.currentUtterance = null;
+          state.speaking = false;
+          state.paused = false;
+          setStatePill('error', '调用失败');
+          setMessage('error', '调用浏览器语音合成 API 失败，请确认浏览器支持该功能。');
+          updateButtons();
+        }
+      }
+
+      function pauseSpeech() {
+        if (!state.supported) return;
+        try {
+          if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+            window.speechSynthesis.pause();
+            state.paused = true;
+            setStatePill('paused', '已暂停');
+            setMessage('warning', '朗读已暂停。');
+          } else {
+            setMessage('warning', '当前没有可暂停的朗读任务。');
+          }
+        } catch (error) {
+          setStatePill('error', '暂停失败');
+          setMessage('error', '暂停朗读失败，请重试。');
+        }
+        updateButtons();
+      }
+
+      function resumeSpeech() {
+        if (!state.supported) return;
+        try {
+          if (window.speechSynthesis.paused) {
+            window.speechSynthesis.resume();
+            state.paused = false;
+            setStatePill('active', '正在朗读');
+            setMessage('success', '朗读已继续。');
+          } else {
+            setMessage('warning', '当前没有已暂停的朗读任务。');
+          }
+        } catch (error) {
+          setStatePill('error', '继续失败');
+          setMessage('error', '继续朗读失败，请重试。');
+        }
+        updateButtons();
+      }
+
+      function initSupport() {
+        if (state.supported) {
+          elements.supportBadge.className = 'rounded-2xl border border-emerald-400/30 bg-emerald-500/10 px-5 py-4 text-sm text-emerald-100 shadow-2xl';
+          elements.supportBadge.textContent = '当前浏览器支持原生 TTS API';
+          setStatePill('idle', '空闲');
+        } else {
+          elements.supportBadge.className = 'rounded-2xl border border-red-400/30 bg-red-500/10 px-5 py-4 text-sm text-red-100 shadow-2xl';
+          elements.supportBadge.textContent = '当前浏览器不支持 speechSynthesis';
+          elements.voiceSelect.innerHTML = '<option value="">浏览器不支持语音合成</option>';
+          setStatePill('error', '不支持');
+          setMessage('error', '当前浏览器不支持 window.speechSynthesis API。请更换现代浏览器后再试。');
+        }
+        updateButtons();
+      }
+
+      function bindEvents() {
+        elements.textInput.addEventListener('input', updateCounters);
+
+        elements.sampleBtn.addEventListener('click', () => {
+          elements.textInput.value = sampleText;
+          updateCounters();
+          setMessage('info', '已填入示例文本，可直接点击“开始朗读”。');
+          elements.textInput.focus();
+        });
+
+        elements.clearBtn.addEventListener('click', () => {
+          elements.textInput.value = '';
+          updateCounters();
+          stopSpeech(true);
+          setMessage('info', '文本已清空。');
+          elements.textInput.focus();
+        });
+
+        [elements.rateRange, elements.pitchRange, elements.volumeRange].forEach((range) => {
+          range.addEventListener('input', updateRangeLabels);
+        });
+
+        elements.speakBtn.addEventListener('click', speak);
+        elements.stopBtn.addEventListener('click', () => stopSpeech(false));
+        elements.pauseBtn.addEventListener('click', pauseSpeech);
+        elements.resumeBtn.addEventListener('click', resumeSpeech);
+
+        if (state.supported) {
+          window.speechSynthesis.onvoiceschanged = populateVoices;
+        }
+
+        window.addEventListener('beforeunload', () => {
+          if (state.supported) {
+            try {
+              window.speechSynthesis.cancel();
+            } catch (_) {}
+          }
+        });
+
+        document.addEventListener('visibilitychange', () => {
+          if (!document.hidden) updateButtons();
+        });
+      }
+
+      initSupport();
+      bindEvents();
+      updateCounters();
+      updateRangeLabels();
+      tryLoadVoices();
+    })();
+  </script>
+</body>
+</html>

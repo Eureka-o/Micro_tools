@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="sql-formatter 是一款在线 SQL 语句美化与格式化工具，支持将混乱的单行 SQL 自动排版为标准缩进格式，并高亮 SELECT、FROM、WHERE 等 SQL 关键字。" />
+  <meta name="keywords" content="sql formatter, SQL格式化工具, SQL美化工具, SQL语句格式化,在线SQL格式化, SQL关键字高亮, SQL排版工具" />
+  <title>sql-formatter - 在线 SQL 语句美化与格式化工具</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+  <header class="relative overflow-hidden border-b border-cyan-400/20 bg-slate-950">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.25),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(99,102,241,0.2),transparent_35%)]"></div>
+    <div class="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-1 text-sm font-medium text-cyan-200">Online SQL Formatter</p>
+          <h1 class="text-4xl font-black tracking-tight text-white sm:text-5xl">sql-formatter</h1>
+          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">将混乱的单行 SQL 语句快速美化为可读、标准缩进的格式，并自动高亮核心 SQL 关键字。</p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 shadow-2xl backdrop-blur">
+          <p class="text-sm text-slate-300">零依赖逻辑 · 本地浏览器处理 · 不上传数据</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-2" aria-label="SQL 格式化工作区">
+      <div class="rounded-3xl border border-slate-700/80 bg-slate-900/80 p-5 shadow-2xl shadow-cyan-950/20">
+        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 class="text-xl font-bold text-white">输入 SQL</h2>
+            <p class="mt-1 text-sm text-slate-400">粘贴需要格式化的 SQL 语句。</p>
+          </div>
+          <button id="sampleBtn" type="button" class="rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">填入示例</button>
+        </div>
+        <textarea id="sqlInput" class="h-[420px] w-full resize-y rounded-2xl border border-slate-700 bg-slate-950 p-4 font-mono text-sm leading-6 text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" spellcheck="false" placeholder="例如：select id,name from users where status='active' order by created_at desc;"></textarea>
+        <div id="errorBox" class="mt-4 hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200" role="alert"></div>
+        <div class="mt-5 flex flex-wrap gap-3">
+          <button id="formatBtn" type="button" class="rounded-xl bg-cyan-400 px-5 py-2.5 text-sm font-bold text-slate-950 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-95">格式化 SQL</button>
+          <button id="minifyBtn" type="button" class="rounded-xl border border-slate-600 bg-slate-800 px-5 py-2.5 text-sm font-semibold text-slate-100 transition hover:bg-slate-700 active:scale-95">压缩为单行</button>
+          <button id="clearBtn" type="button" class="rounded-xl border border-slate-600 bg-transparent px-5 py-2.5 text-sm font-semibold text-slate-300 transition hover:bg-slate-800 active:scale-95">清空</button>
+        </div>
+      </div>
+
+      <div class="rounded-3xl border border-cyan-400/20 bg-gradient-to-b from-slate-900 to-slate-950 p-5 shadow-2xl shadow-indigo-950/20">
+        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 class="text-xl font-bold text-white">格式化结果</h2>
+            <p class="mt-1 text-sm text-slate-400">输出包含缩进排版与关键字高亮。</p>
+          </div>
+          <button id="copyBtn" type="button" class="rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-400/20 active:scale-95">复制纯文本</button>
+        </div>
+        <div class="relative h-[420px] overflow-auto rounded-2xl border border-slate-700 bg-slate-950">
+          <pre id="sqlOutput" class="min-h-full whitespace-pre p-4 font-mono text-sm leading-6 text-slate-200"><span class="text-slate-500">格式化后的 SQL 将显示在这里。</span></pre>
+        </div>
+        <div id="statusBox" class="mt-4 hidden rounded-2xl border border-emerald-400/40 bg-emerald-500/10 px-4 py-3 text-sm font-medium text-emerald-200" role="status"></div>
+      </div>
+    </section>
+
+    <article class="mt-10 rounded-3xl border border-slate-700/70 bg-slate-900/70 p-6 shadow-xl">
+      <h2 class="text-2xl font-bold text-white">在线 SQL 格式化工具的作用与使用方法</h2>
+      <p class="mt-4 leading-8 text-slate-300">
+        sql-formatter 是一款面向开发者、数据分析师和数据库管理员的在线 SQL 语句美化与格式化工具。实际开发中，SQL 往往来自日志、接口参数、ORM 输出或临时拼接脚本，常见问题是整段语句挤在一行，SELECT、FROM、WHERE、JOIN、GROUP BY 等结构不清晰，排查条件和性能问题非常低效。本工具可以将混乱的单行 SQL 自动转换为标准缩进格式，并对常用 SQL 关键字进行高亮展示，让查询结构、嵌套括号、排序分组和过滤条件一目了然。使用方式很简单：将需要处理的 SQL 粘贴到输入框，点击“格式化 SQL”即可获得可读性更强的排版结果；如果需要放入日志或脚本，也可以使用“压缩为单行”。对于正在寻找在线 SQL 格式化、SQL 美化工具、SQL 关键字高亮、数据库查询语句排版工具的用户，这个页面提供了轻量、快速且无需上传数据的本地化处理体验。
+      </p>
+    </article>
+  </main>
+
+  <footer class="border-t border-slate-800 px-4 py-6 text-center text-sm text-slate-500">
+    <p>sql-formatter · SQL formatting runs entirely in your browser.</p>
+  </footer>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const input = document.getElementById("sqlInput");
+      const output = document.getElementById("sqlOutput");
+      const errorBox = document.getElementById("errorBox");
+      const statusBox = document.getElementById("statusBox");
+      const formatBtn = document.getElementById("formatBtn");
+      const minifyBtn = document.getElementById("minifyBtn");
+      const clearBtn = document.getElementById("clearBtn");
+      const copyBtn = document.getElementById("copyBtn");
+      const sampleBtn = document.getElementById("sampleBtn");
+
+      let plainResult = "";
+
+      const keywords = new Set([
+        "SELECT","FROM","WHERE","AND","OR","NOT","NULL","IS","IN","EXISTS","BETWEEN","LIKE","ILIKE",
+        "JOIN","INNER","LEFT","RIGHT","FULL","OUTER","CROSS","ON","USING","GROUP","BY","ORDER","HAVING",
+        "LIMIT","OFFSET","FETCH","UNION","ALL","DISTINCT","AS","CASE","WHEN","THEN","ELSE","END",
+        "INSERT","INTO","VALUES","UPDATE","SET","DELETE","CREATE","ALTER","DROP","TABLE","VIEW","INDEX",
+        "PRIMARY","KEY","FOREIGN","REFERENCES","DEFAULT","CONSTRAINT","CHECK","UNIQUE","DATABASE",
+        "WITH","RECURSIVE","OVER","PARTITION","ROWS","RANGE","CURRENT","ROW","PRECEDING","FOLLOWING",
+        "ASC","DESC","TRUE","FALSE","CAST","CONVERT","INTERVAL","RETURNING","TOP"
+      ]);
+
+      const clauseKeywords = new Set([
+        "SELECT","FROM","WHERE","GROUP BY","ORDER BY","HAVING","LIMIT","OFFSET","UNION","UNION ALL",
+        "INSERT INTO","VALUES","UPDATE","SET","DELETE","CREATE","ALTER","DROP","WITH","RETURNING"
+      ]);
+
+      const joinStarts = new Set(["JOIN","INNER","LEFT","RIGHT","FULL","CROSS"]);
+
+      function showError(message) {
+        errorBox.textContent = message;
+        errorBox.classList.remove("hidden");
+      }
+
+      function hideError() {
+        errorBox.textContent = "";
+        errorBox.classList.add("hidden");
+      }
+
+      function showStatus(message) {
+        statusBox.textContent = message;
+        statusBox.classList.remove("hidden");
+        window.clearTimeout(showStatus.timer);
+        showStatus.timer = window.setTimeout(() => statusBox.classList.add("hidden"), 2200);
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function tokenize(sql) {
+        const tokens = [];
+        let i = 0;
+        const s = String(sql);
+        while (i < s.length) {
+          const ch = s[i];
+
+          if (/\s/.test(ch)) {
+            i++;
+            continue;
+          }
+
+          if (ch === "-" && s[i + 1] === "-") {
+            let j = i + 2;
+            while (j < s.length && s[j] !== "\n") j++;
+            tokens.push({ type: "comment", value: s.slice(i, j) });
+            i = j;
+            continue;
+          }
+
+          if (ch === "/" && s[i + 1] === "*") {
+            let j = i + 2;
+            while (j < s.length - 1 && !(s[j] === "*" && s[j + 1] === "/")) j++;
+            j = Math.min(j + 2, s.length);
+            tokens.push({ type: "comment", value: s.slice(i, j) });
+            i = j;
+            continue;
+          }
+
+          if (ch === "'" || ch === '"' || ch === "`") {
+            const quote = ch;
+            let j = i + 1;
+            while (j < s.length) {
+              if (s[j] === "\\" && j + 1 < s.length) {
+                j += 2;
+                continue;
+              }
+              if (s[j] === quote) {
+                if (quote === "'" && s[j + 1] === "'") {
+                  j += 2;
+                  continue;
+                }
+                j++;
+                break;
+              }
+              j++;
+            }
+            tokens.push({ type: "string", value: s.slice(i, j) });
+            i = j;
+            continue;
+          }
+
+          if (/[(),;]/.test(ch)) {
+            tokens.push({ type: "punct", value: ch });
+            i++;
+            continue;
+          }
+
+          if (/[<>=!+\-*\/%|&^:.]/.test(ch)) {
+            let j = i + 1;
+            while (j < s.length && /[<>=!+\-*\/%|&^:.]/.test(s[j])) j++;
+            tokens.push({ type: "operator", value: s.slice(i, j) });
+            i = j;
+            continue;
+          }
+
+          let j = i;
+          while (j < s.length && !/\s/.test(s[j]) && !/[(),;'"`<>=!+\-*\/%|&^:.]/.test(s[j])) j++;
+          const raw = s.slice(i, j);
+          const upper = raw.toUpperCase();
+          tokens.push({ type: keywords.has(upper) ? "keyword" : "word", value: raw });
+          i = j;
+        }
+        return tokens;
+      }
+
+      function normalizeTokenValue(token) {
+        return token.type === "keyword" ? token.value.toUpperCase() : token.value;
+      }
+
+      function combinedKeyword(tokens, index) {
+        const a = tokens[index] ? normalizeTokenValue(tokens[index]).toUpperCase() : "";
+        const b = tokens[index + 1] ? normalizeTokenValue(tokens[index + 1]).toUpperCase() : "";
+        if ((a === "GROUP" || a === "ORDER") && b === "BY") return a + " BY";
+        if (a === "UNION" && b === "ALL") return "UNION ALL";
+        if (a === "INSERT" && b === "INTO") return "INSERT INTO";
+        return a;
+      }
+
+      function formatSql(sql) {
+        const trimmed = String(sql || "").trim();
+        if (!trimmed) throw new Error("请输入需要格式化的 SQL 语句。");
+        if (trimmed.length > 200000) throw new Error("输入内容过长，请控制在 200,000 个字符以内。");
+
+        const tokens = tokenize(trimmed);
+        if (!tokens.length) throw new Error("未识别到有效的 SQL 内容。");
+
+        let lines = [""];
+        let indent = 0;
+        const unit = "  ";
+
+        const current = () => lines[lines.length - 1];
+        const setCurrent = (v) => { lines[lines.length - 1] = v; };
+        const newLine = (level = indent) => {
+          const last = lines[lines.length - 1];
+          if (last.trim() !== "") lines.push(unit.repeat(Math.max(0, level)));
+          else setCurrent(unit.repeat(Math.max(0, level)));
+        };
+        const append = (text) => {
+          if (!text) return;
+          let line = current();
+          if (line.trim() === "") {
+            setCurrent(line + text);
+            return;
+          }
+          if (/^[,.;)]$/.test(text)) {
+            setCurrent(line.replace(/\s+$/g, "") + text);
+          } else if (text === "(") {
+            setCurrent(line.replace(/\s+$/g, "") + " (");
+          } else if (/^(=|<>|!=|<=|>=|<|>|\+|-|\*|\/|%|\|\||&&)$/i.test(text)) {
+            setCurrent(line.replace(/\s+$/g, "") + " " + text + " ");
+          } else {
+            setCurrent(line.replace(/\s+$/g, "") + " " + text);
+          }
+        };
+
+        for (let i = 0; i < tokens.length; i++) {
+          const token = tokens[i];
+          let value = normalizeTokenValue(token);
+          const upper = value.toUpperCase();
+          const combo = combinedKeyword(tokens, i);
+
+          if (combo === "GROUP BY" || combo === "ORDER BY" || combo === "UNION ALL" || combo === "INSERT INTO") {
+            if (clauseKeywords.has(combo)) newLine(combo.startsWith("UNION") ? 0 : indent);
+            append(combo);
+            i++;
+            continue;
+          }
+
+          if (token.type === "comment") {
+            newLine(indent);
+            append(value);
+            newLine(indent);
+            continue;
+          }
+
+          if (value === ";") {
+            append(";");
+            newLine(0);
+            continue;
+          }
+
+          if (value === "(") {
+            append("(");
+            indent++;
+            const next = tokens[i + 1] ? normalizeTokenValue(tokens[i + 1]).toUpperCase() : "";
+            if (["SELECT", "WITH", "INSERT", "UPDATE", "DELETE"].includes(next)) newLine(indent);
+            continue;
+          }
+
+          if (value === ")") {
+            indent = Math.max(0, indent - 1);
+            newLine(indent);
+            append(")");
+            continue;
+          }
+
+          if (value === ",") {
+            append(",");
+            newLine(indent);
+            continue;
+          }
+
+          if (clauseKeywords.has(upper)) {
+            newLine(upper === "UNION" ? 0 : indent);
+            append(upper);
+            continue;
+          }
+
+          if (joinStarts.has(upper)) {
+            newLine(indent);
+            append(upper);
+            continue;
+          }
+
+          if (upper === "ON" || upper === "USING") {
+            newLine(indent + 1);
+            append(upper);
+            continue;
+          }
+
+          if (upper === "AND" || upper === "OR") {
+            newLine(indent + 1);
+            append(upper);
+            continue;
+          }
+
+          if (upper === "WHEN" || upper === "ELSE") {
+            newLine(indent + 1);
+            append(upper);
+            continue;
+          }
+
+          if (upper === "THEN") {
+            append(upper);
+            continue;
+          }
+
+          if (upper === "END") {
+            newLine(indent);
+            append(upper);
+            continue;
+          }
+
+          append(value);
+        }
+
+        return lines
+          .map(line => line.replace(/[ \t]+$/g, ""))
+          .filter((line, idx, arr) => line.trim() !== "" || (arr[idx - 1] && arr[idx - 1].trim() !== ""))
+          .join("\n")
+          .trim();
+      }
+
+      function minifySql(sql) {
+        const trimmed = String(sql || "").trim();
+        if (!trimmed) throw new Error("请输入需要压缩的 SQL 语句。");
+        if (trimmed.length > 200000) throw new Error("输入内容过长，请控制在 200,000 个字符以内。");
+        const tokens = tokenize(trimmed);
+        let result = "";
+        for (const token of tokens) {
+          const value = normalizeTokenValue(token);
+          if (!result) {
+            result = value;
+          } else if (/^[,.;)]$/.test(value)) {
+            result = result.replace(/\s+$/g, "") + value;
+          } else if (value === "(") {
+            result = result.replace(/\s+$/g, "") + "(";
+          } else if (/^(=|<>|!=|<=|>=|<|>|\+|-|\*|\/|%|\|\||&&)$/i.test(value)) {
+            result = result.replace(/\s+$/g, "") + " " + value + " ";
+          } else {
+            result = result.replace(/\s+$/g, "") + " " + value;
+          }
+        }
+        return result.replace(/\s+/g, " ").trim();
+      }
+
+      function highlightSql(sql) {
+        const tokens = tokenize(sql);
+        let html = "";
+        for (const token of tokens) {
+          const value = normalizeTokenValue(token);
+          const safe = escapeHtml(value);
+          if (token.type === "keyword") {
+            html += `<span class="font-bold text-cyan-300">${safe}</span> `;
+          } else if (token.type === "string") {
+            html += `<span class="text-emerald-300">${safe}</span> `;
+          } else if (token.type === "comment") {
+            html += `<span class="italic text-slate-500">${safe}</span>\n`;
+          } else if (token.type === "operator") {
+            html += `<span class="text-fuchsia-300">${safe}</span> `;
+          } else if (token.value === "," || token.value === ";" || token.value === "(" || token.value === ")") {
+            html = html.replace(/[ ]$/g, "") + `<span class="text-slate-400">${safe}</span>`;
+            if (token.value === "," || token.value === ";") html += " ";
+          } else {
+            html += `<span class="text-slate-100">${safe}</span> `;
+          }
+        }
+        return html;
+      }
+
+      function renderResult(text) {
+        plainResult = text;
+        output.innerHTML = highlightSql(text)
+          .replace(/ \n/g, "\n")
+          .replace(/\n/g, "\n");
+      }
+
+      function withButtonFeedback(button, label, fn) {
+        const original = button.textContent;
+        button.disabled = true;
+        button.classList.add("opacity-75");
+        button.textContent = label;
+        window.setTimeout(() => {
+          try {
+            fn();
+          } finally {
+            button.disabled = false;
+            button.classList.remove("opacity-75");
+            button.textContent = original;
+          }
+        }, 80);
+      }
+
+      formatBtn.addEventListener("click", () => {
+        withButtonFeedback(formatBtn, "处理中...", () => {
+          try {
+            hideError();
+            const formatted = formatSql(input.value);
+            renderResult(formatted);
+            showStatus("SQL 格式化完成。");
+          } catch (err) {
+            showError(err && err.message ? err.message : "格式化失败，请检查输入内容。");
+          }
+        });
+      });
+
+      minifyBtn.addEventListener("click", () => {
+        withButtonFeedback(minifyBtn, "处理中...", () => {
+          try {
+            hideError();
+            const minified = minifySql(input.value);
+            renderResult(minified);
+            showStatus("SQL 已压缩为单行。");
+          } catch (err) {
+            showError(err && err.message ? err.message : "压缩失败，请检查输入内容。");
+          }
+        });
+      });
+
+      clearBtn.addEventListener("click", () => {
+        input.value = "";
+        plainResult = "";
+        output.innerHTML = '<span class="text-slate-500">格式化后的 SQL 将显示在这里。</span>';
+        hideError();
+        showStatus("内容已清空。");
+        input.focus();
+      });
+
+      sampleBtn.addEventListener("click", () => {
+        input.value = "select u.id,u.name,u.email,count(o.id) as order_count,sum(o.amount) total_amount from users u left join orders o on u.id=o.user_id where u.status='active' and o.created_at between '2024-01-01' and '2024-12-31' group by u.id,u.name,u.email having count(o.id)>0 order by total_amount desc limit 20;";
+        hideError();
+        showStatus("示例 SQL 已填入。");
+        input.focus();
+      });
+
+      copyBtn.addEventListener("click", async () => {
+        try {
+          if (!plainResult.trim()) throw new Error("当前没有可复制的格式化结果。");
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(plainResult);
+          } else {
+            const temp = document.createElement("textarea");
+            temp.value = plainResult;
+            temp.setAttribute("readonly", "readonly");
+            temp.style.position = "fixed";
+            temp.style.left = "-9999px";
+            document.body.appendChild(temp);
+            temp.select();
+            const ok = document.execCommand("copy");
+            document.body.removeChild(temp);
+            if (!ok) throw new Error("浏览器拒绝复制，请手动选择结果文本复制。");
+          }
+          showStatus("已复制到剪贴板。");
+        } catch (err) {
+          showError(err && err.message ? err.message : "复制失败，请手动复制。");
+        }
+      });
+
+      input.addEventListener("input", () => {
+        if (errorBox && !errorBox.classList.contains("hidden")) hideError();
+      });
+    })();
+  </script>
+</body>
+</html>

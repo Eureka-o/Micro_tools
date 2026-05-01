@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>subnets-calculator - IP 子网掩码计算器</title>
+  <meta name="description" content="subnets-calculator 是一款在线 IP 子网掩码计算器，输入 IPv4 地址和 CIDR 前缀即可快速计算网络地址、广播地址、子网掩码、可用 IP 范围与主机数量，适合网络工程师和运维人员使用。" />
+  <meta name="keywords" content="subnets-calculator,IP子网掩码计算器,CIDR计算器,网络地址计算,广播地址计算,可用IP范围,IPv4子网计算,在线子网计算工具,网络工程师工具" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
+    <div class="absolute inset-0 opacity-30">
+      <div class="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-cyan-500 blur-3xl"></div>
+      <div class="absolute -bottom-32 -left-24 h-80 w-80 rounded-full bg-blue-600 blur-3xl"></div>
+    </div>
+    <div class="relative mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-1 text-sm font-medium text-cyan-200">
+          IPv4 CIDR Subnet Calculator
+        </p>
+        <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl">subnets-calculator</h1>
+        <p class="mt-5 text-lg leading-8 text-slate-300">
+          输入 IP 地址与 CIDR 前缀，快速计算网络地址、广播地址、子网掩码和可用 IP 范围，帮助网络工程师高效完成子网规划。
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-5">
+      <div class="lg:col-span-2 rounded-3xl border border-slate-700 bg-slate-900/80 p-6 shadow-2xl shadow-cyan-950/30">
+        <div class="mb-6">
+          <h2 class="text-2xl font-semibold text-white">输入参数</h2>
+          <p class="mt-2 text-sm text-slate-400">支持标准 IPv4 地址与 CIDR 前缀，例如：192.168.1.10 / 24。</p>
+        </div>
+
+        <form id="calculatorForm" class="space-y-5" novalidate>
+          <div>
+            <label for="ipAddress" class="mb-2 block text-sm font-medium text-slate-200">IP 地址</label>
+            <input
+              id="ipAddress"
+              name="ipAddress"
+              type="text"
+              inputmode="decimal"
+              autocomplete="off"
+              placeholder="例如：192.168.1.10"
+              class="w-full rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
+            />
+          </div>
+
+          <div>
+            <label for="cidrPrefix" class="mb-2 block text-sm font-medium text-slate-200">CIDR 前缀</label>
+            <div class="flex items-center rounded-2xl border border-slate-700 bg-slate-950 transition focus-within:border-cyan-400 focus-within:ring-4 focus-within:ring-cyan-400/10">
+              <span class="pl-4 text-slate-500">/</span>
+              <input
+                id="cidrPrefix"
+                name="cidrPrefix"
+                type="number"
+                min="0"
+                max="32"
+                step="1"
+                inputmode="numeric"
+                placeholder="24"
+                class="w-full rounded-2xl bg-transparent px-2 py-3 text-white outline-none"
+              />
+            </div>
+            <p class="mt-2 text-xs text-slate-500">有效范围：0 - 32</p>
+          </div>
+
+          <div id="errorBox" class="hidden rounded-2xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-200"></div>
+
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <button
+              id="calculateBtn"
+              type="submit"
+              class="rounded-2xl bg-cyan-400 px-5 py-3 font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-cyan-300/30"
+            >
+              立即计算
+            </button>
+            <button
+              id="resetBtn"
+              type="button"
+              class="rounded-2xl border border-slate-700 bg-slate-800 px-5 py-3 font-semibold text-slate-100 transition hover:bg-slate-700 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-slate-500/20"
+            >
+              重置
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="lg:col-span-3 rounded-3xl border border-cyan-400/20 bg-gradient-to-br from-slate-900 to-slate-800 p-6 shadow-2xl shadow-cyan-950/40">
+        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 class="text-2xl font-semibold text-white">计算结果</h2>
+            <p class="mt-2 text-sm text-slate-400">结果会根据输入实时更新，便于复制到网络配置文档。</p>
+          </div>
+          <button
+            id="copyBtn"
+            type="button"
+            class="rounded-2xl border border-cyan-300/30 bg-cyan-300/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-300/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
+            disabled
+          >
+            复制结果
+          </button>
+        </div>
+
+        <div id="resultGrid" class="grid gap-4 sm:grid-cols-2">
+          <div class="rounded-2xl border border-slate-700 bg-slate-950/60 p-4">
+            <p class="text-sm text-slate-400">网络地址</p>
+            <p id="networkAddress" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-slate-950/60 p-4">
+            <p class="text-sm text-slate-400">广播地址</p>
+            <p id="broadcastAddress" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-slate-950/60 p-4">
+            <p class="text-sm text-slate-400">子网掩码</p>
+            <p id="subnetMask" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-slate-950/60 p-4">
+            <p class="text-sm text-slate-400">通配符掩码</p>
+            <p id="wildcardMask" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-slate-950/60 p-4 sm:col-span-2">
+            <p class="text-sm text-slate-400">可用 IP 范围</p>
+            <p id="usableRange" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-slate-950/60 p-4">
+            <p class="text-sm text-slate-400">总地址数</p>
+            <p id="totalAddresses" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-slate-950/60 p-4">
+            <p class="text-sm text-slate-400">可用主机数</p>
+            <p id="usableHosts" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-slate-950/60 p-4 sm:col-span-2">
+            <p class="text-sm text-slate-400">CIDR 表示</p>
+            <p id="cidrNotation" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
+          </div>
+        </div>
+
+        <div id="successBox" class="mt-5 hidden rounded-2xl border border-emerald-400/40 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-200"></div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-slate-700 bg-slate-900/70 p-6 leading-8 text-slate-300 shadow-xl">
+      <h2 class="mb-4 text-2xl font-semibold text-white">关于 IP 子网掩码计算器</h2>
+      <p>
+        subnets-calculator 是一款面向网络工程师、系统管理员和运维人员的在线 IP 子网掩码计算器。日常进行 IPv4 地址规划、VLAN 划分、路由策略配置或防火墙规则编写时，手动计算网络地址、广播地址和可用 IP 范围不仅耗时，还容易因二进制换算错误导致配置故障。本工具通过输入 IP 地址和 CIDR 前缀，即可自动生成子网掩码、通配符掩码、总地址数、可用主机数以及完整的可用地址区间，帮助用户快速校验网络设计是否合理。使用方法非常简单：在输入框填写类似 192.168.1.10 的 IPv4 地址，再输入 0 到 32 之间的 CIDR 前缀，例如 24，点击立即计算即可获得结果。无论是进行小型办公室网络规划，还是排查生产环境中的子网划分问题，这个在线 CIDR 子网计算工具都能提供清晰、准确、可复制的结果，显著提升网络配置效率。
+      </p>
+    </article>
+  </main>
+
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
+    <p>subnets-calculator · 在线 IPv4 子网计算工具</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById('calculatorForm');
+    const ipInput = document.getElementById('ipAddress');
+    const cidrInput = document.getElementById('cidrPrefix');
+    const errorBox = document.getElementById('errorBox');
+    const successBox = document.getElementById('successBox');
+    const copyBtn = document.getElementById('copyBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const calculateBtn = document.getElementById('calculateBtn');
+
+    const fields = {
+      networkAddress: document.getElementById('networkAddress'),
+      broadcastAddress: document.getElementById('broadcastAddress'),
+      subnetMask: document.getElementById('subnetMask'),
+      wildcardMask: document.getElementById('wildcardMask'),
+      usableRange: document.getElementById('usableRange'),
+      totalAddresses: document.getElementById('totalAddresses'),
+      usableHosts: document.getElementById('usableHosts'),
+      cidrNotation: document.getElementById('cidrNotation')
+    };
+
+    let latestResultText = '';
+
+    function showError(message) {
+      errorBox.textContent = message;
+      errorBox.classList.remove('hidden');
+      successBox.classList.add('hidden');
+      copyBtn.disabled = true;
+    }
+
+    function showSuccess(message) {
+      successBox.textContent = message;
+      successBox.classList.remove('hidden');
+      setTimeout(() => successBox.classList.add('hidden'), 2200);
+    }
+
+    function clearError() {
+      errorBox.textContent = '';
+      errorBox.classList.add('hidden');
+    }
+
+    function setInputInvalid(element, invalid) {
+      if (invalid) {
+        element.classList.add('border-red-500', 'ring-4', 'ring-red-500/10');
+      } else {
+        element.classList.remove('border-red-500', 'ring-4', 'ring-red-500/10');
+      }
+    }
+
+    function parseIPv4(ip) {
+      if (typeof ip !== 'string') return null;
+      const trimmed = ip.trim();
+      const parts = trimmed.split('.');
+      if (parts.length !== 4) return null;
+
+      const nums = [];
+      for (const part of parts) {
+        if (!/^\d{1,3}$/.test(part)) return null;
+        if (part.length > 1 && part.startsWith('0')) {
+          const numericValue = Number(part);
+          if (!Number.isInteger(numericValue)) return null;
+        }
+        const n = Number(part);
+        if (!Number.isInteger(n) || n < 0 || n > 255) return null;
+        nums.push(n);
+      }
+      return nums;
+    }
+
+    function ipArrayToInt(parts) {
+      return (((parts[0] << 24) >>> 0) | (parts[1] << 16) | (parts[2] << 8) | parts[3]) >>> 0;
+    }
+
+    function intToIp(num) {
+      const n = num >>> 0;
+      return [
+        (n >>> 24) & 255,
+        (n >>> 16) & 255,
+        (n >>> 8) & 255,
+        n & 255
+      ].join('.');
+    }
+
+    function formatNumber(num) {
+      return new Intl.NumberFormat('zh-CN').format(num);
+    }
+
+    function calculateSubnet(ipText, cidrText) {
+      const ipParts = parseIPv4(ipText);
+      const cidrTrimmed = String(cidrText).trim();
+
+      if (!ipParts) {
+        throw new Error('请输入有效的 IPv4 地址，例如：192.168.1.10。每段必须是 0 到 255 的整数。');
+      }
+
+      if (!/^\d+$/.test(cidrTrimmed)) {
+        throw new Error('请输入有效的 CIDR 前缀，范围必须是 0 到 32 的整数。');
+      }
+
+      const cidr = Number(cidrTrimmed);
+      if (!Number.isInteger(cidr) || cidr < 0 || cidr > 32) {
+        throw new Error('CIDR 前缀超出范围，请输入 0 到 32 之间的整数。');
+      }
+
+      const ipInt = ipArrayToInt(ipParts);
+      const mask = cidr === 0 ? 0 : (0xFFFFFFFF << (32 - cidr)) >>> 0;
+      const wildcard = (~mask) >>> 0;
+      const network = (ipInt & mask) >>> 0;
+      const broadcast = (network | wildcard) >>> 0;
+      const total = Math.pow(2, 32 - cidr);
+
+      let firstUsable;
+      let lastUsable;
+      let usableHosts;
+      let usableRangeText;
+
+      if (cidr === 32) {
+        firstUsable = network;
+        lastUsable = network;
+        usableHosts = 1;
+        usableRangeText = intToIp(network) + '（单主机地址）';
+      } else if (cidr === 31) {
+        firstUsable = network;
+        lastUsable = broadcast;
+        usableHosts = 2;
+        usableRangeText = intToIp(firstUsable) + ' - ' + intToIp(lastUsable) + '（点到点链路常用）';
+      } else {
+        firstUsable = (network + 1) >>> 0;
+        lastUsable = (broadcast - 1) >>> 0;
+        usableHosts = Math.max(total - 2, 0);
+        usableRangeText = intToIp(firstUsable) + ' - ' + intToIp(lastUsable);
+      }
+
+      return {
+        inputIp: ipParts.join('.'),
+        cidr,
+        networkAddress: intToIp(network),
+        broadcastAddress: intToIp(broadcast),
+        subnetMask: intToIp(mask),
+        wildcardMask: intToIp(wildcard),
+        usableRange: usableRangeText,
+        totalAddresses: formatNumber(total),
+        usableHosts: formatNumber(usableHosts),
+        cidrNotation: intToIp(network) + '/' + cidr
+      };
+    }
+
+    function renderResult(result) {
+      fields.networkAddress.textContent = result.networkAddress;
+      fields.broadcastAddress.textContent = result.broadcastAddress;
+      fields.subnetMask.textContent = result.subnetMask;
+      fields.wildcardMask.textContent = result.wildcardMask;
+      fields.usableRange.textContent = result.usableRange;
+      fields.totalAddresses.textContent = result.totalAddresses;
+      fields.usableHosts.textContent = result.usableHosts;
+      fields.cidrNotation.textContent = result.cidrNotation;
+
+      latestResultText = [
+        'IP 子网掩码计算结果',
+        '输入 IP：' + result.inputIp,
+        'CIDR 前缀：/' + result.cidr,
+        '网络地址：' + result.networkAddress,
+        '广播地址：' + result.broadcastAddress,
+        '子网掩码：' + result.subnetMask,
+        '通配符掩码：' + result.wildcardMask,
+        '可用 IP 范围：' + result.usableRange,
+        '总地址数：' + result.totalAddresses,
+        '可用主机数：' + result.usableHosts,
+        'CIDR 表示：' + result.cidrNotation
+      ].join('\n');
+
+      copyBtn.disabled = false;
+    }
+
+    function resetResult() {
+      Object.values(fields).forEach(field => field.textContent = '--');
+      latestResultText = '';
+      copyBtn.disabled = true;
+      clearError();
+      successBox.classList.add('hidden');
+      setInputInvalid(ipInput, false);
+      setInputInvalid(cidrInput, false);
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      clearError();
+      successBox.classList.add('hidden');
+      setInputInvalid(ipInput, false);
+      setInputInvalid(cidrInput, false);
+
+      calculateBtn.classList.add('scale-[0.98]');
+      setTimeout(() => calculateBtn.classList.remove('scale-[0.98]'), 120);
+
+      try {
+        const result = calculateSubnet(ipInput.value, cidrInput.value);
+        renderResult(result);
+        showSuccess('计算完成，结果已更新。');
+      } catch (error) {
+        resetResult();
+        const message = error instanceof Error ? error.message : '输入有误，请检查 IP 地址和 CIDR 前缀。';
+        showError(message);
+        setInputInvalid(ipInput, !parseIPv4(ipInput.value));
+        setInputInvalid(cidrInput, !/^\d+$/.test(String(cidrInput.value).trim()) || Number(cidrInput.value) < 0 || Number(cidrInput.value) > 32);
+      }
+    });
+
+    resetBtn.addEventListener('click', () => {
+      ipInput.value = '';
+      cidrInput.value = '';
+      resetResult();
+      ipInput.focus();
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      if (!latestResultText) {
+        showError('当前没有可复制的计算结果，请先完成一次计算。');
+        return;
+      }
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(latestResultText);
+        } else {
+          const temp = document.createElement('textarea');
+          temp.value = latestResultText;
+          temp.style.position = 'fixed';
+          temp.style.left = '-9999px';
+          document.body.appendChild(temp);
+          temp.focus();
+          temp.select();
+          const copied = document.execCommand('copy');
+          document.body.removeChild(temp);
+          if (!copied) throw new Error('复制失败');
+        }
+        clearError();
+        showSuccess('结果已复制到剪贴板。');
+      } catch (error) {
+        showError('复制失败，请手动选择结果文本进行复制。');
+      }
+    });
+
+    ipInput.addEventListener('input', () => {
+      clearError();
+      setInputInvalid(ipInput, false);
+    });
+
+    cidrInput.addEventListener('input', () => {
+      clearError();
+      setInputInvalid(cidrInput, false);
+    });
+
+    ipInput.value = '192.168.1.10';
+    cidrInput.value = '24';
+    try {
+      renderResult(calculateSubnet(ipInput.value, cidrInput.value));
+    } catch (error) {}
+  </script>
+</body>
+</html>

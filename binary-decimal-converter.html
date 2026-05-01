@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>binary-decimal-converter｜二进制/十进制/十六进制/八进制互转计算器</title>
+  <meta name="description" content="binary-decimal-converter 是一款在线二进制、十进制、十六进制、八进制互转计算器，支持任意进制输入后自动同步转换，适合程序员、学生和数字电路学习者使用。" />
+  <meta name="keywords" content="binary decimal converter, 二进制十进制转换, 十六进制转换器, 八进制转换器, 进制转换计算器, 在线进制互转工具, 二进制转十进制, 十进制转十六进制" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .glass {
+      background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    .input-focus-ring:focus {
+      box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.18);
+    }
+    .copy-pop {
+      animation: pop 0.18s ease-out;
+    }
+    @keyframes pop {
+      0% { transform: scale(0.96); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+  <div class="fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(148,163,184,.18)_1px,transparent_0)] [background-size:28px_28px]"></div>
+  </div>
+
+  <header class="border-b border-white/10">
+    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="glass rounded-3xl border border-white/10 p-6 shadow-2xl shadow-cyan-950/20 sm:p-10">
+        <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+              在线进制互转工具
+            </p>
+            <h1 class="text-3xl font-black tracking-tight text-white sm:text-5xl">
+              binary-decimal-converter
+            </h1>
+            <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">
+              在二进制、十进制、十六进制、八进制之间实时自动转换。输入任意一个进制数值，其余结果即时同步。
+            </p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-slate-300">
+            <div class="flex items-center gap-2">
+              <span class="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-lg shadow-emerald-400/50"></span>
+              <span>支持超大整数</span>
+            </div>
+            <div class="mt-2 flex items-center gap-2">
+              <span class="h-2.5 w-2.5 rounded-full bg-cyan-400 shadow-lg shadow-cyan-400/50"></span>
+              <span>纯前端本地计算</span>
+            </div>
+            <div class="mt-2 flex items-center gap-2">
+              <span class="h-2.5 w-2.5 rounded-full bg-indigo-400 shadow-lg shadow-indigo-400/50"></span>
+              <span>移动端友好</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <section aria-labelledby="converter-title" class="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+      <div class="rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-xl shadow-slate-950/40 sm:p-7">
+        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 id="converter-title" class="text-2xl font-bold text-white">进制输入与自动转换</h2>
+            <p class="mt-2 text-sm text-slate-400">可输入负整数，支持 0b、0o、0x 前缀；结果会自动格式化为大写十六进制。</p>
+          </div>
+          <button id="clearBtn" type="button" class="rounded-xl border border-rose-400/30 bg-rose-500/10 px-4 py-2 text-sm font-semibold text-rose-200 transition hover:bg-rose-500/20 active:scale-95 focus:outline-none focus:ring-4 focus:ring-rose-500/20">
+            清空全部
+          </button>
+        </div>
+
+        <div id="errorBox" class="mb-5 hidden rounded-2xl border border-red-400/40 bg-red-500/15 px-4 py-3 text-sm font-medium text-red-100" role="alert" aria-live="polite"></div>
+
+        <div class="space-y-4">
+          <div class="rounded-2xl border border-cyan-400/20 bg-cyan-950/20 p-4" data-card="2">
+            <div class="mb-2 flex items-center justify-between gap-3">
+              <label for="binaryInput" class="font-semibold text-cyan-100">二进制 Binary</label>
+              <span class="rounded-full bg-cyan-400/10 px-2.5 py-1 text-xs text-cyan-200">Base 2</span>
+            </div>
+            <div class="flex flex-col gap-3 sm:flex-row">
+              <input id="binaryInput" data-base="2" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：101010 或 0b101010" class="input-focus-ring w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 font-mono text-base text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400" />
+              <button type="button" data-copy="binaryInput" class="copyBtn rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-4 focus:ring-cyan-500/20">复制</button>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-emerald-400/20 bg-emerald-950/20 p-4" data-card="10">
+            <div class="mb-2 flex items-center justify-between gap-3">
+              <label for="decimalInput" class="font-semibold text-emerald-100">十进制 Decimal</label>
+              <span class="rounded-full bg-emerald-400/10 px-2.5 py-1 text-xs text-emerald-200">Base 10</span>
+            </div>
+            <div class="flex flex-col gap-3 sm:flex-row">
+              <input id="decimalInput" data-base="10" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：42 或 -255" class="input-focus-ring w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 font-mono text-base text-white outline-none transition placeholder:text-slate-600 focus:border-emerald-400" />
+              <button type="button" data-copy="decimalInput" class="copyBtn rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-500/20">复制</button>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-indigo-400/20 bg-indigo-950/20 p-4" data-card="16">
+            <div class="mb-2 flex items-center justify-between gap-3">
+              <label for="hexInput" class="font-semibold text-indigo-100">十六进制 Hexadecimal</label>
+              <span class="rounded-full bg-indigo-400/10 px-2.5 py-1 text-xs text-indigo-200">Base 16</span>
+            </div>
+            <div class="flex flex-col gap-3 sm:flex-row">
+              <input id="hexInput" data-base="16" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：2A 或 0xFF" class="input-focus-ring w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 font-mono text-base uppercase text-white outline-none transition placeholder:normal-case placeholder:text-slate-600 focus:border-indigo-400" />
+              <button type="button" data-copy="hexInput" class="copyBtn rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-4 focus:ring-indigo-500/20">复制</button>
+            </div>
+          </div>
+
+          <div class="rounded-2xl border border-amber-400/20 bg-amber-950/20 p-4" data-card="8">
+            <div class="mb-2 flex items-center justify-between gap-3">
+              <label for="octalInput" class="font-semibold text-amber-100">八进制 Octal</label>
+              <span class="rounded-full bg-amber-400/10 px-2.5 py-1 text-xs text-amber-200">Base 8</span>
+            </div>
+            <div class="flex flex-col gap-3 sm:flex-row">
+              <input id="octalInput" data-base="8" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：52 或 0o77" class="input-focus-ring w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 font-mono text-base text-white outline-none transition placeholder:text-slate-600 focus:border-amber-400" />
+              <button type="button" data-copy="octalInput" class="copyBtn rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-4 focus:ring-amber-500/20">复制</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="rounded-3xl border border-white/10 bg-white/[0.04] p-5 shadow-xl shadow-slate-950/30 sm:p-7">
+        <h2 class="text-2xl font-bold text-white">输出概览</h2>
+        <p class="mt-2 text-sm text-slate-400">当前有效数值会在此以不同进制集中展示，方便核对与复制。</p>
+
+        <div class="mt-6 rounded-2xl border border-white/10 bg-slate-950/70 p-5">
+          <p class="text-xs uppercase tracking-[0.24em] text-slate-500">Current Decimal Value</p>
+          <div id="summaryDecimal" class="mt-3 break-all font-mono text-2xl font-bold text-emerald-300">—</div>
+        </div>
+
+        <div class="mt-4 grid gap-4">
+          <div class="rounded-2xl bg-cyan-400/10 p-4">
+            <p class="text-sm font-semibold text-cyan-200">二进制位数</p>
+            <p id="binaryLength" class="mt-1 font-mono text-xl text-white">—</p>
+          </div>
+          <div class="rounded-2xl bg-indigo-400/10 p-4">
+            <p class="text-sm font-semibold text-indigo-200">十六进制位数</p>
+            <p id="hexLength" class="mt-1 font-mono text-xl text-white">—</p>
+          </div>
+          <div class="rounded-2xl bg-amber-400/10 p-4">
+            <p class="text-sm font-semibold text-amber-200">八进制位数</p>
+            <p id="octalLength" class="mt-1 font-mono text-xl text-white">—</p>
+          </div>
+        </div>
+
+        <div class="mt-6 rounded-2xl border border-sky-400/20 bg-sky-500/10 p-4 text-sm leading-6 text-sky-100">
+          <strong class="text-white">提示：</strong>本工具使用浏览器内置 BigInt 进行整数计算，可避免普通浮点数在超大整数场景下的精度丢失。
+        </div>
+      </aside>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-white/10 bg-slate-900/70 p-6 shadow-xl shadow-slate-950/30 sm:p-8">
+      <h2 class="text-2xl font-bold text-white">关于 binary-decimal-converter 在线进制转换计算器</h2>
+      <div class="mt-4 space-y-4 text-base leading-8 text-slate-300">
+        <p>
+          binary-decimal-converter 是一款面向开发者、计算机专业学生、嵌入式工程师和数字电路学习者的在线进制互转工具。它可以在二进制、十进制、十六进制和八进制之间进行实时转换，解决手动换算步骤繁琐、容易出错、超大整数精度不可靠等痛点。无论你需要进行二进制转十进制、十进制转十六进制，还是快速核对八进制权限值，本工具都能在浏览器中即时给出结果。
+        </p>
+        <p>
+          使用方法非常简单：在任意一个输入框中输入合法整数，例如在二进制框输入 101010，其他进制框会自动同步显示对应的十进制、十六进制与八进制结果。工具同时支持 0b、0o、0x 等常见前缀，并对非法字符提供清晰的错误提示，避免错误数据继续传播。对于程序调试、算法学习、网络协议分析、位运算验证和计算机组成原理练习，这个在线二进制十进制十六进制八进制转换器都能提供高效、干净且可靠的计算体验。
+        </p>
+      </div>
+    </article>
+  </main>
+
+  <footer class="mx-auto max-w-6xl px-4 pb-8 pt-2 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
+    <p>© <span id="year"></span> binary-decimal-converter · 本地计算，不上传输入内容</p>
+  </footer>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const inputs = {
+        2: document.getElementById('binaryInput'),
+        10: document.getElementById('decimalInput'),
+        16: document.getElementById('hexInput'),
+        8: document.getElementById('octalInput')
+      };
+
+      const errorBox = document.getElementById('errorBox');
+      const clearBtn = document.getElementById('clearBtn');
+      const summaryDecimal = document.getElementById('summaryDecimal');
+      const binaryLength = document.getElementById('binaryLength');
+      const hexLength = document.getElementById('hexLength');
+      const octalLength = document.getElementById('octalLength');
+      const year = document.getElementById('year');
+      const cards = Array.from(document.querySelectorAll('[data-card]'));
+      let isSyncing = false;
+
+      year.textContent = new Date().getFullYear();
+
+      const digitMap = (() => {
+        const map = new Map();
+        '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach((ch, index) => map.set(ch, index));
+        return map;
+      })();
+
+      function normalizeRaw(value) {
+        return String(value || '').trim().replace(/[\s,_]/g, '');
+      }
+
+      function stripAllowedPrefix(text, base) {
+        let sign = '';
+        let body = text;
+
+        if (body.startsWith('+') || body.startsWith('-')) {
+          sign = body[0] === '-' ? '-' : '';
+          body = body.slice(1);
+        }
+
+        const lower = body.toLowerCase();
+        if (base === 2 && lower.startsWith('0b')) body = body.slice(2);
+        if (base === 8 && lower.startsWith('0o')) body = body.slice(2);
+        if (base === 16 && lower.startsWith('0x')) body = body.slice(2);
+
+        return { sign, body };
+      }
+
+      function parseByBase(rawValue, base) {
+        const normalized = normalizeRaw(rawValue);
+        if (normalized === '') {
+          return { empty: true, value: 0n };
+        }
+
+        const { sign, body } = stripAllowedPrefix(normalized, base);
+        if (body === '') {
+          throw new Error('请输入完整的数字，不能只输入符号或进制前缀。');
+        }
+
+        let result = 0n;
+        const bigBase = BigInt(base);
+        const upperBody = body.toUpperCase();
+
+        for (const char of upperBody) {
+          const digit = digitMap.get(char);
+          if (digit === undefined || digit >= base) {
+            const baseName = base === 2 ? '二进制' : base === 8 ? '八进制' : base === 10 ? '十进制' : '十六进制';
+            throw new Error(`${baseName}输入包含非法字符“${char}”。该进制允许的字符范围为：${allowedChars(base)}。`);
+          }
+          result = result * bigBase + BigInt(digit);
+        }
+
+        return { empty: false, value: sign === '-' ? -result : result };
+      }
+
+      function allowedChars(base) {
+        if (base === 2) return '0-1';
+        if (base === 8) return '0-7';
+        if (base === 10) return '0-9';
+        return '0-9、A-F';
+      }
+
+      function formatByBase(value, base) {
+        if (base === 16) return value.toString(16).toUpperCase();
+        return value.toString(base);
+      }
+
+      function setError(message, sourceBase) {
+        errorBox.textContent = message;
+        errorBox.classList.remove('hidden');
+
+        Object.values(inputs).forEach(input => {
+          input.classList.remove('border-red-400', 'focus:border-red-400');
+        });
+
+        if (sourceBase && inputs[sourceBase]) {
+          inputs[sourceBase].classList.add('border-red-400', 'focus:border-red-400');
+        }
+      }
+
+      function clearError() {
+        errorBox.textContent = '';
+        errorBox.classList.add('hidden');
+        Object.values(inputs).forEach(input => {
+          input.classList.remove('border-red-400', 'focus:border-red-400');
+        });
+      }
+
+      function clearSummary() {
+        summaryDecimal.textContent = '—';
+        binaryLength.textContent = '—';
+        hexLength.textContent = '—';
+        octalLength.textContent = '—';
+      }
+
+      function updateSummary(value) {
+        const absValue = value < 0n ? -value : value;
+        const bin = absValue.toString(2);
+        const hex = absValue.toString(16).toUpperCase();
+        const oct = absValue.toString(8);
+
+        summaryDecimal.textContent = value.toString(10);
+        binaryLength.textContent = `${bin.length} 位`;
+        hexLength.textContent = `${hex.length} 位`;
+        octalLength.textContent = `${oct.length} 位`;
+      }
+
+      function clearAll() {
+        isSyncing = true;
+        Object.values(inputs).forEach(input => {
+          input.value = '';
+          input.classList.remove('ring-2', 'ring-cyan-400/50');
+        });
+        isSyncing = false;
+        clearError();
+        clearSummary();
+        highlightCard(null);
+      }
+
+      function highlightCard(base) {
+        cards.forEach(card => {
+          const active = String(card.dataset.card) === String(base);
+          card.classList.toggle('ring-2', active);
+          card.classList.toggle('ring-cyan-400/50', active);
+          card.classList.toggle('bg-white/5', active);
+        });
+      }
+
+      function syncFrom(sourceInput) {
+        if (isSyncing) return;
+
+        const base = Number(sourceInput.dataset.base);
+        const raw = sourceInput.value;
+
+        try {
+          const parsed = parseByBase(raw, base);
+
+          if (parsed.empty) {
+            clearAll();
+            return;
+          }
+
+          clearError();
+          highlightCard(base);
+          isSyncing = true;
+
+          Object.entries(inputs).forEach(([targetBase, input]) => {
+            if (input !== sourceInput) {
+              input.value = formatByBase(parsed.value, Number(targetBase));
+            }
+          });
+
+          isSyncing = false;
+          updateSummary(parsed.value);
+        } catch (err) {
+          isSyncing = false;
+          setError(err && err.message ? err.message : '输入格式不正确，请检查后重试。', base);
+        }
+      }
+
+      Object.values(inputs).forEach(input => {
+        input.addEventListener('input', () => syncFrom(input));
+        input.addEventListener('focus', () => highlightCard(input.dataset.base));
+        input.addEventListener('blur', () => {
+          if (!Object.values(inputs).some(el => el === document.activeElement)) {
+            const hasValue = Object.values(inputs).some(el => el.value.trim() !== '');
+            if (!hasValue) highlightCard(null);
+          }
+        });
+      });
+
+      clearBtn.addEventListener('click', () => {
+        clearBtn.classList.add('scale-95');
+        setTimeout(() => clearBtn.classList.remove('scale-95'), 120);
+        clearAll();
+        inputs[10].focus();
+      });
+
+      async function copyText(text) {
+        if (!text) {
+          throw new Error('当前没有可复制的内容。');
+        }
+
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return;
+        }
+
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.setAttribute('readonly', '');
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(textarea);
+        if (!ok) throw new Error('复制失败，请手动选择文本复制。');
+      }
+
+      document.querySelectorAll('.copyBtn').forEach(button => {
+        button.addEventListener('click', async () => {
+          const target = document.getElementById(button.dataset.copy);
+          const originalText = button.textContent;
+
+          try {
+            await copyText(target.value.trim());
+            button.textContent = '已复制';
+            button.classList.add('bg-emerald-500/20', 'text-emerald-100', 'copy-pop');
+            clearError();
+          } catch (err) {
+            setError(err && err.message ? err.message : '复制失败，请稍后重试。');
+          } finally {
+            setTimeout(() => {
+              button.textContent = originalText;
+              button.classList.remove('bg-emerald-500/20', 'text-emerald-100', 'copy-pop');
+            }, 1100);
+          }
+        });
+      });
+
+      clearSummary();
+    })();
+  </script>
+</body>
+</html>

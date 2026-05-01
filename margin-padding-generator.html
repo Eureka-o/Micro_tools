@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="margin-padding-generator 是一款 CSS 边距可视化工具，可通过滑块实时调整上下左右 Margin 与 Padding，预览盒模型变化并一键生成 CSS 代码。" />
+  <meta name="keywords" content="margin-padding-generator,CSS边距可视化工具,margin生成器,padding生成器,CSS盒模型工具,CSS margin padding代码生成器,前端布局工具" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>margin-padding-generator - CSS 边距可视化工具</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          boxShadow: {
+            glow: "0 0 40px rgba(56, 189, 248, 0.22)"
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+  <div class="pointer-events-none fixed inset-0 overflow-hidden">
+    <div class="absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-violet-600/20 blur-3xl"></div>
+  </div>
+
+  <header class="relative border-b border-white/10 bg-slate-950/80 backdrop-blur">
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+            CSS Box Model Visual Generator
+          </p>
+          <h1 class="text-3xl font-bold tracking-tight text-white sm:text-5xl">margin-padding-generator</h1>
+          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-300">
+            使用滑块实时调整上下左右 Margin 与 Padding，可视化理解 CSS 盒模型，并立即生成可复制的生产级 CSS 代码。
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 shadow-glow">
+          <p class="text-sm text-slate-400">当前单位</p>
+          <p class="text-2xl font-semibold text-cyan-200">px</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <div class="rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-2xl backdrop-blur">
+          <div class="mb-5 flex items-center justify-between gap-3">
+            <div>
+              <h2 class="text-xl font-semibold text-white">输入控制区</h2>
+              <p class="mt-1 text-sm text-slate-400">拖动滑块或输入数值，范围 0 - 120 px。</p>
+            </div>
+            <button id="resetBtn" type="button" class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-cyan-300/50 hover:bg-cyan-400/10 active:scale-95">
+              重置
+            </button>
+          </div>
+
+          <div id="errorBox" class="mb-4 hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm text-red-200" role="alert"></div>
+
+          <div class="space-y-6">
+            <div class="rounded-2xl bg-slate-950/70 p-4 ring-1 ring-white/10">
+              <h3 class="mb-4 flex items-center gap-2 font-semibold text-cyan-200">
+                <span class="h-2 w-2 rounded-full bg-cyan-300"></span>
+                Margin 外边距
+              </h3>
+              <div class="space-y-4" id="marginControls"></div>
+            </div>
+
+            <div class="rounded-2xl bg-slate-950/70 p-4 ring-1 ring-white/10">
+              <h3 class="mb-4 flex items-center gap-2 font-semibold text-violet-200">
+                <span class="h-2 w-2 rounded-full bg-violet-300"></span>
+                Padding 内边距
+              </h3>
+              <div class="space-y-4" id="paddingControls"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5">
+        <div class="h-full rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900 to-slate-950 p-5 shadow-2xl">
+          <div class="mb-5">
+            <h2 class="text-xl font-semibold text-white">实时可视化预览</h2>
+            <p class="mt-1 text-sm text-slate-400">青色区域代表 Margin，紫色区域代表 Padding，中间为内容盒子。</p>
+          </div>
+
+          <div class="overflow-auto rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_1px_1px,rgba(148,163,184,0.24)_1px,transparent_0)] [background-size:18px_18px] p-4 sm:p-8">
+            <div class="mx-auto flex min-h-[420px] min-w-[320px] items-center justify-center">
+              <div id="marginBox" class="relative rounded-2xl bg-cyan-400/20 outline outline-1 outline-dashed outline-cyan-300/70 transition-all duration-150">
+                <span class="absolute left-3 top-3 rounded-lg bg-cyan-300/20 px-2 py-1 text-xs font-semibold text-cyan-100 ring-1 ring-cyan-200/30">margin</span>
+                <div id="paddingBox" class="relative rounded-xl bg-violet-400/25 outline outline-1 outline-dashed outline-violet-200/80 transition-all duration-150">
+                  <span class="absolute left-3 top-3 rounded-lg bg-violet-300/20 px-2 py-1 text-xs font-semibold text-violet-100 ring-1 ring-violet-200/30">padding</span>
+                  <div id="contentBox" class="flex h-32 w-40 items-center justify-center rounded-lg border border-white/20 bg-slate-100 text-center text-sm font-bold text-slate-900 shadow-xl sm:h-36 sm:w-48">
+                    Content Box
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div class="rounded-2xl border border-cyan-300/20 bg-cyan-400/10 p-3">
+              <p class="text-xs text-cyan-100/80">Margin Top</p>
+              <p id="statMarginTop" class="mt-1 text-lg font-semibold text-cyan-100">0px</p>
+            </div>
+            <div class="rounded-2xl border border-cyan-300/20 bg-cyan-400/10 p-3">
+              <p class="text-xs text-cyan-100/80">Margin Right</p>
+              <p id="statMarginRight" class="mt-1 text-lg font-semibold text-cyan-100">0px</p>
+            </div>
+            <div class="rounded-2xl border border-violet-300/20 bg-violet-400/10 p-3">
+              <p class="text-xs text-violet-100/80">Padding Bottom</p>
+              <p id="statPaddingBottom" class="mt-1 text-lg font-semibold text-violet-100">0px</p>
+            </div>
+            <div class="rounded-2xl border border-violet-300/20 bg-violet-400/10 p-3">
+              <p class="text-xs text-violet-100/80">Padding Left</p>
+              <p id="statPaddingLeft" class="mt-1 text-lg font-semibold text-violet-100">0px</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-3">
+        <div class="sticky top-6 rounded-3xl border border-white/10 bg-white/[0.06] p-5 shadow-2xl backdrop-blur">
+          <div class="mb-4 flex items-center justify-between gap-3">
+            <div>
+              <h2 class="text-xl font-semibold text-white">输出代码区</h2>
+              <p class="mt-1 text-sm text-slate-400">自动生成 CSS。</p>
+            </div>
+            <button id="copyBtn" type="button" class="rounded-xl bg-cyan-400 px-4 py-2 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95">
+              复制
+            </button>
+          </div>
+
+          <pre class="max-h-[480px] overflow-auto rounded-2xl border border-white/10 bg-slate-950 p-4 text-sm leading-6 text-slate-100"><code id="cssOutput"></code></pre>
+
+          <div id="copyStatus" class="mt-4 hidden rounded-2xl border border-emerald-400/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200" role="status"></div>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-white/10 bg-slate-900/70 p-6 leading-8 text-slate-300 shadow-2xl backdrop-blur sm:p-8">
+      <h2 class="mb-4 text-2xl font-bold text-white">关于 CSS 边距可视化工具</h2>
+      <p>
+        margin-padding-generator 是一款面向前端开发者、网页设计师和学习者的 CSS 边距可视化工具。许多布局问题都来自对 CSS 盒模型理解不清，例如元素之间为什么出现空隙、内容区域为什么被挤压、组件在响应式页面中为什么对不齐。本工具通过上下左右 Margin 与 Padding 滑块，把抽象的外边距和内边距转换成直观的实时预览，让你快速观察内容盒子、内边距区域和外边距区域的变化关系。使用时，只需拖动滑块或输入具体像素值，页面会立即更新中心盒子的视觉效果，并同步生成可复制的 CSS margin padding 代码。它适合用于快速制作按钮、卡片、表单、文章容器等常见组件的间距方案，也适合作为 CSS 盒模型在线练习工具。对于需要提升开发效率的人来说，这个 CSS margin padding 代码生成器能够减少反复调试浏览器样式的时间，帮助你更准确地完成网页布局、组件间距设计和前端样式交付。
+      </p>
+    </article>
+  </main>
+
+  <footer class="relative border-t border-white/10 px-4 py-8 text-center text-sm text-slate-500">
+    <p>margin-padding-generator · CSS Box Model Visual Tool</p>
+  </footer>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const MAX_VALUE = 120;
+      const MIN_VALUE = 0;
+      const sides = [
+        { key: "top", label: "上 Top" },
+        { key: "right", label: "右 Right" },
+        { key: "bottom", label: "下 Bottom" },
+        { key: "left", label: "左 Left" }
+      ];
+
+      const state = {
+        margin: { top: 24, right: 24, bottom: 24, left: 24 },
+        padding: { top: 32, right: 32, bottom: 32, left: 32 }
+      };
+
+      const defaultState = JSON.parse(JSON.stringify(state));
+
+      const els = {
+        marginControls: document.getElementById("marginControls"),
+        paddingControls: document.getElementById("paddingControls"),
+        marginBox: document.getElementById("marginBox"),
+        paddingBox: document.getElementById("paddingBox"),
+        contentBox: document.getElementById("contentBox"),
+        cssOutput: document.getElementById("cssOutput"),
+        errorBox: document.getElementById("errorBox"),
+        copyBtn: document.getElementById("copyBtn"),
+        resetBtn: document.getElementById("resetBtn"),
+        copyStatus: document.getElementById("copyStatus"),
+        statMarginTop: document.getElementById("statMarginTop"),
+        statMarginRight: document.getElementById("statMarginRight"),
+        statPaddingBottom: document.getElementById("statPaddingBottom"),
+        statPaddingLeft: document.getElementById("statPaddingLeft")
+      };
+
+      const inputRefs = new Map();
+      let errorTimer = null;
+      let statusTimer = null;
+
+      function clamp(num) {
+        if (!Number.isFinite(num)) return null;
+        return Math.max(MIN_VALUE, Math.min(MAX_VALUE, Math.round(num)));
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      function showError(message) {
+        clearTimeout(errorTimer);
+        els.errorBox.textContent = message;
+        els.errorBox.classList.remove("hidden");
+        errorTimer = setTimeout(() => {
+          els.errorBox.classList.add("hidden");
+        }, 4200);
+      }
+
+      function showStatus(message, isSuccess = true) {
+        clearTimeout(statusTimer);
+        els.copyStatus.textContent = message;
+        els.copyStatus.classList.remove("hidden", "border-red-400/40", "bg-red-500/10", "text-red-200", "border-emerald-400/40", "bg-emerald-500/10", "text-emerald-200");
+        if (isSuccess) {
+          els.copyStatus.classList.add("border-emerald-400/40", "bg-emerald-500/10", "text-emerald-200");
+        } else {
+          els.copyStatus.classList.add("border-red-400/40", "bg-red-500/10", "text-red-200");
+        }
+        statusTimer = setTimeout(() => {
+          els.copyStatus.classList.add("hidden");
+        }, 2600);
+      }
+
+      function shorthand(values) {
+        const top = values.top;
+        const right = values.right;
+        const bottom = values.bottom;
+        const left = values.left;
+
+        if (top === right && right === bottom && bottom === left) return `${top}px`;
+        if (top === bottom && right === left) return `${top}px ${right}px`;
+        if (right === left) return `${top}px ${right}px ${bottom}px`;
+        return `${top}px ${right}px ${bottom}px ${left}px`;
+      }
+
+      function generateControl(group, side) {
+        const id = `${group}-${side.key}`;
+        const colorClass = group === "margin" ? "accent-cyan-300" : "accent-violet-300";
+        const labelColor = group === "margin" ? "text-cyan-100" : "text-violet-100";
+
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = `
+          <label for="${id}-range" class="mb-2 flex items-center justify-between gap-3 text-sm">
+            <span class="font-medium ${labelColor}">${escapeHtml(side.label)}</span>
+            <span class="text-slate-400"><span id="${id}-value">${state[group][side.key]}</span>px</span>
+          </label>
+          <div class="grid grid-cols-[1fr_76px] items-center gap-3">
+            <input id="${id}-range" type="range" min="${MIN_VALUE}" max="${MAX_VALUE}" step="1" value="${state[group][side.key]}" class="h-2 w-full cursor-pointer ${colorClass}">
+            <input id="${id}-number" type="number" inputmode="numeric" min="${MIN_VALUE}" max="${MAX_VALUE}" step="1" value="${state[group][side.key]}" aria-label="${group} ${side.label}" class="w-full rounded-xl border border-white/10 bg-slate-900 px-3 py-2 text-right text-sm text-white outline-none transition focus:border-cyan-300/70 focus:ring-2 focus:ring-cyan-300/20">
+          </div>
+        `;
+
+        const range = wrapper.querySelector(`#${id}-range`);
+        const number = wrapper.querySelector(`#${id}-number`);
+        const value = wrapper.querySelector(`#${id}-value`);
+        inputRefs.set(id, { range, number, value });
+
+        range.addEventListener("input", () => {
+          const next = clamp(Number(range.value));
+          if (next === null) {
+            showError("滑块数值异常，已自动恢复为 0。");
+            updateValue(group, side.key, 0);
+            return;
+          }
+          updateValue(group, side.key, next);
+        });
+
+        number.addEventListener("input", () => {
+          const raw = number.value.trim();
+          if (raw === "") {
+            number.classList.add("border-red-400", "focus:border-red-300", "focus:ring-red-300/20");
+            showError("请输入 0 到 120 之间的数字。");
+            return;
+          }
+
+          const parsed = Number(raw);
+          const next = clamp(parsed);
+          if (next === null || parsed < MIN_VALUE || parsed > MAX_VALUE) {
+            number.classList.add("border-red-400", "focus:border-red-300", "focus:ring-red-300/20");
+            showError("输入无效：数值必须是 0 到 120 之间的数字。");
+            return;
+          }
+
+          number.classList.remove("border-red-400", "focus:border-red-300", "focus:ring-red-300/20");
+          updateValue(group, side.key, next);
+        });
+
+        number.addEventListener("blur", () => {
+          const parsed = clamp(Number(number.value));
+          if (parsed === null) {
+            updateValue(group, side.key, state[group][side.key]);
+          } else {
+            updateValue(group, side.key, parsed);
+          }
+          number.classList.remove("border-red-400", "focus:border-red-300", "focus:ring-red-300/20");
+        });
+
+        return wrapper;
+      }
+
+      function updateValue(group, key, value) {
+        state[group][key] = value;
+        const ref = inputRefs.get(`${group}-${key}`);
+        if (ref) {
+          ref.range.value = value;
+          ref.number.value = value;
+          ref.value.textContent = value;
+        }
+        render();
+      }
+
+      function renderControls() {
+        els.marginControls.innerHTML = "";
+        els.paddingControls.innerHTML = "";
+        sides.forEach(side => {
+          els.marginControls.appendChild(generateControl("margin", side));
+          els.paddingControls.appendChild(generateControl("padding", side));
+        });
+      }
+
+      function render() {
+        const m = state.margin;
+        const p = state.padding;
+
+        els.marginBox.style.padding = `${m.top}px ${m.right}px ${m.bottom}px ${m.left}px`;
+        els.paddingBox.style.padding = `${p.top}px ${p.right}px ${p.bottom}px ${p.left}px`;
+
+        const css = `.box {
+  margin: ${shorthand(m)};
+  padding: ${shorthand(p)};
+}
+
+/* Expanded properties */
+.box {
+  margin-top: ${m.top}px;
+  margin-right: ${m.right}px;
+  margin-bottom: ${m.bottom}px;
+  margin-left: ${m.left}px;
+
+  padding-top: ${p.top}px;
+  padding-right: ${p.right}px;
+  padding-bottom: ${p.bottom}px;
+  padding-left: ${p.left}px;
+}`;
+
+        els.cssOutput.textContent = css;
+        els.statMarginTop.textContent = `${m.top}px`;
+        els.statMarginRight.textContent = `${m.right}px`;
+        els.statPaddingBottom.textContent = `${p.bottom}px`;
+        els.statPaddingLeft.textContent = `${p.left}px`;
+      }
+
+      async function copyCode() {
+        const code = els.cssOutput.textContent || "";
+        if (!code.trim()) {
+          showStatus("当前没有可复制的 CSS 代码。", false);
+          return;
+        }
+
+        els.copyBtn.classList.add("scale-95", "bg-emerald-300");
+        setTimeout(() => els.copyBtn.classList.remove("scale-95", "bg-emerald-300"), 180);
+
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(code);
+          } else {
+            const textarea = document.createElement("textarea");
+            textarea.value = code;
+            textarea.setAttribute("readonly", "readonly");
+            textarea.style.position = "fixed";
+            textarea.style.left = "-9999px";
+            document.body.appendChild(textarea);
+            textarea.select();
+            const ok = document.execCommand("copy");
+            document.body.removeChild(textarea);
+            if (!ok) throw new Error("Copy command failed");
+          }
+          showStatus("CSS 代码已复制到剪贴板。", true);
+        } catch (err) {
+          showStatus("复制失败，请手动选中代码复制。", false);
+        }
+      }
+
+      function resetAll() {
+        Object.keys(defaultState.margin).forEach(key => {
+          updateValue("margin", key, defaultState.margin[key]);
+        });
+        Object.keys(defaultState.padding).forEach(key => {
+          updateValue("padding", key, defaultState.padding[key]);
+        });
+        els.resetBtn.classList.add("scale-95", "border-cyan-300/70", "bg-cyan-400/10");
+        setTimeout(() => els.resetBtn.classList.remove("scale-95", "border-cyan-300/70", "bg-cyan-400/10"), 180);
+      }
+
+      els.copyBtn.addEventListener("click", copyCode);
+      els.resetBtn.addEventListener("click", resetAll);
+
+      window.addEventListener("error", () => {
+        showError("页面遇到异常但已安全处理，请继续使用或点击重置。");
+      });
+
+      renderControls();
+      render();
+    })();
+  </script>
+</body>
+</html>

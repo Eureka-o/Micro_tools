@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="image-compressor 是一款纯前端 WebP 图片压缩转换器，可在浏览器中将 PNG、JPG、JPEG 图片通过 HTML5 Canvas 转换为高压缩比 WebP 格式并下载，保护隐私、快速高效。" />
+  <meta name="keywords" content="image-compressor, WebP图片压缩, PNG转WebP, JPG转WebP, 图片压缩工具, 在线图片转换器, 前端图片压缩, Canvas图片压缩, 高压缩比WebP" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>image-compressor - 纯前端 WebP 图片压缩转换器</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <div class="absolute inset-0 -z-10 overflow-hidden">
+    <div class="absolute left-1/2 top-[-10rem] h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute bottom-[-12rem] right-[-8rem] h-[30rem] w-[30rem] rounded-full bg-indigo-500/20 blur-3xl"></div>
+  </div>
+
+  <header class="border-b border-white/10 bg-slate-950/70 backdrop-blur">
+    <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+            纯前端 · 隐私安全 · WebP 高压缩
+          </p>
+          <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl">image-compressor</h1>
+          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">
+            上传 PNG / JPG 图片，在浏览器本地通过 HTML5 Canvas 转换并压缩为 WebP 格式，无需上传服务器。
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-sm text-slate-300 shadow-2xl">
+          <div class="flex items-center gap-2">
+            <span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
+            <span>本地处理，文件不离开你的设备</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-2">
+      <div class="rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-2xl sm:p-7">
+        <div class="mb-6 flex items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-semibold text-white">输入区</h2>
+            <p class="mt-1 text-sm text-slate-400">选择 PNG、JPG 或 JPEG 图片，可一次选择多张。</p>
+          </div>
+          <span class="rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-300">Input</span>
+        </div>
+
+        <div id="dropZone" class="group flex min-h-56 cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-600 bg-slate-950/60 p-6 text-center transition hover:border-cyan-400 hover:bg-cyan-400/5">
+          <svg class="mb-4 h-12 w-12 text-cyan-300 transition group-hover:scale-110" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5a4.5 4.5 0 0 1-.96-8.898 5.25 5.25 0 0 1 10.233-2.33 3.75 3.75 0 0 1 1.977 7.071M6.75 19.5h10.5" />
+          </svg>
+          <p class="text-lg font-medium text-white">点击选择图片或拖拽到此处</p>
+          <p class="mt-2 text-sm text-slate-400">支持 .png、.jpg、.jpeg，单张建议不超过 20MB</p>
+          <input id="fileInput" type="file" accept="image/png,image/jpeg" multiple class="hidden" />
+        </div>
+
+        <div id="errorBox" class="mt-5 hidden rounded-2xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-200" role="alert"></div>
+        <div id="successBox" class="mt-5 hidden rounded-2xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200" role="status"></div>
+
+        <div class="mt-6 grid gap-5 sm:grid-cols-2">
+          <label class="block rounded-2xl bg-slate-950/60 p-4">
+            <span class="mb-3 flex items-center justify-between text-sm font-medium text-slate-200">
+              WebP 质量
+              <strong id="qualityValue" class="text-cyan-300">75%</strong>
+            </span>
+            <input id="qualityRange" type="range" min="10" max="100" value="75" class="h-2 w-full cursor-pointer accent-cyan-400" />
+            <span class="mt-2 block text-xs text-slate-500">数值越低体积越小，画质也会下降。</span>
+          </label>
+
+          <label class="block rounded-2xl bg-slate-950/60 p-4">
+            <span class="mb-3 block text-sm font-medium text-slate-200">最大宽度（可选）</span>
+            <input id="maxWidthInput" type="number" min="1" max="20000" placeholder="例如 1920" class="w-full rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20" />
+            <span class="mt-2 block text-xs text-slate-500">留空则保持原始尺寸，输入后按比例缩放。</span>
+          </label>
+        </div>
+
+        <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+          <button id="compressBtn" class="inline-flex flex-1 items-center justify-center rounded-2xl bg-cyan-400 px-5 py-3 font-semibold text-slate-950 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-slate-400 disabled:shadow-none">
+            开始压缩转换
+          </button>
+          <button id="resetBtn" class="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-slate-200 transition hover:bg-white/10 active:scale-[0.98]">
+            清空
+          </button>
+        </div>
+
+        <div id="fileList" class="mt-6 space-y-3"></div>
+      </div>
+
+      <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/20 p-5 shadow-2xl sm:p-7">
+        <div class="mb-6 flex items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-semibold text-white">输出区</h2>
+            <p class="mt-1 text-sm text-cyan-100/70">查看压缩结果，下载 WebP 图片。</p>
+          </div>
+          <span class="rounded-full bg-cyan-400/10 px-3 py-1 text-xs text-cyan-200">Output</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div class="rounded-2xl border border-white/10 bg-slate-950/50 p-4">
+            <p class="text-xs text-slate-400">已选文件</p>
+            <p id="statFiles" class="mt-2 text-2xl font-bold text-white">0</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-slate-950/50 p-4">
+            <p class="text-xs text-slate-400">原始大小</p>
+            <p id="statOriginal" class="mt-2 text-2xl font-bold text-white">0 KB</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-slate-950/50 p-4">
+            <p class="text-xs text-slate-400">压缩后</p>
+            <p id="statCompressed" class="mt-2 text-2xl font-bold text-white">0 KB</p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-slate-950/50 p-4">
+            <p class="text-xs text-slate-400">节省比例</p>
+            <p id="statSaved" class="mt-2 text-2xl font-bold text-emerald-300">0%</p>
+          </div>
+        </div>
+
+        <div id="progressWrap" class="mt-6 hidden">
+          <div class="mb-2 flex items-center justify-between text-sm text-slate-300">
+            <span id="progressText">处理中...</span>
+            <span id="progressPercent">0%</span>
+          </div>
+          <div class="h-3 overflow-hidden rounded-full bg-slate-800">
+            <div id="progressBar" class="h-full w-0 rounded-full bg-cyan-400 transition-all duration-300"></div>
+          </div>
+        </div>
+
+        <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+          <button id="downloadAllBtn" disabled class="inline-flex flex-1 items-center justify-center rounded-2xl bg-emerald-400 px-5 py-3 font-semibold text-slate-950 shadow-lg shadow-emerald-400/20 transition hover:bg-emerald-300 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-slate-400 disabled:shadow-none">
+            下载全部 WebP
+          </button>
+          <button id="copyReportBtn" disabled class="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-slate-200 transition hover:bg-white/10 active:scale-[0.98] disabled:cursor-not-allowed disabled:text-slate-500">
+            复制结果
+          </button>
+        </div>
+
+        <div id="resultList" class="mt-6 space-y-4">
+          <div class="rounded-3xl border border-white/10 bg-slate-950/40 p-8 text-center text-slate-400">
+            转换后的 WebP 图片会显示在这里。
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-10 rounded-3xl border border-white/10 bg-white/[0.04] p-6 leading-8 text-slate-300 shadow-2xl sm:p-8">
+      <h2 class="mb-4 text-2xl font-bold text-white">关于 image-compressor WebP 图片压缩转换器</h2>
+      <p>
+        image-compressor 是一款面向设计师、站长、前端开发者和内容运营人员的纯前端 WebP 图片压缩工具。它通过 HTML5 Canvas 在浏览器本地读取 PNG、JPG、JPEG 图片，并将其转换为体积更小、加载更快的 WebP 格式，适合用于网站性能优化、移动端页面提速、博客配图压缩和电商商品图处理。与传统在线图片压缩网站不同，本工具不会把图片上传到服务器，所有转换过程都在你的设备中完成，既能减少等待时间，也能更好地保护隐私数据。使用时只需拖拽或选择图片，调整 WebP 质量参数，必要时设置最大宽度，然后点击开始压缩转换，即可下载生成的 WebP 文件。对于正在寻找“PNG 转 WebP 在线工具”“JPG 图片压缩为 WebP”“无需上传的前端图片压缩器”等解决方案的用户，image-compressor 能提供快速、简洁、可靠的体验，帮助降低图片体积、提升网页打开速度，并改善 SEO 与核心网页指标表现。
+      </p>
+    </article>
+  </main>
+
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
+    <p>image-compressor · Browser-side WebP Converter</p>
+  </footer>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const dropZone = document.getElementById('dropZone');
+    const qualityRange = document.getElementById('qualityRange');
+    const qualityValue = document.getElementById('qualityValue');
+    const maxWidthInput = document.getElementById('maxWidthInput');
+    const compressBtn = document.getElementById('compressBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const fileList = document.getElementById('fileList');
+    const resultList = document.getElementById('resultList');
+    const errorBox = document.getElementById('errorBox');
+    const successBox = document.getElementById('successBox');
+    const progressWrap = document.getElementById('progressWrap');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const progressPercent = document.getElementById('progressPercent');
+    const downloadAllBtn = document.getElementById('downloadAllBtn');
+    const copyReportBtn = document.getElementById('copyReportBtn');
+    const statFiles = document.getElementById('statFiles');
+    const statOriginal = document.getElementById('statOriginal');
+    const statCompressed = document.getElementById('statCompressed');
+    const statSaved = document.getElementById('statSaved');
+
+    let selectedFiles = [];
+    let results = [];
+    let isProcessing = false;
+
+    function showError(message) {
+      errorBox.textContent = message;
+      errorBox.classList.remove('hidden');
+      successBox.classList.add('hidden');
+    }
+
+    function showSuccess(message) {
+      successBox.textContent = message;
+      successBox.classList.remove('hidden');
+      errorBox.classList.add('hidden');
+    }
+
+    function clearMessages() {
+      errorBox.classList.add('hidden');
+      successBox.classList.add('hidden');
+      errorBox.textContent = '';
+      successBox.textContent = '';
+    }
+
+    function formatBytes(bytes) {
+      const safeBytes = Number.isFinite(bytes) && bytes > 0 ? bytes : 0;
+      if (safeBytes < 1024) return safeBytes + ' B';
+      if (safeBytes < 1024 * 1024) return (safeBytes / 1024).toFixed(1) + ' KB';
+      return (safeBytes / 1024 / 1024).toFixed(2) + ' MB';
+    }
+
+    function sanitizeFileName(name) {
+      const base = String(name || 'image').replace(/\.[^.]+$/, '').replace(/[\\/:*?"<>|]+/g, '-').trim();
+      return (base || 'image') + '.webp';
+    }
+
+    function isValidImageFile(file) {
+      return file && (file.type === 'image/png' || file.type === 'image/jpeg' || /\.(png|jpe?g)$/i.test(file.name || ''));
+    }
+
+    function updateQualityLabel() {
+      qualityValue.textContent = `${qualityRange.value}%`;
+    }
+
+    function renderFileList() {
+      statFiles.textContent = String(selectedFiles.length);
+      const totalOriginal = selectedFiles.reduce((sum, file) => sum + file.size, 0);
+      statOriginal.textContent = formatBytes(totalOriginal);
+
+      if (!selectedFiles.length) {
+        fileList.innerHTML = '';
+        return;
+      }
+
+      fileList.innerHTML = selectedFiles.map((file, index) => `
+        <div class="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-slate-950/50 p-4">
+          <div class="min-w-0">
+            <p class="truncate font-medium text-slate-100">${escapeHtml(file.name)}</p>
+            <p class="mt-1 text-xs text-slate-500">${escapeHtml(file.type || '未知类型')} · ${formatBytes(file.size)}</p>
+          </div>
+          <button type="button" data-remove="${index}" class="shrink-0 rounded-xl border border-red-400/30 bg-red-400/10 px-3 py-2 text-xs font-semibold text-red-200 transition hover:bg-red-400/20">移除</button>
+        </div>
+      `).join('');
+
+      fileList.querySelectorAll('[data-remove]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = Number(btn.getAttribute('data-remove'));
+          if (Number.isInteger(idx) && idx >= 0 && idx < selectedFiles.length) {
+            selectedFiles.splice(idx, 1);
+            results = [];
+            renderFileList();
+            renderResults();
+            updateStats();
+            clearMessages();
+          }
+        });
+      });
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, char => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      }[char]));
+    }
+
+    function updateStats() {
+      const totalOriginal = selectedFiles.reduce((sum, file) => sum + file.size, 0);
+      const totalCompressed = results.reduce((sum, item) => sum + item.blob.size, 0);
+      statFiles.textContent = String(selectedFiles.length);
+      statOriginal.textContent = formatBytes(totalOriginal);
+      statCompressed.textContent = formatBytes(totalCompressed);
+      const saved = totalOriginal > 0 && totalCompressed > 0 ? Math.max(-999, Math.round((1 - totalCompressed / totalOriginal) * 100)) : 0;
+      statSaved.textContent = `${saved}%`;
+      statSaved.className = `mt-2 text-2xl font-bold ${saved >= 0 ? 'text-emerald-300' : 'text-amber-300'}`;
+      downloadAllBtn.disabled = results.length === 0;
+      copyReportBtn.disabled = results.length === 0;
+    }
+
+    function setProgress(current, total) {
+      const percent = total > 0 ? Math.round((current / total) * 100) : 0;
+      progressWrap.classList.remove('hidden');
+      progressBar.style.width = `${percent}%`;
+      progressPercent.textContent = `${percent}%`;
+      progressText.textContent = current >= total ? '处理完成' : `正在处理 ${current} / ${total}`;
+    }
+
+    function resetProgress() {
+      progressBar.style.width = '0%';
+      progressPercent.textContent = '0%';
+      progressText.textContent = '处理中...';
+      progressWrap.classList.add('hidden');
+    }
+
+    function renderResults() {
+      if (!results.length) {
+        resultList.innerHTML = '<div class="rounded-3xl border border-white/10 bg-slate-950/40 p-8 text-center text-slate-400">转换后的 WebP 图片会显示在这里。</div>';
+        return;
+      }
+
+      resultList.innerHTML = results.map((item, index) => {
+        const saved = item.originalSize > 0 ? Math.round((1 - item.blob.size / item.originalSize) * 100) : 0;
+        return `
+          <div class="rounded-3xl border border-white/10 bg-slate-950/50 p-4">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+              <img src="${item.url}" alt="${escapeHtml(item.outputName)} 预览" class="h-28 w-full rounded-2xl bg-slate-900 object-contain sm:w-36" />
+              <div class="min-w-0 flex-1">
+                <h3 class="truncate font-semibold text-white">${escapeHtml(item.outputName)}</h3>
+                <div class="mt-2 grid gap-1 text-sm text-slate-400">
+                  <p>尺寸：${item.width} × ${item.height}px</p>
+                  <p>原始：${formatBytes(item.originalSize)} → WebP：${formatBytes(item.blob.size)}</p>
+                  <p class="${saved >= 0 ? 'text-emerald-300' : 'text-amber-300'}">体积变化：${saved}%</p>
+                </div>
+              </div>
+              <button type="button" data-download="${index}" class="rounded-2xl bg-cyan-400 px-5 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300 active:scale-[0.98]">下载</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      resultList.querySelectorAll('[data-download]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = Number(btn.getAttribute('data-download'));
+          if (Number.isInteger(idx) && results[idx]) {
+            downloadBlob(results[idx].blob, results[idx].outputName);
+          }
+        });
+      });
+    }
+
+    function downloadBlob(blob, filename) {
+      try {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      } catch (err) {
+        showError('下载失败，请重试或检查浏览器下载权限。');
+      }
+    }
+
+    function canExportWebP() {
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1;
+        canvas.height = 1;
+        return canvas.toDataURL('image/webp').startsWith('data:image/webp');
+      } catch (err) {
+        return false;
+      }
+    }
+
+    function loadImageFromFile(file) {
+      return new Promise((resolve, reject) => {
+        const url = URL.createObjectURL(file);
+        const img = new Image();
+        img.onload = () => {
+          URL.revokeObjectURL(url);
+          resolve(img);
+        };
+        img.onerror = () => {
+          URL.revokeObjectURL(url);
+          reject(new Error('图片读取失败，文件可能已损坏或格式不受支持。'));
+        };
+        img.src = url;
+      });
+    }
+
+    function canvasToBlob(canvas, quality) {
+      return new Promise((resolve, reject) => {
+        try {
+          canvas.toBlob(blob => {
+            if (!blob || blob.size === 0) {
+              reject(new Error('WebP 导出失败，当前浏览器可能不支持 WebP 编码。'));
+              return;
+            }
+            resolve(blob);
+          }, 'image/webp', quality);
+        } catch (err) {
+          reject(new Error('WebP 导出失败，请更换现代浏览器后重试。'));
+        }
+      });
+    }
+
+    async function compressFile(file, quality, maxWidth) {
+      if (!isValidImageFile(file)) {
+        throw new Error(`“${file.name || '未知文件'}”不是有效的 PNG/JPG 图片。`);
+      }
+
+      const img = await loadImageFromFile(file);
+      const originalWidth = img.naturalWidth || img.width;
+      const originalHeight = img.naturalHeight || img.height;
+
+      if (!originalWidth || !originalHeight) {
+        throw new Error(`“${file.name}”无法获取图片尺寸。`);
+      }
+
+      let targetWidth = originalWidth;
+      let targetHeight = originalHeight;
+
+      if (maxWidth && maxWidth > 0 && originalWidth > maxWidth) {
+        targetWidth = maxWidth;
+        targetHeight = Math.max(1, Math.round(originalHeight * (targetWidth / originalWidth)));
+      }
+
+      const maxCanvasSide = 16384;
+      if (targetWidth > maxCanvasSide || targetHeight > maxCanvasSide) {
+        const ratio = Math.min(maxCanvasSide / targetWidth, maxCanvasSide / targetHeight);
+        targetWidth = Math.max(1, Math.floor(targetWidth * ratio));
+        targetHeight = Math.max(1, Math.floor(targetHeight * ratio));
+      }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
+      const ctx = canvas.getContext('2d', { alpha: true });
+
+      if (!ctx) {
+        throw new Error('浏览器无法创建 Canvas 绘图上下文。');
+      }
+
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.clearRect(0, 0, targetWidth, targetHeight);
+      ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+
+      const blob = await canvasToBlob(canvas, quality);
+      const url = URL.createObjectURL(blob);
+
+      return {
+        originalName: file.name,
+        outputName: sanitizeFileName(file.name),
+        originalSize: file.size,
+        blob,
+        url,
+        width: targetWidth,
+        height: targetHeight
+      };
+    }
+
+    function handleFiles(fileLikeList) {
+      clearMessages();
+      const incoming = Array.from(fileLikeList || []);
+      if (!incoming.length) {
+        showError('没有检测到文件，请选择 PNG、JPG 或 JPEG 图片。');
+        return;
+      }
+
+      const valid = [];
+      const invalid = [];
+
+      incoming.forEach(file => {
+        if (isValidImageFile(file)) valid.push(file);
+        else invalid.push(file.name || '未知文件');
+      });
+
+      if (invalid.length) {
+        showError(`已忽略不支持的文件：${invalid.slice(0, 5).join('、')}${invalid.length > 5 ? ' 等' : ''}。请上传 PNG、JPG 或 JPEG 图片。`);
+      } else {
+        showSuccess(`已选择 ${valid.length} 张图片，可开始压缩转换。`);
+      }
+
+      selectedFiles = selectedFiles.concat(valid);
+      const seen = new Set();
+      selectedFiles = selectedFiles.filter(file => {
+        const key = `${file.name}-${file.size}-${file.lastModified}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+
+      results.forEach(item => URL.revokeObjectURL(item.url));
+      results = [];
+      renderFileList();
+      renderResults();
+      updateStats();
+
+      if (!valid.length && !invalid.length) {
+        showError('未添加任何有效图片。');
+      }
+    }
+
+    async function startCompression() {
+      if (isProcessing) return;
+      clearMessages();
+
+      if (!canExportWebP()) {
+        showError('当前浏览器不支持 WebP 编码，请使用最新版 Chrome、Edge、Firefox 或 Safari。');
+        return;
+      }
+
+      if (!selectedFiles.length) {
+        showError('请先选择至少一张 PNG、JPG 或 JPEG 图片。');
+        return;
+      }
+
+      const qualityRaw = Number(qualityRange.value);
+      if (!Number.isFinite(qualityRaw) || qualityRaw < 10 || qualityRaw > 100) {
+        showError('WebP 质量参数无效，请选择 10 到 100 之间的数值。');
+        return;
+      }
+
+      const maxWidthText = maxWidthInput.value.trim();
+      let maxWidth = null;
+      if (maxWidthText !== '') {
+        maxWidth = Number(maxWidthText);
+        if (!Number.isInteger(maxWidth) || maxWidth < 1 || maxWidth > 20000) {
+          showError('最大宽度必须是 1 到 20000 之间的整数，或留空保持原始尺寸。');
+          return;
+        }
+      }
+
+      results.forEach(item => URL.revokeObjectURL(item.url));
+      results = [];
+      renderResults();
+      updateStats();
+
+      isProcessing = true;
+      compressBtn.disabled = true;
+      compressBtn.textContent = '压缩中...';
+      downloadAllBtn.disabled = true;
+      copyReportBtn.disabled = true;
+      setProgress(0, selectedFiles.length);
+
+      const errors = [];
+      const quality = qualityRaw / 100;
+
+      for (let i = 0; i < selectedFiles.length; i++) {
+        try {
+          setProgress(i, selectedFiles.length);
+          const result = await compressFile(selectedFiles[i], quality, maxWidth);
+          results.push(result);
+          renderResults();
+          updateStats();
+        } catch (err) {
+          errors.push(err && err.message ? err.message : `第 ${i + 1} 张图片处理失败。`);
+        }
+      }
+
+      setProgress(selectedFiles.length, selectedFiles.length);
+      isProcessing = false;
+      compressBtn.disabled = false;
+      compressBtn.textContent = '开始压缩转换';
+      updateStats();
+
+      if (results.length && errors.length) {
+        showError(`部分图片处理完成，但有 ${errors.length} 个错误：${errors.slice(0, 3).join('；')}`);
+      } else if (results.length) {
+        showSuccess(`转换完成！已生成 ${results.length} 个 WebP 文件。`);
+      } else {
+        showError(errors.length ? errors.slice(0, 3).join('；') : '未能生成 WebP 文件，请检查图片是否有效。');
+      }
+    }
+
+    function resetAll() {
+      selectedFiles = [];
+      results.forEach(item => URL.revokeObjectURL(item.url));
+      results = [];
+      fileInput.value = '';
+      maxWidthInput.value = '';
+      qualityRange.value = 75;
+      updateQualityLabel();
+      renderFileList();
+      renderResults();
+      updateStats();
+      resetProgress();
+      clearMessages();
+    }
+
+    function downloadAll() {
+      if (!results.length) {
+        showError('没有可下载的 WebP 文件。');
+        return;
+      }
+      results.forEach((item, index) => {
+        setTimeout(() => downloadBlob(item.blob, item.outputName), index * 250);
+      });
+      showSuccess(`已触发 ${results.length} 个 WebP 文件下载。`);
+    }
+
+    async function copyReport() {
+      if (!results.length) {
+        showError('没有可复制的转换结果。');
+        return;
+      }
+
+      const totalOriginal = selectedFiles.reduce((sum, file) => sum + file.size, 0);
+      const totalCompressed = results.reduce((sum, item) => sum + item.blob.size, 0);
+      const saved = totalOriginal > 0 ? Math.round((1 - totalCompressed / totalOriginal) * 100) : 0;
+      const lines = [
+        'image-compressor 转换结果',
+        `文件数量：${results.length}`,
+        `原始大小：${formatBytes(totalOriginal)}`,
+        `压缩后：${formatBytes(totalCompressed)}`,
+        `节省比例：${saved}%`,
+        ...results.map(item => `${item.originalName} -> ${item.outputName}，${formatBytes(item.originalSize)} -> ${formatBytes(item.blob.size)}，${item.width}x${item.height}px`)
+      ];
+
+      try {
+        await navigator.clipboard.writeText(lines.join('\n'));
+        showSuccess('转换结果已复制到剪贴板。');
+      } catch (err) {
+        showError('复制失败：当前浏览器或页面权限不允许访问剪贴板。');
+      }
+    }
+
+    dropZone.addEventListener('click', () => fileInput.click());
+
+    fileInput.addEventListener('change', event => {
+      handleFiles(event.target.files);
+      fileInput.value = '';
+    });
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropZone.addEventListener(eventName, event => {
+        event.preventDefault();
+        event.stopPropagation();
+        dropZone.classList.add('border-cyan-400', 'bg-cyan-400/10');
+      });
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropZone.addEventListener(eventName, event => {
+        event.preventDefault();
+        event.stopPropagation();
+        dropZone.classList.remove('border-cyan-400', 'bg-cyan-400/10');
+      });
+    });
+
+    dropZone.addEventListener('drop', event => {
+      const files = event.dataTransfer ? event.dataTransfer.files : [];
+      handleFiles(files);
+    });
+
+    qualityRange.addEventListener('input', updateQualityLabel);
+    compressBtn.addEventListener('click', startCompression);
+    resetBtn.addEventListener('click', resetAll);
+    downloadAllBtn.addEventListener('click', downloadAll);
+    copyReportBtn.addEventListener('click', copyReport);
+
+    updateQualityLabel();
+    updateStats();
+  </script>
+</body>
+</html>
