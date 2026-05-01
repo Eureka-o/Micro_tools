@@ -11,6 +11,7 @@
   <meta property="og:image" content="./assets/logo.png">
   <meta name="twitter:image" content="./assets/logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
 </head>
 <body class="min-h-screen bg-slate-950 text-slate-100">
   <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
@@ -446,8 +447,21 @@
           colorEl.value = color.toLowerCase();
           colorTextEl.value = color.toLowerCase();
 
-          const modules = generateQRCode(text);
-          renderQR(modules, pixelSize, color.toLowerCase());
+          if (typeof window.QRious !== 'function') {
+            throw new Error('二维码生成库加载失败，请刷新页面后重试。');
+          }
+
+          new window.QRious({
+            element: canvas,
+            value: text,
+            size: pixelSize,
+            padding: Math.max(16, Math.round(pixelSize * 0.08)),
+            level: 'Q',
+            foreground: color.toLowerCase(),
+            background: '#ffffff'
+          });
+          canvas.style.width = Math.min(pixelSize, 520) + 'px';
+          canvas.style.height = Math.min(pixelSize, 520) + 'px';
 
           currentValid = true;
           downloadBtn.disabled = false;
