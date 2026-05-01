@@ -13,30 +13,30 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen bg-slate-50 text-slate-950 antialiased" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans CJK SC', Arial, sans-serif;">
-  <header class="bg-slate-950 text-white">
+  <header class="bg-slate-950 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-900/20 via-transparent to-transparent text-white">
     <div class="mx-auto max-w-7xl px-4 pb-10 pt-24 sm:px-6 md:py-14 lg:px-8">
       <div class="mb-5 flex w-full items-center gap-3 md:w-auto">
         <img src="./assets/logo.png" alt="Micro Tools Matrix logo" class="h-12 w-12 rounded-xl bg-white/10 object-contain p-1.5 ring-1 ring-white/15 sm:h-14 sm:w-14">
         <p class="text-sm font-semibold uppercase tracking-[0.25em] text-cyan-300">Micro Tools Matrix</p>
       </div>
-      <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end">
+      <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_24rem] lg:items-center">
         <div>
-          <h1 class="max-w-4xl text-3xl font-bold tracking-tight sm:text-4xl lg:text-6xl">开发者与生产力工具箱</h1>
+          <h1 class="max-w-4xl text-3xl font-bold tracking-tight sm:text-4xl lg:text-6xl"><span class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">开发者</span>与生产力工具箱</h1>
           <p class="mt-5 max-w-3xl text-base leading-7 text-slate-300 md:text-lg md:leading-8">集合常用格式转换、编码解码、文本处理、前端样式生成、效率计算与可视化工具，打开即用，无需安装。</p>
         </div>
-        <div class="rounded-lg border border-white/10 bg-white/5 p-5">
+        <div class="rounded-2xl border border-white/10 bg-white/[0.03] p-3 shadow-2xl shadow-black/20 backdrop-blur-md">
           <div class="grid grid-cols-3 gap-3 text-center">
-            <div class="rounded-md bg-white/10 px-3 py-4">
-              <strong id="totalCountHero" class="block text-2xl text-cyan-200">0</strong>
-              <span class="text-xs text-slate-300">工具</span>
+            <div class="rounded-xl border border-white/10 border-t-white/20 bg-gray-800/40 px-3 py-4 backdrop-blur-md transition-transform hover:scale-105">
+              <strong id="totalCountHero" class="block font-mono text-3xl text-cyan-200">0</strong>
+              <span class="mt-1 block text-[0.7rem] uppercase tracking-wide text-slate-300">工具 / Tools</span>
             </div>
-            <div class="rounded-md bg-white/10 px-3 py-4">
-              <strong class="block text-2xl text-emerald-200">0</strong>
-              <span class="text-xs text-slate-300">上传</span>
+            <div class="rounded-xl border border-white/10 border-t-white/20 bg-gray-800/40 px-3 py-4 backdrop-blur-md transition-transform hover:scale-105">
+              <strong class="block font-mono text-3xl text-emerald-200">0</strong>
+              <span class="mt-1 block text-[0.7rem] uppercase tracking-wide text-slate-300">上传 / Uploads</span>
             </div>
-            <div class="rounded-md bg-white/10 px-3 py-4">
-              <strong class="block text-2xl text-amber-200">快</strong>
-              <span class="text-xs text-slate-300">本地运行</span>
+            <div class="rounded-xl border border-white/10 border-t-white/20 bg-gray-800/40 px-3 py-4 backdrop-blur-md transition-transform hover:scale-105">
+              <strong class="block font-mono text-3xl text-blue-200">100%</strong>
+              <span class="mt-1 block text-[0.7rem] uppercase tracking-wide text-slate-300">Privacy / 隐私</span>
             </div>
           </div>
         </div>
@@ -267,6 +267,12 @@
       setMeta('keywords', lang === 'zh'
         ? '免费在线开发者工具箱, 纯前端工具集合, 在线 JSON 工具, 在线编码转换工具, 生产力工具箱, 微型 Web 工具'
         : 'free online developer tools, front-end tools, JSON tools, encoding tools, productivity toolbox, micro web tools');
+      const heroTitle = document.querySelector('header h1');
+      if (heroTitle) {
+        heroTitle.innerHTML = lang === 'zh'
+          ? '<span class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">开发者</span>与生产力工具箱'
+          : '<span class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Developer</span> Productivity Toolbox';
+      }
       return;
     }
     if (!CURRENT_TOOL || !CURRENT_TOOL.zhName) return;
@@ -302,7 +308,7 @@
       toggle.id = 'microToolsLanguageToggle';
       toggle.setAttribute('data-i18n-ignore', 'true');
       toggle.className = 'fixed inset-x-4 top-4 z-50 flex w-auto flex-col gap-2 rounded-lg border border-white/20 bg-slate-950/90 p-2 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur md:left-auto md:right-4 md:w-auto md:flex-row md:items-center md:gap-2 md:rounded-xl';
-      toggle.innerHTML = '<button id="openSponsorBtn" type="button" class="order-2 rounded-md border border-gray-600 px-3 py-2 text-sm text-slate-100 transition-all hover:bg-gray-800 md:order-none md:py-1.5">☕ 赞赏 / Sponsor</button><div class="order-1 flex flex-col gap-2 md:order-none md:flex-row md:items-center md:gap-1"><span data-language-label class="px-2 text-center text-xs text-slate-300 md:text-left">语言</span><div class="grid grid-cols-2 gap-1 md:flex md:items-center"><button type="button" data-lang-option="zh" class="rounded-full px-3 py-2 transition md:py-1.5">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-2 transition md:py-1.5">EN</button></div></div>';
+      toggle.innerHTML = '<button id="openSponsorBtn" type="button" class="order-2 rounded-full border border-white/15 bg-white/5 px-3 py-2 text-sm text-slate-100 transition-all hover:bg-white/10 md:order-none md:py-1.5">☕ 赞赏 / Sponsor</button><div class="order-1 flex flex-col gap-2 md:order-none md:flex-row md:items-center md:gap-1"><span data-language-label class="px-2 text-center text-xs text-slate-300 md:text-left">语言</span><div class="grid grid-cols-2 gap-1 md:flex md:items-center"><button type="button" data-lang-option="zh" class="rounded-full px-3 py-2 transition md:py-1.5">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-2 transition md:py-1.5">EN</button></div></div>';
       document.body.appendChild(toggle);
       toggle.addEventListener('click', (event) => {
         const button = event.target.closest('[data-lang-option]');
