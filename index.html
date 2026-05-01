@@ -83,7 +83,7 @@
     function createCard(tool) {
       const link = document.createElement('a');
       link.href = './' + tool.name + '.html';
-      link.className = 'group flex min-h-56 flex-col rounded-lg border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-cyan-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-cyan-300';
+      link.className = 'card group flex h-full min-h-56 flex-col rounded-lg border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-cyan-300';
       link.dataset.search = normalizeText(tool.name + ' ' + tool.description);
 
       const title = document.createElement('h3');
@@ -91,11 +91,11 @@
       title.textContent = tool.name;
 
       const description = document.createElement('p');
-      description.className = 'mt-3 flex-1 text-sm leading-6 text-slate-600';
+      description.className = 'mt-3 mb-5 line-clamp-3 text-sm leading-6 text-slate-600';
       description.textContent = tool.description;
 
       const action = document.createElement('span');
-      action.className = 'mt-5 inline-flex w-fit items-center rounded-md bg-slate-950 px-3 py-2 text-sm font-semibold text-white transition group-hover:bg-cyan-600';
+      action.className = 'mt-auto inline-flex w-fit items-center rounded-md bg-slate-950 px-3 py-2 text-sm font-semibold text-white transition group-hover:bg-cyan-600';
       action.textContent = '立即使用';
 
       link.appendChild(title);
