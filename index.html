@@ -301,8 +301,8 @@
       toggle = document.createElement('div');
       toggle.id = 'microToolsLanguageToggle';
       toggle.setAttribute('data-i18n-ignore', 'true');
-      toggle.className = 'fixed inset-x-4 top-4 z-50 flex w-auto flex-col gap-2 rounded-lg border border-white/20 bg-slate-950/90 p-2 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur md:left-auto md:right-4 md:w-auto md:flex-row md:items-center md:gap-1 md:rounded-full md:p-1';
-      toggle.innerHTML = '<span data-language-label class="px-2 text-center text-xs text-slate-300 md:text-left">语言</span><div class="grid grid-cols-2 gap-1 md:flex md:items-center"><button type="button" data-lang-option="zh" class="rounded-full px-3 py-2 transition md:py-1.5">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-2 transition md:py-1.5">EN</button></div>';
+      toggle.className = 'fixed inset-x-4 top-4 z-50 flex w-auto flex-col gap-2 rounded-lg border border-white/20 bg-slate-950/90 p-2 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur md:left-auto md:right-4 md:w-auto md:flex-row md:items-center md:gap-2 md:rounded-xl';
+      toggle.innerHTML = '<button id="openSponsorBtn" type="button" class="order-2 rounded-md border border-gray-600 px-3 py-2 text-sm text-slate-100 transition-all hover:bg-gray-800 md:order-none md:py-1.5">☕ 赞赏 / Sponsor</button><div class="order-1 flex flex-col gap-2 md:order-none md:flex-row md:items-center md:gap-1"><span data-language-label class="px-2 text-center text-xs text-slate-300 md:text-left">语言</span><div class="grid grid-cols-2 gap-1 md:flex md:items-center"><button type="button" data-lang-option="zh" class="rounded-full px-3 py-2 transition md:py-1.5">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-2 transition md:py-1.5">EN</button></div></div>';
       document.body.appendChild(toggle);
       toggle.addEventListener('click', (event) => {
         const button = event.target.closest('[data-lang-option]');
@@ -377,5 +377,61 @@
 })();
   </script>
   <!-- micro-tools-i18n:end -->
+  <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md" aria-hidden="true">
+    <div class="relative mx-4 w-full max-w-sm rounded-2xl border border-gray-700 bg-gray-900 p-6 text-white shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="sponsorTitle">
+      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex h-8 w-8 items-center justify-center rounded-full border border-gray-700 text-gray-300 transition-all hover:bg-gray-800 hover:text-white" aria-label="Close sponsor modal">X</button>
+      <div class="text-center">
+        <h2 id="sponsorTitle" class="text-xl font-bold">赞赏支持 / Support Me</h2>
+        <p class="mt-2 text-sm text-gray-400">保持工具免费且无广告 / Keep tools free &amp; ad-free</p>
+      </div>
+      <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-6 flex w-full items-center justify-center rounded-lg bg-yellow-400 px-4 py-3 text-sm font-bold text-gray-950 transition-all hover:bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-200">
+        Buy Me a Coffee
+      </a>
+      <div class="mt-6 flex items-center justify-center gap-5">
+        <div class="text-center">
+          <img id="wechatImg" src="" alt="微信赞赏二维码" class="h-28 w-28 rounded-lg border border-gray-800 bg-gray-950 object-cover shadow-inner">
+          <p class="mt-2 text-xs text-gray-400">微信</p>
+        </div>
+        <div class="text-center">
+          <img id="alipayImg" src="" alt="支付宝赞赏二维码" class="h-28 w-28 rounded-lg border border-gray-800 bg-gray-950 object-cover shadow-inner">
+          <p class="mt-2 text-xs text-gray-400">支付宝</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const WECHAT_QR = "";
+    const ALIPAY_QR = "";
+
+    (() => {
+      const modal = document.getElementById('sponsorModal');
+      const wechatImg = document.getElementById('wechatImg');
+      const alipayImg = document.getElementById('alipayImg');
+
+      function openModal() {
+        if (!modal) return;
+        if (wechatImg) wechatImg.src = WECHAT_QR;
+        if (alipayImg) alipayImg.src = ALIPAY_QR;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        modal.setAttribute('aria-hidden', 'false');
+      }
+
+      function closeModal() {
+        if (!modal) return;
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        modal.setAttribute('aria-hidden', 'true');
+      }
+
+      document.addEventListener('click', (event) => {
+        if (event.target.closest('#openSponsorBtn')) openModal();
+        if (event.target.closest('#closeSponsorBtn')) closeModal();
+        if (event.target === modal) closeModal();
+      });
+
+      window.MicroToolsSponsor = { openModal, closeModal };
+    })();
+  </script>
 </body>
 </html>
