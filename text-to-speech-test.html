@@ -24,9 +24,7 @@
           <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
             Browser Native TTS Tester
           </p>
-          <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
-            text-to-speech-test
-          </h1>
+          <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">浏览器原生 TTS 测试工具</h1>
           <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">
             使用浏览器自带的 <code class="rounded bg-white/10 px-1.5 py-0.5 text-cyan-200">window.speechSynthesis</code> API，将文本即时转换为语音朗读。
           </p>
@@ -566,5 +564,246 @@
       tryLoadVoices();
     })();
   </script>
+
+  <!-- micro-tools-i18n:start -->
+  <script>
+(() => {
+  'use strict';
+  const STORAGE_KEY = 'microToolsLanguage';
+  const PAGE_SLUG = "text-to-speech-test";
+  const TRANSLATIONS = {"这里会显示朗读状态、错误提示和当前参数。":"Reading status, error messages, and current parameters will appear here.","text-to-speech-test｜浏览器原生 TTS 测试工具":"text-to-speech-test | Native Browser TTS Test Tool","需要转语音的文本":"Text to convert to speech","开始朗读":"Start reading","TTS 测试工具主界面":"TTS test tool main interface","语速":"Speech Rate","音调":"Pitch","当前语速":"Current speech rate","text-to-speech-test, 浏览器原生TTS测试工具, 在线文字转语音, speechSynthesis API, 文本转语音朗读, TTS语速音调测试, Web语音合成工具":"text-to-speech-test, Native browser TTS testing tool, Online text to speech, speechSynthesis API, Text-to-speech reading, TTS speed and pitch testing, Web speech synthesis tool","语音角色":"Voice Role","暂停":"Pause","正在加载语音列表...":"Loading voice list...","语音参数":"Voice Parameters","继续":"Continue","当前音调":"Current pitch","使用方法非常简单：在输入框中粘贴或输入需要朗读的文本，从语音角色列表中选择浏览器提供的声音，然后拖动语速、音调和音量滑块，最后点击“开始朗读”。如果朗读过程中需要中断、暂停或继续，也可以通过对应按钮实时控制。由于不同系统和浏览器内置的语音库不同，实际可选声音会有所差异。无论是进行在线文本转语音测试、Web TTS 功能兼容性验证，还是制作语音交互原型，text-to-speech-test 都能提供轻量、直观、隐私友好的测试体验。":"How to use it is very simple: paste or enter the text to be read in the input box, choose a browser-provided voice from the voice list, then adjust the rate, pitch, and volume sliders, and click “Start Reading”. If you need to stop, pause, or resume during playback, you can control it in real time with the corresponding buttons. Because different systems and browsers include different voice libraries, the available voices may vary. Whether you are testing online text to speech, verifying Web TTS compatibility, or building a voice interaction prototype, text-to-speech-test provides a lightweight, intuitive, and privacy-friendly testing experience.","基于浏览器原生 SpeechSynthesis API 构建，所有文本仅在本地浏览器中处理。":"Built with the browser-native SpeechSynthesis API. All text is processed only in the local browser.","输出状态":"Output status","清空文本":"Clear Text","使用浏览器自带的":"Use the browser's built-in","当前音量":"Current volume","空闲":"Idle","选择浏览器可用的语音并调整朗读效果。":"Choose a browser-available voice and adjust the reading effect.","填入示例":"Fill Example","正在检测浏览器支持情况...":"Checking browser support...","请输入文本并点击“开始朗读”。":"Please enter text and click \"Start Reading\".","0 字":"0 characters","输出状态区":"Output status area","你好，这是 text-to-speech-test 浏览器原生 TTS 测试工具。你可以输入任意文本，并调整语速、音调和音量，快速测试当前浏览器的文字转语音朗读效果。":"Hello, this is the text-to-speech-test native browser TTS testing tool. You can enter any text and adjust the speed, pitch, and volume to quickly test the current browser's text-to-speech effect.","API，将文本即时转换为语音朗读。":"API that instantly converts text to speech.","输入文本":"Input Text","请输入需要朗读的内容，建议不超过 5000 个字符。":"Enter the content to read aloud, preferably no more than 5000 characters.","关于 text-to-speech-test 浏览器原生 TTS 测试工具":"About text-to-speech-test Browser-Native TTS Test Tool","停止":"Stop","音量":"Volume","text-to-speech-test 是一个浏览器原生 TTS 测试工具，基于 window.speechSynthesis API，将输入文本转为语音朗读，支持语速、音调、音量和语音角色调节。":"text-to-speech-test is a native browser TTS testing tool based on the window.speechSynthesis API. It converts input text into spoken audio and supports adjusting speed, pitch, volume, and voice.","例如：你好，这是一个浏览器原生文字转语音测试工具。你可以调整语速和音调，体验不同的朗读效果。":"Example: Hello, this is a browser-native text-to-speech test tool. You can adjust the speed and pitch to experience different reading effects.","text-to-speech-test 是一款面向开发者、内容创作者和产品测试人员的在线文字转语音工具。它直接调用浏览器内置的 window.speechSynthesis API，无需安装插件，也不需要上传文本到服务器，即可完成浏览器原生 TTS 测试。对于需要快速验证 Web 语音合成效果、检查不同语音角色、测试中文朗读清晰度以及调整朗读语速和音调的场景，本工具能够显著降低调试成本。":"text-to-speech-test is an online text-to-speech tool for developers, content creators, and product testers. It directly uses the browser's built-in window.speechSynthesis API, with no plugins required and no need to upload text to a server, enabling native browser TTS testing. For scenarios such as quickly verifying Web speech synthesis, checking different voice roles, testing Chinese reading clarity, and adjusting speech rate and pitch, this tool can greatly reduce debugging costs.","浏览器原生 TTS 测试工具":"Text to Speech Tester","浏览器原生 TTS 测试工具。调用浏览器自带的 `window.speechSynthesis` API，将输入的文本转为语音朗读，支持调节语速和音调。":"Browser-native TTS testing tool. Uses the browser's built-in `window.speechSynthesis` API to read input text aloud, with adjustable speech rate and pitch."};
+  const TOOL_DATA = {"text-to-speech-test":{"zhName":"浏览器原生 TTS 测试工具","enName":"Text to Speech Tester","zhDescription":"浏览器原生 TTS 测试工具。调用浏览器自带的 `window.speechSynthesis` API，将输入的文本转为语音朗读，支持调节语速和音调。","enDescription":"Browser-native TTS testing tool. Uses the browser's built-in `window.speechSynthesis` API to read input text aloud, with adjustable speech rate and pitch.","zhTitle":"text-to-speech-test｜浏览器原生 TTS 测试工具","enTitle":"Text to Speech Tester | Free Online Tool","zhKeywords":"text-to-speech-test, 浏览器原生TTS测试工具, 在线文字转语音, speechSynthesis API, 文本转语音朗读, TTS语速音调测试, Web语音合成工具","enKeywords":"Text to Speech Tester, online tool, browser tool, productivity tool"}};
+  const CURRENT_TOOL = {"zhName":"浏览器原生 TTS 测试工具","enName":"Text to Speech Tester","zhDescription":"浏览器原生 TTS 测试工具。调用浏览器自带的 `window.speechSynthesis` API，将输入的文本转为语音朗读，支持调节语速和音调。","enDescription":"Browser-native TTS testing tool. Uses the browser's built-in `window.speechSynthesis` API to read input text aloud, with adjustable speech rate and pitch.","zhTitle":"text-to-speech-test｜浏览器原生 TTS 测试工具","enTitle":"Text to Speech Tester | Free Online Tool","zhKeywords":"text-to-speech-test, 浏览器原生TTS测试工具, 在线文字转语音, speechSynthesis API, 文本转语音朗读, TTS语速音调测试, Web语音合成工具","enKeywords":"Text to Speech Tester, online tool, browser tool, productivity tool"};
+  const ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
+  const ZH_RE = /[\u4e00-\u9fff]/;
+  const originalText = new WeakMap();
+  const originalAttrs = new WeakMap();
+  let observer = null;
+
+  function normalize(value) {
+    return String(value || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function hasChinese(value) {
+    return ZH_RE.test(String(value || ''));
+  }
+
+  function language() {
+    return localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'zh';
+  }
+
+  function translateExact(value, lang) {
+    const text = String(value || '');
+    if (lang === 'zh' || !text) return text;
+    if (TRANSLATIONS[text]) return TRANSLATIONS[text];
+    const normalized = normalize(text);
+    if (TRANSLATIONS[normalized]) return TRANSLATIONS[normalized];
+
+    const dynamic = [
+      [/^(\d+)\s*个字符$/u, '$1 characters'],
+      [/^(\d+)\s*字符$/u, '$1 characters'],
+      [/^(\d+)\s*字$/u, '$1 characters'],
+      [/^(\d+)\s*行$/u, '$1 rows'],
+      [/^(\d+)\s*列$/u, '$1 columns'],
+      [/^(\d+)\s*项$/u, '$1 items'],
+      [/^(\d+)\s*次$/u, '$1 times'],
+      [/^当前显示\s*(\d+)\s*\/\s*(\d+)$/u, 'Showing $1 / $2'],
+      [/^第\s*(\d+)\s*行第\s*(\d+)\s*列/u, 'line $1, column $2']
+    ];
+    for (const [pattern, replacement] of dynamic) {
+      if (pattern.test(normalized)) return normalized.replace(pattern, replacement);
+    }
+    return text;
+  }
+
+  function translateWithSpacing(value, lang) {
+    const text = String(value || '');
+    if (!text.trim()) return text;
+    const leading = text.match(/^\s*/)[0];
+    const trailing = text.match(/\s*$/)[0];
+    const core = text.slice(leading.length, text.length - trailing.length);
+    return leading + translateExact(core, lang) + trailing;
+  }
+
+  function skipped(node) {
+    const parent = node.parentElement;
+    return !parent || Boolean(parent.closest('script, style, code, pre, textarea, [data-i18n-ignore]'));
+  }
+
+  function translateNode(node, lang) {
+    if (skipped(node) || !node.nodeValue.trim()) return;
+    const current = node.nodeValue;
+    let original = originalText.get(node);
+    const originalEnglish = original ? translateWithSpacing(original, 'en') : '';
+    if (!original || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
+      original = current;
+      originalText.set(node, original);
+    }
+    node.nodeValue = lang === 'zh' ? (original || current) : translateWithSpacing(original || current, lang);
+  }
+
+  function translateAttrs(element, lang) {
+    if (element.closest('script, style, [data-i18n-ignore]')) return;
+    let store = originalAttrs.get(element);
+    if (!store) {
+      store = {};
+      originalAttrs.set(element, store);
+    }
+    ATTRS.forEach((attr) => {
+      if (!element.hasAttribute(attr)) return;
+      const current = element.getAttribute(attr);
+      const originalEnglish = store[attr] ? translateExact(store[attr], 'en') : '';
+      if (!store[attr] || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
+        store[attr] = current;
+      }
+      element.setAttribute(attr, lang === 'zh' ? store[attr] : translateExact(store[attr] || current, lang));
+    });
+  }
+
+  function walk(root, lang) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach((node) => translateNode(node, lang));
+
+    const elementRoot = root.nodeType === Node.ELEMENT_NODE ? root : document.body;
+    if (!elementRoot) return;
+    translateAttrs(elementRoot, lang);
+    elementRoot.querySelectorAll('*').forEach((element) => translateAttrs(element, lang));
+  }
+
+  function setMeta(name, value) {
+    if (!value) return;
+    let meta = document.querySelector(`meta[name="${name}"]`);
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', name);
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute('content', value);
+  }
+
+  function applyMetadata(lang) {
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    if (PAGE_SLUG === 'index') {
+      document.title = lang === 'zh'
+        ? '免费在线开发者工具箱 | 纯前端工具集合'
+        : 'Free Online Developer Toolbox | Pure Front-End Tools';
+      setMeta('description', lang === 'zh'
+        ? '免费在线开发者工具箱，汇集 JSON、CSV、LaTeX、Base64、正则、时间戳、二维码、颜色转换等纯前端微型工具，隐私友好、无需安装、极速加载。'
+        : 'A free online developer toolbox with pure front-end tools for JSON, CSV, LaTeX, Base64, regex, timestamps, QR codes, color conversion, and daily productivity.');
+      setMeta('keywords', lang === 'zh'
+        ? '免费在线开发者工具箱, 纯前端工具集合, 在线 JSON 工具, 在线编码转换工具, 生产力工具箱, 微型 Web 工具'
+        : 'free online developer tools, front-end tools, JSON tools, encoding tools, productivity toolbox, micro web tools');
+      return;
+    }
+    if (!CURRENT_TOOL || !CURRENT_TOOL.zhName) return;
+    document.title = lang === 'zh' ? CURRENT_TOOL.zhTitle : CURRENT_TOOL.enTitle;
+    setMeta('description', lang === 'zh' ? CURRENT_TOOL.zhDescription : CURRENT_TOOL.enDescription);
+    setMeta('keywords', lang === 'zh' ? CURRENT_TOOL.zhKeywords : CURRENT_TOOL.enKeywords);
+    const h1 = document.querySelector('h1');
+    if (h1) h1.textContent = lang === 'zh' ? CURRENT_TOOL.zhName : CURRENT_TOOL.enName;
+  }
+
+  function updateIndexCards(lang) {
+    if (PAGE_SLUG !== 'index') return;
+    document.querySelectorAll('a[href$=".html"]').forEach((card) => {
+      const slug = (card.getAttribute('href') || '').split('/').pop().replace(/\.html$/i, '');
+      const tool = TOOL_DATA[slug];
+      if (!tool) return;
+      const title = card.querySelector('h3');
+      const description = card.querySelector('p');
+      const action = card.querySelector('span:last-child');
+      if (title) title.textContent = lang === 'zh' ? tool.zhName : tool.enName;
+      if (description) description.textContent = lang === 'zh' ? tool.zhDescription : tool.enDescription;
+      if (action) action.textContent = lang === 'zh' ? '立即使用' : 'Open Tool';
+      card.dataset.search = normalize(`${slug} ${tool.zhName} ${tool.enName} ${tool.zhDescription} ${tool.enDescription}`).toLowerCase().replace(/[-_\s]+/g, '');
+    });
+    const search = document.getElementById('searchInput');
+    if (search) search.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+
+  function ensureToggle(lang) {
+    let toggle = document.getElementById('microToolsLanguageToggle');
+    if (!toggle) {
+      toggle = document.createElement('div');
+      toggle.id = 'microToolsLanguageToggle';
+      toggle.setAttribute('data-i18n-ignore', 'true');
+      toggle.className = 'fixed right-4 top-4 z-50 flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/90 p-1 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur';
+      toggle.innerHTML = '<span data-language-label class="px-2 text-xs text-slate-300">语言</span><button type="button" data-lang-option="zh" class="rounded-full px-3 py-1.5 transition">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-1.5 transition">EN</button>';
+      document.body.appendChild(toggle);
+      toggle.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-lang-option]');
+        if (!button) return;
+        localStorage.setItem(STORAGE_KEY, button.getAttribute('data-lang-option') === 'en' ? 'en' : 'zh');
+        applyLanguage(language());
+      });
+    }
+    toggle.querySelector('[data-language-label]').textContent = lang === 'zh' ? '语言' : 'Language';
+    toggle.querySelectorAll('[data-lang-option]').forEach((button) => {
+      const active = button.getAttribute('data-lang-option') === lang;
+      button.className = active
+        ? 'rounded-full bg-cyan-400 px-3 py-1.5 text-slate-950 transition'
+        : 'rounded-full px-3 py-1.5 text-slate-200 transition hover:bg-white/10';
+    });
+  }
+
+  function disconnect() {
+    if (observer) observer.disconnect();
+  }
+
+  function observe() {
+    if (!observer) {
+      observer = new MutationObserver(() => {
+        if (language() !== 'en') return;
+        disconnect();
+        applyLanguage('en');
+        observe();
+      });
+    }
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ATTRS
+    });
+  }
+
+  function applyLanguage(lang) {
+    const next = lang === 'en' ? 'en' : 'zh';
+    disconnect();
+    ensureToggle(next);
+    applyMetadata(next);
+    walk(document.body, next);
+    updateIndexCards(next);
+    ensureToggle(next);
+    observe();
+  }
+
+  function init() {
+    applyLanguage(language());
+    window.addEventListener('storage', (event) => {
+      if (event.key === STORAGE_KEY) applyLanguage(language());
+    });
+  }
+
+  window.MicroToolsI18n = {
+    getLanguage: language,
+    setLanguage(value) {
+      localStorage.setItem(STORAGE_KEY, value === 'en' ? 'en' : 'zh');
+      applyLanguage(language());
+    },
+    applyLanguage
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+  </script>
+  <!-- micro-tools-i18n:end -->
 </body>
 </html>

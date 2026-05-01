@@ -23,7 +23,7 @@
           <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
             纯前端 · 隐私安全 · WebP 高压缩
           </p>
-          <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl">image-compressor</h1>
+          <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl">纯前端 WebP 图片压缩转换器</h1>
           <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">
             上传 PNG / JPG 图片，在浏览器本地通过 HTML5 Canvas 转换并压缩为 WebP 格式，无需上传服务器。
           </p>
@@ -649,5 +649,246 @@
     updateQualityLabel();
     updateStats();
   </script>
+
+  <!-- micro-tools-i18n:start -->
+  <script>
+(() => {
+  'use strict';
+  const STORAGE_KEY = 'microToolsLanguage';
+  const PAGE_SLUG = "image-compressor";
+  const TRANSLATIONS = {"选择 PNG、JPG 或 JPEG 图片，可一次选择多张。":"Select PNG, JPG, or JPEG images. Multiple files can be selected at once.","}\">体积变化：${saved}%<\/p> <\/div> <\/div> <button type=\"button\" data-download=\"${index}\" class=\"rounded-2xl bg-cyan-400 px-5 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300 active:scale-[0.98]\">下载<\/button> <\/div> <\/div> `; }).join(":"}\">Size change: ${saved}%<\/p> <\/div> <\/div> <button type=\"button\" data-download=\"${index}\" class=\"rounded-2xl bg-cyan-400 px-5 py-3 font-semibold text-slate-950 transition hover:bg-cyan-300 active:scale-[0.98]\">Download<\/button> <\/div> <\/div> `; }).join(","留空则保持原始尺寸，输入后按比例缩放。":"Leave blank to keep the original size. Enter a value to scale proportionally.","转换后的 WebP 图片会显示在这里。":"The converted WebP image will appear here.","点击选择图片或拖拽到此处":"Click to select an image or drag it here","image-compressor 是一款纯前端 WebP 图片压缩转换器，可在浏览器中将 PNG、JPG、JPEG 图片通过 HTML5 Canvas 转换为高压缩比 WebP 格式并下载，保护隐私、快速高效。":"image-compressor is a pure front-end WebP image compression and conversion tool that converts PNG, JPG, and JPEG images to high-compression WebP format in the browser via HTML5 Canvas and downloads them, protecting privacy while staying fast and efficient.","输入区":"Input",">移除<\/button> <\/div> `).join(''); fileList.querySelectorAll('[data-remove]').forEach(btn => { btn.addEventListener('click', () => { const idx = Number(btn.getAttribute('data-remove')); if (Number.isInteger(idx) && idx >= 0 && idx < selectedFiles.length) { selectedFiles.splice(idx, 1); results = []; renderFileList(); renderResults(); updateStats(); clearMessages(); } }); }); } function escapeHtml(value) { return String(value).replace(/[&<>":">Remove<\/button> <\/div> `).join(''); fileList.querySelectorAll('[data-remove]').forEach(btn => { btn.addEventListener('click', () => { const idx = Number(btn.getAttribute('data-remove')); if (Number.isInteger(idx) && idx >= 0 && idx < selectedFiles.length) { selectedFiles.splice(idx, 1); results = []; renderFileList(); renderResults(); updateStats(); clearMessages(); } }); }); } function escapeHtml(value) { return String(value).replace(/[&<>","; updateStats(); if (results.length && errors.length) { showError(`部分图片处理完成，但有 ${errors.length} 个错误：${errors.slice(0, 3).join(":"; updateStats(); if (results.length && errors.length) { showError(`Some images were processed, but ${errors.length} errors occurred: ${errors.slice(0, 3).join(\",","已选文件":"Selected File","原始大小":"Original size",")}`); } else if (results.length) { showSuccess(`转换完成！已生成 ${results.length} 个 WebP 文件。`); } else { showError(errors.length ? errors.slice(0, 3).join(":")}`); } else if (results.length) { showSuccess(`Conversion complete! Generated ${results.length} WebP files.`); } else { showError(errors.length ? errors.slice(0, 3).join(\",","关于 image-compressor WebP 图片压缩转换器":"About image-compressor WebP Image Compression Converter","}。请上传 PNG、JPG 或 JPEG 图片。`); } else { showSuccess(`已选择 ${valid.length} 张图片，可开始压缩转换。`); } selectedFiles = selectedFiles.concat(valid); const seen = new Set(); selectedFiles = selectedFiles.filter(file => { const key = `${file.name}-${file.size}-${file.lastModified}`; if (seen.has(key)) return false; seen.add(key); return true; }); results.forEach(item => URL.revokeObjectURL(item.url)); results = []; renderFileList(); renderResults(); updateStats(); if (!valid.length && !invalid.length) { showError(":"}. Please upload PNG, JPG, or JPEG images.`); } else { showSuccess(`Selected ${valid.length} images. You can start compression and conversion.`); } selectedFiles = selectedFiles.concat(valid); const seen = new Set(); selectedFiles = selectedFiles.filter(file => { const key = `${file.name}-${file.size}-${file.lastModified}`; if (seen.has(key)) return false; seen.add(key); return true; }); results.forEach(item => URL.revokeObjectURL(item.url)); results = []; renderFileList(); renderResults(); updateStats(); if (!valid.length && !invalid.length) { showError(","下载全部 WebP":"Download all WebP","image-compressor - 纯前端 WebP 图片压缩转换器":"image-compressor - Frontend-only WebP Image Compression Converter","复制结果":"Copy Result","; downloadAllBtn.disabled = true; copyReportBtn.disabled = true; setProgress(0, selectedFiles.length); const errors = []; const quality = qualityRaw / 100; for (let i = 0; i < selectedFiles.length; i++) { try { setProgress(i, selectedFiles.length); const result = await compressFile(selectedFiles[i], quality, maxWidth); results.push(result); renderResults(); updateStats(); } catch (err) { errors.push(err && err.message ? err.message : `第 ${i + 1} 张图片处理失败。`); } } setProgress(selectedFiles.length, selectedFiles.length); isProcessing = false; compressBtn.disabled = false; compressBtn.textContent =":"; downloadAllBtn.disabled = true; copyReportBtn.disabled = true; setProgress(0, selectedFiles.length); const errors = []; const quality = qualityRaw / 100; for (let i = 0; i < selectedFiles.length; i++) { try { setProgress(i, selectedFiles.length); const result = await compressFile(selectedFiles[i], quality, maxWidth); results.push(result); renderResults(); updateStats(); } catch (err) { errors.push(err && err.message ? err.message : `Image ${i + 1} failed to process.`); } } setProgress(selectedFiles.length, selectedFiles.length); isProcessing = false; compressBtn.disabled = false; compressBtn.textContent =","开始压缩转换":"Start compression and conversion","纯前端 · 隐私安全 · WebP 高压缩":"Frontend only · Privacy-safe · High-compression WebP",">${escapeHtml(file.type || '未知类型')} · ${formatBytes(file.size)}<\/p> <\/div> <button type=":">${escapeHtml(file.type || 'Unknown type')} · ${formatBytes(file.size)}<\/p> <\/div> <button type=","); }); if (invalid.length) { showError(`已忽略不支持的文件：${invalid.slice(0, 5).join(":"); }); if (invalid.length) { showError(`Unsupported files ignored: ${invalid.slice(0, 5).join(\", \"","数值越低体积越小，画质也会下降。":"Lower values reduce size but also lower image quality.","例如 1920":"e.g. 1920","上传 PNG / JPG 图片，在浏览器本地通过 HTML5 Canvas 转换并压缩为 WebP 格式，无需上传服务器。":"Upload a PNG / JPG image and convert and compress it to WebP locally in the browser via HTML5 Canvas, with no server upload required.","压缩后":"Compressed","清空":"Clear","支持 .png、.jpg、.jpeg，单张建议不超过 20MB":"Supports .png, .jpg, .jpeg; recommended single file size is under 20MB","); return; } results.forEach((item, index) => { setTimeout(() => downloadBlob(item.blob, item.outputName), index * 250); }); showSuccess(`已触发 ${results.length} 个 WebP 文件下载。`); } async function copyReport() { if (!results.length) { showError(":"); return; } results.forEach((item, index) => { setTimeout(() => downloadBlob(item.blob, item.outputName), index * 250); }); showSuccess(`${results.length} WebP file downloads have been triggered.`); } async function copyReport() { if (!results.length) { showError(","查看压缩结果，下载 WebP 图片。":"View the compression result and download the WebP image.","处理中...":"Processing...","节省比例":"Savings Ratio","最大宽度（可选）":"Maximum width (optional)","输出区":"Output",", `文件数量：${results.length}`, `原始大小：${formatBytes(totalOriginal)}`, `压缩后：${formatBytes(totalCompressed)}`, `节省比例：${saved}%`, ...results.map(item => `${item.originalName} -> ${item.outputName}，${formatBytes(item.originalSize)} -> ${formatBytes(item.blob.size)}，${item.width}x${item.height}px`) ]; try { await navigator.clipboard.writeText(lines.join(":", `File count: ${results.length}`, `Original size: ${formatBytes(totalOriginal)}`, `Compressed: ${formatBytes(totalCompressed)}`, `Saved: ${saved}%`, ...results.map(item => `${item.originalName} -> ${item.outputName}, ${formatBytes(item.originalSize)} -> ${formatBytes(item.blob.size)}, ${item.width}x${item.height}px`) ]; try { await navigator.clipboard.writeText(lines.join(","WebP 质量":"WebP Quality","image-compressor 是一款面向设计师、站长、前端开发者和内容运营人员的纯前端 WebP 图片压缩工具。它通过 HTML5 Canvas 在浏览器本地读取 PNG、JPG、JPEG 图片，并将其转换为体积更小、加载更快的 WebP 格式，适合用于网站性能优化、移动端页面提速、博客配图压缩和电商商品图处理。与传统在线图片压缩网站不同，本工具不会把图片上传到服务器，所有转换过程都在你的设备中完成，既能减少等待时间，也能更好地保护隐私数据。使用时只需拖拽或选择图片，调整 WebP 质量参数，必要时设置最大宽度，然后点击开始压缩转换，即可下载生成的 WebP 文件。对于正在寻找“PNG 转 WebP 在线工具”“JPG 图片压缩为 WebP”“无需上传的前端图片压缩器”等解决方案的用户，image-compressor 能提供快速、简洁、可靠的体验，帮助降低图片体积、提升网页打开速度，并改善 SEO 与核心网页指标表现。":"image-compressor is a pure front-end WebP image compression tool for designers, site owners, front-end developers, and content operators. It uses HTML5 Canvas to read PNG, JPG, and JPEG images locally in the browser and convert them to smaller, faster-loading WebP files, making it suitable for website performance optimization, mobile page acceleration, blog image compression, and e-commerce product image processing. Unlike traditional online image compression sites, this tool does not upload images to a server. All conversion is completed on your device, reducing wait time and better protecting private data. To use it, drag and drop or select images, adjust the WebP quality parameter, set a maximum width if needed, then click to start compression and conversion and download the generated WebP files. For users looking for solutions such as “PNG to WebP online tool,” “compress JPG images to WebP,” or “front-end image compressor without upload,” image-compressor provides a fast, clean, reliable experience that helps reduce image size, improve page loading speed, and enhance SEO and Core Web Vitals performance.",": `正在处理 ${current} / ${total}`; } function resetProgress() { progressBar.style.width =":": `Processing ${current} / ${total}`; } function resetProgress() { progressBar.style.width =","image-compressor, WebP图片压缩, PNG转WebP, JPG转WebP, 图片压缩工具, 在线图片转换器, 前端图片压缩, Canvas图片压缩, 高压缩比WebP":"image-compressor, WebP image compression, PNG to WebP, JPG to WebP, Image compression tool, Online image converter, Front-end image compression, Canvas image compression, High-compression WebP","本地处理，文件不离开你的设备":"Processed locally; files never leave your device","纯前端 WebP 图片压缩转换器":"Image Compressor","纯前端 WebP 图片压缩转换器。利用HTML5 Canvas将上传的PNG/JPG图片在浏览器端转换为高压缩比的WebP格式并下载。":"Pure frontend WebP image compression converter. Uses HTML5 Canvas to convert uploaded PNG/JPG images to highly compressed WebP format in the browser and download them."};
+  const TOOL_DATA = {"image-compressor":{"zhName":"纯前端 WebP 图片压缩转换器","enName":"Image Compressor","zhDescription":"纯前端 WebP 图片压缩转换器。利用HTML5 Canvas将上传的PNG/JPG图片在浏览器端转换为高压缩比的WebP格式并下载。","enDescription":"Pure frontend WebP image compression converter. Uses HTML5 Canvas to convert uploaded PNG/JPG images to highly compressed WebP format in the browser and download them.","zhTitle":"image-compressor - 纯前端 WebP 图片压缩转换器","enTitle":"Image Compressor | Free Online Tool","zhKeywords":"image-compressor, WebP图片压缩, PNG转WebP, JPG转WebP, 图片压缩工具, 在线图片转换器, 前端图片压缩, Canvas图片压缩, 高压缩比WebP","enKeywords":"Image Compressor, online tool, browser tool, productivity tool"}};
+  const CURRENT_TOOL = {"zhName":"纯前端 WebP 图片压缩转换器","enName":"Image Compressor","zhDescription":"纯前端 WebP 图片压缩转换器。利用HTML5 Canvas将上传的PNG/JPG图片在浏览器端转换为高压缩比的WebP格式并下载。","enDescription":"Pure frontend WebP image compression converter. Uses HTML5 Canvas to convert uploaded PNG/JPG images to highly compressed WebP format in the browser and download them.","zhTitle":"image-compressor - 纯前端 WebP 图片压缩转换器","enTitle":"Image Compressor | Free Online Tool","zhKeywords":"image-compressor, WebP图片压缩, PNG转WebP, JPG转WebP, 图片压缩工具, 在线图片转换器, 前端图片压缩, Canvas图片压缩, 高压缩比WebP","enKeywords":"Image Compressor, online tool, browser tool, productivity tool"};
+  const ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
+  const ZH_RE = /[\u4e00-\u9fff]/;
+  const originalText = new WeakMap();
+  const originalAttrs = new WeakMap();
+  let observer = null;
+
+  function normalize(value) {
+    return String(value || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function hasChinese(value) {
+    return ZH_RE.test(String(value || ''));
+  }
+
+  function language() {
+    return localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'zh';
+  }
+
+  function translateExact(value, lang) {
+    const text = String(value || '');
+    if (lang === 'zh' || !text) return text;
+    if (TRANSLATIONS[text]) return TRANSLATIONS[text];
+    const normalized = normalize(text);
+    if (TRANSLATIONS[normalized]) return TRANSLATIONS[normalized];
+
+    const dynamic = [
+      [/^(\d+)\s*个字符$/u, '$1 characters'],
+      [/^(\d+)\s*字符$/u, '$1 characters'],
+      [/^(\d+)\s*字$/u, '$1 characters'],
+      [/^(\d+)\s*行$/u, '$1 rows'],
+      [/^(\d+)\s*列$/u, '$1 columns'],
+      [/^(\d+)\s*项$/u, '$1 items'],
+      [/^(\d+)\s*次$/u, '$1 times'],
+      [/^当前显示\s*(\d+)\s*\/\s*(\d+)$/u, 'Showing $1 / $2'],
+      [/^第\s*(\d+)\s*行第\s*(\d+)\s*列/u, 'line $1, column $2']
+    ];
+    for (const [pattern, replacement] of dynamic) {
+      if (pattern.test(normalized)) return normalized.replace(pattern, replacement);
+    }
+    return text;
+  }
+
+  function translateWithSpacing(value, lang) {
+    const text = String(value || '');
+    if (!text.trim()) return text;
+    const leading = text.match(/^\s*/)[0];
+    const trailing = text.match(/\s*$/)[0];
+    const core = text.slice(leading.length, text.length - trailing.length);
+    return leading + translateExact(core, lang) + trailing;
+  }
+
+  function skipped(node) {
+    const parent = node.parentElement;
+    return !parent || Boolean(parent.closest('script, style, code, pre, textarea, [data-i18n-ignore]'));
+  }
+
+  function translateNode(node, lang) {
+    if (skipped(node) || !node.nodeValue.trim()) return;
+    const current = node.nodeValue;
+    let original = originalText.get(node);
+    const originalEnglish = original ? translateWithSpacing(original, 'en') : '';
+    if (!original || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
+      original = current;
+      originalText.set(node, original);
+    }
+    node.nodeValue = lang === 'zh' ? (original || current) : translateWithSpacing(original || current, lang);
+  }
+
+  function translateAttrs(element, lang) {
+    if (element.closest('script, style, [data-i18n-ignore]')) return;
+    let store = originalAttrs.get(element);
+    if (!store) {
+      store = {};
+      originalAttrs.set(element, store);
+    }
+    ATTRS.forEach((attr) => {
+      if (!element.hasAttribute(attr)) return;
+      const current = element.getAttribute(attr);
+      const originalEnglish = store[attr] ? translateExact(store[attr], 'en') : '';
+      if (!store[attr] || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
+        store[attr] = current;
+      }
+      element.setAttribute(attr, lang === 'zh' ? store[attr] : translateExact(store[attr] || current, lang));
+    });
+  }
+
+  function walk(root, lang) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach((node) => translateNode(node, lang));
+
+    const elementRoot = root.nodeType === Node.ELEMENT_NODE ? root : document.body;
+    if (!elementRoot) return;
+    translateAttrs(elementRoot, lang);
+    elementRoot.querySelectorAll('*').forEach((element) => translateAttrs(element, lang));
+  }
+
+  function setMeta(name, value) {
+    if (!value) return;
+    let meta = document.querySelector(`meta[name="${name}"]`);
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', name);
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute('content', value);
+  }
+
+  function applyMetadata(lang) {
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    if (PAGE_SLUG === 'index') {
+      document.title = lang === 'zh'
+        ? '免费在线开发者工具箱 | 纯前端工具集合'
+        : 'Free Online Developer Toolbox | Pure Front-End Tools';
+      setMeta('description', lang === 'zh'
+        ? '免费在线开发者工具箱，汇集 JSON、CSV、LaTeX、Base64、正则、时间戳、二维码、颜色转换等纯前端微型工具，隐私友好、无需安装、极速加载。'
+        : 'A free online developer toolbox with pure front-end tools for JSON, CSV, LaTeX, Base64, regex, timestamps, QR codes, color conversion, and daily productivity.');
+      setMeta('keywords', lang === 'zh'
+        ? '免费在线开发者工具箱, 纯前端工具集合, 在线 JSON 工具, 在线编码转换工具, 生产力工具箱, 微型 Web 工具'
+        : 'free online developer tools, front-end tools, JSON tools, encoding tools, productivity toolbox, micro web tools');
+      return;
+    }
+    if (!CURRENT_TOOL || !CURRENT_TOOL.zhName) return;
+    document.title = lang === 'zh' ? CURRENT_TOOL.zhTitle : CURRENT_TOOL.enTitle;
+    setMeta('description', lang === 'zh' ? CURRENT_TOOL.zhDescription : CURRENT_TOOL.enDescription);
+    setMeta('keywords', lang === 'zh' ? CURRENT_TOOL.zhKeywords : CURRENT_TOOL.enKeywords);
+    const h1 = document.querySelector('h1');
+    if (h1) h1.textContent = lang === 'zh' ? CURRENT_TOOL.zhName : CURRENT_TOOL.enName;
+  }
+
+  function updateIndexCards(lang) {
+    if (PAGE_SLUG !== 'index') return;
+    document.querySelectorAll('a[href$=".html"]').forEach((card) => {
+      const slug = (card.getAttribute('href') || '').split('/').pop().replace(/\.html$/i, '');
+      const tool = TOOL_DATA[slug];
+      if (!tool) return;
+      const title = card.querySelector('h3');
+      const description = card.querySelector('p');
+      const action = card.querySelector('span:last-child');
+      if (title) title.textContent = lang === 'zh' ? tool.zhName : tool.enName;
+      if (description) description.textContent = lang === 'zh' ? tool.zhDescription : tool.enDescription;
+      if (action) action.textContent = lang === 'zh' ? '立即使用' : 'Open Tool';
+      card.dataset.search = normalize(`${slug} ${tool.zhName} ${tool.enName} ${tool.zhDescription} ${tool.enDescription}`).toLowerCase().replace(/[-_\s]+/g, '');
+    });
+    const search = document.getElementById('searchInput');
+    if (search) search.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+
+  function ensureToggle(lang) {
+    let toggle = document.getElementById('microToolsLanguageToggle');
+    if (!toggle) {
+      toggle = document.createElement('div');
+      toggle.id = 'microToolsLanguageToggle';
+      toggle.setAttribute('data-i18n-ignore', 'true');
+      toggle.className = 'fixed right-4 top-4 z-50 flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/90 p-1 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur';
+      toggle.innerHTML = '<span data-language-label class="px-2 text-xs text-slate-300">语言</span><button type="button" data-lang-option="zh" class="rounded-full px-3 py-1.5 transition">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-1.5 transition">EN</button>';
+      document.body.appendChild(toggle);
+      toggle.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-lang-option]');
+        if (!button) return;
+        localStorage.setItem(STORAGE_KEY, button.getAttribute('data-lang-option') === 'en' ? 'en' : 'zh');
+        applyLanguage(language());
+      });
+    }
+    toggle.querySelector('[data-language-label]').textContent = lang === 'zh' ? '语言' : 'Language';
+    toggle.querySelectorAll('[data-lang-option]').forEach((button) => {
+      const active = button.getAttribute('data-lang-option') === lang;
+      button.className = active
+        ? 'rounded-full bg-cyan-400 px-3 py-1.5 text-slate-950 transition'
+        : 'rounded-full px-3 py-1.5 text-slate-200 transition hover:bg-white/10';
+    });
+  }
+
+  function disconnect() {
+    if (observer) observer.disconnect();
+  }
+
+  function observe() {
+    if (!observer) {
+      observer = new MutationObserver(() => {
+        if (language() !== 'en') return;
+        disconnect();
+        applyLanguage('en');
+        observe();
+      });
+    }
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ATTRS
+    });
+  }
+
+  function applyLanguage(lang) {
+    const next = lang === 'en' ? 'en' : 'zh';
+    disconnect();
+    ensureToggle(next);
+    applyMetadata(next);
+    walk(document.body, next);
+    updateIndexCards(next);
+    ensureToggle(next);
+    observe();
+  }
+
+  function init() {
+    applyLanguage(language());
+    window.addEventListener('storage', (event) => {
+      if (event.key === STORAGE_KEY) applyLanguage(language());
+    });
+  }
+
+  window.MicroToolsI18n = {
+    getLanguage: language,
+    setLanguage(value) {
+      localStorage.setItem(STORAGE_KEY, value === 'en' ? 'en' : 'zh');
+      applyLanguage(language());
+    },
+    applyLanguage
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+  </script>
+  <!-- micro-tools-i18n:end -->
 </body>
 </html>

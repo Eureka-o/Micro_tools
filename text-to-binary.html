@@ -23,9 +23,7 @@
           <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
             在线编码 / 解码工具
           </p>
-          <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
-            text-to-binary
-          </h1>
+          <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">文本转二进制字符串工具</h1>
           <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">
             将普通文本快速编码为由 0 和 1 组成的二进制流，也可以把合法的二进制字符串反向还原为文本。
           </p>
@@ -432,5 +430,246 @@
       updateStats();
     })();
   </script>
+
+  <!-- micro-tools-i18n:start -->
+  <script>
+(() => {
+  'use strict';
+  const STORAGE_KEY = 'microToolsLanguage';
+  const PAGE_SLUG = "text-to-binary";
+  const TRANSLATIONS = {"等待转换":"Waiting for Conversion","开始转换":"Start conversion","交换输入输出":"Swap input and output","关于 text-to-binary 文本转二进制字符串工具":"About text-to-binary Text to Binary String Tool","该二进制数据不是有效的 UTF-8 文本编码，无法安全解码。":"This binary data is not valid UTF-8 text encoding and cannot be safely decoded.","text-to-binary 是一款在线文本转二进制字符串工具，支持将中文、英文、符号等普通文本编码为 0 和 1 组成的二进制流，并可将二进制反向解码为文本。":"text-to-binary is an online text-to-binary string tool that encodes Chinese, English, symbols, and other plain text into a binary stream of 0s and 1s, and can decode binary back to text.","空格分隔":"Space-Separated","编码时会将文本按 UTF-8 转为字节，每个字节输出 8 位二进制；解码时会自动忽略空格、换行、逗号、分号、竖线、下划线和短横线等常见分隔符。":"During encoding, text is converted to bytes using UTF-8, with each byte output as 8-bit binary. During decoding, common separators such as spaces, line breaks, commas, semicolons, vertical bars, underscores, and hyphens are automatically ignored.","结果已复制到剪贴板。":"Result copied to clipboard.","二进制内容只能包含 0、1 以及常见分隔符。检测到非法字符：${invalid ? invalid[0] : '未知字符'}":"Binary content can only contain 0, 1, and common separators. Illegal character detected: ${invalid ? invalid[0] : 'unknown character'}","text-to-binary｜文本转二进制字符串工具":"text-to-binary｜Text to Binary String Tool","转换失败，请检查输入格式后重试。":"Conversion failed. Please check the input format and try again.","输入区":"Input","文本已成功转换为二进制字符串。":"The text was successfully converted to a binary string.","二进制位数必须是 8 的倍数。当前为 ${compact.length} 位，还差 ${8 - (compact.length % 8)} 位。":"The binary length must be a multiple of 8. Current length is ${compact.length} bits, short by ${8 - (compact.length % 8)} bits.","当前没有可下载的转换结果。":"No conversion result available to download.","二进制转文本":"Binary to text","编码标准":"Encoding Standard","文本转二进制":"Text to Binary","请输入要转换的文本":"Please enter the text to convert","连续二进制流":"Continuous Binary Stream","未检测到有效的 0 或 1。":"No valid 0 or 1 detected.","文件已开始下载。":"File download started.","在线编码 / 解码工具":"Online encoding / decoding tool","复制结果":"Copy Result","下载 .txt":"Download .txt","无法解析二进制片段：${chunk}":"Unable to parse binary chunk: ${chunk}","将普通文本快速编码为由 0 和 1 组成的二进制流，也可以把合法的二进制字符串反向还原为文本。":"Quickly encode plain text into a binary stream of 0s and 1s, or decode a valid binary string back into text.","换行分隔":"Separate with line breaks","填入示例":"Fill Example","转换结果":"Conversion Result","例如：01001000 01100101 01101100 01101100 01101111":"Example: 01001000 01100101 01101100 01101100 01101111","请输入需要解码的二进制内容。":"Please enter the binary content to decode.","转换完成":"Conversion Complete","输入 ${input.length} 字符 · ${byteCount} 字节 · ${bitCount} 位":"Input ${input.length} characters · ${byteCount} bytes · ${bitCount} bits","当前没有可复制的转换结果。":"No conversion result available to copy.","二进制字符串已成功解码为文本。":"The binary string was successfully decoded to text.","传统手动转换容易出现位数不足、分隔混乱或中文乱码等问题，本工具提供文本转二进制和二进制转文本双向转换能力，并支持空格、换行、逗号或连续二进制流等输出格式。使用时只需在输入区粘贴文本，点击“开始转换”即可得到结果；若需要反向解码，切换到“二进制转文本”模式并输入合法的 0 和 1 字符串即可。对于搜索“在线字符串转二进制”“二进制转文本解码”“UTF-8 二进制编码转换器”的用户来说，这是一款简洁、安全、无需安装的软件工具。":"Traditional manual conversion can easily cause issues such as insufficient digits, messy separators, or Chinese text garbling. This tool supports two-way conversion between text and binary, and supports output formats such as spaces, line breaks, commas, or continuous binary streams. To use it, paste text into the input area and click “Start Convert” to get the result. To decode in reverse, switch to “Binary to Text” mode and enter a valid string of 0 and 1 characters. For users searching for “online string to binary”, “binary to text decoder”, or “UTF-8 binary encoding converter”, this is a simple, safe, and installation-free software tool.","请输入要解码的二进制字符串":"Please enter the binary string to decode.","请输入要转换的文本，输入不能为空。":"Please enter the text to convert. Input cannot be empty.","下载失败，请复制结果后手动保存。":"Download failed. Please copy the result and save it manually.","已交换":"Swapped","清空":"Clear","逗号分隔":"Comma-separated","提示":"Tip","已复制":"Copied","输出分隔符":"Output separator","UTF-8 字节编码 · 8 位一组":"UTF-8 byte encoding · 8 bits per group","转换结果会显示在这里":"Conversion result will appear here","例如：Hello，世界！":"Example: Hello, world!","输入 ${bits.length} 位 · 输出 ${output.length} 字符":"Input ${bits.length} bits · Output ${output.length} characters","复制失败，请手动选中输出内容进行复制。":"Copy failed. Please manually select the output content and copy it.","输出区":"Output","Hello，世界！":"Hello, World!","text-to-binary,文本转二进制,二进制转文本,字符串转二进制,在线二进制转换工具,UTF-8二进制编码,0和1转换器":"text-to-binary,text to binary,binary to text,string to binary,online binary converter,UTF-8 binary encoding,0 and 1 converter","text-to-binary 是一款面向开发者、学生和技术文档编写者的在线文本转二进制工具，可将中文、英文、数字、标点和 Emoji 等普通文本编码为由 0 和 1 组成的二进制字符串。工具采用 UTF-8 字节编码方式，每个字节固定输出 8 位，适合用于学习计算机编码原理、调试数据传输内容、生成二进制示例以及验证字符串底层表示。":"text-to-binary is an online text-to-binary tool for developers, students, and technical writers. It encodes plain text such as Chinese, English, numbers, punctuation, and Emoji into binary strings made of 0s and 1s. Using UTF-8 byte encoding, each byte is output as a fixed 8 bits, making it useful for learning computer encoding basics, debugging data transmission, generating binary examples, and verifying the underlying representation of strings.","已清空":"Cleared","已下载":"Downloaded","text-to-binary · 本地浏览器内完成转换，不上传输入内容":"text-to-binary · Convert locally in the browser without uploading input","文本转二进制字符串工具":"Text to Binary Converter","文本转二进制字符串工具。将用户输入的普通文本编码为由0和1组成的二进制流，并支持反向解码。":"Text to binary string tool. Encode plain text entered by the user into a binary stream of 0s and 1s, with reverse decoding supported."};
+  const TOOL_DATA = {"text-to-binary":{"zhName":"文本转二进制字符串工具","enName":"Text to Binary Converter","zhDescription":"文本转二进制字符串工具。将用户输入的普通文本编码为由0和1组成的二进制流，并支持反向解码。","enDescription":"Text to binary string tool. Encode plain text entered by the user into a binary stream of 0s and 1s, with reverse decoding supported.","zhTitle":"text-to-binary｜文本转二进制字符串工具","enTitle":"Text to Binary Converter | Free Online Tool","zhKeywords":"text-to-binary,文本转二进制,二进制转文本,字符串转二进制,在线二进制转换工具,UTF-8二进制编码,0和1转换器","enKeywords":"Text to Binary Converter, online tool, browser tool, productivity tool"}};
+  const CURRENT_TOOL = {"zhName":"文本转二进制字符串工具","enName":"Text to Binary Converter","zhDescription":"文本转二进制字符串工具。将用户输入的普通文本编码为由0和1组成的二进制流，并支持反向解码。","enDescription":"Text to binary string tool. Encode plain text entered by the user into a binary stream of 0s and 1s, with reverse decoding supported.","zhTitle":"text-to-binary｜文本转二进制字符串工具","enTitle":"Text to Binary Converter | Free Online Tool","zhKeywords":"text-to-binary,文本转二进制,二进制转文本,字符串转二进制,在线二进制转换工具,UTF-8二进制编码,0和1转换器","enKeywords":"Text to Binary Converter, online tool, browser tool, productivity tool"};
+  const ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
+  const ZH_RE = /[\u4e00-\u9fff]/;
+  const originalText = new WeakMap();
+  const originalAttrs = new WeakMap();
+  let observer = null;
+
+  function normalize(value) {
+    return String(value || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function hasChinese(value) {
+    return ZH_RE.test(String(value || ''));
+  }
+
+  function language() {
+    return localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'zh';
+  }
+
+  function translateExact(value, lang) {
+    const text = String(value || '');
+    if (lang === 'zh' || !text) return text;
+    if (TRANSLATIONS[text]) return TRANSLATIONS[text];
+    const normalized = normalize(text);
+    if (TRANSLATIONS[normalized]) return TRANSLATIONS[normalized];
+
+    const dynamic = [
+      [/^(\d+)\s*个字符$/u, '$1 characters'],
+      [/^(\d+)\s*字符$/u, '$1 characters'],
+      [/^(\d+)\s*字$/u, '$1 characters'],
+      [/^(\d+)\s*行$/u, '$1 rows'],
+      [/^(\d+)\s*列$/u, '$1 columns'],
+      [/^(\d+)\s*项$/u, '$1 items'],
+      [/^(\d+)\s*次$/u, '$1 times'],
+      [/^当前显示\s*(\d+)\s*\/\s*(\d+)$/u, 'Showing $1 / $2'],
+      [/^第\s*(\d+)\s*行第\s*(\d+)\s*列/u, 'line $1, column $2']
+    ];
+    for (const [pattern, replacement] of dynamic) {
+      if (pattern.test(normalized)) return normalized.replace(pattern, replacement);
+    }
+    return text;
+  }
+
+  function translateWithSpacing(value, lang) {
+    const text = String(value || '');
+    if (!text.trim()) return text;
+    const leading = text.match(/^\s*/)[0];
+    const trailing = text.match(/\s*$/)[0];
+    const core = text.slice(leading.length, text.length - trailing.length);
+    return leading + translateExact(core, lang) + trailing;
+  }
+
+  function skipped(node) {
+    const parent = node.parentElement;
+    return !parent || Boolean(parent.closest('script, style, code, pre, textarea, [data-i18n-ignore]'));
+  }
+
+  function translateNode(node, lang) {
+    if (skipped(node) || !node.nodeValue.trim()) return;
+    const current = node.nodeValue;
+    let original = originalText.get(node);
+    const originalEnglish = original ? translateWithSpacing(original, 'en') : '';
+    if (!original || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
+      original = current;
+      originalText.set(node, original);
+    }
+    node.nodeValue = lang === 'zh' ? (original || current) : translateWithSpacing(original || current, lang);
+  }
+
+  function translateAttrs(element, lang) {
+    if (element.closest('script, style, [data-i18n-ignore]')) return;
+    let store = originalAttrs.get(element);
+    if (!store) {
+      store = {};
+      originalAttrs.set(element, store);
+    }
+    ATTRS.forEach((attr) => {
+      if (!element.hasAttribute(attr)) return;
+      const current = element.getAttribute(attr);
+      const originalEnglish = store[attr] ? translateExact(store[attr], 'en') : '';
+      if (!store[attr] || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
+        store[attr] = current;
+      }
+      element.setAttribute(attr, lang === 'zh' ? store[attr] : translateExact(store[attr] || current, lang));
+    });
+  }
+
+  function walk(root, lang) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach((node) => translateNode(node, lang));
+
+    const elementRoot = root.nodeType === Node.ELEMENT_NODE ? root : document.body;
+    if (!elementRoot) return;
+    translateAttrs(elementRoot, lang);
+    elementRoot.querySelectorAll('*').forEach((element) => translateAttrs(element, lang));
+  }
+
+  function setMeta(name, value) {
+    if (!value) return;
+    let meta = document.querySelector(`meta[name="${name}"]`);
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', name);
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute('content', value);
+  }
+
+  function applyMetadata(lang) {
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    if (PAGE_SLUG === 'index') {
+      document.title = lang === 'zh'
+        ? '免费在线开发者工具箱 | 纯前端工具集合'
+        : 'Free Online Developer Toolbox | Pure Front-End Tools';
+      setMeta('description', lang === 'zh'
+        ? '免费在线开发者工具箱，汇集 JSON、CSV、LaTeX、Base64、正则、时间戳、二维码、颜色转换等纯前端微型工具，隐私友好、无需安装、极速加载。'
+        : 'A free online developer toolbox with pure front-end tools for JSON, CSV, LaTeX, Base64, regex, timestamps, QR codes, color conversion, and daily productivity.');
+      setMeta('keywords', lang === 'zh'
+        ? '免费在线开发者工具箱, 纯前端工具集合, 在线 JSON 工具, 在线编码转换工具, 生产力工具箱, 微型 Web 工具'
+        : 'free online developer tools, front-end tools, JSON tools, encoding tools, productivity toolbox, micro web tools');
+      return;
+    }
+    if (!CURRENT_TOOL || !CURRENT_TOOL.zhName) return;
+    document.title = lang === 'zh' ? CURRENT_TOOL.zhTitle : CURRENT_TOOL.enTitle;
+    setMeta('description', lang === 'zh' ? CURRENT_TOOL.zhDescription : CURRENT_TOOL.enDescription);
+    setMeta('keywords', lang === 'zh' ? CURRENT_TOOL.zhKeywords : CURRENT_TOOL.enKeywords);
+    const h1 = document.querySelector('h1');
+    if (h1) h1.textContent = lang === 'zh' ? CURRENT_TOOL.zhName : CURRENT_TOOL.enName;
+  }
+
+  function updateIndexCards(lang) {
+    if (PAGE_SLUG !== 'index') return;
+    document.querySelectorAll('a[href$=".html"]').forEach((card) => {
+      const slug = (card.getAttribute('href') || '').split('/').pop().replace(/\.html$/i, '');
+      const tool = TOOL_DATA[slug];
+      if (!tool) return;
+      const title = card.querySelector('h3');
+      const description = card.querySelector('p');
+      const action = card.querySelector('span:last-child');
+      if (title) title.textContent = lang === 'zh' ? tool.zhName : tool.enName;
+      if (description) description.textContent = lang === 'zh' ? tool.zhDescription : tool.enDescription;
+      if (action) action.textContent = lang === 'zh' ? '立即使用' : 'Open Tool';
+      card.dataset.search = normalize(`${slug} ${tool.zhName} ${tool.enName} ${tool.zhDescription} ${tool.enDescription}`).toLowerCase().replace(/[-_\s]+/g, '');
+    });
+    const search = document.getElementById('searchInput');
+    if (search) search.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+
+  function ensureToggle(lang) {
+    let toggle = document.getElementById('microToolsLanguageToggle');
+    if (!toggle) {
+      toggle = document.createElement('div');
+      toggle.id = 'microToolsLanguageToggle';
+      toggle.setAttribute('data-i18n-ignore', 'true');
+      toggle.className = 'fixed right-4 top-4 z-50 flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/90 p-1 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur';
+      toggle.innerHTML = '<span data-language-label class="px-2 text-xs text-slate-300">语言</span><button type="button" data-lang-option="zh" class="rounded-full px-3 py-1.5 transition">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-1.5 transition">EN</button>';
+      document.body.appendChild(toggle);
+      toggle.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-lang-option]');
+        if (!button) return;
+        localStorage.setItem(STORAGE_KEY, button.getAttribute('data-lang-option') === 'en' ? 'en' : 'zh');
+        applyLanguage(language());
+      });
+    }
+    toggle.querySelector('[data-language-label]').textContent = lang === 'zh' ? '语言' : 'Language';
+    toggle.querySelectorAll('[data-lang-option]').forEach((button) => {
+      const active = button.getAttribute('data-lang-option') === lang;
+      button.className = active
+        ? 'rounded-full bg-cyan-400 px-3 py-1.5 text-slate-950 transition'
+        : 'rounded-full px-3 py-1.5 text-slate-200 transition hover:bg-white/10';
+    });
+  }
+
+  function disconnect() {
+    if (observer) observer.disconnect();
+  }
+
+  function observe() {
+    if (!observer) {
+      observer = new MutationObserver(() => {
+        if (language() !== 'en') return;
+        disconnect();
+        applyLanguage('en');
+        observe();
+      });
+    }
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ATTRS
+    });
+  }
+
+  function applyLanguage(lang) {
+    const next = lang === 'en' ? 'en' : 'zh';
+    disconnect();
+    ensureToggle(next);
+    applyMetadata(next);
+    walk(document.body, next);
+    updateIndexCards(next);
+    ensureToggle(next);
+    observe();
+  }
+
+  function init() {
+    applyLanguage(language());
+    window.addEventListener('storage', (event) => {
+      if (event.key === STORAGE_KEY) applyLanguage(language());
+    });
+  }
+
+  window.MicroToolsI18n = {
+    getLanguage: language,
+    setLanguage(value) {
+      localStorage.setItem(STORAGE_KEY, value === 'en' ? 'en' : 'zh');
+      applyLanguage(language());
+    },
+    applyLanguage
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+  </script>
+  <!-- micro-tools-i18n:end -->
 </body>
 </html>

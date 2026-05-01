@@ -23,7 +23,7 @@
           <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
             免费在线工具
           </p>
-          <h1 class="text-4xl font-black tracking-tight text-white sm:text-5xl md:text-6xl">stopwatch</h1>
+          <h1 class="text-4xl font-black tracking-tight text-white sm:text-5xl md:text-6xl">在线网页版秒表与计次器</h1>
           <p class="mt-3 max-w-2xl text-base leading-7 text-slate-300">
             现代化网页版秒表与计次器，精准记录每一次开始、暂停、重置与中间计次。
           </p>
@@ -406,5 +406,246 @@
       updateButtons();
     })();
   </script>
+
+  <!-- micro-tools-i18n:start -->
+  <script>
+(() => {
+  'use strict';
+  const STORAGE_KEY = 'microToolsLanguage';
+  const PAGE_SLUG = "stopwatch";
+  const TRANSLATIONS = {"开始":"Start","最快单圈":"Fastest Lap","stopwatch,在线秒表,网页版秒表,秒表计次器,计次秒表,免费秒表工具,运动计时器,学习计时器,工作计时工具":"stopwatch,online stopwatch,web stopwatch,lap stopwatch,split stopwatch,free stopwatch tool,sports timer,study timer,work timer tool","启动秒表时出现异常，请刷新页面后重试。":"An error occurred while starting the stopwatch. Please refresh the page and try again.","现代化网页版秒表与计次器，精准记录每一次开始、暂停、重置与中间计次。":"Modern web stopwatch and lap timer, accurately recording every start, pause, reset, and lap.","累计计次":"Cumulative Count","已暂停":"Paused","暂停":"Pause","计次":"Count","继续":"Continue","当前计时时间过短，请稍后再记录计次。":"The current timer duration is too short. Please record the lap later.","添加计次记录失败，请重试。":"Failed to add count record. Please try again.","清空计次记录失败，请重试。":"Failed to clear count records. Please try again.","重置失败，请刷新页面后重试。":"Reset failed. Please refresh the page and try again.","计次记录区":"Counter log area","stopwatch 是一款专为浏览器设计的免费在线网页版秒表工具，适合需要快速、稳定、清晰计时的用户。无论你正在进行跑步训练、健身间歇、课堂实验、演讲排练，还是使用番茄工作法进行学习与工作效率统计，都可以通过这个秒表计次器完成精准记录。工具提供开始、暂停、重置和计次功能，界面会实时显示小时、分钟、秒和毫秒，并在下方列表保存每一次中间时间，方便对比单圈表现与整体用时。":"stopwatch is a free online browser stopwatch designed for users who need quick, stable, and clear timing. Whether you are doing running training, fitness intervals, classroom experiments, speech rehearsal, or using the Pomodoro technique for study and productivity tracking, this lap stopwatch can record accurately. It provides start, pause, reset, and lap functions, displays hours, minutes, seconds, and milliseconds in real time, and saves each split time in a list below for easy comparison of lap performance and total duration.","清空记录":"Clear Records","暂无计次记录。开始计时后点击“计次”即可添加。":"No lap records yet. Start the timer, then click “Lap” to add one.","关于这款在线秒表与计次器":"About this online stopwatch and lap timer","stopwatch - 在线网页版秒表与计次器":"stopwatch - Online web stopwatch and lap timer","秒表已经在计时中，无需重复开始。":"The stopwatch is already running. No need to start again.","格式：小时 : 分钟 : 秒 . 毫秒":"Format: hours : minutes : seconds . milliseconds","秒表控制区":"Stopwatch controls","当前没有可清空的计次记录。":"No count records available to clear.","点击按钮即可开始计时、暂停、重置或记录计次。":"Click the buttons to start, pause, reset, or record laps.","计时中":"Timing","免费在线工具":"Free online tool","stopwatch 是一款免费在线网页版秒表与计次器，支持开始、暂停、重置和计次记录，适合运动训练、学习计时、工作效率统计与实验计时。":"stopwatch is a free online web stopwatch and lap timer that supports start, pause, reset, and lap records, suitable for sports training, study timing, productivity tracking, and experiment timing.","每次点击“计次”都会保存当前中间时间。":"Each click of “Lap” saves the current split time.","stopwatch · 在线网页版秒表与计次器":"stopwatch · Online web stopwatch and lap timer","使用方法非常简单：点击“开始”启动计时，需要临时停止时点击“暂停”，想记录某个阶段的成绩时点击“计次”，系统会自动生成单圈时间和总时间；如果需要重新开始，点击“重置”即可清空当前秒表。作为一款无需安装的在线秒表计时器，它在手机端和桌面端都能良好适配，打开网页即可使用，特别适合搜索“网页版秒表计次器”“免费在线秒表工具”“运动训练计时器”的用户。":"Using it is simple: click “Start” to begin timing, click “Pause” to stop temporarily, click “Lap” to record a stage result, and the system will automatically generate the lap time and total time. Click “Reset” to clear the current stopwatch and start over. As an install-free online stopwatch, it works well on both mobile and desktop, ready to use in your browser and especially suitable for users searching for “web stopwatch with laps”, “free online stopwatch tool”, or “sports training timer”.","单圈时间":"Lap time","暂停秒表时出现异常，请重试。":"An error occurred while pausing the stopwatch. Please try again.","操作无法完成，请稍后重试。":"The operation could not be completed. Please try again later.","秒表尚未开始，无法暂停。":"The stopwatch has not started and cannot be paused.","总时间":"Total Time","请先点击“开始”，计时中才能添加计次记录。":"Please click “Start” first. Lap records can only be added while timing.","序号":"No.","重置":"Reset","本地运行 · 无需安装":"Runs locally · no installation required","最慢单圈":"Slowest Lap","未开始":"Not Started","在线网页版秒表与计次器":"Stopwatch","网页版秒表与计次器。提供开始、暂停、重置功能，并包含一个‘计次’按钮，在下方列表记录每一次的中间时间。":"Web stopwatch and lap timer. Provides start, pause, and reset controls, plus a 'Lap' button to record each split time in the list below."};
+  const TOOL_DATA = {"stopwatch":{"zhName":"在线网页版秒表与计次器","enName":"Stopwatch","zhDescription":"网页版秒表与计次器。提供开始、暂停、重置功能，并包含一个‘计次’按钮，在下方列表记录每一次的中间时间。","enDescription":"Web stopwatch and lap timer. Provides start, pause, and reset controls, plus a 'Lap' button to record each split time in the list below.","zhTitle":"stopwatch - 在线网页版秒表与计次器","enTitle":"Stopwatch | Free Online Tool","zhKeywords":"stopwatch,在线秒表,网页版秒表,秒表计次器,计次秒表,免费秒表工具,运动计时器,学习计时器,工作计时工具","enKeywords":"Stopwatch, online tool, browser tool, productivity tool"}};
+  const CURRENT_TOOL = {"zhName":"在线网页版秒表与计次器","enName":"Stopwatch","zhDescription":"网页版秒表与计次器。提供开始、暂停、重置功能，并包含一个‘计次’按钮，在下方列表记录每一次的中间时间。","enDescription":"Web stopwatch and lap timer. Provides start, pause, and reset controls, plus a 'Lap' button to record each split time in the list below.","zhTitle":"stopwatch - 在线网页版秒表与计次器","enTitle":"Stopwatch | Free Online Tool","zhKeywords":"stopwatch,在线秒表,网页版秒表,秒表计次器,计次秒表,免费秒表工具,运动计时器,学习计时器,工作计时工具","enKeywords":"Stopwatch, online tool, browser tool, productivity tool"};
+  const ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
+  const ZH_RE = /[\u4e00-\u9fff]/;
+  const originalText = new WeakMap();
+  const originalAttrs = new WeakMap();
+  let observer = null;
+
+  function normalize(value) {
+    return String(value || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function hasChinese(value) {
+    return ZH_RE.test(String(value || ''));
+  }
+
+  function language() {
+    return localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'zh';
+  }
+
+  function translateExact(value, lang) {
+    const text = String(value || '');
+    if (lang === 'zh' || !text) return text;
+    if (TRANSLATIONS[text]) return TRANSLATIONS[text];
+    const normalized = normalize(text);
+    if (TRANSLATIONS[normalized]) return TRANSLATIONS[normalized];
+
+    const dynamic = [
+      [/^(\d+)\s*个字符$/u, '$1 characters'],
+      [/^(\d+)\s*字符$/u, '$1 characters'],
+      [/^(\d+)\s*字$/u, '$1 characters'],
+      [/^(\d+)\s*行$/u, '$1 rows'],
+      [/^(\d+)\s*列$/u, '$1 columns'],
+      [/^(\d+)\s*项$/u, '$1 items'],
+      [/^(\d+)\s*次$/u, '$1 times'],
+      [/^当前显示\s*(\d+)\s*\/\s*(\d+)$/u, 'Showing $1 / $2'],
+      [/^第\s*(\d+)\s*行第\s*(\d+)\s*列/u, 'line $1, column $2']
+    ];
+    for (const [pattern, replacement] of dynamic) {
+      if (pattern.test(normalized)) return normalized.replace(pattern, replacement);
+    }
+    return text;
+  }
+
+  function translateWithSpacing(value, lang) {
+    const text = String(value || '');
+    if (!text.trim()) return text;
+    const leading = text.match(/^\s*/)[0];
+    const trailing = text.match(/\s*$/)[0];
+    const core = text.slice(leading.length, text.length - trailing.length);
+    return leading + translateExact(core, lang) + trailing;
+  }
+
+  function skipped(node) {
+    const parent = node.parentElement;
+    return !parent || Boolean(parent.closest('script, style, code, pre, textarea, [data-i18n-ignore]'));
+  }
+
+  function translateNode(node, lang) {
+    if (skipped(node) || !node.nodeValue.trim()) return;
+    const current = node.nodeValue;
+    let original = originalText.get(node);
+    const originalEnglish = original ? translateWithSpacing(original, 'en') : '';
+    if (!original || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
+      original = current;
+      originalText.set(node, original);
+    }
+    node.nodeValue = lang === 'zh' ? (original || current) : translateWithSpacing(original || current, lang);
+  }
+
+  function translateAttrs(element, lang) {
+    if (element.closest('script, style, [data-i18n-ignore]')) return;
+    let store = originalAttrs.get(element);
+    if (!store) {
+      store = {};
+      originalAttrs.set(element, store);
+    }
+    ATTRS.forEach((attr) => {
+      if (!element.hasAttribute(attr)) return;
+      const current = element.getAttribute(attr);
+      const originalEnglish = store[attr] ? translateExact(store[attr], 'en') : '';
+      if (!store[attr] || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
+        store[attr] = current;
+      }
+      element.setAttribute(attr, lang === 'zh' ? store[attr] : translateExact(store[attr] || current, lang));
+    });
+  }
+
+  function walk(root, lang) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach((node) => translateNode(node, lang));
+
+    const elementRoot = root.nodeType === Node.ELEMENT_NODE ? root : document.body;
+    if (!elementRoot) return;
+    translateAttrs(elementRoot, lang);
+    elementRoot.querySelectorAll('*').forEach((element) => translateAttrs(element, lang));
+  }
+
+  function setMeta(name, value) {
+    if (!value) return;
+    let meta = document.querySelector(`meta[name="${name}"]`);
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', name);
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute('content', value);
+  }
+
+  function applyMetadata(lang) {
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    if (PAGE_SLUG === 'index') {
+      document.title = lang === 'zh'
+        ? '免费在线开发者工具箱 | 纯前端工具集合'
+        : 'Free Online Developer Toolbox | Pure Front-End Tools';
+      setMeta('description', lang === 'zh'
+        ? '免费在线开发者工具箱，汇集 JSON、CSV、LaTeX、Base64、正则、时间戳、二维码、颜色转换等纯前端微型工具，隐私友好、无需安装、极速加载。'
+        : 'A free online developer toolbox with pure front-end tools for JSON, CSV, LaTeX, Base64, regex, timestamps, QR codes, color conversion, and daily productivity.');
+      setMeta('keywords', lang === 'zh'
+        ? '免费在线开发者工具箱, 纯前端工具集合, 在线 JSON 工具, 在线编码转换工具, 生产力工具箱, 微型 Web 工具'
+        : 'free online developer tools, front-end tools, JSON tools, encoding tools, productivity toolbox, micro web tools');
+      return;
+    }
+    if (!CURRENT_TOOL || !CURRENT_TOOL.zhName) return;
+    document.title = lang === 'zh' ? CURRENT_TOOL.zhTitle : CURRENT_TOOL.enTitle;
+    setMeta('description', lang === 'zh' ? CURRENT_TOOL.zhDescription : CURRENT_TOOL.enDescription);
+    setMeta('keywords', lang === 'zh' ? CURRENT_TOOL.zhKeywords : CURRENT_TOOL.enKeywords);
+    const h1 = document.querySelector('h1');
+    if (h1) h1.textContent = lang === 'zh' ? CURRENT_TOOL.zhName : CURRENT_TOOL.enName;
+  }
+
+  function updateIndexCards(lang) {
+    if (PAGE_SLUG !== 'index') return;
+    document.querySelectorAll('a[href$=".html"]').forEach((card) => {
+      const slug = (card.getAttribute('href') || '').split('/').pop().replace(/\.html$/i, '');
+      const tool = TOOL_DATA[slug];
+      if (!tool) return;
+      const title = card.querySelector('h3');
+      const description = card.querySelector('p');
+      const action = card.querySelector('span:last-child');
+      if (title) title.textContent = lang === 'zh' ? tool.zhName : tool.enName;
+      if (description) description.textContent = lang === 'zh' ? tool.zhDescription : tool.enDescription;
+      if (action) action.textContent = lang === 'zh' ? '立即使用' : 'Open Tool';
+      card.dataset.search = normalize(`${slug} ${tool.zhName} ${tool.enName} ${tool.zhDescription} ${tool.enDescription}`).toLowerCase().replace(/[-_\s]+/g, '');
+    });
+    const search = document.getElementById('searchInput');
+    if (search) search.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+
+  function ensureToggle(lang) {
+    let toggle = document.getElementById('microToolsLanguageToggle');
+    if (!toggle) {
+      toggle = document.createElement('div');
+      toggle.id = 'microToolsLanguageToggle';
+      toggle.setAttribute('data-i18n-ignore', 'true');
+      toggle.className = 'fixed right-4 top-4 z-50 flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/90 p-1 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur';
+      toggle.innerHTML = '<span data-language-label class="px-2 text-xs text-slate-300">语言</span><button type="button" data-lang-option="zh" class="rounded-full px-3 py-1.5 transition">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-1.5 transition">EN</button>';
+      document.body.appendChild(toggle);
+      toggle.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-lang-option]');
+        if (!button) return;
+        localStorage.setItem(STORAGE_KEY, button.getAttribute('data-lang-option') === 'en' ? 'en' : 'zh');
+        applyLanguage(language());
+      });
+    }
+    toggle.querySelector('[data-language-label]').textContent = lang === 'zh' ? '语言' : 'Language';
+    toggle.querySelectorAll('[data-lang-option]').forEach((button) => {
+      const active = button.getAttribute('data-lang-option') === lang;
+      button.className = active
+        ? 'rounded-full bg-cyan-400 px-3 py-1.5 text-slate-950 transition'
+        : 'rounded-full px-3 py-1.5 text-slate-200 transition hover:bg-white/10';
+    });
+  }
+
+  function disconnect() {
+    if (observer) observer.disconnect();
+  }
+
+  function observe() {
+    if (!observer) {
+      observer = new MutationObserver(() => {
+        if (language() !== 'en') return;
+        disconnect();
+        applyLanguage('en');
+        observe();
+      });
+    }
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ATTRS
+    });
+  }
+
+  function applyLanguage(lang) {
+    const next = lang === 'en' ? 'en' : 'zh';
+    disconnect();
+    ensureToggle(next);
+    applyMetadata(next);
+    walk(document.body, next);
+    updateIndexCards(next);
+    ensureToggle(next);
+    observe();
+  }
+
+  function init() {
+    applyLanguage(language());
+    window.addEventListener('storage', (event) => {
+      if (event.key === STORAGE_KEY) applyLanguage(language());
+    });
+  }
+
+  window.MicroToolsI18n = {
+    getLanguage: language,
+    setLanguage(value) {
+      localStorage.setItem(STORAGE_KEY, value === 'en' ? 'en' : 'zh');
+      applyLanguage(language());
+    },
+    applyLanguage
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+  </script>
+  <!-- micro-tools-i18n:end -->
 </body>
 </html>

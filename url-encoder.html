@@ -21,7 +21,7 @@
       <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">在线开发者工具</p>
-          <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">url-encoder</h1>
+          <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">URL 编码/解码工具</h1>
           <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">URL 编码/解码工具，支持批量处理多行 URL、查询参数以及中文、空格、符号等特殊字符转义。</p>
         </div>
         <div class="grid grid-cols-3 gap-3 rounded-2xl border border-white/10 bg-white/5 p-3 text-center shadow-2xl shadow-cyan-950/20">
@@ -368,5 +368,246 @@
       setStatus('等待处理', 'idle');
     })();
   </script>
+
+  <!-- micro-tools-i18n:start -->
+  <script>
+(() => {
+  'use strict';
+  const STORAGE_KEY = 'microToolsLanguage';
+  const PAGE_SLUG = "url-encoder";
+  const TRANSLATIONS = {"url-encoder,URL编码,URL解码,在线URL编码工具,批量URL解码,encodeURIComponent,decodeURIComponent,特殊字符转义,百分号编码":"url-encoder, URL encoding, URL decoding, Online URL encoding tool, Batch URL decoding, encodeURIComponent, decodeURIComponent, Special character escaping, Percent encoding","URL 编码解码操作区":"URL encode/decode panel","当前没有可复制的输出结果。":"No output result available to copy.","结果":"Result","复制失败":"Copy Failed","输出区为空，无法交换。":"The output area is empty and cannot be swapped.","解码 URL":"Decode URL","没有可复制的结果":"No result to copy","name=张三&city=上海&redirect=https://example.com/a?x=1&y=2":"name=ZhangSan&city=Shanghai&redirect=https://example.com/a?x=1&y=2","输入为空":"Input Is Empty","输入区":"Input","URL 编码/解码工具，支持批量处理多行 URL、查询参数以及中文、空格、符号等特殊字符转义。":"URL encoding/decoding tool. Supports batch processing of multiline URLs, query parameters, and escaping special characters such as Chinese, spaces, and symbols.","等待处理":"Waiting for Processing","解码时将 “+” 识别为空格":"Treat “+” as a space when decoding","处理完成":"Processing Complete","开始处理":"Start processing","关于 URL 编码/解码工具":"About the URL encode/decode tool","无法交换":"Cannot swap","复制失败，请手动复制":"Copy failed. Please copy manually.","复制结果":"Copy Result","结果已复制到剪贴板":"Result copied to clipboard","编码或解码后的输出结果":"Encoded or decoded output","处理前去除每行首尾空白":"Trim leading and trailing whitespace on each line before processing","复制失败：${err && err.message ? err.message : '请手动选择输出内容复制。'}":"Copy failed: ${err && err.message ? err.message : 'Please manually select and copy the output content.'}","还有 ${list.length - 8} 条错误未显示，请检查输入内容。":"${list.length - 8} more errors are not shown; please check your input.","填入示例":"Fill Example","字符":"Characters","url-encoder 是一款免费的在线 URL 编码/解码工具，支持多行批量处理 URL、查询参数与特殊字符转义，适合开发、测试、SEO 与数据处理场景。":"url-encoder is a free online URL encoding/decoding tool that supports multi-line batch processing for URLs, query parameters, and special character escaping, ideal for development, testing, SEO, and data processing.","示例已填入":"Example filled in","行数":"Lines","输入与输出已交换":"Input and output swapped","交换":"Swap","在线开发者工具":"Online Developer Tools","编码参数片段":"Encoded Parameter Fragment","处理结果将显示在这里":"Processing results will appear here","url-encoder · 在线 URL 编码/解码工具":"url-encoder · Online URL encoder/decoder","处理失败或存在需要注意的问题：":"Processing failed or issues need attention:","部分行处理失败，请查看提示":"Some rows failed to process. Please check the tips.","url-encoder｜URL 编码/解码工具":"url-encoder｜URL encoding/decoding tool","已交换":"Swapped","清空":"Clear","结果会保持输入的多行结构，便于直接复制使用。":"Results keep the multiline structure of the input for easy copying.","url-encoder 是一款面向前端开发、后端调试、SEO 运营和数据清洗场景的在线 URL 编码解码工具。浏览器地址、接口参数、广告落地页链接中经常包含中文、空格、井号、百分号、等号和 & 等特殊字符，如果没有正确进行百分号编码，就可能导致链接截断、参数解析错误或搜索引擎抓取异常。本工具支持多行批量 URL 编码、批量 URL 解码，并提供完整 URL 编码与参数片段编码两种模式：前者适合处理整条链接，后者适合处理 query 参数值、表单字段或需要 encodeURIComponent 的内容。使用时只需将 URL 按行粘贴到输入区，选择编码或解码模式，点击开始处理即可获得可复制结果。对于非法百分号转义、异常字符等情况，工具会给出清晰的红色错误提示，帮助你快速定位问题，提升链接处理效率。":"url-encoder is an online URL encoding and decoding tool for frontend development, backend debugging, SEO operations, and data cleaning. Browser addresses, API parameters, ad landing page links often contain Chinese characters, spaces, hashes, percent signs, equals signs, and special characters like &, and without correct percent encoding, links may be truncated, parameters parsed incorrectly, or search engine crawling affected. This tool supports multi-line batch URL encoding and decoding, with two modes: full URL encoding and parameter fragment encoding. The former is suitable for entire links, while the latter is for query parameter values, form fields, or content requiring encodeURIComponent. Paste URLs line by line into the input area, choose encode or decode mode, and click start to get copyable results. For invalid percent escapes or abnormal characters, the tool shows a clear red error message to help you quickly locate issues and improve link processing efficiency.","已复制":"Copied","处理模式":"Processing Mode","每行一个 URL 或文本片段，可批量处理。":"One URL or text snippet per line; batch processing is supported.","请输入需要编码或解码的 URL":"Please enter the URL to encode or decode","请输入至少一行需要处理的 URL 或文本。":"Please enter at least one line of URL or text to process.","输出区":"Output","无结果":"No Results","部分失败":"Partially failed","输出区为空":"Output area is empty","浏览器拒绝复制操作":"Browser denied the copy operation","已清空":"Cleared","编码完整 URL":"Encode full URL","请输入内容后再处理":"Please enter content before processing","URL 编码/解码工具":"URL Encoder and Decoder","URL 编码/解码工具。支持批量处理多行URL，并处理特殊字符的转义。":"URL encode/decode tool. Supports batch processing of multi-line URLs and escaping special characters."};
+  const TOOL_DATA = {"url-encoder":{"zhName":"URL 编码/解码工具","enName":"URL Encoder and Decoder","zhDescription":"URL 编码/解码工具。支持批量处理多行URL，并处理特殊字符的转义。","enDescription":"URL encode/decode tool. Supports batch processing of multi-line URLs and escaping special characters.","zhTitle":"url-encoder｜URL 编码/解码工具","enTitle":"URL Encoder and Decoder | Free Online Tool","zhKeywords":"url-encoder,URL编码,URL解码,在线URL编码工具,批量URL解码,encodeURIComponent,decodeURIComponent,特殊字符转义,百分号编码","enKeywords":"URL Encoder and Decoder, online tool, browser tool, productivity tool"}};
+  const CURRENT_TOOL = {"zhName":"URL 编码/解码工具","enName":"URL Encoder and Decoder","zhDescription":"URL 编码/解码工具。支持批量处理多行URL，并处理特殊字符的转义。","enDescription":"URL encode/decode tool. Supports batch processing of multi-line URLs and escaping special characters.","zhTitle":"url-encoder｜URL 编码/解码工具","enTitle":"URL Encoder and Decoder | Free Online Tool","zhKeywords":"url-encoder,URL编码,URL解码,在线URL编码工具,批量URL解码,encodeURIComponent,decodeURIComponent,特殊字符转义,百分号编码","enKeywords":"URL Encoder and Decoder, online tool, browser tool, productivity tool"};
+  const ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
+  const ZH_RE = /[\u4e00-\u9fff]/;
+  const originalText = new WeakMap();
+  const originalAttrs = new WeakMap();
+  let observer = null;
+
+  function normalize(value) {
+    return String(value || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function hasChinese(value) {
+    return ZH_RE.test(String(value || ''));
+  }
+
+  function language() {
+    return localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'zh';
+  }
+
+  function translateExact(value, lang) {
+    const text = String(value || '');
+    if (lang === 'zh' || !text) return text;
+    if (TRANSLATIONS[text]) return TRANSLATIONS[text];
+    const normalized = normalize(text);
+    if (TRANSLATIONS[normalized]) return TRANSLATIONS[normalized];
+
+    const dynamic = [
+      [/^(\d+)\s*个字符$/u, '$1 characters'],
+      [/^(\d+)\s*字符$/u, '$1 characters'],
+      [/^(\d+)\s*字$/u, '$1 characters'],
+      [/^(\d+)\s*行$/u, '$1 rows'],
+      [/^(\d+)\s*列$/u, '$1 columns'],
+      [/^(\d+)\s*项$/u, '$1 items'],
+      [/^(\d+)\s*次$/u, '$1 times'],
+      [/^当前显示\s*(\d+)\s*\/\s*(\d+)$/u, 'Showing $1 / $2'],
+      [/^第\s*(\d+)\s*行第\s*(\d+)\s*列/u, 'line $1, column $2']
+    ];
+    for (const [pattern, replacement] of dynamic) {
+      if (pattern.test(normalized)) return normalized.replace(pattern, replacement);
+    }
+    return text;
+  }
+
+  function translateWithSpacing(value, lang) {
+    const text = String(value || '');
+    if (!text.trim()) return text;
+    const leading = text.match(/^\s*/)[0];
+    const trailing = text.match(/\s*$/)[0];
+    const core = text.slice(leading.length, text.length - trailing.length);
+    return leading + translateExact(core, lang) + trailing;
+  }
+
+  function skipped(node) {
+    const parent = node.parentElement;
+    return !parent || Boolean(parent.closest('script, style, code, pre, textarea, [data-i18n-ignore]'));
+  }
+
+  function translateNode(node, lang) {
+    if (skipped(node) || !node.nodeValue.trim()) return;
+    const current = node.nodeValue;
+    let original = originalText.get(node);
+    const originalEnglish = original ? translateWithSpacing(original, 'en') : '';
+    if (!original || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
+      original = current;
+      originalText.set(node, original);
+    }
+    node.nodeValue = lang === 'zh' ? (original || current) : translateWithSpacing(original || current, lang);
+  }
+
+  function translateAttrs(element, lang) {
+    if (element.closest('script, style, [data-i18n-ignore]')) return;
+    let store = originalAttrs.get(element);
+    if (!store) {
+      store = {};
+      originalAttrs.set(element, store);
+    }
+    ATTRS.forEach((attr) => {
+      if (!element.hasAttribute(attr)) return;
+      const current = element.getAttribute(attr);
+      const originalEnglish = store[attr] ? translateExact(store[attr], 'en') : '';
+      if (!store[attr] || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
+        store[attr] = current;
+      }
+      element.setAttribute(attr, lang === 'zh' ? store[attr] : translateExact(store[attr] || current, lang));
+    });
+  }
+
+  function walk(root, lang) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach((node) => translateNode(node, lang));
+
+    const elementRoot = root.nodeType === Node.ELEMENT_NODE ? root : document.body;
+    if (!elementRoot) return;
+    translateAttrs(elementRoot, lang);
+    elementRoot.querySelectorAll('*').forEach((element) => translateAttrs(element, lang));
+  }
+
+  function setMeta(name, value) {
+    if (!value) return;
+    let meta = document.querySelector(`meta[name="${name}"]`);
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', name);
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute('content', value);
+  }
+
+  function applyMetadata(lang) {
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    if (PAGE_SLUG === 'index') {
+      document.title = lang === 'zh'
+        ? '免费在线开发者工具箱 | 纯前端工具集合'
+        : 'Free Online Developer Toolbox | Pure Front-End Tools';
+      setMeta('description', lang === 'zh'
+        ? '免费在线开发者工具箱，汇集 JSON、CSV、LaTeX、Base64、正则、时间戳、二维码、颜色转换等纯前端微型工具，隐私友好、无需安装、极速加载。'
+        : 'A free online developer toolbox with pure front-end tools for JSON, CSV, LaTeX, Base64, regex, timestamps, QR codes, color conversion, and daily productivity.');
+      setMeta('keywords', lang === 'zh'
+        ? '免费在线开发者工具箱, 纯前端工具集合, 在线 JSON 工具, 在线编码转换工具, 生产力工具箱, 微型 Web 工具'
+        : 'free online developer tools, front-end tools, JSON tools, encoding tools, productivity toolbox, micro web tools');
+      return;
+    }
+    if (!CURRENT_TOOL || !CURRENT_TOOL.zhName) return;
+    document.title = lang === 'zh' ? CURRENT_TOOL.zhTitle : CURRENT_TOOL.enTitle;
+    setMeta('description', lang === 'zh' ? CURRENT_TOOL.zhDescription : CURRENT_TOOL.enDescription);
+    setMeta('keywords', lang === 'zh' ? CURRENT_TOOL.zhKeywords : CURRENT_TOOL.enKeywords);
+    const h1 = document.querySelector('h1');
+    if (h1) h1.textContent = lang === 'zh' ? CURRENT_TOOL.zhName : CURRENT_TOOL.enName;
+  }
+
+  function updateIndexCards(lang) {
+    if (PAGE_SLUG !== 'index') return;
+    document.querySelectorAll('a[href$=".html"]').forEach((card) => {
+      const slug = (card.getAttribute('href') || '').split('/').pop().replace(/\.html$/i, '');
+      const tool = TOOL_DATA[slug];
+      if (!tool) return;
+      const title = card.querySelector('h3');
+      const description = card.querySelector('p');
+      const action = card.querySelector('span:last-child');
+      if (title) title.textContent = lang === 'zh' ? tool.zhName : tool.enName;
+      if (description) description.textContent = lang === 'zh' ? tool.zhDescription : tool.enDescription;
+      if (action) action.textContent = lang === 'zh' ? '立即使用' : 'Open Tool';
+      card.dataset.search = normalize(`${slug} ${tool.zhName} ${tool.enName} ${tool.zhDescription} ${tool.enDescription}`).toLowerCase().replace(/[-_\s]+/g, '');
+    });
+    const search = document.getElementById('searchInput');
+    if (search) search.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+
+  function ensureToggle(lang) {
+    let toggle = document.getElementById('microToolsLanguageToggle');
+    if (!toggle) {
+      toggle = document.createElement('div');
+      toggle.id = 'microToolsLanguageToggle';
+      toggle.setAttribute('data-i18n-ignore', 'true');
+      toggle.className = 'fixed right-4 top-4 z-50 flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/90 p-1 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur';
+      toggle.innerHTML = '<span data-language-label class="px-2 text-xs text-slate-300">语言</span><button type="button" data-lang-option="zh" class="rounded-full px-3 py-1.5 transition">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-1.5 transition">EN</button>';
+      document.body.appendChild(toggle);
+      toggle.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-lang-option]');
+        if (!button) return;
+        localStorage.setItem(STORAGE_KEY, button.getAttribute('data-lang-option') === 'en' ? 'en' : 'zh');
+        applyLanguage(language());
+      });
+    }
+    toggle.querySelector('[data-language-label]').textContent = lang === 'zh' ? '语言' : 'Language';
+    toggle.querySelectorAll('[data-lang-option]').forEach((button) => {
+      const active = button.getAttribute('data-lang-option') === lang;
+      button.className = active
+        ? 'rounded-full bg-cyan-400 px-3 py-1.5 text-slate-950 transition'
+        : 'rounded-full px-3 py-1.5 text-slate-200 transition hover:bg-white/10';
+    });
+  }
+
+  function disconnect() {
+    if (observer) observer.disconnect();
+  }
+
+  function observe() {
+    if (!observer) {
+      observer = new MutationObserver(() => {
+        if (language() !== 'en') return;
+        disconnect();
+        applyLanguage('en');
+        observe();
+      });
+    }
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ATTRS
+    });
+  }
+
+  function applyLanguage(lang) {
+    const next = lang === 'en' ? 'en' : 'zh';
+    disconnect();
+    ensureToggle(next);
+    applyMetadata(next);
+    walk(document.body, next);
+    updateIndexCards(next);
+    ensureToggle(next);
+    observe();
+  }
+
+  function init() {
+    applyLanguage(language());
+    window.addEventListener('storage', (event) => {
+      if (event.key === STORAGE_KEY) applyLanguage(language());
+    });
+  }
+
+  window.MicroToolsI18n = {
+    getLanguage: language,
+    setLanguage(value) {
+      localStorage.setItem(STORAGE_KEY, value === 'en' ? 'en' : 'zh');
+      applyLanguage(language());
+    },
+    applyLanguage
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+  </script>
+  <!-- micro-tools-i18n:end -->
 </body>
 </html>

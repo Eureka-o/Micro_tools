@@ -19,7 +19,7 @@
       <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm text-cyan-200">在线开发工具</p>
-          <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl">regex-tester</h1>
+          <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl">正则表达式在线测试工具</h1>
           <p class="mt-3 max-w-2xl text-slate-300">正则表达式在线测试工具：实时高亮匹配结果，快捷插入常用正则片段，快速验证文本规则。</p>
         </div>
         <div class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 shadow-2xl">
@@ -398,5 +398,246 @@
       update();
     })();
   </script>
+
+  <!-- micro-tools-i18n:start -->
+  <script>
+(() => {
+  'use strict';
+  const STORAGE_KEY = 'microToolsLanguage';
+  const PAGE_SLUG = "regex-tester";
+  const TRANSLATIONS = {"正则表达式 Pattern":"Regular Expression Pattern","日期":"Date","<div class=\"rounded-xl border border-white/10 bg-white/5 p-3\"> <div class=\"flex flex-wrap items-center justify-between gap-2\"> <span class=\"rounded-lg bg-cyan-400/15 px-2 py-1 text-xs font-semibold text-cyan-200\">#${index + 1}<\/span> <span class=\"text-xs text-slate-400\">位置 ${match.index} - ${match.end}<\/span> <\/div> <div class=\"mt-2 break-words rounded-lg bg-slate-950 p-2 font-mono text-sm text-slate-100\">${match.text === '' ? '<span class=\"text-amber-300\">零宽匹配<\/span>' : escapeHtml(match.text)}<\/div> ${groupHtml} <\/div>":"<div class=\"rounded-xl border border-white/10 bg-white/5 p-3\"> <div class=\"flex flex-wrap items-center justify-between gap-2\"> <span class=\"rounded-lg bg-cyan-400/15 px-2 py-1 text-xs font-semibold text-cyan-200\">#${index + 1}<\/span> <span class=\"text-xs text-slate-400\">Position ${match.index} - ${match.end}<\/span> <\/div> <div class=\"mt-2 break-words rounded-lg bg-slate-950 p-2 font-mono text-sm text-slate-100\">${match.text === '' ? '<span class=\"text-amber-300\">Zero-width match<\/span>' : escapeHtml(match.text)}<\/div> ${groupHtml} <\/div>","使用时，只需在输入区填写 JavaScript 正则表达式主体，选择 g、i、m、s、u、y 等标志位，再粘贴测试文本，即可在输出区查看高亮结果。工具还内置邮箱正则、手机号正则、URL 正则、日期正则、IPv4 正则等常用正则片段，点击即可插入，适合快速构建规则。对于非法正则格式，页面会显示友好的错误提示，避免调试中断。无论是进行正则表达式在线验证，还是查找文本中的特定内容，regex-tester 都能提供轻量、直观、响应式的测试体验。":"To use it, enter the JavaScript regular expression body in the input area, select flags such as g, i, m, s, u, and y, then paste your test text to view highlighted results in the output area. The tool also includes common regex snippets such as email regex, phone number regex, URL regex, date regex, and IPv4 regex, which can be inserted with one click for quickly building rules. For invalid regex formats, the page shows friendly error messages to avoid interrupting debugging. Whether you are validating regular expressions online or finding specific content in text, regex-tester provides a lightweight, intuitive, and responsive testing experience.","正则表达式测试器":"Regular expression tester","匹配详情":"Match details","高亮预览":"Highlight preview","当前匹配数":"Current matches","输入区":"Input","已填入":"Filled","在线开发工具":"Online developer tools","正则表达式格式无效：${error.message}":"Invalid regular expression format: ${error.message}","失败":"Failed","<div class=\"mt-2 text-xs text-slate-500\">无捕获组<\/div>":"<div class=\"mt-2 text-xs text-slate-500\">No capture groups<\/div>","请输入正则表达式 Pattern。":"Please enter a regex Pattern.","匹配过程出现异常：${error.message}":"An error occurred during matching: ${error.message}","regex-tester 是一款面向前端开发者、后端工程师、测试人员和数据处理用户的正则表达式在线测试工具。日常开发中，邮箱校验、手机号校验、URL 提取、日期匹配、日志清洗等场景经常需要反复调试正则规则；如果只依赖代码运行环境，排查效率较低，也不容易直观看到匹配范围。本工具提供实时正则匹配高亮、匹配数量统计和匹配详情列表，帮助你快速确认 pattern 与 flags 是否符合预期。":"regex-tester is an online regular expression testing tool for frontend developers, backend engineers, testers, and data processing users. In daily development, scenarios such as email validation, mobile number validation, URL extraction, date matching, and log cleanup often require repeated regex debugging. Relying only on a code runtime is inefficient and makes it hard to visually inspect match ranges. This tool provides real-time regex match highlighting, match count statistics, and a match details list to help you quickly confirm whether the pattern and flags work as expected.","<div class=\"rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-slate-400\">暂无匹配结果。<\/div>":"<div class=\"rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-slate-400\">No matching results.<\/div>","当前没有可复制的匹配结果。":"No matching results available to copy.","在这里粘贴需要测试的文本...":"Paste the text to test here...","中国手机号":"Chinese mobile number","填入示例":"Fill Example","例如：\\b\\w+@\\w+\\.\\w+\\b":"Example: \\b\\w+@\\w+\\.\\w+\\b","身份证位数":"ID number length","未发现匹配":"No matches found","关于 regex-tester 正则表达式在线测试工具":"About the regex-tester online regular expression testing tool","匹配次数过多，已自动停止以保护浏览器性能。请优化正则表达式。":"Too many matches. Stopped automatically to protect browser performance. Please optimize the regular expression.","邮箱":"Email","regex-tester · 原生 JavaScript 构建 · 支持桌面端与移动端":"regex-tester · Built with native JavaScript · Supports desktop and mobile","等待输入":"Waiting for Input","已插入":"Inserted","<span class=\"mx-0.5 inline-flex rounded bg-amber-400 px-1 align-middle text-[10px] font-bold text-slate-950\" title=\"零宽匹配 #${idx + 1}\">#${idx + 1}<\/span>":"<span class=\"mx-0.5 inline-flex rounded bg-amber-400 px-1 align-middle text-[10px] font-bold text-slate-950\" title=\"Zero-width match #${idx + 1}\">#${idx + 1}<\/span>","常用正则片段快捷插入":"Quick insert for common regex snippets","<div class=\"mt-2 text-xs text-slate-400\">捕获组：${match.groups.map((g, i) =>":"<div class=\"mt-2 text-xs text-slate-400\">Capture groups: ${match.groups.map((g, i) =>","清空":"Clear","正则表达式在线测试工具：实时高亮匹配结果，快捷插入常用正则片段，快速验证文本规则。":"Online regex testing tool: highlight matches in real time, quickly insert common regex snippets, and validate text rules fast.","regex-tester - 正则表达式在线测试工具":"regex-tester - Online Regular Expression Tester","测试文本":"Test Text","已匹配 ${latestMatches.length} 项":"Matched ${latestMatches.length} items","已复制":"Copied","复制失败：${error.message}":"Copy failed: ${error.message}","regex-tester, 正则表达式在线测试, Regex 在线工具, 正则匹配高亮, 邮箱正则, 手机号正则, JavaScript 正则测试工具":"regex-tester, online regular expression tester, Regex online tool, regex match highlighting, email regex, phone number regex, JavaScript regex testing tool","<span class=\"text-slate-600\">测试文本为空。<\/span>":"<span class=\"text-slate-600\">Test text is empty.<\/span>","regex-tester 是一款零依赖的正则表达式在线测试工具，支持实时匹配、高亮结果、常用正则片段快捷插入、匹配列表查看，适合开发者快速验证邮箱、手机号、URL 等规则。":"regex-tester is a zero-dependency online regular expression testing tool. It supports real-time matching, highlighted results, quick insertion of common regex snippets, and match list viewing, ideal for developers to quickly validate rules such as email, phone numbers, and URLs.","复制匹配":"Copy Matches","输出区":"Output","无结果":"No Results","联系邮箱：hello@example.com，备用邮箱：dev.team@test.cn\\\\n手机号：13800138000，网址：https://example.com/docs\\\\n日期：2026-05-01，IP：192.168.1.1":"Contact email: hello@example.com, backup email: dev.team@test.cn\\\\nMobile: 13800138000, URL: https://example.com/docs\\\\nDate: 2026-05-01, IP: 192.168.1.1","已清空":"Cleared","正则表达式在线测试工具":"Regex Tester","正则表达式在线测试工具。支持高亮匹配结果，内置常用正则片段（如邮箱、手机号）的快捷插入。":"Online regex testing tool. Supports highlighted match results and built-in quick insertion of common regex snippets, such as email and mobile numbers."};
+  const TOOL_DATA = {"regex-tester":{"zhName":"正则表达式在线测试工具","enName":"Regex Tester","zhDescription":"正则表达式在线测试工具。支持高亮匹配结果，内置常用正则片段（如邮箱、手机号）的快捷插入。","enDescription":"Online regex testing tool. Supports highlighted match results and built-in quick insertion of common regex snippets, such as email and mobile numbers.","zhTitle":"regex-tester - 正则表达式在线测试工具","enTitle":"Regex Tester | Free Online Tool","zhKeywords":"regex-tester, 正则表达式在线测试, Regex 在线工具, 正则匹配高亮, 邮箱正则, 手机号正则, JavaScript 正则测试工具","enKeywords":"Regex Tester, online tool, browser tool, productivity tool"}};
+  const CURRENT_TOOL = {"zhName":"正则表达式在线测试工具","enName":"Regex Tester","zhDescription":"正则表达式在线测试工具。支持高亮匹配结果，内置常用正则片段（如邮箱、手机号）的快捷插入。","enDescription":"Online regex testing tool. Supports highlighted match results and built-in quick insertion of common regex snippets, such as email and mobile numbers.","zhTitle":"regex-tester - 正则表达式在线测试工具","enTitle":"Regex Tester | Free Online Tool","zhKeywords":"regex-tester, 正则表达式在线测试, Regex 在线工具, 正则匹配高亮, 邮箱正则, 手机号正则, JavaScript 正则测试工具","enKeywords":"Regex Tester, online tool, browser tool, productivity tool"};
+  const ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
+  const ZH_RE = /[\u4e00-\u9fff]/;
+  const originalText = new WeakMap();
+  const originalAttrs = new WeakMap();
+  let observer = null;
+
+  function normalize(value) {
+    return String(value || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function hasChinese(value) {
+    return ZH_RE.test(String(value || ''));
+  }
+
+  function language() {
+    return localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'zh';
+  }
+
+  function translateExact(value, lang) {
+    const text = String(value || '');
+    if (lang === 'zh' || !text) return text;
+    if (TRANSLATIONS[text]) return TRANSLATIONS[text];
+    const normalized = normalize(text);
+    if (TRANSLATIONS[normalized]) return TRANSLATIONS[normalized];
+
+    const dynamic = [
+      [/^(\d+)\s*个字符$/u, '$1 characters'],
+      [/^(\d+)\s*字符$/u, '$1 characters'],
+      [/^(\d+)\s*字$/u, '$1 characters'],
+      [/^(\d+)\s*行$/u, '$1 rows'],
+      [/^(\d+)\s*列$/u, '$1 columns'],
+      [/^(\d+)\s*项$/u, '$1 items'],
+      [/^(\d+)\s*次$/u, '$1 times'],
+      [/^当前显示\s*(\d+)\s*\/\s*(\d+)$/u, 'Showing $1 / $2'],
+      [/^第\s*(\d+)\s*行第\s*(\d+)\s*列/u, 'line $1, column $2']
+    ];
+    for (const [pattern, replacement] of dynamic) {
+      if (pattern.test(normalized)) return normalized.replace(pattern, replacement);
+    }
+    return text;
+  }
+
+  function translateWithSpacing(value, lang) {
+    const text = String(value || '');
+    if (!text.trim()) return text;
+    const leading = text.match(/^\s*/)[0];
+    const trailing = text.match(/\s*$/)[0];
+    const core = text.slice(leading.length, text.length - trailing.length);
+    return leading + translateExact(core, lang) + trailing;
+  }
+
+  function skipped(node) {
+    const parent = node.parentElement;
+    return !parent || Boolean(parent.closest('script, style, code, pre, textarea, [data-i18n-ignore]'));
+  }
+
+  function translateNode(node, lang) {
+    if (skipped(node) || !node.nodeValue.trim()) return;
+    const current = node.nodeValue;
+    let original = originalText.get(node);
+    const originalEnglish = original ? translateWithSpacing(original, 'en') : '';
+    if (!original || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
+      original = current;
+      originalText.set(node, original);
+    }
+    node.nodeValue = lang === 'zh' ? (original || current) : translateWithSpacing(original || current, lang);
+  }
+
+  function translateAttrs(element, lang) {
+    if (element.closest('script, style, [data-i18n-ignore]')) return;
+    let store = originalAttrs.get(element);
+    if (!store) {
+      store = {};
+      originalAttrs.set(element, store);
+    }
+    ATTRS.forEach((attr) => {
+      if (!element.hasAttribute(attr)) return;
+      const current = element.getAttribute(attr);
+      const originalEnglish = store[attr] ? translateExact(store[attr], 'en') : '';
+      if (!store[attr] || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
+        store[attr] = current;
+      }
+      element.setAttribute(attr, lang === 'zh' ? store[attr] : translateExact(store[attr] || current, lang));
+    });
+  }
+
+  function walk(root, lang) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach((node) => translateNode(node, lang));
+
+    const elementRoot = root.nodeType === Node.ELEMENT_NODE ? root : document.body;
+    if (!elementRoot) return;
+    translateAttrs(elementRoot, lang);
+    elementRoot.querySelectorAll('*').forEach((element) => translateAttrs(element, lang));
+  }
+
+  function setMeta(name, value) {
+    if (!value) return;
+    let meta = document.querySelector(`meta[name="${name}"]`);
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', name);
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute('content', value);
+  }
+
+  function applyMetadata(lang) {
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    if (PAGE_SLUG === 'index') {
+      document.title = lang === 'zh'
+        ? '免费在线开发者工具箱 | 纯前端工具集合'
+        : 'Free Online Developer Toolbox | Pure Front-End Tools';
+      setMeta('description', lang === 'zh'
+        ? '免费在线开发者工具箱，汇集 JSON、CSV、LaTeX、Base64、正则、时间戳、二维码、颜色转换等纯前端微型工具，隐私友好、无需安装、极速加载。'
+        : 'A free online developer toolbox with pure front-end tools for JSON, CSV, LaTeX, Base64, regex, timestamps, QR codes, color conversion, and daily productivity.');
+      setMeta('keywords', lang === 'zh'
+        ? '免费在线开发者工具箱, 纯前端工具集合, 在线 JSON 工具, 在线编码转换工具, 生产力工具箱, 微型 Web 工具'
+        : 'free online developer tools, front-end tools, JSON tools, encoding tools, productivity toolbox, micro web tools');
+      return;
+    }
+    if (!CURRENT_TOOL || !CURRENT_TOOL.zhName) return;
+    document.title = lang === 'zh' ? CURRENT_TOOL.zhTitle : CURRENT_TOOL.enTitle;
+    setMeta('description', lang === 'zh' ? CURRENT_TOOL.zhDescription : CURRENT_TOOL.enDescription);
+    setMeta('keywords', lang === 'zh' ? CURRENT_TOOL.zhKeywords : CURRENT_TOOL.enKeywords);
+    const h1 = document.querySelector('h1');
+    if (h1) h1.textContent = lang === 'zh' ? CURRENT_TOOL.zhName : CURRENT_TOOL.enName;
+  }
+
+  function updateIndexCards(lang) {
+    if (PAGE_SLUG !== 'index') return;
+    document.querySelectorAll('a[href$=".html"]').forEach((card) => {
+      const slug = (card.getAttribute('href') || '').split('/').pop().replace(/\.html$/i, '');
+      const tool = TOOL_DATA[slug];
+      if (!tool) return;
+      const title = card.querySelector('h3');
+      const description = card.querySelector('p');
+      const action = card.querySelector('span:last-child');
+      if (title) title.textContent = lang === 'zh' ? tool.zhName : tool.enName;
+      if (description) description.textContent = lang === 'zh' ? tool.zhDescription : tool.enDescription;
+      if (action) action.textContent = lang === 'zh' ? '立即使用' : 'Open Tool';
+      card.dataset.search = normalize(`${slug} ${tool.zhName} ${tool.enName} ${tool.zhDescription} ${tool.enDescription}`).toLowerCase().replace(/[-_\s]+/g, '');
+    });
+    const search = document.getElementById('searchInput');
+    if (search) search.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+
+  function ensureToggle(lang) {
+    let toggle = document.getElementById('microToolsLanguageToggle');
+    if (!toggle) {
+      toggle = document.createElement('div');
+      toggle.id = 'microToolsLanguageToggle';
+      toggle.setAttribute('data-i18n-ignore', 'true');
+      toggle.className = 'fixed right-4 top-4 z-50 flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/90 p-1 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur';
+      toggle.innerHTML = '<span data-language-label class="px-2 text-xs text-slate-300">语言</span><button type="button" data-lang-option="zh" class="rounded-full px-3 py-1.5 transition">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-1.5 transition">EN</button>';
+      document.body.appendChild(toggle);
+      toggle.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-lang-option]');
+        if (!button) return;
+        localStorage.setItem(STORAGE_KEY, button.getAttribute('data-lang-option') === 'en' ? 'en' : 'zh');
+        applyLanguage(language());
+      });
+    }
+    toggle.querySelector('[data-language-label]').textContent = lang === 'zh' ? '语言' : 'Language';
+    toggle.querySelectorAll('[data-lang-option]').forEach((button) => {
+      const active = button.getAttribute('data-lang-option') === lang;
+      button.className = active
+        ? 'rounded-full bg-cyan-400 px-3 py-1.5 text-slate-950 transition'
+        : 'rounded-full px-3 py-1.5 text-slate-200 transition hover:bg-white/10';
+    });
+  }
+
+  function disconnect() {
+    if (observer) observer.disconnect();
+  }
+
+  function observe() {
+    if (!observer) {
+      observer = new MutationObserver(() => {
+        if (language() !== 'en') return;
+        disconnect();
+        applyLanguage('en');
+        observe();
+      });
+    }
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ATTRS
+    });
+  }
+
+  function applyLanguage(lang) {
+    const next = lang === 'en' ? 'en' : 'zh';
+    disconnect();
+    ensureToggle(next);
+    applyMetadata(next);
+    walk(document.body, next);
+    updateIndexCards(next);
+    ensureToggle(next);
+    observe();
+  }
+
+  function init() {
+    applyLanguage(language());
+    window.addEventListener('storage', (event) => {
+      if (event.key === STORAGE_KEY) applyLanguage(language());
+    });
+  }
+
+  window.MicroToolsI18n = {
+    getLanguage: language,
+    setLanguage(value) {
+      localStorage.setItem(STORAGE_KEY, value === 'en' ? 'en' : 'zh');
+      applyLanguage(language());
+    },
+    applyLanguage
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+  </script>
+  <!-- micro-tools-i18n:end -->
 </body>
 </html>

@@ -22,7 +22,7 @@
           <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
             Pure Frontend Data Visualization
           </p>
-          <h1 class="text-4xl font-black tracking-tight text-white sm:text-5xl">bland-altman-plot</h1>
+          <h1 class="text-4xl font-black tracking-tight text-white sm:text-5xl">极简 X/Y 数据绘图工具</h1>
           <p class="mt-3 max-w-2xl text-base leading-7 text-slate-300">
             输入两列 X/Y 数据，实时绘制散点图、折线图或 Bland-Altman 分析图。
           </p>
@@ -600,5 +600,246 @@
       window.addEventListener('load', draw);
     })();
   </script>
+
+  <!-- micro-tools-i18n:start -->
+  <script>
+(() => {
+  'use strict';
+  const STORAGE_KEY = 'microToolsLanguage';
+  const PAGE_SLUG = "bland-altman-plot";
+  const TRANSLATIONS = {"散点图：展示两列 X/Y 坐标的分布关系，适合快速发现相关性与异常点。":"Scatter plot: shows the distribution relationship between two columns of X/Y coordinates, useful for quickly finding correlations and outliers.","折线图":"Line Chart","靛蓝紫":"Indigo Purple","${points.length} 点":"${points.length} points","输入区":"Input","请修正输入错误后重新绘制。":"Please fix the input errors and redraw.","已载入示例数据，可直接绘图或粘贴自己的两列数据。":"Sample data loaded. You can plot directly or paste your own two-column data.","适合科研、质控、实验与快速探索分析":"Suitable for research, quality control, experiments, and quick exploratory analysis","琥珀黄":"Amber","下载失败。请确认浏览器允许当前页面导出画布图片。":"Download failed. Please make sure the browser allows this page to export canvas images.","无法计算":"Cannot calculate","Bland-Altman 图会将 X/Y 视为两种测量方法，横轴为均值，纵轴为差值。":"A Bland-Altman plot treats X/Y as two measurement methods, with the mean on the X-axis and the difference on the Y-axis.","当前没有可下载的图表。请先输入有效数据并绘制图表。":"No chart is available to download. Please enter valid data and draw a chart first.","0 点":"0 points","有效数据点不足。请至少输入 2 组 X/Y 数字数据。":"Not enough valid data points. Enter at least 2 sets of X/Y numeric data.","已清空数据，请输入两列 X/Y 坐标。":"Data cleared. Please enter two columns of X/Y coordinates.","示例":"Example","第 ${index + 1} 行存在非数字内容：${original}":"Line ${index + 1} contains non-numeric content: ${original}","支持格式：":"Supported formats:","第 ${index + 1} 行缺少第二列数据：${original}":"Line ${index + 1} is missing the second column of data: ${original}","关于 bland-altman-plot 在线绘图工具":"About the bland-altman-plot online charting tool","绘制":"Draw","空行会自动忽略，非数字内容会给出明确错误提示。":"Blank lines are ignored automatically, and non-numeric content will show a clear error message.","折线图：按 X 值升序连接数据点，适合观察连续趋势。":"Line chart: Connects data points in ascending X-value order, ideal for viewing continuous trends.","两列 X/Y 坐标数据":"Two columns of X/Y coordinate data","图表 PNG 已开始下载。":"Chart PNG download has started.","X/Y 折线":"X/Y line chart","bland-altman-plot 是一款面向科研人员、工程师、数据分析师和学生的极简在线数据绘图工具。很多实验数据只需要快速查看两列 X/Y 坐标之间的趋势、离散程度或两种测量方法的一致性，传统软件往往安装复杂、导入步骤繁琐。本工具基于浏览器纯前端运行，用户只需粘贴两列数字数据，即可生成在线散点图、在线折线图以及 Bland-Altman 一致性分析图。它特别适合用于医学检验方法比较、仪器测量误差评估、实验结果初筛、课堂统计演示和小规模数据可视化。使用时，将每组数据按行输入，选择图表类型并点击绘制即可；若选择 Bland-Altman 图，系统会自动计算均值、差值、偏倚和一致性限。整个过程无需上传文件，数据保留在本地浏览器中，兼顾效率与隐私，是快速完成两列数据绘图和 Bland Altman plot 在线分析的实用工具。":"bland-altman-plot is a minimalist online data plotting tool for researchers, engineers, data analysts, and students. Many experimental datasets only require a quick look at trends, dispersion, or agreement between two columns of X/Y coordinates, while traditional software can be complex to install and cumbersome to import data into. This tool runs entirely in the browser frontend. Users only need to paste two columns of numeric data to generate an online scatter plot, line chart, or Bland-Altman agreement analysis plot. It is especially suitable for medical test method comparison, instrument measurement error evaluation, preliminary experimental result screening, classroom statistics demonstrations, and small-scale data visualization. Enter each data pair by row, choose a chart type, and click draw. If Bland-Altman is selected, the system automatically calculates mean, difference, bias, and limits of agreement. No file upload is required, and data stays in the local browser, balancing efficiency and privacy. It is a practical tool for quickly plotting two-column data and performing online Bland Altman plot analysis.","发生异常，请检查输入后重试。":"An error occurred. Please check your input and try again.","数据绘图画布":"Data plotting canvas","本地计算 · 不上传数据":"Calculated locally · No data uploaded","成功解析 ${result.points.length} 个数据点，图表已更新。":"Successfully parsed ${result.points.length} data points; the chart has been updated.","Bland-Altman 图":"Bland-Altman plot","图表类型":"Chart type","散点图":"Scatter Plot","\\n另有 ${errors.length - 5} 处错误。":"\\n${errors.length - 5} more errors.","bland-altman-plot,Bland Altman 图,在线散点图工具,在线折线图工具,两列数据绘图,X Y 坐标绘图,实验数据可视化,纯前端图表工具":"bland-altman-plot,Bland Altman plot,online scatter plot tool,online line chart tool,two-column data plotting,X Y coordinate plotting,experimental data visualization,pure frontend chart tool","清空":"Clear","Bland-Altman：偏倚 ${formatNumber(bias)}，95% 一致性限 ${formatNumber(lower)} 到 ${formatNumber(upper)}。":"Bland-Altman: bias ${formatNumber(bias)}, 95% limits of agreement ${formatNumber(lower)} to ${formatNumber(upper)}.","输入提示":"Input Hint","玫瑰红":"Rose Red","均值（X 与 Y 的平均）":"Mean (average of X and Y)","偏倚 Mean Diff":"Bias Mean Diff","处理数据时出现异常，但应用仍可继续使用。请检查输入格式是否为两列数字。":"An error occurred while processing the data, but the app can continue running. Check that the input format is two columns of numbers.","翡翠绿":"Emerald Green","bland-altman-plot｜极简 X/Y 数据绘图工具":"bland-altman-plot｜Minimal X/Y Data Plotting Tool","bland-altman-plot 是一款纯前端极简数据绘图工具，支持输入两列 X/Y 坐标数据，快速生成散点图、折线图与 Bland-Altman 差异分析图，适合科研、统计、实验数据可视化。":"bland-altman-plot is a pure front-end minimalist data plotting tool that supports entering two columns of X/Y coordinate data to quickly generate scatter plots, line charts, and Bland-Altman difference analysis plots, ideal for research, statistics, and experimental data visualization.","科技青":"Tech Cyan","实时解析":"Live Parsing","下载":"Download","图表将在此处实时更新。":"The chart will update here in real time.","差值（Y - X）":"Difference (Y - X)","第 ${index + 1} 行包含多余字段，请仅保留两列：${original}":"Line ${index + 1} contains extra fields. Please keep only two columns: ${original}","X/Y 散点":"X/Y scatter plot","请输入至少两行或两组有效的 X/Y 数字数据。":"Please enter at least two rows or two groups of valid X/Y numeric data.","输出区":"Output","差值点（Y - X）":"Difference point (Y - X)","${ctx.dataset.label || '数据'}：(${formatNumber(p.x)}, ${formatNumber(p.y)})":"${ctx.dataset.label || 'Data'}: (${formatNumber(p.x)}, ${formatNumber(p.y)})","输入两列 X/Y 数据，实时绘制散点图、折线图或 Bland-Altman 分析图。":"Enter two columns of X/Y data to draw a scatter plot, line chart, or Bland-Altman analysis plot in real time.","图表库加载失败，请检查网络连接后刷新页面。":"Failed to load the chart library. Please check your network connection and refresh the page.","每行一组数据，支持空格、逗号、Tab、分号分隔。":"One data set per line. Supports spaces, commas, Tabs, and semicolons as separators.","例如： 1, 1.2 2, 2.4 3, 2.9 4, 4.1 5, 5.3":"Example: 1, 1.2 2, 2.4 3, 2.9 4, 4.1 5, 5.3","主题颜色":"Theme color","极简 X/Y 数据绘图工具":"Bland-Altman Plot Tool","极简数据绘图工具。输入两列X/Y坐标数据，利用纯前端图表库（如Chart.js CDN）实时绘制简单的折线图/散点图。":"Minimal data plotting tool. Enter two columns of X/Y coordinate data and use a pure frontend chart library such as Chart.js CDN to draw simple line or scatter charts in real time."};
+  const TOOL_DATA = {"bland-altman-plot":{"zhName":"极简 X/Y 数据绘图工具","enName":"Bland-Altman Plot Tool","zhDescription":"极简数据绘图工具。输入两列X/Y坐标数据，利用纯前端图表库（如Chart.js CDN）实时绘制简单的折线图/散点图。","enDescription":"Minimal data plotting tool. Enter two columns of X/Y coordinate data and use a pure frontend chart library such as Chart.js CDN to draw simple line or scatter charts in real time.","zhTitle":"bland-altman-plot｜极简 X/Y 数据绘图工具","enTitle":"Bland-Altman Plot Tool | Free Online Tool","zhKeywords":"bland-altman-plot,Bland Altman 图,在线散点图工具,在线折线图工具,两列数据绘图,X Y 坐标绘图,实验数据可视化,纯前端图表工具","enKeywords":"Bland-Altman Plot Tool, online tool, browser tool, productivity tool"}};
+  const CURRENT_TOOL = {"zhName":"极简 X/Y 数据绘图工具","enName":"Bland-Altman Plot Tool","zhDescription":"极简数据绘图工具。输入两列X/Y坐标数据，利用纯前端图表库（如Chart.js CDN）实时绘制简单的折线图/散点图。","enDescription":"Minimal data plotting tool. Enter two columns of X/Y coordinate data and use a pure frontend chart library such as Chart.js CDN to draw simple line or scatter charts in real time.","zhTitle":"bland-altman-plot｜极简 X/Y 数据绘图工具","enTitle":"Bland-Altman Plot Tool | Free Online Tool","zhKeywords":"bland-altman-plot,Bland Altman 图,在线散点图工具,在线折线图工具,两列数据绘图,X Y 坐标绘图,实验数据可视化,纯前端图表工具","enKeywords":"Bland-Altman Plot Tool, online tool, browser tool, productivity tool"};
+  const ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
+  const ZH_RE = /[\u4e00-\u9fff]/;
+  const originalText = new WeakMap();
+  const originalAttrs = new WeakMap();
+  let observer = null;
+
+  function normalize(value) {
+    return String(value || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function hasChinese(value) {
+    return ZH_RE.test(String(value || ''));
+  }
+
+  function language() {
+    return localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'zh';
+  }
+
+  function translateExact(value, lang) {
+    const text = String(value || '');
+    if (lang === 'zh' || !text) return text;
+    if (TRANSLATIONS[text]) return TRANSLATIONS[text];
+    const normalized = normalize(text);
+    if (TRANSLATIONS[normalized]) return TRANSLATIONS[normalized];
+
+    const dynamic = [
+      [/^(\d+)\s*个字符$/u, '$1 characters'],
+      [/^(\d+)\s*字符$/u, '$1 characters'],
+      [/^(\d+)\s*字$/u, '$1 characters'],
+      [/^(\d+)\s*行$/u, '$1 rows'],
+      [/^(\d+)\s*列$/u, '$1 columns'],
+      [/^(\d+)\s*项$/u, '$1 items'],
+      [/^(\d+)\s*次$/u, '$1 times'],
+      [/^当前显示\s*(\d+)\s*\/\s*(\d+)$/u, 'Showing $1 / $2'],
+      [/^第\s*(\d+)\s*行第\s*(\d+)\s*列/u, 'line $1, column $2']
+    ];
+    for (const [pattern, replacement] of dynamic) {
+      if (pattern.test(normalized)) return normalized.replace(pattern, replacement);
+    }
+    return text;
+  }
+
+  function translateWithSpacing(value, lang) {
+    const text = String(value || '');
+    if (!text.trim()) return text;
+    const leading = text.match(/^\s*/)[0];
+    const trailing = text.match(/\s*$/)[0];
+    const core = text.slice(leading.length, text.length - trailing.length);
+    return leading + translateExact(core, lang) + trailing;
+  }
+
+  function skipped(node) {
+    const parent = node.parentElement;
+    return !parent || Boolean(parent.closest('script, style, code, pre, textarea, [data-i18n-ignore]'));
+  }
+
+  function translateNode(node, lang) {
+    if (skipped(node) || !node.nodeValue.trim()) return;
+    const current = node.nodeValue;
+    let original = originalText.get(node);
+    const originalEnglish = original ? translateWithSpacing(original, 'en') : '';
+    if (!original || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
+      original = current;
+      originalText.set(node, original);
+    }
+    node.nodeValue = lang === 'zh' ? (original || current) : translateWithSpacing(original || current, lang);
+  }
+
+  function translateAttrs(element, lang) {
+    if (element.closest('script, style, [data-i18n-ignore]')) return;
+    let store = originalAttrs.get(element);
+    if (!store) {
+      store = {};
+      originalAttrs.set(element, store);
+    }
+    ATTRS.forEach((attr) => {
+      if (!element.hasAttribute(attr)) return;
+      const current = element.getAttribute(attr);
+      const originalEnglish = store[attr] ? translateExact(store[attr], 'en') : '';
+      if (!store[attr] || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
+        store[attr] = current;
+      }
+      element.setAttribute(attr, lang === 'zh' ? store[attr] : translateExact(store[attr] || current, lang));
+    });
+  }
+
+  function walk(root, lang) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach((node) => translateNode(node, lang));
+
+    const elementRoot = root.nodeType === Node.ELEMENT_NODE ? root : document.body;
+    if (!elementRoot) return;
+    translateAttrs(elementRoot, lang);
+    elementRoot.querySelectorAll('*').forEach((element) => translateAttrs(element, lang));
+  }
+
+  function setMeta(name, value) {
+    if (!value) return;
+    let meta = document.querySelector(`meta[name="${name}"]`);
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', name);
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute('content', value);
+  }
+
+  function applyMetadata(lang) {
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    if (PAGE_SLUG === 'index') {
+      document.title = lang === 'zh'
+        ? '免费在线开发者工具箱 | 纯前端工具集合'
+        : 'Free Online Developer Toolbox | Pure Front-End Tools';
+      setMeta('description', lang === 'zh'
+        ? '免费在线开发者工具箱，汇集 JSON、CSV、LaTeX、Base64、正则、时间戳、二维码、颜色转换等纯前端微型工具，隐私友好、无需安装、极速加载。'
+        : 'A free online developer toolbox with pure front-end tools for JSON, CSV, LaTeX, Base64, regex, timestamps, QR codes, color conversion, and daily productivity.');
+      setMeta('keywords', lang === 'zh'
+        ? '免费在线开发者工具箱, 纯前端工具集合, 在线 JSON 工具, 在线编码转换工具, 生产力工具箱, 微型 Web 工具'
+        : 'free online developer tools, front-end tools, JSON tools, encoding tools, productivity toolbox, micro web tools');
+      return;
+    }
+    if (!CURRENT_TOOL || !CURRENT_TOOL.zhName) return;
+    document.title = lang === 'zh' ? CURRENT_TOOL.zhTitle : CURRENT_TOOL.enTitle;
+    setMeta('description', lang === 'zh' ? CURRENT_TOOL.zhDescription : CURRENT_TOOL.enDescription);
+    setMeta('keywords', lang === 'zh' ? CURRENT_TOOL.zhKeywords : CURRENT_TOOL.enKeywords);
+    const h1 = document.querySelector('h1');
+    if (h1) h1.textContent = lang === 'zh' ? CURRENT_TOOL.zhName : CURRENT_TOOL.enName;
+  }
+
+  function updateIndexCards(lang) {
+    if (PAGE_SLUG !== 'index') return;
+    document.querySelectorAll('a[href$=".html"]').forEach((card) => {
+      const slug = (card.getAttribute('href') || '').split('/').pop().replace(/\.html$/i, '');
+      const tool = TOOL_DATA[slug];
+      if (!tool) return;
+      const title = card.querySelector('h3');
+      const description = card.querySelector('p');
+      const action = card.querySelector('span:last-child');
+      if (title) title.textContent = lang === 'zh' ? tool.zhName : tool.enName;
+      if (description) description.textContent = lang === 'zh' ? tool.zhDescription : tool.enDescription;
+      if (action) action.textContent = lang === 'zh' ? '立即使用' : 'Open Tool';
+      card.dataset.search = normalize(`${slug} ${tool.zhName} ${tool.enName} ${tool.zhDescription} ${tool.enDescription}`).toLowerCase().replace(/[-_\s]+/g, '');
+    });
+    const search = document.getElementById('searchInput');
+    if (search) search.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+
+  function ensureToggle(lang) {
+    let toggle = document.getElementById('microToolsLanguageToggle');
+    if (!toggle) {
+      toggle = document.createElement('div');
+      toggle.id = 'microToolsLanguageToggle';
+      toggle.setAttribute('data-i18n-ignore', 'true');
+      toggle.className = 'fixed right-4 top-4 z-50 flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/90 p-1 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur';
+      toggle.innerHTML = '<span data-language-label class="px-2 text-xs text-slate-300">语言</span><button type="button" data-lang-option="zh" class="rounded-full px-3 py-1.5 transition">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-1.5 transition">EN</button>';
+      document.body.appendChild(toggle);
+      toggle.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-lang-option]');
+        if (!button) return;
+        localStorage.setItem(STORAGE_KEY, button.getAttribute('data-lang-option') === 'en' ? 'en' : 'zh');
+        applyLanguage(language());
+      });
+    }
+    toggle.querySelector('[data-language-label]').textContent = lang === 'zh' ? '语言' : 'Language';
+    toggle.querySelectorAll('[data-lang-option]').forEach((button) => {
+      const active = button.getAttribute('data-lang-option') === lang;
+      button.className = active
+        ? 'rounded-full bg-cyan-400 px-3 py-1.5 text-slate-950 transition'
+        : 'rounded-full px-3 py-1.5 text-slate-200 transition hover:bg-white/10';
+    });
+  }
+
+  function disconnect() {
+    if (observer) observer.disconnect();
+  }
+
+  function observe() {
+    if (!observer) {
+      observer = new MutationObserver(() => {
+        if (language() !== 'en') return;
+        disconnect();
+        applyLanguage('en');
+        observe();
+      });
+    }
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ATTRS
+    });
+  }
+
+  function applyLanguage(lang) {
+    const next = lang === 'en' ? 'en' : 'zh';
+    disconnect();
+    ensureToggle(next);
+    applyMetadata(next);
+    walk(document.body, next);
+    updateIndexCards(next);
+    ensureToggle(next);
+    observe();
+  }
+
+  function init() {
+    applyLanguage(language());
+    window.addEventListener('storage', (event) => {
+      if (event.key === STORAGE_KEY) applyLanguage(language());
+    });
+  }
+
+  window.MicroToolsI18n = {
+    getLanguage: language,
+    setLanguage(value) {
+      localStorage.setItem(STORAGE_KEY, value === 'en' ? 'en' : 'zh');
+      applyLanguage(language());
+    },
+    applyLanguage
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+  </script>
+  <!-- micro-tools-i18n:end -->
 </body>
 </html>

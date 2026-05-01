@@ -19,9 +19,7 @@
       <div class="mx-auto mb-4 inline-flex items-center rounded-full border border-cyan-300/30 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-200">
         图片 / 视频 / 设计稿等比缩放工具
       </div>
-      <h1 class="bg-gradient-to-r from-cyan-200 via-white to-indigo-200 bg-clip-text text-4xl font-black tracking-tight text-transparent sm:text-5xl md:text-6xl">
-        aspect-ratio-calculator
-      </h1>
+      <h1 class="bg-gradient-to-r from-cyan-200 via-white to-indigo-200 bg-clip-text text-4xl font-black tracking-tight text-transparent sm:text-5xl md:text-6xl">图片/视频宽高比计算器</h1>
       <p class="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
         输入原始宽高与新的宽度，立即计算保持原始比例的新高度，适合图片裁切、视频发布、网页响应式设计与素材尺寸换算。
       </p>
@@ -307,5 +305,246 @@
       calculate();
     })();
   </script>
+
+  <!-- micro-tools-i18n:start -->
+  <script>
+(() => {
+  'use strict';
+  const STORAGE_KEY = 'microToolsLanguage';
+  const PAGE_SLUG = "aspect-ratio-calculator";
+  const TRANSLATIONS = {"复制失败，请手动选择结果进行复制。":"Copy failed. Please manually select the result and copy it.","图片 / 视频 / 设计稿等比缩放工具":"Aspect ratio scaling tool for images / videos / design drafts","结果已复制到剪贴板。":"Result copied to clipboard.","计算失败，请检查输入尺寸是否合理。":"Calculation failed. Please check whether the input dimensions are valid.","Aspect Ratio Calculator 是一款面向设计师、前端开发者、视频创作者和运营人员的在线宽高比计算器。日常处理图片缩放、视频封面制作、网页响应式布局或社交媒体素材时，经常需要在不拉伸、不变形的前提下调整尺寸。本工具只需输入原始宽度、原始高度以及新的宽度，就能自动计算保持原有比例的新高度，并同步显示宽高比和最终尺寸。无论你想进行 16:9 视频尺寸换算、图片等比缩放计算，还是快速得到适合网页展示的图片高度，都可以通过这个图片/视频宽高比计算器完成。使用方法非常简单：填写原始尺寸，输入目标宽度，点击计算即可获得精准结果，帮助你减少手动换算误差，提升内容制作与前端开发效率。":"Aspect Ratio Calculator is an online aspect ratio calculator for designers, frontend developers, video creators, and operators. When resizing images, creating video covers, building responsive web layouts, or preparing social media assets, you often need to adjust dimensions without stretching or distortion. Enter the original width, original height, and new width, and this tool automatically calculates the new height that keeps the original ratio, while also displaying the aspect ratio and final size. Whether you need 16:9 video size conversion, proportional image scaling, or a quick image height for web display, this image/video aspect ratio calculator can help. Simply fill in the original size, enter the target width, and click calculate to get accurate results, reducing manual conversion errors and improving content creation and frontend development efficiency.","计算等比高度":"Calculate Proportional Height","Aspect Ratio Calculator 是一个免费的图片/视频宽高比计算器，输入原始宽高和新的宽度，即可自动计算保持原比例的新高度，适用于图片缩放、视频尺寸调整、网页设计与内容创作。":"Aspect Ratio Calculator is a free image/video aspect ratio calculator. Enter the original width and height plus a new width to automatically calculate the new height while preserving the original ratio, suitable for image scaling, video resizing, web design, and content creation.","原始宽度":"Original width","aspect ratio calculator, 宽高比计算器, 图片宽高比计算, 视频比例计算器, 等比缩放计算器, 图片尺寸计算, 视频尺寸换算, 保持比例计算高度":"aspect ratio calculator, aspect ratio calculator, image aspect ratio calculator, video ratio calculator, proportional scaling calculator, image size calculator, video size converter, calculate height while keeping ratio","复制结果":"Copy Result","已计算":"Calculated","输入原始宽高与新的宽度，立即计算保持原始比例的新高度，适合图片裁切、视频发布、网页响应式设计与素材尺寸换算。":"Enter the original width and height plus a new width to instantly calculate the new proportional height, ideal for image cropping, video publishing, responsive web design, and asset size conversion.","宽高比":"Aspect ratio","例如：1080":"e.g. 1080","请输入有效的新宽度，必须是大于 0 的数字。":"Please enter a valid new width. It must be a number greater than 0.","输入尺寸":"Input Size","图片/视频宽高比计算器":"Aspect Ratio Calculator","Aspect Ratio Calculator - 图片/视频宽高比计算器":"Aspect Ratio Calculator - Image/Video Aspect Ratio Calculator","新的宽度":"New width","宽高比：${ratioOutput.textContent}；新尺寸：${sizeOutput.textContent}px；新高度：${newHeightOutput.textContent}px":"Aspect ratio: ${ratioOutput.textContent}; new size: ${sizeOutput.textContent}px; new height: ${newHeightOutput.textContent}px","请输入有效的原始高度，必须是大于 0 的数字。":"Please enter a valid original height. It must be a number greater than 0.","新的高度":"New height","请填写大于 0 的数字，可输入小数。":"Please enter a number greater than 0. Decimals are allowed.","计算结果":"Calculation Result","请输入有效的原始宽度，必须是大于 0 的数字。":"Please enter a valid original width. It must be a number greater than 0.","自动保持原始宽高比。":"Automatically keep the original aspect ratio.","原始高度":"Original height","例如：1920":"e.g. 1920","输入数值过大，请输入不超过 100,000,000 的尺寸。":"The input value is too large. Please enter a size no greater than 100,000,000.","已重置":"Reset","例如：1280":"e.g. 1280","关于图片/视频宽高比计算器":"About the Image/Video Aspect Ratio Calculator","重置":"Reset","复制成功":"Copied Successfully","新尺寸":"New Size","图片/视频宽高比计算器。输入原始宽高，给定一个新的宽度，自动计算出保持原有比例的等比高度。":"Image/video aspect ratio calculator. Enter the original width and height, then provide a new width to automatically calculate the proportional height."};
+  const TOOL_DATA = {"aspect-ratio-calculator":{"zhName":"图片/视频宽高比计算器","enName":"Aspect Ratio Calculator","zhDescription":"图片/视频宽高比计算器。输入原始宽高，给定一个新的宽度，自动计算出保持原有比例的等比高度。","enDescription":"Image/video aspect ratio calculator. Enter the original width and height, then provide a new width to automatically calculate the proportional height.","zhTitle":"Aspect Ratio Calculator - 图片/视频宽高比计算器","enTitle":"Aspect Ratio Calculator | Free Online Tool","zhKeywords":"aspect ratio calculator, 宽高比计算器, 图片宽高比计算, 视频比例计算器, 等比缩放计算器, 图片尺寸计算, 视频尺寸换算, 保持比例计算高度","enKeywords":"Aspect Ratio Calculator, online tool, browser tool, productivity tool"}};
+  const CURRENT_TOOL = {"zhName":"图片/视频宽高比计算器","enName":"Aspect Ratio Calculator","zhDescription":"图片/视频宽高比计算器。输入原始宽高，给定一个新的宽度，自动计算出保持原有比例的等比高度。","enDescription":"Image/video aspect ratio calculator. Enter the original width and height, then provide a new width to automatically calculate the proportional height.","zhTitle":"Aspect Ratio Calculator - 图片/视频宽高比计算器","enTitle":"Aspect Ratio Calculator | Free Online Tool","zhKeywords":"aspect ratio calculator, 宽高比计算器, 图片宽高比计算, 视频比例计算器, 等比缩放计算器, 图片尺寸计算, 视频尺寸换算, 保持比例计算高度","enKeywords":"Aspect Ratio Calculator, online tool, browser tool, productivity tool"};
+  const ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
+  const ZH_RE = /[\u4e00-\u9fff]/;
+  const originalText = new WeakMap();
+  const originalAttrs = new WeakMap();
+  let observer = null;
+
+  function normalize(value) {
+    return String(value || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function hasChinese(value) {
+    return ZH_RE.test(String(value || ''));
+  }
+
+  function language() {
+    return localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'zh';
+  }
+
+  function translateExact(value, lang) {
+    const text = String(value || '');
+    if (lang === 'zh' || !text) return text;
+    if (TRANSLATIONS[text]) return TRANSLATIONS[text];
+    const normalized = normalize(text);
+    if (TRANSLATIONS[normalized]) return TRANSLATIONS[normalized];
+
+    const dynamic = [
+      [/^(\d+)\s*个字符$/u, '$1 characters'],
+      [/^(\d+)\s*字符$/u, '$1 characters'],
+      [/^(\d+)\s*字$/u, '$1 characters'],
+      [/^(\d+)\s*行$/u, '$1 rows'],
+      [/^(\d+)\s*列$/u, '$1 columns'],
+      [/^(\d+)\s*项$/u, '$1 items'],
+      [/^(\d+)\s*次$/u, '$1 times'],
+      [/^当前显示\s*(\d+)\s*\/\s*(\d+)$/u, 'Showing $1 / $2'],
+      [/^第\s*(\d+)\s*行第\s*(\d+)\s*列/u, 'line $1, column $2']
+    ];
+    for (const [pattern, replacement] of dynamic) {
+      if (pattern.test(normalized)) return normalized.replace(pattern, replacement);
+    }
+    return text;
+  }
+
+  function translateWithSpacing(value, lang) {
+    const text = String(value || '');
+    if (!text.trim()) return text;
+    const leading = text.match(/^\s*/)[0];
+    const trailing = text.match(/\s*$/)[0];
+    const core = text.slice(leading.length, text.length - trailing.length);
+    return leading + translateExact(core, lang) + trailing;
+  }
+
+  function skipped(node) {
+    const parent = node.parentElement;
+    return !parent || Boolean(parent.closest('script, style, code, pre, textarea, [data-i18n-ignore]'));
+  }
+
+  function translateNode(node, lang) {
+    if (skipped(node) || !node.nodeValue.trim()) return;
+    const current = node.nodeValue;
+    let original = originalText.get(node);
+    const originalEnglish = original ? translateWithSpacing(original, 'en') : '';
+    if (!original || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
+      original = current;
+      originalText.set(node, original);
+    }
+    node.nodeValue = lang === 'zh' ? (original || current) : translateWithSpacing(original || current, lang);
+  }
+
+  function translateAttrs(element, lang) {
+    if (element.closest('script, style, [data-i18n-ignore]')) return;
+    let store = originalAttrs.get(element);
+    if (!store) {
+      store = {};
+      originalAttrs.set(element, store);
+    }
+    ATTRS.forEach((attr) => {
+      if (!element.hasAttribute(attr)) return;
+      const current = element.getAttribute(attr);
+      const originalEnglish = store[attr] ? translateExact(store[attr], 'en') : '';
+      if (!store[attr] || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
+        store[attr] = current;
+      }
+      element.setAttribute(attr, lang === 'zh' ? store[attr] : translateExact(store[attr] || current, lang));
+    });
+  }
+
+  function walk(root, lang) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach((node) => translateNode(node, lang));
+
+    const elementRoot = root.nodeType === Node.ELEMENT_NODE ? root : document.body;
+    if (!elementRoot) return;
+    translateAttrs(elementRoot, lang);
+    elementRoot.querySelectorAll('*').forEach((element) => translateAttrs(element, lang));
+  }
+
+  function setMeta(name, value) {
+    if (!value) return;
+    let meta = document.querySelector(`meta[name="${name}"]`);
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', name);
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute('content', value);
+  }
+
+  function applyMetadata(lang) {
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    if (PAGE_SLUG === 'index') {
+      document.title = lang === 'zh'
+        ? '免费在线开发者工具箱 | 纯前端工具集合'
+        : 'Free Online Developer Toolbox | Pure Front-End Tools';
+      setMeta('description', lang === 'zh'
+        ? '免费在线开发者工具箱，汇集 JSON、CSV、LaTeX、Base64、正则、时间戳、二维码、颜色转换等纯前端微型工具，隐私友好、无需安装、极速加载。'
+        : 'A free online developer toolbox with pure front-end tools for JSON, CSV, LaTeX, Base64, regex, timestamps, QR codes, color conversion, and daily productivity.');
+      setMeta('keywords', lang === 'zh'
+        ? '免费在线开发者工具箱, 纯前端工具集合, 在线 JSON 工具, 在线编码转换工具, 生产力工具箱, 微型 Web 工具'
+        : 'free online developer tools, front-end tools, JSON tools, encoding tools, productivity toolbox, micro web tools');
+      return;
+    }
+    if (!CURRENT_TOOL || !CURRENT_TOOL.zhName) return;
+    document.title = lang === 'zh' ? CURRENT_TOOL.zhTitle : CURRENT_TOOL.enTitle;
+    setMeta('description', lang === 'zh' ? CURRENT_TOOL.zhDescription : CURRENT_TOOL.enDescription);
+    setMeta('keywords', lang === 'zh' ? CURRENT_TOOL.zhKeywords : CURRENT_TOOL.enKeywords);
+    const h1 = document.querySelector('h1');
+    if (h1) h1.textContent = lang === 'zh' ? CURRENT_TOOL.zhName : CURRENT_TOOL.enName;
+  }
+
+  function updateIndexCards(lang) {
+    if (PAGE_SLUG !== 'index') return;
+    document.querySelectorAll('a[href$=".html"]').forEach((card) => {
+      const slug = (card.getAttribute('href') || '').split('/').pop().replace(/\.html$/i, '');
+      const tool = TOOL_DATA[slug];
+      if (!tool) return;
+      const title = card.querySelector('h3');
+      const description = card.querySelector('p');
+      const action = card.querySelector('span:last-child');
+      if (title) title.textContent = lang === 'zh' ? tool.zhName : tool.enName;
+      if (description) description.textContent = lang === 'zh' ? tool.zhDescription : tool.enDescription;
+      if (action) action.textContent = lang === 'zh' ? '立即使用' : 'Open Tool';
+      card.dataset.search = normalize(`${slug} ${tool.zhName} ${tool.enName} ${tool.zhDescription} ${tool.enDescription}`).toLowerCase().replace(/[-_\s]+/g, '');
+    });
+    const search = document.getElementById('searchInput');
+    if (search) search.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+
+  function ensureToggle(lang) {
+    let toggle = document.getElementById('microToolsLanguageToggle');
+    if (!toggle) {
+      toggle = document.createElement('div');
+      toggle.id = 'microToolsLanguageToggle';
+      toggle.setAttribute('data-i18n-ignore', 'true');
+      toggle.className = 'fixed right-4 top-4 z-50 flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/90 p-1 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur';
+      toggle.innerHTML = '<span data-language-label class="px-2 text-xs text-slate-300">语言</span><button type="button" data-lang-option="zh" class="rounded-full px-3 py-1.5 transition">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-1.5 transition">EN</button>';
+      document.body.appendChild(toggle);
+      toggle.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-lang-option]');
+        if (!button) return;
+        localStorage.setItem(STORAGE_KEY, button.getAttribute('data-lang-option') === 'en' ? 'en' : 'zh');
+        applyLanguage(language());
+      });
+    }
+    toggle.querySelector('[data-language-label]').textContent = lang === 'zh' ? '语言' : 'Language';
+    toggle.querySelectorAll('[data-lang-option]').forEach((button) => {
+      const active = button.getAttribute('data-lang-option') === lang;
+      button.className = active
+        ? 'rounded-full bg-cyan-400 px-3 py-1.5 text-slate-950 transition'
+        : 'rounded-full px-3 py-1.5 text-slate-200 transition hover:bg-white/10';
+    });
+  }
+
+  function disconnect() {
+    if (observer) observer.disconnect();
+  }
+
+  function observe() {
+    if (!observer) {
+      observer = new MutationObserver(() => {
+        if (language() !== 'en') return;
+        disconnect();
+        applyLanguage('en');
+        observe();
+      });
+    }
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ATTRS
+    });
+  }
+
+  function applyLanguage(lang) {
+    const next = lang === 'en' ? 'en' : 'zh';
+    disconnect();
+    ensureToggle(next);
+    applyMetadata(next);
+    walk(document.body, next);
+    updateIndexCards(next);
+    ensureToggle(next);
+    observe();
+  }
+
+  function init() {
+    applyLanguage(language());
+    window.addEventListener('storage', (event) => {
+      if (event.key === STORAGE_KEY) applyLanguage(language());
+    });
+  }
+
+  window.MicroToolsI18n = {
+    getLanguage: language,
+    setLanguage(value) {
+      localStorage.setItem(STORAGE_KEY, value === 'en' ? 'en' : 'zh');
+      applyLanguage(language());
+    },
+    applyLanguage
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+  </script>
+  <!-- micro-tools-i18n:end -->
 </body>
 </html>

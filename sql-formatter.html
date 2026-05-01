@@ -15,7 +15,7 @@
       <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-1 text-sm font-medium text-cyan-200">Online SQL Formatter</p>
-          <h1 class="text-4xl font-black tracking-tight text-white sm:text-5xl">sql-formatter</h1>
+          <h1 class="text-4xl font-black tracking-tight text-white sm:text-5xl">在线 SQL 语句美化与格式化工具</h1>
           <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">将混乱的单行 SQL 语句快速美化为可读、标准缩进的格式，并自动高亮核心 SQL 关键字。</p>
         </div>
         <div class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 shadow-2xl backdrop-blur">
@@ -494,5 +494,246 @@
       });
     })();
   </script>
+
+  <!-- micro-tools-i18n:start -->
+  <script>
+(() => {
+  'use strict';
+  const STORAGE_KEY = 'microToolsLanguage';
+  const PAGE_SLUG = "sql-formatter";
+  const TRANSLATIONS = {"零依赖逻辑 · 本地浏览器处理 · 不上传数据":"Zero-dependency logic · Local browser processing · No data upload","粘贴需要格式化的 SQL 语句。":"Paste the SQL statement to format.","sql-formatter 是一款在线 SQL 语句美化与格式化工具，支持将混乱的单行 SQL 自动排版为标准缩进格式，并高亮 SELECT、FROM、WHERE 等 SQL 关键字。":"sql-formatter is an online SQL beautifier and formatter that automatically turns messy single-line SQL into a standard indented format and highlights SQL keywords such as SELECT, FROM, and WHERE.","在线 SQL 格式化工具的作用与使用方法":"What the Online SQL Formatter Does and How to Use It","sql formatter, SQL格式化工具, SQL美化工具, SQL语句格式化,在线SQL格式化, SQL关键字高亮, SQL排版工具":"sql formatter, SQL formatting tool, SQL beautifier, SQL statement formatter,online SQL formatter, SQL keyword highlighting, SQL layout tool","当前没有可复制的格式化结果。":"No formatted result to copy.","格式化结果":"Formatted result","<span class=\"text-slate-500\">格式化后的 SQL 将显示在这里。<\/span>":"<span class=\"text-slate-500\">Formatted SQL will appear here.<\/span>","将混乱的单行 SQL 语句快速美化为可读、标准缩进的格式，并自动高亮核心 SQL 关键字。":"Quickly beautify messy single-line SQL statements into readable, standard-indented format and automatically highlight core SQL keywords.","内容已清空。":"Content cleared.","清空":"Clear","格式化 SQL":"Format SQL","sql-formatter - 在线 SQL 语句美化与格式化工具":"sql-formatter - Online SQL Beautifier and Formatter","复制失败，请手动复制。":"Copy failed. Please copy manually.","sql-formatter 是一款面向开发者、数据分析师和数据库管理员的在线 SQL 语句美化与格式化工具。实际开发中，SQL 往往来自日志、接口参数、ORM 输出或临时拼接脚本，常见问题是整段语句挤在一行，SELECT、FROM、WHERE、JOIN、GROUP BY 等结构不清晰，排查条件和性能问题非常低效。本工具可以将混乱的单行 SQL 自动转换为标准缩进格式，并对常用 SQL 关键字进行高亮展示，让查询结构、嵌套括号、排序分组和过滤条件一目了然。使用方式很简单：将需要处理的 SQL 粘贴到输入框，点击“格式化 SQL”即可获得可读性更强的排版结果；如果需要放入日志或脚本，也可以使用“压缩为单行”。对于正在寻找在线 SQL 格式化、SQL 美化工具、SQL 关键字高亮、数据库查询语句排版工具的用户，这个页面提供了轻量、快速且无需上传数据的本地化处理体验。":"sql-formatter is an online SQL beautifier and formatter for developers, data analysts, and database administrators. In real development, SQL often comes from logs, API parameters, ORM output, or temporary concatenated scripts. A common issue is that the whole statement is squeezed into one line, making SELECT, FROM, WHERE, JOIN, GROUP BY, and other structures unclear, and making condition checking and performance troubleshooting inefficient. This tool automatically converts messy one-line SQL into standard indented format and highlights common SQL keywords, making query structure, nested parentheses, sorting, grouping, and filters easy to see. Paste the SQL into the input box and click \"Format SQL\" to get a more readable result. If you need to place it in logs or scripts, you can also use \"Compress to One Line\". For users looking for online SQL formatting, SQL beautification, SQL keyword highlighting, or database query layout tools, this page provides a lightweight, fast, local processing experience with no data upload required.","SQL 已压缩为单行。":"SQL compressed into a single line.","请输入需要压缩的 SQL 语句。":"Please enter the SQL statement to compress.","处理中...":"Processing...","例如：select id,name from users where status='active' order by created_at desc;":"Example: select id,name from users where status='active' order by created_at desc;","示例 SQL 已填入。":"Sample SQL has been inserted.","已复制到剪贴板。":"Copied to clipboard.","压缩为单行":"Compress to single line","格式化失败，请检查输入内容。":"Formatting failed. Please check your input.","输入内容过长，请控制在 200,000 个字符以内。":"Input too long; keep it within 200,000 characters.","压缩失败，请检查输入内容。":"Compression failed. Please check the input.","未识别到有效的 SQL 内容。":"No valid SQL content detected.","输入 SQL":"Input SQL","请输入需要格式化的 SQL 语句。":"Please enter the SQL statement to format.","SQL 格式化完成。":"SQL formatting complete.","浏览器拒绝复制，请手动选择结果文本复制。":"Browser blocked copying. Please manually select and copy the result text.","输出包含缩进排版与关键字高亮。":"Output includes indentation and keyword highlighting.","SQL 格式化工作区":"SQL Formatting Workspace","复制纯文本":"Copy plain text","填入示例":"Fill Example","在线 SQL 语句美化与格式化工具":"SQL Formatter","SQL 语句美化与格式化工具。支持将混乱的单行SQL语句按照标准缩进格式排版，高亮关键字。":"SQL beautifier and formatter. Format messy single-line SQL statements with standard indentation and highlight keywords."};
+  const TOOL_DATA = {"sql-formatter":{"zhName":"在线 SQL 语句美化与格式化工具","enName":"SQL Formatter","zhDescription":"SQL 语句美化与格式化工具。支持将混乱的单行SQL语句按照标准缩进格式排版，高亮关键字。","enDescription":"SQL beautifier and formatter. Format messy single-line SQL statements with standard indentation and highlight keywords.","zhTitle":"sql-formatter - 在线 SQL 语句美化与格式化工具","enTitle":"SQL Formatter | Free Online Tool","zhKeywords":"sql formatter, SQL格式化工具, SQL美化工具, SQL语句格式化,在线SQL格式化, SQL关键字高亮, SQL排版工具","enKeywords":"SQL Formatter, online tool, browser tool, productivity tool"}};
+  const CURRENT_TOOL = {"zhName":"在线 SQL 语句美化与格式化工具","enName":"SQL Formatter","zhDescription":"SQL 语句美化与格式化工具。支持将混乱的单行SQL语句按照标准缩进格式排版，高亮关键字。","enDescription":"SQL beautifier and formatter. Format messy single-line SQL statements with standard indentation and highlight keywords.","zhTitle":"sql-formatter - 在线 SQL 语句美化与格式化工具","enTitle":"SQL Formatter | Free Online Tool","zhKeywords":"sql formatter, SQL格式化工具, SQL美化工具, SQL语句格式化,在线SQL格式化, SQL关键字高亮, SQL排版工具","enKeywords":"SQL Formatter, online tool, browser tool, productivity tool"};
+  const ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
+  const ZH_RE = /[\u4e00-\u9fff]/;
+  const originalText = new WeakMap();
+  const originalAttrs = new WeakMap();
+  let observer = null;
+
+  function normalize(value) {
+    return String(value || '').replace(/\s+/g, ' ').trim();
+  }
+
+  function hasChinese(value) {
+    return ZH_RE.test(String(value || ''));
+  }
+
+  function language() {
+    return localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'zh';
+  }
+
+  function translateExact(value, lang) {
+    const text = String(value || '');
+    if (lang === 'zh' || !text) return text;
+    if (TRANSLATIONS[text]) return TRANSLATIONS[text];
+    const normalized = normalize(text);
+    if (TRANSLATIONS[normalized]) return TRANSLATIONS[normalized];
+
+    const dynamic = [
+      [/^(\d+)\s*个字符$/u, '$1 characters'],
+      [/^(\d+)\s*字符$/u, '$1 characters'],
+      [/^(\d+)\s*字$/u, '$1 characters'],
+      [/^(\d+)\s*行$/u, '$1 rows'],
+      [/^(\d+)\s*列$/u, '$1 columns'],
+      [/^(\d+)\s*项$/u, '$1 items'],
+      [/^(\d+)\s*次$/u, '$1 times'],
+      [/^当前显示\s*(\d+)\s*\/\s*(\d+)$/u, 'Showing $1 / $2'],
+      [/^第\s*(\d+)\s*行第\s*(\d+)\s*列/u, 'line $1, column $2']
+    ];
+    for (const [pattern, replacement] of dynamic) {
+      if (pattern.test(normalized)) return normalized.replace(pattern, replacement);
+    }
+    return text;
+  }
+
+  function translateWithSpacing(value, lang) {
+    const text = String(value || '');
+    if (!text.trim()) return text;
+    const leading = text.match(/^\s*/)[0];
+    const trailing = text.match(/\s*$/)[0];
+    const core = text.slice(leading.length, text.length - trailing.length);
+    return leading + translateExact(core, lang) + trailing;
+  }
+
+  function skipped(node) {
+    const parent = node.parentElement;
+    return !parent || Boolean(parent.closest('script, style, code, pre, textarea, [data-i18n-ignore]'));
+  }
+
+  function translateNode(node, lang) {
+    if (skipped(node) || !node.nodeValue.trim()) return;
+    const current = node.nodeValue;
+    let original = originalText.get(node);
+    const originalEnglish = original ? translateWithSpacing(original, 'en') : '';
+    if (!original || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
+      original = current;
+      originalText.set(node, original);
+    }
+    node.nodeValue = lang === 'zh' ? (original || current) : translateWithSpacing(original || current, lang);
+  }
+
+  function translateAttrs(element, lang) {
+    if (element.closest('script, style, [data-i18n-ignore]')) return;
+    let store = originalAttrs.get(element);
+    if (!store) {
+      store = {};
+      originalAttrs.set(element, store);
+    }
+    ATTRS.forEach((attr) => {
+      if (!element.hasAttribute(attr)) return;
+      const current = element.getAttribute(attr);
+      const originalEnglish = store[attr] ? translateExact(store[attr], 'en') : '';
+      if (!store[attr] || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
+        store[attr] = current;
+      }
+      element.setAttribute(attr, lang === 'zh' ? store[attr] : translateExact(store[attr] || current, lang));
+    });
+  }
+
+  function walk(root, lang) {
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach((node) => translateNode(node, lang));
+
+    const elementRoot = root.nodeType === Node.ELEMENT_NODE ? root : document.body;
+    if (!elementRoot) return;
+    translateAttrs(elementRoot, lang);
+    elementRoot.querySelectorAll('*').forEach((element) => translateAttrs(element, lang));
+  }
+
+  function setMeta(name, value) {
+    if (!value) return;
+    let meta = document.querySelector(`meta[name="${name}"]`);
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', name);
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute('content', value);
+  }
+
+  function applyMetadata(lang) {
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    if (PAGE_SLUG === 'index') {
+      document.title = lang === 'zh'
+        ? '免费在线开发者工具箱 | 纯前端工具集合'
+        : 'Free Online Developer Toolbox | Pure Front-End Tools';
+      setMeta('description', lang === 'zh'
+        ? '免费在线开发者工具箱，汇集 JSON、CSV、LaTeX、Base64、正则、时间戳、二维码、颜色转换等纯前端微型工具，隐私友好、无需安装、极速加载。'
+        : 'A free online developer toolbox with pure front-end tools for JSON, CSV, LaTeX, Base64, regex, timestamps, QR codes, color conversion, and daily productivity.');
+      setMeta('keywords', lang === 'zh'
+        ? '免费在线开发者工具箱, 纯前端工具集合, 在线 JSON 工具, 在线编码转换工具, 生产力工具箱, 微型 Web 工具'
+        : 'free online developer tools, front-end tools, JSON tools, encoding tools, productivity toolbox, micro web tools');
+      return;
+    }
+    if (!CURRENT_TOOL || !CURRENT_TOOL.zhName) return;
+    document.title = lang === 'zh' ? CURRENT_TOOL.zhTitle : CURRENT_TOOL.enTitle;
+    setMeta('description', lang === 'zh' ? CURRENT_TOOL.zhDescription : CURRENT_TOOL.enDescription);
+    setMeta('keywords', lang === 'zh' ? CURRENT_TOOL.zhKeywords : CURRENT_TOOL.enKeywords);
+    const h1 = document.querySelector('h1');
+    if (h1) h1.textContent = lang === 'zh' ? CURRENT_TOOL.zhName : CURRENT_TOOL.enName;
+  }
+
+  function updateIndexCards(lang) {
+    if (PAGE_SLUG !== 'index') return;
+    document.querySelectorAll('a[href$=".html"]').forEach((card) => {
+      const slug = (card.getAttribute('href') || '').split('/').pop().replace(/\.html$/i, '');
+      const tool = TOOL_DATA[slug];
+      if (!tool) return;
+      const title = card.querySelector('h3');
+      const description = card.querySelector('p');
+      const action = card.querySelector('span:last-child');
+      if (title) title.textContent = lang === 'zh' ? tool.zhName : tool.enName;
+      if (description) description.textContent = lang === 'zh' ? tool.zhDescription : tool.enDescription;
+      if (action) action.textContent = lang === 'zh' ? '立即使用' : 'Open Tool';
+      card.dataset.search = normalize(`${slug} ${tool.zhName} ${tool.enName} ${tool.zhDescription} ${tool.enDescription}`).toLowerCase().replace(/[-_\s]+/g, '');
+    });
+    const search = document.getElementById('searchInput');
+    if (search) search.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+
+  function ensureToggle(lang) {
+    let toggle = document.getElementById('microToolsLanguageToggle');
+    if (!toggle) {
+      toggle = document.createElement('div');
+      toggle.id = 'microToolsLanguageToggle';
+      toggle.setAttribute('data-i18n-ignore', 'true');
+      toggle.className = 'fixed right-4 top-4 z-50 flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/90 p-1 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur';
+      toggle.innerHTML = '<span data-language-label class="px-2 text-xs text-slate-300">语言</span><button type="button" data-lang-option="zh" class="rounded-full px-3 py-1.5 transition">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-1.5 transition">EN</button>';
+      document.body.appendChild(toggle);
+      toggle.addEventListener('click', (event) => {
+        const button = event.target.closest('[data-lang-option]');
+        if (!button) return;
+        localStorage.setItem(STORAGE_KEY, button.getAttribute('data-lang-option') === 'en' ? 'en' : 'zh');
+        applyLanguage(language());
+      });
+    }
+    toggle.querySelector('[data-language-label]').textContent = lang === 'zh' ? '语言' : 'Language';
+    toggle.querySelectorAll('[data-lang-option]').forEach((button) => {
+      const active = button.getAttribute('data-lang-option') === lang;
+      button.className = active
+        ? 'rounded-full bg-cyan-400 px-3 py-1.5 text-slate-950 transition'
+        : 'rounded-full px-3 py-1.5 text-slate-200 transition hover:bg-white/10';
+    });
+  }
+
+  function disconnect() {
+    if (observer) observer.disconnect();
+  }
+
+  function observe() {
+    if (!observer) {
+      observer = new MutationObserver(() => {
+        if (language() !== 'en') return;
+        disconnect();
+        applyLanguage('en');
+        observe();
+      });
+    }
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+      attributes: true,
+      attributeFilter: ATTRS
+    });
+  }
+
+  function applyLanguage(lang) {
+    const next = lang === 'en' ? 'en' : 'zh';
+    disconnect();
+    ensureToggle(next);
+    applyMetadata(next);
+    walk(document.body, next);
+    updateIndexCards(next);
+    ensureToggle(next);
+    observe();
+  }
+
+  function init() {
+    applyLanguage(language());
+    window.addEventListener('storage', (event) => {
+      if (event.key === STORAGE_KEY) applyLanguage(language());
+    });
+  }
+
+  window.MicroToolsI18n = {
+    getLanguage: language,
+    setLanguage(value) {
+      localStorage.setItem(STORAGE_KEY, value === 'en' ? 'en' : 'zh');
+      applyLanguage(language());
+    },
+    applyLanguage
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+  </script>
+  <!-- micro-tools-i18n:end -->
 </body>
 </html>
