@@ -29,10 +29,10 @@ python "D:\DirMove\Document\New project\batch_generate_from_tasks.py"
 
 ## GitOps Deployment
 
-After each tool is generated or repaired, the script commits and pushes that tool individually. The commit message includes the Chinese tool name:
+After each tool is generated or repaired, the script commits and pushes that tool individually. The commit message is written in Chinese and includes the Chinese tool name:
 
 ```text
-Auto-deploy: 工具中文名
+自动部署：工具中文名
 ```
 
 If only the Chinese name mapping is missing, the script repairs `tool_name_map.json` and commits that metadata update with the related tool name.
@@ -73,7 +73,7 @@ python "D:\DirMove\Document\New project\batch_generate_from_tasks.py"
 每个工具生成或修复完成后，脚本会单独提交并推送该工具。提交信息会包含中文工具名：
 
 ```text
-Auto-deploy: 工具中文名
+自动部署：工具中文名
 ```
 
 如果 HTML 文件已存在但中文名映射缺失，脚本会只修复 `tool_name_map.json`，并使用对应工具中文名提交这次元数据更新。
