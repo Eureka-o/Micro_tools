@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="margin-padding-generator 是一款 CSS 边距可视化工具，可通过滑块实时调整上下左右 Margin 与 Padding，预览盒模型变化并一键生成 CSS 代码。" />
-  <meta name="keywords" content="margin-padding-generator,CSS边距可视化工具,margin生成器,padding生成器,CSS盒模型工具,CSS margin padding代码生成器,前端布局工具" />
+  <meta name="description" content="CSS 边距可视化工具。四个滑块控制上下左右的 Margin 和 Padding，中心盒子实时改变大小并输出代码。">
+  <meta name="keywords" content="margin-padding-generator,CSS边距可视化工具,margin生成器,padding生成器,CSS盒模型工具,CSS margin padding代码生成器,前端布局工具">
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#0f172a" />
   <title>margin-padding-generator - CSS 边距可视化工具</title>
@@ -24,26 +24,53 @@
       }
     };
   </script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/margin-padding-generator.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/margin-padding-generator.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/margin-padding-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/margin-padding-generator.html">
+  <script src="./theme-toggle.js" defer></script>
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="./margin-padding-generator.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
+        <a href="./en/margin-padding-generator.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="切换主题" title="切换主题">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
   <div class="pointer-events-none fixed inset-0 overflow-hidden">
     <div class="absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
     <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-violet-600/20 blur-3xl"></div>
   </div>
 
-  <header class="relative border-b border-white/10 bg-slate-950/80 backdrop-blur">
+  <header class="relative border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 backdrop-blur">
     <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
             CSS Box Model Visual Generator
           </p>
-          <h1 class="text-3xl font-bold tracking-tight text-white sm:text-5xl">CSS 边距可视化工具</h1>
-          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-300">
+          <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">CSS 边距可视化工具</h1>
+          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300">
             使用滑块实时调整上下左右 Margin 与 Padding，可视化理解 CSS 盒模型，并立即生成可复制的生产级 CSS 代码。
           </p>
         </div>
-        <div class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 shadow-glow">
+        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 shadow-glow">
           <p class="text-sm text-slate-400">当前单位</p>
           <p class="text-2xl font-semibold text-cyan-200">px</p>
         </div>
@@ -54,13 +81,13 @@
   <main class="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
     <section class="grid gap-6 lg:grid-cols-12">
       <div class="lg:col-span-4">
-        <div class="rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-2xl backdrop-blur">
+        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl backdrop-blur">
           <div class="mb-5 flex items-center justify-between gap-3">
             <div>
-              <h2 class="text-xl font-semibold text-white">输入控制区</h2>
+              <h2 class="text-xl font-semibold text-gray-900 dark:text-white">输入控制区</h2>
               <p class="mt-1 text-sm text-slate-400">拖动滑块或输入数值，范围 0 - 120 px。</p>
             </div>
-            <button id="resetBtn" type="button" class="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-cyan-300/50 hover:bg-cyan-400/10 active:scale-95">
+            <button id="resetBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-2 text-sm font-medium text-slate-800 dark:text-slate-200 transition hover:border-cyan-300/50 hover:bg-cyan-400/10 active:scale-95">
               重置
             </button>
           </div>
@@ -88,19 +115,19 @@
       </div>
 
       <div class="lg:col-span-5">
-        <div class="h-full rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900 to-slate-950 p-5 shadow-2xl">
+        <div class="h-full rounded-3xl border border-gray-200 dark:border-white/10 bg-gradient-to-br from-slate-900 to-slate-950 p-5 shadow-2xl">
           <div class="mb-5">
-            <h2 class="text-xl font-semibold text-white">实时可视化预览</h2>
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white">实时可视化预览</h2>
             <p class="mt-1 text-sm text-slate-400">青色区域代表 Margin，紫色区域代表 Padding，中间为内容盒子。</p>
           </div>
 
-          <div class="overflow-auto rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_1px_1px,rgba(148,163,184,0.24)_1px,transparent_0)] [background-size:18px_18px] p-4 sm:p-8">
+          <div class="overflow-auto rounded-3xl border border-gray-200 dark:border-white/10 bg-[radial-gradient(circle_at_1px_1px,rgba(148,163,184,0.24)_1px,transparent_0)] [background-size:18px_18px] p-4 sm:p-8">
             <div class="mx-auto flex min-h-[420px] min-w-[320px] items-center justify-center">
               <div id="marginBox" class="relative rounded-2xl bg-cyan-400/20 outline outline-1 outline-dashed outline-cyan-300/70 transition-all duration-150">
                 <span class="absolute left-3 top-3 rounded-lg bg-cyan-300/20 px-2 py-1 text-xs font-semibold text-cyan-100 ring-1 ring-cyan-200/30">margin</span>
                 <div id="paddingBox" class="relative rounded-xl bg-violet-400/25 outline outline-1 outline-dashed outline-violet-200/80 transition-all duration-150">
                   <span class="absolute left-3 top-3 rounded-lg bg-violet-300/20 px-2 py-1 text-xs font-semibold text-violet-100 ring-1 ring-violet-200/30">padding</span>
-                  <div id="contentBox" class="flex h-32 w-40 items-center justify-center rounded-lg border border-white/20 bg-slate-100 text-center text-sm font-bold text-slate-900 shadow-xl sm:h-36 sm:w-48">
+                  <div id="contentBox" class="flex h-32 w-40 items-center justify-center rounded-lg border border-white/20 bg-slate-100 text-center text-sm font-bold text-slate-900 dark:text-slate-100 shadow-xl sm:h-36 sm:w-48">
                     Content Box
                   </div>
                 </div>
@@ -130,33 +157,33 @@
       </div>
 
       <div class="lg:col-span-3">
-        <div class="sticky top-6 rounded-3xl border border-white/10 bg-white/[0.06] p-5 shadow-2xl backdrop-blur">
+        <div class="sticky top-6 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5 shadow-2xl backdrop-blur">
           <div class="mb-4 flex items-center justify-between gap-3">
             <div>
-              <h2 class="text-xl font-semibold text-white">输出代码区</h2>
+              <h2 class="text-xl font-semibold text-gray-900 dark:text-white">输出代码区</h2>
               <p class="mt-1 text-sm text-slate-400">自动生成 CSS。</p>
             </div>
-            <button id="copyBtn" type="button" class="rounded-xl bg-cyan-400 px-4 py-2 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95">
+            <button id="copyBtn" type="button" class="rounded-xl bg-cyan-400 px-4 py-2 text-sm font-bold text-slate-950 dark:text-slate-100 transition hover:bg-cyan-300 active:scale-95">
               复制
             </button>
           </div>
 
-          <pre class="max-h-[480px] overflow-auto rounded-2xl border border-white/10 bg-slate-950 p-4 text-sm leading-6 text-slate-100"><code id="cssOutput"></code></pre>
+          <pre class="max-h-[480px] overflow-auto rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950 p-4 text-sm leading-6 text-slate-900 dark:text-slate-100"><code id="cssOutput"></code></pre>
 
           <div id="copyStatus" class="mt-4 hidden rounded-2xl border border-emerald-400/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200" role="status"></div>
         </div>
       </div>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-white/10 bg-slate-900/70 p-6 leading-8 text-slate-300 shadow-2xl backdrop-blur sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-white">关于 CSS 边距可视化工具</h2>
+    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl backdrop-blur sm:p-8">
+      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 CSS 边距可视化工具</h2>
       <p>
         margin-padding-generator 是一款面向前端开发者、网页设计师和学习者的 CSS 边距可视化工具。许多布局问题都来自对 CSS 盒模型理解不清，例如元素之间为什么出现空隙、内容区域为什么被挤压、组件在响应式页面中为什么对不齐。本工具通过上下左右 Margin 与 Padding 滑块，把抽象的外边距和内边距转换成直观的实时预览，让你快速观察内容盒子、内边距区域和外边距区域的变化关系。使用时，只需拖动滑块或输入具体像素值，页面会立即更新中心盒子的视觉效果，并同步生成可复制的 CSS margin padding 代码。它适合用于快速制作按钮、卡片、表单、文章容器等常见组件的间距方案，也适合作为 CSS 盒模型在线练习工具。对于需要提升开发效率的人来说，这个 CSS margin padding 代码生成器能够减少反复调试浏览器样式的时间，帮助你更准确地完成网页布局、组件间距设计和前端样式交付。
       </p>
     </article>
   </main>
 
-  <footer class="relative border-t border-white/10 px-4 py-8 text-center text-sm text-slate-500">
+  <footer class="relative border-t border-gray-200 dark:border-white/10 px-4 py-8 text-center text-sm text-slate-500">
     <p>margin-padding-generator · CSS Box Model Visual Tool</p>
   </footer>
 
@@ -263,7 +290,7 @@
           </label>
           <div class="grid grid-cols-[1fr_76px] items-center gap-3">
             <input id="${id}-range" type="range" min="${MIN_VALUE}" max="${MAX_VALUE}" step="1" value="${state[group][side.key]}" class="h-2 w-full cursor-pointer ${colorClass}">
-            <input id="${id}-number" type="number" inputmode="numeric" min="${MIN_VALUE}" max="${MAX_VALUE}" step="1" value="${state[group][side.key]}" aria-label="${group} ${side.label}" class="w-full rounded-xl border border-white/10 bg-slate-900 px-3 py-2 text-right text-sm text-white outline-none transition focus:border-cyan-300/70 focus:ring-2 focus:ring-cyan-300/20">
+            <input id="${id}-number" type="number" inputmode="numeric" min="${MIN_VALUE}" max="${MAX_VALUE}" step="1" value="${state[group][side.key]}" aria-label="${group} ${side.label}" class="w-full rounded-xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-3 py-2 text-right text-sm text-gray-900 dark:text-white outline-none transition focus:border-cyan-300/70 focus:ring-2 focus:ring-cyan-300/20">
           </div>
         `;
 
@@ -420,246 +447,5 @@
       render();
     })();
   </script>
-
-  <!-- micro-tools-i18n:start -->
-  <script>
-(() => {
-  'use strict';
-  const STORAGE_KEY = 'microToolsLanguage';
-  const PAGE_SLUG = "margin-padding-generator";
-  const TRANSLATIONS = {"输入控制区":"Input control area","使用滑块实时调整上下左右 Margin 与 Padding，可视化理解 CSS 盒模型，并立即生成可复制的生产级 CSS 代码。":"Use sliders to adjust top, right, bottom, and left Margin and Padding in real time, visualize the CSS box model, and instantly generate copy-ready production CSS code.","滑块数值异常，已自动恢复为 0。":"Invalid slider value. It has been reset to 0 automatically.","Padding 内边距":"Padding","下 Bottom":"Bottom","青色区域代表 Margin，紫色区域代表 Padding，中间为内容盒子。":"The cyan area represents Margin, the purple area represents Padding, and the center is the content box.","上 Top":"Top","margin-padding-generator,CSS边距可视化工具,margin生成器,padding生成器,CSS盒模型工具,CSS margin padding代码生成器,前端布局工具":"margin-padding-generator, CSS spacing visualization tool, margin generator, padding generator, CSS box model tool, CSS margin padding code generator, Front-end layout tool","当前单位":"Current unit","自动生成 CSS。":"CSS generated automatically.","Margin 外边距":"Margin","复制失败，请手动选中代码复制。":"Copy failed. Please manually select and copy the code.","margin-padding-generator 是一款面向前端开发者、网页设计师和学习者的 CSS 边距可视化工具。许多布局问题都来自对 CSS 盒模型理解不清，例如元素之间为什么出现空隙、内容区域为什么被挤压、组件在响应式页面中为什么对不齐。本工具通过上下左右 Margin 与 Padding 滑块，把抽象的外边距和内边距转换成直观的实时预览，让你快速观察内容盒子、内边距区域和外边距区域的变化关系。使用时，只需拖动滑块或输入具体像素值，页面会立即更新中心盒子的视觉效果，并同步生成可复制的 CSS margin padding 代码。它适合用于快速制作按钮、卡片、表单、文章容器等常见组件的间距方案，也适合作为 CSS 盒模型在线练习工具。对于需要提升开发效率的人来说，这个 CSS margin padding 代码生成器能够减少反复调试浏览器样式的时间，帮助你更准确地完成网页布局、组件间距设计和前端样式交付。":"margin-padding-generator is a visual CSS spacing tool for front-end developers, web designers, and learners. Many layout issues come from unclear understanding of the CSS box model, such as why gaps appear between elements, why the content area is squeezed, or why components are misaligned on responsive pages. This tool turns abstract margin and padding values into an intuitive real-time preview with top, right, bottom, and left Margin and Padding sliders, helping you quickly observe how the content box, padding area, and margin area change. To use it, drag the sliders or enter exact pixel values, and the page instantly updates the visual effect of the center box while generating copyable CSS margin padding code. It is suitable for quickly creating spacing schemes for common components such as buttons, cards, forms, and article containers, and also works as an online CSS box model practice tool. For anyone who wants to improve development efficiency, this CSS margin padding code generator reduces repeated browser style debugging and helps you complete web layouts, component spacing design, and front-end style delivery more accurately.","margin-padding-generator - CSS 边距可视化工具":"margin-padding-generator - CSS Margin and Padding Visualizer","输出代码区":"Output code area","复制":"Copy","右 Right":"Right","重置":"Reset","拖动滑块或输入数值，范围 0 - 120 px。":"Drag the slider or enter a value, range 0 - 120 px.","当前没有可复制的 CSS 代码。":"No CSS code available to copy.","页面遇到异常但已安全处理，请继续使用或点击重置。":"The page encountered an error but handled it safely. Please continue or click reset.","左 Left":"Left","关于 CSS 边距可视化工具":"About the CSS margin visualization tool","请输入 0 到 120 之间的数字。":"Please enter a number between 0 and 120.","输入无效：数值必须是 0 到 120 之间的数字。":"Invalid input: the value must be a number between 0 and 120.","实时可视化预览":"Real-time visual preview","margin-padding-generator 是一款 CSS 边距可视化工具，可通过滑块实时调整上下左右 Margin 与 Padding，预览盒模型变化并一键生成 CSS 代码。":"margin-padding-generator is a visual CSS spacing tool that lets you adjust top, right, bottom, and left Margin and Padding in real time with sliders, preview box model changes, and generate CSS code with one click.","CSS 代码已复制到剪贴板。":"CSS code copied to clipboard.","CSS 边距可视化工具":"CSS Margin and Padding Generator","CSS 边距可视化工具。四个滑块控制上下左右的 Margin 和 Padding，中心盒子实时改变大小并输出代码。":"CSS spacing visualizer. Four sliders control the top, bottom, left, and right Margin and Padding, while the center box updates in real time and outputs code."};
-  const TOOL_DATA = {"margin-padding-generator":{"zhName":"CSS 边距可视化工具","enName":"CSS Margin and Padding Generator","zhDescription":"CSS 边距可视化工具。四个滑块控制上下左右的 Margin 和 Padding，中心盒子实时改变大小并输出代码。","enDescription":"CSS spacing visualizer. Four sliders control the top, bottom, left, and right Margin and Padding, while the center box updates in real time and outputs code.","zhTitle":"margin-padding-generator - CSS 边距可视化工具","enTitle":"CSS Margin and Padding Generator | Free Online Tool","zhKeywords":"margin-padding-generator,CSS边距可视化工具,margin生成器,padding生成器,CSS盒模型工具,CSS margin padding代码生成器,前端布局工具","enKeywords":"CSS Margin and Padding Generator, online tool, browser tool, productivity tool"}};
-  const CURRENT_TOOL = {"zhName":"CSS 边距可视化工具","enName":"CSS Margin and Padding Generator","zhDescription":"CSS 边距可视化工具。四个滑块控制上下左右的 Margin 和 Padding，中心盒子实时改变大小并输出代码。","enDescription":"CSS spacing visualizer. Four sliders control the top, bottom, left, and right Margin and Padding, while the center box updates in real time and outputs code.","zhTitle":"margin-padding-generator - CSS 边距可视化工具","enTitle":"CSS Margin and Padding Generator | Free Online Tool","zhKeywords":"margin-padding-generator,CSS边距可视化工具,margin生成器,padding生成器,CSS盒模型工具,CSS margin padding代码生成器,前端布局工具","enKeywords":"CSS Margin and Padding Generator, online tool, browser tool, productivity tool"};
-  const ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
-  const ZH_RE = /[\u4e00-\u9fff]/;
-  const originalText = new WeakMap();
-  const originalAttrs = new WeakMap();
-  let observer = null;
-
-  function normalize(value) {
-    return String(value || '').replace(/\s+/g, ' ').trim();
-  }
-
-  function hasChinese(value) {
-    return ZH_RE.test(String(value || ''));
-  }
-
-  function language() {
-    return localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'zh';
-  }
-
-  function translateExact(value, lang) {
-    const text = String(value || '');
-    if (lang === 'zh' || !text) return text;
-    if (TRANSLATIONS[text]) return TRANSLATIONS[text];
-    const normalized = normalize(text);
-    if (TRANSLATIONS[normalized]) return TRANSLATIONS[normalized];
-
-    const dynamic = [
-      [/^(\d+)\s*个字符$/u, '$1 characters'],
-      [/^(\d+)\s*字符$/u, '$1 characters'],
-      [/^(\d+)\s*字$/u, '$1 characters'],
-      [/^(\d+)\s*行$/u, '$1 rows'],
-      [/^(\d+)\s*列$/u, '$1 columns'],
-      [/^(\d+)\s*项$/u, '$1 items'],
-      [/^(\d+)\s*次$/u, '$1 times'],
-      [/^当前显示\s*(\d+)\s*\/\s*(\d+)$/u, 'Showing $1 / $2'],
-      [/^第\s*(\d+)\s*行第\s*(\d+)\s*列/u, 'line $1, column $2']
-    ];
-    for (const [pattern, replacement] of dynamic) {
-      if (pattern.test(normalized)) return normalized.replace(pattern, replacement);
-    }
-    return text;
-  }
-
-  function translateWithSpacing(value, lang) {
-    const text = String(value || '');
-    if (!text.trim()) return text;
-    const leading = text.match(/^\s*/)[0];
-    const trailing = text.match(/\s*$/)[0];
-    const core = text.slice(leading.length, text.length - trailing.length);
-    return leading + translateExact(core, lang) + trailing;
-  }
-
-  function skipped(node) {
-    const parent = node.parentElement;
-    return !parent || Boolean(parent.closest('script, style, code, pre, textarea, [data-i18n-ignore]'));
-  }
-
-  function translateNode(node, lang) {
-    if (skipped(node) || !node.nodeValue.trim()) return;
-    const current = node.nodeValue;
-    let original = originalText.get(node);
-    const originalEnglish = original ? translateWithSpacing(original, 'en') : '';
-    if (!original || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
-      original = current;
-      originalText.set(node, original);
-    }
-    node.nodeValue = lang === 'zh' ? (original || current) : translateWithSpacing(original || current, lang);
-  }
-
-  function translateAttrs(element, lang) {
-    if (element.closest('script, style, [data-i18n-ignore]')) return;
-    let store = originalAttrs.get(element);
-    if (!store) {
-      store = {};
-      originalAttrs.set(element, store);
-    }
-    ATTRS.forEach((attr) => {
-      if (!element.hasAttribute(attr)) return;
-      const current = element.getAttribute(attr);
-      const originalEnglish = store[attr] ? translateExact(store[attr], 'en') : '';
-      if (!store[attr] || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
-        store[attr] = current;
-      }
-      element.setAttribute(attr, lang === 'zh' ? store[attr] : translateExact(store[attr] || current, lang));
-    });
-  }
-
-  function walk(root, lang) {
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    const nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-    nodes.forEach((node) => translateNode(node, lang));
-
-    const elementRoot = root.nodeType === Node.ELEMENT_NODE ? root : document.body;
-    if (!elementRoot) return;
-    translateAttrs(elementRoot, lang);
-    elementRoot.querySelectorAll('*').forEach((element) => translateAttrs(element, lang));
-  }
-
-  function setMeta(name, value) {
-    if (!value) return;
-    let meta = document.querySelector(`meta[name="${name}"]`);
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.setAttribute('name', name);
-      document.head.appendChild(meta);
-    }
-    meta.setAttribute('content', value);
-  }
-
-  function applyMetadata(lang) {
-    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-    if (PAGE_SLUG === 'index') {
-      document.title = lang === 'zh'
-        ? '免费在线开发者工具箱 | 纯前端工具集合'
-        : 'Free Online Developer Toolbox | Pure Front-End Tools';
-      setMeta('description', lang === 'zh'
-        ? '免费在线开发者工具箱，汇集 JSON、CSV、LaTeX、Base64、正则、时间戳、二维码、颜色转换等纯前端微型工具，隐私友好、无需安装、极速加载。'
-        : 'A free online developer toolbox with pure front-end tools for JSON, CSV, LaTeX, Base64, regex, timestamps, QR codes, color conversion, and daily productivity.');
-      setMeta('keywords', lang === 'zh'
-        ? '免费在线开发者工具箱, 纯前端工具集合, 在线 JSON 工具, 在线编码转换工具, 生产力工具箱, 微型 Web 工具'
-        : 'free online developer tools, front-end tools, JSON tools, encoding tools, productivity toolbox, micro web tools');
-      return;
-    }
-    if (!CURRENT_TOOL || !CURRENT_TOOL.zhName) return;
-    document.title = lang === 'zh' ? CURRENT_TOOL.zhTitle : CURRENT_TOOL.enTitle;
-    setMeta('description', lang === 'zh' ? CURRENT_TOOL.zhDescription : CURRENT_TOOL.enDescription);
-    setMeta('keywords', lang === 'zh' ? CURRENT_TOOL.zhKeywords : CURRENT_TOOL.enKeywords);
-    const h1 = document.querySelector('h1');
-    if (h1) h1.textContent = lang === 'zh' ? CURRENT_TOOL.zhName : CURRENT_TOOL.enName;
-  }
-
-  function updateIndexCards(lang) {
-    if (PAGE_SLUG !== 'index') return;
-    document.querySelectorAll('a[href$=".html"]').forEach((card) => {
-      const slug = (card.getAttribute('href') || '').split('/').pop().replace(/\.html$/i, '');
-      const tool = TOOL_DATA[slug];
-      if (!tool) return;
-      const title = card.querySelector('h3');
-      const description = card.querySelector('p');
-      const action = card.querySelector('span:last-child');
-      if (title) title.textContent = lang === 'zh' ? tool.zhName : tool.enName;
-      if (description) description.textContent = lang === 'zh' ? tool.zhDescription : tool.enDescription;
-      if (action) action.textContent = lang === 'zh' ? '立即使用' : 'Open Tool';
-      card.dataset.search = normalize(`${slug} ${tool.zhName} ${tool.enName} ${tool.zhDescription} ${tool.enDescription}`).toLowerCase().replace(/[-_\s]+/g, '');
-    });
-    const search = document.getElementById('searchInput');
-    if (search) search.dispatchEvent(new Event('input', { bubbles: true }));
-  }
-
-  function ensureToggle(lang) {
-    let toggle = document.getElementById('microToolsLanguageToggle');
-    if (!toggle) {
-      toggle = document.createElement('div');
-      toggle.id = 'microToolsLanguageToggle';
-      toggle.setAttribute('data-i18n-ignore', 'true');
-      toggle.className = 'fixed right-4 top-4 z-50 flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/90 p-1 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur';
-      toggle.innerHTML = '<span data-language-label class="px-2 text-xs text-slate-300">语言</span><button type="button" data-lang-option="zh" class="rounded-full px-3 py-1.5 transition">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-1.5 transition">EN</button>';
-      document.body.appendChild(toggle);
-      toggle.addEventListener('click', (event) => {
-        const button = event.target.closest('[data-lang-option]');
-        if (!button) return;
-        localStorage.setItem(STORAGE_KEY, button.getAttribute('data-lang-option') === 'en' ? 'en' : 'zh');
-        applyLanguage(language());
-      });
-    }
-    toggle.querySelector('[data-language-label]').textContent = lang === 'zh' ? '语言' : 'Language';
-    toggle.querySelectorAll('[data-lang-option]').forEach((button) => {
-      const active = button.getAttribute('data-lang-option') === lang;
-      button.className = active
-        ? 'rounded-full bg-cyan-400 px-3 py-1.5 text-slate-950 transition'
-        : 'rounded-full px-3 py-1.5 text-slate-200 transition hover:bg-white/10';
-    });
-  }
-
-  function disconnect() {
-    if (observer) observer.disconnect();
-  }
-
-  function observe() {
-    if (!observer) {
-      observer = new MutationObserver(() => {
-        if (language() !== 'en') return;
-        disconnect();
-        applyLanguage('en');
-        observe();
-      });
-    }
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributes: true,
-      attributeFilter: ATTRS
-    });
-  }
-
-  function applyLanguage(lang) {
-    const next = lang === 'en' ? 'en' : 'zh';
-    disconnect();
-    ensureToggle(next);
-    applyMetadata(next);
-    walk(document.body, next);
-    updateIndexCards(next);
-    ensureToggle(next);
-    observe();
-  }
-
-  function init() {
-    applyLanguage(language());
-    window.addEventListener('storage', (event) => {
-      if (event.key === STORAGE_KEY) applyLanguage(language());
-    });
-  }
-
-  window.MicroToolsI18n = {
-    getLanguage: language,
-    setLanguage(value) {
-      localStorage.setItem(STORAGE_KEY, value === 'en' ? 'en' : 'zh');
-      applyLanguage(language());
-    },
-    applyLanguage
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
-  </script>
-  <!-- micro-tools-i18n:end -->
 </body>
 </html>

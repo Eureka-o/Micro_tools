@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CRON Expression Generator | Free Online Tool</title>
+  <meta name="description" content="CRON expression generator and parser. Provides UI components (dropdowns/radio buttons) to generate complex CRON syntax and explain the next 5 run times in English.">
+  <meta name="keywords" content="CRON Expression Generator, online tool, browser tool, productivity tool">
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+  <meta property="og:image" content="../assets/logo.png">
+  <meta name="twitter:image" content="../assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/en/cron-generator.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/cron-generator.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/cron-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/cron-generator.html">
+  <script src="./theme-toggle.js" defer></script>
+</head>
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="../cron-generator.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./cron-generator.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
+  <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
+    <div class="absolute inset-0 opacity-30">
+      <div class="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-cyan-500 blur-3xl"></div>
+      <div class="absolute left-10 top-24 h-40 w-40 rounded-full bg-blue-600 blur-3xl"></div>
+    </div>
+    <div class="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-1 text-sm text-cyan-200">Zero dependencies · Chinese parsing · Future execution time prediction</p>
+        <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-6xl">CRON Expression Generator</h1>
+        <p class="mt-5 text-lg leading-8 text-slate-700 dark:text-slate-300">CRON expression generator and parser. Quickly generate scheduled task syntax through visual controls, or paste an expression directly for an English explanation and calculate the next 5 run times.</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-2">
+      <div class="rounded-3xl border border-slate-700 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
+        <div class="mb-5 flex items-center justify-between gap-3">
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Input</h2>
+            <p class="mt-1 text-sm text-slate-400">Choose a template or use advanced fields to generate a 5-field Unix CRON expression: minute hour day-of-month month day-of-week</p>
+          </div>
+          <span class="rounded-xl bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-200">UTC? No, local time</span>
+        </div>
+
+        <div id="errorBox" class="mb-4 hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm text-red-200"></div>
+
+        <div class="mb-5 rounded-2xl bg-slate-800/80 p-4">
+          <label for="modeSelect" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Generation Mode</label>
+          <select id="modeSelect" class="w-full rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20">
+            <option value="preset">Common Templates</option>
+            <option value="advanced">Advanced Field Builder</option>
+            <option value="manual">Manual input / parse</option>
+          </select>
+        </div>
+
+        <div id="presetPanel" class="space-y-4">
+          <div>
+            <label for="presetType" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Select Timer Type</label>
+            <select id="presetType" class="w-full rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20">
+              <option value="everyMinute">Run every minute</option>
+              <option value="everyNMinutes">Run every N minutes</option>
+              <option value="hourly">Run at specified minute every hour</option>
+              <option value="daily">Run daily at a specified time</option>
+              <option value="weekly">Run weekly on specified days and times</option>
+              <option value="monthly">Run monthly on specified dates and times</option>
+              <option value="workday">Run at a specified time on weekdays</option>
+            </select>
+          </div>
+
+          <div id="presetOptions" class="grid gap-4 sm:grid-cols-2"></div>
+        </div>
+
+        <div id="advancedPanel" class="hidden space-y-4">
+          <div class="grid gap-4">
+            <div class="rounded-2xl border border-slate-700 bg-slate-800/70 p-4">
+              <h3 class="mb-3 font-bold text-cyan-100">Minute field</h3>
+              <div class="grid gap-3 sm:grid-cols-3">
+                <select data-field="minute" data-role="mode" class="field-mode rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2">
+                  <option value="*">Per Minute</option><option value="specific">Specify</option><option value="step">Interval</option><option value="range">Range</option>
+                </select>
+                <select data-field="minute" data-role="a" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
+                <select data-field="minute" data-role="b" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-slate-700 bg-slate-800/70 p-4">
+              <h3 class="mb-3 font-bold text-cyan-100">Hour Field</h3>
+              <div class="grid gap-3 sm:grid-cols-3">
+                <select data-field="hour" data-role="mode" class="field-mode rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2">
+                  <option value="*">Per Hour</option><option value="specific">Specify</option><option value="step">Interval</option><option value="range">Range</option>
+                </select>
+                <select data-field="hour" data-role="a" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
+                <select data-field="hour" data-role="b" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-slate-700 bg-slate-800/70 p-4">
+              <h3 class="mb-3 font-bold text-cyan-100">Date Field</h3>
+              <div class="grid gap-3 sm:grid-cols-3">
+                <select data-field="dom" data-role="mode" class="field-mode rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2">
+                  <option value="*">Daily</option><option value="specific">Specified date</option><option value="step">Interval</option><option value="range">Range</option>
+                </select>
+                <select data-field="dom" data-role="a" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
+                <select data-field="dom" data-role="b" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-slate-700 bg-slate-800/70 p-4">
+              <h3 class="mb-3 font-bold text-cyan-100">Month Field</h3>
+              <div class="grid gap-3 sm:grid-cols-3">
+                <select data-field="month" data-role="mode" class="field-mode rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2">
+                  <option value="*">Monthly</option><option value="specific">Specified month</option><option value="step">Interval</option><option value="range">Range</option>
+                </select>
+                <select data-field="month" data-role="a" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
+                <select data-field="month" data-role="b" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-slate-700 bg-slate-800/70 p-4">
+              <h3 class="mb-3 font-bold text-cyan-100">Day of Week Field</h3>
+              <div class="grid gap-3 sm:grid-cols-3">
+                <select data-field="dow" data-role="mode" class="field-mode rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2">
+                  <option value="*">Any day of week</option><option value="specific">Specified weekday</option><option value="step">Interval</option><option value="range">Range</option>
+                </select>
+                <select data-field="dow" data-role="a" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
+                <select data-field="dow" data-role="b" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="manualPanel" class="hidden">
+          <label for="manualCron" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">CRON expression</label>
+          <input id="manualCron" type="text" value="*/5 * * * *" class="w-full rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-4 py-3 font-mono text-cyan-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20" placeholder="Example: */5 * * * *" />
+          <p class="mt-2 text-xs text-slate-400">Supports *, ?, comma lists, ranges, and steps, for example: 0 9-18/2 * * 1-5</p>
+        </div>
+
+        <div class="mt-5 rounded-2xl border border-cyan-400/20 bg-cyan-400/5 p-4">
+          <label for="cronOutput" class="mb-2 block text-sm font-semibold text-cyan-100">Current expression</label>
+          <div class="flex flex-col gap-3 sm:flex-row">
+            <input id="cronOutput" type="text" class="flex-1 rounded-xl border border-cyan-400/30 bg-white dark:bg-slate-950 px-4 py-3 font-mono text-lg font-bold text-cyan-200 outline-none focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20" />
+            <button id="copyBtn" class="rounded-xl bg-slate-700 px-5 py-3 font-bold text-gray-900 dark:text-white transition hover:bg-slate-600 active:scale-95">Copy</button>
+            <button id="analyzeBtn" class="rounded-xl bg-cyan-400 px-5 py-3 font-black text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-95">Parse</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/30 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
+        <div class="mb-5">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Output</h2>
+          <p class="mt-1 text-sm text-cyan-100/70">Chinese explanation and next 5 local run times</p>
+        </div>
+
+        <div class="space-y-4">
+          <div class="rounded-2xl border border-cyan-300/20 bg-slate-950/70 p-5">
+            <h3 class="mb-2 text-sm font-bold uppercase tracking-widest text-cyan-300">Chinese explanation</h3>
+            <p id="explainText" class="text-lg leading-8 text-slate-900 dark:text-slate-100">Waiting to parse...</p>
+          </div>
+
+          <div class="rounded-2xl border border-cyan-300/20 bg-slate-950/70 p-5">
+            <h3 class="mb-4 text-sm font-bold uppercase tracking-widest text-cyan-300">Next 5 run times</h3>
+            <ol id="nextList" class="space-y-3"></ol>
+          </div>
+
+          <div class="rounded-2xl border border-slate-700 bg-slate-900/70 p-5">
+            <h3 class="mb-3 text-sm font-bold uppercase tracking-widest text-slate-700 dark:text-slate-300">Field Description</h3>
+            <div class="grid gap-2 text-sm text-slate-700 dark:text-slate-300 sm:grid-cols-2">
+              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-2"><b class="text-gray-900 dark:text-white">Minutes</b>：0-59</div>
+              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-2"><b class="text-gray-900 dark:text-white">Hours</b>：0-23</div>
+              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-2"><b class="text-gray-900 dark:text-white">Date</b>：1-31</div>
+              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-2"><b class="text-gray-900 dark:text-white">Month</b>：1-12</div>
+              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-2 sm:col-span-2"><b class="text-gray-900 dark:text-white">Week</b>: 0-7, where both 0 and 7 represent Sunday</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-slate-700 bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About CRON Expression Generator</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">CRON expression generator and parser. Provides UI components (dropdowns/radio buttons) to generate complex CRON syntax and explain the next 5 run times in English. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use CRON Expression Generator for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+    </article>
+  </main>
+
+  <footer class="mx-auto max-w-7xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
+    <p>cron-generator · Calculated locally in the browser; no expressions are uploaded</p>
+  </footer>
+
+  <script>
+    (() => {
+      const $ = (id) => document.getElementById(id);
+      const modeSelect = $("modeSelect");
+      const presetType = $("presetType");
+      const presetOptions = $("presetOptions");
+      const presetPanel = $("presetPanel");
+      const advancedPanel = $("advancedPanel");
+      const manualPanel = $("manualPanel");
+      const manualCron = $("manualCron");
+      const cronOutput = $("cronOutput");
+      const errorBox = $("errorBox");
+      const explainText = $("explainText");
+      const nextList = $("nextList");
+      const analyzeBtn = $("analyzeBtn");
+      const copyBtn = $("copyBtn");
+
+      const zhWeek = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+      const fieldRanges = {
+        minute: [0, 59],
+        hour: [0, 23],
+        dom: [1, 31],
+        month: [1, 12],
+        dow: [0, 7]
+      };
+
+      const aliases = {
+        JAN: 1, FEB: 2, MAR: 3, APR: 4, MAY: 5, JUN: 6, JUL: 7, AUG: 8, SEP: 9, OCT: 10, NOV: 11, DEC: 12,
+        SUN: 0, MON: 1, TUE: 2, WED: 3, THU: 4, FRI: 5, SAT: 6
+      };
+
+      function showError(message) {
+        errorBox.textContent = message;
+        errorBox.classList.remove("hidden");
+      }
+
+      function clearError() {
+        errorBox.textContent = "";
+        errorBox.classList.add("hidden");
+      }
+
+      function pad(n) {
+        return String(n).padStart(2, "0");
+      }
+
+      function formatDate(d) {
+        return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}（${zhWeek[d.getDay()]}）`;
+      }
+
+      function makeSelectHtml(id, label, min, max, value, suffix = "") {
+        let html = `<label class="block"><span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">${label}</span><select id="${id}" class="w-full rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20">`;
+        for (let i = min; i <= max; i++) {
+          html += `<option value="${i}" ${i === value ? "selected" : ""}>${i}${suffix}</option>`;
+        }
+        html += `</select></label>`;
+        return html;
+      }
+
+      function makeWeekSelect(id, value) {
+        let html = `<label class="block"><span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Weekday</span><select id="${id}" class="w-full rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20">`;
+        for (let i = 0; i <= 6; i++) html += `<option value="${i}" ${i === value ? "selected" : ""}>${zhWeek[i]}</option>`;
+        html += `</select></label>`;
+        return html;
+      }
+
+      function renderPresetOptions() {
+        const t = presetType.value;
+        let html = "";
+        if (t === "everyNMinutes") html = makeSelectHtml("optN", "Interval in minutes", 1, 59, 5, " 分钟");
+        if (t === "hourly") html = makeSelectHtml("optMinute", "Minute of each hour", 0, 59, 0, " 分");
+        if (t === "daily") html = makeSelectHtml("optHour", "小时", 0, 23, 9, " 点") + makeSelectHtml("optMinute", "分钟", 0, 59, 0, " 分");
+        if (t === "weekly") html = makeWeekSelect("optDow", 1) + makeSelectHtml("optHour", "小时", 0, 23, 9, " 点") + makeSelectHtml("optMinute", "分钟", 0, 59, 0, " 分");
+        if (t === "monthly") html = makeSelectHtml("optDom", "Monthly Date", 1, 31, 1, " 号") + makeSelectHtml("optHour", "小时", 0, 23, 0, " 点") + makeSelectHtml("optMinute", "分钟", 0, 59, 0, " 分");
+        if (t === "workday") html = makeSelectHtml("optHour", "小时", 0, 23, 9, " 点") + makeSelectHtml("optMinute", "分钟", 0, 59, 0, " 分");
+        presetOptions.innerHTML = html;
+        presetOptions.querySelectorAll("select").forEach(el => el.addEventListener("change", updateFromUI));
+      }
+
+      function getPresetCron() {
+        const t = presetType.value;
+        if (t === "everyMinute") return "* * * * *";
+        if (t === "everyNMinutes") return `*/${$("optN").value} * * * *`;
+        if (t === "hourly") return `${$("optMinute").value} * * * *`;
+        if (t === "daily") return `${$("optMinute").value} ${$("optHour").value} * * *`;
+        if (t === "weekly") return `${$("optMinute").value} ${$("optHour").value} * * ${$("optDow").value}`;
+        if (t === "monthly") return `${$("optMinute").value} ${$("optHour").value} ${$("optDom").value} * *`;
+        if (t === "workday") return `${$("optMinute").value} ${$("optHour").value} * * 1-5`;
+        return "* * * * *";
+      }
+
+      function initAdvancedSelects() {
+        document.querySelectorAll("[data-field][data-role='a'], [data-field][data-role='b']").forEach(sel => {
+          const field = sel.dataset.field;
+          const [min, max] = fieldRanges[field];
+          sel.innerHTML = "";
+          for (let i = min; i <= max; i++) {
+            const label = field === "dow" ? `${i} ${i === 7 ? "Sunday" : zhWeek[i]}` : i;
+            sel.add(new Option(label, i));
+          }
+          if (sel.dataset.role === "b") {
+            sel.value = field === "minute" ? 5 : field === "hour" ? 2 : field === "dom" ? 7 : field === "month" ? 3 : 5;
+          }
+        });
+        document.querySelectorAll("[data-field]").forEach(el => el.addEventListener("change", updateFromUI));
+      }
+
+      function getAdvancedCron() {
+        const order = ["minute", "hour", "dom", "month", "dow"];
+        return order.map(field => {
+          const mode = document.querySelector(`[data-field="${field}"][data-role="mode"]`).value;
+          const a = document.querySelector(`[data-field="${field}"][data-role="a"]`).value;
+          const b = document.querySelector(`[data-field="${field}"][data-role="b"]`).value;
+          if (mode === "*") return "*";
+          if (mode === "specific") return a;
+          if (mode === "step") return `*/${Math.max(1, Number(b))}`;
+          if (mode === "range") return `${Math.min(Number(a), Number(b))}-${Math.max(Number(a), Number(b))}`;
+          return "*";
+        }).join(" ");
+      }
+
+      function updatePanels() {
+        const mode = modeSelect.value;
+        presetPanel.classList.toggle("hidden", mode !== "preset");
+        advancedPanel.classList.toggle("hidden", mode !== "advanced");
+        manualPanel.classList.toggle("hidden", mode !== "manual");
+      }
+
+      function updateFromUI() {
+        clearError();
+        updatePanels();
+        if (modeSelect.value === "preset") cronOutput.value = getPresetCron();
+        if (modeSelect.value === "advanced") cronOutput.value = getAdvancedCron();
+        if (modeSelect.value === "manual") cronOutput.value = manualCron.value.trim();
+        analyzeCurrent(false);
+      }
+
+      function tokenToNumber(token, min, max) {
+        const up = String(token).trim().toUpperCase();
+        const val = aliases.hasOwnProperty(up) ? aliases[up] : Number(up);
+        if (!Number.isInteger(val)) throw new Error(`Field value “${token}” is not a valid number or alias`);
+        if (val < min || val > max) throw new Error(`Field value "${token}" is outside the allowed range ${min}-${max}`);
+        return val;
+      }
+
+      function parseField(text, min, max, name, normalizeDow = false) {
+        const raw = String(text || "").trim().toUpperCase();
+        if (!raw) throw new Error(`${name} field cannot be empty`);
+        if (!/^[A-Z0-9,*\/?\-]+$/.test(raw)) throw new Error(`${name} field contains invalid characters`);
+        const set = new Set();
+        const parts = raw.split(",");
+        for (const part of parts) {
+          if (!part) throw new Error(`Empty items exist in the ${name} field list`);
+          const stepPieces = part.split("/");
+          if (stepPieces.length > 2) throw new Error(`${name} field has an invalid step format`);
+          const base = stepPieces[0];
+          const step = stepPieces[1] === undefined ? 1 : Number(stepPieces[1]);
+          if (!Number.isInteger(step) || step <= 0) throw new Error(`${name} field step must be a positive integer`);
+
+          let start, end;
+          if (base === "*" || base === "?") {
+            start = min; end = max;
+          } else if (base.includes("-")) {
+            const pair = base.split("-");
+            if (pair.length !== 2 || !pair[0] || !pair[1]) throw new Error(`${name} field has an invalid range format`);
+            start = tokenToNumber(pair[0], min, max);
+            end = tokenToNumber(pair[1], min, max);
+            if (start > end) throw new Error(`The start of the ${name} field range cannot be greater than the end`);
+          } else {
+            start = tokenToNumber(base, min, max);
+            end = stepPieces[1] === undefined ? start : max;
+          }
+
+          for (let i = start; i <= end; i += step) {
+            const v = normalizeDow && i === 7 ? 0 : i;
+            if (normalizeDow && v > 6) continue;
+            set.add(v);
+          }
+        }
+        if (set.size === 0) throw new Error(`The ${name} field did not match any valid value`);
+        return { raw, set, any: raw === "*" || raw === "?" };
+      }
+
+      function parseCron(expr) {
+        const parts = String(expr || "").trim().replace(/\s+/g, " ").split(" ").filter(Boolean);
+        if (parts.length !== 5) throw new Error("Please enter a 5-field Unix CRON expression in the format: minute hour day month weekday");
+        return {
+          minute: parseField(parts[0], 0, 59, "分钟"),
+          hour: parseField(parts[1], 0, 23, "小时"),
+          dom: parseField(parts[2], 1, 31, "日期"),
+          month: parseField(parts[3], 1, 12, "月份"),
+          dow: parseField(parts[4], 0, 7, "星期", true),
+          parts
+        };
+      }
+
+      function summarizeSet(parsed, label, formatter) {
+        if (parsed.any) return `${label} unlimited`;
+        const arr = Array.from(parsed.set).sort((a, b) => a - b);
+        if (arr.length <= 10) return `${label} is ${arr.map(formatter).join("、")}`;
+        return `${label} matches ${arr.length} values (${formatter(arr[0])} to ${formatter(arr[arr.length - 1])}, etc.)`;
+      }
+
+      function explainCron(parsed) {
+        const p = parsed.parts;
+        const fragments = [
+          summarizeSet(parsed.minute, "分钟", v => `${v} min`),
+          summarizeSet(parsed.hour, "小时", v => `${v} o'clock`),
+          summarizeSet(parsed.dom, "日期", v => `${v} day`),
+          summarizeSet(parsed.month, "月份", v => `${v} month`),
+          summarizeSet(parsed.dow, "星期", v => zhWeek[v])
+        ];
+
+        let hint = "";
+        if (!parsed.dom.any && !parsed.dow.any) {
+          hint = " Note: When both day of month and day of week are restricted, this tool follows common Unix Cron behavior: either one matching is enough.";
+        }
+
+        if (p.join(" ") === "* * * * *") return "Run once every minute.";
+        return `This expression means: execute when ${fragments.join("，")}. ${hint}`;
+      }
+
+      function dayMatches(d, parsed) {
+        const domMatch = parsed.dom.set.has(d.getDate());
+        const dowMatch = parsed.dow.set.has(d.getDay());
+        if (parsed.dom.any && parsed.dow.any) return true;
+        if (parsed.dom.any) return dowMatch;
+        if (parsed.dow.any) return domMatch;
+        return domMatch || dowMatch;
+      }
+
+      function matches(d, parsed) {
+        return parsed.minute.set.has(d.getMinutes()) &&
+          parsed.hour.set.has(d.getHours()) &&
+          parsed.month.set.has(d.getMonth() + 1) &&
+          dayMatches(d, parsed);
+      }
+
+      function nextRuns(parsed, count = 5) {
+        const result = [];
+        const d = new Date();
+        d.setSeconds(0, 0);
+        d.setMinutes(d.getMinutes() + 1);
+
+        const maxIterations = 60 * 24 * 366 * 5;
+        for (let i = 0; i < maxIterations && result.length < count; i++) {
+          if (matches(d, parsed)) result.push(new Date(d));
+          d.setMinutes(d.getMinutes() + 1);
+        }
+        if (result.length < count) throw new Error("Not enough run times found within the next 5 years. Check whether the date, month, and weekday combination is reachable, for example February 31 usually cannot run.");
+        return result;
+      }
+
+      function analyzeCurrent(showSuccess = true) {
+        try {
+          clearError();
+          const expr = cronOutput.value.trim();
+          if (modeSelect.value === "manual") manualCron.value = expr;
+          const parsed = parseCron(expr);
+          const explain = explainCron(parsed);
+          const runs = nextRuns(parsed, 5);
+          explainText.textContent = explain;
+          nextList.innerHTML = runs.map((d, idx) => `
+            <li class="flex items-center gap-3 rounded-2xl border border-cyan-300/10 bg-cyan-300/5 px-4 py-3">
+              <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-400 font-black text-slate-950 dark:text-slate-100">${idx + 1}</span>
+              <time class="font-mono text-cyan-100">${formatDate(d)}</time>
+            </li>
+          `).join("");
+          if (showSuccess) {
+            analyzeBtn.textContent = "已解析";
+            setTimeout(() => analyzeBtn.textContent = "解析", 700);
+          }
+        } catch (err) {
+          showError(err && err.message ? err.message : "Parsing failed. Please check the expression format.");
+          explainText.textContent = "Unable to parse the current expression.";
+          nextList.innerHTML = `<li class="rounded-2xl border border-red-400/20 bg-red-500/10 px-4 py-3 text-red-200">Please fix the input and parse again.</li>`;
+        }
+      }
+
+      async function copyCron() {
+        try {
+          await navigator.clipboard.writeText(cronOutput.value);
+          copyBtn.textContent = "Copied";
+          copyBtn.classList.remove("bg-slate-700");
+          copyBtn.classList.add("bg-emerald-500", "text-slate-950");
+          setTimeout(() => {
+            copyBtn.textContent = "Copy";
+            copyBtn.classList.add("bg-slate-700");
+            copyBtn.classList.remove("bg-emerald-500", "text-slate-950");
+          }, 900);
+        } catch {
+          cronOutput.select();
+          document.execCommand("copy");
+          copyBtn.textContent = "Copied";
+          setTimeout(() => copyBtn.textContent = "Copy", 900);
+        }
+      }
+
+      modeSelect.addEventListener("change", updateFromUI);
+      presetType.addEventListener("change", () => {
+        renderPresetOptions();
+        updateFromUI();
+      });
+      manualCron.addEventListener("input", updateFromUI);
+      cronOutput.addEventListener("input", () => {
+        if (modeSelect.value !== "manual") modeSelect.value = "manual";
+        manualCron.value = cronOutput.value;
+        updatePanels();
+        analyzeCurrent(false);
+      });
+      analyzeBtn.addEventListener("click", () => analyzeCurrent(true));
+      copyBtn.addEventListener("click", copyCron);
+
+      renderPresetOptions();
+      initAdvancedSelects();
+      updateFromUI();
+    })();
+  </script>
+</body>
+</html>

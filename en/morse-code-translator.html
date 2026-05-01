@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Morse code two-way translator. Convert English text into Morse code made of dots and dashes, with support for playing simple Morse code tones via the Web Audio API.">
+  <meta name="keywords" content="Morse Code Translator, online tool, browser tool, productivity tool">
+  <meta name="robots" content="index, follow" />
+  <title>Morse Code Translator | Free Online Tool</title>
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+  <meta property="og:image" content="../assets/logo.png">
+  <meta name="twitter:image" content="../assets/logo.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#0f172a',
+            neon: '#22d3ee',
+            glow: '#38bdf8'
+          },
+          boxShadow: {
+            soft: '0 20px 60px rgba(15, 23, 42, 0.12)',
+            neon: '0 0 30px rgba(34, 211, 238, 0.25)'
+          }
+        }
+      }
+    };
+  </script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/en/morse-code-translator.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/morse-code-translator.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/morse-code-translator.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/morse-code-translator.html">
+  <script src="./theme-toggle.js" defer></script>
+</head>
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="../morse-code-translator.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./morse-code-translator.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
+  <div class="fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute left-1/2 top-[-10rem] h-[32rem] w-[32rem] -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute bottom-[-12rem] right-[-8rem] h-[30rem] w-[30rem] rounded-full bg-blue-600/20 blur-3xl"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_35%),linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[length:auto,36px_36px,36px_36px]"></div>
+  </div>
+
+  <header class="px-4 py-10 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-6xl rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 p-6 shadow-neon backdrop-blur-md sm:p-10">
+      <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+        <div>
+          <p class="mb-3 inline-flex items-center rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-1 text-sm font-medium text-cyan-200">
+            Online Tools · Web Audio API · Zero Dependencies
+          </p>
+          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">Morse Code Translator</h1>
+          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
+            Morse code two-way translator: convert English text into Morse code made of dots and dashes, or quickly restore Morse code to English, with support for playing clear Morse tones.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-cyan-200/20 bg-slate-900/70 px-5 py-4 text-center shadow-soft">
+          <div class="text-3xl font-black text-cyan-300">· −</div>
+          <div class="mt-1 text-sm text-slate-400">DOT & DASH</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="px-4 pb-14 sm:px-6 lg:px-8">
+    <section class="mx-auto max-w-6xl">
+      <div id="alert" class="mb-5 hidden rounded-2xl border px-4 py-3 text-sm font-medium" role="alert" aria-live="polite"></div>
+
+      <div class="grid gap-5 lg:grid-cols-2">
+        <section class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-900/90 p-5 shadow-soft backdrop-blur sm:p-6">
+          <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 class="text-xl font-bold text-gray-900 dark:text-white">Input</h2>
+              <p class="mt-1 text-sm text-slate-400">Enter English text or Morse code, then choose a mode to convert.</p>
+            </div>
+            <select id="mode" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/30">
+              <option value="auto">Auto Detect</option>
+              <option value="text-to-morse">English → Morse Code</option>
+              <option value="morse-to-text">Morse code → English</option>
+            </select>
+          </div>
+
+          <textarea id="inputText" rows="11" class="w-full resize-y rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/90 p-4 font-mono text-base leading-7 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" placeholder="示例：HELLO WORLD&#10;或：.... . .-.. .-.. --- / .-- --- .-. .-.. -.."></textarea>
+
+          <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <button id="translateBtn" class="rounded-xl bg-cyan-400 px-4 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-95 focus:outline-none focus:ring-4 focus:ring-cyan-300/30">Translate</button>
+            <button id="swapBtn" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-4 py-3 font-bold text-gray-900 dark:text-white transition hover:bg-white/15 active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/10">Swap</button>
+            <button id="clearBtn" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-4 py-3 font-bold text-gray-900 dark:text-white transition hover:bg-white/15 active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/10">Clear</button>
+            <button id="sampleBtn" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-4 py-3 font-bold text-gray-900 dark:text-white transition hover:bg-white/15 active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/10">Example</button>
+          </div>
+
+          <div class="mt-5 rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/70 p-4">
+            <div class="mb-3 flex items-center justify-between">
+              <h3 class="font-semibold text-slate-900 dark:text-slate-100">Playback settings</h3>
+              <span id="speedValue" class="text-sm text-cyan-200">80 ms / point</span>
+            </div>
+            <input id="speed" type="range" min="45" max="180" value="80" class="w-full accent-cyan-300" />
+            <p class="mt-2 text-xs leading-5 text-slate-500">A dot is 1 unit, a dash is 3 units, and spacing between characters and words is added automatically.</p>
+          </div>
+        </section>
+
+        <section class="rounded-3xl border border-cyan-300/20 bg-cyan-950/30 p-5 shadow-soft backdrop-blur sm:p-6">
+          <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 class="text-xl font-bold text-gray-900 dark:text-white">Output</h2>
+              <p id="detectedMode" class="mt-1 text-sm text-cyan-100/80">Waiting for input.</p>
+            </div>
+            <div class="flex gap-2">
+              <button id="copyBtn" class="rounded-xl border border-cyan-200/20 bg-cyan-200/10 px-4 py-2 text-sm font-bold text-cyan-100 transition hover:bg-cyan-200/20 active:scale-95 focus:outline-none focus:ring-4 focus:ring-cyan-300/20">Copy</button>
+              <button id="playBtn" class="rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-950 dark:text-slate-100 transition hover:bg-cyan-100 active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/30">Play</button>
+              <button id="stopBtn" class="rounded-xl border border-red-300/20 bg-red-400/10 px-4 py-2 text-sm font-bold text-red-100 transition hover:bg-red-400/20 active:scale-95 focus:outline-none focus:ring-4 focus:ring-red-300/20">Stop</button>
+            </div>
+          </div>
+
+          <textarea id="outputText" rows="11" readonly class="w-full resize-y rounded-2xl border border-cyan-200/20 bg-white dark:bg-slate-950/80 p-4 font-mono text-base leading-7 text-cyan-50 outline-none placeholder:text-slate-600" placeholder="Translation results will appear here"></textarea>
+
+          <div class="mt-4 grid gap-3 sm:grid-cols-3">
+            <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/60 p-4">
+              <div class="text-sm text-slate-400">Input Characters</div>
+              <div id="inputCount" class="mt-1 text-2xl font-black text-gray-900 dark:text-white">0</div>
+            </div>
+            <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/60 p-4">
+              <div class="text-sm text-slate-400">Output characters</div>
+              <div id="outputCount" class="mt-1 text-2xl font-black text-gray-900 dark:text-white">0</div>
+            </div>
+            <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/60 p-4">
+              <div class="text-sm text-slate-400">Status</div>
+              <div id="statusText" class="mt-1 truncate text-lg font-bold text-cyan-200">Ready</div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 p-6 leading-8 text-slate-800 dark:text-slate-200 shadow-soft backdrop-blur sm:p-8">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Morse Code Translator</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Morse code two-way translator. Convert English text into Morse code made of dots and dashes, with support for playing simple Morse code tones via the Web Audio API. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Morse Code Translator for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+    </article>
+    </section>
+  </main>
+
+  <footer class="px-4 pb-8 text-center text-sm text-slate-500">
+    <p>morse-code-translator · Fast, private, browser-based Morse code conversion.</p>
+  </footer>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const MORSE = Object.freeze({
+        'A': '.-', 'B': '-...', 'C': '-.-.', 'D': '-..', 'E': '.', 'F': '..-.',
+        'G': '--.', 'H': '....', 'I': '..', 'J': '.---', 'K': '-.-', 'L': '.-..',
+        'M': '--', 'N': '-.', 'O': '---', 'P': '.--.', 'Q': '--.-', 'R': '.-.',
+        'S': '...', 'T': '-', 'U': '..-', 'V': '...-', 'W': '.--', 'X': '-..-',
+        'Y': '-.--', 'Z': '--..',
+        '0': '-----', '1': '.----', '2': '..---', '3': '...--', '4': '....-',
+        '5': '.....', '6': '-....', '7': '--...', '8': '---..', '9': '----.',
+        '.': '.-.-.-', ',': '--..--', '?': '..--..', "'": '.----.', '!': '-.-.--',
+        '/': '-..-.', '(': '-.--.', ')': '-.--.-', '&': '.-...', ':': '---...',
+        ';': '-.-.-.', '=': '-...-', '+': '.-.-.', '-': '-....-', '_': '..--.-',
+        '"': '.-..-.', '$': '...-..-', '@': '.--.-.'
+      });
+
+      const REVERSE = Object.freeze(Object.fromEntries(Object.entries(MORSE).map(([k, v]) => [v, k])));
+
+      const $ = (id) => document.getElementById(id);
+      const inputText = $('inputText');
+      const outputText = $('outputText');
+      const mode = $('mode');
+      const alertBox = $('alert');
+      const detectedMode = $('detectedMode');
+      const inputCount = $('inputCount');
+      const outputCount = $('outputCount');
+      const statusText = $('statusText');
+      const speed = $('speed');
+      const speedValue = $('speedValue');
+
+      let audioCtx = null;
+      let oscillators = [];
+      let gainNodes = [];
+      let stopTimer = null;
+
+      function showAlert(message, type = 'error') {
+        alertBox.className = 'mb-5 rounded-2xl border px-4 py-3 text-sm font-medium';
+        if (type === 'error') {
+          alertBox.classList.add('border-red-300/30', 'bg-red-500/15', 'text-red-100');
+        } else if (type === 'success') {
+          alertBox.classList.add('border-emerald-300/30', 'bg-emerald-500/15', 'text-emerald-100');
+        } else {
+          alertBox.classList.add('border-cyan-300/30', 'bg-cyan-500/15', 'text-cyan-100');
+        }
+        alertBox.textContent = message;
+        alertBox.classList.remove('hidden');
+      }
+
+      function hideAlert() {
+        alertBox.classList.add('hidden');
+        alertBox.textContent = '';
+      }
+
+      function setStatus(text) {
+        statusText.textContent = text;
+      }
+
+      function updateCounts() {
+        inputCount.textContent = String(inputText.value.length);
+        outputCount.textContent = String(outputText.value.length);
+      }
+
+      function normalizeMorseSymbols(value) {
+        return value
+          .replace(/[·•]/g, '.')
+          .replace(/[–—−]/g, '-')
+          .replace(/[｜|]/g, '/')
+          .replace(/\u3000/g, ' ');
+      }
+
+      function isLikelyMorse(value) {
+        const normalized = normalizeMorseSymbols(value).trim();
+        if (!normalized) return false;
+        return /^[.\-\s/]+$/.test(normalized);
+      }
+
+      function resolveMode(value) {
+        if (mode.value !== 'auto') return mode.value;
+        return isLikelyMorse(value) ? 'morse-to-text' : 'text-to-morse';
+      }
+
+      function textToMorse(text) {
+        const unsupported = new Set();
+        const words = text.toUpperCase().trim().split(/\s+/).filter(Boolean);
+
+        if (words.length === 0) {
+          throw new Error('Please enter the English text to translate.');
+        }
+
+        const resultWords = words.map(word => {
+          const letters = [];
+          for (const ch of word) {
+            if (MORSE[ch]) {
+              letters.push(MORSE[ch]);
+            } else {
+              unsupported.add(ch);
+            }
+          }
+          return letters.join(' ');
+        }).filter(Boolean);
+
+        if (unsupported.size > 0) {
+          throw new Error('The text contains unsupported characters:' + Array.from(unsupported).join(' ') + '. Use English letters, numbers, or common English punctuation.');
+        }
+
+        if (!resultWords.length) {
+          throw new Error('No valid English characters available to convert.');
+        }
+
+        return resultWords.join(' / ');
+      }
+
+      function morseToText(morse) {
+        const normalized = normalizeMorseSymbols(morse).trim();
+        if (!normalized) {
+          throw new Error('Please enter the Morse code to translate.');
+        }
+        if (!/^[.\-\s/]+$/.test(normalized)) {
+          throw new Error('Morse code can only contain dots ".", dashes "-", spaces, and the word separator "/".');
+        }
+
+        const compact = normalized.replace(/\s*\/\s*/g, ' / ').replace(/\s{3,}/g, ' / ').replace(/\s+/g, ' ').trim();
+        const tokens = compact.split(' ');
+        const words = [];
+        let current = [];
+
+        for (const token of tokens) {
+          if (!token) continue;
+          if (token === '/') {
+            if (current.length) {
+              words.push(current.join(''));
+              current = [];
+            } else if (words.length && words[words.length - 1] !== '') {
+              words.push('');
+            }
+            continue;
+          }
+          if (!/^[.-]+$/.test(token)) {
+            throw new Error('Invalid Morse segment found:' + token);
+          }
+          if (!REVERSE[token]) {
+            throw new Error('Unrecognized Morse code:' + token + '. Please check whether the dot-dash combination is correct.');
+          }
+          current.push(REVERSE[token]);
+        }
+
+        if (current.length) words.push(current.join(''));
+        const result = words.filter((word, index, arr) => !(word === '' && arr[index - 1] === '')).join(' ').trim();
+
+        if (!result) {
+          throw new Error('No valid Morse code available to convert.');
+        }
+
+        return result;
+      }
+
+      function translate() {
+        try {
+          hideAlert();
+          stopPlayback();
+          const value = inputText.value;
+          if (!value.trim()) {
+            outputText.value = '';
+            detectedMode.textContent = 'Waiting for input.';
+            setStatus('就绪');
+            updateCounts();
+            showAlert('Please enter English text or Morse code before translating.', 'error');
+            return;
+          }
+
+          const activeMode = resolveMode(value);
+          let result = '';
+
+          if (activeMode === 'text-to-morse') {
+            result = textToMorse(value);
+            detectedMode.textContent = mode.value === 'auto' ? 'Auto-detected: English → Morse code' : 'Current mode: English → Morse code';
+          } else {
+            result = morseToText(value);
+            detectedMode.textContent = mode.value === 'auto' ? 'Auto-detected: Morse code → English' : 'Current mode: Morse code → English';
+          }
+
+          outputText.value = result;
+          setStatus('Translation Complete');
+          updateCounts();
+          showAlert('Translation successful.', 'success');
+        } catch (err) {
+          outputText.value = '';
+          detectedMode.textContent = 'Input format needs correction.';
+          setStatus('错误');
+          updateCounts();
+          showAlert(err && err.message ? err.message : 'An unknown error occurred. Please check your input.', 'error');
+        }
+      }
+
+      function swapContent() {
+        const out = outputText.value;
+        const input = inputText.value;
+        inputText.value = out;
+        outputText.value = input;
+        if (mode.value === 'text-to-morse') mode.value = 'morse-to-text';
+        else if (mode.value === 'morse-to-text') mode.value = 'text-to-morse';
+        hideAlert();
+        setStatus('已交换');
+        updateCounts();
+        if (inputText.value.trim()) translate();
+      }
+
+      async function copyOutput() {
+        try {
+          if (!outputText.value.trim()) {
+            showAlert('No output result available to copy.', 'error');
+            return;
+          }
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(outputText.value);
+          } else {
+            outputText.focus();
+            outputText.select();
+            const ok = document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+            if (!ok) throw new Error('copy failed');
+          }
+          setStatus('Copied');
+          showAlert('Result copied to clipboard.', 'success');
+        } catch (err) {
+          showAlert('Copy failed. Please manually select the output content and copy it.', 'error');
+        }
+      }
+
+      function getPlayableMorse() {
+        const out = outputText.value.trim();
+        const inp = inputText.value.trim();
+
+        if (isLikelyMorse(out)) return normalizeMorseSymbols(out);
+        if (isLikelyMorse(inp)) return normalizeMorseSymbols(inp);
+
+        if (out) return textToMorse(out);
+        if (inp) return textToMorse(inp);
+        throw new Error('No Morse code available to play. Please enter and translate content first.');
+      }
+
+      function stopPlayback() {
+        if (stopTimer) {
+          clearTimeout(stopTimer);
+          stopTimer = null;
+        }
+        oscillators.forEach(osc => {
+          try { osc.stop(); } catch (e) {}
+          try { osc.disconnect(); } catch (e) {}
+        });
+        gainNodes.forEach(gain => {
+          try { gain.disconnect(); } catch (e) {}
+        });
+        oscillators = [];
+        gainNodes = [];
+        setStatus(outputText.value ? '就绪' : '就绪');
+      }
+
+      async function playMorse() {
+        try {
+          hideAlert();
+          stopPlayback();
+
+          const morse = getPlayableMorse();
+          const unit = Math.max(45, Math.min(180, Number(speed.value) || 80)) / 1000;
+          audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+
+          if (audioCtx.state === 'suspended') {
+            await audioCtx.resume();
+          }
+
+          const now = audioCtx.currentTime + 0.08;
+          let cursor = now;
+          const frequency = 650;
+          const volume = 0.16;
+
+          function beep(start, duration) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = frequency;
+            gain.gain.setValueAtTime(0.0001, start);
+            gain.gain.exponentialRampToValueAtTime(volume, start + 0.01);
+            gain.gain.setValueAtTime(volume, Math.max(start + 0.01, start + duration - 0.02));
+            gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(start);
+            osc.stop(start + duration + 0.03);
+            oscillators.push(osc);
+            gainNodes.push(gain);
+          }
+
+          const normalized = morse.replace(/\s*\/\s*/g, ' / ').replace(/\s+/g, ' ').trim();
+          for (const token of normalized.split(' ')) {
+            if (!token) continue;
+            if (token === '/') {
+              cursor += unit * 4;
+              continue;
+            }
+            for (const symbol of token) {
+              if (symbol === '.') {
+                beep(cursor, unit);
+                cursor += unit * 2;
+              } else if (symbol === '-') {
+                beep(cursor, unit * 3);
+                cursor += unit * 4;
+              }
+            }
+            cursor += unit * 2;
+          }
+
+          const totalMs = Math.max(0, (cursor - audioCtx.currentTime) * 1000 + 150);
+          stopTimer = setTimeout(() => {
+            oscillators = [];
+            gainNodes = [];
+            stopTimer = null;
+            setStatus('Playback complete');
+          }, totalMs);
+
+          setStatus('播放中');
+          showAlert('Playing Morse code audio prompt.', 'info');
+        } catch (err) {
+          setStatus('Playback failed');
+          showAlert(err && err.message ? err.message : 'Playback failed. Please check whether your browser supports the Web Audio API.', 'error');
+        }
+      }
+
+      $('translateBtn').addEventListener('click', translate);
+      $('swapBtn').addEventListener('click', swapContent);
+      $('clearBtn').addEventListener('click', () => {
+        stopPlayback();
+        inputText.value = '';
+        outputText.value = '';
+        detectedMode.textContent = 'Waiting for input.';
+        setStatus('已Clear');
+        updateCounts();
+        hideAlert();
+      });
+      $('sampleBtn').addEventListener('click', () => {
+        stopPlayback();
+        inputText.value = 'HELLO WORLD 2026';
+        mode.value = 'text-to-morse';
+        translate();
+      });
+      $('copyBtn').addEventListener('click', copyOutput);
+      $('playBtn').addEventListener('click', playMorse);
+      $('stopBtn').addEventListener('click', () => {
+        stopPlayback();
+        showAlert('Playback stopped.', 'info');
+      });
+
+      inputText.addEventListener('input', () => {
+        updateCounts();
+        if (!inputText.value.trim()) {
+          outputText.value = '';
+          detectedMode.textContent = 'Waiting for input.';
+          setStatus('就绪');
+          hideAlert();
+          updateCounts();
+        }
+      });
+
+      inputText.addEventListener('keydown', (event) => {
+        if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+          event.preventDefault();
+          translate();
+        }
+      });
+
+      speed.addEventListener('input', () => {
+        speedValue.textContent = `${speed.value} ms / point`;
+      });
+
+      mode.addEventListener('change', () => {
+        hideAlert();
+        if (inputText.value.trim()) translate();
+      });
+
+      window.addEventListener('beforeunload', stopPlayback);
+      updateCounts();
+    })();
+  </script>
+</body>
+</html>

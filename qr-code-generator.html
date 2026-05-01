@@ -4,16 +4,44 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>qr-code-generator 在线二维码生成器</title>
-  <meta name="description" content="qr-code-generator 是一款在线二维码生成器，可在浏览器中将 URL 或文本快速生成二维码，支持尺寸调整、前景色自定义和 PNG 下载。" />
-  <meta name="keywords" content="在线二维码生成器,二维码生成工具,URL生成二维码,文本生成二维码,二维码PNG下载,自定义颜色二维码,qr-code-generator" />
+  <meta name="description" content="在线二维码生成器。利用纯前端库将输入的URL或文本生成二维码，支持调整尺寸和前景色，并可下载为PNG。">
+  <meta name="keywords" content="在线二维码生成器,二维码生成工具,URL生成二维码,文本生成二维码,二维码PNG下载,自定义颜色二维码,qr-code-generator">
   <link rel="icon" type="image/png" href="./assets/logo.png">
   <link rel="apple-touch-icon" href="./assets/logo.png">
   <meta property="og:image" content="./assets/logo.png">
   <meta name="twitter:image" content="./assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/qr-code-generator.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/qr-code-generator.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/qr-code-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/qr-code-generator.html">
+  <script src="./theme-toggle.js" defer></script>
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100">
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="./qr-code-generator.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
+        <a href="./en/qr-code-generator.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="切换主题" title="切换主题">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
   <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
     <div class="absolute inset-0 opacity-30">
       <div class="absolute left-1/4 top-10 h-48 w-48 rounded-full bg-cyan-500 blur-3xl"></div>
@@ -23,8 +51,8 @@
       <div class="inline-flex items-center rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-1 text-sm text-cyan-100 shadow-lg shadow-cyan-950/40">
         纯前端 · 隐私安全 · PNG 下载
       </div>
-      <h1 class="mt-5 text-4xl font-black tracking-tight text-white sm:text-5xl md:text-6xl">在线二维码生成器</h1>
-      <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
+      <h1 class="mt-5 text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl">在线二维码生成器</h1>
+      <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
         在线二维码生成器：输入 URL 或任意文本，即可快速生成可下载的高清二维码。
       </p>
     </div>
@@ -32,17 +60,17 @@
 
   <main class="mx-auto max-w-6xl px-5 py-8 sm:py-12">
     <section class="grid gap-6 lg:grid-cols-2">
-      <div class="rounded-3xl border border-slate-700/70 bg-slate-900/80 p-5 shadow-2xl shadow-black/30 backdrop-blur sm:p-7">
+      <div class="rounded-3xl border border-slate-200 dark:border-slate-700/70 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-black/30 backdrop-blur sm:p-7">
         <div class="mb-6 flex items-center justify-between gap-4">
           <div>
-            <h2 class="text-xl font-bold text-white">输入设置</h2>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入设置</h2>
             <p class="mt-1 text-sm text-slate-400">填写内容并调整二维码外观参数</p>
           </div>
           <span class="rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-200 ring-1 ring-cyan-300/20">INPUT</span>
         </div>
 
-        <label for="qrText" class="mb-2 block text-sm font-semibold text-slate-200">URL 或文本内容</label>
-        <textarea id="qrText" rows="7" class="w-full resize-y rounded-2xl border border-slate-700 bg-slate-950/80 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="例如：https://example.com 或需要生成二维码的文本">https://example.com</textarea>
+        <label for="qrText" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">URL 或文本内容</label>
+        <textarea id="qrText" rows="7" class="w-full resize-y rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/80 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="例如：https://example.com 或需要生成二维码的文本">https://example.com</textarea>
         <div class="mt-2 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
           <span id="byteInfo">0 bytes</span>
           <span>建议输入简短 URL 或文本，过长内容会降低识别效率</span>
@@ -50,7 +78,7 @@
 
         <div class="mt-6 grid gap-5 sm:grid-cols-2">
           <div>
-            <label for="qrSize" class="mb-2 block text-sm font-semibold text-slate-200">图片尺寸</label>
+            <label for="qrSize" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">图片尺寸</label>
             <div class="rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
               <input id="qrSize" type="range" min="128" max="1024" step="16" value="384" class="w-full accent-cyan-400" />
               <div class="mt-3 flex items-center justify-between text-sm">
@@ -62,10 +90,10 @@
           </div>
 
           <div>
-            <label for="qrColor" class="mb-2 block text-sm font-semibold text-slate-200">前景色</label>
+            <label for="qrColor" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">前景色</label>
             <div class="flex items-center gap-3 rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
               <input id="qrColor" type="color" value="#0f172a" class="h-12 w-16 cursor-pointer rounded-xl border border-slate-600 bg-transparent p-1" />
-              <input id="colorText" type="text" value="#0f172a" class="min-w-0 flex-1 rounded-xl border border-slate-700 bg-slate-900 px-3 py-3 text-sm text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
+              <input id="colorText" type="text" value="#0f172a" class="min-w-0 flex-1 rounded-xl border border-slate-700 bg-slate-100 dark:bg-slate-900 px-3 py-3 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
             </div>
           </div>
         </div>
@@ -73,42 +101,42 @@
         <div id="errorBox" class="mt-5 hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200"></div>
 
         <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-          <button id="generateBtn" class="inline-flex flex-1 items-center justify-center rounded-2xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98]">
+          <button id="generateBtn" class="inline-flex flex-1 items-center justify-center rounded-2xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98]">
             生成二维码
           </button>
-          <button id="clearBtn" class="inline-flex items-center justify-center rounded-2xl border border-slate-700 bg-slate-800 px-5 py-3 font-bold text-slate-200 transition hover:bg-slate-700 active:scale-[0.98]">
+          <button id="clearBtn" class="inline-flex items-center justify-center rounded-2xl border border-slate-700 bg-slate-50 dark:bg-slate-800 px-5 py-3 font-bold text-slate-800 dark:text-slate-200 transition hover:bg-slate-700 active:scale-[0.98]">
             清空
           </button>
         </div>
       </div>
 
-      <div class="rounded-3xl border border-cyan-300/20 bg-cyan-50 p-5 text-slate-950 shadow-2xl shadow-cyan-950/20 sm:p-7">
+      <div class="rounded-3xl border border-cyan-300/20 bg-cyan-50 p-5 text-slate-950 dark:text-slate-100 shadow-2xl shadow-cyan-950/20 sm:p-7">
         <div class="mb-6 flex items-center justify-between gap-4">
           <div>
-            <h2 class="text-xl font-bold text-slate-950">输出预览</h2>
-            <p class="mt-1 text-sm text-slate-600">生成结果会显示在下方，可直接下载 PNG</p>
+            <h2 class="text-xl font-bold text-slate-950 dark:text-slate-100">输出预览</h2>
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">生成结果会显示在下方，可直接下载 PNG</p>
           </div>
-          <span class="rounded-full bg-slate-950 px-3 py-1 text-xs font-semibold text-cyan-100">OUTPUT</span>
+          <span class="rounded-full bg-white dark:bg-slate-950 px-3 py-1 text-xs font-semibold text-cyan-100">OUTPUT</span>
         </div>
 
-        <div class="flex min-h-[360px] items-center justify-center rounded-3xl border border-slate-200 bg-white p-5 shadow-inner">
+        <div class="flex min-h-[360px] items-center justify-center rounded-3xl border border-slate-200 dark:border-white/10 bg-white p-5 shadow-inner">
           <canvas id="qrCanvas" class="max-w-full rounded-2xl"></canvas>
         </div>
 
         <div class="mt-5 grid gap-3 sm:grid-cols-2">
-          <button id="downloadBtn" class="inline-flex items-center justify-center rounded-2xl bg-slate-950 px-5 py-3 font-bold text-white shadow-lg shadow-slate-950/20 transition hover:bg-slate-800 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50">
+          <button id="downloadBtn" class="inline-flex items-center justify-center rounded-2xl bg-white dark:bg-slate-950 px-5 py-3 font-bold text-gray-900 dark:text-white shadow-lg shadow-slate-950/20 transition hover:bg-slate-800 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50">
             下载 PNG
           </button>
-          <button id="copyBtn" class="inline-flex items-center justify-center rounded-2xl border border-slate-300 bg-white px-5 py-3 font-bold text-slate-900 transition hover:bg-slate-100 active:scale-[0.98]">
+          <button id="copyBtn" class="inline-flex items-center justify-center rounded-2xl border border-slate-300 bg-white px-5 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-100 active:scale-[0.98]">
             复制图片
           </button>
         </div>
-        <p id="statusText" class="mt-4 text-center text-sm font-medium text-slate-600">二维码已就绪</p>
+        <p id="statusText" class="mt-4 text-center text-sm font-medium text-slate-600 dark:text-slate-400">二维码已就绪</p>
       </div>
     </section>
 
-    <article class="mt-10 rounded-3xl border border-slate-700/70 bg-slate-900/70 p-6 leading-8 text-slate-300 shadow-xl shadow-black/20 sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-white">在线二维码生成器，让链接与文本分享更高效</h2>
+    <article class="mt-10 rounded-3xl border border-slate-200 dark:border-slate-700/70 bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl shadow-black/20 sm:p-8">
+      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">在线二维码生成器，让链接与文本分享更高效</h2>
       <p>
         qr-code-generator 是一款无需安装软件的在线二维码生成器，适合将网站链接、活动页面、联系方式、产品说明或普通文本快速转换为可扫描的二维码。所有生成过程均在浏览器本地完成，输入内容不会上传到服务器，更适合重视隐私与效率的用户。使用时，只需在输入框中粘贴 URL 或文本，按需调整二维码尺寸与前景色，点击“生成二维码”即可实时预览结果，并支持一键下载 PNG 图片。对于需要制作宣传海报、名片、门店物料、社交媒体图片的运营人员和设计师，这个自定义颜色二维码生成工具可以显著减少沟通成本。通过“URL 生成二维码”“文本生成二维码”“二维码 PNG 下载”等功能，你可以快速获得清晰、易识别、便于传播的二维码素材。
       </p>
@@ -559,246 +587,5 @@
       generate();
     })();
   </script>
-
-  <!-- micro-tools-i18n:start -->
-  <script>
-(() => {
-  'use strict';
-  const STORAGE_KEY = 'microToolsLanguage';
-  const PAGE_SLUG = "qr-code-generator";
-  const TRANSLATIONS = {"生成二维码时发生未知错误，请检查输入后重试。":"An unknown error occurred while generating the QR code. Please check your input and try again.","当前纯前端版本支持最多约 108 bytes 内容，请缩短文本或使用短链接后再生成。":"The current frontend-only version supports up to about 108 bytes of content. Please shorten the text or use a short link before generating.","二维码已生成，可下载 PNG":"QR code generated. PNG is ready to download.","输入内容过长，请缩短文本或使用短链接后再试。":"The input is too long. Please shorten the text or use a short link and try again.","PNG 图片已开始下载":"PNG image download started","输出预览":"Output preview","二维码图片已复制到剪贴板":"QR code image copied to clipboard","在线二维码生成器，让链接与文本分享更高效":"Online QR Code Generator for Easier Link and Text Sharing","当前浏览器不支持直接复制图片，请使用下载 PNG 功能。":"This browser does not support copying images directly. Please use Download PNG.","URL 或文本内容":"URL or text content","二维码已就绪":"QR code is ready","qr-code-generator 是一款无需安装软件的在线二维码生成器，适合将网站链接、活动页面、联系方式、产品说明或普通文本快速转换为可扫描的二维码。所有生成过程均在浏览器本地完成，输入内容不会上传到服务器，更适合重视隐私与效率的用户。使用时，只需在输入框中粘贴 URL 或文本，按需调整二维码尺寸与前景色，点击“生成二维码”即可实时预览结果，并支持一键下载 PNG 图片。对于需要制作宣传海报、名片、门店物料、社交媒体图片的运营人员和设计师，这个自定义颜色二维码生成工具可以显著减少沟通成本。通过“URL 生成二维码”“文本生成二维码”“二维码 PNG 下载”等功能，你可以快速获得清晰、易识别、便于传播的二维码素材。":"qr-code-generator is an online QR code generator that requires no software installation, ideal for quickly converting website links, event pages, contact information, product descriptions, or plain text into scannable QR codes. All generation happens locally in the browser, and input content is not uploaded to a server, making it better for users who value privacy and efficiency. To use it, paste a URL or text into the input box, adjust the QR code size and foreground color as needed, then click “Generate QR Code” to preview the result in real time and download a PNG image with one click. For operators and designers creating posters, business cards, store materials, or social media images, this custom-color QR code generator can greatly reduce communication costs. With features such as “URL to QR code”, “text to QR code”, and “QR code PNG download”, you can quickly get clear, recognizable, and easy-to-share QR code assets.","生成二维码":"Generate QR code","前景色格式不正确，请使用类似 #0f172a 的 6 位十六进制颜色。":"Invalid foreground color format. Use a 6-digit hexadecimal color like #0f172a.","前景色":"Foreground color","生成失败，请检查输入":"Generation failed. Please check your input.","纯前端 · 隐私安全 · PNG 下载":"Pure frontend · Privacy-safe · PNG download","例如：https://example.com 或需要生成二维码的文本":"Example: https://example.com or the text to generate a QR code for","请输入 URL 或文本内容，不能为空。":"Please enter a URL or text content. It cannot be empty.","生成结果会显示在下方，可直接下载 PNG":"The generated result will appear below and can be downloaded directly as PNG.","请先成功生成二维码后再下载。":"Please generate a QR code successfully before downloading.","建议输入简短 URL 或文本，过长内容会降低识别效率":"Use a short URL or text. Overly long content reduces recognition efficiency.","下载 PNG":"Download PNG","请先成功生成二维码后再复制图片。":"Please generate a QR code successfully before copying the image.","图片数据生成失败，请重试。":"Failed to generate image data. Please try again.","输入设置":"Input Settings","复制失败，请使用下载 PNG 功能。":"Copy failed. Please use the Download PNG feature.","清空":"Clear","请输入需要生成二维码的 URL 或文本内容。":"Please enter the URL or text content to generate a QR code.","在线二维码生成器,二维码生成工具,URL生成二维码,文本生成二维码,二维码PNG下载,自定义颜色二维码,qr-code-generator":"online QR code generator,QR code generator tool,URL to QR code,text to QR code,QR code PNG download,custom color QR code,qr-code-generator","填写内容并调整二维码外观参数":"Enter content and adjust QR code appearance settings","图片尺寸":"Image dimensions","qr-code-generator 在线二维码生成器":"qr-code-generator Online QR Code Generator","复制图片":"Copy Image","内容已清空，请输入文本后生成":"Content is empty. Please enter text before generating.","在线二维码生成器：输入 URL 或任意文本，即可快速生成可下载的高清二维码。":"Online QR code generator: enter a URL or any text to quickly generate a downloadable high-resolution QR code.","下载失败，请确认浏览器允许保存图片。":"Download failed. Please confirm that your browser allows saving images.","qr-code-generator 是一款在线二维码生成器，可在浏览器中将 URL 或文本快速生成二维码，支持尺寸调整、前景色自定义和 PNG 下载。":"qr-code-generator is an online QR code generator that quickly creates QR codes from URLs or text in the browser, supporting size adjustment, foreground color customization, and PNG download.","图片尺寸必须在 128px 到 1024px 之间。":"Image dimensions must be between 128px and 1024px.","在线二维码生成器":"QR Code Generator","在线二维码生成器。利用纯前端库将输入的URL或文本生成二维码，支持调整尺寸和前景色，并可下载为PNG。":"Online QR code generator. Use a pure frontend library to generate a QR code from a URL or text, adjust size and foreground color, and download as PNG."};
-  const TOOL_DATA = {"qr-code-generator":{"zhName":"在线二维码生成器","enName":"QR Code Generator","zhDescription":"在线二维码生成器。利用纯前端库将输入的URL或文本生成二维码，支持调整尺寸和前景色，并可下载为PNG。","enDescription":"Online QR code generator. Use a pure frontend library to generate a QR code from a URL or text, adjust size and foreground color, and download as PNG.","zhTitle":"qr-code-generator 在线二维码生成器","enTitle":"QR Code Generator | Free Online Tool","zhKeywords":"在线二维码生成器,二维码生成工具,URL生成二维码,文本生成二维码,二维码PNG下载,自定义颜色二维码,qr-code-generator","enKeywords":"QR Code Generator, online tool, browser tool, productivity tool"}};
-  const CURRENT_TOOL = {"zhName":"在线二维码生成器","enName":"QR Code Generator","zhDescription":"在线二维码生成器。利用纯前端库将输入的URL或文本生成二维码，支持调整尺寸和前景色，并可下载为PNG。","enDescription":"Online QR code generator. Use a pure frontend library to generate a QR code from a URL or text, adjust size and foreground color, and download as PNG.","zhTitle":"qr-code-generator 在线二维码生成器","enTitle":"QR Code Generator | Free Online Tool","zhKeywords":"在线二维码生成器,二维码生成工具,URL生成二维码,文本生成二维码,二维码PNG下载,自定义颜色二维码,qr-code-generator","enKeywords":"QR Code Generator, online tool, browser tool, productivity tool"};
-  const ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
-  const ZH_RE = /[\u4e00-\u9fff]/;
-  const originalText = new WeakMap();
-  const originalAttrs = new WeakMap();
-  let observer = null;
-
-  function normalize(value) {
-    return String(value || '').replace(/\s+/g, ' ').trim();
-  }
-
-  function hasChinese(value) {
-    return ZH_RE.test(String(value || ''));
-  }
-
-  function language() {
-    return localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'zh';
-  }
-
-  function translateExact(value, lang) {
-    const text = String(value || '');
-    if (lang === 'zh' || !text) return text;
-    if (TRANSLATIONS[text]) return TRANSLATIONS[text];
-    const normalized = normalize(text);
-    if (TRANSLATIONS[normalized]) return TRANSLATIONS[normalized];
-
-    const dynamic = [
-      [/^(\d+)\s*个字符$/u, '$1 characters'],
-      [/^(\d+)\s*字符$/u, '$1 characters'],
-      [/^(\d+)\s*字$/u, '$1 characters'],
-      [/^(\d+)\s*行$/u, '$1 rows'],
-      [/^(\d+)\s*列$/u, '$1 columns'],
-      [/^(\d+)\s*项$/u, '$1 items'],
-      [/^(\d+)\s*次$/u, '$1 times'],
-      [/^当前显示\s*(\d+)\s*\/\s*(\d+)$/u, 'Showing $1 / $2'],
-      [/^第\s*(\d+)\s*行第\s*(\d+)\s*列/u, 'line $1, column $2']
-    ];
-    for (const [pattern, replacement] of dynamic) {
-      if (pattern.test(normalized)) return normalized.replace(pattern, replacement);
-    }
-    return text;
-  }
-
-  function translateWithSpacing(value, lang) {
-    const text = String(value || '');
-    if (!text.trim()) return text;
-    const leading = text.match(/^\s*/)[0];
-    const trailing = text.match(/\s*$/)[0];
-    const core = text.slice(leading.length, text.length - trailing.length);
-    return leading + translateExact(core, lang) + trailing;
-  }
-
-  function skipped(node) {
-    const parent = node.parentElement;
-    return !parent || Boolean(parent.closest('script, style, code, pre, textarea, [data-i18n-ignore]'));
-  }
-
-  function translateNode(node, lang) {
-    if (skipped(node) || !node.nodeValue.trim()) return;
-    const current = node.nodeValue;
-    let original = originalText.get(node);
-    const originalEnglish = original ? translateWithSpacing(original, 'en') : '';
-    if (!original || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
-      original = current;
-      originalText.set(node, original);
-    }
-    node.nodeValue = lang === 'zh' ? (original || current) : translateWithSpacing(original || current, lang);
-  }
-
-  function translateAttrs(element, lang) {
-    if (element.closest('script, style, [data-i18n-ignore]')) return;
-    let store = originalAttrs.get(element);
-    if (!store) {
-      store = {};
-      originalAttrs.set(element, store);
-    }
-    ATTRS.forEach((attr) => {
-      if (!element.hasAttribute(attr)) return;
-      const current = element.getAttribute(attr);
-      const originalEnglish = store[attr] ? translateExact(store[attr], 'en') : '';
-      if (!store[attr] || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
-        store[attr] = current;
-      }
-      element.setAttribute(attr, lang === 'zh' ? store[attr] : translateExact(store[attr] || current, lang));
-    });
-  }
-
-  function walk(root, lang) {
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    const nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-    nodes.forEach((node) => translateNode(node, lang));
-
-    const elementRoot = root.nodeType === Node.ELEMENT_NODE ? root : document.body;
-    if (!elementRoot) return;
-    translateAttrs(elementRoot, lang);
-    elementRoot.querySelectorAll('*').forEach((element) => translateAttrs(element, lang));
-  }
-
-  function setMeta(name, value) {
-    if (!value) return;
-    let meta = document.querySelector(`meta[name="${name}"]`);
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.setAttribute('name', name);
-      document.head.appendChild(meta);
-    }
-    meta.setAttribute('content', value);
-  }
-
-  function applyMetadata(lang) {
-    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-    if (PAGE_SLUG === 'index') {
-      document.title = lang === 'zh'
-        ? '免费在线开发者工具箱 | 纯前端工具集合'
-        : 'Free Online Developer Toolbox | Pure Front-End Tools';
-      setMeta('description', lang === 'zh'
-        ? '免费在线开发者工具箱，汇集 JSON、CSV、LaTeX、Base64、正则、时间戳、二维码、颜色转换等纯前端微型工具，隐私友好、无需安装、极速加载。'
-        : 'A free online developer toolbox with pure front-end tools for JSON, CSV, LaTeX, Base64, regex, timestamps, QR codes, color conversion, and daily productivity.');
-      setMeta('keywords', lang === 'zh'
-        ? '免费在线开发者工具箱, 纯前端工具集合, 在线 JSON 工具, 在线编码转换工具, 生产力工具箱, 微型 Web 工具'
-        : 'free online developer tools, front-end tools, JSON tools, encoding tools, productivity toolbox, micro web tools');
-      return;
-    }
-    if (!CURRENT_TOOL || !CURRENT_TOOL.zhName) return;
-    document.title = lang === 'zh' ? CURRENT_TOOL.zhTitle : CURRENT_TOOL.enTitle;
-    setMeta('description', lang === 'zh' ? CURRENT_TOOL.zhDescription : CURRENT_TOOL.enDescription);
-    setMeta('keywords', lang === 'zh' ? CURRENT_TOOL.zhKeywords : CURRENT_TOOL.enKeywords);
-    const h1 = document.querySelector('h1');
-    if (h1) h1.textContent = lang === 'zh' ? CURRENT_TOOL.zhName : CURRENT_TOOL.enName;
-  }
-
-  function updateIndexCards(lang) {
-    if (PAGE_SLUG !== 'index') return;
-    document.querySelectorAll('a[href$=".html"]').forEach((card) => {
-      const slug = (card.getAttribute('href') || '').split('/').pop().replace(/\.html$/i, '');
-      const tool = TOOL_DATA[slug];
-      if (!tool) return;
-      const title = card.querySelector('h3');
-      const description = card.querySelector('p');
-      const action = card.querySelector('span:last-child');
-      if (title) title.textContent = lang === 'zh' ? tool.zhName : tool.enName;
-      if (description) description.textContent = lang === 'zh' ? tool.zhDescription : tool.enDescription;
-      if (action) action.textContent = lang === 'zh' ? '立即使用' : 'Open Tool';
-      card.dataset.search = normalize(`${slug} ${tool.zhName} ${tool.enName} ${tool.zhDescription} ${tool.enDescription}`).toLowerCase().replace(/[-_\s]+/g, '');
-    });
-    const search = document.getElementById('searchInput');
-    if (search) search.dispatchEvent(new Event('input', { bubbles: true }));
-  }
-
-  function ensureToggle(lang) {
-    let toggle = document.getElementById('microToolsLanguageToggle');
-    if (!toggle) {
-      toggle = document.createElement('div');
-      toggle.id = 'microToolsLanguageToggle';
-      toggle.setAttribute('data-i18n-ignore', 'true');
-      toggle.className = 'fixed right-4 top-4 z-50 flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/90 p-1 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur';
-      toggle.innerHTML = '<span data-language-label class="px-2 text-xs text-slate-300">语言</span><button type="button" data-lang-option="zh" class="rounded-full px-3 py-1.5 transition">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-1.5 transition">EN</button>';
-      document.body.appendChild(toggle);
-      toggle.addEventListener('click', (event) => {
-        const button = event.target.closest('[data-lang-option]');
-        if (!button) return;
-        localStorage.setItem(STORAGE_KEY, button.getAttribute('data-lang-option') === 'en' ? 'en' : 'zh');
-        applyLanguage(language());
-      });
-    }
-    toggle.querySelector('[data-language-label]').textContent = lang === 'zh' ? '语言' : 'Language';
-    toggle.querySelectorAll('[data-lang-option]').forEach((button) => {
-      const active = button.getAttribute('data-lang-option') === lang;
-      button.className = active
-        ? 'rounded-full bg-cyan-400 px-3 py-1.5 text-slate-950 transition'
-        : 'rounded-full px-3 py-1.5 text-slate-200 transition hover:bg-white/10';
-    });
-  }
-
-  function disconnect() {
-    if (observer) observer.disconnect();
-  }
-
-  function observe() {
-    if (!observer) {
-      observer = new MutationObserver(() => {
-        if (language() !== 'en') return;
-        disconnect();
-        applyLanguage('en');
-        observe();
-      });
-    }
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributes: true,
-      attributeFilter: ATTRS
-    });
-  }
-
-  function applyLanguage(lang) {
-    const next = lang === 'en' ? 'en' : 'zh';
-    disconnect();
-    ensureToggle(next);
-    applyMetadata(next);
-    walk(document.body, next);
-    updateIndexCards(next);
-    ensureToggle(next);
-    observe();
-  }
-
-  function init() {
-    applyLanguage(language());
-    window.addEventListener('storage', (event) => {
-      if (event.key === STORAGE_KEY) applyLanguage(language());
-    });
-  }
-
-  window.MicroToolsI18n = {
-    getLanguage: language,
-    setLanguage(value) {
-      localStorage.setItem(STORAGE_KEY, value === 'en' ? 'en' : 'zh');
-      applyLanguage(language());
-    },
-    applyLanguage
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
-  </script>
-  <!-- micro-tools-i18n:end -->
 </body>
 </html>

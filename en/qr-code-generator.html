@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Code Generator | Free Online Tool</title>
+  <meta name="description" content="Online QR code generator. Use a pure frontend library to generate a QR code from a URL or text, adjust size and foreground color, and download as PNG.">
+  <meta name="keywords" content="QR Code Generator, online tool, browser tool, productivity tool">
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+  <meta property="og:image" content="../assets/logo.png">
+  <meta name="twitter:image" content="../assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/en/qr-code-generator.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/qr-code-generator.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/qr-code-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/qr-code-generator.html">
+  <script src="./theme-toggle.js" defer></script>
+</head>
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="../qr-code-generator.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./qr-code-generator.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
+  <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
+    <div class="absolute inset-0 opacity-30">
+      <div class="absolute left-1/4 top-10 h-48 w-48 rounded-full bg-cyan-500 blur-3xl"></div>
+      <div class="absolute right-1/4 bottom-0 h-56 w-56 rounded-full bg-blue-600 blur-3xl"></div>
+    </div>
+    <div class="relative mx-auto max-w-6xl px-5 py-12 sm:py-16">
+      <div class="inline-flex items-center rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-1 text-sm text-cyan-100 shadow-lg shadow-cyan-950/40">
+        Pure frontend · Privacy-safe · PNG download
+      </div>
+      <h1 class="mt-5 text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl">QR Code Generator</h1>
+      <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
+        Online QR code generator: enter a URL or any text to quickly generate a downloadable high-resolution QR code.
+      </p>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-5 py-8 sm:py-12">
+    <section class="grid gap-6 lg:grid-cols-2">
+      <div class="rounded-3xl border border-slate-200 dark:border-slate-700/70 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-black/30 backdrop-blur sm:p-7">
+        <div class="mb-6 flex items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Input Settings</h2>
+            <p class="mt-1 text-sm text-slate-400">Enter content and adjust QR code appearance settings</p>
+          </div>
+          <span class="rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-200 ring-1 ring-cyan-300/20">INPUT</span>
+        </div>
+
+        <label for="qrText" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">URL or text content</label>
+        <textarea id="qrText" rows="7" class="w-full resize-y rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/80 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="Example: https://example.com or the text to generate a QR code for">https://example.com</textarea>
+        <div class="mt-2 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
+          <span id="byteInfo">0 bytes</span>
+          <span>Use a short URL or text. Overly long content reduces recognition efficiency.</span>
+        </div>
+
+        <div class="mt-6 grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="qrSize" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Image dimensions</label>
+            <div class="rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
+              <input id="qrSize" type="range" min="128" max="1024" step="16" value="384" class="w-full accent-cyan-400" />
+              <div class="mt-3 flex items-center justify-between text-sm">
+                <span class="text-slate-400">128px</span>
+                <strong id="sizeLabel" class="text-cyan-200">384px</strong>
+                <span class="text-slate-400">1024px</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label for="qrColor" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Foreground color</label>
+            <div class="flex items-center gap-3 rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
+              <input id="qrColor" type="color" value="#0f172a" class="h-12 w-16 cursor-pointer rounded-xl border border-slate-600 bg-transparent p-1" />
+              <input id="colorText" type="text" value="#0f172a" class="min-w-0 flex-1 rounded-xl border border-slate-700 bg-slate-100 dark:bg-slate-900 px-3 py-3 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
+            </div>
+          </div>
+        </div>
+
+        <div id="errorBox" class="mt-5 hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200"></div>
+
+        <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+          <button id="generateBtn" class="inline-flex flex-1 items-center justify-center rounded-2xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98]">
+            Generate QR code
+          </button>
+          <button id="clearBtn" class="inline-flex items-center justify-center rounded-2xl border border-slate-700 bg-slate-50 dark:bg-slate-800 px-5 py-3 font-bold text-slate-800 dark:text-slate-200 transition hover:bg-slate-700 active:scale-[0.98]">
+            Clear
+          </button>
+        </div>
+      </div>
+
+      <div class="rounded-3xl border border-cyan-300/20 bg-cyan-50 p-5 text-slate-950 dark:text-slate-100 shadow-2xl shadow-cyan-950/20 sm:p-7">
+        <div class="mb-6 flex items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-bold text-slate-950 dark:text-slate-100">Output preview</h2>
+            <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">The generated result will appear below and can be downloaded directly as PNG.</p>
+          </div>
+          <span class="rounded-full bg-white dark:bg-slate-950 px-3 py-1 text-xs font-semibold text-cyan-100">OUTPUT</span>
+        </div>
+
+        <div class="flex min-h-[360px] items-center justify-center rounded-3xl border border-slate-200 dark:border-white/10 bg-white p-5 shadow-inner">
+          <canvas id="qrCanvas" class="max-w-full rounded-2xl"></canvas>
+        </div>
+
+        <div class="mt-5 grid gap-3 sm:grid-cols-2">
+          <button id="downloadBtn" class="inline-flex items-center justify-center rounded-2xl bg-white dark:bg-slate-950 px-5 py-3 font-bold text-gray-900 dark:text-white shadow-lg shadow-slate-950/20 transition hover:bg-slate-800 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50">
+            Download PNG
+          </button>
+          <button id="copyBtn" class="inline-flex items-center justify-center rounded-2xl border border-slate-300 bg-white px-5 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-100 active:scale-[0.98]">
+            Copy Image
+          </button>
+        </div>
+        <p id="statusText" class="mt-4 text-center text-sm font-medium text-slate-600 dark:text-slate-400">QR code is ready</p>
+      </div>
+    </section>
+
+    <article class="mt-10 rounded-3xl border border-slate-200 dark:border-slate-700/70 bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl shadow-black/20 sm:p-8">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About QR Code Generator</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Online QR code generator. Use a pure frontend library to generate a QR code from a URL or text, adjust size and foreground color, and download as PNG. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use QR Code Generator for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+    </article>
+  </main>
+
+  <footer class="border-t border-slate-800 px-5 py-8 text-center text-sm text-slate-500">
+    <p>© <span id="year"></span> qr-code-generator. Built with native HTML, JavaScript and Tailwind CSS.</p>
+  </footer>
+
+  <script>
+    (() => {
+      const textEl = document.getElementById('qrText');
+      const sizeEl = document.getElementById('qrSize');
+      const sizeLabel = document.getElementById('sizeLabel');
+      const colorEl = document.getElementById('qrColor');
+      const colorTextEl = document.getElementById('colorText');
+      const canvas = document.getElementById('qrCanvas');
+      const ctx = canvas.getContext('2d');
+      const errorBox = document.getElementById('errorBox');
+      const generateBtn = document.getElementById('generateBtn');
+      const downloadBtn = document.getElementById('downloadBtn');
+      const clearBtn = document.getElementById('clearBtn');
+      const copyBtn = document.getElementById('copyBtn');
+      const statusText = document.getElementById('statusText');
+      const byteInfo = document.getElementById('byteInfo');
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      const VERSION_INFO = {
+        1: { data: 19, ecc: 7, align: [] },
+        2: { data: 34, ecc: 10, align: [6, 18] },
+        3: { data: 55, ecc: 15, align: [6, 22] },
+        4: { data: 80, ecc: 20, align: [6, 26] },
+        5: { data: 108, ecc: 26, align: [6, 30] }
+      };
+
+      const encoder = new TextEncoder();
+      let currentValid = false;
+
+      function showError(message) {
+        errorBox.textContent = message;
+        errorBox.classList.remove('hidden');
+        statusText.textContent = 'Generation failed. Please check your input.';
+        statusText.className = 'mt-4 text-center text-sm font-medium text-red-600';
+        currentValid = false;
+        downloadBtn.disabled = true;
+      }
+
+      function hideError() {
+        errorBox.classList.add('hidden');
+        errorBox.textContent = '';
+      }
+
+      function setStatus(message, ok = true) {
+        statusText.textContent = message;
+        statusText.className = ok
+          ? 'mt-4 text-center text-sm font-medium text-slate-600'
+          : 'mt-4 text-center text-sm font-medium text-red-600';
+      }
+
+      function isHexColor(value) {
+        return /^#[0-9a-fA-F]{6}$/.test(String(value).trim());
+      }
+
+      function updateByteInfo() {
+        try {
+          const bytes = encoder.encode(textEl.value || '');
+          byteInfo.textContent = `${bytes.length} bytes`;
+        } catch {
+          byteInfo.textContent = '0 bytes';
+        }
+      }
+
+      function gfTables() {
+        const exp = new Array(512);
+        const log = new Array(256);
+        let x = 1;
+        for (let i = 0; i < 255; i++) {
+          exp[i] = x;
+          log[x] = i;
+          x <<= 1;
+          if (x & 0x100) x ^= 0x11d;
+        }
+        for (let i = 255; i < 512; i++) exp[i] = exp[i - 255];
+        return { exp, log };
+      }
+
+      const GF = gfTables();
+
+      function gfMul(a, b) {
+        if (a === 0 || b === 0) return 0;
+        return GF.exp[GF.log[a] + GF.log[b]];
+      }
+
+      function rsGenerator(degree) {
+        let poly = [1];
+        for (let i = 0; i < degree; i++) {
+          const next = new Array(poly.length + 1).fill(0);
+          for (let j = 0; j < poly.length; j++) {
+            next[j] ^= gfMul(poly[j], GF.exp[i]);
+            next[j + 1] ^= poly[j];
+          }
+          poly = next;
+        }
+        return poly;
+      }
+
+      function rsRemainder(data, degree) {
+        const gen = rsGenerator(degree);
+        const rem = new Array(degree).fill(0);
+        for (const b of data) {
+          const factor = b ^ rem.shift();
+          rem.push(0);
+          for (let i = 0; i < degree; i++) {
+            rem[i] ^= gfMul(gen[i], factor);
+          }
+        }
+        return rem;
+      }
+
+      function appendBits(arr, value, length) {
+        for (let i = length - 1; i >= 0; i--) arr.push((value >>> i) & 1);
+      }
+
+      function chooseVersion(byteLength) {
+        for (let v = 1; v <= 5; v++) {
+          const capacityBits = VERSION_INFO[v].data * 8;
+          const required = 4 + 8 + byteLength * 8;
+          if (required <= capacityBits) return v;
+        }
+        return null;
+      }
+
+      function createMatrix(size) {
+        return {
+          modules: Array.from({ length: size }, () => Array(size).fill(false)),
+          func: Array.from({ length: size }, () => Array(size).fill(false))
+        };
+      }
+
+      function setFunction(qr, r, c, dark) {
+        const size = qr.modules.length;
+        if (r < 0 || c < 0 || r >= size || c >= size) return;
+        qr.modules[r][c] = !!dark;
+        qr.func[r][c] = true;
+      }
+
+      function drawFinder(qr, r, c) {
+        for (let dy = -1; dy <= 7; dy++) {
+          for (let dx = -1; dx <= 7; dx++) {
+            const rr = r + dy, cc = c + dx;
+            const inCore = dx >= 0 && dx <= 6 && dy >= 0 && dy <= 6;
+            const dark = inCore && (dx === 0 || dx === 6 || dy === 0 || dy === 6 || (dx >= 2 && dx <= 4 && dy >= 2 && dy <= 4));
+            setFunction(qr, rr, cc, dark);
+          }
+        }
+      }
+
+      function drawAlignment(qr, centerR, centerC) {
+        for (let dy = -2; dy <= 2; dy++) {
+          for (let dx = -2; dx <= 2; dx++) {
+            const dist = Math.max(Math.abs(dx), Math.abs(dy));
+            setFunction(qr, centerR + dy, centerC + dx, dist === 2 || dist === 0);
+          }
+        }
+      }
+
+      function drawFunctionPatterns(qr, version) {
+        const size = qr.modules.length;
+        drawFinder(qr, 0, 0);
+        drawFinder(qr, 0, size - 7);
+        drawFinder(qr, size - 7, 0);
+
+        for (let i = 8; i < size - 8; i++) {
+          setFunction(qr, 6, i, i % 2 === 0);
+          setFunction(qr, i, 6, i % 2 === 0);
+        }
+
+        const positions = VERSION_INFO[version].align;
+        for (const r of positions) {
+          for (const c of positions) {
+            if ((r <= 8 && c <= 8) || (r <= 8 && c >= size - 9) || (r >= size - 9 && c <= 8)) continue;
+            drawAlignment(qr, r, c);
+          }
+        }
+
+        for (let i = 0; i < 9; i++) {
+          if (i !== 6) {
+            setFunction(qr, 8, i, false);
+            setFunction(qr, i, 8, false);
+          }
+        }
+        for (let i = 0; i < 8; i++) {
+          setFunction(qr, 8, size - 1 - i, false);
+          setFunction(qr, size - 1 - i, 8, false);
+        }
+        setFunction(qr, 4 * version + 9, 8, true);
+      }
+
+      function getFormatBits(mask) {
+        const eccLevelBits = 1;
+        let data = (eccLevelBits << 3) | mask;
+        let rem = data << 10;
+        const generator = 0x537;
+        for (let i = 14; i >= 10; i--) {
+          if ((rem >>> i) & 1) rem ^= generator << (i - 10);
+        }
+        return ((data << 10) | rem) ^ 0x5412;
+      }
+
+      function drawFormatBits(qr, mask) {
+        const size = qr.modules.length;
+        const bits = getFormatBits(mask);
+        const bit = i => ((bits >>> i) & 1) === 1;
+
+        for (let i = 0; i <= 5; i++) setFunction(qr, 8, i, bit(i));
+        setFunction(qr, 8, 7, bit(6));
+        setFunction(qr, 8, 8, bit(7));
+        setFunction(qr, 7, 8, bit(8));
+        for (let i = 9; i < 15; i++) setFunction(qr, 14 - i, 8, bit(i));
+
+        for (let i = 0; i < 8; i++) setFunction(qr, size - 1 - i, 8, bit(i));
+        for (let i = 8; i < 15; i++) setFunction(qr, 8, size - 15 + i, bit(i));
+        setFunction(qr, 4 * ((size - 17) / 4) + 9, 8, true);
+      }
+
+      function buildDataCodewords(bytes, version) {
+        const info = VERSION_INFO[version];
+        const bits = [];
+        appendBits(bits, 0b0100, 4);
+        appendBits(bits, bytes.length, 8);
+        for (const b of bytes) appendBits(bits, b, 8);
+
+        const capacityBits = info.data * 8;
+        const terminator = Math.min(4, capacityBits - bits.length);
+        appendBits(bits, 0, terminator);
+
+        while (bits.length % 8 !== 0) bits.push(0);
+
+        const data = [];
+        for (let i = 0; i < bits.length; i += 8) {
+          let val = 0;
+          for (let j = 0; j < 8; j++) val = (val << 1) | bits[i + j];
+          data.push(val);
+        }
+
+        const pads = [0xec, 0x11];
+        let p = 0;
+        while (data.length < info.data) data.push(pads[p++ % 2]);
+        return data;
+      }
+
+      function placeData(qr, codewords) {
+        const size = qr.modules.length;
+        const bits = [];
+        for (const cw of codewords) appendBits(bits, cw, 8);
+        let i = 0;
+        let upward = true;
+
+        for (let right = size - 1; right >= 1; right -= 2) {
+          if (right === 6) right--;
+          for (let vert = 0; vert < size; vert++) {
+            const r = upward ? size - 1 - vert : vert;
+            for (let j = 0; j < 2; j++) {
+              const c = right - j;
+              if (!qr.func[r][c]) {
+                let dark = i < bits.length ? bits[i++] === 1 : false;
+                if ((r + c) % 2 === 0) dark = !dark;
+                qr.modules[r][c] = dark;
+              }
+            }
+          }
+          upward = !upward;
+        }
+      }
+
+      function generateQRCode(text) {
+        const bytes = Array.from(encoder.encode(text));
+        if (bytes.length === 0) throw new Error('Please enter the URL or text content to generate a QR code.');
+        if (bytes.length > 108) throw new Error('The current frontend-only version supports up to about 108 bytes of content. Please shorten the text or use a short link before generating.');
+
+        const version = chooseVersion(bytes.length);
+        if (!version) throw new Error('The input is too long. Please shorten the text or use a short link and try again.');
+
+        const size = 21 + 4 * (version - 1);
+        const qr = createMatrix(size);
+        drawFunctionPatterns(qr, version);
+
+        const data = buildDataCodewords(bytes, version);
+        const ecc = rsRemainder(data, VERSION_INFO[version].ecc);
+        placeData(qr, data.concat(ecc));
+        drawFormatBits(qr, 0);
+
+        return qr.modules;
+      }
+
+      function renderQR(modules, pixelSize, fgColor) {
+        const count = modules.length;
+        const quiet = 4;
+        const total = count + quiet * 2;
+        const scale = Math.max(1, Math.floor(pixelSize / total));
+        const actualSize = total * scale;
+
+        canvas.width = actualSize;
+        canvas.height = actualSize;
+        canvas.style.width = Math.min(actualSize, 520) + 'px';
+        canvas.style.height = Math.min(actualSize, 520) + 'px';
+
+        ctx.clearRect(0, 0, actualSize, actualSize);
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, actualSize, actualSize);
+        ctx.fillStyle = fgColor;
+
+        for (let r = 0; r < count; r++) {
+          for (let c = 0; c < count; c++) {
+            if (modules[r][c]) {
+              ctx.fillRect((c + quiet) * scale, (r + quiet) * scale, scale, scale);
+            }
+          }
+        }
+      }
+
+      function generate() {
+        try {
+          hideError();
+          updateByteInfo();
+
+          const text = String(textEl.value || '').trim();
+          const pixelSize = Number(sizeEl.value);
+          const color = String(colorTextEl.value || '').trim();
+
+          if (!text) throw new Error('Please enter a URL or text content. It cannot be empty.');
+          if (!Number.isFinite(pixelSize) || pixelSize < 128 || pixelSize > 1024) throw new Error('Image dimensions must be between 128px and 1024px.');
+          if (!isHexColor(color)) throw new Error('Invalid foreground color format. Use a 6-digit hexadecimal color like #0f172a.');
+
+          colorEl.value = color.toLowerCase();
+          colorTextEl.value = color.toLowerCase();
+
+          if (typeof window.QRious !== 'function') {
+            throw new Error('二维码Generate库加载失败，请刷新页面后重试。');
+          }
+
+          new window.QRious({
+            element: canvas,
+            value: text,
+            size: pixelSize,
+            padding: Math.max(16, Math.round(pixelSize * 0.08)),
+            level: 'Q',
+            foreground: color.toLowerCase(),
+            background: '#ffffff'
+          });
+          canvas.style.width = Math.min(pixelSize, 520) + 'px';
+          canvas.style.height = Math.min(pixelSize, 520) + 'px';
+
+          currentValid = true;
+          downloadBtn.disabled = false;
+          setStatus('QR code generated. PNG is ready to download.', true);
+
+          generateBtn.classList.add('ring-4', 'ring-cyan-300/30');
+          setTimeout(() => generateBtn.classList.remove('ring-4', 'ring-cyan-300/30'), 250);
+        } catch (err) {
+          showError(err && err.message ? err.message : 'An unknown error occurred while generating the QR code. Please check your input and try again.');
+        }
+      }
+
+      sizeEl.addEventListener('input', () => {
+        sizeLabel.textContent = `${sizeEl.value}px`;
+        if (currentValid) generate();
+      });
+
+      colorEl.addEventListener('input', () => {
+        colorTextEl.value = colorEl.value;
+        if (currentValid) generate();
+      });
+
+      colorTextEl.addEventListener('input', () => {
+        const value = colorTextEl.value.trim();
+        if (isHexColor(value)) {
+          colorEl.value = value;
+          if (currentValid) generate();
+        }
+      });
+
+      textEl.addEventListener('input', () => {
+        updateByteInfo();
+        if (!errorBox.classList.contains('hidden')) hideError();
+      });
+
+      generateBtn.addEventListener('click', generate);
+
+      clearBtn.addEventListener('click', () => {
+        textEl.value = '';
+        updateByteInfo();
+        hideError();
+        currentValid = false;
+        downloadBtn.disabled = true;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvas.width = 320;
+        canvas.height = 320;
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        setStatus('Content is empty. Please enter text before generating.', true);
+      });
+
+      downloadBtn.addEventListener('click', () => {
+        if (!currentValid) {
+          showError('Please generate a QR code successfully before downloading.');
+          return;
+        }
+        try {
+          const link = document.createElement('a');
+          link.download = `qr-code-${Date.now()}.png`;
+          link.href = canvas.toDataURL('image/png');
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          setStatus('PNG image download started', true);
+        } catch {
+          showError('Download failed. Please confirm that your browser allows saving images.');
+        }
+      });
+
+      copyBtn.addEventListener('click', async () => {
+        if (!currentValid) {
+          showError('Please generate a QR code successfully before copying the image.');
+          return;
+        }
+        try {
+          if (!navigator.clipboard || !window.ClipboardItem) {
+            throw new Error('This browser does not support copying images directly. Please use Download PNG.');
+          }
+          canvas.toBlob(async blob => {
+            try {
+              if (!blob) throw new Error('Failed to generate image data. Please try again.');
+              await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+              setStatus('QR code image copied to clipboard', true);
+            } catch (e) {
+              showError(e && e.message ? e.message : 'Copy failed. Please use the Download PNG feature.');
+            }
+          }, 'image/png');
+        } catch (err) {
+          showError(err && err.message ? err.message : 'Copy failed. Please use the Download PNG feature.');
+        }
+      });
+
+      updateByteInfo();
+      downloadBtn.disabled = true;
+      generate();
+    })();
+  </script>
+</body>
+</html>

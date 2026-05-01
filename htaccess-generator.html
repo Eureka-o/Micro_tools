@@ -4,16 +4,44 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>htaccess-generator - .htaccess 重定向代码生成器</title>
-  <meta name="description" content="htaccess-generator 是一个免费的 .htaccess 重定向代码生成器，可快速生成 Apache 301 重定向、强制 HTTPS、www 跳转、尾斜杠规范化等常用配置代码。" />
-  <meta name="keywords" content=".htaccess生成器, htaccess-generator, Apache重定向代码生成器, 301重定向生成器, 强制HTTPS配置, RewriteRule生成器, 网站SEO重定向工具" />
+  <meta name="description" content=".htaccess 重定向代码生成器。通过简单的表单生成 Apache 服务器常用的 301 重定向、强制 HTTPS 等配置代码。">
+  <meta name="keywords" content=".htaccess生成器, htaccess-generator, Apache重定向代码生成器, 301重定向生成器, 强制HTTPS配置, RewriteRule生成器, 网站SEO重定向工具">
   <meta name="robots" content="index,follow" />
   <link rel="icon" type="image/png" href="./assets/logo.png">
   <link rel="apple-touch-icon" href="./assets/logo.png">
   <meta property="og:image" content="./assets/logo.png">
   <meta name="twitter:image" content="./assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/htaccess-generator.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/htaccess-generator.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/htaccess-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/htaccess-generator.html">
+  <script src="./theme-toggle.js" defer></script>
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100">
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="./htaccess-generator.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
+        <a href="./en/htaccess-generator.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="切换主题" title="切换主题">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
   <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
     <div class="absolute inset-0 opacity-30">
       <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500 blur-3xl"></div>
@@ -24,8 +52,8 @@
         <span class="inline-flex items-center rounded-full border border-cyan-300/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
           Apache SEO Redirect Toolkit
         </span>
-        <h1 class="mt-5 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">.htaccess 重定向代码生成器</h1>
-        <p class="mt-5 text-lg leading-8 text-slate-300">
+        <h1 class="mt-5 text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">.htaccess 重定向代码生成器</h1>
+        <p class="mt-5 text-lg leading-8 text-slate-700 dark:text-slate-300">
           快速生成可用于 Apache 服务器的 .htaccess 301 重定向、强制 HTTPS、www 规范化与常见 Rewrite 配置代码。
         </p>
       </div>
@@ -34,13 +62,13 @@
 
   <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
     <section class="grid gap-6 lg:grid-cols-2">
-      <div class="rounded-2xl border border-slate-700/70 bg-slate-900/80 p-5 shadow-2xl shadow-cyan-950/30 backdrop-blur sm:p-6">
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-700/70 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-cyan-950/30 backdrop-blur sm:p-6">
         <div class="mb-5 flex items-center justify-between gap-3">
           <div>
-            <h2 class="text-xl font-bold text-white">输入配置</h2>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入配置</h2>
             <p class="mt-1 text-sm text-slate-400">选择需要的规则并填写域名或路径，系统将自动生成代码。</p>
           </div>
-          <button id="resetBtn" type="button" class="rounded-lg border border-slate-600 px-3 py-2 text-sm text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-95">
+          <button id="resetBtn" type="button" class="rounded-lg border border-slate-600 px-3 py-2 text-sm text-slate-800 dark:text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-95">
             重置
           </button>
         </div>
@@ -52,7 +80,7 @@
             <label class="flex cursor-pointer items-start gap-3">
               <input id="enableBase" type="checkbox" class="mt-1 h-4 w-4 rounded border-slate-500 text-cyan-500 focus:ring-cyan-500" checked />
               <span>
-                <span class="block font-semibold text-white">启用 RewriteEngine</span>
+                <span class="block font-semibold text-gray-900 dark:text-white">启用 RewriteEngine</span>
                 <span class="block text-sm text-slate-400">生成 .htaccess 重写规则通常需要开启 RewriteEngine。</span>
               </span>
             </label>
@@ -62,27 +90,27 @@
             <label class="flex cursor-pointer items-start gap-3">
               <input id="forceHttps" type="checkbox" class="mt-1 h-4 w-4 rounded border-slate-500 text-cyan-500 focus:ring-cyan-500" checked />
               <span>
-                <span class="block font-semibold text-white">强制 HTTPS</span>
+                <span class="block font-semibold text-gray-900 dark:text-white">强制 HTTPS</span>
                 <span class="block text-sm text-slate-400">将所有 HTTP 请求 301 跳转到 HTTPS。</span>
               </span>
             </label>
           </div>
 
           <div class="rounded-xl bg-slate-800/80 p-4">
-            <label for="wwwMode" class="block font-semibold text-white">www 规范化</label>
-            <select id="wwwMode" class="mt-3 w-full rounded-lg border border-slate-600 bg-slate-950 px-3 py-2 text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30">
+            <label for="wwwMode" class="block font-semibold text-gray-900 dark:text-white">www 规范化</label>
+            <select id="wwwMode" class="mt-3 w-full rounded-lg border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30">
               <option value="none">不处理 www</option>
               <option value="to_www">非 www 跳转到 www</option>
               <option value="to_non_www">www 跳转到非 www</option>
             </select>
-            <label for="domain" class="mt-4 block text-sm font-medium text-slate-300">主域名（用于 www 规则）</label>
-            <input id="domain" type="text" inputmode="url" placeholder="example.com" class="mt-2 w-full rounded-lg border border-slate-600 bg-slate-950 px-3 py-2 text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30" />
+            <label for="domain" class="mt-4 block text-sm font-medium text-slate-700 dark:text-slate-300">主域名（用于 www 规则）</label>
+            <input id="domain" type="text" inputmode="url" placeholder="example.com" class="mt-2 w-full rounded-lg border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30" />
             <p class="mt-2 text-xs text-slate-500">仅填写域名，不要包含 http://、https:// 或路径。</p>
           </div>
 
           <div class="rounded-xl bg-slate-800/80 p-4">
-            <label for="slashMode" class="block font-semibold text-white">尾斜杠处理</label>
-            <select id="slashMode" class="mt-3 w-full rounded-lg border border-slate-600 bg-slate-950 px-3 py-2 text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30">
+            <label for="slashMode" class="block font-semibold text-gray-900 dark:text-white">尾斜杠处理</label>
+            <select id="slashMode" class="mt-3 w-full rounded-lg border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30">
               <option value="none">不处理尾斜杠</option>
               <option value="add">为目录式 URL 添加尾斜杠</option>
               <option value="remove">移除 URL 尾斜杠</option>
@@ -92,10 +120,10 @@
           <div class="rounded-xl bg-slate-800/80 p-4">
             <div class="flex items-start justify-between gap-3">
               <div>
-                <h3 class="font-semibold text-white">301 单页重定向</h3>
+                <h3 class="font-semibold text-gray-900 dark:text-white">301 单页重定向</h3>
                 <p class="mt-1 text-sm text-slate-400">添加旧地址到新地址的永久重定向规则。</p>
               </div>
-              <button id="addRedirectBtn" type="button" class="rounded-lg bg-cyan-500 px-3 py-2 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300 active:scale-95">
+              <button id="addRedirectBtn" type="button" class="rounded-lg bg-cyan-500 px-3 py-2 text-sm font-semibold text-slate-950 dark:text-slate-100 transition hover:bg-cyan-300 active:scale-95">
                 添加
               </button>
             </div>
@@ -103,11 +131,11 @@
           </div>
 
           <div class="rounded-xl bg-slate-800/80 p-4">
-            <label for="customRules" class="block font-semibold text-white">自定义附加规则（可选）</label>
-            <textarea id="customRules" rows="4" placeholder="# 可粘贴额外 .htaccess 配置" class="mt-3 w-full resize-y rounded-lg border border-slate-600 bg-slate-950 px-3 py-2 font-mono text-sm text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30"></textarea>
+            <label for="customRules" class="block font-semibold text-gray-900 dark:text-white">自定义附加规则（可选）</label>
+            <textarea id="customRules" rows="4" placeholder="# 可粘贴额外 .htaccess 配置" class="mt-3 w-full resize-y rounded-lg border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2 font-mono text-sm text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30"></textarea>
           </div>
 
-          <button id="generateBtn" type="submit" class="w-full rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 px-5 py-3 font-bold text-slate-950 shadow-lg shadow-cyan-900/30 transition hover:from-cyan-300 hover:to-blue-400 active:scale-[0.99]">
+          <button id="generateBtn" type="submit" class="w-full rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-900/30 transition hover:from-cyan-300 hover:to-blue-400 active:scale-[0.99]">
             生成 .htaccess 代码
           </button>
         </form>
@@ -116,14 +144,14 @@
       <div class="rounded-2xl border border-cyan-400/20 bg-cyan-950/20 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
         <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 class="text-xl font-bold text-white">输出代码</h2>
-            <p class="mt-1 text-sm text-slate-400">复制后保存为 <code class="rounded bg-slate-800 px-1 py-0.5 text-cyan-200">.htaccess</code> 并上传到站点根目录。</p>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输出代码</h2>
+            <p class="mt-1 text-sm text-slate-400">复制后保存为 <code class="rounded bg-slate-50 dark:bg-slate-800 px-1 py-0.5 text-cyan-200">.htaccess</code> 并上传到站点根目录。</p>
           </div>
           <div class="flex gap-2">
             <button id="copyBtn" type="button" class="rounded-lg border border-cyan-400/50 px-3 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/10 active:scale-95">
               复制
             </button>
-            <button id="downloadBtn" type="button" class="rounded-lg border border-slate-600 px-3 py-2 text-sm font-semibold text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-95">
+            <button id="downloadBtn" type="button" class="rounded-lg border border-slate-600 px-3 py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-95">
               下载
             </button>
           </div>
@@ -131,7 +159,7 @@
 
         <div id="successBox" class="mb-4 hidden rounded-xl border border-emerald-400/50 bg-emerald-500/10 p-3 text-sm text-emerald-200"></div>
 
-        <textarea id="output" readonly rows="22" class="h-[520px] w-full resize-none rounded-xl border border-slate-700 bg-slate-950 p-4 font-mono text-sm leading-6 text-cyan-100 outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30"></textarea>
+        <textarea id="output" readonly rows="22" class="h-[520px] w-full resize-none rounded-xl border border-slate-700 bg-white dark:bg-slate-950 p-4 font-mono text-sm leading-6 text-cyan-100 outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30"></textarea>
 
         <div class="mt-4 rounded-xl border border-amber-400/30 bg-amber-400/10 p-4 text-sm leading-6 text-amber-100">
           <strong>提示：</strong>上传前建议备份原 .htaccess 文件。不同主机环境可能存在模块限制，如规则未生效，请确认 Apache 已启用 mod_rewrite。
@@ -139,8 +167,8 @@
       </div>
     </section>
 
-    <article class="mt-10 rounded-2xl border border-slate-700/70 bg-slate-900/70 p-6 leading-8 text-slate-300 shadow-xl">
-      <h2 class="mb-4 text-2xl font-bold text-white">关于 .htaccess 重定向代码生成器</h2>
+    <article class="mt-10 rounded-2xl border border-slate-200 dark:border-slate-700/70 bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl">
+      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 .htaccess 重定向代码生成器</h2>
       <p>
         htaccess-generator 是一款面向站长、SEO 优化人员和前端开发者的在线 .htaccess 重定向代码生成器，主要用于快速创建 Apache 服务器常见的 301 永久重定向、强制 HTTPS 访问、www 与非 www 域名规范化以及 URL 尾斜杠处理规则。很多网站在改版、迁移目录、更换域名或部署 SSL 证书后，都需要正确配置 RewriteRule，否则容易出现重复页面、权重分散、收录异常和用户访问旧链接失败等问题。本工具通过清晰的表单把复杂的 Apache Rewrite 语法转换为可复制的配置代码，降低手写规则出错的风险。使用时只需勾选所需功能，填写主域名或旧 URL、新 URL，点击生成即可得到完整的 .htaccess 配置。对于需要“Apache 301 重定向生成器”“强制 HTTPS .htaccess 配置工具”“网站 SEO 重定向规则生成”等长尾关键词场景的用户，本工具能够帮助快速完成标准化配置，提高搜索引擎友好度与访问体验。
       </p>
@@ -268,11 +296,11 @@
           <div class="grid gap-3">
             <div>
               <label class="block text-xs font-medium text-slate-400">旧地址（相对路径，如 /old-page.html）</label>
-              <input type="text" data-old-url class="mt-1 w-full rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30" placeholder="/old-page.html" value="${escapeHtml(oldValue)}">
+              <input type="text" data-old-url class="mt-1 w-full rounded-lg border border-slate-600 bg-slate-100 dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30" placeholder="/old-page.html" value="${escapeHtml(oldValue)}">
             </div>
             <div>
               <label class="block text-xs font-medium text-slate-400">新地址（完整 URL 或相对路径）</label>
-              <input type="text" data-new-url class="mt-1 w-full rounded-lg border border-slate-600 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30" placeholder="https://example.com/new-page.html" value="${escapeHtml(newValue)}">
+              <input type="text" data-new-url class="mt-1 w-full rounded-lg border border-slate-600 bg-slate-100 dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/30" placeholder="https://example.com/new-page.html" value="${escapeHtml(newValue)}">
             </div>
             <div class="flex justify-end">
               <button type="button" data-remove-row class="rounded-md border border-red-400/40 px-3 py-1.5 text-xs font-semibold text-red-200 transition hover:bg-red-500/10 active:scale-95">删除此条</button>
@@ -493,246 +521,5 @@
       addRedirectRow('/old-page.html', 'https://example.com/new-page.html');
     })();
   </script>
-
-  <!-- micro-tools-i18n:start -->
-  <script>
-(() => {
-  'use strict';
-  const STORAGE_KEY = 'microToolsLanguage';
-  const PAGE_SLUG = "htaccess-generator";
-  const TRANSLATIONS = {">新地址（完整 URL 或相对路径）<\/label> <input type=":">New address (full URL or relative path)<\/label> <input type=","关于 .htaccess 重定向代码生成器":"About the .htaccess redirect code generator","# 请在左侧配置规则并点击“生成 .htaccess 代码”":"# Configure rules on the left and click “Generate .htaccess Code”","上传前建议备份原 .htaccess 文件。不同主机环境可能存在模块限制，如规则未生效，请确认 Apache 已启用 mod_rewrite。":"Back up the original .htaccess file before uploading. Different hosting environments may have module restrictions. If the rules do not take effect, confirm that Apache has mod_rewrite enabled.","www 跳转到非 www":"Redirect www to non-www","不处理 www":"Do Not Process www","将所有 HTTP 请求 301 跳转到 HTTPS。":"Redirect all HTTP requests to HTTPS with 301.","添加":"Add","复制":"Copy","非 www 跳转到 www":"Redirect non-www to www","添加旧地址到新地址的永久重定向规则。":"Add a permanent redirect rule from the old address to the new address.","301 单页重定向":"301 single-page redirect","输入配置":"Input configuration","htaccess-generator 是一个免费的 .htaccess 重定向代码生成器，可快速生成 Apache 301 重定向、强制 HTTPS、www 跳转、尾斜杠规范化等常用配置代码。":"htaccess-generator is a free .htaccess redirect code generator that quickly creates common Apache configuration code such as 301 redirects, forced HTTPS, www redirects, and trailing slash normalization.","生成 .htaccess 重写规则通常需要开启 RewriteEngine。":"Generating .htaccess rewrite rules usually requires enabling RewriteEngine.","并上传到站点根目录。":"and upload it to the site root directory.","不处理尾斜杠":"Do not handle trailing slash",">旧地址（相对路径，如 /old-page.html）<\/label> <input type=":">Old URL (relative path, e.g. /old-page.html)<\/label> <input type=","# 可粘贴额外 .htaccess 配置":"# Paste additional .htaccess configuration","强制 HTTPS":"Force HTTPS","htaccess-generator - .htaccess 重定向代码生成器":"htaccess-generator - .htaccess Redirect Code Generator","快速生成可用于 Apache 服务器的 .htaccess 301 重定向、强制 HTTPS、www 规范化与常见 Rewrite 配置代码。":"Quickly generate .htaccess code for Apache servers, including 301 redirects, forced HTTPS, www normalization, and common Rewrite configurations.","下载":"Download","生成 .htaccess 代码":"Generate .htaccess Code","为目录式 URL 添加尾斜杠":"Add trailing slash to directory-style URLs","www 规范化":"www Canonicalization","尾斜杠处理":"Trailing slash handling","选择需要的规则并填写域名或路径，系统将自动生成代码。":"Select the required rules and enter a domain or path; the system will generate the code automatically.","仅填写域名，不要包含 http://、https:// 或路径。":"Enter only the domain name. Do not include http://, https://, or paths.","复制后保存为":"Copy and save as","htaccess-generator 是一款面向站长、SEO 优化人员和前端开发者的在线 .htaccess 重定向代码生成器，主要用于快速创建 Apache 服务器常见的 301 永久重定向、强制 HTTPS 访问、www 与非 www 域名规范化以及 URL 尾斜杠处理规则。很多网站在改版、迁移目录、更换域名或部署 SSL 证书后，都需要正确配置 RewriteRule，否则容易出现重复页面、权重分散、收录异常和用户访问旧链接失败等问题。本工具通过清晰的表单把复杂的 Apache Rewrite 语法转换为可复制的配置代码，降低手写规则出错的风险。使用时只需勾选所需功能，填写主域名或旧 URL、新 URL，点击生成即可得到完整的 .htaccess 配置。对于需要“Apache 301 重定向生成器”“强制 HTTPS .htaccess 配置工具”“网站 SEO 重定向规则生成”等长尾关键词场景的用户，本工具能够帮助快速完成标准化配置，提高搜索引擎友好度与访问体验。":"htaccess-generator is an online .htaccess redirect code generator for site owners, SEO specialists, and front-end developers. It is mainly used to quickly create common Apache server rules such as 301 permanent redirects, forced HTTPS access, www and non-www domain canonicalization, and URL trailing slash handling. After a website redesign, directory migration, domain change, or SSL certificate deployment, RewriteRule must be configured correctly; otherwise, duplicate pages, scattered ranking signals, indexing issues, and failed visits to old links can occur. This tool turns complex Apache Rewrite syntax into copyable configuration code through clear forms, reducing the risk of errors when writing rules manually. To use it, select the required features, fill in the primary domain or old URL and new URL, then click Generate to get the complete .htaccess configuration. For long-tail keyword scenarios such as “Apache 301 redirect generator,” “force HTTPS .htaccess configuration tool,” and “website SEO redirect rule generator,” this tool helps quickly complete standardized configuration and improve search engine friendliness and user experience.","输出代码":"Output code","自定义附加规则（可选）":"Custom additional rules (optional)","主域名（用于 www 规则）":"Primary domain (for www rule)","重置":"Reset","移除 URL 尾斜杠":"Remove trailing URL slash","启用 RewriteEngine":"Enable RewriteEngine","提示：":"Tip:",".htaccess生成器, htaccess-generator, Apache重定向代码生成器, 301重定向生成器, 强制HTTPS配置, RewriteRule生成器, 网站SEO重定向工具":".htaccess generator, htaccess-generator, Apache redirect code generator, 301 redirect generator, Force HTTPS configuration, RewriteRule generator, Website SEO redirect tool",".htaccess 重定向代码生成器":".htaccess Generator",".htaccess 重定向代码生成器。通过简单的表单生成 Apache 服务器常用的 301 重定向、强制 HTTPS 等配置代码。":".htaccess redirect code generator. Generate common Apache server configuration code such as 301 redirects and forced HTTPS through a simple form."};
-  const TOOL_DATA = {"htaccess-generator":{"zhName":".htaccess 重定向代码生成器","enName":".htaccess Generator","zhDescription":".htaccess 重定向代码生成器。通过简单的表单生成 Apache 服务器常用的 301 重定向、强制 HTTPS 等配置代码。","enDescription":".htaccess redirect code generator. Generate common Apache server configuration code such as 301 redirects and forced HTTPS through a simple form.","zhTitle":"htaccess-generator - .htaccess 重定向代码生成器","enTitle":".htaccess Generator | Free Online Tool","zhKeywords":".htaccess生成器, htaccess-generator, Apache重定向代码生成器, 301重定向生成器, 强制HTTPS配置, RewriteRule生成器, 网站SEO重定向工具","enKeywords":".htaccess Generator, online tool, browser tool, productivity tool"}};
-  const CURRENT_TOOL = {"zhName":".htaccess 重定向代码生成器","enName":".htaccess Generator","zhDescription":".htaccess 重定向代码生成器。通过简单的表单生成 Apache 服务器常用的 301 重定向、强制 HTTPS 等配置代码。","enDescription":".htaccess redirect code generator. Generate common Apache server configuration code such as 301 redirects and forced HTTPS through a simple form.","zhTitle":"htaccess-generator - .htaccess 重定向代码生成器","enTitle":".htaccess Generator | Free Online Tool","zhKeywords":".htaccess生成器, htaccess-generator, Apache重定向代码生成器, 301重定向生成器, 强制HTTPS配置, RewriteRule生成器, 网站SEO重定向工具","enKeywords":".htaccess Generator, online tool, browser tool, productivity tool"};
-  const ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
-  const ZH_RE = /[\u4e00-\u9fff]/;
-  const originalText = new WeakMap();
-  const originalAttrs = new WeakMap();
-  let observer = null;
-
-  function normalize(value) {
-    return String(value || '').replace(/\s+/g, ' ').trim();
-  }
-
-  function hasChinese(value) {
-    return ZH_RE.test(String(value || ''));
-  }
-
-  function language() {
-    return localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'zh';
-  }
-
-  function translateExact(value, lang) {
-    const text = String(value || '');
-    if (lang === 'zh' || !text) return text;
-    if (TRANSLATIONS[text]) return TRANSLATIONS[text];
-    const normalized = normalize(text);
-    if (TRANSLATIONS[normalized]) return TRANSLATIONS[normalized];
-
-    const dynamic = [
-      [/^(\d+)\s*个字符$/u, '$1 characters'],
-      [/^(\d+)\s*字符$/u, '$1 characters'],
-      [/^(\d+)\s*字$/u, '$1 characters'],
-      [/^(\d+)\s*行$/u, '$1 rows'],
-      [/^(\d+)\s*列$/u, '$1 columns'],
-      [/^(\d+)\s*项$/u, '$1 items'],
-      [/^(\d+)\s*次$/u, '$1 times'],
-      [/^当前显示\s*(\d+)\s*\/\s*(\d+)$/u, 'Showing $1 / $2'],
-      [/^第\s*(\d+)\s*行第\s*(\d+)\s*列/u, 'line $1, column $2']
-    ];
-    for (const [pattern, replacement] of dynamic) {
-      if (pattern.test(normalized)) return normalized.replace(pattern, replacement);
-    }
-    return text;
-  }
-
-  function translateWithSpacing(value, lang) {
-    const text = String(value || '');
-    if (!text.trim()) return text;
-    const leading = text.match(/^\s*/)[0];
-    const trailing = text.match(/\s*$/)[0];
-    const core = text.slice(leading.length, text.length - trailing.length);
-    return leading + translateExact(core, lang) + trailing;
-  }
-
-  function skipped(node) {
-    const parent = node.parentElement;
-    return !parent || Boolean(parent.closest('script, style, code, pre, textarea, [data-i18n-ignore]'));
-  }
-
-  function translateNode(node, lang) {
-    if (skipped(node) || !node.nodeValue.trim()) return;
-    const current = node.nodeValue;
-    let original = originalText.get(node);
-    const originalEnglish = original ? translateWithSpacing(original, 'en') : '';
-    if (!original || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
-      original = current;
-      originalText.set(node, original);
-    }
-    node.nodeValue = lang === 'zh' ? (original || current) : translateWithSpacing(original || current, lang);
-  }
-
-  function translateAttrs(element, lang) {
-    if (element.closest('script, style, [data-i18n-ignore]')) return;
-    let store = originalAttrs.get(element);
-    if (!store) {
-      store = {};
-      originalAttrs.set(element, store);
-    }
-    ATTRS.forEach((attr) => {
-      if (!element.hasAttribute(attr)) return;
-      const current = element.getAttribute(attr);
-      const originalEnglish = store[attr] ? translateExact(store[attr], 'en') : '';
-      if (!store[attr] || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
-        store[attr] = current;
-      }
-      element.setAttribute(attr, lang === 'zh' ? store[attr] : translateExact(store[attr] || current, lang));
-    });
-  }
-
-  function walk(root, lang) {
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    const nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-    nodes.forEach((node) => translateNode(node, lang));
-
-    const elementRoot = root.nodeType === Node.ELEMENT_NODE ? root : document.body;
-    if (!elementRoot) return;
-    translateAttrs(elementRoot, lang);
-    elementRoot.querySelectorAll('*').forEach((element) => translateAttrs(element, lang));
-  }
-
-  function setMeta(name, value) {
-    if (!value) return;
-    let meta = document.querySelector(`meta[name="${name}"]`);
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.setAttribute('name', name);
-      document.head.appendChild(meta);
-    }
-    meta.setAttribute('content', value);
-  }
-
-  function applyMetadata(lang) {
-    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-    if (PAGE_SLUG === 'index') {
-      document.title = lang === 'zh'
-        ? '免费在线开发者工具箱 | 纯前端工具集合'
-        : 'Free Online Developer Toolbox | Pure Front-End Tools';
-      setMeta('description', lang === 'zh'
-        ? '免费在线开发者工具箱，汇集 JSON、CSV、LaTeX、Base64、正则、时间戳、二维码、颜色转换等纯前端微型工具，隐私友好、无需安装、极速加载。'
-        : 'A free online developer toolbox with pure front-end tools for JSON, CSV, LaTeX, Base64, regex, timestamps, QR codes, color conversion, and daily productivity.');
-      setMeta('keywords', lang === 'zh'
-        ? '免费在线开发者工具箱, 纯前端工具集合, 在线 JSON 工具, 在线编码转换工具, 生产力工具箱, 微型 Web 工具'
-        : 'free online developer tools, front-end tools, JSON tools, encoding tools, productivity toolbox, micro web tools');
-      return;
-    }
-    if (!CURRENT_TOOL || !CURRENT_TOOL.zhName) return;
-    document.title = lang === 'zh' ? CURRENT_TOOL.zhTitle : CURRENT_TOOL.enTitle;
-    setMeta('description', lang === 'zh' ? CURRENT_TOOL.zhDescription : CURRENT_TOOL.enDescription);
-    setMeta('keywords', lang === 'zh' ? CURRENT_TOOL.zhKeywords : CURRENT_TOOL.enKeywords);
-    const h1 = document.querySelector('h1');
-    if (h1) h1.textContent = lang === 'zh' ? CURRENT_TOOL.zhName : CURRENT_TOOL.enName;
-  }
-
-  function updateIndexCards(lang) {
-    if (PAGE_SLUG !== 'index') return;
-    document.querySelectorAll('a[href$=".html"]').forEach((card) => {
-      const slug = (card.getAttribute('href') || '').split('/').pop().replace(/\.html$/i, '');
-      const tool = TOOL_DATA[slug];
-      if (!tool) return;
-      const title = card.querySelector('h3');
-      const description = card.querySelector('p');
-      const action = card.querySelector('span:last-child');
-      if (title) title.textContent = lang === 'zh' ? tool.zhName : tool.enName;
-      if (description) description.textContent = lang === 'zh' ? tool.zhDescription : tool.enDescription;
-      if (action) action.textContent = lang === 'zh' ? '立即使用' : 'Open Tool';
-      card.dataset.search = normalize(`${slug} ${tool.zhName} ${tool.enName} ${tool.zhDescription} ${tool.enDescription}`).toLowerCase().replace(/[-_\s]+/g, '');
-    });
-    const search = document.getElementById('searchInput');
-    if (search) search.dispatchEvent(new Event('input', { bubbles: true }));
-  }
-
-  function ensureToggle(lang) {
-    let toggle = document.getElementById('microToolsLanguageToggle');
-    if (!toggle) {
-      toggle = document.createElement('div');
-      toggle.id = 'microToolsLanguageToggle';
-      toggle.setAttribute('data-i18n-ignore', 'true');
-      toggle.className = 'fixed right-4 top-4 z-50 flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/90 p-1 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur';
-      toggle.innerHTML = '<span data-language-label class="px-2 text-xs text-slate-300">语言</span><button type="button" data-lang-option="zh" class="rounded-full px-3 py-1.5 transition">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-1.5 transition">EN</button>';
-      document.body.appendChild(toggle);
-      toggle.addEventListener('click', (event) => {
-        const button = event.target.closest('[data-lang-option]');
-        if (!button) return;
-        localStorage.setItem(STORAGE_KEY, button.getAttribute('data-lang-option') === 'en' ? 'en' : 'zh');
-        applyLanguage(language());
-      });
-    }
-    toggle.querySelector('[data-language-label]').textContent = lang === 'zh' ? '语言' : 'Language';
-    toggle.querySelectorAll('[data-lang-option]').forEach((button) => {
-      const active = button.getAttribute('data-lang-option') === lang;
-      button.className = active
-        ? 'rounded-full bg-cyan-400 px-3 py-1.5 text-slate-950 transition'
-        : 'rounded-full px-3 py-1.5 text-slate-200 transition hover:bg-white/10';
-    });
-  }
-
-  function disconnect() {
-    if (observer) observer.disconnect();
-  }
-
-  function observe() {
-    if (!observer) {
-      observer = new MutationObserver(() => {
-        if (language() !== 'en') return;
-        disconnect();
-        applyLanguage('en');
-        observe();
-      });
-    }
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributes: true,
-      attributeFilter: ATTRS
-    });
-  }
-
-  function applyLanguage(lang) {
-    const next = lang === 'en' ? 'en' : 'zh';
-    disconnect();
-    ensureToggle(next);
-    applyMetadata(next);
-    walk(document.body, next);
-    updateIndexCards(next);
-    ensureToggle(next);
-    observe();
-  }
-
-  function init() {
-    applyLanguage(language());
-    window.addEventListener('storage', (event) => {
-      if (event.key === STORAGE_KEY) applyLanguage(language());
-    });
-  }
-
-  window.MicroToolsI18n = {
-    getLanguage: language,
-    setLanguage(value) {
-      localStorage.setItem(STORAGE_KEY, value === 'en' ? 'en' : 'zh');
-      applyLanguage(language());
-    },
-    applyLanguage
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
-  </script>
-  <!-- micro-tools-i18n:end -->
 </body>
 </html>

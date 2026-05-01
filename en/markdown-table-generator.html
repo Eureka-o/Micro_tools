@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Markdown Table Generator | Free Online Tool</title>
+  <meta name="description" content="Visual Markdown table generator. Add rows and columns with buttons, then generate standard Markdown table code in real time after filling cell content.">
+  <meta name="keywords" content="Markdown Table Generator, online tool, browser tool, productivity tool">
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+  <meta property="og:image" content="../assets/logo.png">
+  <meta name="twitter:image" content="../assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/en/markdown-table-generator.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/markdown-table-generator.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/markdown-table-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/markdown-table-generator.html">
+  <script src="./theme-toggle.js" defer></script>
+</head>
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="../markdown-table-generator.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./markdown-table-generator.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
+  <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
+    <div class="absolute inset-0 opacity-30">
+      <div class="absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-cyan-500 blur-3xl"></div>
+      <div class="absolute -bottom-24 right-1/4 h-72 w-72 rounded-full bg-blue-600 blur-3xl"></div>
+    </div>
+    <div class="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-1 text-sm font-medium text-cyan-200">
+          Visual Markdown Table Builder
+        </p>
+        <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">Markdown Table Generator</h1>
+        <p class="mt-5 text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
+          Edit content through a visual table and generate standard Markdown table code in real time. Ideal for README files, technical docs, blog posts, and project descriptions.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-2" aria-label="Markdown Table Generator">
+      <div class="rounded-3xl border border-slate-700 bg-slate-900/90 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
+        <div class="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Visual editor</h2>
+            <p class="mt-1 text-sm text-slate-400">The first row is the header, followed by table content. Markdown will be generated automatically after input.</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button id="addRowBtn" type="button" class="rounded-xl bg-cyan-500 px-4 py-2 text-sm font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400 active:scale-95 focus:outline-none focus:ring-2 focus:ring-cyan-300">Add row</button>
+            <button id="addColBtn" type="button" class="rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-gray-900 dark:text-white shadow-lg shadow-blue-500/20 transition hover:bg-blue-400 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-300">Add column</button>
+            <button id="removeRowBtn" type="button" class="rounded-xl border border-rose-400/40 bg-rose-500/10 px-4 py-2 text-sm font-bold text-rose-200 transition hover:bg-rose-500/20 active:scale-95 focus:outline-none focus:ring-2 focus:ring-rose-300">Delete row</button>
+            <button id="removeColBtn" type="button" class="rounded-xl border border-amber-400/40 bg-amber-500/10 px-4 py-2 text-sm font-bold text-amber-200 transition hover:bg-amber-500/20 active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-300">Delete column</button>
+          </div>
+        </div>
+
+        <div id="errorBox" class="mb-4 hidden rounded-2xl border border-red-400/50 bg-red-500/15 px-4 py-3 text-sm font-medium text-red-100" role="alert"></div>
+
+        <div class="mb-4 grid gap-3 sm:grid-cols-3">
+          <div class="rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
+            <p class="text-xs uppercase tracking-widest text-slate-500">Current rows</p>
+            <p id="rowCount" class="mt-1 text-2xl font-black text-cyan-300">0</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
+            <p class="text-xs uppercase tracking-widest text-slate-500">Current columns</p>
+            <p id="colCount" class="mt-1 text-2xl font-black text-blue-300">0</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
+            <p class="text-xs uppercase tracking-widest text-slate-500">Live Status</p>
+            <p id="statusText" class="mt-2 text-sm font-semibold text-emerald-300">Ready</p>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-slate-700 bg-white dark:bg-slate-950">
+          <table class="min-w-full border-collapse" aria-label="Editable Markdown Table">
+            <thead id="tableHead"></thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+
+        <div class="mt-4 flex flex-wrap gap-2">
+          <button id="resetBtn" type="button" class="rounded-xl border border-slate-600 bg-slate-50 dark:bg-slate-800 px-4 py-2 text-sm font-bold text-slate-800 dark:text-slate-200 transition hover:bg-slate-700 active:scale-95 focus:outline-none focus:ring-2 focus:ring-slate-400">Reset example</button>
+          <button id="clearBtn" type="button" class="rounded-xl border border-slate-600 bg-slate-50 dark:bg-slate-800 px-4 py-2 text-sm font-bold text-slate-800 dark:text-slate-200 transition hover:bg-slate-700 active:scale-95 focus:outline-none focus:ring-2 focus:ring-slate-400">Clear Content</button>
+        </div>
+      </div>
+
+      <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/30 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
+        <div class="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Markdown output area</h2>
+            <p class="mt-1 text-sm text-cyan-100/70">Copy the code below and paste it into a Markdown document.</p>
+          </div>
+          <button id="copyBtn" type="button" class="rounded-xl bg-emerald-400 px-4 py-2 text-sm font-black text-slate-950 dark:text-slate-100 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-300 active:scale-95 focus:outline-none focus:ring-2 focus:ring-emerald-200">Copy Code</button>
+        </div>
+
+        <textarea id="markdownOutput" readonly spellcheck="false" class="h-[420px] w-full resize-y rounded-2xl border border-cyan-300/20 bg-white dark:bg-slate-950 p-4 font-mono text-sm leading-6 text-cyan-100 shadow-inner outline-none focus:ring-2 focus:ring-cyan-400" aria-label="Generated Markdown table code"></textarea>
+
+        <div class="mt-4 rounded-2xl border border-cyan-300/20 bg-white dark:bg-slate-950/60 p-4">
+          <h3 class="font-bold text-cyan-100">Tip</h3>
+          <ul class="mt-2 list-disc space-y-1 pl-5 text-sm leading-6 text-slate-700 dark:text-slate-300">
+            <li>Vertical bar in cells <code class="rounded bg-slate-50 dark:bg-slate-800 px-1 text-cyan-200">|</code> Will be escaped automatically to avoid breaking the Markdown table structure.</li>
+            <li>Line breaks will be converted to <code class="rounded bg-slate-50 dark:bg-slate-800 px-1 text-cyan-200">&lt;br&gt;</code>, making it easy to keep multi-line content in the table.</li>
+            <li>Each column can be set to left, center, or right alignment independently.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-slate-700 bg-white dark:bg-slate-900/80 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl shadow-slate-950/30 sm:p-8">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Markdown Table Generator</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Visual Markdown table generator. Add rows and columns with buttons, then generate standard Markdown table code in real time after filling cell content. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Markdown Table Generator for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+    </article>
+  </main>
+
+  <footer class="border-t border-slate-800 py-6 text-center text-sm text-slate-500">
+    <p>markdown-table-generator · Zero Dependency Single Page Tool</p>
+  </footer>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const MAX_ROWS = 50;
+      const MAX_COLS = 20;
+      const MIN_ROWS = 2;
+      const MIN_COLS = 1;
+
+      const elements = {
+        tableHead: document.getElementById('tableHead'),
+        tableBody: document.getElementById('tableBody'),
+        output: document.getElementById('markdownOutput'),
+        errorBox: document.getElementById('errorBox'),
+        rowCount: document.getElementById('rowCount'),
+        colCount: document.getElementById('colCount'),
+        statusText: document.getElementById('statusText'),
+        addRowBtn: document.getElementById('addRowBtn'),
+        addColBtn: document.getElementById('addColBtn'),
+        removeRowBtn: document.getElementById('removeRowBtn'),
+        removeColBtn: document.getElementById('removeColBtn'),
+        resetBtn: document.getElementById('resetBtn'),
+        clearBtn: document.getElementById('clearBtn'),
+        copyBtn: document.getElementById('copyBtn')
+      };
+
+      let data = [
+        ['名称', '说明', '示例'],
+        ['项目', 'Markdown table generator', 'README 文档'],
+        ['特点', 'Real-time generation and visual editing', 'One-click copy']
+      ];
+      let aligns = ['left', 'center', 'right'];
+      let errorTimer = null;
+
+      const safeText = (value) => String(value ?? '');
+
+      const showError = (message) => {
+        const text = safeText(message).trim() || 'An unknown error occurred. Please check your input and try again.';
+        elements.errorBox.textContent = text;
+        elements.errorBox.classList.remove('hidden');
+        elements.statusText.textContent = 'Needs processing';
+        elements.statusText.className = 'mt-2 text-sm font-semibold text-red-300';
+        clearTimeout(errorTimer);
+        errorTimer = setTimeout(() => {
+          elements.errorBox.classList.add('hidden');
+          elements.statusText.textContent = '已就绪';
+          elements.statusText.className = 'mt-2 text-sm font-semibold text-emerald-300';
+        }, 3500);
+      };
+
+      const setStatus = (message, colorClass = 'text-emerald-300') => {
+        elements.statusText.textContent = message;
+        elements.statusText.className = `mt-2 text-sm font-semibold ${colorClass}`;
+      };
+
+      const escapeMarkdownCell = (value) => {
+        return safeText(value)
+          .replace(/\\/g, '\\\\')
+          .replace(/\|/g, '\\|')
+          .replace(/\r\n|\r|\n/g, '<br>')
+          .trim() || ' ';
+      };
+
+      const separatorFor = (align) => {
+        if (align === 'center') return ':---:';
+        if (align === 'right') return '---:';
+        return ':---';
+      };
+
+      const normalizeState = () => {
+        if (!Array.isArray(data) || data.length < MIN_ROWS) {
+          data = [['列 1'], ['']];
+        }
+
+        const colLength = Math.max(
+          MIN_COLS,
+          Math.min(MAX_COLS, ...data.map(row => Array.isArray(row) ? row.length : 0))
+        );
+
+        data = data.slice(0, MAX_ROWS).map(row => {
+          const safeRow = Array.isArray(row) ? row.slice(0, colLength) : [];
+          while (safeRow.length < colLength) safeRow.push('');
+          return safeRow.map(safeText);
+        });
+
+        while (data.length < MIN_ROWS) {
+          data.push(Array(colLength).fill(''));
+        }
+
+        aligns = Array.isArray(aligns) ? aligns.slice(0, colLength) : [];
+        while (aligns.length < colLength) aligns.push('left');
+        aligns = aligns.map(item => ['left', 'center', 'right'].includes(item) ? item : 'left');
+      };
+
+      const generateMarkdown = () => {
+        normalizeState();
+        const header = data[0].map(escapeMarkdownCell);
+        const separator = aligns.map(separatorFor);
+        const body = data.slice(1).map(row => row.map(escapeMarkdownCell));
+
+        const lines = [
+          `| ${header.join(' | ')} |`,
+          `| ${separator.join(' | ')} |`,
+          ...body.map(row => `| ${row.join(' | ')} |`)
+        ];
+
+        elements.output.value = lines.join('\n');
+        elements.rowCount.textContent = String(data.length);
+        elements.colCount.textContent = String(data[0].length);
+      };
+
+      const createCellInput = (rowIndex, colIndex, value) => {
+        const input = document.createElement('textarea');
+        input.value = safeText(value);
+        input.rows = 2;
+        input.dataset.row = String(rowIndex);
+        input.dataset.col = String(colIndex);
+        input.maxLength = 5000;
+        input.className = 'min-h-[54px] w-44 resize-y rounded-xl border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-300 focus:ring-2 focus:ring-cyan-400/40 sm:w-52';
+        input.placeholder = rowIndex === 0 ? `Header ${colIndex + 1}` : `Content ${rowIndex}-${colIndex + 1}`;
+        input.setAttribute('aria-label', rowIndex === 0 ? `Column ${colIndex + 1} header` : `Row ${rowIndex}, column ${colIndex + 1} content`);
+        return input;
+      };
+
+      const renderTable = () => {
+        normalizeState();
+
+        elements.tableHead.innerHTML = '';
+        elements.tableBody.innerHTML = '';
+
+        const controlRow = document.createElement('tr');
+        controlRow.className = 'border-b border-slate-700 bg-slate-900';
+
+        data[0].forEach((_, colIndex) => {
+          const th = document.createElement('th');
+          th.className = 'min-w-44 border-r border-slate-800 p-3 text-left align-top last:border-r-0 sm:min-w-52';
+
+          const label = document.createElement('div');
+          label.className = 'mb-2 flex items-center justify-between gap-2';
+          label.innerHTML = `<span class="rounded-full bg-cyan-400/10 px-2 py-1 text-xs font-bold text-cyan-200">Column ${colIndex + 1}</span>`;
+
+          const select = document.createElement('select');
+          select.dataset.alignCol = String(colIndex);
+          select.className = 'w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-sm font-medium text-slate-200 outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-400/40';
+          [
+            ['left', '左对齐'],
+            ['center', '居中'],
+            ['right', '右对齐']
+          ].forEach(([value, text]) => {
+            const option = document.createElement('option');
+            option.value = value;
+            option.textContent = text;
+            option.selected = aligns[colIndex] === value;
+            select.appendChild(option);
+          });
+
+          th.appendChild(label);
+          th.appendChild(select);
+          controlRow.appendChild(th);
+        });
+
+        elements.tableHead.appendChild(controlRow);
+
+        data.forEach((row, rowIndex) => {
+          const tr = document.createElement('tr');
+          tr.className = rowIndex === 0 ? 'border-b border-cyan-400/20 bg-cyan-950/20' : 'border-b border-slate-800 last:border-b-0';
+
+          row.forEach((cell, colIndex) => {
+            const td = document.createElement(rowIndex === 0 ? 'th' : 'td');
+            td.className = 'border-r border-slate-800 p-3 align-top last:border-r-0';
+
+            if (rowIndex === 0) {
+              const badge = document.createElement('div');
+              badge.className = 'mb-2 text-xs font-black uppercase tracking-widest text-cyan-300';
+              badge.textContent = 'Header';
+              td.appendChild(badge);
+            }
+
+            td.appendChild(createCellInput(rowIndex, colIndex, cell));
+            tr.appendChild(td);
+          });
+
+          elements.tableBody.appendChild(tr);
+        });
+
+        generateMarkdown();
+      };
+
+      const addRow = () => {
+        normalizeState();
+        if (data.length >= MAX_ROWS) {
+          showError(`Supports up to ${MAX_ROWS} rows; the limit has been reached.`);
+          return;
+        }
+        data.push(Array(data[0].length).fill(''));
+        renderTable();
+        setStatus('Row added');
+      };
+
+      const addCol = () => {
+        normalizeState();
+        if (data[0].length >= MAX_COLS) {
+          showError(`Supports up to ${MAX_COLS} columns; the limit has been reached.`);
+          return;
+        }
+        const newIndex = data[0].length + 1;
+        data.forEach((row, index) => row.push(index === 0 ? `Column ${newIndex}` : ''));
+        aligns.push('left');
+        renderTable();
+        setStatus('Column added');
+      };
+
+      const removeRow = () => {
+        normalizeState();
+        if (data.length <= MIN_ROWS) {
+          showError('You must keep at least the header and one row. No more rows can be deleted.');
+          return;
+        }
+        data.pop();
+        renderTable();
+        setStatus('Last row deleted');
+      };
+
+      const removeCol = () => {
+        normalizeState();
+        if (data[0].length <= MIN_COLS) {
+          showError('At least one column must remain; cannot delete more columns.');
+          return;
+        }
+        data.forEach(row => row.pop());
+        aligns.pop();
+        renderTable();
+        setStatus('Last column deleted');
+      };
+
+      const clearContent = () => {
+        normalizeState();
+        data = data.map(row => row.map(() => ''));
+        renderTable();
+        setStatus('Content cleared');
+      };
+
+      const resetExample = () => {
+        data = [
+          ['名称', '说明', '示例'],
+          ['项目', 'Markdown table generator', 'README 文档'],
+          ['特点', 'Real-time generation and visual editing', 'One-click copy']
+        ];
+        aligns = ['left', 'center', 'right'];
+        renderTable();
+        setStatus('Example reset');
+      };
+
+      const copyOutput = async () => {
+        try {
+          const text = elements.output.value;
+          if (!text.trim()) {
+            showError('No Markdown content available to copy.');
+            return;
+          }
+
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+          } else {
+            elements.output.focus();
+            elements.output.select();
+            const successful = document.execCommand('copy');
+            if (!successful) throw new Error('Copy command failed');
+            window.getSelection()?.removeAllRanges();
+          }
+
+          const original = elements.copyBtn.textContent;
+          elements.copyBtn.textContent = 'Copied';
+          elements.copyBtn.classList.remove('bg-emerald-400');
+          elements.copyBtn.classList.add('bg-cyan-300');
+          setStatus('Markdown copied to clipboard');
+          setTimeout(() => {
+            elements.copyBtn.textContent = original;
+            elements.copyBtn.classList.add('bg-emerald-400');
+            elements.copyBtn.classList.remove('bg-cyan-300');
+          }, 1200);
+        } catch (err) {
+          showError('Copy failed. Please manually select the output area content to copy.');
+        }
+      };
+
+      elements.tableBody.addEventListener('input', (event) => {
+        try {
+          const target = event.target;
+          if (!(target instanceof HTMLTextAreaElement)) return;
+
+          const row = Number.parseInt(target.dataset.row, 10);
+          const col = Number.parseInt(target.dataset.col, 10);
+
+          if (!Number.isInteger(row) || !Number.isInteger(col) || row < 0 || col < 0 || !data[row] || col >= data[row].length) {
+            showError('Cell position error. The table has been refreshed automatically.');
+            renderTable();
+            return;
+          }
+
+          data[row][col] = safeText(target.value);
+          generateMarkdown();
+          setStatus('Updated in real time');
+        } catch (err) {
+          showError('Input processing failed. Please refresh the page or try again.');
+        }
+      });
+
+      elements.tableHead.addEventListener('change', (event) => {
+        try {
+          const target = event.target;
+          if (!(target instanceof HTMLSelectElement)) return;
+
+          const col = Number.parseInt(target.dataset.alignCol, 10);
+          if (!Number.isInteger(col) || col < 0 || col >= aligns.length) {
+            showError('Column alignment settings are invalid and have been reset to default.');
+            renderTable();
+            return;
+          }
+
+          aligns[col] = ['left', 'center', 'right'].includes(target.value) ? target.value : 'left';
+          generateMarkdown();
+          setStatus('Column alignment updated');
+        } catch (err) {
+          showError('Failed to apply alignment settings. Please try again.');
+        }
+      });
+
+      elements.addRowBtn.addEventListener('click', addRow);
+      elements.addColBtn.addEventListener('click', addCol);
+      elements.removeRowBtn.addEventListener('click', removeRow);
+      elements.removeColBtn.addEventListener('click', removeCol);
+      elements.clearBtn.addEventListener('click', clearContent);
+      elements.resetBtn.addEventListener('click', resetExample);
+      elements.copyBtn.addEventListener('click', copyOutput);
+
+      window.addEventListener('error', () => {
+        showError('The page encountered an error, but the tool has tried to remain usable.');
+      });
+
+      window.addEventListener('unhandledrejection', () => {
+        showError('Async operation failed. Please try again later.');
+      });
+
+      renderTable();
+    })();
+  </script>
+</body>
+</html>

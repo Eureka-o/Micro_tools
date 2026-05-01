@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UTM Builder | Free Online Tool</title>
+  <meta name="description" content="Marketing URL UTM parameter builder. Enter the target URL, source, medium, and campaign name to automatically assemble a complete link with UTM tracking parameters.">
+  <meta name="keywords" content="UTM Builder, online tool, browser tool, productivity tool">
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+  <meta property="og:image" content="../assets/logo.png">
+  <meta name="twitter:image" content="../assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/en/utm-builder.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/utm-builder.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/utm-builder.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/utm-builder.html">
+  <script src="./theme-toggle.js" defer></script>
+</head>
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="../utm-builder.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./utm-builder.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
+  <main class="min-h-screen">
+    <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
+      <div class="absolute inset-0 opacity-30">
+        <div class="absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-400 blur-3xl"></div>
+        <div class="absolute bottom-0 right-0 h-64 w-64 rounded-full bg-blue-500 blur-3xl"></div>
+      </div>
+      <section class="relative mx-auto max-w-6xl px-5 py-12 sm:py-16">
+        <div class="max-w-3xl">
+          <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-1 text-sm font-medium text-cyan-200">
+            Free online marketing tracking link generator
+          </p>
+          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">UTM Builder</h1>
+          <p class="mt-5 text-lg leading-8 text-slate-700 dark:text-slate-300">
+            Enter the target URL, source, medium, and campaign name to generate a complete marketing link with UTM tracking parameters in one click, helping you accurately identify channel performance.
+          </p>
+        </div>
+      </section>
+    </header>
+
+    <section class="mx-auto grid max-w-6xl gap-6 px-5 py-8 lg:grid-cols-5">
+      <div class="rounded-3xl border border-slate-200 dark:border-slate-700/70 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-cyan-950/30 sm:p-7 lg:col-span-3">
+        <div class="mb-6 flex items-center justify-between gap-4">
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Input Parameters</h2>
+            <p class="mt-1 text-sm text-slate-400">Required fields are used to generate a standard UTM tracking link.</p>
+          </div>
+          <span class="rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-200 ring-1 ring-cyan-300/20">Builder</span>
+        </div>
+
+        <form id="utmForm" class="space-y-5" novalidate>
+          <div>
+            <label for="targetUrl" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Target URL <span class="text-rose-300">*</span></label>
+            <input id="targetUrl" name="targetUrl" type="url" autocomplete="url" placeholder="https://example.com/landing-page" class="w-full rounded-2xl border border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
+          </div>
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="source" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Source utm_source <span class="text-rose-300">*</span></label>
+              <input id="source" name="source" type="text" maxlength="120" placeholder="google / wechat / newsletter" class="w-full rounded-2xl border border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
+            </div>
+            <div>
+              <label for="medium" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Medium utm_medium <span class="text-rose-300">*</span></label>
+              <input id="medium" name="medium" type="text" maxlength="120" placeholder="cpc / social / email" class="w-full rounded-2xl border border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
+            </div>
+          </div>
+
+          <div>
+            <label for="campaign" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Campaign name utm_campaign <span class="text-rose-300">*</span></label>
+            <input id="campaign" name="campaign" type="text" maxlength="160" placeholder="spring_sale_2026" class="w-full rounded-2xl border border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
+          </div>
+
+          <details class="rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
+            <summary class="cursor-pointer select-none text-sm font-semibold text-cyan-200">Optional parameters: keyword and content ID</summary>
+            <div class="mt-4 grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="term" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Keyword utm_term</label>
+                <input id="term" name="term" type="text" maxlength="160" placeholder="running_shoes" class="w-full rounded-2xl border border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
+              </div>
+              <div>
+                <label for="content" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Content utm_content</label>
+                <input id="content" name="content" type="text" maxlength="160" placeholder="banner_a / textlink_b" class="w-full rounded-2xl border border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
+              </div>
+            </div>
+          </details>
+
+          <div id="errorBox" class="hidden rounded-2xl border border-rose-400/40 bg-rose-500/10 px-4 py-3 text-sm font-medium text-rose-100"></div>
+
+          <div class="flex flex-col gap-3 sm:flex-row">
+            <button type="submit" id="buildBtn" class="rounded-2xl bg-cyan-400 px-6 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-cyan-300/30">
+              Generate UTM Link
+            </button>
+            <button type="button" id="resetBtn" class="rounded-2xl border border-slate-600 px-6 py-3 font-bold text-slate-800 dark:text-slate-200 transition hover:border-slate-400 hover:bg-slate-800 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-slate-500/20">
+              Clear
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="rounded-3xl border border-cyan-300/20 bg-cyan-950/30 p-5 shadow-2xl shadow-cyan-950/30 sm:p-7 lg:col-span-2">
+        <div class="mb-6">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Output result</h2>
+          <p class="mt-1 text-sm text-cyan-100/70">The generated link will keep the original URL’s existing parameters and anchor.</p>
+        </div>
+
+        <div class="rounded-2xl border border-cyan-300/20 bg-white dark:bg-slate-950/80 p-4">
+          <label for="resultUrl" class="mb-2 block text-sm font-semibold text-cyan-100">Full UTM link</label>
+          <textarea id="resultUrl" rows="8" readonly placeholder="The generated result will appear here..." class="w-full resize-none rounded-2xl border border-slate-700 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-sm leading-6 text-cyan-50 outline-none placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10"></textarea>
+        </div>
+
+        <div id="successBox" class="mt-4 hidden rounded-2xl border border-emerald-400/40 bg-emerald-500/10 px-4 py-3 text-sm font-medium text-emerald-100"></div>
+
+        <div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+          <button type="button" id="copyBtn" class="rounded-2xl bg-white px-5 py-3 font-bold text-slate-950 dark:text-slate-100 transition hover:bg-cyan-100 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-white/20">
+            Copy Link
+          </button>
+          <button type="button" id="openBtn" class="rounded-2xl border border-cyan-300/40 px-5 py-3 font-bold text-cyan-100 transition hover:bg-cyan-300/10 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-cyan-300/20">
+            Open link
+          </button>
+        </div>
+
+        <div class="mt-6 rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/60 p-4 text-sm leading-6 text-slate-700 dark:text-slate-300">
+          <p class="font-semibold text-slate-900 dark:text-slate-100">Naming suggestions</p>
+          <p class="mt-2">Use lowercase letters, numbers, hyphens, or underscores, for example <span class="text-cyan-200">summer_sale</span>, making unified analysis easier later in GA4, ad platforms, or BI reports.</p>
+        </div>
+      </div>
+    </section>
+
+    <article class="mx-auto mb-12 max-w-6xl px-5">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About UTM Builder</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Marketing URL UTM parameter builder. Enter the target URL, source, medium, and campaign name to automatically assemble a complete link with UTM tracking parameters. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use UTM Builder for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+    </article>
+  </main>
+
+  <script>
+    (function () {
+      const form = document.getElementById('utmForm');
+      const targetUrl = document.getElementById('targetUrl');
+      const source = document.getElementById('source');
+      const medium = document.getElementById('medium');
+      const campaign = document.getElementById('campaign');
+      const term = document.getElementById('term');
+      const content = document.getElementById('content');
+      const resultUrl = document.getElementById('resultUrl');
+      const errorBox = document.getElementById('errorBox');
+      const successBox = document.getElementById('successBox');
+      const copyBtn = document.getElementById('copyBtn');
+      const openBtn = document.getElementById('openBtn');
+      const resetBtn = document.getElementById('resetBtn');
+      const buildBtn = document.getElementById('buildBtn');
+
+      function showError(message) {
+        errorBox.textContent = message;
+        errorBox.classList.remove('hidden');
+        successBox.classList.add('hidden');
+      }
+
+      function showSuccess(message) {
+        successBox.textContent = message;
+        successBox.classList.remove('hidden');
+        errorBox.classList.add('hidden');
+      }
+
+      function clearMessages() {
+        errorBox.classList.add('hidden');
+        successBox.classList.add('hidden');
+        errorBox.textContent = '';
+        successBox.textContent = '';
+      }
+
+      function normalizeUrl(input) {
+        const raw = String(input || '').trim();
+        if (!raw) return '';
+        if (/^https?:\/\//i.test(raw)) return raw;
+        if (/^[\w.-]+\.[a-z]{2,}([/:?#].*)?$/i.test(raw)) return 'https://' + raw;
+        return raw;
+      }
+
+      function isUnsafeValue(value) {
+        return /[\u0000-\u001F\u007F<>]/.test(value);
+      }
+
+      function validateText(value, label, required) {
+        const trimmed = String(value || '').trim();
+        if (required && !trimmed) {
+          return label + 'Cannot be empty.';
+        }
+        if (trimmed.length > 160) {
+          return label + 'Too long. Keep it within 160 characters.';
+        }
+        if (isUnsafeValue(trimmed)) {
+          return label + 'Contains unsupported special characters. Please remove angle brackets or control characters.';
+        }
+        return '';
+      }
+
+      function buildUtmUrl() {
+        clearMessages();
+
+        const urlInput = normalizeUrl(targetUrl.value);
+        if (!urlInput) {
+          showError('Please enter the target URL, for example https://example.com/landing-page.');
+          targetUrl.focus();
+          return '';
+        }
+
+        let parsedUrl;
+        try {
+          parsedUrl = new URL(urlInput);
+        } catch (e) {
+          showError('The target URL format is incorrect. Please enter a full URL, for example https://example.com, or enter example.com for automatic completion.');
+          targetUrl.focus();
+          return '';
+        }
+
+        if (!/^https?:$/.test(parsedUrl.protocol)) {
+          showError('The target URL only supports the http or https protocol.');
+          targetUrl.focus();
+          return '';
+        }
+
+        if (!parsedUrl.hostname || parsedUrl.hostname.length > 253) {
+          showError('The target URL domain is invalid. Please check and try again.');
+          targetUrl.focus();
+          return '';
+        }
+
+        const validations = [
+          validateText(source.value, '来源 utm_source', true),
+          validateText(medium.value, '媒介 utm_medium', true),
+          validateText(campaign.value, 'Campaign name utm_campaign', true),
+          validateText(term.value, '关键词 utm_term', false),
+          validateText(content.value, '内容 utm_content', false)
+        ].filter(Boolean);
+
+        if (validations.length) {
+          showError(validations[0]);
+          return '';
+        }
+
+        parsedUrl.searchParams.set('utm_source', source.value.trim());
+        parsedUrl.searchParams.set('utm_medium', medium.value.trim());
+        parsedUrl.searchParams.set('utm_campaign', campaign.value.trim());
+
+        if (term.value.trim()) {
+          parsedUrl.searchParams.set('utm_term', term.value.trim());
+        } else {
+          parsedUrl.searchParams.delete('utm_term');
+        }
+
+        if (content.value.trim()) {
+          parsedUrl.searchParams.set('utm_content', content.value.trim());
+        } else {
+          parsedUrl.searchParams.delete('utm_content');
+        }
+
+        return parsedUrl.toString();
+      }
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        buildBtn.classList.add('scale-[0.98]', 'bg-cyan-200');
+        window.setTimeout(function () {
+          buildBtn.classList.remove('scale-[0.98]', 'bg-cyan-200');
+        }, 140);
+
+        const built = buildUtmUrl();
+        if (built) {
+          resultUrl.value = built;
+          showSuccess('UTM link generated successfully.');
+        }
+      });
+
+      copyBtn.addEventListener('click', async function () {
+        clearMessages();
+        const value = resultUrl.value.trim();
+        if (!value) {
+          showError('No link available to copy. Please generate a UTM link first.');
+          return;
+        }
+
+        copyBtn.classList.add('scale-[0.98]');
+        window.setTimeout(function () {
+          copyBtn.classList.remove('scale-[0.98]');
+        }, 140);
+
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(value);
+          } else {
+            resultUrl.focus();
+            resultUrl.select();
+            const ok = document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+            if (!ok) throw new Error('copy failed');
+          }
+          showSuccess('Link copied to clipboard.');
+        } catch (e) {
+          showError('Copy failed. Please manually select the result link and copy it.');
+        }
+      });
+
+      openBtn.addEventListener('click', function () {
+        clearMessages();
+        const value = resultUrl.value.trim();
+        if (!value) {
+          showError('No link available to open. Please generate a UTM link first.');
+          return;
+        }
+
+        try {
+          const url = new URL(value);
+          if (!/^https?:$/.test(url.protocol)) {
+            showError('Result link protocol is invalid and cannot be opened.');
+            return;
+          }
+          openBtn.classList.add('scale-[0.98]');
+          window.setTimeout(function () {
+            openBtn.classList.remove('scale-[0.98]');
+          }, 140);
+          window.open(url.toString(), '_blank', 'noopener,noreferrer');
+        } catch (e) {
+          showError('The result link format is invalid and cannot be opened. Please generate it again.');
+        }
+      });
+
+      resetBtn.addEventListener('click', function () {
+        form.reset();
+        resultUrl.value = '';
+        clearMessages();
+        targetUrl.focus();
+        resetBtn.classList.add('scale-[0.98]');
+        window.setTimeout(function () {
+          resetBtn.classList.remove('scale-[0.98]');
+        }, 140);
+      });
+
+      [targetUrl, source, medium, campaign, term, content].forEach(function (input) {
+        input.addEventListener('input', function () {
+          if (!errorBox.classList.contains('hidden')) {
+            clearMessages();
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

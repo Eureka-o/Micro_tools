@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Text Reverser | Free Online Tool</title>
+  <meta name="description" content="Text reverse tool. Reverse the input string completely or by word.">
+  <meta name="keywords" content="Text Reverser, online tool, browser tool, productivity tool">
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+  <meta property="og:image" content="../assets/logo.png">
+  <meta name="twitter:image" content="../assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/en/text-reverser.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/text-reverser.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/text-reverser.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/text-reverser.html">
+  <script src="./theme-toggle.js" defer></script>
+</head>
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="../text-reverser.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./text-reverser.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
+  <div class="relative overflow-hidden">
+    <div class="absolute inset-0 -z-10">
+      <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+      <div class="absolute right-0 top-48 h-80 w-80 rounded-full bg-indigo-500/10 blur-3xl"></div>
+    </div>
+
+    <header class="border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 backdrop-blur">
+      <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+        <div class="flex flex-col gap-4">
+          <span class="inline-flex w-fit items-center rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+            Online Text Utility
+          </span>
+          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">Text Reverser</h1>
+          <p class="max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
+            Text flip and reverse tool: reverse the input string completely or by word, quickly handling text reversal, word reordering, and content testing.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+      <section class="grid gap-6 lg:grid-cols-2" aria-label="Text Flip Tool Main Interface">
+        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-cyan-950/20">
+          <div class="mb-4 flex items-center justify-between gap-3">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Input Text</h2>
+            <button id="clearBtn" type="button" class="rounded-lg border border-slate-700 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 transition hover:border-red-400 hover:bg-red-500/10 hover:text-red-200 active:scale-95">
+              Clear
+            </button>
+          </div>
+
+          <label for="inputText" class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">Please enter the string to reverse</label>
+          <textarea id="inputText" rows="12" maxlength="200000" class="w-full resize-y rounded-xl border border-slate-700 bg-white dark:bg-slate-950/80 p-4 text-base leading-7 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="例如：Hello world 你好世界"></textarea>
+
+          <div class="mt-4 grid gap-3 sm:grid-cols-2">
+            <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-cyan-400/30 bg-cyan-400/10 p-4 transition hover:bg-cyan-400/15">
+              <input class="h-4 w-4 accent-cyan-400" type="radio" name="mode" value="chars" checked />
+              <span>
+                <span class="block font-semibold text-cyan-100">Full Reverse</span>
+                <span class="text-sm text-slate-400">Reverse all content character by character</span>
+              </span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-indigo-400/30 bg-indigo-400/10 p-4 transition hover:bg-indigo-400/15">
+              <input class="h-4 w-4 accent-indigo-400" type="radio" name="mode" value="words" />
+              <span>
+                <span class="block font-semibold text-indigo-100">Reverse by word</span>
+                <span class="text-sm text-slate-400">Keep words intact and reorder them</span>
+              </span>
+            </label>
+          </div>
+
+          <div id="errorBox" class="mt-4 hidden rounded-xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200" role="alert"></div>
+
+          <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+            <button id="reverseBtn" type="button" class="inline-flex flex-1 items-center justify-center rounded-xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60">
+              Start Reversing
+            </button>
+            <button id="sampleBtn" type="button" class="inline-flex items-center justify-center rounded-xl border border-slate-700 px-5 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-[0.98]">
+              Fill Example
+            </button>
+          </div>
+
+          <div class="mt-4 flex flex-wrap gap-3 text-sm text-slate-400">
+            <span>Character Count:<strong id="charCount" class="text-slate-800 dark:text-slate-200">0</strong></span>
+            <span>Words/fragments:<strong id="wordCount" class="text-slate-800 dark:text-slate-200">0</strong></span>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-cyan-400/20 bg-cyan-950/20 p-5 shadow-2xl shadow-cyan-950/20">
+          <div class="mb-4 flex items-center justify-between gap-3">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Output result</h2>
+            <button id="copyBtn" type="button" class="rounded-lg border border-cyan-400/30 px-3 py-2 text-sm font-medium text-cyan-100 transition hover:bg-cyan-400/10 active:scale-95">
+              Copy Result
+            </button>
+          </div>
+
+          <label for="outputText" class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">Reversed text</label>
+          <textarea id="outputText" rows="12" readonly class="w-full resize-y rounded-xl border border-cyan-400/20 bg-white dark:bg-slate-950/60 p-4 text-base leading-7 text-cyan-50 outline-none placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="Results will appear here"></textarea>
+
+          <div id="statusBox" class="mt-4 hidden rounded-xl border border-emerald-400/40 bg-emerald-500/10 px-4 py-3 text-sm font-medium text-emerald-200" role="status"></div>
+
+          <div class="mt-5 grid gap-3 sm:grid-cols-3">
+            <button id="swapBtn" type="button" class="rounded-xl border border-slate-700 px-4 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-[0.98]">
+              Send result to input
+            </button>
+            <button id="downloadBtn" type="button" class="rounded-xl border border-slate-700 px-4 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-[0.98]">
+              Download TXT
+            </button>
+            <button id="selectBtn" type="button" class="rounded-xl border border-slate-700 px-4 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-[0.98]">
+              Select all results
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <article class="mt-10 rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Text Reverser</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Text reverse tool. Reverse the input string completely or by word. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Text Reverser for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+    </article>
+    </main>
+  </div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const inputText = document.getElementById("inputText");
+      const outputText = document.getElementById("outputText");
+      const reverseBtn = document.getElementById("reverseBtn");
+      const clearBtn = document.getElementById("clearBtn");
+      const sampleBtn = document.getElementById("sampleBtn");
+      const copyBtn = document.getElementById("copyBtn");
+      const swapBtn = document.getElementById("swapBtn");
+      const downloadBtn = document.getElementById("downloadBtn");
+      const selectBtn = document.getElementById("selectBtn");
+      const errorBox = document.getElementById("errorBox");
+      const statusBox = document.getElementById("statusBox");
+      const charCount = document.getElementById("charCount");
+      const wordCount = document.getElementById("wordCount");
+
+      const MAX_LENGTH = 200000;
+      let statusTimer = null;
+      let errorTimer = null;
+
+      const safeString = (value) => {
+        try {
+          return typeof value === "string" ? value : String(value ?? "");
+        } catch {
+          return "";
+        }
+      };
+
+      const showError = (message) => {
+        clearTimeout(errorTimer);
+        errorBox.textContent = message;
+        errorBox.classList.remove("hidden");
+        errorTimer = setTimeout(() => {
+          errorBox.classList.add("hidden");
+          errorBox.textContent = "";
+        }, 4500);
+      };
+
+      const showStatus = (message) => {
+        clearTimeout(statusTimer);
+        statusBox.textContent = message;
+        statusBox.classList.remove("hidden");
+        statusTimer = setTimeout(() => {
+          statusBox.classList.add("hidden");
+          statusBox.textContent = "";
+        }, 3000);
+      };
+
+      const hideError = () => {
+        clearTimeout(errorTimer);
+        errorBox.classList.add("hidden");
+        errorBox.textContent = "";
+      };
+
+      const getMode = () => {
+        const selected = document.querySelector('input[name="mode"]:checked');
+        return selected ? selected.value : "chars";
+      };
+
+      const countWords = (text) => {
+        const trimmed = safeString(text).trim();
+        if (!trimmed) return 0;
+        const matches = trimmed.match(/\S+/gu);
+        return matches ? matches.length : 0;
+      };
+
+      const updateStats = () => {
+        const text = safeString(inputText.value);
+        charCount.textContent = String(Array.from(text).length);
+        wordCount.textContent = String(countWords(text));
+      };
+
+      const reverseByChars = (text) => {
+        return Array.from(text).reverse().join("");
+      };
+
+      const reverseByWords = (text) => {
+        const source = safeString(text);
+        if (!source.trim()) return "";
+        const tokens = source.match(/\s+|\S+/gu) || [];
+        const words = tokens.filter((token) => !/^\s+$/u.test(token)).reverse();
+        let index = 0;
+        return tokens.map((token) => {
+          if (/^\s+$/u.test(token)) return token;
+          const next = words[index] ?? "";
+          index += 1;
+          return next;
+        }).join("");
+      };
+
+      const validateInput = (text) => {
+        if (typeof text !== "string") {
+          return "The input format is invalid. Please re-enter the text.";
+        }
+        if (text.length === 0) {
+          return "Please enter the text to reverse.";
+        }
+        if (text.length > MAX_LENGTH) {
+          return `Input text is too long. Please keep it within ${MAX_LENGTH.toLocaleString("zh-CN")} characters.`;
+        }
+        return "";
+      };
+
+      const performReverse = () => {
+        try {
+          hideError();
+          const text = safeString(inputText.value);
+          const error = validateInput(text);
+          if (error) {
+            outputText.value = "";
+            showError(error);
+            return;
+          }
+
+          reverseBtn.disabled = true;
+          reverseBtn.textContent = "处理中...";
+
+          const mode = getMode();
+          const result = mode === "words" ? reverseByWords(text) : reverseByChars(text);
+          outputText.value = result;
+          showStatus(mode === "words" ? "Word-level reversal completed." : "Full string reversal completed.");
+        } catch {
+          showError("An error occurred during processing. Please check your input and try again.");
+        } finally {
+          reverseBtn.disabled = false;
+          reverseBtn.textContent = "Start Reversing";
+        }
+      };
+
+      const copyResult = async () => {
+        try {
+          const result = safeString(outputText.value);
+          if (!result) {
+            showError("No result is available to copy. Please generate reversed text first.");
+            return;
+          }
+
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(result);
+          } else {
+            outputText.focus();
+            outputText.select();
+            const ok = document.execCommand("copy");
+            if (!ok) throw new Error("copy failed");
+          }
+          showStatus("Result copied to clipboard.");
+        } catch {
+          showError("Copy failed. Please select the result manually and copy it.");
+        }
+      };
+
+      const downloadResult = () => {
+        try {
+          const result = safeString(outputText.value);
+          if (!result) {
+            showError("No downloadable result is available. Please generate reversed text first.");
+            return;
+          }
+          const blob = new Blob([result], { type: "text/plain;charset=utf-8" });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement("a");
+          const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+          link.href = url;
+          link.download = `text-reverser-${timestamp}.txt`;
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          URL.revokeObjectURL(url);
+          showStatus("TXT file download has started.");
+        } catch {
+          showError("Download failed. Please try again later or copy the result to save it.");
+        }
+      };
+
+      const selectResult = () => {
+        try {
+          if (!outputText.value) {
+            showError("There are currently no results to select.");
+            return;
+          }
+          outputText.focus();
+          outputText.select();
+          showStatus("All output results selected.");
+        } catch {
+          showError("Select all failed. Please select the text manually.");
+        }
+      };
+
+      const clearAll = () => {
+        inputText.value = "";
+        outputText.value = "";
+        updateStats();
+        hideError();
+        showStatus("Content cleared.");
+        inputText.focus();
+      };
+
+      const fillSample = () => {
+        inputText.value = "Hello world 你好世界 12345\ntext-reverser makes text processing easier!";
+        updateStats();
+        performReverse();
+      };
+
+      const swapOutputToInput = () => {
+        const result = safeString(outputText.value);
+        if (!result) {
+          showError("No result to move to the input box.");
+          return;
+        }
+        inputText.value = result;
+        updateStats();
+        showStatus("The result has been moved to the input box for further processing.");
+        inputText.focus();
+      };
+
+      inputText.addEventListener("input", () => {
+        try {
+          if (inputText.value.length > MAX_LENGTH) {
+            inputText.value = inputText.value.slice(0, MAX_LENGTH);
+            showError(`Input was automatically truncated to ${MAX_LENGTH.toLocaleString("zh-CN")} characters.`);
+          }
+          updateStats();
+        } catch {
+          showError("An error occurred while reading the input. Please enter it again.");
+        }
+      });
+
+      reverseBtn.addEventListener("click", performReverse);
+      clearBtn.addEventListener("click", clearAll);
+      sampleBtn.addEventListener("click", fillSample);
+      copyBtn.addEventListener("click", copyResult);
+      swapBtn.addEventListener("click", swapOutputToInput);
+      downloadBtn.addEventListener("click", downloadResult);
+      selectBtn.addEventListener("click", selectResult);
+
+      document.addEventListener("keydown", (event) => {
+        try {
+          const isMac = navigator.platform.toUpperCase().includes("MAC");
+          const modifier = isMac ? event.metaKey : event.ctrlKey;
+          if (modifier && event.key === "Enter") {
+            event.preventDefault();
+            performReverse();
+          }
+        } catch {
+          showError("Shortcut handling error. Please use the button instead.");
+        }
+      });
+
+      updateStats();
+    })();
+  </script>
+</body>
+</html>

@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="LaTeX 矩阵与复杂公式在线可视化编辑器，支持 MathJax 实时渲染、矩阵模板、积分公式、求和公式、语法错误提示和 LaTeX 代码复制。">
+  <meta name="description" content="LaTeX 矩阵与复杂公式在线可视化编辑器。通过 CDN 引入 MathJax 库用于公式渲染。提供一个代码输入区，用户可以输入 LaTeX 语法。监听输入区变化，使用 debounce 防抖处理，延迟 300ms 后在下方可视化输出区实时渲染数学公式。提供预设按钮：插入2x2矩阵、插入积分公式、插入求和公式。输入错误 LaTeX 语法时不能白屏，而是提示“语法解析错误”。">
   <meta name="keywords" content="LaTeX矩阵编辑器, LaTeX公式可视化, MathJax在线编辑器, LaTeX实时渲染, 矩阵公式生成器, 在线数学公式编辑器">
   <title>LaTeX 矩阵与复杂公式在线可视化编辑器</title>
   <link rel="icon" type="image/png" href="./assets/logo.png">
   <link rel="apple-touch-icon" href="./assets/logo.png">
   <meta property="og:image" content="./assets/logo.png">
   <meta name="twitter:image" content="./assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     window.MathJax = {
@@ -31,15 +32,42 @@
     };
   </script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/latex-formula-editor.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/latex-formula-editor.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/latex-formula-editor.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/latex-formula-editor.html">
+  <script src="./theme-toggle.js" defer></script>
 </head>
-<body class="min-h-screen bg-[#f7f7fb] text-slate-950">
+<body class="min-h-screen bg-[#f7f7fb] text-slate-950 dark:text-slate-100">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="./latex-formula-editor.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
+        <a href="./en/latex-formula-editor.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="切换主题" title="切换主题">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
   <header class="bg-white">
     <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-end">
         <div>
           <p class="mb-3 text-sm font-semibold uppercase tracking-widest text-violet-600">MathJax Formula Workspace</p>
-          <h1 class="max-w-5xl text-3xl font-bold tracking-tight text-slate-950 sm:text-5xl">LaTeX 矩阵与复杂公式在线可视化编辑器</h1>
-          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-600">一边输入 LaTeX 代码，一边实时查看公式排版效果，适合论文、课件、Markdown 和技术文档写作。</p>
+          <h1 class="max-w-5xl text-3xl font-bold tracking-tight text-slate-950 dark:text-slate-100 sm:text-5xl">LaTeX 矩阵与复杂公式在线可视化编辑器</h1>
+          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-600 dark:text-slate-400">一边输入 LaTeX 代码，一边实时查看公式排版效果，适合论文、课件、Markdown 和技术文档写作。</p>
         </div>
         <div class="rounded-lg border border-violet-100 bg-violet-50 p-4">
           <p class="text-sm font-semibold text-violet-800">实时预览</p>
@@ -50,37 +78,37 @@
   </header>
 
   <main class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-    <section class="rounded-lg border border-slate-200 bg-white p-3 shadow-sm" aria-label="公式模板">
+    <section class="rounded-lg border border-slate-200 dark:border-white/10 bg-white p-3 shadow-sm" aria-label="公式模板">
       <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <div>
-          <h2 class="text-lg font-semibold text-slate-950">常用模板</h2>
+          <h2 class="text-lg font-semibold text-slate-950 dark:text-slate-100">常用模板</h2>
           <p class="mt-1 text-sm text-slate-500">点击插入基础代码，再按你的公式需求修改。</p>
         </div>
         <div class="grid gap-2 sm:grid-cols-3 lg:min-w-[34rem]">
-          <button data-template="matrix" type="button" class="rounded-md bg-violet-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-300">插入2x2矩阵</button>
-          <button data-template="integral" type="button" class="rounded-md bg-sky-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-300">插入积分公式</button>
-          <button data-template="summation" type="button" class="rounded-md bg-emerald-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300">插入求和公式</button>
+          <button data-template="matrix" type="button" class="rounded-md bg-violet-600 px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white transition hover:bg-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-300">插入2x2矩阵</button>
+          <button data-template="integral" type="button" class="rounded-md bg-sky-600 px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white transition hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-300">插入积分公式</button>
+          <button data-template="summation" type="button" class="rounded-md bg-emerald-600 px-4 py-3 text-sm font-semibold text-gray-900 dark:text-white transition hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300">插入求和公式</button>
         </div>
       </div>
     </section>
 
     <section class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]" aria-label="LaTeX 公式编辑工作区">
-      <div class="rounded-lg border border-slate-200 bg-white shadow-sm">
-        <div class="flex flex-col gap-3 border-b border-slate-200 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+      <div class="rounded-lg border border-slate-200 dark:border-white/10 bg-white shadow-sm">
+        <div class="flex flex-col gap-3 border-b border-slate-200 dark:border-white/10 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div class="flex items-center gap-2">
               <span class="rounded-md bg-violet-50 px-2 py-1 text-xs font-semibold text-violet-700">编辑</span>
-              <h2 class="text-lg font-semibold text-slate-950">LaTeX 代码</h2>
+              <h2 class="text-lg font-semibold text-slate-950 dark:text-slate-100">LaTeX 代码</h2>
             </div>
             <p id="sourceStats" class="mt-1 text-sm text-slate-500">0 个字符</p>
           </div>
           <div class="flex gap-2">
-            <button id="copySourceBtn" type="button" class="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-violet-400 hover:text-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-300">复制代码</button>
-            <button id="clearBtn" type="button" class="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-red-400 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-300">清空</button>
+            <button id="copySourceBtn" type="button" class="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 transition hover:border-violet-400 hover:text-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-300">复制代码</button>
+            <button id="clearBtn" type="button" class="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 transition hover:border-red-400 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-300">清空</button>
           </div>
         </div>
         <div class="p-4">
-          <textarea id="latexInput" spellcheck="false" class="h-80 w-full resize-y rounded-md border border-slate-300 bg-slate-50 p-4 font-mono text-sm leading-6 text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-violet-500 focus:bg-white focus:ring-2 focus:ring-violet-200 lg:h-[30rem]" placeholder="例如：\begin{bmatrix} a & b \\ c & d \end{bmatrix}">\begin{bmatrix}
+          <textarea id="latexInput" spellcheck="false" class="h-80 w-full resize-y rounded-md border border-slate-300 bg-slate-50 p-4 font-mono text-sm leading-6 text-slate-950 dark:text-slate-100 outline-none transition placeholder:text-slate-400 focus:border-violet-500 focus:bg-white focus:ring-2 focus:ring-violet-200 lg:h-[30rem]" placeholder="例如：\begin{bmatrix} a & b \\ c & d \end{bmatrix}">\begin{bmatrix}
 a & b \\
 c & d
 \end{bmatrix}</textarea>
@@ -88,28 +116,28 @@ c & d
         </div>
       </div>
 
-      <div class="rounded-lg border border-slate-200 bg-white shadow-sm">
-        <div class="flex flex-col gap-3 border-b border-slate-200 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+      <div class="rounded-lg border border-slate-200 dark:border-white/10 bg-white shadow-sm">
+        <div class="flex flex-col gap-3 border-b border-slate-200 dark:border-white/10 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div class="flex items-center gap-2">
               <span class="rounded-md bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-700">预览</span>
-              <h2 class="text-lg font-semibold text-slate-950">可视化输出</h2>
+              <h2 class="text-lg font-semibold text-slate-950 dark:text-slate-100">可视化输出</h2>
             </div>
             <p class="mt-1 text-sm text-slate-500">由 MathJax 渲染，可横向滚动查看长公式。</p>
           </div>
-          <span id="renderStatus" class="rounded-full border border-slate-300 px-3 py-1 text-xs font-medium text-slate-600">准备渲染</span>
+          <span id="renderStatus" class="rounded-full border border-slate-300 px-3 py-1 text-xs font-medium text-slate-600 dark:text-slate-400">准备渲染</span>
         </div>
 
         <div class="p-4">
-          <div id="previewWrap" class="flex min-h-80 items-center justify-center overflow-auto rounded-md border border-slate-200 bg-[#fbfcff] p-6 text-slate-950 lg:min-h-[30rem]">
+          <div id="previewWrap" class="flex min-h-80 items-center justify-center overflow-auto rounded-md border border-slate-200 dark:border-white/10 bg-[#fbfcff] p-6 text-slate-950 dark:text-slate-100 lg:min-h-[30rem]">
             <div id="formulaPreview" class="max-w-full text-center text-xl"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <article class="mt-10 border-t border-slate-200 pt-8 leading-8 text-slate-700">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950">在线 LaTeX 公式可视化编辑器说明</h2>
+    <article class="mt-10 border-t border-slate-200 dark:border-white/10 pt-8 leading-8 text-slate-700 dark:text-slate-300">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100">在线 LaTeX 公式可视化编辑器说明</h2>
       <p>
         LaTeX 矩阵与复杂公式在线可视化编辑器是一款面向学生、教师、科研作者、算法工程师和技术文档编写者的数学公式预览工具。用户可以在输入区编写 LaTeX 语法，例如 bmatrix 矩阵、积分表达式、求和公式、分式和上下标，页面会通过 MathJax 在线渲染为清晰的数学排版结果。相比反复在论文编辑器或 Markdown 平台中试错，这个 LaTeX 公式实时渲染工具可以更快发现括号不闭合、矩阵换行错误、环境缺失等问题，并在解析异常时给出“语法解析错误”的友好提示。通过内置的插入2x2矩阵、插入积分公式和插入求和公式模板，新手也能快速生成基础代码，再根据实际论文、课件、博客或技术说明进行修改。它适合作为在线数学公式编辑器、LaTeX矩阵编辑器和 MathJax 公式预览工具使用。
       </p>
@@ -312,246 +340,5 @@ c & d
     latexInput.addEventListener('input', debounceRender);
     renderFormula();
   </script>
-
-  <!-- micro-tools-i18n:start -->
-  <script>
-(() => {
-  'use strict';
-  const STORAGE_KEY = 'microToolsLanguage';
-  const PAGE_SLUG = "latex-formula-editor";
-  const TRANSLATIONS = {"插入2x2矩阵":"Insert 2x2 matrix","由 MathJax 渲染，可横向滚动查看长公式。":"Rendered by MathJax; scroll horizontally to view long formulas.","在线 LaTeX 公式可视化编辑器说明":"Online LaTeX formula visual editor guide","渲染失败":"Rendering Failed","插入积分公式":"Insert integral formula","请检查 LaTeX 环境名称、花括号、矩阵换行符和命令拼写是否完整。":"Check whether the LaTeX environment name, braces, matrix line breaks, and command spelling are complete.","插入求和公式":"Insert summation formula","0 个字符":"0 characters","预览":"Preview","LaTeX 矩阵与复杂公式在线可视化编辑器":"LaTeX Formula Editor","准备渲染":"Ready to render","点击插入基础代码，再按你的公式需求修改。":"Click to insert basic code, then modify it for your formula needs.","输入停止 300ms 后自动更新，语法异常会在预览区直接提示，不影响页面使用。":"Automatically updates 300ms after input stops. Syntax errors are shown directly in the preview area without affecting page usage.","当前没有可复制的 LaTeX 代码。":"There is no LaTeX code to copy.","公式模板":"Formula template","${latexInput.value.length} 个字符":"${latexInput.value.length} characters","MathJax 初始化失败，请刷新页面后重试。":"MathJax failed to initialize. Please refresh the page and try again.","渲染成功":"Rendered Successfully","编辑":"Edit","请检查 LaTeX 语法，当前公式无法被 MathJax 正确解析。":"Check the LaTeX syntax. The current formula cannot be parsed correctly by MathJax.","例如：\\begin{bmatrix} a & b \\\\ c & d \\end{bmatrix}":"Example: \\begin{bmatrix} a & b \\\\ c & d \\end{bmatrix}","<p class=\"text-sm text-slate-500\">请输入 LaTeX 公式代码。<\/p>":"<p class=\"text-sm text-slate-500\">Enter LaTeX formula code.<\/p>","语法解析错误":"Syntax parsing error","复制代码":"Copy Code","一边输入 LaTeX 代码，一边实时查看公式排版效果，适合论文、课件、Markdown 和技术文档写作。":"Type LaTeX code and preview the rendered formula in real time. Ideal for papers, courseware, Markdown, and technical documentation.","常用模板":"Common Templates","可视化输出":"Visual output","LaTeX 代码":"LaTeX code","等待输入":"Waiting for Input","语法解析错误：请检查 LaTeX 代码后再试。":"Syntax parsing error: Please check the LaTeX code and try again.","LaTeX 代码已复制到剪贴板。":"LaTeX code copied to clipboard.","清空":"Clear","LaTeX 公式编辑工作区":"LaTeX formula editing workspace","复制失败，请手动选择代码后复制。":"Copy failed. Please select the code manually and copy it.","LaTeX 矩阵与复杂公式在线可视化编辑器，支持 MathJax 实时渲染、矩阵模板、积分公式、求和公式、语法错误提示和 LaTeX 代码复制。":"Online visual editor for LaTeX matrices and complex formulas, supporting MathJax real-time rendering, matrix templates, integral formulas, summation formulas, syntax error prompts, and LaTeX code copying.","LaTeX 矩阵与复杂公式在线可视化编辑器是一款面向学生、教师、科研作者、算法工程师和技术文档编写者的数学公式预览工具。用户可以在输入区编写 LaTeX 语法，例如 bmatrix 矩阵、积分表达式、求和公式、分式和上下标，页面会通过 MathJax 在线渲染为清晰的数学排版结果。相比反复在论文编辑器或 Markdown 平台中试错，这个 LaTeX 公式实时渲染工具可以更快发现括号不闭合、矩阵换行错误、环境缺失等问题，并在解析异常时给出“语法解析错误”的友好提示。通过内置的插入2x2矩阵、插入积分公式和插入求和公式模板，新手也能快速生成基础代码，再根据实际论文、课件、博客或技术说明进行修改。它适合作为在线数学公式编辑器、LaTeX矩阵编辑器和 MathJax 公式预览工具使用。":"The LaTeX Matrix and Complex Formula Online Visual Editor is a math formula preview tool for students, teachers, research writers, algorithm engineers, and technical documentation authors. Users can write LaTeX syntax in the input area, such as bmatrix matrices, integrals, sums, fractions, superscripts, and subscripts, and the page renders clear mathematical typesetting online via MathJax. Compared with repeated trial and error in paper editors or Markdown platforms, this real-time LaTeX formula renderer helps you find unclosed brackets, matrix line break errors, missing environments, and other issues faster, with a friendly \"Syntax parsing error\" prompt on parsing failures. Built-in templates for inserting a 2x2 matrix, an integral formula, and a summation formula help beginners quickly generate basic code and modify it for papers, courseware, blogs, or technical notes. It works well as an online math formula editor, LaTeX matrix editor, and MathJax formula preview tool.","MathJax 加载失败，请检查网络连接或 CDN 是否可访问。":"MathJax failed to load. Please check your network connection or whether the CDN is accessible.","渲染中":"Rendering","LaTeX矩阵编辑器, LaTeX公式可视化, MathJax在线编辑器, LaTeX实时渲染, 矩阵公式生成器, 在线数学公式编辑器":"LaTeX matrix editor, LaTeX formula visualization, MathJax online editor, LaTeX real-time rendering, matrix formula generator, online math formula editor","实时预览":"Live Preview","LaTeX 矩阵与复杂公式在线可视化编辑器。通过 CDN 引入 MathJax 库用于公式渲染。提供一个代码输入区，用户可以输入 LaTeX 语法。监听输入区变化，使用 debounce 防抖处理，延迟 300ms 后在下方可视化输出区实时渲染数学公式。提供预设按钮：插入2x2矩阵、插入积分公式、插入求和公式。输入错误 LaTeX 语法时不能白屏，而是提示“语法解析错误”。":"Online visual editor for LaTeX matrices and complex formulas. The MathJax library is loaded via CDN for formula rendering. It provides a code input area where users can enter LaTeX syntax. Input changes are monitored and processed with debounce, rendering the math formula in real time in the visual output area below after a 300ms delay. Preset buttons are provided: insert 2x2 matrix, insert integral formula, and insert summation formula. Invalid LaTeX syntax must not cause a blank screen; instead, show “Syntax parsing error”."};
-  const TOOL_DATA = {"latex-formula-editor":{"zhName":"LaTeX 矩阵与复杂公式在线可视化编辑器","enName":"LaTeX Formula Editor","zhDescription":"LaTeX 矩阵与复杂公式在线可视化编辑器。通过 CDN 引入 MathJax 库用于公式渲染。提供一个代码输入区，用户可以输入 LaTeX 语法。监听输入区变化，使用 debounce 防抖处理，延迟 300ms 后在下方可视化输出区实时渲染数学公式。提供预设按钮：插入2x2矩阵、插入积分公式、插入求和公式。输入错误 LaTeX 语法时不能白屏，而是提示“语法解析错误”。","enDescription":"Online visual editor for LaTeX matrices and complex formulas. The MathJax library is loaded via CDN for formula rendering. It provides a code input area where users can enter LaTeX syntax. Input changes are monitored and processed with debounce, rendering the math formula in real time in the visual output area below after a 300ms delay. Preset buttons are provided: insert 2x2 matrix, insert integral formula, and insert summation formula. Invalid LaTeX syntax must not cause a blank screen; instead, show “Syntax parsing error”.","zhTitle":"LaTeX 矩阵与复杂公式在线可视化编辑器","enTitle":"LaTeX Formula Editor | Free Online Tool","zhKeywords":"LaTeX矩阵编辑器, LaTeX公式可视化, MathJax在线编辑器, LaTeX实时渲染, 矩阵公式生成器, 在线数学公式编辑器","enKeywords":"LaTeX Formula Editor, online tool, browser tool, productivity tool"}};
-  const CURRENT_TOOL = {"zhName":"LaTeX 矩阵与复杂公式在线可视化编辑器","enName":"LaTeX Formula Editor","zhDescription":"LaTeX 矩阵与复杂公式在线可视化编辑器。通过 CDN 引入 MathJax 库用于公式渲染。提供一个代码输入区，用户可以输入 LaTeX 语法。监听输入区变化，使用 debounce 防抖处理，延迟 300ms 后在下方可视化输出区实时渲染数学公式。提供预设按钮：插入2x2矩阵、插入积分公式、插入求和公式。输入错误 LaTeX 语法时不能白屏，而是提示“语法解析错误”。","enDescription":"Online visual editor for LaTeX matrices and complex formulas. The MathJax library is loaded via CDN for formula rendering. It provides a code input area where users can enter LaTeX syntax. Input changes are monitored and processed with debounce, rendering the math formula in real time in the visual output area below after a 300ms delay. Preset buttons are provided: insert 2x2 matrix, insert integral formula, and insert summation formula. Invalid LaTeX syntax must not cause a blank screen; instead, show “Syntax parsing error”.","zhTitle":"LaTeX 矩阵与复杂公式在线可视化编辑器","enTitle":"LaTeX Formula Editor | Free Online Tool","zhKeywords":"LaTeX矩阵编辑器, LaTeX公式可视化, MathJax在线编辑器, LaTeX实时渲染, 矩阵公式生成器, 在线数学公式编辑器","enKeywords":"LaTeX Formula Editor, online tool, browser tool, productivity tool"};
-  const ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
-  const ZH_RE = /[\u4e00-\u9fff]/;
-  const originalText = new WeakMap();
-  const originalAttrs = new WeakMap();
-  let observer = null;
-
-  function normalize(value) {
-    return String(value || '').replace(/\s+/g, ' ').trim();
-  }
-
-  function hasChinese(value) {
-    return ZH_RE.test(String(value || ''));
-  }
-
-  function language() {
-    return localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'zh';
-  }
-
-  function translateExact(value, lang) {
-    const text = String(value || '');
-    if (lang === 'zh' || !text) return text;
-    if (TRANSLATIONS[text]) return TRANSLATIONS[text];
-    const normalized = normalize(text);
-    if (TRANSLATIONS[normalized]) return TRANSLATIONS[normalized];
-
-    const dynamic = [
-      [/^(\d+)\s*个字符$/u, '$1 characters'],
-      [/^(\d+)\s*字符$/u, '$1 characters'],
-      [/^(\d+)\s*字$/u, '$1 characters'],
-      [/^(\d+)\s*行$/u, '$1 rows'],
-      [/^(\d+)\s*列$/u, '$1 columns'],
-      [/^(\d+)\s*项$/u, '$1 items'],
-      [/^(\d+)\s*次$/u, '$1 times'],
-      [/^当前显示\s*(\d+)\s*\/\s*(\d+)$/u, 'Showing $1 / $2'],
-      [/^第\s*(\d+)\s*行第\s*(\d+)\s*列/u, 'line $1, column $2']
-    ];
-    for (const [pattern, replacement] of dynamic) {
-      if (pattern.test(normalized)) return normalized.replace(pattern, replacement);
-    }
-    return text;
-  }
-
-  function translateWithSpacing(value, lang) {
-    const text = String(value || '');
-    if (!text.trim()) return text;
-    const leading = text.match(/^\s*/)[0];
-    const trailing = text.match(/\s*$/)[0];
-    const core = text.slice(leading.length, text.length - trailing.length);
-    return leading + translateExact(core, lang) + trailing;
-  }
-
-  function skipped(node) {
-    const parent = node.parentElement;
-    return !parent || Boolean(parent.closest('script, style, code, pre, textarea, [data-i18n-ignore]'));
-  }
-
-  function translateNode(node, lang) {
-    if (skipped(node) || !node.nodeValue.trim()) return;
-    const current = node.nodeValue;
-    let original = originalText.get(node);
-    const originalEnglish = original ? translateWithSpacing(original, 'en') : '';
-    if (!original || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
-      original = current;
-      originalText.set(node, original);
-    }
-    node.nodeValue = lang === 'zh' ? (original || current) : translateWithSpacing(original || current, lang);
-  }
-
-  function translateAttrs(element, lang) {
-    if (element.closest('script, style, [data-i18n-ignore]')) return;
-    let store = originalAttrs.get(element);
-    if (!store) {
-      store = {};
-      originalAttrs.set(element, store);
-    }
-    ATTRS.forEach((attr) => {
-      if (!element.hasAttribute(attr)) return;
-      const current = element.getAttribute(attr);
-      const originalEnglish = store[attr] ? translateExact(store[attr], 'en') : '';
-      if (!store[attr] || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
-        store[attr] = current;
-      }
-      element.setAttribute(attr, lang === 'zh' ? store[attr] : translateExact(store[attr] || current, lang));
-    });
-  }
-
-  function walk(root, lang) {
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    const nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-    nodes.forEach((node) => translateNode(node, lang));
-
-    const elementRoot = root.nodeType === Node.ELEMENT_NODE ? root : document.body;
-    if (!elementRoot) return;
-    translateAttrs(elementRoot, lang);
-    elementRoot.querySelectorAll('*').forEach((element) => translateAttrs(element, lang));
-  }
-
-  function setMeta(name, value) {
-    if (!value) return;
-    let meta = document.querySelector(`meta[name="${name}"]`);
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.setAttribute('name', name);
-      document.head.appendChild(meta);
-    }
-    meta.setAttribute('content', value);
-  }
-
-  function applyMetadata(lang) {
-    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-    if (PAGE_SLUG === 'index') {
-      document.title = lang === 'zh'
-        ? '免费在线开发者工具箱 | 纯前端工具集合'
-        : 'Free Online Developer Toolbox | Pure Front-End Tools';
-      setMeta('description', lang === 'zh'
-        ? '免费在线开发者工具箱，汇集 JSON、CSV、LaTeX、Base64、正则、时间戳、二维码、颜色转换等纯前端微型工具，隐私友好、无需安装、极速加载。'
-        : 'A free online developer toolbox with pure front-end tools for JSON, CSV, LaTeX, Base64, regex, timestamps, QR codes, color conversion, and daily productivity.');
-      setMeta('keywords', lang === 'zh'
-        ? '免费在线开发者工具箱, 纯前端工具集合, 在线 JSON 工具, 在线编码转换工具, 生产力工具箱, 微型 Web 工具'
-        : 'free online developer tools, front-end tools, JSON tools, encoding tools, productivity toolbox, micro web tools');
-      return;
-    }
-    if (!CURRENT_TOOL || !CURRENT_TOOL.zhName) return;
-    document.title = lang === 'zh' ? CURRENT_TOOL.zhTitle : CURRENT_TOOL.enTitle;
-    setMeta('description', lang === 'zh' ? CURRENT_TOOL.zhDescription : CURRENT_TOOL.enDescription);
-    setMeta('keywords', lang === 'zh' ? CURRENT_TOOL.zhKeywords : CURRENT_TOOL.enKeywords);
-    const h1 = document.querySelector('h1');
-    if (h1) h1.textContent = lang === 'zh' ? CURRENT_TOOL.zhName : CURRENT_TOOL.enName;
-  }
-
-  function updateIndexCards(lang) {
-    if (PAGE_SLUG !== 'index') return;
-    document.querySelectorAll('a[href$=".html"]').forEach((card) => {
-      const slug = (card.getAttribute('href') || '').split('/').pop().replace(/\.html$/i, '');
-      const tool = TOOL_DATA[slug];
-      if (!tool) return;
-      const title = card.querySelector('h3');
-      const description = card.querySelector('p');
-      const action = card.querySelector('span:last-child');
-      if (title) title.textContent = lang === 'zh' ? tool.zhName : tool.enName;
-      if (description) description.textContent = lang === 'zh' ? tool.zhDescription : tool.enDescription;
-      if (action) action.textContent = lang === 'zh' ? '立即使用' : 'Open Tool';
-      card.dataset.search = normalize(`${slug} ${tool.zhName} ${tool.enName} ${tool.zhDescription} ${tool.enDescription}`).toLowerCase().replace(/[-_\s]+/g, '');
-    });
-    const search = document.getElementById('searchInput');
-    if (search) search.dispatchEvent(new Event('input', { bubbles: true }));
-  }
-
-  function ensureToggle(lang) {
-    let toggle = document.getElementById('microToolsLanguageToggle');
-    if (!toggle) {
-      toggle = document.createElement('div');
-      toggle.id = 'microToolsLanguageToggle';
-      toggle.setAttribute('data-i18n-ignore', 'true');
-      toggle.className = 'fixed right-4 top-4 z-50 flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/90 p-1 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur';
-      toggle.innerHTML = '<span data-language-label class="px-2 text-xs text-slate-300">语言</span><button type="button" data-lang-option="zh" class="rounded-full px-3 py-1.5 transition">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-1.5 transition">EN</button>';
-      document.body.appendChild(toggle);
-      toggle.addEventListener('click', (event) => {
-        const button = event.target.closest('[data-lang-option]');
-        if (!button) return;
-        localStorage.setItem(STORAGE_KEY, button.getAttribute('data-lang-option') === 'en' ? 'en' : 'zh');
-        applyLanguage(language());
-      });
-    }
-    toggle.querySelector('[data-language-label]').textContent = lang === 'zh' ? '语言' : 'Language';
-    toggle.querySelectorAll('[data-lang-option]').forEach((button) => {
-      const active = button.getAttribute('data-lang-option') === lang;
-      button.className = active
-        ? 'rounded-full bg-cyan-400 px-3 py-1.5 text-slate-950 transition'
-        : 'rounded-full px-3 py-1.5 text-slate-200 transition hover:bg-white/10';
-    });
-  }
-
-  function disconnect() {
-    if (observer) observer.disconnect();
-  }
-
-  function observe() {
-    if (!observer) {
-      observer = new MutationObserver(() => {
-        if (language() !== 'en') return;
-        disconnect();
-        applyLanguage('en');
-        observe();
-      });
-    }
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributes: true,
-      attributeFilter: ATTRS
-    });
-  }
-
-  function applyLanguage(lang) {
-    const next = lang === 'en' ? 'en' : 'zh';
-    disconnect();
-    ensureToggle(next);
-    applyMetadata(next);
-    walk(document.body, next);
-    updateIndexCards(next);
-    ensureToggle(next);
-    observe();
-  }
-
-  function init() {
-    applyLanguage(language());
-    window.addEventListener('storage', (event) => {
-      if (event.key === STORAGE_KEY) applyLanguage(language());
-    });
-  }
-
-  window.MicroToolsI18n = {
-    getLanguage: language,
-    setLanguage(value) {
-      localStorage.setItem(STORAGE_KEY, value === 'en' ? 'en' : 'zh');
-      applyLanguage(language());
-    },
-    applyLanguage
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
-  </script>
-  <!-- micro-tools-i18n:end -->
 </body>
 </html>

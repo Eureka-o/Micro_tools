@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Word Counter | Free Online Tool</title>
+  <meta name="description" content="Advanced word count tool. Count characters, words, sentences, paragraphs, and estimated reading time in real time.">
+  <meta name="keywords" content="Word Counter, online tool, browser tool, productivity tool">
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+  <meta property="og:image" content="../assets/logo.png">
+  <meta name="twitter:image" content="../assets/logo.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          boxShadow: {
+            glow: '0 20px 80px rgba(14, 165, 233, 0.18)'
+          }
+        }
+      }
+    }
+  </script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/en/word-counter.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/word-counter.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/word-counter.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/word-counter.html">
+  <script src="./theme-toggle.js" defer></script>
+</head>
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="../word-counter.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./word-counter.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
+  <div class="pointer-events-none fixed inset-0 overflow-hidden">
+    <div class="absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
+  </div>
+
+  <header class="relative border-b border-gray-200 dark:border-white/10 bg-slate-950/70 backdrop-blur-xl">
+    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+            Real-time · Accurate · Zero dependencies
+          </p>
+          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">Word Counter</h1>
+          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
+            Advanced word count tool: count characters, words, sentences, and paragraphs in real time, and automatically estimate reading time.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 text-sm text-slate-700 dark:text-slate-300 shadow-glow">
+          <span class="block text-slate-400">Recommended scenarios</span>
+          <strong class="text-cyan-200">Writing / SEO / Papers / Content Editing</strong>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-[1.25fr_0.75fr]" aria-label="Word count tool main interface">
+      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-glow backdrop-blur-xl sm:p-6">
+        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Input Text</h2>
+            <p class="mt-1 text-sm text-slate-400">Paste or enter any Chinese, English, symbols, or line breaks, and the statistics will update automatically.</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button id="sampleBtn" type="button" class="rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95 focus:outline-none focus:ring-2 focus:ring-cyan-300">
+              Example Text
+            </button>
+            <button id="clearBtn" type="button" class="rounded-xl border border-rose-400/30 bg-rose-400/10 px-4 py-2 text-sm font-semibold text-rose-100 transition hover:bg-rose-400/20 active:scale-95 focus:outline-none focus:ring-2 focus:ring-rose-300">
+              Clear
+            </button>
+          </div>
+        </div>
+
+        <label for="textInput" class="sr-only">Enter the text to count</label>
+        <textarea id="textInput" class="h-80 w-full resize-y rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 p-4 text-base leading-7 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" placeholder="Enter or paste text here, such as articles, papers, product descriptions, SEO copy..." spellcheck="true" maxlength="500000"></textarea>
+
+        <div id="errorBox" class="mt-4 hidden rounded-2xl border border-rose-400/40 bg-rose-500/10 px-4 py-3 text-sm font-medium text-rose-100" role="alert"></div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <p id="statusText" class="text-sm text-slate-400">Waiting for text.</p>
+          <div class="flex flex-wrap gap-2">
+            <button id="copyBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-4 py-2 text-sm font-semibold text-gray-900 dark:text-white transition hover:bg-white/15 active:scale-95 focus:outline-none focus:ring-2 focus:ring-slate-300">
+              Copy statistics
+            </button>
+            <button id="downloadBtn" type="button" class="rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-400/20 active:scale-95 focus:outline-none focus:ring-2 focus:ring-emerald-300">
+              Download text
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5 shadow-glow backdrop-blur-xl sm:p-6" aria-label="Statistics">
+        <div class="mb-5">
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">Statistics</h2>
+          <p class="mt-1 text-sm text-slate-400">Calculates in real time based on current input.</p>
+        </div>
+
+        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+          <div class="rounded-2xl border border-cyan-400/20 bg-cyan-400/10 p-4">
+            <p class="text-sm text-cyan-100/80">Character count (including spaces)</p>
+            <p id="charsWithSpaces" class="mt-2 text-3xl font-black text-gray-900 dark:text-white">0</p>
+          </div>
+          <div class="rounded-2xl border border-sky-400/20 bg-sky-400/10 p-4">
+            <p class="text-sm text-sky-100/80">Character count (excluding spaces)</p>
+            <p id="charsNoSpaces" class="mt-2 text-3xl font-black text-gray-900 dark:text-white">0</p>
+          </div>
+          <div class="rounded-2xl border border-indigo-400/20 bg-indigo-400/10 p-4">
+            <p class="text-sm text-indigo-100/80">Word count</p>
+            <p id="wordCount" class="mt-2 text-3xl font-black text-gray-900 dark:text-white">0</p>
+          </div>
+          <div class="rounded-2xl border border-violet-400/20 bg-violet-400/10 p-4">
+            <p class="text-sm text-violet-100/80">Sentence count</p>
+            <p id="sentenceCount" class="mt-2 text-3xl font-black text-gray-900 dark:text-white">0</p>
+          </div>
+          <div class="rounded-2xl border border-fuchsia-400/20 bg-fuchsia-400/10 p-4">
+            <p class="text-sm text-fuchsia-100/80">Paragraph Count</p>
+            <p id="paragraphCount" class="mt-2 text-3xl font-black text-gray-900 dark:text-white">0</p>
+          </div>
+          <div class="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4">
+            <p class="text-sm text-emerald-100/80">Estimated Reading Time</p>
+            <p id="readingTime" class="mt-2 text-3xl font-black text-gray-900 dark:text-white">0 seconds</p>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-glow backdrop-blur-xl sm:p-8">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Word Counter</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Advanced word count tool. Count characters, words, sentences, paragraphs, and estimated reading time in real time. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Word Counter for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+    </article>
+  </main>
+
+  <footer class="relative mx-auto max-w-6xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
+    <p>© <span id="year"></span> word-counter. Built with native HTML, JavaScript and Tailwind CSS.</p>
+  </footer>
+
+  <script>
+    (function () {
+      'use strict';
+
+      const MAX_LENGTH = 500000;
+      const WORDS_PER_MINUTE_EN = 225;
+      const CHARS_PER_MINUTE_CJK = 450;
+
+      const elements = {
+        input: document.getElementById('textInput'),
+        errorBox: document.getElementById('errorBox'),
+        statusText: document.getElementById('statusText'),
+        charsWithSpaces: document.getElementById('charsWithSpaces'),
+        charsNoSpaces: document.getElementById('charsNoSpaces'),
+        wordCount: document.getElementById('wordCount'),
+        sentenceCount: document.getElementById('sentenceCount'),
+        paragraphCount: document.getElementById('paragraphCount'),
+        readingTime: document.getElementById('readingTime'),
+        sampleBtn: document.getElementById('sampleBtn'),
+        clearBtn: document.getElementById('clearBtn'),
+        copyBtn: document.getElementById('copyBtn'),
+        downloadBtn: document.getElementById('downloadBtn'),
+        year: document.getElementById('year')
+      };
+
+      elements.year.textContent = String(new Date().getFullYear());
+
+      const sampleText = 'word-counter is an advanced word count tool.\n\nIt can count characters, words, sentences, and paragraphs in real time, and estimate reading time. For SEO writers, editors, students and content marketers, this tool helps improve writing efficiency.\n\nPaste your article, paper, product description, or marketing copy here, and the statistics will update automatically.';
+
+      function safeText(value) {
+        if (typeof value !== 'string') return '';
+        return value.replace(/\u0000/g, '');
+      }
+
+      function formatNumber(num) {
+        const n = Number.isFinite(num) && num >= 0 ? Math.floor(num) : 0;
+        return n.toLocaleString('zh-CN');
+      }
+
+      function showError(message) {
+        elements.errorBox.textContent = message;
+        elements.errorBox.classList.remove('hidden');
+      }
+
+      function hideError() {
+        elements.errorBox.textContent = '';
+        elements.errorBox.classList.add('hidden');
+      }
+
+      function setButtonFeedback(button, text, isSuccess) {
+        if (!button) return;
+        const original = button.dataset.originalText || button.textContent;
+        button.dataset.originalText = original;
+        button.textContent = text;
+        button.classList.add(isSuccess ? 'ring-2' : 'ring-2', isSuccess ? 'ring-emerald-300' : 'ring-rose-300');
+        window.setTimeout(function () {
+          button.textContent = original;
+          button.classList.remove('ring-2', 'ring-emerald-300', 'ring-rose-300');
+        }, 1200);
+      }
+
+      function countWords(text) {
+        const normalized = safeText(text).trim();
+        if (!normalized) return 0;
+
+        const latinMatches = normalized.match(/[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*/g) || [];
+        const cjkMatches = normalized.match(/[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/g) || [];
+        const otherWordMatches = normalized.match(/[\p{L}\p{N}]+/gu) || [];
+
+        let nonLatinOther = 0;
+        for (const token of otherWordMatches) {
+          if (!/[A-Za-z0-9]/.test(token) && !/[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/.test(token)) {
+            nonLatinOther += 1;
+          }
+        }
+
+        return latinMatches.length + cjkMatches.length + nonLatinOther;
+      }
+
+      function countSentences(text) {
+        const trimmed = safeText(text).trim();
+        if (!trimmed) return 0;
+
+        const matches = trimmed.match(/[^。！？!?\.]+[。！？!?\.]+(?:["'”’）\]\}】》]*)|[^。！？!?\.]+$/g);
+        if (!matches) return 0;
+
+        return matches
+          .map(function (s) { return s.trim(); })
+          .filter(function (s) { return s.length > 0 && /[\p{L}\p{N}\u3400-\u9FFF]/u.test(s); })
+          .length;
+      }
+
+      function countParagraphs(text) {
+        const trimmed = safeText(text).trim();
+        if (!trimmed) return 0;
+        return trimmed.split(/\n\s*\n+/).map(function (p) {
+          return p.trim();
+        }).filter(function (p) {
+          return p.length > 0;
+        }).length;
+      }
+
+      function calculateReadingTime(text, words, charsNoSpaces) {
+        if (!text.trim()) return '0 秒';
+
+        const cjkChars = (text.match(/[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/g) || []).length;
+        const latinWords = (text.match(/[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*/g) || []).length;
+        const cjkMinutes = cjkChars / CHARS_PER_MINUTE_CJK;
+        const enMinutes = latinWords / WORDS_PER_MINUTE_EN;
+        const fallbackMinutes = charsNoSpaces > 0 && cjkChars === 0 && latinWords === 0 ? charsNoSpaces / CHARS_PER_MINUTE_CJK : 0;
+        const totalSeconds = Math.max(1, Math.ceil((cjkMinutes + enMinutes + fallbackMinutes) * 60));
+
+        if (totalSeconds < 60) return totalSeconds + ' 秒';
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        if (minutes < 60) return seconds ? minutes + ' 分 ' + seconds + ' 秒' : minutes + ' 分钟';
+        const hours = Math.floor(minutes / 60);
+        const restMinutes = minutes % 60;
+        return restMinutes ? hours + ' 小时 ' + restMinutes + ' 分钟' : hours + ' 小时';
+      }
+
+      function getStats(text) {
+        const value = safeText(text);
+        const charsWithSpaces = Array.from(value).length;
+        const charsNoSpaces = Array.from(value.replace(/\s/g, '')).length;
+        const words = countWords(value);
+        const sentences = countSentences(value);
+        const paragraphs = countParagraphs(value);
+        const readingTime = calculateReadingTime(value, words, charsNoSpaces);
+
+        return {
+          charsWithSpaces,
+          charsNoSpaces,
+          words,
+          sentences,
+          paragraphs,
+          readingTime
+        };
+      }
+
+      function render() {
+        try {
+          let value = safeText(elements.input.value);
+
+          if (value.length > MAX_LENGTH) {
+            value = value.slice(0, MAX_LENGTH);
+            elements.input.value = value;
+            showError('Input Content过长，已自动截取到 500,000 个字符以内，以确保浏览器稳定运行。');
+          } else {
+            hideError();
+          }
+
+          const stats = getStats(value);
+
+          elements.charsWithSpaces.textContent = formatNumber(stats.charsWithSpaces);
+          elements.charsNoSpaces.textContent = formatNumber(stats.charsNoSpaces);
+          elements.wordCount.textContent = formatNumber(stats.words);
+          elements.sentenceCount.textContent = formatNumber(stats.sentences);
+          elements.paragraphCount.textContent = formatNumber(stats.paragraphs);
+          elements.readingTime.textContent = stats.readingTime;
+
+          if (stats.charsWithSpaces === 0) {
+            elements.statusText.textContent = 'Waiting for text.';
+          } else {
+            elements.statusText.textContent = '已统计 ' + formatNumber(stats.charsWithSpaces) + ' 个字符，结果实时更新。';
+          }
+        } catch (error) {
+          showError('统计时遇到异常字符，请尝试删除特殊控制字符后重试。应用已保持稳定运行。');
+        }
+      }
+
+      function copyStats() {
+        try {
+          const text = safeText(elements.input.value);
+          const stats = getStats(text);
+          const result = [
+            'word-counter Statistics',
+            'Character count (including spaces)：' + stats.charsWithSpaces,
+            'Character count (excluding spaces)：' + stats.charsNoSpaces,
+            '单词数：' + stats.words,
+            '句子数：' + stats.sentences,
+            '段落数：' + stats.paragraphs,
+            'Estimated Reading Time：' + stats.readingTime
+          ].join('\n');
+
+          if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(result).then(function () {
+              setButtonFeedback(elements.copyBtn, 'Copied', true);
+            }).catch(function () {
+              fallbackCopy(result);
+            });
+          } else {
+            fallbackCopy(result);
+          }
+        } catch (error) {
+          showError('Copy Failed，请检查浏览器权限或手动选择Statistics。');
+          setButtonFeedback(elements.copyBtn, 'Copy Failed', false);
+        }
+      }
+
+      function fallbackCopy(text) {
+        const temp = document.createElement('textarea');
+        temp.value = text;
+        temp.setAttribute('readonly', 'readonly');
+        temp.style.position = 'fixed';
+        temp.style.left = '-9999px';
+        document.body.appendChild(temp);
+        temp.select();
+
+        try {
+          const ok = document.execCommand('copy');
+          setButtonFeedback(elements.copyBtn, ok ? 'Copied' : 'Copy Failed', ok);
+          if (!ok) showError('Copy failed. Please copy manually.Statistics。');
+        } catch (error) {
+          showError('Copy failed. Please copy manually.Statistics。');
+          setButtonFeedback(elements.copyBtn, 'Copy Failed', false);
+        } finally {
+          document.body.removeChild(temp);
+        }
+      }
+
+      function downloadText() {
+        try {
+          const text = safeText(elements.input.value);
+          if (!text.trim()) {
+            showError('当前没有可Download的文本，请先Input Content。');
+            setButtonFeedback(elements.downloadBtn, '无内容', false);
+            return;
+          }
+
+          const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+          a.href = url;
+          a.download = 'word-counter-' + timestamp + '.txt';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          setButtonFeedback(elements.downloadBtn, '已Download', true);
+          hideError();
+        } catch (error) {
+          showError('Download失败，请检查浏览器是否允许Download文件。');
+          setButtonFeedback(elements.downloadBtn, 'Download失败', false);
+        }
+      }
+
+      elements.input.addEventListener('input', render);
+      elements.sampleBtn.addEventListener('click', function () {
+        elements.input.value = sampleText;
+        render();
+        setButtonFeedback(elements.sampleBtn, '已填入', true);
+        elements.input.focus();
+      });
+      elements.clearBtn.addEventListener('click', function () {
+        elements.input.value = '';
+        render();
+        setButtonFeedback(elements.clearBtn, '已Clear', true);
+        elements.input.focus();
+      });
+      elements.copyBtn.addEventListener('click', copyStats);
+      elements.downloadBtn.addEventListener('click', downloadText);
+
+      render();
+    })();
+  </script>
+</body>
+</html>

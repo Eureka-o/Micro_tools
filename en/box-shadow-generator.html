@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSS Box Shadow Generator | Free Online Tool</title>
+  <meta name="description" content="CSS shadow (Box-Shadow) debugger and generator. Adjust offset, blur radius, spread radius, and color with sliders, preview in real time, and generate CSS.">
+  <meta name="keywords" content="CSS Box Shadow Generator, online tool, browser tool, productivity tool">
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+  <meta property="og:image" content="../assets/logo.png">
+  <meta name="twitter:image" content="../assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/en/box-shadow-generator.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/box-shadow-generator.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/box-shadow-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/box-shadow-generator.html">
+  <script src="./theme-toggle.js" defer></script>
+</head>
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="../box-shadow-generator.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./box-shadow-generator.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
+  <div class="pointer-events-none fixed inset-0 overflow-hidden">
+    <div class="absolute -top-28 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-violet-500/10 blur-3xl"></div>
+  </div>
+
+  <header class="relative border-b border-gray-200 dark:border-white/10 bg-slate-950/70 backdrop-blur-xl">
+    <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+            Online CSS tools · Live preview · One-click copy
+          </p>
+          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">CSS Box Shadow Generator</h1>
+          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
+            CSS shadow (Box-Shadow) debugger and generator. Adjust offset, blur radius, spread radius, and color with sliders, preview in real time, and generate ready-to-use CSS.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 text-sm text-slate-700 dark:text-slate-300 shadow-2xl">
+          <div class="flex items-center gap-2">
+            <span class="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_18px_rgba(52,211,153,.8)]"></span>
+            <span>Zero-dependency logic · Native JavaScript</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl backdrop-blur-xl sm:p-6">
+          <div class="mb-6 flex items-center justify-between gap-4">
+            <div>
+              <h2 class="text-xl font-bold text-gray-900 dark:text-white">Input</h2>
+              <p class="mt-1 text-sm text-slate-400">Drag the parameters to generate shadows in real time.</p>
+            </div>
+            <button id="resetBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:border-cyan-300/40 hover:bg-cyan-400/10 active:scale-95">
+              Reset
+            </button>
+          </div>
+
+          <div id="errorBox" class="mb-5 hidden rounded-2xl border border-red-400/30 bg-red-500/15 px-4 py-3 text-sm text-red-100" role="alert"></div>
+
+          <div class="space-y-5">
+            <label class="block">
+              <div class="mb-2 flex items-center justify-between">
+                <span class="font-medium text-slate-800 dark:text-slate-200">Horizontal Offset X</span>
+                <span id="xValue" class="rounded-lg bg-slate-50 dark:bg-slate-800 px-2 py-1 text-sm text-cyan-200">12px</span>
+              </div>
+              <input id="offsetX" type="range" min="-100" max="100" step="1" value="12" class="w-full accent-cyan-400" />
+            </label>
+
+            <label class="block">
+              <div class="mb-2 flex items-center justify-between">
+                <span class="font-medium text-slate-800 dark:text-slate-200">Vertical offset Y</span>
+                <span id="yValue" class="rounded-lg bg-slate-50 dark:bg-slate-800 px-2 py-1 text-sm text-cyan-200">18px</span>
+              </div>
+              <input id="offsetY" type="range" min="-100" max="100" step="1" value="18" class="w-full accent-cyan-400" />
+            </label>
+
+            <label class="block">
+              <div class="mb-2 flex items-center justify-between">
+                <span class="font-medium text-slate-800 dark:text-slate-200">Blur Radius</span>
+                <span id="blurValue" class="rounded-lg bg-slate-50 dark:bg-slate-800 px-2 py-1 text-sm text-cyan-200">35px</span>
+              </div>
+              <input id="blurRadius" type="range" min="0" max="160" step="1" value="35" class="w-full accent-cyan-400" />
+            </label>
+
+            <label class="block">
+              <div class="mb-2 flex items-center justify-between">
+                <span class="font-medium text-slate-800 dark:text-slate-200">Spread radius</span>
+                <span id="spreadValue" class="rounded-lg bg-slate-50 dark:bg-slate-800 px-2 py-1 text-sm text-cyan-200">0px</span>
+              </div>
+              <input id="spreadRadius" type="range" min="-80" max="80" step="1" value="0" class="w-full accent-cyan-400" />
+            </label>
+
+            <label class="block">
+              <div class="mb-2 flex items-center justify-between">
+                <span class="font-medium text-slate-800 dark:text-slate-200">Alpha Opacity</span>
+                <span id="alphaValue" class="rounded-lg bg-slate-50 dark:bg-slate-800 px-2 py-1 text-sm text-cyan-200">0.28</span>
+              </div>
+              <input id="alpha" type="range" min="0" max="1" step="0.01" value="0.28" class="w-full accent-cyan-400" />
+            </label>
+
+            <div class="grid gap-4 sm:grid-cols-2">
+              <label class="block rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/70 p-4">
+                <span class="mb-3 block font-medium text-slate-800 dark:text-slate-200">Shadow color</span>
+                <div class="flex items-center gap-3">
+                  <input id="shadowColor" type="color" value="#000000" class="h-11 w-14 cursor-pointer rounded-lg border border-gray-200 dark:border-white/10 bg-transparent p-1" />
+                  <input id="shadowColorText" type="text" value="#000000" aria-label="Shadow color hex value" class="min-w-0 flex-1 rounded-xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-300/60" />
+                </div>
+              </label>
+
+              <label class="block rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/70 p-4">
+                <span class="mb-3 block font-medium text-slate-800 dark:text-slate-200">Shadow type</span>
+                <select id="shadowType" class="w-full rounded-xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-300/60">
+                  <option value="outset">Outer shadow outset</option>
+                  <option value="inset">Inset shadow</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/70 p-4">
+              <label class="mb-3 flex items-center gap-3">
+                <input id="multiShadow" type="checkbox" class="h-4 w-4 accent-cyan-400" />
+                <span class="font-medium text-slate-800 dark:text-slate-200">Enhanced layered shadow</span>
+              </label>
+              <p class="text-sm leading-6 text-slate-400">When enabled, a softer long-distance shadow layer is added automatically, ideal for cards and modal visuals.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7">
+        <div class="grid gap-6">
+          <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-gradient-to-br from-slate-100 to-slate-300 p-5 shadow-2xl sm:p-8">
+            <div class="mb-5 flex items-center justify-between">
+              <div>
+                <h2 class="text-xl font-bold text-slate-950 dark:text-slate-100">Live Preview</h2>
+                <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">See how the shadow looks on a real card.</p>
+              </div>
+              <span class="rounded-full bg-slate-950/10 px-3 py-1 text-xs font-semibold text-slate-700 dark:text-slate-300">Preview</span>
+            </div>
+            <div class="flex min-h-[360px] items-center justify-center rounded-3xl border border-slate-950/10 bg-white/60 p-6">
+              <div id="previewBox" class="flex h-56 w-full max-w-sm flex-col justify-between rounded-3xl bg-white p-7 transition-all duration-150">
+                <div>
+                  <div class="mb-5 h-12 w-12 rounded-2xl bg-gradient-to-br from-cyan-400 to-violet-500"></div>
+                  <h3 class="text-2xl font-black text-slate-950 dark:text-slate-100">Shadow Card</h3>
+                  <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">Drag the controls on the left, and the shadow effect will be applied to this preview card instantly.</p>
+                </div>
+                <div class="flex gap-2">
+                  <span class="h-2 flex-1 rounded-full bg-cyan-400"></span>
+                  <span class="h-2 flex-1 rounded-full bg-violet-400"></span>
+                  <span class="h-2 flex-1 rounded-full bg-slate-300"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="rounded-3xl border border-cyan-300/20 bg-cyan-950/30 p-5 shadow-2xl backdrop-blur-xl sm:p-6">
+            <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white">Output</h2>
+                <p class="mt-1 text-sm text-cyan-100/70">The generated CSS can be copied directly into your project.</p>
+              </div>
+              <button id="copyBtn" type="button" class="rounded-xl bg-cyan-400 px-5 py-2.5 text-sm font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-95">
+                Copy CSS
+              </button>
+            </div>
+            <pre class="overflow-x-auto rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950 p-4 text-sm leading-7 text-cyan-100"><code id="cssOutput"></code></pre>
+            <div id="copyStatus" class="mt-3 hidden rounded-xl border border-emerald-400/30 bg-emerald-500/15 px-4 py-2 text-sm text-emerald-100"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl backdrop-blur-xl sm:p-8">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About CSS Box Shadow Generator</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">CSS shadow (Box-Shadow) debugger and generator. Adjust offset, blur radius, spread radius, and color with sliders, preview in real time, and generate CSS. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use CSS Box Shadow Generator for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+    </article>
+  </main>
+
+  <footer class="relative mx-auto max-w-7xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
+    <p>box-shadow-generator · CSS Box-Shadow Online Tool</p>
+  </footer>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const $ = (id) => document.getElementById(id);
+
+      const elements = {
+        offsetX: $("offsetX"),
+        offsetY: $("offsetY"),
+        blurRadius: $("blurRadius"),
+        spreadRadius: $("spreadRadius"),
+        alpha: $("alpha"),
+        shadowColor: $("shadowColor"),
+        shadowColorText: $("shadowColorText"),
+        shadowType: $("shadowType"),
+        multiShadow: $("multiShadow"),
+        previewBox: $("previewBox"),
+        cssOutput: $("cssOutput"),
+        copyBtn: $("copyBtn"),
+        resetBtn: $("resetBtn"),
+        errorBox: $("errorBox"),
+        copyStatus: $("copyStatus"),
+        xValue: $("xValue"),
+        yValue: $("yValue"),
+        blurValue: $("blurValue"),
+        spreadValue: $("spreadValue"),
+        alphaValue: $("alphaValue")
+      };
+
+      const defaults = {
+        offsetX: 12,
+        offsetY: 18,
+        blurRadius: 35,
+        spreadRadius: 0,
+        alpha: 0.28,
+        shadowColor: "#000000",
+        shadowType: "outset",
+        multiShadow: false
+      };
+
+      function showError(message) {
+        elements.errorBox.textContent = message;
+        elements.errorBox.classList.remove("hidden");
+      }
+
+      function hideError() {
+        elements.errorBox.textContent = "";
+        elements.errorBox.classList.add("hidden");
+      }
+
+      function showCopyStatus(message, isError = false) {
+        elements.copyStatus.textContent = message;
+        elements.copyStatus.classList.remove("hidden", "border-emerald-400/30", "bg-emerald-500/15", "text-emerald-100", "border-red-400/30", "bg-red-500/15", "text-red-100");
+        if (isError) {
+          elements.copyStatus.classList.add("border-red-400/30", "bg-red-500/15", "text-red-100");
+        } else {
+          elements.copyStatus.classList.add("border-emerald-400/30", "bg-emerald-500/15", "text-emerald-100");
+        }
+        window.clearTimeout(showCopyStatus.timer);
+        showCopyStatus.timer = window.setTimeout(() => {
+          elements.copyStatus.classList.add("hidden");
+        }, 2200);
+      }
+
+      function clampNumber(value, min, max, fallback) {
+        const num = Number(value);
+        if (!Number.isFinite(num)) return fallback;
+        return Math.min(max, Math.max(min, num));
+      }
+
+      function normalizeHexColor(value) {
+        const raw = String(value || "").trim();
+        const shortHex = /^#([0-9a-fA-F]{3})$/;
+        const fullHex = /^#([0-9a-fA-F]{6})$/;
+
+        if (fullHex.test(raw)) return raw.toLowerCase();
+
+        if (shortHex.test(raw)) {
+          const chars = raw.slice(1).split("");
+          return ("#" + chars.map((c) => c + c).join("")).toLowerCase();
+        }
+
+        return null;
+      }
+
+      function hexToRgb(hex) {
+        const normalized = normalizeHexColor(hex);
+        if (!normalized) return { r: 0, g: 0, b: 0 };
+        const value = normalized.slice(1);
+        return {
+          r: parseInt(value.slice(0, 2), 16),
+          g: parseInt(value.slice(2, 4), 16),
+          b: parseInt(value.slice(4, 6), 16)
+        };
+      }
+
+      function getState() {
+        const color = normalizeHexColor(elements.shadowColorText.value);
+        if (!color) {
+          showError("Enter a valid hexadecimal color, such as #000000 or #0ea5e9.");
+        } else {
+          hideError();
+        }
+
+        const safeColor = color || defaults.shadowColor;
+
+        return {
+          offsetX: clampNumber(elements.offsetX.value, -100, 100, defaults.offsetX),
+          offsetY: clampNumber(elements.offsetY.value, -100, 100, defaults.offsetY),
+          blurRadius: clampNumber(elements.blurRadius.value, 0, 160, defaults.blurRadius),
+          spreadRadius: clampNumber(elements.spreadRadius.value, -80, 80, defaults.spreadRadius),
+          alpha: clampNumber(elements.alpha.value, 0, 1, defaults.alpha),
+          shadowColor: safeColor,
+          shadowType: elements.shadowType.value === "inset" ? "inset" : "outset",
+          multiShadow: Boolean(elements.multiShadow.checked)
+        };
+      }
+
+      function buildShadow(state) {
+        const rgb = hexToRgb(state.shadowColor);
+        const color = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${state.alpha.toFixed(2)})`;
+        const inset = state.shadowType === "inset" ? "inset " : "";
+        const primary = `${inset}${state.offsetX}px ${state.offsetY}px ${state.blurRadius}px ${state.spreadRadius}px ${color}`;
+
+        if (!state.multiShadow || state.shadowType === "inset") return primary;
+
+        const secondaryAlpha = Math.max(0, state.alpha * 0.45);
+        const secondaryColor = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${secondaryAlpha.toFixed(2)})`;
+        const secondaryX = Math.round(state.offsetX * 0.4);
+        const secondaryY = Math.round(state.offsetY * 1.9);
+        const secondaryBlur = Math.round(state.blurRadius * 1.8 + 10);
+        const secondarySpread = Math.round(state.spreadRadius - 4);
+
+        return `${primary}, ${secondaryX}px ${secondaryY}px ${secondaryBlur}px ${secondarySpread}px ${secondaryColor}`;
+      }
+
+      function updateUI() {
+        const state = getState();
+
+        elements.xValue.textContent = `${state.offsetX}px`;
+        elements.yValue.textContent = `${state.offsetY}px`;
+        elements.blurValue.textContent = `${state.blurRadius}px`;
+        elements.spreadValue.textContent = `${state.spreadRadius}px`;
+        elements.alphaValue.textContent = state.alpha.toFixed(2);
+
+        if (normalizeHexColor(elements.shadowColorText.value)) {
+          elements.shadowColor.value = state.shadowColor;
+        }
+
+        const shadow = buildShadow(state);
+        elements.previewBox.style.boxShadow = shadow;
+        elements.cssOutput.textContent = `.your-element {\n  box-shadow: ${shadow};\n}`;
+      }
+
+      function resetAll() {
+        elements.offsetX.value = defaults.offsetX;
+        elements.offsetY.value = defaults.offsetY;
+        elements.blurRadius.value = defaults.blurRadius;
+        elements.spreadRadius.value = defaults.spreadRadius;
+        elements.alpha.value = defaults.alpha;
+        elements.shadowColor.value = defaults.shadowColor;
+        elements.shadowColorText.value = defaults.shadowColor;
+        elements.shadowType.value = defaults.shadowType;
+        elements.multiShadow.checked = defaults.multiShadow;
+        hideError();
+        updateUI();
+      }
+
+      async function copyCss() {
+        const css = elements.cssOutput.textContent || "";
+        if (!css.trim()) {
+          showCopyStatus("No CSS code available to copy.", true);
+          return;
+        }
+
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(css);
+          } else {
+            const textarea = document.createElement("textarea");
+            textarea.value = css;
+            textarea.setAttribute("readonly", "");
+            textarea.style.position = "fixed";
+            textarea.style.left = "-9999px";
+            document.body.appendChild(textarea);
+            textarea.select();
+            const success = document.execCommand("copy");
+            document.body.removeChild(textarea);
+            if (!success) throw new Error("copy failed");
+          }
+          showCopyStatus("CSS copied to clipboard.");
+          elements.copyBtn.textContent = "Copied";
+          window.setTimeout(() => {
+            elements.copyBtn.textContent = "Copy CSS";
+          }, 1200);
+        } catch (error) {
+          showCopyStatus("Copy failed. Please manually select and copy the code.", true);
+        }
+      }
+
+      const inputIds = ["offsetX", "offsetY", "blurRadius", "spreadRadius", "alpha"];
+      inputIds.forEach((id) => {
+        elements[id].addEventListener("input", updateUI);
+        elements[id].addEventListener("change", updateUI);
+      });
+
+      elements.shadowColor.addEventListener("input", () => {
+        elements.shadowColorText.value = elements.shadowColor.value;
+        updateUI();
+      });
+
+      elements.shadowColorText.addEventListener("input", () => {
+        const normalized = normalizeHexColor(elements.shadowColorText.value);
+        if (normalized) {
+          elements.shadowColor.value = normalized;
+        }
+        updateUI();
+      });
+
+      elements.shadowColorText.addEventListener("blur", () => {
+        const normalized = normalizeHexColor(elements.shadowColorText.value);
+        if (normalized) {
+          elements.shadowColorText.value = normalized;
+        }
+        updateUI();
+      });
+
+      elements.shadowType.addEventListener("change", updateUI);
+      elements.multiShadow.addEventListener("change", updateUI);
+      elements.resetBtn.addEventListener("click", resetAll);
+      elements.copyBtn.addEventListener("click", copyCss);
+
+      window.addEventListener("error", () => {
+        showError("An unexpected error occurred. Please refresh the page or reset the parameters to continue.");
+      });
+
+      updateUI();
+    })();
+  </script>
+</body>
+</html>

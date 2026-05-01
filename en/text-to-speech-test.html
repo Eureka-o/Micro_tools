@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Browser-native TTS testing tool. Uses the browser&#x27;s built-in `window.speechSynthesis` API to read input text aloud, with adjustable speech rate and pitch.">
+  <meta name="keywords" content="Text to Speech Tester, online tool, browser tool, productivity tool">
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>Text to Speech Tester | Free Online Tool</title>
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+  <meta property="og:image" content="../assets/logo.png">
+  <meta name="twitter:image" content="../assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/en/text-to-speech-test.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/text-to-speech-test.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/text-to-speech-test.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/text-to-speech-test.html">
+  <script src="./theme-toggle.js" defer></script>
+</head>
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="../text-to-speech-test.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./text-to-speech-test.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
+  <div class="fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute right-0 top-40 h-96 w-96 rounded-full bg-indigo-500/10 blur-3xl"></div>
+    <div class="absolute bottom-0 left-0 h-80 w-80 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+  </div>
+
+  <header class="border-b border-gray-200 dark:border-white/10 bg-slate-950/70 backdrop-blur-xl">
+    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+            Browser Native TTS Tester
+          </p>
+          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">Text to Speech Tester</h1>
+          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
+            Use the browser's built-in <code class="rounded bg-white dark:bg-white/10 px-1.5 py-0.5 text-cyan-200">window.speechSynthesis</code> API that instantly converts text to speech.
+          </p>
+        </div>
+        <div id="supportBadge" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 text-sm text-slate-700 dark:text-slate-300 shadow-2xl">
+          Checking browser support...
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-5" aria-label="TTS test tool main interface">
+      <div class="lg:col-span-3">
+        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-6">
+          <div class="mb-5 flex items-center justify-between gap-4">
+            <div>
+              <h2 class="text-xl font-bold text-gray-900 dark:text-white">Input Text</h2>
+              <p class="mt-1 text-sm text-slate-400">Enter the content to read aloud, preferably no more than 5000 characters.</p>
+            </div>
+            <span id="charCount" class="shrink-0 rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">0 characters</span>
+          </div>
+
+          <label for="textInput" class="sr-only">Text to convert to speech</label>
+          <textarea
+            id="textInput"
+            class="min-h-64 w-full resize-y rounded-2xl border border-slate-700 bg-slate-950/70 p-4 text-base leading-7 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
+            placeholder="Example: Hello, this is a browser-native text-to-speech test tool. You can adjust the speed and pitch to experience different reading effects."
+            maxlength="5000"
+          ></textarea>
+
+          <div class="mt-4 flex flex-wrap gap-3">
+            <button id="sampleBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-95">
+              Fill Example
+            </button>
+            <button id="clearBtn" type="button" class="rounded-xl border border-red-400/20 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-200 transition hover:bg-red-500/20 active:scale-95">
+              Clear Text
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-2">
+        <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/30 p-5 shadow-2xl shadow-cyan-950/20 backdrop-blur-xl sm:p-6">
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">Voice Parameters</h2>
+          <p class="mt-1 text-sm text-cyan-100/70">Choose a browser-available voice and adjust the reading effect.</p>
+
+          <div class="mt-5 space-y-5">
+            <div>
+              <label for="voiceSelect" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Voice Role</label>
+              <select id="voiceSelect" class="w-full rounded-xl border border-slate-700 bg-white dark:bg-slate-950/80 px-3 py-3 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
+                <option value="">Loading voice list...</option>
+              </select>
+            </div>
+
+            <div>
+              <div class="mb-2 flex items-center justify-between">
+                <label for="rateRange" class="text-sm font-medium text-slate-800 dark:text-slate-200">Speech Rate</label>
+                <span id="rateValue" class="rounded-full bg-slate-100 dark:bg-slate-900 px-2.5 py-1 text-xs text-cyan-200">1.0</span>
+              </div>
+              <input id="rateRange" type="range" min="0.1" max="2" step="0.1" value="1" class="w-full accent-cyan-400" />
+            </div>
+
+            <div>
+              <div class="mb-2 flex items-center justify-between">
+                <label for="pitchRange" class="text-sm font-medium text-slate-800 dark:text-slate-200">Pitch</label>
+                <span id="pitchValue" class="rounded-full bg-slate-100 dark:bg-slate-900 px-2.5 py-1 text-xs text-cyan-200">1.0</span>
+              </div>
+              <input id="pitchRange" type="range" min="0" max="2" step="0.1" value="1" class="w-full accent-cyan-400" />
+            </div>
+
+            <div>
+              <div class="mb-2 flex items-center justify-between">
+                <label for="volumeRange" class="text-sm font-medium text-slate-800 dark:text-slate-200">Volume</label>
+                <span id="volumeValue" class="rounded-full bg-slate-100 dark:bg-slate-900 px-2.5 py-1 text-xs text-cyan-200">1.0</span>
+              </div>
+              <input id="volumeRange" type="range" min="0" max="1" step="0.1" value="1" class="w-full accent-cyan-400" />
+            </div>
+          </div>
+
+          <div class="mt-6 grid grid-cols-2 gap-3">
+            <button id="speakBtn" type="button" class="rounded-xl bg-cyan-400 px-4 py-3 text-sm font-extrabold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-95 disabled:cursor-not-allowed disabled:bg-slate-600 disabled:text-slate-300">
+              Start reading
+            </button>
+            <button id="stopBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-sm font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-800 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
+              Stop
+            </button>
+            <button id="pauseBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-sm font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-800 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
+              Pause
+            </button>
+            <button id="resumeBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-sm font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-800 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-6 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-5 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-6" aria-label="Output status area">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">Output status</h2>
+          <p class="mt-1 text-sm text-slate-400">Reading status, error messages, and current parameters will appear here.</p>
+        </div>
+        <div id="statePill" class="inline-flex w-fit items-center rounded-full border border-slate-700 bg-slate-100 dark:bg-slate-900 px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300">
+          Idle
+        </div>
+      </div>
+
+      <div id="messageBox" class="mt-5 rounded-2xl border border-slate-700 bg-slate-950/70 p-4 text-sm leading-6 text-slate-700 dark:text-slate-300">
+        Please enter text and click "Start Reading".
+      </div>
+
+      <div class="mt-4 grid gap-3 text-sm sm:grid-cols-3">
+        <div class="rounded-2xl bg-slate-950/50 p-4">
+          <p class="text-slate-500">Current speech rate</p>
+          <p id="summaryRate" class="mt-1 font-bold text-cyan-200">1.0</p>
+        </div>
+        <div class="rounded-2xl bg-slate-950/50 p-4">
+          <p class="text-slate-500">Current pitch</p>
+          <p id="summaryPitch" class="mt-1 font-bold text-cyan-200">1.0</p>
+        </div>
+        <div class="rounded-2xl bg-slate-950/50 p-4">
+          <p class="text-slate-500">Current volume</p>
+          <p id="summaryVolume" class="mt-1 font-bold text-cyan-200">1.0</p>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl shadow-black/20 backdrop-blur-xl">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Text to Speech Tester</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Browser-native TTS testing tool. Uses the browser&#x27;s built-in `window.speechSynthesis` API to read input text aloud, with adjustable speech rate and pitch. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Text to Speech Tester for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+    </article>
+  </main>
+
+  <footer class="mx-auto max-w-6xl px-4 pb-8 pt-2 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
+    <p>Built with the browser-native SpeechSynthesis API. All text is processed only in the local browser.</p>
+  </footer>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const $ = (id) => document.getElementById(id);
+
+      const elements = {
+        supportBadge: $('supportBadge'),
+        textInput: $('textInput'),
+        charCount: $('charCount'),
+        sampleBtn: $('sampleBtn'),
+        clearBtn: $('clearBtn'),
+        voiceSelect: $('voiceSelect'),
+        rateRange: $('rateRange'),
+        pitchRange: $('pitchRange'),
+        volumeRange: $('volumeRange'),
+        rateValue: $('rateValue'),
+        pitchValue: $('pitchValue'),
+        volumeValue: $('volumeValue'),
+        summaryRate: $('summaryRate'),
+        summaryPitch: $('summaryPitch'),
+        summaryVolume: $('summaryVolume'),
+        speakBtn: $('speakBtn'),
+        stopBtn: $('stopBtn'),
+        pauseBtn: $('pauseBtn'),
+        resumeBtn: $('resumeBtn'),
+        messageBox: $('messageBox'),
+        statePill: $('statePill')
+      };
+
+      const state = {
+        supported: 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window,
+        voices: [],
+        speaking: false,
+        paused: false,
+        currentUtterance: null,
+        voiceLoadAttempts: 0
+      };
+
+      const sampleText = 'Hello, this is the text-to-speech-test native browser TTS testing tool. You can enter any text and adjust the speed, pitch, and volume to quickly test the current browser's text-to-speech effect.';
+
+      function escapeText(value) {
+        return String(value ?? '').replace(/[<>&"']/g, (char) => {
+          const map = { '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#39;' };
+          return map[char] || char;
+        });
+      }
+
+      function setMessage(type, text) {
+        const base = 'mt-5 rounded-2xl border p-4 text-sm leading-6';
+        const styles = {
+          info: 'border-slate-700 bg-slate-950/70 text-slate-300',
+          success: 'border-emerald-400/30 bg-emerald-500/10 text-emerald-100',
+          error: 'border-red-400/40 bg-red-500/10 text-red-100',
+          warning: 'border-amber-400/40 bg-amber-500/10 text-amber-100'
+        };
+        elements.messageBox.className = `${base} ${styles[type] || styles.info}`;
+        elements.messageBox.textContent = text;
+      }
+
+      function setStatePill(type, text) {
+        const base = 'inline-flex w-fit items-center rounded-full border px-4 py-2 text-sm font-semibold';
+        const styles = {
+          idle: 'border-slate-700 bg-slate-900 text-slate-300',
+          active: 'border-cyan-400/40 bg-cyan-400/10 text-cyan-100',
+          paused: 'border-amber-400/40 bg-amber-400/10 text-amber-100',
+          error: 'border-red-400/40 bg-red-500/10 text-red-100',
+          success: 'border-emerald-400/40 bg-emerald-500/10 text-emerald-100'
+        };
+        elements.statePill.className = `${base} ${styles[type] || styles.idle}`;
+        elements.statePill.textContent = text;
+      }
+
+      function updateButtons() {
+        const disabled = !state.supported;
+        elements.speakBtn.disabled = disabled;
+        elements.stopBtn.disabled = disabled || (!state.speaking && !window.speechSynthesis?.speaking);
+        elements.pauseBtn.disabled = disabled || !state.speaking || state.paused;
+        elements.resumeBtn.disabled = disabled || !state.paused;
+      }
+
+      function updateCounters() {
+        const len = elements.textInput.value.length;
+        elements.charCount.textContent = `${len} 字`;
+      }
+
+      function updateRangeLabels() {
+        const rate = Number(elements.rateRange.value).toFixed(1);
+        const pitch = Number(elements.pitchRange.value).toFixed(1);
+        const volume = Number(elements.volumeRange.value).toFixed(1);
+
+        elements.rateValue.textContent = rate;
+        elements.pitchValue.textContent = pitch;
+        elements.volumeValue.textContent = volume;
+
+        elements.summaryRate.textContent = rate;
+        elements.summaryPitch.textContent = pitch;
+        elements.summaryVolume.textContent = volume;
+      }
+
+      function validateText(rawText) {
+        const text = String(rawText ?? '').trim();
+        if (!text) {
+          return { ok: false, message: 'Please enter需要朗读的文本，文本Cannot be empty.' };
+        }
+        if (text.length > 5000) {
+          return { ok: false, message: '文本过长，请将内容控制在 5000 个字符以内。' };
+        }
+        if (!/[\p{L}\p{N}]/u.test(text)) {
+          return { ok: false, message: '文本格式无效，请至少输入包含文字或数字的内容。' };
+        }
+        return { ok: true, text };
+      }
+
+      function validateNumber(value, min, max, label) {
+        const num = Number(value);
+        if (!Number.isFinite(num) || num < min || num > max) {
+          return { ok: false, message: `${label}参数异常，请刷新页面或重新调整滑块。` };
+        }
+        return { ok: true, value: num };
+      }
+
+      function populateVoices() {
+        if (!state.supported) return;
+
+        const voices = window.speechSynthesis.getVoices();
+        state.voices = Array.isArray(voices) ? voices : [];
+
+        elements.voiceSelect.innerHTML = '';
+
+        if (!state.voices.length) {
+          const option = document.createElement('option');
+          option.value = '';
+          option.textContent = '暂无可用语音，浏览器可能仍在加载';
+          elements.voiceSelect.appendChild(option);
+          return;
+        }
+
+        const preferred = state.voices
+          .map((voice, index) => ({ voice, index }))
+          .sort((a, b) => {
+            const aZh = /^zh|Chinese|Mandarin|普通话|Chinese/i.test(`${a.voice.lang} ${a.voice.name}`) ? 0 : 1;
+            const bZh = /^zh|Chinese|Mandarin|普通话|Chinese/i.test(`${b.voice.lang} ${b.voice.name}`) ? 0 : 1;
+            return aZh - bZh || a.voice.name.localeCompare(b.voice.name);
+          });
+
+        preferred.forEach(({ voice, index }) => {
+          const option = document.createElement('option');
+          option.value = String(index);
+          option.textContent = `${voice.name} (${voice.lang || 'Unknown语言'})${voice.default ? ' - 默认' : ''}`;
+          elements.voiceSelect.appendChild(option);
+        });
+
+        const firstChinese = preferred.find(({ voice }) => /^zh/i.test(voice.lang || ''));
+        if (firstChinese) {
+          elements.voiceSelect.value = String(firstChinese.index);
+        }
+
+        setMessage('info', `已加载 ${state.voices.length} 个浏览器可用语音。不同系统和浏览器的语音列表可能不同。`);
+      }
+
+      function tryLoadVoices() {
+        if (!state.supported) return;
+        populateVoices();
+
+        if (!state.voices.length && state.voiceLoadAttempts < 10) {
+          state.voiceLoadAttempts += 1;
+          window.setTimeout(tryLoadVoices, 250);
+        }
+      }
+
+      function stopSpeech(silent = false) {
+        if (!state.supported) return;
+        try {
+          window.speechSynthesis.cancel();
+        } catch (error) {
+          setMessage('error', '停止朗读时发生异常，请刷新页面后重试。');
+        }
+        state.speaking = false;
+        state.paused = false;
+        state.currentUtterance = null;
+        setStatePill('idle', '空闲');
+        if (!silent) setMessage('info', '朗读已停止。');
+        updateButtons();
+      }
+
+      function speak() {
+        if (!state.supported) {
+          setStatePill('error', '不支持');
+          setMessage('error', '当前浏览器不支持 window.speechSynthesis API。请尝试使用最新版 Chrome、Edge、Safari 或 Firefox。');
+          return;
+        }
+
+        const textValidation = validateText(elements.textInput.value);
+        if (!textValidation.ok) {
+          setStatePill('error', '输入错误');
+          setMessage('error', textValidation.message);
+          elements.textInput.focus();
+          return;
+        }
+
+        const rateValidation = validateNumber(elements.rateRange.value, 0.1, 2, '语速');
+        const pitchValidation = validateNumber(elements.pitchRange.value, 0, 2, '音调');
+        const volumeValidation = validateNumber(elements.volumeRange.value, 0, 1, '音量');
+
+        const firstInvalid = [rateValidation, pitchValidation, volumeValidation].find((item) => !item.ok);
+        if (firstInvalid) {
+          setStatePill('error', '参数错误');
+          setMessage('error', firstInvalid.message);
+          return;
+        }
+
+        stopSpeech(true);
+
+        let utterance;
+        try {
+          utterance = new SpeechSynthesisUtterance(textValidation.text);
+        } catch (error) {
+          setStatePill('error', '创建失败');
+          setMessage('error', '创建语音朗读任务失败，请检查浏览器权限或刷新页面重试。');
+          return;
+        }
+
+        const selectedIndex = Number(elements.voiceSelect.value);
+        if (Number.isInteger(selectedIndex) && state.voices[selectedIndex]) {
+          utterance.voice = state.voices[selectedIndex];
+          utterance.lang = state.voices[selectedIndex].lang || 'zh-CN';
+        } else {
+          utterance.lang = navigator.language || 'zh-CN';
+        }
+
+        utterance.rate = rateValidation.value;
+        utterance.pitch = pitchValidation.value;
+        utterance.volume = volumeValidation.value;
+
+        utterance.onstart = () => {
+          state.speaking = true;
+          state.paused = false;
+          setStatePill('active', '正在朗读');
+          setMessage('success', `正在朗读：${escapeText(textValidation.text.slice(0, 80))}${textValidation.text.length > 80 ? '...' : ''}`);
+          updateButtons();
+        };
+
+        utterance.onpause = () => {
+          state.paused = true;
+          setStatePill('paused', '已暂停');
+          setMessage('warning', '朗读已暂停，可点击“继续”恢复。');
+          updateButtons();
+        };
+
+        utterance.onresume = () => {
+          state.paused = false;
+          setStatePill('active', '正在朗读');
+          setMessage('success', '朗读已继续。');
+          updateButtons();
+        };
+
+        utterance.onend = () => {
+          state.speaking = false;
+          state.paused = false;
+          state.currentUtterance = null;
+          setStatePill('success', '朗读完成');
+          setMessage('success', '文本朗读完成。');
+          updateButtons();
+          window.setTimeout(() => {
+            if (!state.speaking && !state.paused) setStatePill('idle', '空闲');
+          }, 1200);
+        };
+
+        utterance.onerror = (event) => {
+          state.speaking = false;
+          state.paused = false;
+          state.currentUtterance = null;
+          const errorName = event && event.error ? event.error : 'unknown';
+          setStatePill('error', '朗读错误');
+          setMessage('error', `语音合成失败：${errorName}。请尝试更换Voice Role、缩短文本或刷新页面。`);
+          updateButtons();
+        };
+
+        try {
+          state.currentUtterance = utterance;
+          window.speechSynthesis.speak(utterance);
+          window.setTimeout(updateButtons, 50);
+        } catch (error) {
+          state.currentUtterance = null;
+          state.speaking = false;
+          state.paused = false;
+          setStatePill('error', '调用失败');
+          setMessage('error', '调用浏览器语音合成 API 失败，请确认浏览器支持该功能。');
+          updateButtons();
+        }
+      }
+
+      function pauseSpeech() {
+        if (!state.supported) return;
+        try {
+          if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+            window.speechSynthesis.pause();
+            state.paused = true;
+            setStatePill('paused', '已暂停');
+            setMessage('warning', '朗读已暂停。');
+          } else {
+            setMessage('warning', '当前没有可暂停的朗读任务。');
+          }
+        } catch (error) {
+          setStatePill('error', '暂停失败');
+          setMessage('error', '暂停朗读失败，请重试。');
+        }
+        updateButtons();
+      }
+
+      function resumeSpeech() {
+        if (!state.supported) return;
+        try {
+          if (window.speechSynthesis.paused) {
+            window.speechSynthesis.resume();
+            state.paused = false;
+            setStatePill('active', '正在朗读');
+            setMessage('success', '朗读已继续。');
+          } else {
+            setMessage('warning', '当前没有已暂停的朗读任务。');
+          }
+        } catch (error) {
+          setStatePill('error', '继续失败');
+          setMessage('error', '继续朗读失败，请重试。');
+        }
+        updateButtons();
+      }
+
+      function initSupport() {
+        if (state.supported) {
+          elements.supportBadge.className = 'rounded-2xl border border-emerald-400/30 bg-emerald-500/10 px-5 py-4 text-sm text-emerald-100 shadow-2xl';
+          elements.supportBadge.textContent = '当前浏览器支持原生 TTS API';
+          setStatePill('idle', '空闲');
+        } else {
+          elements.supportBadge.className = 'rounded-2xl border border-red-400/30 bg-red-500/10 px-5 py-4 text-sm text-red-100 shadow-2xl';
+          elements.supportBadge.textContent = '当前浏览器不支持 speechSynthesis';
+          elements.voiceSelect.innerHTML = '<option value="">浏览器不支持语音合成</option>';
+          setStatePill('error', '不支持');
+          setMessage('error', '当前浏览器不支持 window.speechSynthesis API。请更换现代浏览器后再试。');
+        }
+        updateButtons();
+      }
+
+      function bindEvents() {
+        elements.textInput.addEventListener('input', updateCounters);
+
+        elements.sampleBtn.addEventListener('click', () => {
+          elements.textInput.value = sampleText;
+          updateCounters();
+          setMessage('info', '已Fill Example文本，可直接点击“Start reading”。');
+          elements.textInput.focus();
+        });
+
+        elements.clearBtn.addEventListener('click', () => {
+          elements.textInput.value = '';
+          updateCounters();
+          stopSpeech(true);
+          setMessage('info', '文本已Clear。');
+          elements.textInput.focus();
+        });
+
+        [elements.rateRange, elements.pitchRange, elements.volumeRange].forEach((range) => {
+          range.addEventListener('input', updateRangeLabels);
+        });
+
+        elements.speakBtn.addEventListener('click', speak);
+        elements.stopBtn.addEventListener('click', () => stopSpeech(false));
+        elements.pauseBtn.addEventListener('click', pauseSpeech);
+        elements.resumeBtn.addEventListener('click', resumeSpeech);
+
+        if (state.supported) {
+          window.speechSynthesis.onvoiceschanged = populateVoices;
+        }
+
+        window.addEventListener('beforeunload', () => {
+          if (state.supported) {
+            try {
+              window.speechSynthesis.cancel();
+            } catch (_) {}
+          }
+        });
+
+        document.addEventListener('visibilitychange', () => {
+          if (!document.hidden) updateButtons();
+        });
+      }
+
+      initSupport();
+      bindEvents();
+      updateCounters();
+      updateRangeLabels();
+      tryLoadVoices();
+    })();
+  </script>
+</body>
+</html>

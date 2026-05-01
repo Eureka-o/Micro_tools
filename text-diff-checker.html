@@ -4,33 +4,61 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>text-diff-checker - 文本对比检查工具</title>
-  <meta name="description" content="text-diff-checker 是一款在线文本对比检查工具，可快速高亮显示两段文本之间增加、删除或修改的字符，适合代码审查、文案校对、合同内容核对与版本差异检查。" />
-  <meta name="keywords" content="text-diff-checker, 文本对比工具, 文本差异检查, 在线文本比较, 字符差异高亮, 文案校对工具, 版本对比工具, 文本修改对比" />
+  <meta name="description" content="文本对比检查工具。提供左右两个文本域，高亮显示两段文本之间的差异（增加、删除或修改的字符）。">
+  <meta name="keywords" content="text-diff-checker, 文本对比工具, 文本差异检查, 在线文本比较, 字符差异高亮, 文案校对工具, 版本对比工具, 文本修改对比">
   <link rel="icon" type="image/png" href="./assets/logo.png">
   <link rel="apple-touch-icon" href="./assets/logo.png">
   <meta property="og:image" content="./assets/logo.png">
   <meta name="twitter:image" content="./assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/text-diff-checker.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/text-diff-checker.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/text-diff-checker.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/text-diff-checker.html">
+  <script src="./theme-toggle.js" defer></script>
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100">
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="./text-diff-checker.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
+        <a href="./en/text-diff-checker.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="切换主题" title="切换主题">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
   <div class="absolute inset-0 -z-10 overflow-hidden">
     <div class="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
     <div class="absolute right-0 top-60 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
   </div>
 
-  <header class="border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
+  <header class="border-b border-gray-200 dark:border-white/10 bg-slate-950/70 backdrop-blur-xl">
     <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
             在线字符级差异高亮工具
           </p>
-          <h1 class="text-4xl font-black tracking-tight text-white sm:text-5xl">文本对比检查工具</h1>
-          <p class="mt-3 max-w-2xl text-base leading-7 text-slate-300">
+          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">文本对比检查工具</h1>
+          <p class="mt-3 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
             粘贴两段文本，一键识别新增、删除与修改内容，帮助你更快完成版本核对、文案校对和内容审查。
           </p>
         </div>
-        <div class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-300 shadow-2xl">
+        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm text-slate-700 dark:text-slate-300 shadow-2xl">
           <span class="inline-block h-2 w-2 rounded-full bg-emerald-400"></span>
           本地浏览器计算，不上传文本
         </div>
@@ -40,35 +68,35 @@
 
   <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
     <section class="grid gap-6 lg:grid-cols-2" aria-label="文本输入区">
-      <div class="rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-2xl">
+      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-xl font-bold text-white">原始文本</h2>
-          <span id="leftCount" class="rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-300">0 字符</span>
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">原始文本</h2>
+          <span id="leftCount" class="rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">0 字符</span>
         </div>
-        <textarea id="leftText" class="h-72 w-full resize-y rounded-2xl border border-slate-700 bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="在此粘贴第一段文本，例如旧版本内容、原始文案或待核对文本。"></textarea>
+        <textarea id="leftText" class="h-72 w-full resize-y rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="在此粘贴第一段文本，例如旧版本内容、原始文案或待核对文本。"></textarea>
       </div>
 
-      <div class="rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-2xl">
+      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-xl font-bold text-white">对比文本</h2>
-          <span id="rightCount" class="rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-300">0 字符</span>
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">对比文本</h2>
+          <span id="rightCount" class="rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">0 字符</span>
         </div>
-        <textarea id="rightText" class="h-72 w-full resize-y rounded-2xl border border-slate-700 bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="在此粘贴第二段文本，例如新版本内容、修改后文案或目标文本。"></textarea>
+        <textarea id="rightText" class="h-72 w-full resize-y rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="在此粘贴第二段文本，例如新版本内容、修改后文案或目标文本。"></textarea>
       </div>
     </section>
 
-    <section class="mt-6 rounded-3xl border border-white/10 bg-white/[0.04] p-5 shadow-2xl" aria-label="操作区">
+    <section class="mt-6 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-5 shadow-2xl" aria-label="操作区">
       <div id="errorBox" class="mb-4 hidden rounded-2xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200"></div>
 
       <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div class="flex flex-wrap gap-3">
-          <button id="compareBtn" type="button" class="rounded-2xl bg-cyan-400 px-6 py-3 font-bold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60">
+          <button id="compareBtn" type="button" class="rounded-2xl bg-cyan-400 px-6 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60">
             开始对比
           </button>
-          <button id="swapBtn" type="button" class="rounded-2xl border border-white/10 bg-slate-800 px-6 py-3 font-bold text-slate-100 transition hover:bg-slate-700 active:scale-95">
+          <button id="swapBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-50 dark:bg-slate-800 px-6 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-700 active:scale-95">
             左右互换
           </button>
-          <button id="clearBtn" type="button" class="rounded-2xl border border-white/10 bg-slate-800 px-6 py-3 font-bold text-slate-100 transition hover:bg-slate-700 active:scale-95">
+          <button id="clearBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-50 dark:bg-slate-800 px-6 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-700 active:scale-95">
             清空
           </button>
         </div>
@@ -91,47 +119,47 @@
     </section>
 
     <section class="mt-6 grid gap-6 lg:grid-cols-2" aria-label="文本对比输出区">
-      <div class="rounded-3xl border border-white/10 bg-slate-100 p-5 text-slate-950 shadow-2xl">
+      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-100 p-5 text-slate-950 dark:text-slate-100 shadow-2xl">
         <div class="mb-4 flex items-center justify-between">
           <h2 class="text-xl font-bold">原始文本差异</h2>
           <span class="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700">删除/修改高亮</span>
         </div>
-        <div id="leftOutput" class="min-h-72 overflow-auto rounded-2xl border border-slate-200 bg-white p-4 font-mono text-sm leading-7 whitespace-pre-wrap break-words text-slate-800">
+        <div id="leftOutput" class="min-h-72 overflow-auto rounded-2xl border border-slate-200 dark:border-white/10 bg-white p-4 font-mono text-sm leading-7 whitespace-pre-wrap break-words text-slate-800 dark:text-slate-200">
           对比结果将在这里显示。
         </div>
       </div>
 
-      <div class="rounded-3xl border border-white/10 bg-slate-100 p-5 text-slate-950 shadow-2xl">
+      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-100 p-5 text-slate-950 dark:text-slate-100 shadow-2xl">
         <div class="mb-4 flex items-center justify-between">
           <h2 class="text-xl font-bold">对比文本差异</h2>
           <span class="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">新增/修改高亮</span>
         </div>
-        <div id="rightOutput" class="min-h-72 overflow-auto rounded-2xl border border-slate-200 bg-white p-4 font-mono text-sm leading-7 whitespace-pre-wrap break-words text-slate-800">
+        <div id="rightOutput" class="min-h-72 overflow-auto rounded-2xl border border-slate-200 dark:border-white/10 bg-white p-4 font-mono text-sm leading-7 whitespace-pre-wrap break-words text-slate-800 dark:text-slate-200">
           对比结果将在这里显示。
         </div>
       </div>
     </section>
 
-    <section class="mt-6 rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-2xl" aria-label="图例说明">
-      <h2 class="mb-4 text-xl font-bold text-white">差异标记说明</h2>
+    <section class="mt-6 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl" aria-label="图例说明">
+      <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">差异标记说明</h2>
       <div class="grid gap-3 sm:grid-cols-3">
-        <div class="rounded-2xl bg-white/5 p-4">
+        <div class="rounded-2xl bg-white dark:bg-white/5 p-4">
           <span class="rounded bg-emerald-200 px-2 py-1 font-mono text-sm text-emerald-950">新增字符</span>
           <p class="mt-2 text-sm text-slate-400">只存在于右侧对比文本中的内容。</p>
         </div>
-        <div class="rounded-2xl bg-white/5 p-4">
+        <div class="rounded-2xl bg-white dark:bg-white/5 p-4">
           <span class="rounded bg-red-200 px-2 py-1 font-mono text-sm text-red-950 line-through">删除字符</span>
           <p class="mt-2 text-sm text-slate-400">只存在于左侧原始文本中的内容。</p>
         </div>
-        <div class="rounded-2xl bg-white/5 p-4">
+        <div class="rounded-2xl bg-white dark:bg-white/5 p-4">
           <span class="rounded bg-amber-200 px-2 py-1 font-mono text-sm text-amber-950">修改字符</span>
           <p class="mt-2 text-sm text-slate-400">删除与新增相邻出现时，会被识别为修改。</p>
         </div>
       </div>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-white/10 bg-white/[0.04] p-6 leading-8 text-slate-300 shadow-2xl">
-      <h2 class="mb-4 text-2xl font-black text-white">关于 text-diff-checker 文本对比检查工具</h2>
+    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl">
+      <h2 class="mb-4 text-2xl font-black text-gray-900 dark:text-white">关于 text-diff-checker 文本对比检查工具</h2>
       <p>
         text-diff-checker 是一款面向文案编辑、产品经理、开发者和法务人员的在线文本对比检查工具，能够以字符级粒度高亮展示两段文本之间的新增、删除和修改内容。日常工作中，合同条款、需求文档、代码片段、公告文案或翻译稿件经常会经历多轮改动，人工逐字核对不仅耗时，而且容易遗漏细微差异。使用这款在线文本差异高亮工具，只需将旧版本内容粘贴到左侧，将新版本内容粘贴到右侧，点击“开始对比”，即可快速获得清晰的差异结果。
       </p>
@@ -397,246 +425,5 @@
 
     updateCounts();
   </script>
-
-  <!-- micro-tools-i18n:start -->
-  <script>
-(() => {
-  'use strict';
-  const STORAGE_KEY = 'microToolsLanguage';
-  const PAGE_SLUG = "text-diff-checker";
-  const TRANSLATIONS = {"在此粘贴第二段文本，例如新版本内容、修改后文案或目标文本。":"Paste the second text here, such as new version content, revised copy, or target text.","text-diff-checker 是一款在线文本对比检查工具，可快速高亮显示两段文本之间增加、删除或修改的字符，适合代码审查、文案校对、合同内容核对与版本差异检查。":"text-diff-checker is an online text comparison tool that quickly highlights added, deleted, or modified characters between two texts. Ideal for code reviews, copy proofreading, contract checks, and version diff checks.","操作区":"Actions","删除与新增相邻出现时，会被识别为修改。":"Adjacent deletions and additions will be identified as modifications.","关于 text-diff-checker 文本对比检查工具":"About text-diff-checker Text Diff Checker","本工具适合用于文案修改对比、版本差异检查、文本校对、网页内容更新核验以及代码审查前的初步比对。所有计算都在浏览器本地完成，不会上传你的文本内容，兼顾效率与隐私。通过颜色区分新增字符、删除字符和修改字符，用户可以直观定位变更位置，减少重复沟通成本，提升内容审核和版本管理效率。":"This tool is ideal for copy revision comparison, version diff checks, text proofreading, webpage content update verification, and preliminary comparison before code review. All calculations run locally in your browser and your text is never uploaded, balancing efficiency and privacy. Added, deleted, and modified characters are highlighted with different colors, helping users quickly locate changes, reduce repeated communication, and improve content review and version management efficiency.","对比文本差异":"Compare text differences","文本对比输出区":"Text comparison output area","在线字符级差异高亮工具":"Online character-level diff highlighting tool","删除":"Delete","删除字符":"Delete character","文本输入区":"Text input area","text-diff-checker - 文本对比检查工具":"text-diff-checker - Text diff checker","新增/修改高亮":"Addition/Change Highlight","修改":"Edit","新增字符":"New characters","删除/修改高亮":"Deletion/Change Highlight","text-diff-checker 是一款面向文案编辑、产品经理、开发者和法务人员的在线文本对比检查工具，能够以字符级粒度高亮展示两段文本之间的新增、删除和修改内容。日常工作中，合同条款、需求文档、代码片段、公告文案或翻译稿件经常会经历多轮改动，人工逐字核对不仅耗时，而且容易遗漏细微差异。使用这款在线文本差异高亮工具，只需将旧版本内容粘贴到左侧，将新版本内容粘贴到右侧，点击“开始对比”，即可快速获得清晰的差异结果。":"text-diff-checker is an online text comparison tool for copy editors, product managers, developers, and legal professionals. It highlights additions, deletions, and modifications between two text versions at character-level granularity. In daily work, contract clauses, requirement documents, code snippets, announcements, and translation drafts often go through multiple revisions. Manually checking word by word is time-consuming and easy to miss subtle differences. With this online text difference highlighting tool, simply paste the old version on the left, paste the new version on the right, and click “Start Compare” to quickly get clear diff results.",">左侧为空。<\/span>'; rightOutput.innerHTML = rightHtml || '<span class=":">Left side is empty.<\/span>'; rightOutput.innerHTML = rightHtml || '<span class=",">右侧为空。<\/span>'; setStats(added, deleted, changed); } function compareTexts() { hideError(); const a = leftText.value; const b = rightText.value; const error = validateInput(a, b); if (error) { showError(error); return; } compareBtn.disabled = true; compareBtn.textContent = '对比中...'; window.setTimeout(() => { try { const ops = diffChars(a, b); renderDiff(ops); if (a === b) { leftOutput.innerHTML = escapeHtml(a) || '<span class=":">Right side is empty.<\/span>'; setStats(added, deleted, changed); } function compareTexts() { hideError(); const a = leftText.value; const b = rightText.value; const error = validateInput(a, b); if (error) { showError(error); return; } compareBtn.disabled = true; compareBtn.textContent = 'Comparing...'; window.setTimeout(() => { try { const ops = diffChars(a, b); renderDiff(ops); if (a === b) { leftOutput.innerHTML = escapeHtml(a) || '<span class=","只存在于左侧原始文本中的内容。":"Content that exists only in the left original text.","原始文本":"Original text","清空":"Clear","图例说明":"Legend","text-diff-checker, 文本对比工具, 文本差异检查, 在线文本比较, 字符差异高亮, 文案校对工具, 版本对比工具, 文本修改对比":"text-diff-checker, text comparison tool, text diff checker, online text comparison, character difference highlighting, copy proofreading tool, version comparison tool, text change comparison","开始对比":"Start comparison","只存在于右侧对比文本中的内容。":"Content that exists only in the right comparison text.","原始文本差异":"Original text diff","左右互换":"Swap Left and Right","粘贴两段文本，一键识别新增、删除与修改内容，帮助你更快完成版本核对、文案校对和内容审查。":"Paste two pieces of text to identify additions, deletions, and changes in one click, helping you compare versions, proofread copy, and review content faster.","本地浏览器计算，不上传文本":"Calculated locally in your browser; text is not uploaded",">文本为空。<\/span>'; rightOutput.innerHTML = escapeHtml(b) || '<span class=":">Text is empty.<\/span>'; rightOutput.innerHTML = escapeHtml(b) || '<span class=","修改字符":"Modify character","差异标记说明":"Diff marker guide","0 字符":"0 characters","新增":"Add","在此粘贴第一段文本，例如旧版本内容、原始文案或待核对文本。":"Paste the first text here, such as old version content, original copy, or text to check.","对比文本":"Compare Text","对比结果将在这里显示。":"Comparison results will appear here.","文本对比检查工具":"Text Diff Checker","文本对比检查工具。提供左右两个文本域，高亮显示两段文本之间的差异（增加、删除或修改的字符）。":"Text comparison tool. Provides left and right text areas and highlights differences between two texts, including added, deleted, or modified characters."};
-  const TOOL_DATA = {"text-diff-checker":{"zhName":"文本对比检查工具","enName":"Text Diff Checker","zhDescription":"文本对比检查工具。提供左右两个文本域，高亮显示两段文本之间的差异（增加、删除或修改的字符）。","enDescription":"Text comparison tool. Provides left and right text areas and highlights differences between two texts, including added, deleted, or modified characters.","zhTitle":"text-diff-checker - 文本对比检查工具","enTitle":"Text Diff Checker | Free Online Tool","zhKeywords":"text-diff-checker, 文本对比工具, 文本差异检查, 在线文本比较, 字符差异高亮, 文案校对工具, 版本对比工具, 文本修改对比","enKeywords":"Text Diff Checker, online tool, browser tool, productivity tool"}};
-  const CURRENT_TOOL = {"zhName":"文本对比检查工具","enName":"Text Diff Checker","zhDescription":"文本对比检查工具。提供左右两个文本域，高亮显示两段文本之间的差异（增加、删除或修改的字符）。","enDescription":"Text comparison tool. Provides left and right text areas and highlights differences between two texts, including added, deleted, or modified characters.","zhTitle":"text-diff-checker - 文本对比检查工具","enTitle":"Text Diff Checker | Free Online Tool","zhKeywords":"text-diff-checker, 文本对比工具, 文本差异检查, 在线文本比较, 字符差异高亮, 文案校对工具, 版本对比工具, 文本修改对比","enKeywords":"Text Diff Checker, online tool, browser tool, productivity tool"};
-  const ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
-  const ZH_RE = /[\u4e00-\u9fff]/;
-  const originalText = new WeakMap();
-  const originalAttrs = new WeakMap();
-  let observer = null;
-
-  function normalize(value) {
-    return String(value || '').replace(/\s+/g, ' ').trim();
-  }
-
-  function hasChinese(value) {
-    return ZH_RE.test(String(value || ''));
-  }
-
-  function language() {
-    return localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'zh';
-  }
-
-  function translateExact(value, lang) {
-    const text = String(value || '');
-    if (lang === 'zh' || !text) return text;
-    if (TRANSLATIONS[text]) return TRANSLATIONS[text];
-    const normalized = normalize(text);
-    if (TRANSLATIONS[normalized]) return TRANSLATIONS[normalized];
-
-    const dynamic = [
-      [/^(\d+)\s*个字符$/u, '$1 characters'],
-      [/^(\d+)\s*字符$/u, '$1 characters'],
-      [/^(\d+)\s*字$/u, '$1 characters'],
-      [/^(\d+)\s*行$/u, '$1 rows'],
-      [/^(\d+)\s*列$/u, '$1 columns'],
-      [/^(\d+)\s*项$/u, '$1 items'],
-      [/^(\d+)\s*次$/u, '$1 times'],
-      [/^当前显示\s*(\d+)\s*\/\s*(\d+)$/u, 'Showing $1 / $2'],
-      [/^第\s*(\d+)\s*行第\s*(\d+)\s*列/u, 'line $1, column $2']
-    ];
-    for (const [pattern, replacement] of dynamic) {
-      if (pattern.test(normalized)) return normalized.replace(pattern, replacement);
-    }
-    return text;
-  }
-
-  function translateWithSpacing(value, lang) {
-    const text = String(value || '');
-    if (!text.trim()) return text;
-    const leading = text.match(/^\s*/)[0];
-    const trailing = text.match(/\s*$/)[0];
-    const core = text.slice(leading.length, text.length - trailing.length);
-    return leading + translateExact(core, lang) + trailing;
-  }
-
-  function skipped(node) {
-    const parent = node.parentElement;
-    return !parent || Boolean(parent.closest('script, style, code, pre, textarea, [data-i18n-ignore]'));
-  }
-
-  function translateNode(node, lang) {
-    if (skipped(node) || !node.nodeValue.trim()) return;
-    const current = node.nodeValue;
-    let original = originalText.get(node);
-    const originalEnglish = original ? translateWithSpacing(original, 'en') : '';
-    if (!original || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
-      original = current;
-      originalText.set(node, original);
-    }
-    node.nodeValue = lang === 'zh' ? (original || current) : translateWithSpacing(original || current, lang);
-  }
-
-  function translateAttrs(element, lang) {
-    if (element.closest('script, style, [data-i18n-ignore]')) return;
-    let store = originalAttrs.get(element);
-    if (!store) {
-      store = {};
-      originalAttrs.set(element, store);
-    }
-    ATTRS.forEach((attr) => {
-      if (!element.hasAttribute(attr)) return;
-      const current = element.getAttribute(attr);
-      const originalEnglish = store[attr] ? translateExact(store[attr], 'en') : '';
-      if (!store[attr] || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
-        store[attr] = current;
-      }
-      element.setAttribute(attr, lang === 'zh' ? store[attr] : translateExact(store[attr] || current, lang));
-    });
-  }
-
-  function walk(root, lang) {
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    const nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-    nodes.forEach((node) => translateNode(node, lang));
-
-    const elementRoot = root.nodeType === Node.ELEMENT_NODE ? root : document.body;
-    if (!elementRoot) return;
-    translateAttrs(elementRoot, lang);
-    elementRoot.querySelectorAll('*').forEach((element) => translateAttrs(element, lang));
-  }
-
-  function setMeta(name, value) {
-    if (!value) return;
-    let meta = document.querySelector(`meta[name="${name}"]`);
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.setAttribute('name', name);
-      document.head.appendChild(meta);
-    }
-    meta.setAttribute('content', value);
-  }
-
-  function applyMetadata(lang) {
-    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-    if (PAGE_SLUG === 'index') {
-      document.title = lang === 'zh'
-        ? '免费在线开发者工具箱 | 纯前端工具集合'
-        : 'Free Online Developer Toolbox | Pure Front-End Tools';
-      setMeta('description', lang === 'zh'
-        ? '免费在线开发者工具箱，汇集 JSON、CSV、LaTeX、Base64、正则、时间戳、二维码、颜色转换等纯前端微型工具，隐私友好、无需安装、极速加载。'
-        : 'A free online developer toolbox with pure front-end tools for JSON, CSV, LaTeX, Base64, regex, timestamps, QR codes, color conversion, and daily productivity.');
-      setMeta('keywords', lang === 'zh'
-        ? '免费在线开发者工具箱, 纯前端工具集合, 在线 JSON 工具, 在线编码转换工具, 生产力工具箱, 微型 Web 工具'
-        : 'free online developer tools, front-end tools, JSON tools, encoding tools, productivity toolbox, micro web tools');
-      return;
-    }
-    if (!CURRENT_TOOL || !CURRENT_TOOL.zhName) return;
-    document.title = lang === 'zh' ? CURRENT_TOOL.zhTitle : CURRENT_TOOL.enTitle;
-    setMeta('description', lang === 'zh' ? CURRENT_TOOL.zhDescription : CURRENT_TOOL.enDescription);
-    setMeta('keywords', lang === 'zh' ? CURRENT_TOOL.zhKeywords : CURRENT_TOOL.enKeywords);
-    const h1 = document.querySelector('h1');
-    if (h1) h1.textContent = lang === 'zh' ? CURRENT_TOOL.zhName : CURRENT_TOOL.enName;
-  }
-
-  function updateIndexCards(lang) {
-    if (PAGE_SLUG !== 'index') return;
-    document.querySelectorAll('a[href$=".html"]').forEach((card) => {
-      const slug = (card.getAttribute('href') || '').split('/').pop().replace(/\.html$/i, '');
-      const tool = TOOL_DATA[slug];
-      if (!tool) return;
-      const title = card.querySelector('h3');
-      const description = card.querySelector('p');
-      const action = card.querySelector('span:last-child');
-      if (title) title.textContent = lang === 'zh' ? tool.zhName : tool.enName;
-      if (description) description.textContent = lang === 'zh' ? tool.zhDescription : tool.enDescription;
-      if (action) action.textContent = lang === 'zh' ? '立即使用' : 'Open Tool';
-      card.dataset.search = normalize(`${slug} ${tool.zhName} ${tool.enName} ${tool.zhDescription} ${tool.enDescription}`).toLowerCase().replace(/[-_\s]+/g, '');
-    });
-    const search = document.getElementById('searchInput');
-    if (search) search.dispatchEvent(new Event('input', { bubbles: true }));
-  }
-
-  function ensureToggle(lang) {
-    let toggle = document.getElementById('microToolsLanguageToggle');
-    if (!toggle) {
-      toggle = document.createElement('div');
-      toggle.id = 'microToolsLanguageToggle';
-      toggle.setAttribute('data-i18n-ignore', 'true');
-      toggle.className = 'fixed right-4 top-4 z-50 flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/90 p-1 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur';
-      toggle.innerHTML = '<span data-language-label class="px-2 text-xs text-slate-300">语言</span><button type="button" data-lang-option="zh" class="rounded-full px-3 py-1.5 transition">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-1.5 transition">EN</button>';
-      document.body.appendChild(toggle);
-      toggle.addEventListener('click', (event) => {
-        const button = event.target.closest('[data-lang-option]');
-        if (!button) return;
-        localStorage.setItem(STORAGE_KEY, button.getAttribute('data-lang-option') === 'en' ? 'en' : 'zh');
-        applyLanguage(language());
-      });
-    }
-    toggle.querySelector('[data-language-label]').textContent = lang === 'zh' ? '语言' : 'Language';
-    toggle.querySelectorAll('[data-lang-option]').forEach((button) => {
-      const active = button.getAttribute('data-lang-option') === lang;
-      button.className = active
-        ? 'rounded-full bg-cyan-400 px-3 py-1.5 text-slate-950 transition'
-        : 'rounded-full px-3 py-1.5 text-slate-200 transition hover:bg-white/10';
-    });
-  }
-
-  function disconnect() {
-    if (observer) observer.disconnect();
-  }
-
-  function observe() {
-    if (!observer) {
-      observer = new MutationObserver(() => {
-        if (language() !== 'en') return;
-        disconnect();
-        applyLanguage('en');
-        observe();
-      });
-    }
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributes: true,
-      attributeFilter: ATTRS
-    });
-  }
-
-  function applyLanguage(lang) {
-    const next = lang === 'en' ? 'en' : 'zh';
-    disconnect();
-    ensureToggle(next);
-    applyMetadata(next);
-    walk(document.body, next);
-    updateIndexCards(next);
-    ensureToggle(next);
-    observe();
-  }
-
-  function init() {
-    applyLanguage(language());
-    window.addEventListener('storage', (event) => {
-      if (event.key === STORAGE_KEY) applyLanguage(language());
-    });
-  }
-
-  window.MicroToolsI18n = {
-    getLanguage: language,
-    setLanguage(value) {
-      localStorage.setItem(STORAGE_KEY, value === 'en' ? 'en' : 'zh');
-      applyLanguage(language());
-    },
-    applyLanguage
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
-  </script>
-  <!-- micro-tools-i18n:end -->
 </body>
 </html>

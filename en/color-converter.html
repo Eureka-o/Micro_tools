@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="HEX, RGB, HSL, and CMYK color conversion tool. Includes a visual color picker and a color preview panel.">
+  <meta name="keywords" content="Color Converter, online tool, browser tool, productivity tool">
+  <meta name="robots" content="index,follow" />
+  <title>Color Converter | Free Online Tool</title>
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+  <meta property="og:image" content="../assets/logo.png">
+  <meta name="twitter:image" content="../assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background:
+        radial-gradient(circle at 20% 10%, rgba(59,130,246,.20), transparent 28%),
+        radial-gradient(circle at 85% 25%, rgba(168,85,247,.18), transparent 30%),
+        linear-gradient(135deg, #020617 0%, #0f172a 48%, #111827 100%);
+    }
+    input[type="color"] {
+      -webkit-appearance: none;
+      appearance: none;
+      border: none;
+      padding: 0;
+      background: transparent;
+    }
+    input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+    input[type="color"]::-webkit-color-swatch {
+      border: 0;
+      border-radius: 1rem;
+    }
+    input[type="color"]::-moz-color-swatch {
+      border: 0;
+      border-radius: 1rem;
+    }
+    .glass {
+      background: rgba(15, 23, 42, .72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(148, 163, 184, .22);
+    }
+    .soft-card {
+      background: rgba(255,255,255,.075);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .btn-feedback {
+      transform: scale(.97);
+      filter: brightness(1.18);
+    }
+  </style>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/en/color-converter.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/color-converter.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/color-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/color-converter.html">
+  <script src="./theme-toggle.js" defer></script>
+</head>
+<body class="min-h-screen text-slate-900 dark:text-slate-100 antialiased">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="../color-converter.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./color-converter.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
+  <header class="px-4 py-10 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-6xl text-center">
+      <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-2 text-sm text-cyan-100 shadow-lg shadow-cyan-950/30">
+        <span class="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_18px_rgba(52,211,153,.9)]"></span>
+        Online color format conversion and preview
+      </div>
+      <h1 class="bg-gradient-to-r from-cyan-200 via-blue-200 to-fuchsia-200 bg-clip-text text-4xl font-black tracking-tight text-transparent sm:text-5xl lg:text-6xl">Color Converter</h1>
+      <p class="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
+        HEX, RGB, HSL, and CMYK color converter with a built-in visual Color Picker, real-time color preview, and one-click copy to help you quickly get standard color codes.
+      </p>
+    </div>
+  </header>
+
+  <main class="px-4 pb-12 sm:px-6 lg:px-8">
+    <section class="mx-auto grid max-w-6xl gap-6 lg:grid-cols-5" aria-label="Color Converter Main Interface">
+      <div class="glass rounded-3xl p-5 shadow-2xl shadow-black/30 sm:p-6 lg:col-span-3">
+        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Input</h2>
+            <p class="mt-1 text-sm text-slate-700 dark:text-slate-300">Enter any color format and click Apply to convert all formats.</p>
+          </div>
+          <button id="resetBtn" type="button" class="rounded-xl border border-slate-500/40 bg-slate-900/70 px-4 py-2 text-sm font-semibold text-slate-900 dark:text-slate-100 transition hover:border-cyan-300/60 hover:bg-slate-800 active:scale-95">
+            Reset to Default Blue
+          </button>
+        </div>
+
+        <div id="message" class="mb-5 hidden rounded-2xl border px-4 py-3 text-sm font-medium" role="alert" aria-live="polite"></div>
+
+        <div class="mb-6 grid gap-4 md:grid-cols-2">
+          <div class="soft-card rounded-3xl p-4">
+            <label for="colorPicker" class="mb-3 block text-sm font-semibold text-slate-800 dark:text-slate-200">Visual color picker</label>
+            <input id="colorPicker" type="color" value="#3b82f6" class="h-40 w-full cursor-pointer rounded-2xl shadow-inner" aria-label="Color picker" />
+            <p class="mt-3 text-xs leading-5 text-slate-400">After dragging or clicking to select a color, all formats will update in real time.</p>
+          </div>
+
+          <div class="soft-card rounded-3xl p-4">
+            <label for="hexInput" class="mb-3 block text-sm font-semibold text-slate-800 dark:text-slate-200">HEX input</label>
+            <input id="hexInput" type="text" value="#3B82F6" spellcheck="false" class="w-full rounded-2xl border border-slate-600/60 bg-slate-950/70 px-4 py-3 font-mono text-base text-gray-900 dark:text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/15" placeholder="#3B82F6 or 3BF" />
+            <button data-apply="hex" type="button" class="apply-btn mt-3 w-full rounded-2xl bg-cyan-500 px-4 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-950/30 transition hover:bg-cyan-300 active:scale-95">
+              Apply HEX
+            </button>
+          </div>
+        </div>
+
+        <div class="grid gap-4">
+          <div class="soft-card rounded-3xl p-4">
+            <div class="mb-3 flex items-center justify-between gap-3">
+              <h3 class="font-semibold text-slate-900 dark:text-slate-100">RGB input</h3>
+              <span class="text-xs text-slate-400">Range: 0 - 255</span>
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+              <label class="block">
+                <span class="mb-1 block text-xs text-slate-400">R</span>
+                <input id="rInput" type="number" inputmode="numeric" min="0" max="255" value="59" class="num-input w-full rounded-xl border border-slate-600/60 bg-slate-950/70 px-3 py-3 text-gray-900 dark:text-white outline-none focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/15" />
+              </label>
+              <label class="block">
+                <span class="mb-1 block text-xs text-slate-400">G</span>
+                <input id="gInput" type="number" inputmode="numeric" min="0" max="255" value="130" class="num-input w-full rounded-xl border border-slate-600/60 bg-slate-950/70 px-3 py-3 text-gray-900 dark:text-white outline-none focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/15" />
+              </label>
+              <label class="block">
+                <span class="mb-1 block text-xs text-slate-400">B</span>
+                <input id="bInput" type="number" inputmode="numeric" min="0" max="255" value="246" class="num-input w-full rounded-xl border border-slate-600/60 bg-slate-950/70 px-3 py-3 text-gray-900 dark:text-white outline-none focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/15" />
+              </label>
+            </div>
+            <button data-apply="rgb" type="button" class="apply-btn mt-3 w-full rounded-2xl bg-blue-500 px-4 py-3 font-bold text-gray-900 dark:text-white shadow-lg shadow-blue-950/30 transition hover:bg-blue-400 active:scale-95">
+              Apply RGB
+            </button>
+          </div>
+
+          <div class="soft-card rounded-3xl p-4">
+            <div class="mb-3 flex items-center justify-between gap-3">
+              <h3 class="font-semibold text-slate-900 dark:text-slate-100">HSL input</h3>
+              <span class="text-xs text-slate-400">H: 0 - 360，S/L: 0 - 100%</span>
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+              <label class="block">
+                <span class="mb-1 block text-xs text-slate-400">H</span>
+                <input id="hInput" type="number" inputmode="decimal" min="0" max="360" value="217" class="num-input w-full rounded-xl border border-slate-600/60 bg-slate-950/70 px-3 py-3 text-gray-900 dark:text-white outline-none focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/15" />
+              </label>
+              <label class="block">
+                <span class="mb-1 block text-xs text-slate-400">S %</span>
+                <input id="sInput" type="number" inputmode="decimal" min="0" max="100" value="91" class="num-input w-full rounded-xl border border-slate-600/60 bg-slate-950/70 px-3 py-3 text-gray-900 dark:text-white outline-none focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/15" />
+              </label>
+              <label class="block">
+                <span class="mb-1 block text-xs text-slate-400">L %</span>
+                <input id="lInput" type="number" inputmode="decimal" min="0" max="100" value="60" class="num-input w-full rounded-xl border border-slate-600/60 bg-slate-950/70 px-3 py-3 text-gray-900 dark:text-white outline-none focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/15" />
+              </label>
+            </div>
+            <button data-apply="hsl" type="button" class="apply-btn mt-3 w-full rounded-2xl bg-violet-500 px-4 py-3 font-bold text-gray-900 dark:text-white shadow-lg shadow-violet-950/30 transition hover:bg-violet-400 active:scale-95">
+              Apply HSL
+            </button>
+          </div>
+
+          <div class="soft-card rounded-3xl p-4">
+            <div class="mb-3 flex items-center justify-between gap-3">
+              <h3 class="font-semibold text-slate-900 dark:text-slate-100">CMYK Input</h3>
+              <span class="text-xs text-slate-400">Range: 0 - 100%</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <label class="block">
+                <span class="mb-1 block text-xs text-slate-400">C %</span>
+                <input id="cInput" type="number" inputmode="decimal" min="0" max="100" value="76" class="num-input w-full rounded-xl border border-slate-600/60 bg-slate-950/70 px-3 py-3 text-gray-900 dark:text-white outline-none focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/15" />
+              </label>
+              <label class="block">
+                <span class="mb-1 block text-xs text-slate-400">M %</span>
+                <input id="mInput" type="number" inputmode="decimal" min="0" max="100" value="47" class="num-input w-full rounded-xl border border-slate-600/60 bg-slate-950/70 px-3 py-3 text-gray-900 dark:text-white outline-none focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/15" />
+              </label>
+              <label class="block">
+                <span class="mb-1 block text-xs text-slate-400">Y %</span>
+                <input id="yInput" type="number" inputmode="decimal" min="0" max="100" value="0" class="num-input w-full rounded-xl border border-slate-600/60 bg-slate-950/70 px-3 py-3 text-gray-900 dark:text-white outline-none focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/15" />
+              </label>
+              <label class="block">
+                <span class="mb-1 block text-xs text-slate-400">K %</span>
+                <input id="kInput" type="number" inputmode="decimal" min="0" max="100" value="4" class="num-input w-full rounded-xl border border-slate-600/60 bg-slate-950/70 px-3 py-3 text-gray-900 dark:text-white outline-none focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/15" />
+              </label>
+            </div>
+            <button data-apply="cmyk" type="button" class="apply-btn mt-3 w-full rounded-2xl bg-fuchsia-500 px-4 py-3 font-bold text-gray-900 dark:text-white shadow-lg shadow-fuchsia-950/30 transition hover:bg-fuchsia-400 active:scale-95">
+              Apply CMYK
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="glass rounded-3xl p-5 shadow-2xl shadow-black/30 sm:p-6 lg:col-span-2">
+        <div class="mb-6">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Output</h2>
+          <p class="mt-1 text-sm text-slate-700 dark:text-slate-300">Preview the current color in real time and copy standard format code.</p>
+        </div>
+
+        <div class="overflow-hidden rounded-3xl border border-gray-200 dark:border-white/15 bg-slate-950/50">
+          <div id="previewPanel" class="flex h-56 items-end justify-start p-5 transition-colors duration-300" style="background-color:#3B82F6;">
+            <div class="rounded-2xl bg-black/35 px-4 py-3 backdrop-blur">
+              <p class="text-xs uppercase tracking-[.25em] text-white/70">Preview</p>
+              <p id="contrastText" class="mt-1 text-lg font-black text-gray-900 dark:text-white">#3B82F6</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-5">
+            <div class="h-10" id="tone1"></div>
+            <div class="h-10" id="tone2"></div>
+            <div class="h-10" id="tone3"></div>
+            <div class="h-10" id="tone4"></div>
+            <div class="h-10" id="tone5"></div>
+          </div>
+        </div>
+
+        <div class="mt-6 space-y-3">
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-700/70 bg-slate-950/55 p-4">
+            <div class="mb-2 flex items-center justify-between gap-3">
+              <span class="text-xs font-bold uppercase tracking-widest text-cyan-200">HEX</span>
+              <button data-copy="hexOut" type="button" class="copy-btn rounded-lg bg-white dark:bg-white/10 px-3 py-1.5 text-xs font-semibold text-gray-900 dark:text-white transition hover:bg-white/20 active:scale-95">Copy</button>
+            </div>
+            <output id="hexOut" class="break-all font-mono text-lg text-gray-900 dark:text-white">#3B82F6</output>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-700/70 bg-slate-950/55 p-4">
+            <div class="mb-2 flex items-center justify-between gap-3">
+              <span class="text-xs font-bold uppercase tracking-widest text-blue-200">RGB</span>
+              <button data-copy="rgbOut" type="button" class="copy-btn rounded-lg bg-white dark:bg-white/10 px-3 py-1.5 text-xs font-semibold text-gray-900 dark:text-white transition hover:bg-white/20 active:scale-95">Copy</button>
+            </div>
+            <output id="rgbOut" class="break-all font-mono text-lg text-gray-900 dark:text-white">rgb(59, 130, 246)</output>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-700/70 bg-slate-950/55 p-4">
+            <div class="mb-2 flex items-center justify-between gap-3">
+              <span class="text-xs font-bold uppercase tracking-widest text-violet-200">HSL</span>
+              <button data-copy="hslOut" type="button" class="copy-btn rounded-lg bg-white dark:bg-white/10 px-3 py-1.5 text-xs font-semibold text-gray-900 dark:text-white transition hover:bg-white/20 active:scale-95">Copy</button>
+            </div>
+            <output id="hslOut" class="break-all font-mono text-lg text-gray-900 dark:text-white">hsl(217, 91%, 60%)</output>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-700/70 bg-slate-950/55 p-4">
+            <div class="mb-2 flex items-center justify-between gap-3">
+              <span class="text-xs font-bold uppercase tracking-widest text-fuchsia-200">CMYK</span>
+              <button data-copy="cmykOut" type="button" class="copy-btn rounded-lg bg-white dark:bg-white/10 px-3 py-1.5 text-xs font-semibold text-gray-900 dark:text-white transition hover:bg-white/20 active:scale-95">Copy</button>
+            </div>
+            <output id="cmykOut" class="break-all font-mono text-lg text-gray-900 dark:text-white">cmyk(76%, 47%, 0%, 4%)</output>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <article class="mx-auto mt-8 max-w-6xl rounded-3xl border border-gray-200 dark:border-white/10 bg-white/[.07] p-6 leading-8 text-slate-800 dark:text-slate-200 shadow-2xl shadow-black/20 backdrop-blur sm:p-8">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Color Converter</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">HEX, RGB, HSL, and CMYK color conversion tool. Includes a visual color picker and a color preview panel. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Color Converter for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+    </article>
+  </main>
+
+  <footer class="px-4 pb-8 text-center text-sm text-slate-500">
+    <p>Built for fast color conversion, preview and copy.</p>
+  </footer>
+
+  <script>
+    (() => {
+      const $ = (id) => document.getElementById(id);
+
+      const els = {
+        message: $("message"),
+        picker: $("colorPicker"),
+        preview: $("previewPanel"),
+        contrastText: $("contrastText"),
+        hexInput: $("hexInput"),
+        r: $("rInput"),
+        g: $("gInput"),
+        b: $("bInput"),
+        h: $("hInput"),
+        s: $("sInput"),
+        l: $("lInput"),
+        c: $("cInput"),
+        m: $("mInput"),
+        y: $("yInput"),
+        k: $("kInput"),
+        hexOut: $("hexOut"),
+        rgbOut: $("rgbOut"),
+        hslOut: $("hslOut"),
+        cmykOut: $("cmykOut"),
+        tones: [$("tone1"), $("tone2"), $("tone3"), $("tone4"), $("tone5")]
+      };
+
+      let currentRgb = { r: 59, g: 130, b: 246 };
+
+      const round = (num, digits = 0) => {
+        const p = Math.pow(10, digits);
+        return Math.round((Number(num) + Number.EPSILON) * p) / p;
+      };
+
+      const isFiniteNumber = (value) => {
+        if (value === null || value === undefined || String(value).trim() === "") return false;
+        return Number.isFinite(Number(value));
+      };
+
+      const validateRange = (value, min, max, label, integer = false) => {
+        if (!isFiniteNumber(value)) throw new Error(`${label} cannot be empty and must be a number.`);
+        const n = Number(value);
+        if (integer && !Number.isInteger(n)) throw new Error(`${label} must be an integer.`);
+        if (n < min || n > max) throw new Error(`${label} must be between ${min} and ${max}.`);
+        return n;
+      };
+
+      const normalizeHex = (hex) => {
+        let v = String(hex || "").trim();
+        if (v.startsWith("#")) v = v.slice(1);
+        if (/^[0-9a-fA-F]{3}$/.test(v)) {
+          v = v.split("").map(ch => ch + ch).join("");
+        }
+        if (!/^[0-9a-fA-F]{6}$/.test(v)) {
+          throw new Error("Invalid HEX format. Enter #RGB, RGB, #RRGGBB, or RRGGBB, e.g. #3B82F6.");
+        }
+        return "#" + v.toUpperCase();
+      };
+
+      const hexToRgb = (hex) => {
+        const normalized = normalizeHex(hex).slice(1);
+        return {
+          r: parseInt(normalized.slice(0, 2), 16),
+          g: parseInt(normalized.slice(2, 4), 16),
+          b: parseInt(normalized.slice(4, 6), 16)
+        };
+      };
+
+      const componentToHex = (n) => {
+        const v = Math.max(0, Math.min(255, Math.round(n)));
+        return v.toString(16).padStart(2, "0").toUpperCase();
+      };
+
+      const rgbToHex = ({ r, g, b }) => `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`;
+
+      const rgbToHsl = ({ r, g, b }) => {
+        r /= 255; g /= 255; b /= 255;
+        const max = Math.max(r, g, b);
+        const min = Math.min(r, g, b);
+        let h = 0;
+        let s = 0;
+        const l = (max + min) / 2;
+        const d = max - min;
+
+        if (d !== 0) {
+          s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+          switch (max) {
+            case r:
+              h = ((g - b) / d + (g < b ? 6 : 0));
+              break;
+            case g:
+              h = ((b - r) / d + 2);
+              break;
+            default:
+              h = ((r - g) / d + 4);
+          }
+          h *= 60;
+        }
+
+        return { h: round(h), s: round(s * 100), l: round(l * 100) };
+      };
+
+      const hslToRgb = ({ h, s, l }) => {
+        h = ((h % 360) + 360) % 360;
+        s /= 100;
+        l /= 100;
+
+        const c = (1 - Math.abs(2 * l - 1)) * s;
+        const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+        const m = l - c / 2;
+        let rp = 0, gp = 0, bp = 0;
+
+        if (h < 60) [rp, gp, bp] = [c, x, 0];
+        else if (h < 120) [rp, gp, bp] = [x, c, 0];
+        else if (h < 180) [rp, gp, bp] = [0, c, x];
+        else if (h < 240) [rp, gp, bp] = [0, x, c];
+        else if (h < 300) [rp, gp, bp] = [x, 0, c];
+        else [rp, gp, bp] = [c, 0, x];
+
+        return {
+          r: Math.round((rp + m) * 255),
+          g: Math.round((gp + m) * 255),
+          b: Math.round((bp + m) * 255)
+        };
+      };
+
+      const rgbToCmyk = ({ r, g, b }) => {
+        const rn = r / 255, gn = g / 255, bn = b / 255;
+        const k = 1 - Math.max(rn, gn, bn);
+        if (k >= 1) return { c: 0, m: 0, y: 0, k: 100 };
+        return {
+          c: round(((1 - rn - k) / (1 - k)) * 100),
+          m: round(((1 - gn - k) / (1 - k)) * 100),
+          y: round(((1 - bn - k) / (1 - k)) * 100),
+          k: round(k * 100)
+        };
+      };
+
+      const cmykToRgb = ({ c, m, y, k }) => {
+        c /= 100; m /= 100; y /= 100; k /= 100;
+        return {
+          r: Math.round(255 * (1 - c) * (1 - k)),
+          g: Math.round(255 * (1 - m) * (1 - k)),
+          b: Math.round(255 * (1 - y) * (1 - k))
+        };
+      };
+
+      const showMessage = (text, type = "error") => {
+        els.message.classList.remove("hidden", "border-red-400/50", "bg-red-500/15", "text-red-100", "border-emerald-400/50", "bg-emerald-500/15", "text-emerald-100");
+        if (type === "success") {
+          els.message.classList.add("border-emerald-400/50", "bg-emerald-500/15", "text-emerald-100");
+        } else {
+          els.message.classList.add("border-red-400/50", "bg-red-500/15", "text-red-100");
+        }
+        els.message.textContent = text;
+        window.clearTimeout(showMessage.timer);
+        showMessage.timer = window.setTimeout(() => {
+          els.message.classList.add("hidden");
+        }, type === "success" ? 1800 : 4200);
+      };
+
+      const updateToneStrip = (rgb) => {
+        const hsl = rgbToHsl(rgb);
+        const lights = [22, 36, 50, 64, 78];
+        els.tones.forEach((tone, i) => {
+          tone.style.backgroundColor = `hsl(${hsl.h}, ${Math.max(8, hsl.s)}%, ${lights[i]}%)`;
+        });
+      };
+
+      const setButtonFeedback = (button) => {
+        if (!button) return;
+        button.classList.add("btn-feedback");
+        window.setTimeout(() => button.classList.remove("btn-feedback"), 160);
+      };
+
+      const render = (rgb, silent = false) => {
+        const safeRgb = {
+          r: Math.max(0, Math.min(255, Math.round(rgb.r))),
+          g: Math.max(0, Math.min(255, Math.round(rgb.g))),
+          b: Math.max(0, Math.min(255, Math.round(rgb.b)))
+        };
+        currentRgb = safeRgb;
+
+        const hex = rgbToHex(safeRgb);
+        const hsl = rgbToHsl(safeRgb);
+        const cmyk = rgbToCmyk(safeRgb);
+
+        els.picker.value = hex;
+        els.hexInput.value = hex;
+
+        els.r.value = safeRgb.r;
+        els.g.value = safeRgb.g;
+        els.b.value = safeRgb.b;
+
+        els.h.value = hsl.h;
+        els.s.value = hsl.s;
+        els.l.value = hsl.l;
+
+        els.c.value = cmyk.c;
+        els.m.value = cmyk.m;
+        els.y.value = cmyk.y;
+        els.k.value = cmyk.k;
+
+        els.preview.style.backgroundColor = hex;
+        els.contrastText.textContent = hex;
+        const luminance = (0.299 * safeRgb.r + 0.587 * safeRgb.g + 0.114 * safeRgb.b) / 255;
+        els.contrastText.className = `mt-1 text-lg font-black ${luminance > 0.62 ? "text-slate-950" : "text-white"}`;
+
+        els.hexOut.textContent = hex;
+        els.rgbOut.textContent = `rgb(${safeRgb.r}, ${safeRgb.g}, ${safeRgb.b})`;
+        els.hslOut.textContent = `hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)`;
+        els.cmykOut.textContent = `cmyk(${cmyk.c}%, ${cmyk.m}%, ${cmyk.y}%, ${cmyk.k}%)`;
+
+        updateToneStrip(safeRgb);
+        if (!silent) showMessage("Color converted successfully.", "success");
+      };
+
+      const applyFormat = (format, button) => {
+        try {
+          let rgb;
+          if (format === "hex") {
+            rgb = hexToRgb(els.hexInput.value);
+          } else if (format === "rgb") {
+            rgb = {
+              r: validateRange(els.r.value, 0, 255, "RGB 的 R 值", true),
+              g: validateRange(els.g.value, 0, 255, "RGB 的 G 值", true),
+              b: validateRange(els.b.value, 0, 255, "RGB 的 B 值", true)
+            };
+          } else if (format === "hsl") {
+            rgb = hslToRgb({
+              h: validateRange(els.h.value, 0, 360, "HSL 的 H 值"),
+              s: validateRange(els.s.value, 0, 100, "HSL 的 S 值"),
+              l: validateRange(els.l.value, 0, 100, "HSL 的 L 值")
+            });
+          } else if (format === "cmyk") {
+            rgb = cmykToRgb({
+              c: validateRange(els.c.value, 0, 100, "CMYK 的 C 值"),
+              m: validateRange(els.m.value, 0, 100, "CMYK 的 M 值"),
+              y: validateRange(els.y.value, 0, 100, "CMYK 的 Y 值"),
+              k: validateRange(els.k.value, 0, 100, "CMYK 的 K 值")
+            });
+          } else {
+            throw new Error("Unknown color format. Please refresh the page and try again.");
+          }
+          render(rgb);
+          setButtonFeedback(button);
+        } catch (err) {
+          showMessage(err && err.message ? err.message : "Invalid input format. Please check and try again.", "error");
+        }
+      };
+
+      document.querySelectorAll(".apply-btn").forEach((btn) => {
+        btn.addEventListener("click", () => applyFormat(btn.dataset.apply, btn));
+      });
+
+      els.picker.addEventListener("input", () => {
+        try {
+          render(hexToRgb(els.picker.value), true);
+        } catch (err) {
+          showMessage("The color picker returned an invalid color. Please select again.", "error");
+        }
+      });
+
+      $("resetBtn").addEventListener("click", (e) => {
+        render({ r: 59, g: 130, b: 246 });
+        setButtonFeedback(e.currentTarget);
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key !== "Enter") return;
+        const id = e.target && e.target.id;
+        if (id === "hexInput") applyFormat("hex", document.querySelector('[data-apply="hex"]'));
+        if (["rInput", "gInput", "bInput"].includes(id)) applyFormat("rgb", document.querySelector('[data-apply="rgb"]'));
+        if (["hInput", "sInput", "lInput"].includes(id)) applyFormat("hsl", document.querySelector('[data-apply="hsl"]'));
+        if (["cInput", "mInput", "yInput", "kInput"].includes(id)) applyFormat("cmyk", document.querySelector('[data-apply="cmyk"]'));
+      });
+
+      document.querySelectorAll(".copy-btn").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const target = $(btn.dataset.copy);
+          const text = target ? target.textContent.trim() : "";
+          if (!text) {
+            showMessage("No content to copy.", "error");
+            return;
+          }
+
+          try {
+            if (navigator.clipboard && window.isSecureContext) {
+              await navigator.clipboard.writeText(text);
+            } else {
+              const temp = document.createElement("textarea");
+              temp.value = text;
+              temp.setAttribute("readonly", "");
+              temp.style.position = "fixed";
+              temp.style.left = "-9999px";
+              document.body.appendChild(temp);
+              temp.select();
+              document.execCommand("copy");
+              document.body.removeChild(temp);
+            }
+            const oldText = btn.textContent;
+            btn.textContent = "Copied";
+            btn.classList.add("bg-emerald-500/70");
+            setButtonFeedback(btn);
+            showMessage(`Copied: ${text}`, "success");
+            window.setTimeout(() => {
+              btn.textContent = oldText;
+              btn.classList.remove("bg-emerald-500/70");
+            }, 1200);
+          } catch (err) {
+            showMessage("Copy failed. Please manually select the result text and copy it.", "error");
+          }
+        });
+      });
+
+      render(currentRgb, true);
+    })();
+  </script>
+</body>
+</html>

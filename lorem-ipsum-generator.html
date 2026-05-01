@@ -4,31 +4,59 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>lorem-ipsum-generator｜乱数假文生成器</title>
-  <meta name="description" content="lorem-ipsum-generator 是一个免费在线乱数假文生成器，可自定义段落数与单词数，支持英文 Lorem Ipsum 和中文占位文本生成，适合设计稿、网页原型与内容排版测试。" />
-  <meta name="keywords" content="lorem ipsum generator, 乱数假文生成器, 中文占位文本生成器, 英文假文生成器, Lorem Ipsum 在线生成, 段落生成器, 前端排版测试工具" />
+  <meta name="description" content="乱数假文 (Lorem Ipsum) 生成器。可设置生成的段落数、单词数，支持生成英文和中文占位文本。">
+  <meta name="keywords" content="lorem ipsum generator, 乱数假文生成器, 中文占位文本生成器, 英文假文生成器, Lorem Ipsum 在线生成, 段落生成器, 前端排版测试工具">
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="./assets/logo.png">
   <link rel="apple-touch-icon" href="./assets/logo.png">
   <meta property="og:image" content="./assets/logo.png">
   <meta name="twitter:image" content="./assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/lorem-ipsum-generator.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/lorem-ipsum-generator.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/lorem-ipsum-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/lorem-ipsum-generator.html">
+  <script src="./theme-toggle.js" defer></script>
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="./lorem-ipsum-generator.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
+        <a href="./en/lorem-ipsum-generator.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="切换主题" title="切换主题">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
   <main class="relative overflow-hidden">
     <div class="pointer-events-none absolute inset-0">
       <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
       <div class="absolute right-0 top-72 h-80 w-80 rounded-full bg-indigo-500/10 blur-3xl"></div>
     </div>
 
-    <header class="relative border-b border-white/10 bg-slate-950/70 backdrop-blur">
+    <header class="relative border-b border-gray-200 dark:border-white/10 bg-slate-950/70 backdrop-blur">
       <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
         <div class="max-w-3xl">
           <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
             Free Online Text Placeholder Tool
           </p>
-          <h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl">乱数假文生成器</h1>
-          <p class="mt-4 text-base leading-7 text-slate-300 sm:text-lg">
+          <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">乱数假文生成器</h1>
+          <p class="mt-4 text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
             乱数假文生成器：按需生成英文 Lorem Ipsum 或中文占位文本，快速用于网页设计、UI 原型、排版测试与内容占位。
           </p>
         </div>
@@ -36,71 +64,71 @@
     </header>
 
     <section class="relative mx-auto grid max-w-6xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-12 lg:px-8">
-      <section class="rounded-3xl border border-white/10 bg-white/[0.06] p-5 shadow-2xl shadow-cyan-950/20 backdrop-blur lg:col-span-4 sm:p-6" aria-labelledby="input-title">
+      <section class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5 shadow-2xl shadow-cyan-950/20 backdrop-blur lg:col-span-4 sm:p-6" aria-labelledby="input-title">
         <div class="mb-6">
-          <h2 id="input-title" class="text-xl font-semibold text-white">生成设置</h2>
+          <h2 id="input-title" class="text-xl font-semibold text-gray-900 dark:text-white">生成设置</h2>
           <p class="mt-2 text-sm text-slate-400">调整语言、段落数量和每段单词数，即可生成可复制的占位文本。</p>
         </div>
 
         <form id="generatorForm" class="space-y-5" novalidate>
           <div>
-            <label for="language" class="mb-2 block text-sm font-medium text-slate-200">文本语言</label>
-            <select id="language" name="language" class="w-full rounded-2xl border border-white/10 bg-slate-900 px-4 py-3 text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
+            <label for="language" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">文本语言</label>
+            <select id="language" name="language" class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
               <option value="english">英文 Lorem Ipsum</option>
               <option value="chinese">中文占位文本</option>
             </select>
           </div>
 
           <div>
-            <label for="paragraphs" class="mb-2 block text-sm font-medium text-slate-200">段落数</label>
-            <input id="paragraphs" name="paragraphs" type="number" inputmode="numeric" min="1" max="50" value="3" class="w-full rounded-2xl border border-white/10 bg-slate-900 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
+            <label for="paragraphs" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">段落数</label>
+            <input id="paragraphs" name="paragraphs" type="number" inputmode="numeric" min="1" max="50" value="3" class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
             <p class="mt-2 text-xs text-slate-500">范围：1 - 50</p>
           </div>
 
           <div>
-            <label for="words" class="mb-2 block text-sm font-medium text-slate-200">每段单词数</label>
-            <input id="words" name="words" type="number" inputmode="numeric" min="1" max="500" value="80" class="w-full rounded-2xl border border-white/10 bg-slate-900 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
+            <label for="words" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">每段单词数</label>
+            <input id="words" name="words" type="number" inputmode="numeric" min="1" max="500" value="80" class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
             <p class="mt-2 text-xs text-slate-500">英文按单词计数，中文按词组计数。范围：1 - 500</p>
           </div>
 
           <div id="errorBox" class="hidden rounded-2xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-200" role="alert" aria-live="polite"></div>
 
           <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-            <button id="generateBtn" type="submit" class="rounded-2xl bg-cyan-400 px-5 py-3 font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-cyan-400/30">
+            <button id="generateBtn" type="submit" class="rounded-2xl bg-cyan-400 px-5 py-3 font-semibold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-cyan-400/30">
               生成假文
             </button>
-            <button id="resetBtn" type="button" class="rounded-2xl border border-white/10 bg-slate-900 px-5 py-3 font-semibold text-slate-100 transition hover:bg-slate-800 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-white/10">
+            <button id="resetBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-5 py-3 font-semibold text-slate-900 dark:text-slate-100 transition hover:bg-slate-800 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-white/10">
               重置
             </button>
           </div>
         </form>
       </section>
 
-      <section class="rounded-3xl border border-cyan-400/20 bg-slate-900/80 p-5 shadow-2xl shadow-slate-950/40 backdrop-blur lg:col-span-8 sm:p-6" aria-labelledby="output-title">
+      <section class="rounded-3xl border border-cyan-400/20 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-slate-950/40 backdrop-blur lg:col-span-8 sm:p-6" aria-labelledby="output-title">
         <div class="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 id="output-title" class="text-xl font-semibold text-white">生成结果</h2>
+            <h2 id="output-title" class="text-xl font-semibold text-gray-900 dark:text-white">生成结果</h2>
             <p id="stats" class="mt-2 text-sm text-slate-400">当前：3 段，每段 80 个词组，英文</p>
           </div>
           <div class="flex gap-3">
             <button id="copyBtn" type="button" class="rounded-2xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-cyan-400/20">
               复制文本
             </button>
-            <button id="downloadBtn" type="button" class="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:bg-white/10 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-white/10">
+            <button id="downloadBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-2 text-sm font-semibold text-slate-900 dark:text-slate-100 transition hover:bg-white/10 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-white/10">
               下载 .txt
             </button>
           </div>
         </div>
 
-        <textarea id="outputText" readonly class="min-h-[430px] w-full resize-y rounded-3xl border border-white/10 bg-slate-950/90 p-5 text-sm leading-7 text-slate-200 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 sm:text-base" spellcheck="false" aria-label="生成的乱数假文"></textarea>
+        <textarea id="outputText" readonly class="min-h-[430px] w-full resize-y rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-950/90 p-5 text-sm leading-7 text-slate-800 dark:text-slate-200 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 sm:text-base" spellcheck="false" aria-label="生成的乱数假文"></textarea>
 
         <div id="successBox" class="mt-4 hidden rounded-2xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200" aria-live="polite"></div>
       </section>
     </section>
 
     <article class="relative mx-auto max-w-6xl px-4 pb-12 sm:px-6 lg:px-8">
-      <div class="rounded-3xl border border-white/10 bg-white/[0.04] p-6 text-slate-300 shadow-2xl shadow-slate-950/30 sm:p-8">
-        <h2 class="text-2xl font-bold text-white">关于乱数假文生成器</h2>
+      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-6 text-slate-700 dark:text-slate-300 shadow-2xl shadow-slate-950/30 sm:p-8">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">关于乱数假文生成器</h2>
         <p class="mt-4 leading-8">
           lorem-ipsum-generator 是一款面向设计师、前端开发者、产品经理和内容编辑的在线乱数假文生成器。制作网页原型、落地页、后台界面或移动端 UI 时，经常需要稳定、自然、长度可控的占位文案来验证版式、行高、卡片间距与响应式布局效果。本工具支持英文 Lorem Ipsum 生成和中文占位文本生成，可自由设置生成的段落数与每段单词数，避免手动复制假文导致内容过短、重复或不适配设计稿的问题。使用时只需选择语言，输入段落数量和单词数量，点击“生成假文”即可得到可复制的测试文本；也可以一键下载为 TXT 文件，方便导入 CMS、Figma 标注或前端测试数据。对于需要“中文 lorem ipsum 在线生成”“网页排版测试占位文本”“多段假文生成器”等场景的用户，这个零依赖工具能够快速提升原型搭建与内容排版效率。
         </p>
@@ -375,246 +403,5 @@
       runGenerate();
     })();
   </script>
-
-  <!-- micro-tools-i18n:start -->
-  <script>
-(() => {
-  'use strict';
-  const STORAGE_KEY = 'microToolsLanguage';
-  const PAGE_SLUG = "lorem-ipsum-generator";
-  const TRANSLATIONS = {"中文":"Chinese","设计":"Design","原型":"Prototype","交互":"Interaction","乱数假文生成器：按需生成英文 Lorem Ipsum 或中文占位文本，快速用于网页设计、UI 原型、排版测试与内容占位。":"Lorem ipsum generator: generate English Lorem Ipsum or Chinese placeholder text as needed, for quick use in web design, UI prototypes, layout testing, and content placeholders.","界面":"Interface","文本":"Text","核心价值":"Core Values","调整语言、段落数量和每段单词数，即可生成可复制的占位文本。":"Adjust the language, number of paragraphs, and words per paragraph to generate copyable placeholder text.","段落数必须是整数，例如 3。":"The number of paragraphs must be an integer, e.g. 3.","信息":"Info","持续迭代":"Continuous iteration","表单":"Form","层级":"Hierarchy","颜色":"Color","测试":"Test","生成过程中出现异常，请调整参数后重试。":"An error occurred during generation. Please adjust the parameters and try again.","输出":"Output","占位":"Placeholder","中文占位文本":"Chinese placeholder text","文本已复制到剪贴板。":"Text copied to clipboard.","样式":"Style","内容":"Content","lorem ipsum generator, 乱数假文生成器, 中文占位文本生成器, 英文假文生成器, Lorem Ipsum 在线生成, 段落生成器, 前端排版测试工具":"lorem ipsum generator, dummy text generator, Chinese placeholder text generator, English dummy text generator, online Lorem Ipsum generator, paragraph generator, frontend layout testing tool","导航":"Navigation","服务":"Service","下载 .txt":"Download .txt","规范":"Specification","体验":"Experience","管理":"Management","文本语言":"Text language","信息架构":"Information architecture","假文已成功生成。":"Placeholder text generated successfully.","前端":"Frontend","标题":"Title","主题":"Theme","lorem-ipsum-generator 是一款面向设计师、前端开发者、产品经理和内容编辑的在线乱数假文生成器。制作网页原型、落地页、后台界面或移动端 UI 时，经常需要稳定、自然、长度可控的占位文案来验证版式、行高、卡片间距与响应式布局效果。本工具支持英文 Lorem Ipsum 生成和中文占位文本生成，可自由设置生成的段落数与每段单词数，避免手动复制假文导致内容过短、重复或不适配设计稿的问题。使用时只需选择语言，输入段落数量和单词数量，点击“生成假文”即可得到可复制的测试文本；也可以一键下载为 TXT 文件，方便导入 CMS、Figma 标注或前端测试数据。对于需要“中文 lorem ipsum 在线生成”“网页排版测试占位文本”“多段假文生成器”等场景的用户，这个零依赖工具能够快速提升原型搭建与内容排版效率。":"lorem-ipsum-generator is an online dummy text generator for designers, frontend developers, product managers, and content editors. When creating web prototypes, landing pages, admin interfaces, or mobile UIs, you often need stable, natural, length-controlled placeholder copy to test typography, line height, card spacing, and responsive layouts. This tool supports English Lorem Ipsum generation and Chinese placeholder text generation, with customizable paragraph count and words per paragraph to avoid copied dummy text that is too short, repetitive, or unsuitable for the design. Choose a language, enter the number of paragraphs and words, and click \"Generate Dummy Text\" to get copyable test text. You can also download it as a TXT file for CMS import, Figma annotations, or frontend test data. For users needing \"Chinese lorem ipsum generator\", \"web layout placeholder text\", or \"multi-paragraph dummy text generator\", this zero-dependency tool quickly improves prototyping and content layout efficiency.","TXT 文件已开始下载。":"TXT file download has started.","流程":"Flow","文案":"Copy","场景":"Scenario","每段单词数":"Words per segment","关于乱数假文生成器":"About the Lorem Ipsum Generator","英文按单词计数，中文按词组计数。范围：1 - 500":"English is counted by words; Chinese by phrases. Range: 1 - 500","桌面端":"Desktop","视觉":"Visual","页面元素":"Page elements","英文":"English","策略":"Strategy","当前：${paragraphs} 段，每段 ${words} ${unit}，${langLabel}":"Current: ${paragraphs} paragraphs, ${words} ${unit} per paragraph, ${langLabel}","展示":"Show","内容区域":"Content area","生成结果":"Generated Results","个单词":"words","下载":"Download","快速生成":"Quick generate","开发":"Development","用户旅程":"User Journey","响应":"Response","每段单词数超出范围，请输入 1 到 500 之间的整数。":"Words per paragraph is out of range. Enter an integer between 1 and 500.","当前没有可复制的内容，请先生成假文。":"There is no content to copy. Please generate dummy text first.","优化":"Optimization","用户":"User","项目":"Project","应用":"App","方案":"Plan","下载失败，请复制文本后手动保存。":"Download failed. Please copy the text and save it manually.","重置":"Reset","每段单词数必须是整数，例如 80。":"Words per paragraph must be an integer, e.g. 80.","业务场景":"Business scenarios","英文 Lorem Ipsum":"English Lorem Ipsum","平台":"Platform","自然呈现":"Natural Presentation","高效协作":"Efficient collaboration","生成的乱数假文":"Generated random dummy text","段落数超出范围，请输入 1 到 50 之间的整数。":"Paragraph count is out of range. Please enter an integer between 1 and 50.","品牌":"Brand","细节":"Details","页面":"Page","布局":"Layout","按钮":"Button","预览":"Preview","范围：1 - 50":"Range: 1 - 50","生成设置":"Generation Settings","复制":"Copy","节奏":"Rhythm","空间":"Space","清晰":"Clear","个词组":"phrases","lorem-ipsum-generator 是一个免费在线乱数假文生成器，可自定义段落数与单词数，支持英文 Lorem Ipsum 和中文占位文本生成，适合设计稿、网页原型与内容排版测试。":"lorem-ipsum-generator is a free online placeholder text generator that lets you customize paragraph and word counts, supporting English Lorem Ipsum and Chinese placeholder text, ideal for design drafts, web prototypes, and content layout testing.","简洁":"Concise","请选择有效的文本语言。":"Please select a valid text language.","卡片":"Card","生成假文":"Generate Placeholder Text","复制失败，请手动选中文本后复制。":"Copy failed. Please select the text manually and copy it.","现代":"Modern","段落数":"Paragraph Count","排版":"Typography","轻量化":"Lightweight","模块":"Module","灵活":"Flexible","可维护":"Maintainable","移动端":"Mobile","输入":"Input","当前：3 段，每段 80 个词组，英文":"Current: 3 sections, 80 phrases per section, English","复制文本":"Copy Text","在线工具":"Online tools","当前没有可下载的内容，请先生成假文。":"There is no content to download. Please generate dummy text first.","lorem-ipsum-generator｜乱数假文生成器":"lorem-ipsum-generator｜Lorem ipsum generator","一致性":"Consistency","系统":"System","效率":"Efficiency","稳定":"Stable","响应式":"Responsive","组件":"Components","可读性":"Readability","结构":"Structure","功能":"Features","产品":"Product","验证":"Validation","数据":"Data","段落":"Paragraph","需求":"Requirements","科技":"Technology","乱数假文生成器":"Lorem Ipsum Generator","乱数假文 (Lorem Ipsum) 生成器。可设置生成的段落数、单词数，支持生成英文和中文占位文本。":"Lorem Ipsum generator. Set the number of paragraphs and words, with support for English and Chinese placeholder text."};
-  const TOOL_DATA = {"lorem-ipsum-generator":{"zhName":"乱数假文生成器","enName":"Lorem Ipsum Generator","zhDescription":"乱数假文 (Lorem Ipsum) 生成器。可设置生成的段落数、单词数，支持生成英文和中文占位文本。","enDescription":"Lorem Ipsum generator. Set the number of paragraphs and words, with support for English and Chinese placeholder text.","zhTitle":"lorem-ipsum-generator｜乱数假文生成器","enTitle":"Lorem Ipsum Generator | Free Online Tool","zhKeywords":"lorem ipsum generator, 乱数假文生成器, 中文占位文本生成器, 英文假文生成器, Lorem Ipsum 在线生成, 段落生成器, 前端排版测试工具","enKeywords":"Lorem Ipsum Generator, online tool, browser tool, productivity tool"}};
-  const CURRENT_TOOL = {"zhName":"乱数假文生成器","enName":"Lorem Ipsum Generator","zhDescription":"乱数假文 (Lorem Ipsum) 生成器。可设置生成的段落数、单词数，支持生成英文和中文占位文本。","enDescription":"Lorem Ipsum generator. Set the number of paragraphs and words, with support for English and Chinese placeholder text.","zhTitle":"lorem-ipsum-generator｜乱数假文生成器","enTitle":"Lorem Ipsum Generator | Free Online Tool","zhKeywords":"lorem ipsum generator, 乱数假文生成器, 中文占位文本生成器, 英文假文生成器, Lorem Ipsum 在线生成, 段落生成器, 前端排版测试工具","enKeywords":"Lorem Ipsum Generator, online tool, browser tool, productivity tool"};
-  const ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
-  const ZH_RE = /[\u4e00-\u9fff]/;
-  const originalText = new WeakMap();
-  const originalAttrs = new WeakMap();
-  let observer = null;
-
-  function normalize(value) {
-    return String(value || '').replace(/\s+/g, ' ').trim();
-  }
-
-  function hasChinese(value) {
-    return ZH_RE.test(String(value || ''));
-  }
-
-  function language() {
-    return localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'zh';
-  }
-
-  function translateExact(value, lang) {
-    const text = String(value || '');
-    if (lang === 'zh' || !text) return text;
-    if (TRANSLATIONS[text]) return TRANSLATIONS[text];
-    const normalized = normalize(text);
-    if (TRANSLATIONS[normalized]) return TRANSLATIONS[normalized];
-
-    const dynamic = [
-      [/^(\d+)\s*个字符$/u, '$1 characters'],
-      [/^(\d+)\s*字符$/u, '$1 characters'],
-      [/^(\d+)\s*字$/u, '$1 characters'],
-      [/^(\d+)\s*行$/u, '$1 rows'],
-      [/^(\d+)\s*列$/u, '$1 columns'],
-      [/^(\d+)\s*项$/u, '$1 items'],
-      [/^(\d+)\s*次$/u, '$1 times'],
-      [/^当前显示\s*(\d+)\s*\/\s*(\d+)$/u, 'Showing $1 / $2'],
-      [/^第\s*(\d+)\s*行第\s*(\d+)\s*列/u, 'line $1, column $2']
-    ];
-    for (const [pattern, replacement] of dynamic) {
-      if (pattern.test(normalized)) return normalized.replace(pattern, replacement);
-    }
-    return text;
-  }
-
-  function translateWithSpacing(value, lang) {
-    const text = String(value || '');
-    if (!text.trim()) return text;
-    const leading = text.match(/^\s*/)[0];
-    const trailing = text.match(/\s*$/)[0];
-    const core = text.slice(leading.length, text.length - trailing.length);
-    return leading + translateExact(core, lang) + trailing;
-  }
-
-  function skipped(node) {
-    const parent = node.parentElement;
-    return !parent || Boolean(parent.closest('script, style, code, pre, textarea, [data-i18n-ignore]'));
-  }
-
-  function translateNode(node, lang) {
-    if (skipped(node) || !node.nodeValue.trim()) return;
-    const current = node.nodeValue;
-    let original = originalText.get(node);
-    const originalEnglish = original ? translateWithSpacing(original, 'en') : '';
-    if (!original || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
-      original = current;
-      originalText.set(node, original);
-    }
-    node.nodeValue = lang === 'zh' ? (original || current) : translateWithSpacing(original || current, lang);
-  }
-
-  function translateAttrs(element, lang) {
-    if (element.closest('script, style, [data-i18n-ignore]')) return;
-    let store = originalAttrs.get(element);
-    if (!store) {
-      store = {};
-      originalAttrs.set(element, store);
-    }
-    ATTRS.forEach((attr) => {
-      if (!element.hasAttribute(attr)) return;
-      const current = element.getAttribute(attr);
-      const originalEnglish = store[attr] ? translateExact(store[attr], 'en') : '';
-      if (!store[attr] || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
-        store[attr] = current;
-      }
-      element.setAttribute(attr, lang === 'zh' ? store[attr] : translateExact(store[attr] || current, lang));
-    });
-  }
-
-  function walk(root, lang) {
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    const nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-    nodes.forEach((node) => translateNode(node, lang));
-
-    const elementRoot = root.nodeType === Node.ELEMENT_NODE ? root : document.body;
-    if (!elementRoot) return;
-    translateAttrs(elementRoot, lang);
-    elementRoot.querySelectorAll('*').forEach((element) => translateAttrs(element, lang));
-  }
-
-  function setMeta(name, value) {
-    if (!value) return;
-    let meta = document.querySelector(`meta[name="${name}"]`);
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.setAttribute('name', name);
-      document.head.appendChild(meta);
-    }
-    meta.setAttribute('content', value);
-  }
-
-  function applyMetadata(lang) {
-    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-    if (PAGE_SLUG === 'index') {
-      document.title = lang === 'zh'
-        ? '免费在线开发者工具箱 | 纯前端工具集合'
-        : 'Free Online Developer Toolbox | Pure Front-End Tools';
-      setMeta('description', lang === 'zh'
-        ? '免费在线开发者工具箱，汇集 JSON、CSV、LaTeX、Base64、正则、时间戳、二维码、颜色转换等纯前端微型工具，隐私友好、无需安装、极速加载。'
-        : 'A free online developer toolbox with pure front-end tools for JSON, CSV, LaTeX, Base64, regex, timestamps, QR codes, color conversion, and daily productivity.');
-      setMeta('keywords', lang === 'zh'
-        ? '免费在线开发者工具箱, 纯前端工具集合, 在线 JSON 工具, 在线编码转换工具, 生产力工具箱, 微型 Web 工具'
-        : 'free online developer tools, front-end tools, JSON tools, encoding tools, productivity toolbox, micro web tools');
-      return;
-    }
-    if (!CURRENT_TOOL || !CURRENT_TOOL.zhName) return;
-    document.title = lang === 'zh' ? CURRENT_TOOL.zhTitle : CURRENT_TOOL.enTitle;
-    setMeta('description', lang === 'zh' ? CURRENT_TOOL.zhDescription : CURRENT_TOOL.enDescription);
-    setMeta('keywords', lang === 'zh' ? CURRENT_TOOL.zhKeywords : CURRENT_TOOL.enKeywords);
-    const h1 = document.querySelector('h1');
-    if (h1) h1.textContent = lang === 'zh' ? CURRENT_TOOL.zhName : CURRENT_TOOL.enName;
-  }
-
-  function updateIndexCards(lang) {
-    if (PAGE_SLUG !== 'index') return;
-    document.querySelectorAll('a[href$=".html"]').forEach((card) => {
-      const slug = (card.getAttribute('href') || '').split('/').pop().replace(/\.html$/i, '');
-      const tool = TOOL_DATA[slug];
-      if (!tool) return;
-      const title = card.querySelector('h3');
-      const description = card.querySelector('p');
-      const action = card.querySelector('span:last-child');
-      if (title) title.textContent = lang === 'zh' ? tool.zhName : tool.enName;
-      if (description) description.textContent = lang === 'zh' ? tool.zhDescription : tool.enDescription;
-      if (action) action.textContent = lang === 'zh' ? '立即使用' : 'Open Tool';
-      card.dataset.search = normalize(`${slug} ${tool.zhName} ${tool.enName} ${tool.zhDescription} ${tool.enDescription}`).toLowerCase().replace(/[-_\s]+/g, '');
-    });
-    const search = document.getElementById('searchInput');
-    if (search) search.dispatchEvent(new Event('input', { bubbles: true }));
-  }
-
-  function ensureToggle(lang) {
-    let toggle = document.getElementById('microToolsLanguageToggle');
-    if (!toggle) {
-      toggle = document.createElement('div');
-      toggle.id = 'microToolsLanguageToggle';
-      toggle.setAttribute('data-i18n-ignore', 'true');
-      toggle.className = 'fixed right-4 top-4 z-50 flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/90 p-1 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur';
-      toggle.innerHTML = '<span data-language-label class="px-2 text-xs text-slate-300">语言</span><button type="button" data-lang-option="zh" class="rounded-full px-3 py-1.5 transition">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-1.5 transition">EN</button>';
-      document.body.appendChild(toggle);
-      toggle.addEventListener('click', (event) => {
-        const button = event.target.closest('[data-lang-option]');
-        if (!button) return;
-        localStorage.setItem(STORAGE_KEY, button.getAttribute('data-lang-option') === 'en' ? 'en' : 'zh');
-        applyLanguage(language());
-      });
-    }
-    toggle.querySelector('[data-language-label]').textContent = lang === 'zh' ? '语言' : 'Language';
-    toggle.querySelectorAll('[data-lang-option]').forEach((button) => {
-      const active = button.getAttribute('data-lang-option') === lang;
-      button.className = active
-        ? 'rounded-full bg-cyan-400 px-3 py-1.5 text-slate-950 transition'
-        : 'rounded-full px-3 py-1.5 text-slate-200 transition hover:bg-white/10';
-    });
-  }
-
-  function disconnect() {
-    if (observer) observer.disconnect();
-  }
-
-  function observe() {
-    if (!observer) {
-      observer = new MutationObserver(() => {
-        if (language() !== 'en') return;
-        disconnect();
-        applyLanguage('en');
-        observe();
-      });
-    }
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributes: true,
-      attributeFilter: ATTRS
-    });
-  }
-
-  function applyLanguage(lang) {
-    const next = lang === 'en' ? 'en' : 'zh';
-    disconnect();
-    ensureToggle(next);
-    applyMetadata(next);
-    walk(document.body, next);
-    updateIndexCards(next);
-    ensureToggle(next);
-    observe();
-  }
-
-  function init() {
-    applyLanguage(language());
-    window.addEventListener('storage', (event) => {
-      if (event.key === STORAGE_KEY) applyLanguage(language());
-    });
-  }
-
-  window.MicroToolsI18n = {
-    getLanguage: language,
-    setLanguage(value) {
-      localStorage.setItem(STORAGE_KEY, value === 'en' ? 'en' : 'zh');
-      applyLanguage(language());
-    },
-    applyLanguage
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
-  </script>
-  <!-- micro-tools-i18n:end -->
 </body>
 </html>

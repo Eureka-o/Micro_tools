@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSV to HTML Table Generator | Free Online Tool</title>
+  <meta name="description" content="CSV to HTML `&lt;table&gt;` code generator. Paste CSV data to directly output HTML table code with basic CSS styles.">
+  <meta name="keywords" content="CSV to HTML Table Generator, online tool, browser tool, productivity tool">
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+  <meta property="og:image" content="../assets/logo.png">
+  <meta name="twitter:image" content="../assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/en/csv-to-html-table.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/csv-to-html-table.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/csv-to-html-table.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/csv-to-html-table.html">
+  <script src="./theme-toggle.js" defer></script>
+</head>
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="../csv-to-html-table.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./csv-to-html-table.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
+  <div class="pointer-events-none fixed inset-0 overflow-hidden">
+    <div class="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
+  </div>
+
+  <main class="relative mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+    <header class="mb-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 p-6 shadow-2xl shadow-cyan-950/30 backdrop-blur md:p-10">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+            Free online tool · no uploads · local conversion
+          </p>
+          <h1 class="text-3xl font-black tracking-tight text-gray-900 dark:text-white sm:text-4xl md:text-5xl">CSV to HTML Table Generator</h1>
+          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300 md:text-lg">
+            Paste CSV data and generate HTML with basic CSS styling in one click <code class="rounded bg-white dark:bg-slate-900/80 px-1.5 py-0.5 text-cyan-200">&lt;table&gt;</code> code, with instant preview, copy, or download.
+          </p>
+        </div>
+        <div class="grid grid-cols-3 gap-3 text-center">
+          <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-3">
+            <div id="statRows" class="text-2xl font-bold text-cyan-200">0</div>
+            <div class="text-xs text-slate-400">row</div>
+          </div>
+          <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-3">
+            <div id="statCols" class="text-2xl font-bold text-indigo-200">0</div>
+            <div class="text-xs text-slate-400">column</div>
+          </div>
+          <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-3">
+            <div id="statChars" class="text-2xl font-bold text-emerald-200">0</div>
+            <div class="text-xs text-slate-400">Characters</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="grid gap-6 lg:grid-cols-2" aria-label="CSV to HTML Table Tool">
+      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-xl shadow-black/20 backdrop-blur">
+        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Input CSV Data</h2>
+            <p class="mt-1 text-sm text-slate-400">Supports common CSV formats, including quoted fields, line breaks within fields, commas, and tabs.</p>
+          </div>
+          <button id="sampleBtn" type="button" class="rounded-xl border border-cyan-300/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">
+            Fill Example
+          </button>
+        </div>
+
+        <label for="csvInput" class="sr-only">CSV Input Box</label>
+        <textarea id="csvInput" spellcheck="false" class="h-80 w-full resize-y rounded-2xl border border-slate-700 bg-slate-950/90 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="例如：
+姓名,职位,城市
+张三,前端工程师,上海
+李四,产品经理,北京"></textarea>
+
+        <div class="mt-4 grid gap-3 sm:grid-cols-2">
+          <label class="block">
+            <span class="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Delimiter</span>
+            <select id="delimiterSelect" class="w-full rounded-xl border border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
+              <option value="auto">Auto Detect</option>
+              <option value=",">Comma ,</option>
+              <option value=";">Semicolon ;</option>
+              <option value="tab">Tab character</option>
+              <option value="|">Vertical Bar |</option>
+            </select>
+          </label>
+          <label class="block">
+            <span class="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Table Class Name</span>
+            <input id="classNameInput" type="text" value="csv-html-table" maxlength="80" class="w-full rounded-xl border border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
+          </label>
+        </div>
+
+        <div class="mt-4 grid gap-3 sm:grid-cols-3">
+          <label class="flex cursor-pointer items-center gap-2 rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-slate-700 dark:text-slate-300">
+            <input id="headerCheckbox" type="checkbox" checked class="h-4 w-4 accent-cyan-400" />
+            First Row as Header
+          </label>
+          <label class="flex cursor-pointer items-center gap-2 rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-slate-700 dark:text-slate-300">
+            <input id="trimCheckbox" type="checkbox" checked class="h-4 w-4 accent-cyan-400" />
+            Trim leading and trailing spaces
+          </label>
+          <label class="flex cursor-pointer items-center gap-2 rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-slate-700 dark:text-slate-300">
+            <input id="captionCheckbox" type="checkbox" class="h-4 w-4 accent-cyan-400" />
+            Add Title
+          </label>
+        </div>
+
+        <div id="captionWrap" class="mt-3 hidden">
+          <label for="captionInput" class="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Table Title</label>
+          <input id="captionInput" type="text" maxlength="120" placeholder="Example: employee information table" class="w-full rounded-xl border border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
+        </div>
+
+        <div id="errorBox" class="mt-4 hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200" role="alert"></div>
+        <div id="successBox" class="mt-4 hidden rounded-2xl border border-emerald-400/40 bg-emerald-500/10 px-4 py-3 text-sm font-medium text-emerald-200" role="status"></div>
+
+        <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+          <button id="generateBtn" type="button" class="flex-1 rounded-2xl bg-gradient-to-r from-cyan-400 to-indigo-500 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:brightness-110 active:scale-[0.98]">
+            Generate HTML table code
+          </button>
+          <button id="clearBtn" type="button" class="rounded-2xl border border-slate-600 bg-slate-50 dark:bg-slate-800 px-5 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-slate-700 active:scale-[0.98]">
+            Clear
+          </button>
+        </div>
+      </div>
+
+      <div class="rounded-3xl border border-cyan-300/20 bg-cyan-950/20 p-5 shadow-xl shadow-black/20 backdrop-blur">
+        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Output HTML code</h2>
+            <p class="mt-1 text-sm text-cyan-100/70">Generated result contains inline <code>&lt;style&gt;</code>, ready to copy into a web page.</p>
+          </div>
+          <div class="flex gap-2">
+            <button id="copyBtn" type="button" class="rounded-xl border border-emerald-300/30 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-400/20 active:scale-95">
+              Copy
+            </button>
+            <button id="downloadBtn" type="button" class="rounded-xl border border-indigo-300/30 bg-indigo-400/10 px-4 py-2 text-sm font-semibold text-indigo-100 transition hover:bg-indigo-400/20 active:scale-95">
+              Download
+            </button>
+          </div>
+        </div>
+
+        <label for="htmlOutput" class="sr-only">HTML output box</label>
+        <textarea id="htmlOutput" readonly spellcheck="false" class="h-80 w-full resize-y rounded-2xl border border-cyan-900/80 bg-slate-950/95 p-4 font-mono text-sm leading-6 text-cyan-50 outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="The generated HTML table code will appear here"></textarea>
+
+        <div class="mt-5">
+          <div class="mb-3 flex items-center justify-between">
+            <h3 class="font-bold text-gray-900 dark:text-white">Live Preview</h3>
+            <span class="text-xs text-slate-400">The preview area has isolated base styles</span>
+          </div>
+          <div id="preview" class="min-h-40 overflow-auto rounded-2xl border border-gray-200 dark:border-white/10 bg-white p-4 text-slate-900 dark:text-slate-100">
+            <p class="text-sm text-slate-500">The HTML table preview will appear here after generation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 p-6 leading-8 text-slate-800 dark:text-slate-200 shadow-xl shadow-black/20 backdrop-blur md:p-8">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About CSV to HTML Table Generator</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">CSV to HTML `&lt;table&gt;` code generator. Paste CSV data to directly output HTML table code with basic CSS styles. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use CSV to HTML Table Generator for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+    </article>
+
+    <footer class="mt-8 pb-6 text-center text-sm text-slate-500">
+      <p>All conversions are completed in the current browser; CSV data is not uploaded to the server.</p>
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const csvInput = document.getElementById("csvInput");
+      const delimiterSelect = document.getElementById("delimiterSelect");
+      const classNameInput = document.getElementById("classNameInput");
+      const headerCheckbox = document.getElementById("headerCheckbox");
+      const trimCheckbox = document.getElementById("trimCheckbox");
+      const captionCheckbox = document.getElementById("captionCheckbox");
+      const captionWrap = document.getElementById("captionWrap");
+      const captionInput = document.getElementById("captionInput");
+      const htmlOutput = document.getElementById("htmlOutput");
+      const preview = document.getElementById("preview");
+      const errorBox = document.getElementById("errorBox");
+      const successBox = document.getElementById("successBox");
+      const statRows = document.getElementById("statRows");
+      const statCols = document.getElementById("statCols");
+      const statChars = document.getElementById("statChars");
+
+      const generateBtn = document.getElementById("generateBtn");
+      const clearBtn = document.getElementById("clearBtn");
+      const sampleBtn = document.getElementById("sampleBtn");
+      const copyBtn = document.getElementById("copyBtn");
+      const downloadBtn = document.getElementById("downloadBtn");
+
+      const sampleData = `姓名,职位,城市,邮箱
+张三,前端工程师,上海,zhangsan@example.com
+李四,产品经理,北京,lisi@example.com
+王五,"数据分析师, BI方向",深圳,wangwu@example.com
+赵六,"负责内容运营
+包含跨部门协作",杭州,zhaoliu@example.com`;
+
+      function showError(message) {
+        errorBox.textContent = message;
+        errorBox.classList.remove("hidden");
+        successBox.classList.add("hidden");
+      }
+
+      function showSuccess(message) {
+        successBox.textContent = message;
+        successBox.classList.remove("hidden");
+        errorBox.classList.add("hidden");
+        window.clearTimeout(showSuccess.timer);
+        showSuccess.timer = window.setTimeout(() => successBox.classList.add("hidden"), 2600);
+      }
+
+      function clearMessages() {
+        errorBox.classList.add("hidden");
+        successBox.classList.add("hidden");
+      }
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function sanitizeClassName(value) {
+        const cleaned = String(value || "").trim().replace(/[^\w\-\s]/g, "").replace(/\s+/g, "-");
+        return cleaned || "csv-html-table";
+      }
+
+      function normalizeNewlines(text) {
+        return String(text || "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+      }
+
+      function countDelimiterOutsideQuotes(text, delimiter) {
+        let count = 0;
+        let inQuotes = false;
+        for (let i = 0; i < text.length; i++) {
+          const char = text[i];
+          if (char === '"') {
+            if (inQuotes && text[i + 1] === '"') {
+              i++;
+            } else {
+              inQuotes = !inQuotes;
+            }
+          } else if (!inQuotes && char === delimiter) {
+            count++;
+          }
+        }
+        return count;
+      }
+
+      function detectDelimiter(text) {
+        const candidates = [",", ";", "\t", "|"];
+        let best = ",";
+        let bestScore = -1;
+        for (const delimiter of candidates) {
+          const score = countDelimiterOutsideQuotes(text, delimiter);
+          if (score > bestScore) {
+            bestScore = score;
+            best = delimiter;
+          }
+        }
+        return best;
+      }
+
+      function parseCSV(input, delimiter, trimFields) {
+        const text = normalizeNewlines(input);
+        const rows = [];
+        let row = [];
+        let field = "";
+        let inQuotes = false;
+        let quoteClosed = false;
+
+        for (let i = 0; i < text.length; i++) {
+          const char = text[i];
+
+          if (inQuotes) {
+            if (char === '"') {
+              if (text[i + 1] === '"') {
+                field += '"';
+                i++;
+              } else {
+                inQuotes = false;
+                quoteClosed = true;
+              }
+            } else {
+              field += char;
+            }
+            continue;
+          }
+
+          if (char === '"') {
+            if (field.length === 0 || /^[ \t]*$/.test(field)) {
+              if (field.length > 0 && trimFields) field = "";
+              inQuotes = true;
+              quoteClosed = false;
+            } else {
+              throw new Error(`第 ${rows.length + 1} 行存在非法双引号。请使用两个双引号表示字段内的引号，或用双引号包裹整个字段。`);
+            }
+          } else if (char === delimiter) {
+            row.push(trimFields ? field.trim() : field);
+            field = "";
+            quoteClosed = false;
+          } else if (char === "\n") {
+            row.push(trimFields ? field.trim() : field);
+            rows.push(row);
+            row = [];
+            field = "";
+            quoteClosed = false;
+          } else {
+            if (quoteClosed && !/^[ \t]$/.test(char)) {
+              throw new Error(`第 ${rows.length + 1} 行的引号字段结束后存在非法字符，请检查 CSV 格式。`);
+            }
+            field += char;
+          }
+        }
+
+        if (inQuotes) {
+          throw new Error("CSV 格式不完整：存在未闭合的双引号字段。");
+        }
+
+        row.push(trimFields ? field.trim() : field);
+        rows.push(row);
+
+        const filteredRows = rows.filter((r, index) => {
+          if (index === rows.length - 1 && r.length === 1 && r[0] === "" && text.endsWith("\n")) return false;
+          return r.some(cell => String(cell).length > 0);
+        });
+
+        return filteredRows;
+      }
+
+      function normalizeRows(rows) {
+        const maxCols = rows.reduce((max, row) => Math.max(max, row.length), 0);
+        return rows.map(row => {
+          const next = row.slice();
+          while (next.length < maxCols) next.push("");
+          return next;
+        });
+      }
+
+      function buildTableHTML(rows, options) {
+        const tableClass = sanitizeClassName(options.className);
+        const hasHeader = options.hasHeader && rows.length > 0;
+        const caption = options.captionEnabled ? String(options.caption || "").trim() : "";
+        const css = `<style>
+.${tableClass} {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-family: Arial, "Microsoft YaHei", sans-serif;
+  font-size: 14px;
+  color: #1f2937;
+  background: #ffffff;
+}
+.${tableClass} caption {
+  caption-side: top;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  text-align: left;
+}
+.${tableClass} th,
+.${tableClass} td {
+  border: 1px solid #d1d5db;
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+.${tableClass} th {
+  background: #f3f4f6;
+  font-weight: 700;
+}
+.${tableClass} tbody tr:nth-child(even) {
+  background: #f9fafb;
+}
+.${tableClass} tbody tr:hover {
+  background: #eef6ff;
+}
+</style>`;
+
+        const lines = [css, `<table class="${escapeHtml(tableClass)}">`];
+
+        if (caption) {
+          lines.push(`  <caption>${escapeHtml(caption)}</caption>`);
+        }
+
+        if (hasHeader) {
+          lines.push("  <thead>");
+          lines.push("    <tr>");
+          rows[0].forEach(cell => lines.push(`      <th>${escapeHtml(cell)}</th>`));
+          lines.push("    </tr>");
+          lines.push("  </thead>");
+        }
+
+        const bodyRows = hasHeader ? rows.slice(1) : rows;
+        lines.push("  <tbody>");
+        bodyRows.forEach(row => {
+          lines.push("    <tr>");
+          row.forEach(cell => lines.push(`      <td>${escapeHtml(cell)}</td>`));
+          lines.push("    </tr>");
+        });
+        lines.push("  </tbody>");
+        lines.push("</table>");
+
+        return lines.join("\n");
+      }
+
+      function updateStats(rows, chars) {
+        const colCount = rows.length ? rows.reduce((max, row) => Math.max(max, row.length), 0) : 0;
+        statRows.textContent = String(rows.length || 0);
+        statCols.textContent = String(colCount);
+        statChars.textContent = String(chars || 0);
+      }
+
+      function generate() {
+        try {
+          clearMessages();
+          const raw = csvInput.value || "";
+          statChars.textContent = String(raw.length);
+
+          if (!raw.trim()) {
+            htmlOutput.value = "";
+            preview.innerHTML = '<p class="text-sm text-slate-500">The HTML table preview will appear here after generation.</p>';
+            updateStats([], raw.length);
+            showError("请Input CSV Data后再Generate HTML table code。");
+            return;
+          }
+
+          if (raw.length > 1000000) {
+            showError("Input Content过大。为保证浏览器稳定运行，请将 CSV 内容控制在 100 万字符以内。");
+            return;
+          }
+
+          const selectedDelimiter = delimiterSelect.value;
+          const delimiter = selectedDelimiter === "auto"
+            ? detectDelimiter(raw)
+            : selectedDelimiter === "tab"
+              ? "\t"
+              : selectedDelimiter;
+
+          const parsed = parseCSV(raw, delimiter, trimCheckbox.checked);
+          if (!parsed.length) {
+            htmlOutput.value = "";
+            preview.innerHTML = '<p class="text-sm text-slate-500">未解析到有效数据。</p>';
+            updateStats([], raw.length);
+            showError("未解析到有效 CSV 数据，请检查Input Content。");
+            return;
+          }
+
+          const rows = normalizeRows(parsed);
+          const maxCols = rows.reduce((max, row) => Math.max(max, row.length), 0);
+
+          if (maxCols === 0) {
+            showError("CSV 数据没有有效列，请检查Input Content。");
+            return;
+          }
+
+          if (rows.length > 5000 || maxCols > 200) {
+            showError("表格规模过大。为避免页面卡顿，请控制在 5000 行、200 列以内。");
+            return;
+          }
+
+          const output = buildTableHTML(rows, {
+            className: classNameInput.value,
+            hasHeader: headerCheckbox.checked,
+            captionEnabled: captionCheckbox.checked,
+            caption: captionInput.value
+          });
+
+          htmlOutput.value = output;
+          preview.innerHTML = output;
+          updateStats(rows, raw.length);
+
+          const delimiterName = delimiter === "\t" ? "Tab" : delimiter;
+          showSuccess(`Generated Successfully：共 ${rows.length} 行、${maxCols} 列，使用分隔符 ${delimiterName}。`);
+        } catch (err) {
+          const message = err && err.message ? err.message : "解析 CSV 时发生Unknown Error，请检查输入格式。";
+          showError(message);
+        }
+      }
+
+      async function copyOutput() {
+        try {
+          if (!htmlOutput.value.trim()) {
+            showError("当前没有可Copy的 HTML 代码，请先Generate。");
+            return;
+          }
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(htmlOutput.value);
+          } else {
+            htmlOutput.focus();
+            htmlOutput.select();
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();
+          }
+          showSuccess("HTML 表格代码Copied to clipboard.");
+        } catch (err) {
+          showError("Copy Failed，请手动选中输出框内容进行Copy。");
+        }
+      }
+
+      function downloadOutput() {
+        try {
+          if (!htmlOutput.value.trim()) {
+            showError("当前没有可Download的 HTML 代码，请先Generate。");
+            return;
+          }
+          const blob = new Blob([htmlOutput.value], { type: "text/html;charset=utf-8" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "csv-html-table.html";
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(url);
+          showSuccess("HTML File download started.");
+        } catch (err) {
+          showError("Download失败，请Copy Code后手动保存为 .html 文件。");
+        }
+      }
+
+      function clearAll() {
+        csvInput.value = "";
+        htmlOutput.value = "";
+        preview.innerHTML = '<p class="text-sm text-slate-500">The HTML table preview will appear here after generation.</p>';
+        updateStats([], 0);
+        clearMessages();
+        csvInput.focus();
+      }
+
+      captionCheckbox.addEventListener("change", () => {
+        captionWrap.classList.toggle("hidden", !captionCheckbox.checked);
+        if (captionCheckbox.checked) captionInput.focus();
+      });
+
+      generateBtn.addEventListener("click", generate);
+      copyBtn.addEventListener("click", copyOutput);
+      downloadBtn.addEventListener("click", downloadOutput);
+      clearBtn.addEventListener("click", clearAll);
+
+      sampleBtn.addEventListener("click", () => {
+        csvInput.value = sampleData;
+        captionCheckbox.checked = true;
+        captionWrap.classList.remove("hidden");
+        captionInput.value = "团队成员信息表";
+        generate();
+      });
+
+      [delimiterSelect, classNameInput, headerCheckbox, trimCheckbox, captionInput].forEach(el => {
+        el.addEventListener("change", () => {
+          if (csvInput.value.trim()) generate();
+        });
+      });
+
+      let inputTimer = null;
+      csvInput.addEventListener("input", () => {
+        statChars.textContent = String(csvInput.value.length);
+        window.clearTimeout(inputTimer);
+        inputTimer = window.setTimeout(() => {
+          if (csvInput.value.trim()) generate();
+          else {
+            htmlOutput.value = "";
+            preview.innerHTML = '<p class="text-sm text-slate-500">The HTML table preview will appear here after generation.</p>';
+            updateStats([], 0);
+            clearMessages();
+          }
+        }, 500);
+      });
+
+      updateStats([], 0);
+    })();
+  </script>
+</body>
+</html>

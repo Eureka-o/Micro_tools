@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loan Calculator | Free Online Tool</title>
+  <meta name="description" content="Mortgage/loan equal principal and interest calculator. Enter the total amount, annual interest rate, and loan term to generate a detailed monthly repayment schedule.">
+  <meta name="keywords" content="Loan Calculator, online tool, browser tool, productivity tool">
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+  <meta property="og:image" content="../assets/logo.png">
+  <meta name="twitter:image" content="../assets/logo.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: '#0f172a',
+            neon: '#38bdf8'
+          },
+          boxShadow: {
+            glow: '0 0 40px rgba(56, 189, 248, 0.18)'
+          }
+        }
+      }
+    }
+  </script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/en/loan-calculator.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/loan-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/loan-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/loan-calculator.html">
+  <script src="./theme-toggle.js" defer></script>
+</head>
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="../loan-calculator.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./loan-calculator.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
+  <div class="fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute left-1/2 top-[-10rem] h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute bottom-[-12rem] right-[-8rem] h-[30rem] w-[30rem] rounded-full bg-indigo-500/20 blur-3xl"></div>
+  </div>
+
+  <header class="border-b border-gray-200 dark:border-white/10 bg-slate-950/70 backdrop-blur">
+    <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+            Equal principal and interest · monthly payment details · online calculator
+          </p>
+          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">Loan Calculator</h1>
+          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
+            Enter the total loan amount, annual interest rate, and number of periods to quickly generate a complete monthly repayment schedule.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 shadow-glow">
+          <p class="text-sm text-slate-400">Calculation Method</p>
+          <p class="mt-1 text-lg font-semibold text-cyan-200">Equal Principal and Interest</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-12">
+      <div class="lg:col-span-4">
+        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-6 shadow-glow backdrop-blur">
+          <div class="mb-6">
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Enter Loan Information</h2>
+            <p class="mt-2 text-sm text-slate-400">Supports mortgages, car loans, consumer loans, and other loans calculated with equal principal and interest.</p>
+          </div>
+
+          <div id="errorBox" class="mb-5 hidden rounded-2xl border border-red-400/40 bg-red-500/15 px-4 py-3 text-sm leading-6 text-red-100"></div>
+
+          <form id="loanForm" class="space-y-5" novalidate>
+            <div>
+              <label for="amount" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Total loan amount</label>
+              <div class="relative">
+                <input id="amount" name="amount" type="text" inputmode="decimal" autocomplete="off" placeholder="Example: 1000000"
+                  class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-3 pr-16 text-gray-900 dark:text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
+                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">yuan</span>
+              </div>
+            </div>
+
+            <div>
+              <label for="rate" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Annual Interest Rate</label>
+              <div class="relative">
+                <input id="rate" name="rate" type="text" inputmode="decimal" autocomplete="off" placeholder="Example: 3.85"
+                  class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-3 pr-16 text-gray-900 dark:text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
+                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">%</span>
+              </div>
+            </div>
+
+            <div>
+              <label for="months" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Loan Periods</label>
+              <div class="relative">
+                <input id="months" name="months" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g., 360"
+                  class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-3 pr-16 text-gray-900 dark:text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
+                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">month</span>
+              </div>
+              <p class="mt-2 text-xs text-slate-500">Common: 20 years = 240 periods, 30 years = 360 periods.</p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 pt-2">
+              <button type="submit" id="calcBtn"
+                class="rounded-2xl bg-cyan-400 px-4 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98]">
+                Start calculation
+              </button>
+              <button type="button" id="resetBtn"
+                class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 font-bold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-[0.98]">
+                Reset
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="lg:col-span-8">
+        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-900/70 p-6 shadow-glow backdrop-blur">
+          <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Calculation Result</h2>
+              <p class="mt-2 text-sm text-slate-400">Monthly payment, total interest, and month-by-month repayment details are shown below.</p>
+            </div>
+            <button id="downloadBtn" type="button" disabled
+              class="rounded-2xl border border-cyan-300/30 bg-cyan-300/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-300/15 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40">
+              Download CSV
+            </button>
+          </div>
+
+          <div id="emptyState" class="rounded-3xl border border-dashed border-gray-200 dark:border-white/15 bg-white/[0.03] px-6 py-12 text-center">
+            <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-400/10 text-2xl">⌁</div>
+            <p class="text-lg font-semibold text-slate-800 dark:text-slate-200">Repayment schedule not generated yet</p>
+            <p class="mt-2 text-sm text-slate-400">Enter the loan information on the left, then click “Start Calculation”.</p>
+          </div>
+
+          <div id="resultArea" class="hidden">
+            <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-4">
+                <p class="text-sm text-slate-400">Monthly Payment</p>
+                <p id="monthlyPayment" class="mt-2 text-2xl font-extrabold text-cyan-200">--</p>
+              </div>
+              <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-4">
+                <p class="text-sm text-slate-400">Total repayment</p>
+                <p id="totalPayment" class="mt-2 text-2xl font-extrabold text-gray-900 dark:text-white">--</p>
+              </div>
+              <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-4">
+                <p class="text-sm text-slate-400">Total Interest</p>
+                <p id="totalInterest" class="mt-2 text-2xl font-extrabold text-amber-200">--</p>
+              </div>
+              <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-4">
+                <p class="text-sm text-slate-400">Loan Periods</p>
+                <p id="totalMonths" class="mt-2 text-2xl font-extrabold text-gray-900 dark:text-white">--</p>
+              </div>
+            </div>
+
+            <div class="mt-6 overflow-hidden rounded-2xl border border-gray-200 dark:border-white/10">
+              <div class="max-h-[520px] overflow-auto">
+                <table class="min-w-full divide-y divide-white/10 text-sm">
+                  <thead class="sticky top-0 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200">
+                    <tr>
+                      <th class="whitespace-nowrap px-4 py-3 text-left font-semibold">Periods</th>
+                      <th class="whitespace-nowrap px-4 py-3 text-right font-semibold">Monthly Payment</th>
+                      <th class="whitespace-nowrap px-4 py-3 text-right font-semibold">Principal</th>
+                      <th class="whitespace-nowrap px-4 py-3 text-right font-semibold">Interest</th>
+                      <th class="whitespace-nowrap px-4 py-3 text-right font-semibold">Remaining principal</th>
+                    </tr>
+                  </thead>
+                  <tbody id="scheduleBody" class="divide-y divide-white/10 bg-slate-950/40"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-glow backdrop-blur">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Loan Calculator</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Mortgage/loan equal principal and interest calculator. Enter the total amount, annual interest rate, and loan term to generate a detailed monthly repayment schedule. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Loan Calculator for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+    </article>
+  </main>
+
+  <footer class="mx-auto max-w-7xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
+    © <span id="year"></span> loan-calculator. Calculation results are for reference only; actual repayments are subject to the loan institution’s contract.
+  </footer>
+
+  <script>
+    (() => {
+      const form = document.getElementById('loanForm');
+      const amountInput = document.getElementById('amount');
+      const rateInput = document.getElementById('rate');
+      const monthsInput = document.getElementById('months');
+      const errorBox = document.getElementById('errorBox');
+      const emptyState = document.getElementById('emptyState');
+      const resultArea = document.getElementById('resultArea');
+      const scheduleBody = document.getElementById('scheduleBody');
+      const monthlyPaymentEl = document.getElementById('monthlyPayment');
+      const totalPaymentEl = document.getElementById('totalPayment');
+      const totalInterestEl = document.getElementById('totalInterest');
+      const totalMonthsEl = document.getElementById('totalMonths');
+      const resetBtn = document.getElementById('resetBtn');
+      const downloadBtn = document.getElementById('downloadBtn');
+      const yearEl = document.getElementById('year');
+
+      let currentSchedule = [];
+
+      yearEl.textContent = new Date().getFullYear();
+
+      const parseNumber = (value) => {
+        if (typeof value !== 'string') return NaN;
+        const normalized = value.trim().replace(/,/g, '').replace(/，/g, '');
+        if (normalized === '') return NaN;
+        return Number(normalized);
+      };
+
+      const money = (num) => {
+        const safe = Number.isFinite(num) ? num : 0;
+        return safe.toLocaleString('zh-CN', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }) + ' 元';
+      };
+
+      const showError = (message) => {
+        errorBox.textContent = message;
+        errorBox.classList.remove('hidden');
+      };
+
+      const clearError = () => {
+        errorBox.textContent = '';
+        errorBox.classList.add('hidden');
+      };
+
+      const validate = () => {
+        const amount = parseNumber(amountInput.value);
+        const annualRate = parseNumber(rateInput.value);
+        const monthsRaw = parseNumber(monthsInput.value);
+
+        if (!Number.isFinite(amount) || amount <= 0) {
+          return { ok: false, message: 'Please enter a valid total loan amount. The amount must be greater than 0.' };
+        }
+        if (amount > 1000000000000) {
+          return { ok: false, message: 'The total loan amount is too large. Please enter a value no greater than 1,000,000,000,000 yuan.' };
+        }
+        if (!Number.isFinite(annualRate) || annualRate < 0) {
+          return { ok: false, message: 'Please enter a valid annual interest rate. The rate cannot be negative.' };
+        }
+        if (annualRate > 100) {
+          return { ok: false, message: 'Annual interest rate is too high. Enter a percentage between 0 and 100.' };
+        }
+        if (!Number.isFinite(monthsRaw) || monthsRaw <= 0 || !Number.isInteger(monthsRaw)) {
+          return { ok: false, message: 'Enter a valid loan term; the term must be an integer number of months greater than 0.' };
+        }
+        if (monthsRaw > 1200) {
+          return { ok: false, message: 'The loan term is too long. Please enter an integer no greater than 1200 periods.' };
+        }
+
+        return { ok: true, amount, annualRate, months: monthsRaw };
+      };
+
+      const calculateSchedule = (amount, annualRate, months) => {
+        const monthlyRate = annualRate / 100 / 12;
+        let monthlyPayment;
+
+        if (monthlyRate === 0) {
+          monthlyPayment = amount / months;
+        } else {
+          const factor = Math.pow(1 + monthlyRate, months);
+          monthlyPayment = amount * monthlyRate * factor / (factor - 1);
+        }
+
+        const rows = [];
+        let remaining = amount;
+        let totalInterest = 0;
+        let totalPayment = 0;
+
+        for (let i = 1; i <= months; i++) {
+          let interest = remaining * monthlyRate;
+          let principal = monthlyPayment - interest;
+          let payment = monthlyPayment;
+
+          if (i === months) {
+            principal = remaining;
+            interest = remaining * monthlyRate;
+            payment = principal + interest;
+            remaining = 0;
+          } else {
+            remaining = Math.max(0, remaining - principal);
+          }
+
+          totalInterest += interest;
+          totalPayment += payment;
+
+          rows.push({
+            period: i,
+            payment,
+            principal,
+            interest,
+            remaining
+          });
+        }
+
+        return { rows, monthlyPayment, totalPayment, totalInterest };
+      };
+
+      const render = (data, months) => {
+        monthlyPaymentEl.textContent = money(data.monthlyPayment);
+        totalPaymentEl.textContent = money(data.totalPayment);
+        totalInterestEl.textContent = money(data.totalInterest);
+        totalMonthsEl.textContent = months + ' 期';
+
+        scheduleBody.innerHTML = '';
+        const fragment = document.createDocumentFragment();
+
+        data.rows.forEach((row) => {
+          const tr = document.createElement('tr');
+          tr.className = 'transition hover:bg-cyan-400/5';
+
+          const cells = [
+            { text: row.period, align: 'text-left' },
+            { text: money(row.payment), align: 'text-right' },
+            { text: money(row.principal), align: 'text-right' },
+            { text: money(row.interest), align: 'text-right' },
+            { text: money(row.remaining), align: 'text-right' }
+          ];
+
+          cells.forEach((cell) => {
+            const td = document.createElement('td');
+            td.className = `whitespace-nowrap px-4 py-3 ${cell.align} text-slate-300`;
+            td.textContent = cell.text;
+            tr.appendChild(td);
+          });
+
+          fragment.appendChild(tr);
+        });
+
+        scheduleBody.appendChild(fragment);
+        emptyState.classList.add('hidden');
+        resultArea.classList.remove('hidden');
+        downloadBtn.disabled = false;
+        currentSchedule = data.rows;
+      };
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        clearError();
+
+        const valid = validate();
+        if (!valid.ok) {
+          showError(valid.message);
+          return;
+        }
+
+        try {
+          const data = calculateSchedule(valid.amount, valid.annualRate, valid.months);
+          if (!data.rows.length || !Number.isFinite(data.totalPayment)) {
+            showError('Calculation failed. Please check whether the input values are valid.');
+            return;
+          }
+          render(data, valid.months);
+        } catch (error) {
+          showError('An error occurred during calculation. Please adjust your input and try again.');
+        }
+      });
+
+      resetBtn.addEventListener('click', () => {
+        amountInput.value = '';
+        rateInput.value = '';
+        monthsInput.value = '';
+        clearError();
+        scheduleBody.innerHTML = '';
+        currentSchedule = [];
+        resultArea.classList.add('hidden');
+        emptyState.classList.remove('hidden');
+        downloadBtn.disabled = true;
+        amountInput.focus();
+      });
+
+      downloadBtn.addEventListener('click', () => {
+        if (!Array.isArray(currentSchedule) || currentSchedule.length === 0) {
+          showError('No downloadable repayment schedule is available. Please complete the calculation first.');
+          return;
+        }
+
+        const header = ['期数', '月供', '本金', '利息', 'Remaining principal'];
+        const lines = currentSchedule.map(row => [
+          row.period,
+          row.payment.toFixed(2),
+          row.principal.toFixed(2),
+          row.interest.toFixed(2),
+          row.remaining.toFixed(2)
+        ]);
+
+        const csv = '\uFEFF' + [header, ...lines].map(arr => arr.map(item => `"${String(item).replace(/"/g, '""')}"`).join(',')).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'loan-calculator-schedule.csv';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      });
+
+      [amountInput, rateInput, monthsInput].forEach(input => {
+        input.addEventListener('input', () => {
+          if (!errorBox.classList.contains('hidden')) clearError();
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

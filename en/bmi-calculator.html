@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="BMI calculator. Enter height (cm) and weight (kg) to calculate BMI, with a dynamic health status indicator bar.">
+  <meta name="keywords" content="BMI Calculator, online tool, browser tool, productivity tool">
+  <meta name="robots" content="index, follow" />
+  <title>BMI Calculator | Free Online Tool</title>
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+  <meta property="og:image" content="../assets/logo.png">
+  <meta name="twitter:image" content="../assets/logo.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            tech: {
+              50: '#eef8ff',
+              100: '#d9efff',
+              500: '#1687ff',
+              600: '#006de5',
+              900: '#062344'
+            }
+          },
+          boxShadow: {
+            glow: '0 20px 60px rgba(22, 135, 255, 0.18)'
+          }
+        }
+      }
+    };
+  </script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/en/bmi-calculator.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/bmi-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/bmi-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/bmi-calculator.html">
+  <script src="./theme-toggle.js" defer></script>
+</head>
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="../bmi-calculator.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./bmi-calculator.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
+  <div class="absolute inset-0 -z-10 overflow-hidden">
+    <div class="absolute left-1/2 top-[-10rem] h-80 w-80 -translate-x-1/2 rounded-full bg-blue-500/25 blur-3xl"></div>
+    <div class="absolute bottom-[-12rem] right-[-8rem] h-96 w-96 rounded-full bg-cyan-400/20 blur-3xl"></div>
+  </div>
+
+  <header class="border-b border-gray-200 dark:border-white/10 bg-slate-950/70 backdrop-blur-xl">
+    <div class="mx-auto flex max-w-6xl flex-col gap-5 px-5 py-10 sm:px-8 lg:px-10">
+      <div class="inline-flex w-fit items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/10 px-4 py-2 text-sm text-blue-100">
+        <span class="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(103,232,249,0.9)]"></span>
+        Online health assessment tool
+      </div>
+      <div class="max-w-3xl">
+        <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">BMI Calculator</h1>
+        <p class="mt-4 text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
+          Enter height and weight to calculate BMI in real time, with a dynamic health status bar showing your current weight range.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-5 py-8 sm:px-8 lg:px-10">
+    <section class="grid gap-6 lg:grid-cols-5" aria-label="BMI Calculator">
+      <div class="lg:col-span-2 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-6 shadow-glow backdrop-blur-xl sm:p-8">
+        <div class="mb-6">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Input Information</h2>
+          <p class="mt-2 text-sm text-slate-400">Please enter your real height and weight, in centimeters and kilograms.</p>
+        </div>
+
+        <form id="bmiForm" novalidate class="space-y-5">
+          <div>
+            <label for="height" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Height (cm)</label>
+            <div class="relative">
+              <input
+                id="height"
+                name="height"
+                type="text"
+                inputmode="decimal"
+                autocomplete="off"
+                placeholder="e.g., 170"
+                class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-4 pr-14 text-lg text-gray-900 dark:text-white outline-none transition placeholder:text-slate-600 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20"
+                aria-describedby="heightHelp"
+              />
+              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">cm</span>
+            </div>
+            <p id="heightHelp" class="mt-2 text-xs text-slate-500">Recommended range: 50 - 250 cm</p>
+          </div>
+
+          <div>
+            <label for="weight" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Weight (kg)</label>
+            <div class="relative">
+              <input
+                id="weight"
+                name="weight"
+                type="text"
+                inputmode="decimal"
+                autocomplete="off"
+                placeholder="Example: 65"
+                class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-4 pr-14 text-lg text-gray-900 dark:text-white outline-none transition placeholder:text-slate-600 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20"
+                aria-describedby="weightHelp"
+              />
+              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">kg</span>
+            </div>
+            <p id="weightHelp" class="mt-2 text-xs text-slate-500">Recommended range: 10 - 500 kg</p>
+          </div>
+
+          <div id="errorBox" class="hidden rounded-2xl border border-red-400/40 bg-red-500/15 px-4 py-3 text-sm font-medium text-red-100" role="alert"></div>
+
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+            <button
+              type="submit"
+              id="calculateBtn"
+              class="rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-400 px-5 py-4 font-bold text-gray-900 dark:text-white shadow-lg shadow-blue-500/25 transition active:scale-[0.98] hover:brightness-110 focus:outline-none focus:ring-4 focus:ring-blue-400/30"
+            >
+              Calculate BMI
+            </button>
+            <button
+              type="button"
+              id="resetBtn"
+              class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-5 py-4 font-bold text-slate-900 dark:text-slate-100 transition active:scale-[0.98] hover:bg-white/15 focus:outline-none focus:ring-4 focus:ring-white/10"
+            >
+              Reset
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="lg:col-span-3 rounded-3xl border border-blue-300/15 bg-gradient-to-br from-slate-900 via-slate-900 to-blue-950/80 p-6 shadow-glow sm:p-8">
+        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Calculation Result</h2>
+            <p class="mt-2 text-sm text-slate-400">Results are classified using common Chinese adult BMI reference ranges.</p>
+          </div>
+          <div id="statusBadge" class="w-fit rounded-full border border-slate-600 bg-slate-50 dark:bg-slate-800 px-4 py-2 text-sm font-bold text-slate-700 dark:text-slate-300">
+            Waiting for Input
+          </div>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-3">
+          <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5">
+            <p class="text-sm text-slate-400">BMI value</p>
+            <p id="bmiValue" class="mt-3 text-5xl font-black tracking-tight text-gray-900 dark:text-white">--</p>
+          </div>
+          <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5">
+            <p class="text-sm text-slate-400">Health status</p>
+            <p id="bmiCategory" class="mt-3 text-3xl font-black text-slate-800 dark:text-slate-200">--</p>
+          </div>
+          <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5">
+            <p class="text-sm text-slate-400">Health advice</p>
+            <p id="bmiAdvice" class="mt-3 text-sm leading-6 text-slate-700 dark:text-slate-300">Please enter height and weight to see recommendations.</p>
+          </div>
+        </div>
+
+        <div class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-950/50 p-5 sm:p-6">
+          <div class="mb-4 flex items-center justify-between gap-4">
+            <h3 class="font-bold text-gray-900 dark:text-white">Dynamic health status indicator</h3>
+            <span id="pointerText" class="text-sm text-slate-400">--</span>
+          </div>
+
+          <div class="relative pt-7">
+            <div id="pointer" class="absolute left-0 top-0 flex -translate-x-1/2 flex-col items-center transition-all duration-700 ease-out" style="left: 0%;">
+              <div class="rounded-full bg-white px-2 py-1 text-xs font-bold text-slate-900 dark:text-slate-100 shadow-lg">BMI</div>
+              <div class="h-3 w-0.5 bg-white"></div>
+            </div>
+
+            <div class="h-5 overflow-hidden rounded-full bg-slate-50 dark:bg-slate-800 shadow-inner">
+              <div class="flex h-full w-full">
+                <div class="h-full bg-sky-400" style="width: 18.5%"></div>
+                <div class="h-full bg-emerald-400" style="width: 5.5%"></div>
+                <div class="h-full bg-amber-400" style="width: 4%"></div>
+                <div class="h-full bg-orange-500" style="width: 4%"></div>
+                <div class="h-full bg-red-500" style="width: 68%"></div>
+              </div>
+            </div>
+
+            <div class="mt-3 grid grid-cols-5 gap-2 text-center text-[11px] text-slate-400 sm:text-xs">
+              <span>Slim<br />&lt;18.5</span>
+              <span>Normal<br />18.5-23.9</span>
+              <span>Overweight<br />24-27.9</span>
+              <span>Obesity<br />≥28</span>
+              <span>High Risk<br />≥32</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 rounded-3xl border border-cyan-300/20 bg-cyan-400/10 p-5 text-sm leading-6 text-cyan-50">
+          <strong>Formula:</strong>BMI = weight (kg) ÷ height² (m²). BMI is a common initial screening indicator for weight management and cannot replace professional medical diagnosis.
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-glow backdrop-blur-xl sm:p-8">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About BMI Calculator</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">BMI calculator. Enter height (cm) and weight (kg) to calculate BMI, with a dynamic health status indicator bar. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use BMI Calculator for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+    </article>
+  </main>
+
+  <footer class="mx-auto max-w-6xl px-5 pb-8 text-center text-sm text-slate-500 sm:px-8 lg:px-10">
+    <p>© <span id="year"></span> bmi-calculator. Results are for health management reference only.</p>
+  </footer>
+
+  <script>
+    (function () {
+      const form = document.getElementById('bmiForm');
+      const heightInput = document.getElementById('height');
+      const weightInput = document.getElementById('weight');
+      const errorBox = document.getElementById('errorBox');
+      const bmiValue = document.getElementById('bmiValue');
+      const bmiCategory = document.getElementById('bmiCategory');
+      const bmiAdvice = document.getElementById('bmiAdvice');
+      const statusBadge = document.getElementById('statusBadge');
+      const pointer = document.getElementById('pointer');
+      const pointerText = document.getElementById('pointerText');
+      const resetBtn = document.getElementById('resetBtn');
+      const calculateBtn = document.getElementById('calculateBtn');
+      const year = document.getElementById('year');
+
+      year.textContent = new Date().getFullYear();
+
+      function normalizeNumber(value) {
+        return String(value || '')
+          .trim()
+          .replace(/，/g, '.')
+          .replace(/。/g, '.')
+          .replace(/,/g, '.');
+      }
+
+      function parsePositiveNumber(value) {
+        const normalized = normalizeNumber(value);
+        if (!normalized) return NaN;
+        if (!/^\d+(\.\d+)?$/.test(normalized)) return NaN;
+        return Number(normalized);
+      }
+
+      function showError(message) {
+        errorBox.textContent = message;
+        errorBox.classList.remove('hidden');
+      }
+
+      function clearError() {
+        errorBox.textContent = '';
+        errorBox.classList.add('hidden');
+      }
+
+      function setInputState(input, isInvalid) {
+        if (isInvalid) {
+          input.classList.add('border-red-400', 'focus:border-red-400', 'focus:ring-red-500/20');
+          input.classList.remove('border-white/10', 'focus:border-blue-400', 'focus:ring-blue-500/20');
+        } else {
+          input.classList.remove('border-red-400', 'focus:border-red-400', 'focus:ring-red-500/20');
+          input.classList.add('border-white/10', 'focus:border-blue-400', 'focus:ring-blue-500/20');
+        }
+      }
+
+      function getCategory(bmi) {
+        if (bmi < 18.5) {
+          return {
+            label: '偏瘦',
+            color: 'sky',
+            badge: 'border-sky-300/40 bg-sky-400/15 text-sky-100',
+            text: 'Maintain regular meals, focus on protein and total energy intake, and consult a nutritionist if needed.'
+          };
+        }
+        if (bmi < 24) {
+          return {
+            label: '正常',
+            color: 'emerald',
+            badge: 'border-emerald-300/40 bg-emerald-400/15 text-emerald-100',
+            text: 'Your current BMI is within the common healthy range. Keep maintaining a balanced diet and regular exercise.'
+          };
+        }
+        if (bmi < 28) {
+          return {
+            label: '超重',
+            color: 'amber',
+            badge: 'border-amber-300/40 bg-amber-400/15 text-amber-100',
+            text: 'Consider reducing high-calorie foods, increasing aerobic and strength training, and improving weight gradually.'
+          };
+        }
+        return {
+          label: '肥胖',
+          color: 'red',
+          badge: 'border-red-300/40 bg-red-400/15 text-red-100',
+          text: 'Pay attention to weight management, consider waist circumference, blood pressure, blood sugar, and other indicators, and consider seeking professional medical advice.'
+        };
+      }
+
+      function updateResult(bmi) {
+        const fixed = bmi.toFixed(1);
+        const category = getCategory(bmi);
+        const maxBmi = 40;
+        const percent = Math.max(0, Math.min(100, (bmi / maxBmi) * 100));
+
+        bmiValue.textContent = fixed;
+        bmiCategory.textContent = category.label;
+        bmiAdvice.textContent = category.text;
+        pointer.style.left = percent + '%';
+        pointerText.textContent = 'Current location: BMI ' + fixed;
+
+        statusBadge.className = 'w-fit rounded-full border px-4 py-2 text-sm font-bold ' + category.badge;
+        statusBadge.textContent = category.label;
+
+        const categoryColorMap = {
+          sky: 'text-sky-300',
+          emerald: 'text-emerald-300',
+          amber: 'text-amber-300',
+          red: 'text-red-300'
+        };
+
+        bmiCategory.className = 'mt-3 text-3xl font-black ' + categoryColorMap[category.color];
+
+        calculateBtn.classList.add('scale-[0.98]');
+        setTimeout(() => calculateBtn.classList.remove('scale-[0.98]'), 120);
+      }
+
+      function resetResult() {
+        clearError();
+        heightInput.value = '';
+        weightInput.value = '';
+        setInputState(heightInput, false);
+        setInputState(weightInput, false);
+        bmiValue.textContent = '--';
+        bmiCategory.textContent = '--';
+        bmiCategory.className = 'mt-3 text-3xl font-black text-slate-200';
+        bmiAdvice.textContent = 'Please enter height and weight to see recommendations.';
+        statusBadge.className = 'w-fit rounded-full border border-slate-600 bg-slate-800 px-4 py-2 text-sm font-bold text-slate-300';
+        statusBadge.textContent = 'Waiting for Input';
+        pointer.style.left = '0%';
+        pointerText.textContent = '--';
+        heightInput.focus();
+      }
+
+      function calculate() {
+        clearError();
+
+        const height = parsePositiveNumber(heightInput.value);
+        const weight = parsePositiveNumber(weightInput.value);
+
+        let invalidHeight = false;
+        let invalidWeight = false;
+        const messages = [];
+
+        if (!Number.isFinite(height)) {
+          invalidHeight = true;
+          messages.push('Please enter a valid height.');
+        } else if (height < 50 || height > 250) {
+          invalidHeight = true;
+          messages.push('Height should be between 50 and 250 cm.');
+        }
+
+        if (!Number.isFinite(weight)) {
+          invalidWeight = true;
+          messages.push('Please enter a valid weight.');
+        } else if (weight < 10 || weight > 500) {
+          invalidWeight = true;
+          messages.push('Weight must be between 10 and 500 kg.');
+        }
+
+        setInputState(heightInput, invalidHeight);
+        setInputState(weightInput, invalidWeight);
+
+        if (messages.length > 0) {
+          showError(messages.join(' '));
+          return;
+        }
+
+        const heightMeters = height / 100;
+        const bmi = weight / (heightMeters * heightMeters);
+
+        if (!Number.isFinite(bmi) || bmi <= 0) {
+          showError('Calculation failed. Please check your input and try again.');
+          return;
+        }
+
+        updateResult(bmi);
+      }
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        calculate();
+      });
+
+      resetBtn.addEventListener('click', resetResult);
+
+      [heightInput, weightInput].forEach(function (input) {
+        input.addEventListener('input', function () {
+          clearError();
+          setInputState(input, false);
+        });
+
+        input.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            calculate();
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="html-entity-encoder 是一个免费的 HTML 实体转义工具，可将 <、>、&、引号等特殊字符转换为 HTML 实体代码，帮助开发者防止 XSS 攻击并安全展示 HTML 文本。" />
-  <meta name="keywords" content="HTML实体转义工具, HTML Entity Encoder, HTML转义, XSS防护工具, 特殊字符转义, HTML编码, 前端安全工具" />
+  <meta name="description" content="HTML 实体转义工具。将特殊字符（如 &lt;, &gt;, &amp;）转换为HTML实体代码，防止XSS攻击。">
+  <meta name="keywords" content="HTML实体转义工具, HTML Entity Encoder, HTML转义, XSS防护工具, 特殊字符转义, HTML编码, 前端安全工具">
   <meta name="robots" content="index, follow" />
   <title>html-entity-encoder - HTML 实体转义工具</title>
   <link rel="icon" type="image/png" href="./assets/logo.png">
   <link rel="apple-touch-icon" href="./assets/logo.png">
   <meta property="og:image" content="./assets/logo.png">
   <meta name="twitter:image" content="./assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     html { scroll-behavior: smooth; }
@@ -21,28 +22,55 @@
       -webkit-backdrop-filter: blur(14px);
     }
   </style>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/html-entity-encoder.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/html-entity-encoder.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/html-entity-encoder.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/html-entity-encoder.html">
+  <script src="./theme-toggle.js" defer></script>
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100">
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="./html-entity-encoder.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
+        <a href="./en/html-entity-encoder.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="切换主题" title="切换主题">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
   <div class="fixed inset-0 -z-10 overflow-hidden">
     <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/30 blur-3xl"></div>
     <div class="absolute bottom-10 left-10 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
     <div class="absolute right-0 top-1/3 h-96 w-96 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
   </div>
 
-  <header class="border-b border-white/10 bg-slate-950/70">
+  <header class="border-b border-gray-200 dark:border-white/10 bg-slate-950/70">
     <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
       <div class="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
         <div>
           <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
             Frontend Security Utility
           </p>
-          <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">HTML 实体转义工具</h1>
-          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">
+          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">HTML 实体转义工具</h1>
+          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
             HTML 实体转义工具：将特殊字符转换为安全的 HTML 实体代码，降低 XSS 注入风险，让页面内容展示更可靠。
           </p>
         </div>
-        <div class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-sm text-slate-300 shadow-2xl">
-          <div class="font-semibold text-white">支持转义</div>
+        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 text-sm text-slate-700 dark:text-slate-300 shadow-2xl">
+          <div class="font-semibold text-gray-900 dark:text-white">支持转义</div>
           <div class="mt-1 font-mono text-cyan-200">&lt; &gt; &amp; " ' ` = /</div>
         </div>
       </div>
@@ -51,18 +79,18 @@
 
   <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
     <section class="grid gap-6 lg:grid-cols-2" aria-label="HTML 实体转义工具主界面">
-      <div class="rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-2xl">
+      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl">
         <div class="mb-4 flex items-center justify-between gap-3">
           <div>
-            <h2 class="text-xl font-bold text-white">输入内容</h2>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入内容</h2>
             <p class="mt-1 text-sm text-slate-400">粘贴需要安全展示的 HTML、脚本片段或普通文本。</p>
           </div>
-          <span id="inputCount" class="shrink-0 rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-300">0 字符</span>
+          <span id="inputCount" class="shrink-0 rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">0 字符</span>
         </div>
 
         <textarea
           id="inputText"
-          class="min-h-80 w-full rounded-2xl border border-slate-700 bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
+          class="min-h-80 w-full rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
           placeholder="示例：<script>alert('XSS')</script>"
           spellcheck="false"
           maxlength="200000"
@@ -70,21 +98,21 @@
         ></textarea>
 
         <div class="mt-4 grid gap-3 sm:grid-cols-2">
-          <label class="flex cursor-pointer items-center gap-3 rounded-2xl border border-slate-700 bg-slate-950/60 p-3 text-sm text-slate-300">
+          <label class="flex cursor-pointer items-center gap-3 rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/60 p-3 text-sm text-slate-700 dark:text-slate-300">
             <input id="encodeQuotes" type="checkbox" checked class="h-4 w-4 accent-cyan-400" />
             转义单双引号
           </label>
-          <label class="flex cursor-pointer items-center gap-3 rounded-2xl border border-slate-700 bg-slate-950/60 p-3 text-sm text-slate-300">
+          <label class="flex cursor-pointer items-center gap-3 rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/60 p-3 text-sm text-slate-700 dark:text-slate-300">
             <input id="encodeNonAscii" type="checkbox" class="h-4 w-4 accent-cyan-400" />
             非 ASCII 转数字实体
           </label>
         </div>
 
         <div class="mt-5 flex flex-col gap-3 sm:flex-row">
-          <button id="encodeBtn" class="inline-flex flex-1 items-center justify-center rounded-2xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-[0.98]">
+          <button id="encodeBtn" class="inline-flex flex-1 items-center justify-center rounded-2xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-[0.98]">
             立即转义
           </button>
-          <button id="sampleBtn" class="inline-flex items-center justify-center rounded-2xl border border-slate-600 bg-slate-800 px-5 py-3 font-semibold text-slate-100 transition hover:bg-slate-700 active:scale-[0.98]">
+          <button id="sampleBtn" class="inline-flex items-center justify-center rounded-2xl border border-slate-600 bg-slate-50 dark:bg-slate-800 px-5 py-3 font-semibold text-slate-900 dark:text-slate-100 transition hover:bg-slate-700 active:scale-[0.98]">
             填入示例
           </button>
           <button id="clearBtn" class="inline-flex items-center justify-center rounded-2xl border border-rose-400/40 bg-rose-500/10 px-5 py-3 font-semibold text-rose-200 transition hover:bg-rose-500/20 active:scale-[0.98]">
@@ -96,7 +124,7 @@
       <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/30 p-5 shadow-2xl">
         <div class="mb-4 flex items-center justify-between gap-3">
           <div>
-            <h2 class="text-xl font-bold text-white">输出结果</h2>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输出结果</h2>
             <p class="mt-1 text-sm text-cyan-100/70">已编码的 HTML 实体，可直接复制到页面中安全展示。</p>
           </div>
           <span id="outputCount" class="shrink-0 rounded-full bg-cyan-400/10 px-3 py-1 text-xs text-cyan-200">0 字符</span>
@@ -112,7 +140,7 @@
         ></textarea>
 
         <div class="mt-5 flex flex-col gap-3 sm:flex-row">
-          <button id="copyBtn" class="inline-flex flex-1 items-center justify-center rounded-2xl bg-white px-5 py-3 font-bold text-slate-950 shadow-lg transition hover:bg-cyan-50 active:scale-[0.98]">
+          <button id="copyBtn" class="inline-flex flex-1 items-center justify-center rounded-2xl bg-white px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg transition hover:bg-cyan-50 active:scale-[0.98]">
             复制结果
           </button>
           <button id="selectBtn" class="inline-flex items-center justify-center rounded-2xl border border-cyan-300/30 bg-cyan-400/10 px-5 py-3 font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-[0.98]">
@@ -120,7 +148,7 @@
           </button>
         </div>
 
-        <div class="mt-4 rounded-2xl border border-cyan-400/20 bg-slate-950/50 p-4 text-sm leading-6 text-slate-300">
+        <div class="mt-4 rounded-2xl border border-cyan-400/20 bg-slate-950/50 p-4 text-sm leading-6 text-slate-700 dark:text-slate-300">
           <strong class="text-cyan-200">提示：</strong>
           编码后的内容适合放入 HTML 文本节点中展示。如果要写入属性、URL 或 JavaScript 上下文，请结合对应场景继续进行上下文安全处理。
         </div>
@@ -129,13 +157,13 @@
 
     <div id="messageBox" class="mt-6 hidden rounded-2xl border px-4 py-3 text-sm font-medium" role="alert" aria-live="polite"></div>
 
-    <article class="mt-10 rounded-3xl border border-white/10 bg-white/[0.06] p-6 shadow-2xl sm:p-8">
-      <h2 class="text-2xl font-bold text-white">关于 HTML 实体转义工具</h2>
-      <p class="mt-4 leading-8 text-slate-300">
+    <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-6 shadow-2xl sm:p-8">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">关于 HTML 实体转义工具</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">
         html-entity-encoder 是一款面向前端开发者、内容运营人员和安全测试人员的在线 HTML 实体转义工具。它可以将
         &lt;、&gt;、&amp;、双引号、单引号等特殊字符转换为标准 HTML 实体代码，避免浏览器把用户输入误解析为真实标签或脚本，从而降低 XSS 跨站脚本攻击风险。在评论系统、富文本预览、日志展示、代码片段发布以及后台管理页面中，经常需要安全输出不可信文本，本工具正是为这些场景提供快速、可靠的 HTML 编码能力。
       </p>
-      <p class="mt-4 leading-8 text-slate-300">
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">
         使用方法非常简单：将需要处理的 HTML 字符串、JavaScript 片段或普通文本粘贴到输入框，按下“立即转义”即可获得编码结果；如需处理中文、Emoji 或其他非 ASCII 字符，也可以启用“非 ASCII 转数字实体”。通过这个免费的 HTML Entity Encoder，你可以快速完成特殊字符转义、HTML 文本安全展示和基础 XSS 防护检查，提升前端页面的安全性与可维护性。
       </p>
     </article>
@@ -335,246 +363,5 @@
       updateCounts();
     })();
   </script>
-
-  <!-- micro-tools-i18n:start -->
-  <script>
-(() => {
-  'use strict';
-  const STORAGE_KEY = 'microToolsLanguage';
-  const PAGE_SLUG = "html-entity-encoder";
-  const TRANSLATIONS = {"示例：<script>alert('XSS')<\/script>":"Example: <script>alert('XSS')<\/script>","支持转义":"Supports escaping","关于 HTML 实体转义工具":"About the HTML entity escape tool","> <strong>用户输入：<\/strong> <script>alert('XSS & HTML injection')":"> <strong>User input:<\/strong> <script>alert('XSS & HTML injection')","输出结果":"Output result","使用方法非常简单：将需要处理的 HTML 字符串、JavaScript 片段或普通文本粘贴到输入框，按下“立即转义”即可获得编码结果；如需处理中文、Emoji 或其他非 ASCII 字符，也可以启用“非 ASCII 转数字实体”。通过这个免费的 HTML Entity Encoder，你可以快速完成特殊字符转义、HTML 文本安全展示和基础 XSS 防护检查，提升前端页面的安全性与可维护性。":"Usage is simple: paste the HTML string, JavaScript snippet, or plain text you want to process into the input box, then click “Escape Now” to get the encoded result. If you need to process Chinese, Emoji, or other non-ASCII characters, you can also enable “Convert non-ASCII to numeric entities”. With this free HTML Entity Encoder, you can quickly escape special characters, safely display HTML text, and perform basic XSS protection checks, improving frontend page security and maintainability.","html-entity-encoder · HTML 实体转义与前端安全辅助工具":"html-entity-encoder · HTML Entity Escaping and Front-End Security Helper","粘贴需要安全展示的 HTML、脚本片段或普通文本。":"Paste HTML, script snippets, or plain text that need to be displayed safely.","html-entity-encoder - HTML 实体转义工具":"html-entity-encoder - HTML Entity Escaping Tool","`; handleEncode(); } function selectOutput() { if (!outputText.value) { showMessage('没有可选择的结果，请先进行转义。', 'error'); return; } outputText.focus(); outputText.select(); showMessage('已全选输出结果。', 'success'); } inputText.addEventListener('input', () => { if (inputText.value.length >= MAX_LENGTH) { showMessage(`已达到最大输入长度 ${MAX_LENGTH} 个字符。`, 'warning'); } updateCounts(); }); encodeBtn.addEventListener('click', handleEncode); copyBtn.addEventListener('click', copyOutput); clearBtn.addEventListener('click', clearAll); sampleBtn.addEventListener('click', fillSample); selectBtn.addEventListener('click', selectOutput); encodeQuotes.addEventListener('change', () => { if (inputText.value.trim()) handleEncode(); }); encodeNonAscii.addEventListener('change', () => { if (inputText.value.trim()) handleEncode(); }); inputText.addEventListener('keydown', (event) => { if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') { event.preventDefault(); handleEncode(); } }); updateCounts(); })();":"`; handleEncode(); } function selectOutput() { if (!outputText.value) { showMessage('No result to select. Please escape first.', 'error'); return; } outputText.focus(); outputText.select(); showMessage('Output result selected.', 'success'); } inputText.addEventListener('input', () => { if (inputText.value.length >= MAX_LENGTH) { showMessage(`Maximum input length reached: ${MAX_LENGTH} characters.`, 'warning'); } updateCounts(); }); encodeBtn.addEventListener('click', handleEncode); copyBtn.addEventListener('click', copyOutput); clearBtn.addEventListener('click', clearAll); sampleBtn.addEventListener('click', fillSample); selectBtn.addEventListener('click', selectOutput); encodeQuotes.addEventListener('change', () => { if (inputText.value.trim()) handleEncode(); }); encodeNonAscii.addEventListener('change', () => { if (inputText.value.trim()) handleEncode(); }); inputText.addEventListener('keydown', (event) => { if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') { event.preventDefault(); handleEncode(); } }); updateCounts(); })();","清空":"Clear","提示：":"Tip:","非 ASCII 转数字实体":"Non-ASCII to numeric entities","全选结果":"Select all results","转义单双引号":"Escape Single and Double Quotes","立即转义":"Escape Now","HTML 实体转义工具主界面":"HTML entity escape tool main interface","${outputText.value.length} 字符":"${outputText.value.length} characters","html-entity-encoder 是一个免费的 HTML 实体转义工具，可将 <、>、&、引号等特殊字符转换为 HTML 实体代码，帮助开发者防止 XSS 攻击并安全展示 HTML 文本。":"html-entity-encoder is a free HTML entity escaping tool that converts special characters such as <, >, &, and quotes into HTML entity codes, helping developers prevent XSS attacks and safely display HTML text.","复制结果":"Copy Result","html-entity-encoder 是一款面向前端开发者、内容运营人员和安全测试人员的在线 HTML 实体转义工具。它可以将 <、>、&、双引号、单引号等特殊字符转换为标准 HTML 实体代码，避免浏览器把用户输入误解析为真实标签或脚本，从而降低 XSS 跨站脚本攻击风险。在评论系统、富文本预览、日志展示、代码片段发布以及后台管理页面中，经常需要安全输出不可信文本，本工具正是为这些场景提供快速、可靠的 HTML 编码能力。":"html-entity-encoder is an online HTML entity escaping tool for frontend developers, content operators, and security testers. It can convert special characters such as <, >, &, double quotes, and single quotes into standard HTML entity codes, preventing browsers from mistakenly parsing user input as real tags or scripts, thereby reducing the risk of XSS cross-site scripting attacks. In comment systems, rich text previews, log displays, code snippet publishing, and admin pages, untrusted text often needs to be output safely. This tool provides fast and reliable HTML encoding for exactly these scenarios.","查看详情":"View Details","输入内容":"Input Content","转义结果将显示在这里...":"Escaped result will appear here...","编码后的内容适合放入 HTML 文本节点中展示。如果要写入属性、URL 或 JavaScript 上下文，请结合对应场景继续进行上下文安全处理。":"The encoded content is suitable for display in HTML text nodes. If writing to attributes, URLs, or JavaScript contexts, apply context-specific security handling as needed.","HTML 实体转义工具：将特殊字符转换为安全的 HTML 实体代码，降低 XSS 注入风险，让页面内容展示更可靠。":"HTML entity escape tool: converts special characters into safe HTML entity codes, reducing XSS injection risk and making page content display more reliably.","HTML实体转义工具, HTML Entity Encoder, HTML转义, XSS防护工具, 特殊字符转义, HTML编码, 前端安全工具":"HTML entity escaping tool, HTML Entity Encoder, HTML escaping, XSS protection tool, special character escaping, HTML encoding, frontend security tool","0 字符":"0 characters","已编码的 HTML 实体，可直接复制到页面中安全展示。":"Encoded HTML entities, ready to copy into a page for safe display.","待转义的 HTML 文本":"HTML text to escape","HTML 实体转义结果":"HTML entity escape result","填入示例":"Fill Example","${inputText.value.length} 字符":"${inputText.value.length} characters","HTML 实体转义工具":"HTML Entity Encoder","HTML 实体转义工具。将特殊字符（如 <, >, &）转换为HTML实体代码，防止XSS攻击。":"HTML entity escaping tool. Convert special characters such as <, >, and & into HTML entities to help prevent XSS attacks."};
-  const TOOL_DATA = {"html-entity-encoder":{"zhName":"HTML 实体转义工具","enName":"HTML Entity Encoder","zhDescription":"HTML 实体转义工具。将特殊字符（如 <, >, &）转换为HTML实体代码，防止XSS攻击。","enDescription":"HTML entity escaping tool. Convert special characters such as <, >, and & into HTML entities to help prevent XSS attacks.","zhTitle":"html-entity-encoder - HTML 实体转义工具","enTitle":"HTML Entity Encoder | Free Online Tool","zhKeywords":"HTML实体转义工具, HTML Entity Encoder, HTML转义, XSS防护工具, 特殊字符转义, HTML编码, 前端安全工具","enKeywords":"HTML Entity Encoder, online tool, browser tool, productivity tool"}};
-  const CURRENT_TOOL = {"zhName":"HTML 实体转义工具","enName":"HTML Entity Encoder","zhDescription":"HTML 实体转义工具。将特殊字符（如 <, >, &）转换为HTML实体代码，防止XSS攻击。","enDescription":"HTML entity escaping tool. Convert special characters such as <, >, and & into HTML entities to help prevent XSS attacks.","zhTitle":"html-entity-encoder - HTML 实体转义工具","enTitle":"HTML Entity Encoder | Free Online Tool","zhKeywords":"HTML实体转义工具, HTML Entity Encoder, HTML转义, XSS防护工具, 特殊字符转义, HTML编码, 前端安全工具","enKeywords":"HTML Entity Encoder, online tool, browser tool, productivity tool"};
-  const ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
-  const ZH_RE = /[\u4e00-\u9fff]/;
-  const originalText = new WeakMap();
-  const originalAttrs = new WeakMap();
-  let observer = null;
-
-  function normalize(value) {
-    return String(value || '').replace(/\s+/g, ' ').trim();
-  }
-
-  function hasChinese(value) {
-    return ZH_RE.test(String(value || ''));
-  }
-
-  function language() {
-    return localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'zh';
-  }
-
-  function translateExact(value, lang) {
-    const text = String(value || '');
-    if (lang === 'zh' || !text) return text;
-    if (TRANSLATIONS[text]) return TRANSLATIONS[text];
-    const normalized = normalize(text);
-    if (TRANSLATIONS[normalized]) return TRANSLATIONS[normalized];
-
-    const dynamic = [
-      [/^(\d+)\s*个字符$/u, '$1 characters'],
-      [/^(\d+)\s*字符$/u, '$1 characters'],
-      [/^(\d+)\s*字$/u, '$1 characters'],
-      [/^(\d+)\s*行$/u, '$1 rows'],
-      [/^(\d+)\s*列$/u, '$1 columns'],
-      [/^(\d+)\s*项$/u, '$1 items'],
-      [/^(\d+)\s*次$/u, '$1 times'],
-      [/^当前显示\s*(\d+)\s*\/\s*(\d+)$/u, 'Showing $1 / $2'],
-      [/^第\s*(\d+)\s*行第\s*(\d+)\s*列/u, 'line $1, column $2']
-    ];
-    for (const [pattern, replacement] of dynamic) {
-      if (pattern.test(normalized)) return normalized.replace(pattern, replacement);
-    }
-    return text;
-  }
-
-  function translateWithSpacing(value, lang) {
-    const text = String(value || '');
-    if (!text.trim()) return text;
-    const leading = text.match(/^\s*/)[0];
-    const trailing = text.match(/\s*$/)[0];
-    const core = text.slice(leading.length, text.length - trailing.length);
-    return leading + translateExact(core, lang) + trailing;
-  }
-
-  function skipped(node) {
-    const parent = node.parentElement;
-    return !parent || Boolean(parent.closest('script, style, code, pre, textarea, [data-i18n-ignore]'));
-  }
-
-  function translateNode(node, lang) {
-    if (skipped(node) || !node.nodeValue.trim()) return;
-    const current = node.nodeValue;
-    let original = originalText.get(node);
-    const originalEnglish = original ? translateWithSpacing(original, 'en') : '';
-    if (!original || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
-      original = current;
-      originalText.set(node, original);
-    }
-    node.nodeValue = lang === 'zh' ? (original || current) : translateWithSpacing(original || current, lang);
-  }
-
-  function translateAttrs(element, lang) {
-    if (element.closest('script, style, [data-i18n-ignore]')) return;
-    let store = originalAttrs.get(element);
-    if (!store) {
-      store = {};
-      originalAttrs.set(element, store);
-    }
-    ATTRS.forEach((attr) => {
-      if (!element.hasAttribute(attr)) return;
-      const current = element.getAttribute(attr);
-      const originalEnglish = store[attr] ? translateExact(store[attr], 'en') : '';
-      if (!store[attr] || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
-        store[attr] = current;
-      }
-      element.setAttribute(attr, lang === 'zh' ? store[attr] : translateExact(store[attr] || current, lang));
-    });
-  }
-
-  function walk(root, lang) {
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    const nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-    nodes.forEach((node) => translateNode(node, lang));
-
-    const elementRoot = root.nodeType === Node.ELEMENT_NODE ? root : document.body;
-    if (!elementRoot) return;
-    translateAttrs(elementRoot, lang);
-    elementRoot.querySelectorAll('*').forEach((element) => translateAttrs(element, lang));
-  }
-
-  function setMeta(name, value) {
-    if (!value) return;
-    let meta = document.querySelector(`meta[name="${name}"]`);
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.setAttribute('name', name);
-      document.head.appendChild(meta);
-    }
-    meta.setAttribute('content', value);
-  }
-
-  function applyMetadata(lang) {
-    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-    if (PAGE_SLUG === 'index') {
-      document.title = lang === 'zh'
-        ? '免费在线开发者工具箱 | 纯前端工具集合'
-        : 'Free Online Developer Toolbox | Pure Front-End Tools';
-      setMeta('description', lang === 'zh'
-        ? '免费在线开发者工具箱，汇集 JSON、CSV、LaTeX、Base64、正则、时间戳、二维码、颜色转换等纯前端微型工具，隐私友好、无需安装、极速加载。'
-        : 'A free online developer toolbox with pure front-end tools for JSON, CSV, LaTeX, Base64, regex, timestamps, QR codes, color conversion, and daily productivity.');
-      setMeta('keywords', lang === 'zh'
-        ? '免费在线开发者工具箱, 纯前端工具集合, 在线 JSON 工具, 在线编码转换工具, 生产力工具箱, 微型 Web 工具'
-        : 'free online developer tools, front-end tools, JSON tools, encoding tools, productivity toolbox, micro web tools');
-      return;
-    }
-    if (!CURRENT_TOOL || !CURRENT_TOOL.zhName) return;
-    document.title = lang === 'zh' ? CURRENT_TOOL.zhTitle : CURRENT_TOOL.enTitle;
-    setMeta('description', lang === 'zh' ? CURRENT_TOOL.zhDescription : CURRENT_TOOL.enDescription);
-    setMeta('keywords', lang === 'zh' ? CURRENT_TOOL.zhKeywords : CURRENT_TOOL.enKeywords);
-    const h1 = document.querySelector('h1');
-    if (h1) h1.textContent = lang === 'zh' ? CURRENT_TOOL.zhName : CURRENT_TOOL.enName;
-  }
-
-  function updateIndexCards(lang) {
-    if (PAGE_SLUG !== 'index') return;
-    document.querySelectorAll('a[href$=".html"]').forEach((card) => {
-      const slug = (card.getAttribute('href') || '').split('/').pop().replace(/\.html$/i, '');
-      const tool = TOOL_DATA[slug];
-      if (!tool) return;
-      const title = card.querySelector('h3');
-      const description = card.querySelector('p');
-      const action = card.querySelector('span:last-child');
-      if (title) title.textContent = lang === 'zh' ? tool.zhName : tool.enName;
-      if (description) description.textContent = lang === 'zh' ? tool.zhDescription : tool.enDescription;
-      if (action) action.textContent = lang === 'zh' ? '立即使用' : 'Open Tool';
-      card.dataset.search = normalize(`${slug} ${tool.zhName} ${tool.enName} ${tool.zhDescription} ${tool.enDescription}`).toLowerCase().replace(/[-_\s]+/g, '');
-    });
-    const search = document.getElementById('searchInput');
-    if (search) search.dispatchEvent(new Event('input', { bubbles: true }));
-  }
-
-  function ensureToggle(lang) {
-    let toggle = document.getElementById('microToolsLanguageToggle');
-    if (!toggle) {
-      toggle = document.createElement('div');
-      toggle.id = 'microToolsLanguageToggle';
-      toggle.setAttribute('data-i18n-ignore', 'true');
-      toggle.className = 'fixed right-4 top-4 z-50 flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/90 p-1 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur';
-      toggle.innerHTML = '<span data-language-label class="px-2 text-xs text-slate-300">语言</span><button type="button" data-lang-option="zh" class="rounded-full px-3 py-1.5 transition">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-1.5 transition">EN</button>';
-      document.body.appendChild(toggle);
-      toggle.addEventListener('click', (event) => {
-        const button = event.target.closest('[data-lang-option]');
-        if (!button) return;
-        localStorage.setItem(STORAGE_KEY, button.getAttribute('data-lang-option') === 'en' ? 'en' : 'zh');
-        applyLanguage(language());
-      });
-    }
-    toggle.querySelector('[data-language-label]').textContent = lang === 'zh' ? '语言' : 'Language';
-    toggle.querySelectorAll('[data-lang-option]').forEach((button) => {
-      const active = button.getAttribute('data-lang-option') === lang;
-      button.className = active
-        ? 'rounded-full bg-cyan-400 px-3 py-1.5 text-slate-950 transition'
-        : 'rounded-full px-3 py-1.5 text-slate-200 transition hover:bg-white/10';
-    });
-  }
-
-  function disconnect() {
-    if (observer) observer.disconnect();
-  }
-
-  function observe() {
-    if (!observer) {
-      observer = new MutationObserver(() => {
-        if (language() !== 'en') return;
-        disconnect();
-        applyLanguage('en');
-        observe();
-      });
-    }
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributes: true,
-      attributeFilter: ATTRS
-    });
-  }
-
-  function applyLanguage(lang) {
-    const next = lang === 'en' ? 'en' : 'zh';
-    disconnect();
-    ensureToggle(next);
-    applyMetadata(next);
-    walk(document.body, next);
-    updateIndexCards(next);
-    ensureToggle(next);
-    observe();
-  }
-
-  function init() {
-    applyLanguage(language());
-    window.addEventListener('storage', (event) => {
-      if (event.key === STORAGE_KEY) applyLanguage(language());
-    });
-  }
-
-  window.MicroToolsI18n = {
-    getLanguage: language,
-    setLanguage(value) {
-      localStorage.setItem(STORAGE_KEY, value === 'en' ? 'en' : 'zh');
-      applyLanguage(language());
-    },
-    applyLanguage
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
-  </script>
-  <!-- micro-tools-i18n:end -->
 </body>
 </html>

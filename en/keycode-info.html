@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keycode Info | Free Online Tool</title>
+  <meta name="description" content="Keyboard Keycode Capturer. Press any key on the keyboard to show its event.keyCode, event.key, and event.code in the center of the screen.">
+  <meta name="keywords" content="Keycode Info, online tool, browser tool, productivity tool">
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+  <meta property="og:image" content="../assets/logo.png">
+  <meta name="twitter:image" content="../assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/en/keycode-info.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/keycode-info.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/keycode-info.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/keycode-info.html">
+  <script src="./theme-toggle.js" defer></script>
+</head>
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="../keycode-info.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./keycode-info.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
+  <div class="pointer-events-none fixed inset-0 overflow-hidden">
+    <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
+  </div>
+
+  <header class="relative border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 backdrop-blur">
+    <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-200">
+            Keyboard Event Inspector
+          </p>
+          <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">Keycode Info</h1>
+          <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-700 dark:text-slate-300 sm:text-base">
+            Press any key on your keyboard to instantly view its corresponding <strong>event.keyCode</strong>、<strong>event.key</strong> and <strong>event.code</strong>。
+          </p>
+        </div>
+        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm text-slate-700 dark:text-slate-300 shadow-2xl">
+          <span class="inline-block h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_#34d399]"></span>
+          <span class="ml-2">Listening in real time</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-5">
+      <div class="lg:col-span-2">
+        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl backdrop-blur">
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Input</h2>
+          <p class="mt-2 text-sm leading-6 text-slate-400">
+            Click the capture area below, then press any key. On desktop, press a key directly; on mobile, tap the input box to open the soft keyboard for testing.
+          </p>
+
+          <div
+            id="captureZone"
+            tabindex="0"
+            role="button"
+            aria-label="Keyboard key capture area"
+            class="mt-5 flex min-h-52 cursor-text select-none flex-col items-center justify-center rounded-2xl border border-dashed border-cyan-300/40 bg-cyan-300/10 p-6 text-center outline-none transition duration-200 focus:border-cyan-300 focus:bg-cyan-300/15 focus:ring-4 focus:ring-cyan-400/20"
+          >
+            <div class="mb-4 rounded-2xl bg-slate-950/70 px-5 py-4 shadow-inner">
+              <span id="bigKey" class="block break-all text-5xl font-black tracking-tight text-cyan-200 sm:text-6xl">Key</span>
+            </div>
+            <p id="captureHint" class="text-sm text-slate-700 dark:text-slate-300">Press any key on your keyboard</p>
+          </div>
+
+          <label for="mobileInput" class="mt-5 block text-sm font-medium text-slate-700 dark:text-slate-300">Mobile input helper</label>
+          <input
+            id="mobileInput"
+            type="text"
+            inputmode="text"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            placeholder="Click here, then press a key"
+            class="mt-2 w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/70 px-4 py-3 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-cyan-300 focus:ring-4 focus:ring-cyan-400/20"
+          />
+
+          <div class="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+            <button
+              id="focusBtn"
+              type="button"
+              class="rounded-2xl bg-cyan-400 px-4 py-3 text-sm font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98]"
+            >
+              Focus Capture
+            </button>
+            <button
+              id="copyBtn"
+              type="button"
+              class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-4 py-3 text-sm font-bold text-gray-900 dark:text-white transition hover:bg-white/15 active:scale-[0.98]"
+            >
+              Copy Result
+            </button>
+            <button
+              id="clearBtn"
+              type="button"
+              class="rounded-2xl border border-rose-300/20 bg-rose-400/10 px-4 py-3 text-sm font-bold text-rose-100 transition hover:bg-rose-400/15 active:scale-[0.98]"
+            >
+              Clear
+            </button>
+          </div>
+
+          <div id="errorBox" class="mt-5 hidden rounded-2xl border border-red-400/40 bg-red-500/15 px-4 py-3 text-sm text-red-100" role="alert"></div>
+          <div id="successBox" class="mt-5 hidden rounded-2xl border border-emerald-400/40 bg-emerald-500/15 px-4 py-3 text-sm text-emerald-100" role="status"></div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-3">
+        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5 shadow-2xl backdrop-blur">
+          <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Output</h2>
+              <p class="mt-2 text-sm text-slate-400">Displays key KeyboardEvent fields in real time.</p>
+            </div>
+            <p id="timeLabel" class="text-xs text-slate-500">Not Captured Yet</p>
+          </div>
+
+          <div class="mt-6 grid gap-4 md:grid-cols-3">
+            <div class="rounded-3xl border border-cyan-300/20 bg-slate-950/70 p-5">
+              <p class="text-xs font-semibold uppercase tracking-wider text-cyan-200">event.keyCode</p>
+              <p id="keyCodeValue" class="mt-4 break-all text-4xl font-black text-gray-900 dark:text-white sm:text-5xl">--</p>
+              <p class="mt-3 text-xs leading-5 text-slate-500">Legacy numeric key code, still commonly used for compatibility troubleshooting.</p>
+            </div>
+
+            <div class="rounded-3xl border border-indigo-300/20 bg-slate-950/70 p-5">
+              <p class="text-xs font-semibold uppercase tracking-wider text-indigo-200">event.key</p>
+              <p id="keyValue" class="mt-4 break-all text-4xl font-black text-gray-900 dark:text-white sm:text-5xl">--</p>
+              <p class="mt-3 text-xs leading-5 text-slate-500">Indicates the key value pressed by the user, affected by the keyboard layout.</p>
+            </div>
+
+            <div class="rounded-3xl border border-emerald-300/20 bg-slate-950/70 p-5">
+              <p class="text-xs font-semibold uppercase tracking-wider text-emerald-200">event.code</p>
+              <p id="codeValue" class="mt-4 break-all text-4xl font-black text-gray-900 dark:text-white sm:text-5xl">--</p>
+              <p class="mt-3 text-xs leading-5 text-slate-500">Represents the physical key position, usually unaffected by keyboard layout.</p>
+            </div>
+          </div>
+
+          <div class="mt-5 rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-950/70 p-5">
+            <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200">Full capture results</h3>
+            <pre id="jsonOutput" class="mt-3 max-h-72 overflow-auto whitespace-pre-wrap break-words rounded-2xl bg-black/40 p-4 text-sm leading-6 text-slate-700 dark:text-slate-300">Waiting for key input...</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-900/75 p-6 shadow-2xl backdrop-blur sm:p-8">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Keycode Info</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Keyboard Keycode Capturer. Press any key on the keyboard to show its event.keyCode, event.key, and event.code in the center of the screen. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Keycode Info for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+    </article>
+  </main>
+
+  <footer class="relative mx-auto max-w-6xl px-4 pb-8 text-center text-xs text-slate-500 sm:px-6 lg:px-8">
+    <p>keycode-info · Native JavaScript Real-Time Keyboard Event Detection Tool</p>
+  </footer>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const state = {
+        lastResult: null,
+        hideErrorTimer: null,
+        hideSuccessTimer: null
+      };
+
+      const $ = (id) => document.getElementById(id);
+
+      const elements = {
+        captureZone: $("captureZone"),
+        mobileInput: $("mobileInput"),
+        bigKey: $("bigKey"),
+        captureHint: $("captureHint"),
+        keyCodeValue: $("keyCodeValue"),
+        keyValue: $("keyValue"),
+        codeValue: $("codeValue"),
+        jsonOutput: $("jsonOutput"),
+        timeLabel: $("timeLabel"),
+        errorBox: $("errorBox"),
+        successBox: $("successBox"),
+        focusBtn: $("focusBtn"),
+        copyBtn: $("copyBtn"),
+        clearBtn: $("clearBtn")
+      };
+
+      function safeText(value) {
+        if (value === undefined || value === null) return "未提供";
+        const text = String(value);
+        if (text === "") return "Empty String";
+        if (text === " ") return "Space (空格)";
+        return text;
+      }
+
+      function setText(el, value) {
+        if (!el) return;
+        el.textContent = safeText(value);
+      }
+
+      function showError(message) {
+        if (!elements.errorBox) return;
+        clearTimeout(state.hideErrorTimer);
+        elements.errorBox.textContent = message || "An unknown error occurred. Please try again.";
+        elements.errorBox.classList.remove("hidden");
+        state.hideErrorTimer = setTimeout(() => {
+          elements.errorBox.classList.add("hidden");
+        }, 4500);
+      }
+
+      function showSuccess(message) {
+        if (!elements.successBox) return;
+        clearTimeout(state.hideSuccessTimer);
+        elements.successBox.textContent = message || "Operation successful.";
+        elements.successBox.classList.remove("hidden");
+        state.hideSuccessTimer = setTimeout(() => {
+          elements.successBox.classList.add("hidden");
+        }, 2500);
+      }
+
+      function formatTime(date) {
+        try {
+          return new Intl.DateTimeFormat("zh-CN", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+          }).format(date);
+        } catch (error) {
+          return date.toLocaleString();
+        }
+      }
+
+      function normalizeKeyboardEvent(event) {
+        if (!event || typeof event !== "object") {
+          throw new Error("No valid keyboard event detected.");
+        }
+
+        const keyCodeRaw = event.keyCode ?? event.which ?? event.charCode ?? 0;
+        const keyCode = Number.isFinite(Number(keyCodeRaw)) ? Number(keyCodeRaw) : 0;
+        const key = typeof event.key === "string" ? event.key : "Unidentified";
+        const code = typeof event.code === "string" && event.code.length > 0 ? event.code : "Unidentified";
+
+        return {
+          keyCode,
+          key,
+          code,
+          which: Number.isFinite(Number(event.which)) ? Number(event.which) : keyCode,
+          altKey: Boolean(event.altKey),
+          ctrlKey: Boolean(event.ctrlKey),
+          shiftKey: Boolean(event.shiftKey),
+          metaKey: Boolean(event.metaKey),
+          repeat: Boolean(event.repeat),
+          location: Number.isFinite(Number(event.location)) ? Number(event.location) : 0,
+          type: event.type || "keydown",
+          capturedAt: new Date().toISOString()
+        };
+      }
+
+      function renderResult(result) {
+        state.lastResult = result;
+
+        setText(elements.bigKey, result.key);
+        setText(elements.keyCodeValue, result.keyCode);
+        setText(elements.keyValue, result.key);
+        setText(elements.codeValue, result.code);
+
+        if (elements.captureHint) {
+          const modifiers = [];
+          if (result.ctrlKey) modifiers.push("Ctrl");
+          if (result.altKey) modifiers.push("Alt");
+          if (result.shiftKey) modifiers.push("Shift");
+          if (result.metaKey) modifiers.push("Meta");
+          elements.captureHint.textContent = modifiers.length
+            ? "Key combination detected:" + modifiers.join(" + ") + " + " + safeText(result.key)
+            : "Captured keys:" + safeText(result.key);
+        }
+
+        if (elements.timeLabel) {
+          elements.timeLabel.textContent = "Capture time:" + formatTime(new Date(result.capturedAt));
+        }
+
+        if (elements.jsonOutput) {
+          elements.jsonOutput.textContent = JSON.stringify(result, null, 2);
+        }
+
+        if (elements.captureZone) {
+          elements.captureZone.classList.add("ring-4", "ring-cyan-400/30", "border-cyan-300");
+          setTimeout(() => {
+            elements.captureZone.classList.remove("ring-4", "ring-cyan-400/30");
+          }, 180);
+        }
+      }
+
+      function handleKeydown(event) {
+        try {
+          if (!event) {
+            showError("The browser did not return a valid key event. Please press a key again.");
+            return;
+          }
+
+          const target = event.target;
+          const isEditable =
+            target &&
+            (target.tagName === "INPUT" ||
+              target.tagName === "TEXTAREA" ||
+              target.isContentEditable);
+
+          if ([" ", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key) && !isEditable) {
+            event.preventDefault();
+          }
+
+          const result = normalizeKeyboardEvent(event);
+          renderResult(result);
+
+          if (elements.mobileInput && target === elements.mobileInput) {
+            elements.mobileInput.value = "";
+          }
+        } catch (error) {
+          showError(error && error.message ? error.message : "Key parsing failed. Please try another key.");
+        }
+      }
+
+      async function copyText(text) {
+        if (!text || typeof text !== "string") {
+          throw new Error("No content to copy.");
+        }
+
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return;
+        }
+
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.setAttribute("readonly", "readonly");
+        textarea.style.position = "fixed";
+        textarea.style.top = "-9999px";
+        textarea.style.left = "-9999px";
+        document.body.appendChild(textarea);
+        textarea.select();
+
+        const ok = document.execCommand("copy");
+        document.body.removeChild(textarea);
+
+        if (!ok) {
+          throw new Error("The current browser does not allow automatic copying. Please manually select and copy the result text.");
+        }
+      }
+
+      function clearResult() {
+        state.lastResult = null;
+        setText(elements.bigKey, "按键");
+        setText(elements.keyCodeValue, "--");
+        setText(elements.keyValue, "--");
+        setText(elements.codeValue, "--");
+
+        if (elements.captureHint) elements.captureHint.textContent = "Press any key on your keyboard";
+        if (elements.timeLabel) elements.timeLabel.textContent = "Not Captured Yet";
+        if (elements.jsonOutput) elements.jsonOutput.textContent = "Waiting for key input...";
+        if (elements.mobileInput) elements.mobileInput.value = "";
+
+        showSuccess("Capture results cleared.");
+      }
+
+      function addButtonFeedback(button) {
+        if (!button) return;
+        button.classList.add("scale-[0.98]");
+        setTimeout(() => button.classList.remove("scale-[0.98]"), 140);
+      }
+
+      function init() {
+        if (!elements.captureZone || !elements.focusBtn || !elements.copyBtn || !elements.clearBtn) {
+          showError("Page initialization failed. Please refresh and try again.");
+          return;
+        }
+
+        document.addEventListener("keydown", handleKeydown, { passive: false });
+
+        elements.captureZone.addEventListener("click", () => {
+          try {
+            elements.captureZone.focus();
+            showSuccess("Capture area focused. Press any key.");
+          } catch (error) {
+            showError("Cannot focus the capture area. Please press a key directly or refresh the page.");
+          }
+        });
+
+        elements.focusBtn.addEventListener("click", () => {
+          addButtonFeedback(elements.focusBtn);
+          try {
+            elements.captureZone.focus();
+            showSuccess("Capture area focused. Press any key.");
+          } catch (error) {
+            showError("Focus failed. Please click the capture area and try again.");
+          }
+        });
+
+        elements.copyBtn.addEventListener("click", async () => {
+          addButtonFeedback(elements.copyBtn);
+          try {
+            if (!state.lastResult) {
+              showError("No capture result yet. Press any key first.");
+              return;
+            }
+            await copyText(JSON.stringify(state.lastResult, null, 2));
+            showSuccess("Captured result copied to clipboard.");
+          } catch (error) {
+            showError(error && error.message ? error.message : "Copy failed. Please copy the result manually.");
+          }
+        });
+
+        elements.clearBtn.addEventListener("click", () => {
+          addButtonFeedback(elements.clearBtn);
+          clearResult();
+        });
+
+        if (elements.mobileInput) {
+          elements.mobileInput.addEventListener("input", () => {
+            elements.mobileInput.value = "";
+          });
+        }
+
+        setTimeout(() => {
+          try {
+            elements.captureZone.focus();
+          } catch (error) {
+            showError("Auto-focus failed. Please click the capture area to start.");
+          }
+        }, 300);
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init);
+      } else {
+        init();
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -4,31 +4,59 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>text-reverser - 文字翻转与倒序工具</title>
-  <meta name="description" content="text-reverser 是一个在线文字翻转与倒序工具，支持将字符串完全倒序排列，也支持按单词级别倒序，适合文本处理、编码测试、内容编辑和快速格式转换。" />
-  <meta name="keywords" content="text-reverser,文字翻转工具,字符串倒序,在线文本倒序,单词倒序工具,文本反转,中文倒序,英文单词倒序" />
+  <meta name="description" content="文字翻转与倒序工具。将输入的字符串完全倒序排列，或者按单词级别倒序。">
+  <meta name="keywords" content="text-reverser,文字翻转工具,字符串倒序,在线文本倒序,单词倒序工具,文本反转,中文倒序,英文单词倒序">
   <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="./assets/logo.png">
   <link rel="apple-touch-icon" href="./assets/logo.png">
   <meta property="og:image" content="./assets/logo.png">
   <meta name="twitter:image" content="./assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/text-reverser.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/text-reverser.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/text-reverser.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/text-reverser.html">
+  <script src="./theme-toggle.js" defer></script>
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="./text-reverser.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
+        <a href="./en/text-reverser.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="切换主题" title="切换主题">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
   <div class="relative overflow-hidden">
     <div class="absolute inset-0 -z-10">
       <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
       <div class="absolute right-0 top-48 h-80 w-80 rounded-full bg-indigo-500/10 blur-3xl"></div>
     </div>
 
-    <header class="border-b border-white/10 bg-slate-950/80 backdrop-blur">
+    <header class="border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 backdrop-blur">
       <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
         <div class="flex flex-col gap-4">
           <span class="inline-flex w-fit items-center rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
             Online Text Utility
           </span>
-          <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">文字翻转与倒序工具</h1>
-          <p class="max-w-3xl text-base leading-7 text-slate-300 sm:text-lg">
+          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">文字翻转与倒序工具</h1>
+          <p class="max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
             文字翻转与倒序工具：支持将输入字符串完全倒序排列，也可以按单词级别倒序，快速完成文本反转、单词重排与内容测试。
           </p>
         </div>
@@ -37,16 +65,16 @@
 
     <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
       <section class="grid gap-6 lg:grid-cols-2" aria-label="文字翻转工具主界面">
-        <div class="rounded-2xl border border-white/10 bg-slate-900/80 p-5 shadow-2xl shadow-cyan-950/20">
+        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-cyan-950/20">
           <div class="mb-4 flex items-center justify-between gap-3">
-            <h2 class="text-xl font-bold text-white">输入文本</h2>
-            <button id="clearBtn" type="button" class="rounded-lg border border-slate-700 px-3 py-2 text-sm font-medium text-slate-300 transition hover:border-red-400 hover:bg-red-500/10 hover:text-red-200 active:scale-95">
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入文本</h2>
+            <button id="clearBtn" type="button" class="rounded-lg border border-slate-700 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 transition hover:border-red-400 hover:bg-red-500/10 hover:text-red-200 active:scale-95">
               清空
             </button>
           </div>
 
-          <label for="inputText" class="mb-2 block text-sm font-medium text-slate-300">请输入需要倒序的字符串</label>
-          <textarea id="inputText" rows="12" maxlength="200000" class="w-full resize-y rounded-xl border border-slate-700 bg-slate-950/80 p-4 text-base leading-7 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="例如：Hello world 你好世界"></textarea>
+          <label for="inputText" class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">请输入需要倒序的字符串</label>
+          <textarea id="inputText" rows="12" maxlength="200000" class="w-full resize-y rounded-xl border border-slate-700 bg-white dark:bg-slate-950/80 p-4 text-base leading-7 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="例如：Hello world 你好世界"></textarea>
 
           <div class="mt-4 grid gap-3 sm:grid-cols-2">
             <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-cyan-400/30 bg-cyan-400/10 p-4 transition hover:bg-cyan-400/15">
@@ -68,49 +96,49 @@
           <div id="errorBox" class="mt-4 hidden rounded-xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200" role="alert"></div>
 
           <div class="mt-5 flex flex-col gap-3 sm:flex-row">
-            <button id="reverseBtn" type="button" class="inline-flex flex-1 items-center justify-center rounded-xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60">
+            <button id="reverseBtn" type="button" class="inline-flex flex-1 items-center justify-center rounded-xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60">
               开始倒序
             </button>
-            <button id="sampleBtn" type="button" class="inline-flex items-center justify-center rounded-xl border border-slate-700 px-5 py-3 font-semibold text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-[0.98]">
+            <button id="sampleBtn" type="button" class="inline-flex items-center justify-center rounded-xl border border-slate-700 px-5 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-[0.98]">
               填入示例
             </button>
           </div>
 
           <div class="mt-4 flex flex-wrap gap-3 text-sm text-slate-400">
-            <span>字符数：<strong id="charCount" class="text-slate-200">0</strong></span>
-            <span>单词/片段数：<strong id="wordCount" class="text-slate-200">0</strong></span>
+            <span>字符数：<strong id="charCount" class="text-slate-800 dark:text-slate-200">0</strong></span>
+            <span>单词/片段数：<strong id="wordCount" class="text-slate-800 dark:text-slate-200">0</strong></span>
           </div>
         </div>
 
         <div class="rounded-2xl border border-cyan-400/20 bg-cyan-950/20 p-5 shadow-2xl shadow-cyan-950/20">
           <div class="mb-4 flex items-center justify-between gap-3">
-            <h2 class="text-xl font-bold text-white">输出结果</h2>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输出结果</h2>
             <button id="copyBtn" type="button" class="rounded-lg border border-cyan-400/30 px-3 py-2 text-sm font-medium text-cyan-100 transition hover:bg-cyan-400/10 active:scale-95">
               复制结果
             </button>
           </div>
 
-          <label for="outputText" class="mb-2 block text-sm font-medium text-slate-300">倒序后的文本</label>
-          <textarea id="outputText" rows="12" readonly class="w-full resize-y rounded-xl border border-cyan-400/20 bg-slate-950/60 p-4 text-base leading-7 text-cyan-50 outline-none placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="结果会显示在这里"></textarea>
+          <label for="outputText" class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">倒序后的文本</label>
+          <textarea id="outputText" rows="12" readonly class="w-full resize-y rounded-xl border border-cyan-400/20 bg-white dark:bg-slate-950/60 p-4 text-base leading-7 text-cyan-50 outline-none placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="结果会显示在这里"></textarea>
 
           <div id="statusBox" class="mt-4 hidden rounded-xl border border-emerald-400/40 bg-emerald-500/10 px-4 py-3 text-sm font-medium text-emerald-200" role="status"></div>
 
           <div class="mt-5 grid gap-3 sm:grid-cols-3">
-            <button id="swapBtn" type="button" class="rounded-xl border border-slate-700 px-4 py-3 font-semibold text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-[0.98]">
+            <button id="swapBtn" type="button" class="rounded-xl border border-slate-700 px-4 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-[0.98]">
               结果转输入
             </button>
-            <button id="downloadBtn" type="button" class="rounded-xl border border-slate-700 px-4 py-3 font-semibold text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-[0.98]">
+            <button id="downloadBtn" type="button" class="rounded-xl border border-slate-700 px-4 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-[0.98]">
               下载 TXT
             </button>
-            <button id="selectBtn" type="button" class="rounded-xl border border-slate-700 px-4 py-3 font-semibold text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-[0.98]">
+            <button id="selectBtn" type="button" class="rounded-xl border border-slate-700 px-4 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-[0.98]">
               全选结果
             </button>
           </div>
         </div>
       </section>
 
-      <article class="mt-10 rounded-2xl border border-white/10 bg-slate-900/70 p-6 leading-8 text-slate-300 shadow-xl">
-        <h2 class="mb-4 text-2xl font-bold text-white">关于 text-reverser 文字翻转与倒序工具</h2>
+      <article class="mt-10 rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl">
+        <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 text-reverser 文字翻转与倒序工具</h2>
         <p>
           text-reverser 是一款轻量、快速、无需安装的在线文字翻转工具，适用于需要进行字符串倒序、文本反转、单词倒序重排等场景。无论你是在做前端开发调试、数据清洗、文案编辑，还是进行编码学习与字符串处理测试，都可以通过这个工具迅速获得可靠结果。用户只需将文本粘贴到输入框，选择“完全倒序”即可把整段内容按字符反向排列，例如将中文、英文、数字、符号统一从末尾翻转到开头；如果选择“按单词倒序”，工具会保留每个单词或连续文本片段本身，仅调整它们的排列顺序，非常适合处理英文句子、关键词组合和标题结构优化。该在线文本倒序工具支持移动端与桌面端访问，界面简洁，响应迅速，并提供复制、下载、结果转输入等实用操作，帮助你减少重复劳动。对于正在寻找“在线字符串倒序工具”“中文文字反转工具”或“英文单词倒序生成器”的用户来说，text-reverser 能以直观方式解决文本顺序转换的痛点。
         </p>
@@ -371,246 +399,5 @@
       updateStats();
     })();
   </script>
-
-  <!-- micro-tools-i18n:start -->
-  <script>
-(() => {
-  'use strict';
-  const STORAGE_KEY = 'microToolsLanguage';
-  const PAGE_SLUG = "text-reverser";
-  const TRANSLATIONS = {"输入已自动截断至 ${MAX_LENGTH.toLocaleString(\"zh-CN\")} 个字符。":"Input was automatically truncated to ${MAX_LENGTH.toLocaleString(\"zh-CN\")} characters.","输入文本过长，请控制在 ${MAX_LENGTH.toLocaleString(\"zh-CN\")} 个字符以内。":"Input text is too long. Please keep it within ${MAX_LENGTH.toLocaleString(\"zh-CN\")} characters.","结果已复制到剪贴板。":"Result copied to clipboard.","text-reverser,文字翻转工具,字符串倒序,在线文本倒序,单词倒序工具,文本反转,中文倒序,英文单词倒序":"text-reverser,text reverse tool,string reverse,online text reverse,word reverse tool,text reversal,Chinese reverse,English word reverse","文字翻转与倒序工具：支持将输入字符串完全倒序排列，也可以按单词级别倒序，快速完成文本反转、单词重排与内容测试。":"Text flip and reverse tool: reverse the input string completely or by word, quickly handling text reversal, word reordering, and content testing.","当前没有可复制的结果，请先生成倒序文本。":"No result is available to copy. Please generate reversed text first.","输出结果":"Output result","复制失败，请手动选择结果后复制。":"Copy failed. Please select the result manually and copy it.","完全倒序":"Full Reverse","单词/片段数：":"Words/fragments:","已完成字符串完全倒序。":"Full string reversal completed.","保留单词本身并重排顺序":"Keep words intact and reorder them","内容已清空。":"Content cleared.","当前没有可转入输入框的结果。":"No result to move to the input box.","处理过程中出现异常，请检查输入内容后重试。":"An error occurred during processing. Please check your input and try again.","请输入需要倒序的字符串":"Please enter the string to reverse","text-reverser 是一个在线文字翻转与倒序工具，支持将字符串完全倒序排列，也支持按单词级别倒序，适合文本处理、编码测试、内容编辑和快速格式转换。":"text-reverser is an online text reversal and reverse-order tool. It supports reversing an entire string or reversing by word, ideal for text processing, encoding tests, content editing, and quick format conversion.","结果已转入输入框，可继续处理。":"The result has been moved to the input box for further processing.","按单词倒序":"Reverse by word","复制结果":"Copy Result","文字翻转工具主界面":"Text Flip Tool Main Interface","关于 text-reverser 文字翻转与倒序工具":"About the text-reverser Text Reverse and Backward Tool","请输入需要倒序的文本。":"Please enter the text to reverse.","填入示例":"Fill Example","当前没有可下载的结果，请先生成倒序文本。":"No downloadable result is available. Please generate reversed text first.","TXT 文件已开始下载。":"TXT file download has started.","下载失败，请稍后重试或复制结果保存。":"Download failed. Please try again later or copy the result to save it.","当前没有可选择的结果。":"There are currently no results to select.","全选失败，请手动选择文本。":"Select all failed. Please select the text manually.","text-reverser - 文字翻转与倒序工具":"text-reverser - Text Reverse and Backward Tool","清空":"Clear","已按单词级别完成倒序。":"Word-level reversal completed.","下载 TXT":"Download TXT","输入文本":"Input Text","字符数：":"Character Count:","读取输入时出现异常，请重新输入。":"An error occurred while reading the input. Please enter it again.","全选结果":"Select all results","输入内容格式异常，请重新输入文本。":"The input format is invalid. Please re-enter the text.","处理中...":"Processing...","倒序后的文本":"Reversed text","text-reverser 是一款轻量、快速、无需安装的在线文字翻转工具，适用于需要进行字符串倒序、文本反转、单词倒序重排等场景。无论你是在做前端开发调试、数据清洗、文案编辑，还是进行编码学习与字符串处理测试，都可以通过这个工具迅速获得可靠结果。用户只需将文本粘贴到输入框，选择“完全倒序”即可把整段内容按字符反向排列，例如将中文、英文、数字、符号统一从末尾翻转到开头；如果选择“按单词倒序”，工具会保留每个单词或连续文本片段本身，仅调整它们的排列顺序，非常适合处理英文句子、关键词组合和标题结构优化。该在线文本倒序工具支持移动端与桌面端访问，界面简洁，响应迅速，并提供复制、下载、结果转输入等实用操作，帮助你减少重复劳动。对于正在寻找“在线字符串倒序工具”“中文文字反转工具”或“英文单词倒序生成器”的用户来说，text-reverser 能以直观方式解决文本顺序转换的痛点。":"text-reverser is a lightweight, fast, no-install online text reversal tool for reversing strings, flipping text, and reordering words in reverse. Whether you are debugging front-end code, cleaning data, editing copy, or learning coding and testing string handling, this tool helps you get reliable results quickly. Paste your text into the input box and choose “Full Reverse” to reverse the entire content character by character, turning Chinese, English, numbers, and symbols from end to start. Choose “Reverse by Words” to keep each word or continuous text segment unchanged while reversing their order, ideal for English sentences, keyword combinations, and title structure optimization. This online text reversal tool works on mobile and desktop, has a clean interface, responds quickly, and offers useful actions such as copy, download, and send result to input to reduce repetitive work. For users looking for an “online string reverse tool,” “Chinese text reverser,” or “English word reverse generator,” text-reverser solves text order conversion in an intuitive way.","开始倒序":"Start Reversing","快捷键处理异常，请使用按钮操作。":"Shortcut handling error. Please use the button instead.","结果转输入":"Send result to input","逐字符反转全部内容":"Reverse all content character by character","结果会显示在这里":"Results will appear here","已全选输出结果。":"All output results selected.","文字翻转与倒序工具":"Text Reverser","文字翻转与倒序工具。将输入的字符串完全倒序排列，或者按单词级别倒序。":"Text reverse tool. Reverse the input string completely or by word."};
-  const TOOL_DATA = {"text-reverser":{"zhName":"文字翻转与倒序工具","enName":"Text Reverser","zhDescription":"文字翻转与倒序工具。将输入的字符串完全倒序排列，或者按单词级别倒序。","enDescription":"Text reverse tool. Reverse the input string completely or by word.","zhTitle":"text-reverser - 文字翻转与倒序工具","enTitle":"Text Reverser | Free Online Tool","zhKeywords":"text-reverser,文字翻转工具,字符串倒序,在线文本倒序,单词倒序工具,文本反转,中文倒序,英文单词倒序","enKeywords":"Text Reverser, online tool, browser tool, productivity tool"}};
-  const CURRENT_TOOL = {"zhName":"文字翻转与倒序工具","enName":"Text Reverser","zhDescription":"文字翻转与倒序工具。将输入的字符串完全倒序排列，或者按单词级别倒序。","enDescription":"Text reverse tool. Reverse the input string completely or by word.","zhTitle":"text-reverser - 文字翻转与倒序工具","enTitle":"Text Reverser | Free Online Tool","zhKeywords":"text-reverser,文字翻转工具,字符串倒序,在线文本倒序,单词倒序工具,文本反转,中文倒序,英文单词倒序","enKeywords":"Text Reverser, online tool, browser tool, productivity tool"};
-  const ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
-  const ZH_RE = /[\u4e00-\u9fff]/;
-  const originalText = new WeakMap();
-  const originalAttrs = new WeakMap();
-  let observer = null;
-
-  function normalize(value) {
-    return String(value || '').replace(/\s+/g, ' ').trim();
-  }
-
-  function hasChinese(value) {
-    return ZH_RE.test(String(value || ''));
-  }
-
-  function language() {
-    return localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'zh';
-  }
-
-  function translateExact(value, lang) {
-    const text = String(value || '');
-    if (lang === 'zh' || !text) return text;
-    if (TRANSLATIONS[text]) return TRANSLATIONS[text];
-    const normalized = normalize(text);
-    if (TRANSLATIONS[normalized]) return TRANSLATIONS[normalized];
-
-    const dynamic = [
-      [/^(\d+)\s*个字符$/u, '$1 characters'],
-      [/^(\d+)\s*字符$/u, '$1 characters'],
-      [/^(\d+)\s*字$/u, '$1 characters'],
-      [/^(\d+)\s*行$/u, '$1 rows'],
-      [/^(\d+)\s*列$/u, '$1 columns'],
-      [/^(\d+)\s*项$/u, '$1 items'],
-      [/^(\d+)\s*次$/u, '$1 times'],
-      [/^当前显示\s*(\d+)\s*\/\s*(\d+)$/u, 'Showing $1 / $2'],
-      [/^第\s*(\d+)\s*行第\s*(\d+)\s*列/u, 'line $1, column $2']
-    ];
-    for (const [pattern, replacement] of dynamic) {
-      if (pattern.test(normalized)) return normalized.replace(pattern, replacement);
-    }
-    return text;
-  }
-
-  function translateWithSpacing(value, lang) {
-    const text = String(value || '');
-    if (!text.trim()) return text;
-    const leading = text.match(/^\s*/)[0];
-    const trailing = text.match(/\s*$/)[0];
-    const core = text.slice(leading.length, text.length - trailing.length);
-    return leading + translateExact(core, lang) + trailing;
-  }
-
-  function skipped(node) {
-    const parent = node.parentElement;
-    return !parent || Boolean(parent.closest('script, style, code, pre, textarea, [data-i18n-ignore]'));
-  }
-
-  function translateNode(node, lang) {
-    if (skipped(node) || !node.nodeValue.trim()) return;
-    const current = node.nodeValue;
-    let original = originalText.get(node);
-    const originalEnglish = original ? translateWithSpacing(original, 'en') : '';
-    if (!original || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
-      original = current;
-      originalText.set(node, original);
-    }
-    node.nodeValue = lang === 'zh' ? (original || current) : translateWithSpacing(original || current, lang);
-  }
-
-  function translateAttrs(element, lang) {
-    if (element.closest('script, style, [data-i18n-ignore]')) return;
-    let store = originalAttrs.get(element);
-    if (!store) {
-      store = {};
-      originalAttrs.set(element, store);
-    }
-    ATTRS.forEach((attr) => {
-      if (!element.hasAttribute(attr)) return;
-      const current = element.getAttribute(attr);
-      const originalEnglish = store[attr] ? translateExact(store[attr], 'en') : '';
-      if (!store[attr] || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
-        store[attr] = current;
-      }
-      element.setAttribute(attr, lang === 'zh' ? store[attr] : translateExact(store[attr] || current, lang));
-    });
-  }
-
-  function walk(root, lang) {
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    const nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-    nodes.forEach((node) => translateNode(node, lang));
-
-    const elementRoot = root.nodeType === Node.ELEMENT_NODE ? root : document.body;
-    if (!elementRoot) return;
-    translateAttrs(elementRoot, lang);
-    elementRoot.querySelectorAll('*').forEach((element) => translateAttrs(element, lang));
-  }
-
-  function setMeta(name, value) {
-    if (!value) return;
-    let meta = document.querySelector(`meta[name="${name}"]`);
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.setAttribute('name', name);
-      document.head.appendChild(meta);
-    }
-    meta.setAttribute('content', value);
-  }
-
-  function applyMetadata(lang) {
-    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-    if (PAGE_SLUG === 'index') {
-      document.title = lang === 'zh'
-        ? '免费在线开发者工具箱 | 纯前端工具集合'
-        : 'Free Online Developer Toolbox | Pure Front-End Tools';
-      setMeta('description', lang === 'zh'
-        ? '免费在线开发者工具箱，汇集 JSON、CSV、LaTeX、Base64、正则、时间戳、二维码、颜色转换等纯前端微型工具，隐私友好、无需安装、极速加载。'
-        : 'A free online developer toolbox with pure front-end tools for JSON, CSV, LaTeX, Base64, regex, timestamps, QR codes, color conversion, and daily productivity.');
-      setMeta('keywords', lang === 'zh'
-        ? '免费在线开发者工具箱, 纯前端工具集合, 在线 JSON 工具, 在线编码转换工具, 生产力工具箱, 微型 Web 工具'
-        : 'free online developer tools, front-end tools, JSON tools, encoding tools, productivity toolbox, micro web tools');
-      return;
-    }
-    if (!CURRENT_TOOL || !CURRENT_TOOL.zhName) return;
-    document.title = lang === 'zh' ? CURRENT_TOOL.zhTitle : CURRENT_TOOL.enTitle;
-    setMeta('description', lang === 'zh' ? CURRENT_TOOL.zhDescription : CURRENT_TOOL.enDescription);
-    setMeta('keywords', lang === 'zh' ? CURRENT_TOOL.zhKeywords : CURRENT_TOOL.enKeywords);
-    const h1 = document.querySelector('h1');
-    if (h1) h1.textContent = lang === 'zh' ? CURRENT_TOOL.zhName : CURRENT_TOOL.enName;
-  }
-
-  function updateIndexCards(lang) {
-    if (PAGE_SLUG !== 'index') return;
-    document.querySelectorAll('a[href$=".html"]').forEach((card) => {
-      const slug = (card.getAttribute('href') || '').split('/').pop().replace(/\.html$/i, '');
-      const tool = TOOL_DATA[slug];
-      if (!tool) return;
-      const title = card.querySelector('h3');
-      const description = card.querySelector('p');
-      const action = card.querySelector('span:last-child');
-      if (title) title.textContent = lang === 'zh' ? tool.zhName : tool.enName;
-      if (description) description.textContent = lang === 'zh' ? tool.zhDescription : tool.enDescription;
-      if (action) action.textContent = lang === 'zh' ? '立即使用' : 'Open Tool';
-      card.dataset.search = normalize(`${slug} ${tool.zhName} ${tool.enName} ${tool.zhDescription} ${tool.enDescription}`).toLowerCase().replace(/[-_\s]+/g, '');
-    });
-    const search = document.getElementById('searchInput');
-    if (search) search.dispatchEvent(new Event('input', { bubbles: true }));
-  }
-
-  function ensureToggle(lang) {
-    let toggle = document.getElementById('microToolsLanguageToggle');
-    if (!toggle) {
-      toggle = document.createElement('div');
-      toggle.id = 'microToolsLanguageToggle';
-      toggle.setAttribute('data-i18n-ignore', 'true');
-      toggle.className = 'fixed right-4 top-4 z-50 flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/90 p-1 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur';
-      toggle.innerHTML = '<span data-language-label class="px-2 text-xs text-slate-300">语言</span><button type="button" data-lang-option="zh" class="rounded-full px-3 py-1.5 transition">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-1.5 transition">EN</button>';
-      document.body.appendChild(toggle);
-      toggle.addEventListener('click', (event) => {
-        const button = event.target.closest('[data-lang-option]');
-        if (!button) return;
-        localStorage.setItem(STORAGE_KEY, button.getAttribute('data-lang-option') === 'en' ? 'en' : 'zh');
-        applyLanguage(language());
-      });
-    }
-    toggle.querySelector('[data-language-label]').textContent = lang === 'zh' ? '语言' : 'Language';
-    toggle.querySelectorAll('[data-lang-option]').forEach((button) => {
-      const active = button.getAttribute('data-lang-option') === lang;
-      button.className = active
-        ? 'rounded-full bg-cyan-400 px-3 py-1.5 text-slate-950 transition'
-        : 'rounded-full px-3 py-1.5 text-slate-200 transition hover:bg-white/10';
-    });
-  }
-
-  function disconnect() {
-    if (observer) observer.disconnect();
-  }
-
-  function observe() {
-    if (!observer) {
-      observer = new MutationObserver(() => {
-        if (language() !== 'en') return;
-        disconnect();
-        applyLanguage('en');
-        observe();
-      });
-    }
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributes: true,
-      attributeFilter: ATTRS
-    });
-  }
-
-  function applyLanguage(lang) {
-    const next = lang === 'en' ? 'en' : 'zh';
-    disconnect();
-    ensureToggle(next);
-    applyMetadata(next);
-    walk(document.body, next);
-    updateIndexCards(next);
-    ensureToggle(next);
-    observe();
-  }
-
-  function init() {
-    applyLanguage(language());
-    window.addEventListener('storage', (event) => {
-      if (event.key === STORAGE_KEY) applyLanguage(language());
-    });
-  }
-
-  window.MicroToolsI18n = {
-    getLanguage: language,
-    setLanguage(value) {
-      localStorage.setItem(STORAGE_KEY, value === 'en' ? 'en' : 'zh');
-      applyLanguage(language());
-    },
-    applyLanguage
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
-  </script>
-  <!-- micro-tools-i18n:end -->
 </body>
 </html>

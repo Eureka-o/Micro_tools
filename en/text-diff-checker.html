@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Text Diff Checker | Free Online Tool</title>
+  <meta name="description" content="Text comparison tool. Provides left and right text areas and highlights differences between two texts, including added, deleted, or modified characters.">
+  <meta name="keywords" content="Text Diff Checker, online tool, browser tool, productivity tool">
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+  <meta property="og:image" content="../assets/logo.png">
+  <meta name="twitter:image" content="../assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/en/text-diff-checker.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/text-diff-checker.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/text-diff-checker.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/text-diff-checker.html">
+  <script src="./theme-toggle.js" defer></script>
+</head>
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="../text-diff-checker.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./text-diff-checker.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
+  <div class="absolute inset-0 -z-10 overflow-hidden">
+    <div class="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute right-0 top-60 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
+  </div>
+
+  <header class="border-b border-gray-200 dark:border-white/10 bg-slate-950/70 backdrop-blur-xl">
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+            Online character-level diff highlighting tool
+          </p>
+          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">Text Diff Checker</h1>
+          <p class="mt-3 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
+            Paste two pieces of text to identify additions, deletions, and changes in one click, helping you compare versions, proofread copy, and review content faster.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm text-slate-700 dark:text-slate-300 shadow-2xl">
+          <span class="inline-block h-2 w-2 rounded-full bg-emerald-400"></span>
+          Calculated locally in your browser; text is not uploaded
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-2" aria-label="Text input area">
+      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">Original text</h2>
+          <span id="leftCount" class="rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">0 characters</span>
+        </div>
+        <textarea id="leftText" class="h-72 w-full resize-y rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="Paste the first text here, such as old version content, original copy, or text to check."></textarea>
+      </div>
+
+      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">Compare Text</h2>
+          <span id="rightCount" class="rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">0 characters</span>
+        </div>
+        <textarea id="rightText" class="h-72 w-full resize-y rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="Paste the second text here, such as new version content, revised copy, or target text."></textarea>
+      </div>
+    </section>
+
+    <section class="mt-6 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-5 shadow-2xl" aria-label="Actions">
+      <div id="errorBox" class="mb-4 hidden rounded-2xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200"></div>
+
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div class="flex flex-wrap gap-3">
+          <button id="compareBtn" type="button" class="rounded-2xl bg-cyan-400 px-6 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60">
+            Start comparison
+          </button>
+          <button id="swapBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-50 dark:bg-slate-800 px-6 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-700 active:scale-95">
+            Swap Left and Right
+          </button>
+          <button id="clearBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-50 dark:bg-slate-800 px-6 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-700 active:scale-95">
+            Clear
+          </button>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 text-center text-xs sm:text-sm">
+          <div class="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-2">
+            <div class="font-black text-emerald-200" id="addedCount">0</div>
+            <div class="text-slate-400">Add</div>
+          </div>
+          <div class="rounded-2xl border border-red-400/20 bg-red-400/10 px-4 py-2">
+            <div class="font-black text-red-200" id="deletedCount">0</div>
+            <div class="text-slate-400">Delete</div>
+          </div>
+          <div class="rounded-2xl border border-amber-400/20 bg-amber-400/10 px-4 py-2">
+            <div class="font-black text-amber-200" id="changedCount">0</div>
+            <div class="text-slate-400">Edit</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-6 grid gap-6 lg:grid-cols-2" aria-label="Text comparison output area">
+      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-100 p-5 text-slate-950 dark:text-slate-100 shadow-2xl">
+        <div class="mb-4 flex items-center justify-between">
+          <h2 class="text-xl font-bold">Original text diff</h2>
+          <span class="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700">Deletion/Change Highlight</span>
+        </div>
+        <div id="leftOutput" class="min-h-72 overflow-auto rounded-2xl border border-slate-200 dark:border-white/10 bg-white p-4 font-mono text-sm leading-7 whitespace-pre-wrap break-words text-slate-800 dark:text-slate-200">
+          Comparison results will appear here.
+        </div>
+      </div>
+
+      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-100 p-5 text-slate-950 dark:text-slate-100 shadow-2xl">
+        <div class="mb-4 flex items-center justify-between">
+          <h2 class="text-xl font-bold">Compare text differences</h2>
+          <span class="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">Addition/Change Highlight</span>
+        </div>
+        <div id="rightOutput" class="min-h-72 overflow-auto rounded-2xl border border-slate-200 dark:border-white/10 bg-white p-4 font-mono text-sm leading-7 whitespace-pre-wrap break-words text-slate-800 dark:text-slate-200">
+          Comparison results will appear here.
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-6 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl" aria-label="Legend">
+      <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Diff marker guide</h2>
+      <div class="grid gap-3 sm:grid-cols-3">
+        <div class="rounded-2xl bg-white dark:bg-white/5 p-4">
+          <span class="rounded bg-emerald-200 px-2 py-1 font-mono text-sm text-emerald-950">New characters</span>
+          <p class="mt-2 text-sm text-slate-400">Content that exists only in the right comparison text.</p>
+        </div>
+        <div class="rounded-2xl bg-white dark:bg-white/5 p-4">
+          <span class="rounded bg-red-200 px-2 py-1 font-mono text-sm text-red-950 line-through">Delete character</span>
+          <p class="mt-2 text-sm text-slate-400">Content that exists only in the left original text.</p>
+        </div>
+        <div class="rounded-2xl bg-white dark:bg-white/5 p-4">
+          <span class="rounded bg-amber-200 px-2 py-1 font-mono text-sm text-amber-950">Modify character</span>
+          <p class="mt-2 text-sm text-slate-400">Adjacent deletions and additions will be identified as modifications.</p>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Text Diff Checker</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Text comparison tool. Provides left and right text areas and highlights differences between two texts, including added, deleted, or modified characters. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Text Diff Checker for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+    </article>
+  </main>
+
+  <footer class="mx-auto max-w-7xl px-4 pb-8 pt-2 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
+    © <span id="year"></span> text-diff-checker
+  </footer>
+
+  <script>
+    const leftText = document.getElementById('leftText');
+    const rightText = document.getElementById('rightText');
+    const leftCount = document.getElementById('leftCount');
+    const rightCount = document.getElementById('rightCount');
+    const compareBtn = document.getElementById('compareBtn');
+    const swapBtn = document.getElementById('swapBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const errorBox = document.getElementById('errorBox');
+    const leftOutput = document.getElementById('leftOutput');
+    const rightOutput = document.getElementById('rightOutput');
+    const addedCount = document.getElementById('addedCount');
+    const deletedCount = document.getElementById('deletedCount');
+    const changedCount = document.getElementById('changedCount');
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const MAX_CHARS = 8000;
+    const MAX_CELLS = 4000000;
+
+    function toChars(str) {
+      return Array.from(str || '');
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function showError(message) {
+      errorBox.textContent = message;
+      errorBox.classList.remove('hidden');
+    }
+
+    function hideError() {
+      errorBox.textContent = '';
+      errorBox.classList.add('hidden');
+    }
+
+    function updateCounts() {
+      leftCount.textContent = `${toChars(leftText.value).length} characters`;
+      rightCount.textContent = `${toChars(rightText.value).length} characters`;
+    }
+
+    function setStats(added, deleted, changed) {
+      addedCount.textContent = added;
+      deletedCount.textContent = deleted;
+      changedCount.textContent = changed;
+    }
+
+    function validateInput(a, b) {
+      const n = toChars(a).length;
+      const m = toChars(b).length;
+
+      if (n === 0 && m === 0) {
+        return 'Please enter至少一段文本后再进行对比。';
+      }
+
+      if (n > MAX_CHARS || m > MAX_CHARS) {
+        return `单侧文本最多支持 ${MAX_CHARS} 个字符。当前左侧 ${n} 个字符，右侧 ${m} 个字符，请缩短文本后重试。`;
+      }
+
+      if ((n + 1) * (m + 1) > MAX_CELLS) {
+        return '两段文本组合过长，字符级精确对比可能消耗过多浏览器内存。请减少文本长度后再试。';
+      }
+
+      return '';
+    }
+
+    function diffChars(a, b) {
+      const A = toChars(a);
+      const B = toChars(b);
+      const n = A.length;
+      const m = B.length;
+      const cols = m + 1;
+      const dp = new Uint16Array((n + 1) * (m + 1));
+
+      for (let i = n - 1; i >= 0; i--) {
+        const row = i * cols;
+        const nextRow = (i + 1) * cols;
+        for (let j = m - 1; j >= 0; j--) {
+          if (A[i] === B[j]) {
+            dp[row + j] = dp[nextRow + j + 1] + 1;
+          } else {
+            const down = dp[nextRow + j];
+            const right = dp[row + j + 1];
+            dp[row + j] = down >= right ? down : right;
+          }
+        }
+      }
+
+      const ops = [];
+      let i = 0;
+      let j = 0;
+
+      while (i < n && j < m) {
+        if (A[i] === B[j]) {
+          ops.push({ type: 'equal', value: A[i] });
+          i++;
+          j++;
+        } else if (dp[(i + 1) * cols + j] >= dp[i * cols + j + 1]) {
+          ops.push({ type: 'delete', value: A[i] });
+          i++;
+        } else {
+          ops.push({ type: 'insert', value: B[j] });
+          j++;
+        }
+      }
+
+      while (i < n) {
+        ops.push({ type: 'delete', value: A[i] });
+        i++;
+      }
+
+      while (j < m) {
+        ops.push({ type: 'insert', value: B[j] });
+        j++;
+      }
+
+      return mergeOps(ops);
+    }
+
+    function mergeOps(ops) {
+      if (!ops.length) return [];
+      const merged = [];
+
+      for (const op of ops) {
+        const last = merged[merged.length - 1];
+        if (last && last.type === op.type) {
+          last.value += op.value;
+        } else {
+          merged.push({ type: op.type, value: op.value });
+        }
+      }
+
+      const classified = [];
+      for (let i = 0; i < merged.length; i++) {
+        const current = merged[i];
+        const next = merged[i + 1];
+
+        if (current.type === 'delete' && next && next.type === 'insert') {
+          classified.push({ type: 'replace-delete', value: current.value });
+          classified.push({ type: 'replace-insert', value: next.value });
+          i++;
+        } else if (current.type === 'insert' && next && next.type === 'delete') {
+          classified.push({ type: 'replace-insert', value: current.value });
+          classified.push({ type: 'replace-delete', value: next.value });
+          i++;
+        } else {
+          classified.push(current);
+        }
+      }
+
+      return classified;
+    }
+
+    function renderDiff(ops) {
+      let leftHtml = '';
+      let rightHtml = '';
+      let added = 0;
+      let deleted = 0;
+      let changed = 0;
+
+      for (const op of ops) {
+        const safe = escapeHtml(op.value);
+        const len = toChars(op.value).length;
+
+        if (op.type === 'equal') {
+          leftHtml += safe;
+          rightHtml += safe;
+        } else if (op.type === 'delete') {
+          deleted += len;
+          leftHtml += `<span class="rounded bg-red-200 px-0.5 text-red-950 line-through">${safe}</span>`;
+        } else if (op.type === 'insert') {
+          added += len;
+          rightHtml += `<span class="rounded bg-emerald-200 px-0.5 text-emerald-950">${safe}</span>`;
+        } else if (op.type === 'replace-delete') {
+          changed += len;
+          leftHtml += `<span class="rounded bg-amber-200 px-0.5 text-amber-950 line-through decoration-amber-700">${safe}</span>`;
+        } else if (op.type === 'replace-insert') {
+          rightHtml += `<span class="rounded bg-amber-200 px-0.5 text-amber-950">${safe}</span>`;
+        }
+      }
+
+      leftOutput.innerHTML = leftHtml || '<span class="text-slate-400">左侧为空。</span>';
+      rightOutput.innerHTML = rightHtml || '<span class="text-slate-400">右侧为空。</span>';
+      setStats(added, deleted, changed);
+    }
+
+    function compareTexts() {
+      hideError();
+      const a = leftText.value;
+      const b = rightText.value;
+      const error = validateInput(a, b);
+
+      if (error) {
+        showError(error);
+        return;
+      }
+
+      compareBtn.disabled = true;
+      compareBtn.textContent = '对比中...';
+
+      window.setTimeout(() => {
+        try {
+          const ops = diffChars(a, b);
+          renderDiff(ops);
+          if (a === b) {
+            leftOutput.innerHTML = escapeHtml(a) || '<span class="text-slate-400">文本为空。</span>';
+            rightOutput.innerHTML = escapeHtml(b) || '<span class="text-slate-400">文本为空。</span>';
+            setStats(0, 0, 0);
+          }
+        } catch (err) {
+          showError('对比过程中发生异常，请检查Input Content或缩短文本后重试。');
+        } finally {
+          compareBtn.disabled = false;
+          compareBtn.textContent = 'Start comparison';
+        }
+      }, 30);
+    }
+
+    leftText.addEventListener('input', updateCounts);
+    rightText.addEventListener('input', updateCounts);
+
+    compareBtn.addEventListener('click', compareTexts);
+
+    swapBtn.addEventListener('click', () => {
+      hideError();
+      const temp = leftText.value;
+      leftText.value = rightText.value;
+      rightText.value = temp;
+      updateCounts();
+      compareTexts();
+    });
+
+    clearBtn.addEventListener('click', () => {
+      hideError();
+      leftText.value = '';
+      rightText.value = '';
+      leftOutput.textContent = 'Comparison results will appear here.';
+      rightOutput.textContent = 'Comparison results will appear here.';
+      setStats(0, 0, 0);
+      updateCounts();
+      leftText.focus();
+    });
+
+    updateCounts();
+  </script>
+</body>
+</html>

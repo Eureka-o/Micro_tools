@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Subnet Calculator | Free Online Tool</title>
+  <meta name="description" content="IP subnet mask calculator. Enter an IP address and CIDR prefix to calculate the network address, broadcast address, and usable IP range (for network engineers).">
+  <meta name="keywords" content="Subnet Calculator, online tool, browser tool, productivity tool">
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+  <meta property="og:image" content="../assets/logo.png">
+  <meta name="twitter:image" content="../assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/en/subnets-calculator.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/subnets-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/subnets-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/subnets-calculator.html">
+  <script src="./theme-toggle.js" defer></script>
+</head>
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="../subnets-calculator.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./subnets-calculator.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
+  <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
+    <div class="absolute inset-0 opacity-30">
+      <div class="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-cyan-500 blur-3xl"></div>
+      <div class="absolute -bottom-32 -left-24 h-80 w-80 rounded-full bg-blue-600 blur-3xl"></div>
+    </div>
+    <div class="relative mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-1 text-sm font-medium text-cyan-200">
+          IPv4 CIDR Subnet Calculator
+        </p>
+        <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">Subnet Calculator</h1>
+        <p class="mt-5 text-lg leading-8 text-slate-700 dark:text-slate-300">
+          Enter an IP address and CIDR prefix to quickly calculate the network address, broadcast address, subnet mask, and usable IP range, helping network engineers plan subnets efficiently.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-5">
+      <div class="lg:col-span-2 rounded-3xl border border-slate-700 bg-white dark:bg-slate-900/80 p-6 shadow-2xl shadow-cyan-950/30">
+        <div class="mb-6">
+          <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">Input Parameters</h2>
+          <p class="mt-2 text-sm text-slate-400">Supports standard IPv4 addresses and CIDR prefixes, for example: 192.168.1.10 / 24.</p>
+        </div>
+
+        <form id="calculatorForm" class="space-y-5" novalidate>
+          <div>
+            <label for="ipAddress" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">IP address</label>
+            <input
+              id="ipAddress"
+              name="ipAddress"
+              type="text"
+              inputmode="decimal"
+              autocomplete="off"
+              placeholder="Example: 192.168.1.10"
+              class="w-full rounded-2xl border border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-gray-900 dark:text-white outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
+            />
+          </div>
+
+          <div>
+            <label for="cidrPrefix" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">CIDR Prefix</label>
+            <div class="flex items-center rounded-2xl border border-slate-700 bg-white dark:bg-slate-950 transition focus-within:border-cyan-400 focus-within:ring-4 focus-within:ring-cyan-400/10">
+              <span class="pl-4 text-slate-500">/</span>
+              <input
+                id="cidrPrefix"
+                name="cidrPrefix"
+                type="number"
+                min="0"
+                max="32"
+                step="1"
+                inputmode="numeric"
+                placeholder="24"
+                class="w-full rounded-2xl bg-transparent px-2 py-3 text-gray-900 dark:text-white outline-none"
+              />
+            </div>
+            <p class="mt-2 text-xs text-slate-500">Valid range: 0 - 32</p>
+          </div>
+
+          <div id="errorBox" class="hidden rounded-2xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-200"></div>
+
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <button
+              id="calculateBtn"
+              type="submit"
+              class="rounded-2xl bg-cyan-400 px-5 py-3 font-semibold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-cyan-300/30"
+            >
+              Calculate Now
+            </button>
+            <button
+              id="resetBtn"
+              type="button"
+              class="rounded-2xl border border-slate-700 bg-slate-50 dark:bg-slate-800 px-5 py-3 font-semibold text-slate-900 dark:text-slate-100 transition hover:bg-slate-700 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-slate-500/20"
+            >
+              Reset
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="lg:col-span-3 rounded-3xl border border-cyan-400/20 bg-gradient-to-br from-slate-900 to-slate-800 p-6 shadow-2xl shadow-cyan-950/40">
+        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">Calculation Result</h2>
+            <p class="mt-2 text-sm text-slate-400">Results update in real time based on input for easy copying into network configuration docs.</p>
+          </div>
+          <button
+            id="copyBtn"
+            type="button"
+            class="rounded-2xl border border-cyan-300/30 bg-cyan-300/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-300/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
+            disabled
+          >
+            Copy Result
+          </button>
+        </div>
+
+        <div id="resultGrid" class="grid gap-4 sm:grid-cols-2">
+          <div class="rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/60 p-4">
+            <p class="text-sm text-slate-400">Web Address</p>
+            <p id="networkAddress" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/60 p-4">
+            <p class="text-sm text-slate-400">Broadcast Address</p>
+            <p id="broadcastAddress" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/60 p-4">
+            <p class="text-sm text-slate-400">Subnet Mask</p>
+            <p id="subnetMask" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/60 p-4">
+            <p class="text-sm text-slate-400">Wildcard mask</p>
+            <p id="wildcardMask" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/60 p-4 sm:col-span-2">
+            <p class="text-sm text-slate-400">Available IP range</p>
+            <p id="usableRange" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/60 p-4">
+            <p class="text-sm text-slate-400">Total addresses</p>
+            <p id="totalAddresses" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/60 p-4">
+            <p class="text-sm text-slate-400">Usable hosts</p>
+            <p id="usableHosts" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/60 p-4 sm:col-span-2">
+            <p class="text-sm text-slate-400">CIDR Notation</p>
+            <p id="cidrNotation" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
+          </div>
+        </div>
+
+        <div id="successBox" class="mt-5 hidden rounded-2xl border border-emerald-400/40 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-200"></div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-slate-700 bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Subnet Calculator</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">IP subnet mask calculator. Enter an IP address and CIDR prefix to calculate the network address, broadcast address, and usable IP range (for network engineers). This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Subnet Calculator for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+    </article>
+  </main>
+
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
+    <p>subnets-calculator · Online IPv4 Subnet Calculator</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById('calculatorForm');
+    const ipInput = document.getElementById('ipAddress');
+    const cidrInput = document.getElementById('cidrPrefix');
+    const errorBox = document.getElementById('errorBox');
+    const successBox = document.getElementById('successBox');
+    const copyBtn = document.getElementById('copyBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const calculateBtn = document.getElementById('calculateBtn');
+
+    const fields = {
+      networkAddress: document.getElementById('networkAddress'),
+      broadcastAddress: document.getElementById('broadcastAddress'),
+      subnetMask: document.getElementById('subnetMask'),
+      wildcardMask: document.getElementById('wildcardMask'),
+      usableRange: document.getElementById('usableRange'),
+      totalAddresses: document.getElementById('totalAddresses'),
+      usableHosts: document.getElementById('usableHosts'),
+      cidrNotation: document.getElementById('cidrNotation')
+    };
+
+    let latestResultText = '';
+
+    function showError(message) {
+      errorBox.textContent = message;
+      errorBox.classList.remove('hidden');
+      successBox.classList.add('hidden');
+      copyBtn.disabled = true;
+    }
+
+    function showSuccess(message) {
+      successBox.textContent = message;
+      successBox.classList.remove('hidden');
+      setTimeout(() => successBox.classList.add('hidden'), 2200);
+    }
+
+    function clearError() {
+      errorBox.textContent = '';
+      errorBox.classList.add('hidden');
+    }
+
+    function setInputInvalid(element, invalid) {
+      if (invalid) {
+        element.classList.add('border-red-500', 'ring-4', 'ring-red-500/10');
+      } else {
+        element.classList.remove('border-red-500', 'ring-4', 'ring-red-500/10');
+      }
+    }
+
+    function parseIPv4(ip) {
+      if (typeof ip !== 'string') return null;
+      const trimmed = ip.trim();
+      const parts = trimmed.split('.');
+      if (parts.length !== 4) return null;
+
+      const nums = [];
+      for (const part of parts) {
+        if (!/^\d{1,3}$/.test(part)) return null;
+        if (part.length > 1 && part.startsWith('0')) {
+          const numericValue = Number(part);
+          if (!Number.isInteger(numericValue)) return null;
+        }
+        const n = Number(part);
+        if (!Number.isInteger(n) || n < 0 || n > 255) return null;
+        nums.push(n);
+      }
+      return nums;
+    }
+
+    function ipArrayToInt(parts) {
+      return (((parts[0] << 24) >>> 0) | (parts[1] << 16) | (parts[2] << 8) | parts[3]) >>> 0;
+    }
+
+    function intToIp(num) {
+      const n = num >>> 0;
+      return [
+        (n >>> 24) & 255,
+        (n >>> 16) & 255,
+        (n >>> 8) & 255,
+        n & 255
+      ].join('.');
+    }
+
+    function formatNumber(num) {
+      return new Intl.NumberFormat('zh-CN').format(num);
+    }
+
+    function calculateSubnet(ipText, cidrText) {
+      const ipParts = parseIPv4(ipText);
+      const cidrTrimmed = String(cidrText).trim();
+
+      if (!ipParts) {
+        throw new Error('Enter a valid IPv4 address, e.g. 192.168.1.10. Each segment must be an integer from 0 to 255.');
+      }
+
+      if (!/^\d+$/.test(cidrTrimmed)) {
+        throw new Error('Please enter a valid CIDR prefix. The range must be an integer from 0 to 32.');
+      }
+
+      const cidr = Number(cidrTrimmed);
+      if (!Number.isInteger(cidr) || cidr < 0 || cidr > 32) {
+        throw new Error('CIDR prefix out of range. Enter an integer between 0 and 32.');
+      }
+
+      const ipInt = ipArrayToInt(ipParts);
+      const mask = cidr === 0 ? 0 : (0xFFFFFFFF << (32 - cidr)) >>> 0;
+      const wildcard = (~mask) >>> 0;
+      const network = (ipInt & mask) >>> 0;
+      const broadcast = (network | wildcard) >>> 0;
+      const total = Math.pow(2, 32 - cidr);
+
+      let firstUsable;
+      let lastUsable;
+      let usableHosts;
+      let usableRangeText;
+
+      if (cidr === 32) {
+        firstUsable = network;
+        lastUsable = network;
+        usableHosts = 1;
+        usableRangeText = intToIp(network) + '(single host address)';
+      } else if (cidr === 31) {
+        firstUsable = network;
+        lastUsable = broadcast;
+        usableHosts = 2;
+        usableRangeText = intToIp(firstUsable) + ' - ' + intToIp(lastUsable) + '(commonly used for point-to-point links)';
+      } else {
+        firstUsable = (network + 1) >>> 0;
+        lastUsable = (broadcast - 1) >>> 0;
+        usableHosts = Math.max(total - 2, 0);
+        usableRangeText = intToIp(firstUsable) + ' - ' + intToIp(lastUsable);
+      }
+
+      return {
+        inputIp: ipParts.join('.'),
+        cidr,
+        networkAddress: intToIp(network),
+        broadcastAddress: intToIp(broadcast),
+        subnetMask: intToIp(mask),
+        wildcardMask: intToIp(wildcard),
+        usableRange: usableRangeText,
+        totalAddresses: formatNumber(total),
+        usableHosts: formatNumber(usableHosts),
+        cidrNotation: intToIp(network) + '/' + cidr
+      };
+    }
+
+    function renderResult(result) {
+      fields.networkAddress.textContent = result.networkAddress;
+      fields.broadcastAddress.textContent = result.broadcastAddress;
+      fields.subnetMask.textContent = result.subnetMask;
+      fields.wildcardMask.textContent = result.wildcardMask;
+      fields.usableRange.textContent = result.usableRange;
+      fields.totalAddresses.textContent = result.totalAddresses;
+      fields.usableHosts.textContent = result.usableHosts;
+      fields.cidrNotation.textContent = result.cidrNotation;
+
+      latestResultText = [
+        'IP subnet mask calculation result',
+        'Input IP:' + result.inputIp,
+        'CIDR prefix: /' + result.cidr,
+        'URL:' + result.networkAddress,
+        'Broadcast address:' + result.broadcastAddress,
+        'Subnet mask:' + result.subnetMask,
+        'Wildcard Mask:' + result.wildcardMask,
+        'Available IP range:' + result.usableRange,
+        'Total addresses:' + result.totalAddresses,
+        'Available hosts:' + result.usableHosts,
+        'CIDR notation:' + result.cidrNotation
+      ].join('\n');
+
+      copyBtn.disabled = false;
+    }
+
+    function resetResult() {
+      Object.values(fields).forEach(field => field.textContent = '--');
+      latestResultText = '';
+      copyBtn.disabled = true;
+      clearError();
+      successBox.classList.add('hidden');
+      setInputInvalid(ipInput, false);
+      setInputInvalid(cidrInput, false);
+    }
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      clearError();
+      successBox.classList.add('hidden');
+      setInputInvalid(ipInput, false);
+      setInputInvalid(cidrInput, false);
+
+      calculateBtn.classList.add('scale-[0.98]');
+      setTimeout(() => calculateBtn.classList.remove('scale-[0.98]'), 120);
+
+      try {
+        const result = calculateSubnet(ipInput.value, cidrInput.value);
+        renderResult(result);
+        showSuccess('Calculation complete. Results updated.');
+      } catch (error) {
+        resetResult();
+        const message = error instanceof Error ? error.message : 'Invalid input. Please check the IP address and CIDR prefix.';
+        showError(message);
+        setInputInvalid(ipInput, !parseIPv4(ipInput.value));
+        setInputInvalid(cidrInput, !/^\d+$/.test(String(cidrInput.value).trim()) || Number(cidrInput.value) < 0 || Number(cidrInput.value) > 32);
+      }
+    });
+
+    resetBtn.addEventListener('click', () => {
+      ipInput.value = '';
+      cidrInput.value = '';
+      resetResult();
+      ipInput.focus();
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      if (!latestResultText) {
+        showError('No calculation result to copy. Please complete a calculation first.');
+        return;
+      }
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(latestResultText);
+        } else {
+          const temp = document.createElement('textarea');
+          temp.value = latestResultText;
+          temp.style.position = 'fixed';
+          temp.style.left = '-9999px';
+          document.body.appendChild(temp);
+          temp.focus();
+          temp.select();
+          const copied = document.execCommand('copy');
+          document.body.removeChild(temp);
+          if (!copied) throw new Error('Copy Failed');
+        }
+        clearError();
+        showSuccess('Result copied to clipboard.');
+      } catch (error) {
+        showError('Copy failed. Please manually select the result text to copy.');
+      }
+    });
+
+    ipInput.addEventListener('input', () => {
+      clearError();
+      setInputInvalid(ipInput, false);
+    });
+
+    cidrInput.addEventListener('input', () => {
+      clearError();
+      setInputInvalid(cidrInput, false);
+    });
+
+    ipInput.value = '192.168.1.10';
+    cidrInput.value = '24';
+    try {
+      renderResult(calculateSubnet(ipInput.value, cidrInput.value));
+    } catch (error) {}
+  </script>
+</body>
+</html>

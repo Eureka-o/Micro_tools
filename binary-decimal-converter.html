@@ -4,14 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>binary-decimal-converter｜二进制/十进制/十六进制/八进制互转计算器</title>
-  <meta name="description" content="binary-decimal-converter 是一款在线二进制、十进制、十六进制、八进制互转计算器，支持任意进制输入后自动同步转换，适合程序员、学生和数字电路学习者使用。" />
-  <meta name="keywords" content="binary decimal converter, 二进制十进制转换, 十六进制转换器, 八进制转换器, 进制转换计算器, 在线进制互转工具, 二进制转十进制, 十进制转十六进制" />
+  <meta name="description" content="二进制/十进制/十六进制/八进制 互转计算器。在任意输入框输入数字，其他进制框自动同步转换结果。">
+  <meta name="keywords" content="binary decimal converter, 二进制十进制转换, 十六进制转换器, 八进制转换器, 进制转换计算器, 在线进制互转工具, 二进制转十进制, 十进制转十六进制">
   <meta name="robots" content="index,follow" />
   <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="./assets/logo.png">
   <link rel="apple-touch-icon" href="./assets/logo.png">
   <meta property="og:image" content="./assets/logo.png">
   <meta name="twitter:image" content="./assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     html { scroll-behavior: smooth; }
@@ -31,28 +32,55 @@
       100% { transform: scale(1); }
     }
   </style>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/binary-decimal-converter.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/binary-decimal-converter.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/binary-decimal-converter.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/binary-decimal-converter.html">
+  <script src="./theme-toggle.js" defer></script>
 </head>
-<body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="./binary-decimal-converter.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
+        <a href="./en/binary-decimal-converter.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="切换主题" title="切换主题">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
   <div class="fixed inset-0 -z-10 overflow-hidden">
     <div class="absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
     <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl"></div>
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(148,163,184,.18)_1px,transparent_0)] [background-size:28px_28px]"></div>
   </div>
 
-  <header class="border-b border-white/10">
+  <header class="border-b border-gray-200 dark:border-white/10">
     <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-      <div class="glass rounded-3xl border border-white/10 p-6 shadow-2xl shadow-cyan-950/20 sm:p-10">
+      <div class="glass rounded-3xl border border-gray-200 dark:border-white/10 p-6 shadow-2xl shadow-cyan-950/20 sm:p-10">
         <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
             <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
               在线进制互转工具
             </p>
-            <h1 class="text-3xl font-black tracking-tight text-white sm:text-5xl">二进制/十进制/十六进制/八进制互转计算器</h1>
-            <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">
+            <h1 class="text-3xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">二进制/十进制/十六进制/八进制互转计算器</h1>
+            <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
               在二进制、十进制、十六进制、八进制之间实时自动转换。输入任意一个进制数值，其余结果即时同步。
             </p>
           </div>
-          <div class="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-slate-300">
+          <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-4 text-sm text-slate-700 dark:text-slate-300">
             <div class="flex items-center gap-2">
               <span class="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-lg shadow-emerald-400/50"></span>
               <span>支持超大整数</span>
@@ -73,10 +101,10 @@
 
   <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
     <section aria-labelledby="converter-title" class="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-      <div class="rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-xl shadow-slate-950/40 sm:p-7">
+      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-xl shadow-slate-950/40 sm:p-7">
         <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h2 id="converter-title" class="text-2xl font-bold text-white">进制输入与自动转换</h2>
+            <h2 id="converter-title" class="text-2xl font-bold text-gray-900 dark:text-white">进制输入与自动转换</h2>
             <p class="mt-2 text-sm text-slate-400">可输入负整数，支持 0b、0o、0x 前缀；结果会自动格式化为大写十六进制。</p>
           </div>
           <button id="clearBtn" type="button" class="rounded-xl border border-rose-400/30 bg-rose-500/10 px-4 py-2 text-sm font-semibold text-rose-200 transition hover:bg-rose-500/20 active:scale-95 focus:outline-none focus:ring-4 focus:ring-rose-500/20">
@@ -93,8 +121,8 @@
               <span class="rounded-full bg-cyan-400/10 px-2.5 py-1 text-xs text-cyan-200">Base 2</span>
             </div>
             <div class="flex flex-col gap-3 sm:flex-row">
-              <input id="binaryInput" data-base="2" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：101010 或 0b101010" class="input-focus-ring w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 font-mono text-base text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400" />
-              <button type="button" data-copy="binaryInput" class="copyBtn rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-4 focus:ring-cyan-500/20">复制</button>
+              <input id="binaryInput" data-base="2" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：101010 或 0b101010" class="input-focus-ring w-full rounded-xl border border-gray-200 dark:border-white/10 bg-slate-950/70 px-4 py-3 font-mono text-base text-gray-900 dark:text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400" />
+              <button type="button" data-copy="binaryInput" class="copyBtn rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-4 focus:ring-cyan-500/20">复制</button>
             </div>
           </div>
 
@@ -104,8 +132,8 @@
               <span class="rounded-full bg-emerald-400/10 px-2.5 py-1 text-xs text-emerald-200">Base 10</span>
             </div>
             <div class="flex flex-col gap-3 sm:flex-row">
-              <input id="decimalInput" data-base="10" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：42 或 -255" class="input-focus-ring w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 font-mono text-base text-white outline-none transition placeholder:text-slate-600 focus:border-emerald-400" />
-              <button type="button" data-copy="decimalInput" class="copyBtn rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-500/20">复制</button>
+              <input id="decimalInput" data-base="10" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：42 或 -255" class="input-focus-ring w-full rounded-xl border border-gray-200 dark:border-white/10 bg-slate-950/70 px-4 py-3 font-mono text-base text-gray-900 dark:text-white outline-none transition placeholder:text-slate-600 focus:border-emerald-400" />
+              <button type="button" data-copy="decimalInput" class="copyBtn rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-500/20">复制</button>
             </div>
           </div>
 
@@ -115,8 +143,8 @@
               <span class="rounded-full bg-indigo-400/10 px-2.5 py-1 text-xs text-indigo-200">Base 16</span>
             </div>
             <div class="flex flex-col gap-3 sm:flex-row">
-              <input id="hexInput" data-base="16" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：2A 或 0xFF" class="input-focus-ring w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 font-mono text-base uppercase text-white outline-none transition placeholder:normal-case placeholder:text-slate-600 focus:border-indigo-400" />
-              <button type="button" data-copy="hexInput" class="copyBtn rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-4 focus:ring-indigo-500/20">复制</button>
+              <input id="hexInput" data-base="16" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：2A 或 0xFF" class="input-focus-ring w-full rounded-xl border border-gray-200 dark:border-white/10 bg-slate-950/70 px-4 py-3 font-mono text-base uppercase text-gray-900 dark:text-white outline-none transition placeholder:normal-case placeholder:text-slate-600 focus:border-indigo-400" />
+              <button type="button" data-copy="hexInput" class="copyBtn rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-4 focus:ring-indigo-500/20">复制</button>
             </div>
           </div>
 
@@ -126,18 +154,18 @@
               <span class="rounded-full bg-amber-400/10 px-2.5 py-1 text-xs text-amber-200">Base 8</span>
             </div>
             <div class="flex flex-col gap-3 sm:flex-row">
-              <input id="octalInput" data-base="8" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：52 或 0o77" class="input-focus-ring w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 font-mono text-base text-white outline-none transition placeholder:text-slate-600 focus:border-amber-400" />
-              <button type="button" data-copy="octalInput" class="copyBtn rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-4 focus:ring-amber-500/20">复制</button>
+              <input id="octalInput" data-base="8" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：52 或 0o77" class="input-focus-ring w-full rounded-xl border border-gray-200 dark:border-white/10 bg-slate-950/70 px-4 py-3 font-mono text-base text-gray-900 dark:text-white outline-none transition placeholder:text-slate-600 focus:border-amber-400" />
+              <button type="button" data-copy="octalInput" class="copyBtn rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-4 focus:ring-amber-500/20">复制</button>
             </div>
           </div>
         </div>
       </div>
 
-      <aside class="rounded-3xl border border-white/10 bg-white/[0.04] p-5 shadow-xl shadow-slate-950/30 sm:p-7">
-        <h2 class="text-2xl font-bold text-white">输出概览</h2>
+      <aside class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-5 shadow-xl shadow-slate-950/30 sm:p-7">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输出概览</h2>
         <p class="mt-2 text-sm text-slate-400">当前有效数值会在此以不同进制集中展示，方便核对与复制。</p>
 
-        <div class="mt-6 rounded-2xl border border-white/10 bg-slate-950/70 p-5">
+        <div class="mt-6 rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/70 p-5">
           <p class="text-xs uppercase tracking-[0.24em] text-slate-500">Current Decimal Value</p>
           <div id="summaryDecimal" class="mt-3 break-all font-mono text-2xl font-bold text-emerald-300">—</div>
         </div>
@@ -145,27 +173,27 @@
         <div class="mt-4 grid gap-4">
           <div class="rounded-2xl bg-cyan-400/10 p-4">
             <p class="text-sm font-semibold text-cyan-200">二进制位数</p>
-            <p id="binaryLength" class="mt-1 font-mono text-xl text-white">—</p>
+            <p id="binaryLength" class="mt-1 font-mono text-xl text-gray-900 dark:text-white">—</p>
           </div>
           <div class="rounded-2xl bg-indigo-400/10 p-4">
             <p class="text-sm font-semibold text-indigo-200">十六进制位数</p>
-            <p id="hexLength" class="mt-1 font-mono text-xl text-white">—</p>
+            <p id="hexLength" class="mt-1 font-mono text-xl text-gray-900 dark:text-white">—</p>
           </div>
           <div class="rounded-2xl bg-amber-400/10 p-4">
             <p class="text-sm font-semibold text-amber-200">八进制位数</p>
-            <p id="octalLength" class="mt-1 font-mono text-xl text-white">—</p>
+            <p id="octalLength" class="mt-1 font-mono text-xl text-gray-900 dark:text-white">—</p>
           </div>
         </div>
 
         <div class="mt-6 rounded-2xl border border-sky-400/20 bg-sky-500/10 p-4 text-sm leading-6 text-sky-100">
-          <strong class="text-white">提示：</strong>本工具使用浏览器内置 BigInt 进行整数计算，可避免普通浮点数在超大整数场景下的精度丢失。
+          <strong class="text-gray-900 dark:text-white">提示：</strong>本工具使用浏览器内置 BigInt 进行整数计算，可避免普通浮点数在超大整数场景下的精度丢失。
         </div>
       </aside>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-white/10 bg-slate-900/70 p-6 shadow-xl shadow-slate-950/30 sm:p-8">
-      <h2 class="text-2xl font-bold text-white">关于 binary-decimal-converter 在线进制转换计算器</h2>
-      <div class="mt-4 space-y-4 text-base leading-8 text-slate-300">
+    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-900/70 p-6 shadow-xl shadow-slate-950/30 sm:p-8">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">关于 binary-decimal-converter 在线进制转换计算器</h2>
+      <div class="mt-4 space-y-4 text-base leading-8 text-slate-700 dark:text-slate-300">
         <p>
           binary-decimal-converter 是一款面向开发者、计算机专业学生、嵌入式工程师和数字电路学习者的在线进制互转工具。它可以在二进制、十进制、十六进制和八进制之间进行实时转换，解决手动换算步骤繁琐、容易出错、超大整数精度不可靠等痛点。无论你需要进行二进制转十进制、十进制转十六进制，还是快速核对八进制权限值，本工具都能在浏览器中即时给出结果。
         </p>
@@ -426,246 +454,5 @@
       clearSummary();
     })();
   </script>
-
-  <!-- micro-tools-i18n:start -->
-  <script>
-(() => {
-  'use strict';
-  const STORAGE_KEY = 'microToolsLanguage';
-  const PAGE_SLUG = "binary-decimal-converter";
-  const TRANSLATIONS = {"八进制":"Octal","当前有效数值会在此以不同进制集中展示，方便核对与复制。":"The current valid value will be shown here in different bases for easy checking and copying.","可输入负整数，支持 0b、0o、0x 前缀；结果会自动格式化为大写十六进制。":"Negative integers are allowed, with 0b, 0o, and 0x prefixes supported; results are automatically formatted as uppercase hexadecimal.","例如：52 或 0o77":"Example: 52 or 0o77","使用方法非常简单：在任意一个输入框中输入合法整数，例如在二进制框输入 101010，其他进制框会自动同步显示对应的十进制、十六进制与八进制结果。工具同时支持 0b、0o、0x 等常见前缀，并对非法字符提供清晰的错误提示，避免错误数据继续传播。对于程序调试、算法学习、网络协议分析、位运算验证和计算机组成原理练习，这个在线二进制十进制十六进制八进制转换器都能提供高效、干净且可靠的计算体验。":"Usage is simple: enter a valid integer in any input field, such as 101010 in the binary field, and the other base fields will automatically show the corresponding decimal, hexadecimal, and octal results. The tool also supports common prefixes such as 0b, 0o, and 0x, and provides clear error messages for invalid characters to prevent incorrect data from spreading. For program debugging, algorithm learning, network protocol analysis, bit operation verification, and computer architecture practice, this online binary, decimal, hexadecimal, and octal converter provides an efficient, clean, and reliable calculation experience.","八进制 Octal":"Octal","关于 binary-decimal-converter 在线进制转换计算器":"About binary-decimal-converter Online Base Converter","当前没有可复制的内容。":"There is currently nothing to copy.","在二进制、十进制、十六进制、八进制之间实时自动转换。输入任意一个进制数值，其余结果即时同步。":"Automatically convert in real time between binary, decimal, hexadecimal, and octal. Enter a value in any base, and the other results sync instantly.","二进制 Binary":"Binary","${oct.length} 位":"${oct.length} bits","复制":"Copy","${baseName}输入包含非法字符“${char}”。该进制允许的字符范围为：${allowedChars(base)}。":"${baseName} input contains illegal character “${char}”. The allowed character range for this base is: ${allowedChars(base)}.","binary-decimal-converter 是一款在线二进制、十进制、十六进制、八进制互转计算器，支持任意进制输入后自动同步转换，适合程序员、学生和数字电路学习者使用。":"binary-decimal-converter is an online calculator for converting between binary, decimal, hexadecimal, and octal. It automatically syncs conversions after input in any base, ideal for programmers, students, and digital circuit learners.","请输入完整的数字，不能只输入符号或进制前缀。":"Please enter a complete number, not just a sign or base prefix.","十进制 Decimal":"Decimal","binary-decimal-converter · 本地计算，不上传输入内容":"binary-decimal-converter · Local calculation; input content is not uploaded","二进制":"Binary","支持超大整数":"Supports very large integers","八进制位数":"Octal digits","binary-decimal-converter 是一款面向开发者、计算机专业学生、嵌入式工程师和数字电路学习者的在线进制互转工具。它可以在二进制、十进制、十六进制和八进制之间进行实时转换，解决手动换算步骤繁琐、容易出错、超大整数精度不可靠等痛点。无论你需要进行二进制转十进制、十进制转十六进制，还是快速核对八进制权限值，本工具都能在浏览器中即时给出结果。":"binary-decimal-converter is an online base conversion tool for developers, computer science students, embedded engineers, and digital circuit learners. It converts in real time between binary, decimal, hexadecimal, and octal, solving the pain points of tedious manual conversion, easy mistakes, and unreliable precision for very large integers. Whether you need binary to decimal, decimal to hexadecimal, or a quick check of octal permission values, this tool gives instant results in the browser.","binary-decimal-converter｜二进制/十进制/十六进制/八进制互转计算器":"binary-decimal-converter｜Binary/decimal/hexadecimal/octal conversion calculator","输出概览":"Output overview","例如：42 或 -255":"Example: 42 or -255","十进制":"Decimal","清空全部":"Clear All","例如：2A 或 0xFF":"Example: 2A or 0xFF","复制失败，请手动选择文本复制。":"Copy failed. Please manually select and copy the text.","binary decimal converter, 二进制十进制转换, 十六进制转换器, 八进制转换器, 进制转换计算器, 在线进制互转工具, 二进制转十进制, 十进制转十六进制":"binary decimal converter, binary decimal conversion, hexadecimal converter, octal converter, base conversion calculator, online base conversion tool, binary to decimal, decimal to hexadecimal","二进制位数":"Binary digits","本工具使用浏览器内置 BigInt 进行整数计算，可避免普通浮点数在超大整数场景下的精度丢失。":"This tool uses the browser's built-in BigInt for integer calculations to avoid precision loss with very large integers.","${bin.length} 位":"${bin.length} bits","输入格式不正确，请检查后重试。":"Invalid input format. Please check and try again.","十六进制位数":"Hex digits","已复制":"Copied","进制输入与自动转换":"Base Input and Auto Conversion","在线进制互转工具":"Online base conversion tool","纯前端本地计算":"Pure front-end local calculation","十六进制 Hexadecimal":"Hexadecimal","十六进制":"Hexadecimal","移动端友好":"Mobile-friendly","复制失败，请稍后重试。":"Copy failed. Please try again later.","例如：101010 或 0b101010":"Example: 101010 or 0b101010","${hex.length} 位":"${hex.length} bits","提示：":"Tip:","二进制/十进制/十六进制/八进制互转计算器":"Binary and Decimal Converter","二进制/十进制/十六进制/八进制 互转计算器。在任意输入框输入数字，其他进制框自动同步转换结果。":"Binary/decimal/hexadecimal/octal converter. Enter a number in any field and the other bases update automatically."};
-  const TOOL_DATA = {"binary-decimal-converter":{"zhName":"二进制/十进制/十六进制/八进制互转计算器","enName":"Binary and Decimal Converter","zhDescription":"二进制/十进制/十六进制/八进制 互转计算器。在任意输入框输入数字，其他进制框自动同步转换结果。","enDescription":"Binary/decimal/hexadecimal/octal converter. Enter a number in any field and the other bases update automatically.","zhTitle":"binary-decimal-converter｜二进制/十进制/十六进制/八进制互转计算器","enTitle":"Binary and Decimal Converter | Free Online Tool","zhKeywords":"binary decimal converter, 二进制十进制转换, 十六进制转换器, 八进制转换器, 进制转换计算器, 在线进制互转工具, 二进制转十进制, 十进制转十六进制","enKeywords":"Binary and Decimal Converter, online tool, browser tool, productivity tool"}};
-  const CURRENT_TOOL = {"zhName":"二进制/十进制/十六进制/八进制互转计算器","enName":"Binary and Decimal Converter","zhDescription":"二进制/十进制/十六进制/八进制 互转计算器。在任意输入框输入数字，其他进制框自动同步转换结果。","enDescription":"Binary/decimal/hexadecimal/octal converter. Enter a number in any field and the other bases update automatically.","zhTitle":"binary-decimal-converter｜二进制/十进制/十六进制/八进制互转计算器","enTitle":"Binary and Decimal Converter | Free Online Tool","zhKeywords":"binary decimal converter, 二进制十进制转换, 十六进制转换器, 八进制转换器, 进制转换计算器, 在线进制互转工具, 二进制转十进制, 十进制转十六进制","enKeywords":"Binary and Decimal Converter, online tool, browser tool, productivity tool"};
-  const ATTRS = ['placeholder', 'aria-label', 'alt', 'title'];
-  const ZH_RE = /[\u4e00-\u9fff]/;
-  const originalText = new WeakMap();
-  const originalAttrs = new WeakMap();
-  let observer = null;
-
-  function normalize(value) {
-    return String(value || '').replace(/\s+/g, ' ').trim();
-  }
-
-  function hasChinese(value) {
-    return ZH_RE.test(String(value || ''));
-  }
-
-  function language() {
-    return localStorage.getItem(STORAGE_KEY) === 'en' ? 'en' : 'zh';
-  }
-
-  function translateExact(value, lang) {
-    const text = String(value || '');
-    if (lang === 'zh' || !text) return text;
-    if (TRANSLATIONS[text]) return TRANSLATIONS[text];
-    const normalized = normalize(text);
-    if (TRANSLATIONS[normalized]) return TRANSLATIONS[normalized];
-
-    const dynamic = [
-      [/^(\d+)\s*个字符$/u, '$1 characters'],
-      [/^(\d+)\s*字符$/u, '$1 characters'],
-      [/^(\d+)\s*字$/u, '$1 characters'],
-      [/^(\d+)\s*行$/u, '$1 rows'],
-      [/^(\d+)\s*列$/u, '$1 columns'],
-      [/^(\d+)\s*项$/u, '$1 items'],
-      [/^(\d+)\s*次$/u, '$1 times'],
-      [/^当前显示\s*(\d+)\s*\/\s*(\d+)$/u, 'Showing $1 / $2'],
-      [/^第\s*(\d+)\s*行第\s*(\d+)\s*列/u, 'line $1, column $2']
-    ];
-    for (const [pattern, replacement] of dynamic) {
-      if (pattern.test(normalized)) return normalized.replace(pattern, replacement);
-    }
-    return text;
-  }
-
-  function translateWithSpacing(value, lang) {
-    const text = String(value || '');
-    if (!text.trim()) return text;
-    const leading = text.match(/^\s*/)[0];
-    const trailing = text.match(/\s*$/)[0];
-    const core = text.slice(leading.length, text.length - trailing.length);
-    return leading + translateExact(core, lang) + trailing;
-  }
-
-  function skipped(node) {
-    const parent = node.parentElement;
-    return !parent || Boolean(parent.closest('script, style, code, pre, textarea, [data-i18n-ignore]'));
-  }
-
-  function translateNode(node, lang) {
-    if (skipped(node) || !node.nodeValue.trim()) return;
-    const current = node.nodeValue;
-    let original = originalText.get(node);
-    const originalEnglish = original ? translateWithSpacing(original, 'en') : '';
-    if (!original || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
-      original = current;
-      originalText.set(node, original);
-    }
-    node.nodeValue = lang === 'zh' ? (original || current) : translateWithSpacing(original || current, lang);
-  }
-
-  function translateAttrs(element, lang) {
-    if (element.closest('script, style, [data-i18n-ignore]')) return;
-    let store = originalAttrs.get(element);
-    if (!store) {
-      store = {};
-      originalAttrs.set(element, store);
-    }
-    ATTRS.forEach((attr) => {
-      if (!element.hasAttribute(attr)) return;
-      const current = element.getAttribute(attr);
-      const originalEnglish = store[attr] ? translateExact(store[attr], 'en') : '';
-      if (!store[attr] || (lang === 'en' && current !== originalEnglish && hasChinese(current))) {
-        store[attr] = current;
-      }
-      element.setAttribute(attr, lang === 'zh' ? store[attr] : translateExact(store[attr] || current, lang));
-    });
-  }
-
-  function walk(root, lang) {
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-    const nodes = [];
-    while (walker.nextNode()) nodes.push(walker.currentNode);
-    nodes.forEach((node) => translateNode(node, lang));
-
-    const elementRoot = root.nodeType === Node.ELEMENT_NODE ? root : document.body;
-    if (!elementRoot) return;
-    translateAttrs(elementRoot, lang);
-    elementRoot.querySelectorAll('*').forEach((element) => translateAttrs(element, lang));
-  }
-
-  function setMeta(name, value) {
-    if (!value) return;
-    let meta = document.querySelector(`meta[name="${name}"]`);
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.setAttribute('name', name);
-      document.head.appendChild(meta);
-    }
-    meta.setAttribute('content', value);
-  }
-
-  function applyMetadata(lang) {
-    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-    if (PAGE_SLUG === 'index') {
-      document.title = lang === 'zh'
-        ? '免费在线开发者工具箱 | 纯前端工具集合'
-        : 'Free Online Developer Toolbox | Pure Front-End Tools';
-      setMeta('description', lang === 'zh'
-        ? '免费在线开发者工具箱，汇集 JSON、CSV、LaTeX、Base64、正则、时间戳、二维码、颜色转换等纯前端微型工具，隐私友好、无需安装、极速加载。'
-        : 'A free online developer toolbox with pure front-end tools for JSON, CSV, LaTeX, Base64, regex, timestamps, QR codes, color conversion, and daily productivity.');
-      setMeta('keywords', lang === 'zh'
-        ? '免费在线开发者工具箱, 纯前端工具集合, 在线 JSON 工具, 在线编码转换工具, 生产力工具箱, 微型 Web 工具'
-        : 'free online developer tools, front-end tools, JSON tools, encoding tools, productivity toolbox, micro web tools');
-      return;
-    }
-    if (!CURRENT_TOOL || !CURRENT_TOOL.zhName) return;
-    document.title = lang === 'zh' ? CURRENT_TOOL.zhTitle : CURRENT_TOOL.enTitle;
-    setMeta('description', lang === 'zh' ? CURRENT_TOOL.zhDescription : CURRENT_TOOL.enDescription);
-    setMeta('keywords', lang === 'zh' ? CURRENT_TOOL.zhKeywords : CURRENT_TOOL.enKeywords);
-    const h1 = document.querySelector('h1');
-    if (h1) h1.textContent = lang === 'zh' ? CURRENT_TOOL.zhName : CURRENT_TOOL.enName;
-  }
-
-  function updateIndexCards(lang) {
-    if (PAGE_SLUG !== 'index') return;
-    document.querySelectorAll('a[href$=".html"]').forEach((card) => {
-      const slug = (card.getAttribute('href') || '').split('/').pop().replace(/\.html$/i, '');
-      const tool = TOOL_DATA[slug];
-      if (!tool) return;
-      const title = card.querySelector('h3');
-      const description = card.querySelector('p');
-      const action = card.querySelector('span:last-child');
-      if (title) title.textContent = lang === 'zh' ? tool.zhName : tool.enName;
-      if (description) description.textContent = lang === 'zh' ? tool.zhDescription : tool.enDescription;
-      if (action) action.textContent = lang === 'zh' ? '立即使用' : 'Open Tool';
-      card.dataset.search = normalize(`${slug} ${tool.zhName} ${tool.enName} ${tool.zhDescription} ${tool.enDescription}`).toLowerCase().replace(/[-_\s]+/g, '');
-    });
-    const search = document.getElementById('searchInput');
-    if (search) search.dispatchEvent(new Event('input', { bubbles: true }));
-  }
-
-  function ensureToggle(lang) {
-    let toggle = document.getElementById('microToolsLanguageToggle');
-    if (!toggle) {
-      toggle = document.createElement('div');
-      toggle.id = 'microToolsLanguageToggle';
-      toggle.setAttribute('data-i18n-ignore', 'true');
-      toggle.className = 'fixed right-4 top-4 z-50 flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/90 p-1 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur';
-      toggle.innerHTML = '<span data-language-label class="px-2 text-xs text-slate-300">语言</span><button type="button" data-lang-option="zh" class="rounded-full px-3 py-1.5 transition">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-1.5 transition">EN</button>';
-      document.body.appendChild(toggle);
-      toggle.addEventListener('click', (event) => {
-        const button = event.target.closest('[data-lang-option]');
-        if (!button) return;
-        localStorage.setItem(STORAGE_KEY, button.getAttribute('data-lang-option') === 'en' ? 'en' : 'zh');
-        applyLanguage(language());
-      });
-    }
-    toggle.querySelector('[data-language-label]').textContent = lang === 'zh' ? '语言' : 'Language';
-    toggle.querySelectorAll('[data-lang-option]').forEach((button) => {
-      const active = button.getAttribute('data-lang-option') === lang;
-      button.className = active
-        ? 'rounded-full bg-cyan-400 px-3 py-1.5 text-slate-950 transition'
-        : 'rounded-full px-3 py-1.5 text-slate-200 transition hover:bg-white/10';
-    });
-  }
-
-  function disconnect() {
-    if (observer) observer.disconnect();
-  }
-
-  function observe() {
-    if (!observer) {
-      observer = new MutationObserver(() => {
-        if (language() !== 'en') return;
-        disconnect();
-        applyLanguage('en');
-        observe();
-      });
-    }
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-      attributes: true,
-      attributeFilter: ATTRS
-    });
-  }
-
-  function applyLanguage(lang) {
-    const next = lang === 'en' ? 'en' : 'zh';
-    disconnect();
-    ensureToggle(next);
-    applyMetadata(next);
-    walk(document.body, next);
-    updateIndexCards(next);
-    ensureToggle(next);
-    observe();
-  }
-
-  function init() {
-    applyLanguage(language());
-    window.addEventListener('storage', (event) => {
-      if (event.key === STORAGE_KEY) applyLanguage(language());
-    });
-  }
-
-  window.MicroToolsI18n = {
-    getLanguage: language,
-    setLanguage(value) {
-      localStorage.setItem(STORAGE_KEY, value === 'en' ? 'en' : 'zh');
-      applyLanguage(language());
-    },
-    applyLanguage
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
-  </script>
-  <!-- micro-tools-i18n:end -->
 </body>
 </html>

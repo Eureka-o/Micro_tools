@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UUID v4 Generator | Free Online Tool</title>
+  <meta name="description" content="UUID v4 batch generator. Generate 1 to 100 standard UUIDs at once, with a button to copy all results.">
+  <meta name="keywords" content="UUID v4 Generator, online tool, browser tool, productivity tool">
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+  <meta property="og:image" content="../assets/logo.png">
+  <meta name="twitter:image" content="../assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/en/uuid-v4-generator.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/uuid-v4-generator.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/uuid-v4-generator.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/uuid-v4-generator.html">
+  <script src="./theme-toggle.js" defer></script>
+</head>
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="../uuid-v4-generator.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./uuid-v4-generator.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
+  <div class="pointer-events-none fixed inset-0 overflow-hidden">
+    <div class="absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
+  </div>
+
+  <main class="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 py-6 sm:px-6 lg:px-8">
+    <header class="mb-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-6 py-8 shadow-2xl shadow-cyan-950/30 backdrop-blur md:px-10 md:py-12">
+      <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+        <div>
+          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+            Online Developer Tool
+          </p>
+          <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl md:text-5xl">UUID v4 Generator</h1>
+          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
+            UUID v4 batch generator. Generate 1 to 100 standard random UUIDs at once and copy all results with one click.
+          </p>
+        </div>
+        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-900/70 p-4 text-sm text-slate-700 dark:text-slate-300">
+          <div class="flex items-center gap-2">
+            <span class="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-lg shadow-emerald-400/50"></span>
+            <span>Generated locally · No data uploaded</span>
+          </div>
+          <div class="mt-2 flex items-center gap-2">
+            <span class="h-2.5 w-2.5 rounded-full bg-cyan-400 shadow-lg shadow-cyan-400/50"></span>
+            <span>Standard format · RFC 4122 v4</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="grid gap-6 lg:grid-cols-5">
+      <div class="lg:col-span-2">
+        <div class="h-full rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-900/90 p-6 shadow-xl shadow-black/20 backdrop-blur">
+          <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Input Settings</h2>
+          <p class="mt-2 text-sm leading-6 text-slate-400">Enter the number of UUIDs to generate, from 1 to 100.</p>
+
+          <form id="uuidForm" class="mt-6 space-y-5" novalidate>
+            <div>
+              <label for="countInput" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Quantity to Generate</label>
+              <input
+                id="countInput"
+                name="count"
+                type="number"
+                inputmode="numeric"
+                min="1"
+                max="100"
+                step="1"
+                value="10"
+                autocomplete="off"
+                class="w-full rounded-2xl border border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-base text-gray-900 dark:text-white outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
+                aria-describedby="countHelp"
+              />
+              <p id="countHelp" class="mt-2 text-xs text-slate-500">Only integers are allowed, e.g. 1, 10, 100.</p>
+            </div>
+
+            <div id="errorBox" class="hidden rounded-2xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200" role="alert"></div>
+
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+              <button
+                type="submit"
+                id="generateBtn"
+                class="rounded-2xl bg-cyan-400 px-5 py-3 font-semibold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-cyan-400/30"
+              >
+                Generate UUID
+              </button>
+              <button
+                type="button"
+                id="clearBtn"
+                class="rounded-2xl border border-slate-700 bg-slate-50 dark:bg-slate-800 px-5 py-3 font-semibold text-slate-900 dark:text-slate-100 transition hover:border-slate-500 hover:bg-slate-700 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-slate-500/30"
+              >
+                Clear Results
+              </button>
+            </div>
+          </form>
+
+          <div class="mt-6 rounded-2xl border border-cyan-400/20 bg-cyan-400/5 p-4 text-sm leading-6 text-cyan-100">
+            <strong class="text-cyan-200">Tip:</strong>
+            UUID v4 is randomly generated and commonly used for database primary keys, distributed system identifiers, test data, and API request tracing.
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-3">
+        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-800/80 p-6 shadow-xl shadow-black/20 backdrop-blur">
+          <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Generated Results</h2>
+              <p id="resultSummary" class="mt-2 text-sm text-slate-400">No UUID generated yet.</p>
+            </div>
+            <button
+              type="button"
+              id="copyBtn"
+              disabled
+              class="rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-5 py-3 font-semibold text-emerald-100 transition hover:bg-emerald-400/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:border-slate-700 disabled:bg-slate-900 disabled:text-slate-500 focus:outline-none focus:ring-4 focus:ring-emerald-400/20"
+            >
+              Copy all results
+            </button>
+          </div>
+
+          <div id="copyFeedback" class="mt-4 hidden rounded-2xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm font-medium text-emerald-200" role="status"></div>
+
+          <div class="mt-5 rounded-2xl border border-slate-700 bg-slate-950/90">
+            <textarea
+              id="outputArea"
+              readonly
+              spellcheck="false"
+              placeholder="Generated UUIDs will appear here, one per line."
+              class="min-h-[360px] w-full resize-y rounded-2xl bg-transparent p-4 font-mono text-sm leading-7 text-slate-900 dark:text-slate-100 outline-none placeholder:text-slate-600"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl shadow-black/10 backdrop-blur md:p-8">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About UUID v4 Generator</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">UUID v4 batch generator. Generate 1 to 100 standard UUIDs at once, with a button to copy all results. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use UUID v4 Generator for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+    </article>
+
+    <footer class="py-8 text-center text-sm text-slate-500">
+      <p>© <span id="year"></span> uuid-v4-generator · Zero Dependency Web Tool</p>
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const form = document.getElementById("uuidForm");
+      const countInput = document.getElementById("countInput");
+      const errorBox = document.getElementById("errorBox");
+      const outputArea = document.getElementById("outputArea");
+      const copyBtn = document.getElementById("copyBtn");
+      const clearBtn = document.getElementById("clearBtn");
+      const resultSummary = document.getElementById("resultSummary");
+      const copyFeedback = document.getElementById("copyFeedback");
+      const year = document.getElementById("year");
+
+      year.textContent = String(new Date().getFullYear());
+
+      let feedbackTimer = null;
+
+      function showError(message) {
+        errorBox.textContent = message;
+        errorBox.classList.remove("hidden");
+        countInput.classList.add("border-red-400", "focus:border-red-400", "focus:ring-red-400/20");
+        countInput.classList.remove("border-slate-700", "focus:border-cyan-400", "focus:ring-cyan-400/10");
+      }
+
+      function hideError() {
+        errorBox.textContent = "";
+        errorBox.classList.add("hidden");
+        countInput.classList.remove("border-red-400", "focus:border-red-400", "focus:ring-red-400/20");
+        countInput.classList.add("border-slate-700", "focus:border-cyan-400", "focus:ring-cyan-400/10");
+      }
+
+      function showFeedback(message, isSuccess = true) {
+        if (feedbackTimer) {
+          window.clearTimeout(feedbackTimer);
+        }
+        copyFeedback.textContent = message;
+        copyFeedback.classList.remove("hidden", "border-red-400/30", "bg-red-500/10", "text-red-200", "border-emerald-400/30", "bg-emerald-500/10", "text-emerald-200");
+        if (isSuccess) {
+          copyFeedback.classList.add("border-emerald-400/30", "bg-emerald-500/10", "text-emerald-200");
+        } else {
+          copyFeedback.classList.add("border-red-400/30", "bg-red-500/10", "text-red-200");
+        }
+        feedbackTimer = window.setTimeout(() => {
+          copyFeedback.classList.add("hidden");
+        }, 2600);
+      }
+
+      function validateCount(rawValue) {
+        const value = String(rawValue ?? "").trim();
+
+        if (value === "") {
+          return { valid: false, message: "Please enter the number of UUIDs to generate." };
+        }
+
+        if (!/^\d+$/.test(value)) {
+          return { valid: false, message: "The generation count must be an integer between 1 and 100, with no decimals, negative numbers, or other characters." };
+        }
+
+        const count = Number(value);
+
+        if (!Number.isSafeInteger(count)) {
+          return { valid: false, message: "The number entered is too large. Enter an integer from 1 to 100." };
+        }
+
+        if (count < 1 || count > 100) {
+          return { valid: false, message: "Generation count out of range. Enter an integer from 1 to 100." };
+        }
+
+        return { valid: true, count };
+      }
+
+      function getRandomBytes(length) {
+        const bytes = new Uint8Array(length);
+        if (window.crypto && typeof window.crypto.getRandomValues === "function") {
+          window.crypto.getRandomValues(bytes);
+        } else {
+          for (let i = 0; i < length; i += 1) {
+            bytes[i] = Math.floor(Math.random() * 256);
+          }
+        }
+        return bytes;
+      }
+
+      function generateUuidV4() {
+        const bytes = getRandomBytes(16);
+
+        bytes[6] = (bytes[6] & 0x0f) | 0x40;
+        bytes[8] = (bytes[8] & 0x3f) | 0x80;
+
+        const hex = Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0"));
+        return (
+          hex.slice(0, 4).join("") + "-" +
+          hex.slice(4, 6).join("") + "-" +
+          hex.slice(6, 8).join("") + "-" +
+          hex.slice(8, 10).join("") + "-" +
+          hex.slice(10, 16).join("")
+        );
+      }
+
+      function generateBatch(count) {
+        const results = [];
+        for (let i = 0; i < count; i += 1) {
+          results.push(generateUuidV4());
+        }
+        return results;
+      }
+
+      async function copyText(text) {
+        if (!text) {
+          throw new Error("No content to copy.");
+        }
+
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+          return;
+        }
+
+        outputArea.focus();
+        outputArea.select();
+
+        const ok = document.execCommand("copy");
+        window.getSelection()?.removeAllRanges();
+
+        if (!ok) {
+          throw new Error("This browser does not support automatic copying. Please manually select and copy the result.");
+        }
+      }
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        try {
+          const validation = validateCount(countInput.value);
+          if (!validation.valid) {
+            showError(validation.message);
+            outputArea.value = "";
+            copyBtn.disabled = true;
+            resultSummary.textContent = "Invalid input. UUID not generated.";
+            return;
+          }
+
+          hideError();
+          const list = generateBatch(validation.count);
+          outputArea.value = list.join("\n");
+          copyBtn.disabled = false;
+          resultSummary.textContent = `Generated ${list.length} standard UUID v4 values.`;
+          showFeedback("UUID generated successfully.", true);
+        } catch (error) {
+          showError("An error occurred during generation. Please refresh the page and try again.");
+          resultSummary.textContent = "Generation failed.";
+          copyBtn.disabled = true;
+        }
+      });
+
+      copyBtn.addEventListener("click", async () => {
+        const text = outputArea.value.trim();
+
+        if (!text) {
+          showFeedback("No UUID available to copy. Please generate a result first.", false);
+          copyBtn.disabled = true;
+          return;
+        }
+
+        try {
+          await copyText(text);
+          copyBtn.textContent = "Copied";
+          showFeedback("All UUIDs copied to clipboard.", true);
+          window.setTimeout(() => {
+            copyBtn.textContent = "Copy all results";
+          }, 1200);
+        } catch (error) {
+          showFeedback(error && error.message ? error.message : "Copy failed. Please copy the text box content manually.", false);
+        }
+      });
+
+      clearBtn.addEventListener("click", () => {
+        outputArea.value = "";
+        copyBtn.disabled = true;
+        resultSummary.textContent = "Result cleared.";
+        hideError();
+        showFeedback("Generated results cleared.", true);
+      });
+
+      countInput.addEventListener("input", () => {
+        if (!errorBox.classList.contains("hidden")) {
+          const validation = validateCount(countInput.value);
+          if (validation.valid) {
+            hideError();
+          }
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        try {
+          const initialList = generateBatch(10);
+          outputArea.value = initialList.join("\n");
+          copyBtn.disabled = false;
+          resultSummary.textContent = "Generated 10 standard UUID v4s.";
+        } catch (error) {
+          outputArea.value = "";
+          copyBtn.disabled = true;
+          resultSummary.textContent = "Click the generate button to create a UUID.";
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

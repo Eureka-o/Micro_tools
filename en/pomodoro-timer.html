@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Pomodoro web timer. Minimal interface, 25-minute work / 5-minute break countdown, with browser title bar countdown and an alert sound when finished.">
+  <meta name="keywords" content="Pomodoro Timer, online tool, browser tool, productivity tool">
+  <meta name="theme-color" content="#0f172a" />
+  <title>Pomodoro Timer | Free Online Tool</title>
+  <link rel="icon" type="image/png" href="../assets/logo.png">
+  <link rel="apple-touch-icon" href="../assets/logo.png">
+  <meta property="og:image" content="../assets/logo.png">
+  <meta name="twitter:image" content="../assets/logo.png">
+  <script>tailwind.config = { darkMode: "class" };</script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./theme-init.js"></script>
+  <link rel="canonical" href="https://mymicrotools.xyz/en/pomodoro-timer.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/pomodoro-timer.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/pomodoro-timer.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/pomodoro-timer.html">
+  <script src="./theme-toggle.js" defer></script>
+</head>
+<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
+  <!-- static-controls:start -->
+  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
+      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+    </a>
+    <div class="flex shrink-0 items-center gap-1">
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
+      <div class="flex items-center gap-1">
+        <a href="../pomodoro-timer.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./pomodoro-timer.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+        <button type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-slate-900 dark:text-slate-100 transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-white" aria-label="Toggle theme" title="Toggle theme">
+          <svg class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <svg class="hidden h-5 w-5 dark:block" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="h-20" aria-hidden="true"></div>
+  <!-- static-controls:end -->
+
+  <div class="pointer-events-none fixed inset-0 overflow-hidden">
+    <div class="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-fuchsia-500/10 blur-3xl"></div>
+  </div>
+
+  <main class="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 py-6 sm:px-6 lg:px-8">
+    <header class="mb-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-6 py-7 shadow-2xl shadow-cyan-950/20 backdrop-blur md:px-10">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+            Focus · Break · Repeat
+          </p>
+          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">Pomodoro Timer</h1>
+          <p class="mt-3 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
+            Minimal Pomodoro web timer: 25 minutes of focused work, 5 minutes of rest, live countdown in the title bar, and an alert sound when time is up.
+          </p>
+        </div>
+        <div id="statusBadge" class="w-fit rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-5 py-3 text-sm font-semibold text-emerald-200">
+          Ready to start
+        </div>
+      </div>
+    </header>
+
+    <section class="grid gap-6 lg:grid-cols-5">
+      <section aria-labelledby="timer-output-title" class="lg:col-span-3 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-6 shadow-2xl shadow-black/30 backdrop-blur sm:p-8">
+        <div class="mb-6 flex items-center justify-between gap-4">
+          <div>
+            <h2 id="timer-output-title" class="text-xl font-bold text-gray-900 dark:text-white">Countdown output</h2>
+            <p class="mt-1 text-sm text-slate-400">Current stage, remaining time, and cycle count</p>
+          </div>
+          <div id="modePill" class="rounded-full bg-cyan-400 px-4 py-2 text-sm font-black text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20">
+            Working
+          </div>
+        </div>
+
+        <div class="flex flex-col items-center justify-center rounded-3xl border border-gray-200 dark:border-white/10 bg-gradient-to-br from-slate-950 to-slate-900 px-4 py-10 sm:py-14">
+          <div id="timerDisplay" class="select-none font-mono text-7xl font-black tracking-tighter text-gray-900 dark:text-white sm:text-8xl md:text-9xl">
+            25:00
+          </div>
+          <div class="mt-5 h-3 w-full max-w-xl overflow-hidden rounded-full bg-slate-50 dark:bg-slate-800">
+            <div id="progressBar" class="h-full w-full rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-300"></div>
+          </div>
+          <div class="mt-5 grid w-full max-w-xl grid-cols-3 gap-3 text-center">
+            <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-3">
+              <p class="text-xs text-slate-400">Stage</p>
+              <p id="phaseText" class="mt-1 font-bold text-cyan-200">Focus on work</p>
+            </div>
+            <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-3">
+              <p class="text-xs text-slate-400">Completed</p>
+              <p id="completedCount" class="mt-1 font-bold text-cyan-200">0 rounds</p>
+            </div>
+            <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-3">
+              <p class="text-xs text-slate-400">Sound</p>
+              <p id="soundState" class="mt-1 font-bold text-cyan-200">Enable</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <button id="startPauseBtn" type="button" class="rounded-2xl bg-cyan-400 px-5 py-4 font-black text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-95 focus:outline-none focus:ring-4 focus:ring-cyan-300/30">
+            Start
+          </button>
+          <button id="resetBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-5 py-4 font-bold text-gray-900 dark:text-white transition hover:bg-white/15 active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/20">
+            Reset
+          </button>
+          <button id="skipBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-5 py-4 font-bold text-gray-900 dark:text-white transition hover:bg-white/15 active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/20">
+            Skip
+          </button>
+          <button id="soundBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-5 py-4 font-bold text-gray-900 dark:text-white transition hover:bg-white/15 active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/20">
+            Mute
+          </button>
+        </div>
+      </section>
+
+      <section aria-labelledby="timer-input-title" class="lg:col-span-2 rounded-3xl border border-cyan-300/10 bg-cyan-950/20 p-6 shadow-2xl shadow-cyan-950/20 backdrop-blur sm:p-8">
+        <h2 id="timer-input-title" class="text-xl font-bold text-gray-900 dark:text-white">Input Settings</h2>
+        <p class="mt-1 text-sm text-slate-400">Keep the default 25/5 or customize the duration</p>
+
+        <form id="settingsForm" class="mt-6 space-y-5" novalidate>
+          <div>
+            <label for="workMinutes" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Work duration (minutes)</label>
+            <input id="workMinutes" name="workMinutes" type="number" min="1" max="180" step="1" value="25" inputmode="numeric" class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/70 px-4 py-3 text-gray-900 dark:text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
+          </div>
+          <div>
+            <label for="breakMinutes" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Break duration (minutes)</label>
+            <input id="breakMinutes" name="breakMinutes" type="number" min="1" max="180" step="1" value="5" inputmode="numeric" class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/70 px-4 py-3 text-gray-900 dark:text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
+          </div>
+
+          <div id="errorBox" class="hidden rounded-2xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200" role="alert"></div>
+          <div id="successBox" class="hidden rounded-2xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm font-medium text-emerald-200" role="status"></div>
+
+          <button type="submit" class="w-full rounded-2xl bg-white px-5 py-4 font-black text-slate-950 dark:text-slate-100 shadow-lg shadow-white/10 transition hover:bg-cyan-100 active:scale-95 focus:outline-none focus:ring-4 focus:ring-white/20">
+            App Settings
+          </button>
+        </form>
+
+        <div class="mt-6 rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/50 p-5">
+          <h3 class="font-bold text-gray-900 dark:text-white">Usage tips</h3>
+          <ul class="mt-3 space-y-2 text-sm leading-6 text-slate-700 dark:text-slate-300">
+            <li>· Click “Start” to begin the focus countdown.</li>
+            <li>· The browser title bar will also show the remaining time.</li>
+            <li>· Automatically switches between work/rest after each phase.</li>
+            <li>· If your browser blocks audio, click any button first to enable alert sounds.</li>
+          </ul>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl shadow-black/20 backdrop-blur sm:p-8">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Pomodoro Timer</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Pomodoro web timer. Minimal interface, 25-minute work / 5-minute break countdown, with browser title bar countdown and an alert sound when finished. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Pomodoro Timer for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+    </article>
+
+    <footer class="py-8 text-center text-sm text-slate-500">
+      <p>© <span id="year"></span> pomodoro-timer · Stay focused.</p>
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const DEFAULT_TITLE = 'pomodoro-timer | Pomodoro web timer';
+      const state = {
+        workMinutes: 25,
+        breakMinutes: 5,
+        mode: 'work',
+        remainingSeconds: 25 * 60,
+        totalSeconds: 25 * 60,
+        running: false,
+        completed: 0,
+        soundEnabled: true,
+        timerId: null,
+        lastTickTime: null,
+        audioContext: null
+      };
+
+      const $ = (id) => document.getElementById(id);
+
+      const els = {
+        timerDisplay: $('timerDisplay'),
+        progressBar: $('progressBar'),
+        modePill: $('modePill'),
+        phaseText: $('phaseText'),
+        completedCount: $('completedCount'),
+        soundState: $('soundState'),
+        statusBadge: $('statusBadge'),
+        startPauseBtn: $('startPauseBtn'),
+        resetBtn: $('resetBtn'),
+        skipBtn: $('skipBtn'),
+        soundBtn: $('soundBtn'),
+        form: $('settingsForm'),
+        workInput: $('workMinutes'),
+        breakInput: $('breakMinutes'),
+        errorBox: $('errorBox'),
+        successBox: $('successBox'),
+        year: $('year')
+      };
+
+      els.year.textContent = new Date().getFullYear();
+
+      function clampNumber(value, min, max) {
+        const num = Number(value);
+        if (!Number.isFinite(num)) return null;
+        if (!Number.isInteger(num)) return null;
+        if (num < min || num > max) return null;
+        return num;
+      }
+
+      function formatTime(seconds) {
+        const safe = Math.max(0, Math.floor(Number.isFinite(seconds) ? seconds : 0));
+        const min = Math.floor(safe / 60);
+        const sec = safe % 60;
+        return `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+      }
+
+      function hideMessage(box) {
+        box.classList.add('hidden');
+        box.textContent = '';
+      }
+
+      function showError(message) {
+        hideMessage(els.successBox);
+        els.errorBox.textContent = message;
+        els.errorBox.classList.remove('hidden');
+      }
+
+      function showSuccess(message) {
+        hideMessage(els.errorBox);
+        els.successBox.textContent = message;
+        els.successBox.classList.remove('hidden');
+        window.setTimeout(() => hideMessage(els.successBox), 2400);
+      }
+
+      function setModeVisuals() {
+        const isWork = state.mode === 'work';
+        els.modePill.textContent = isWork ? '工作中' : '休息中';
+        els.phaseText.textContent = isWork ? 'Focus on work' : 'Relax and rest';
+
+        els.modePill.className = isWork
+          ? 'rounded-full bg-cyan-400 px-4 py-2 text-sm font-black text-slate-950 shadow-lg shadow-cyan-500/20'
+          : 'rounded-full bg-emerald-400 px-4 py-2 text-sm font-black text-slate-950 shadow-lg shadow-emerald-500/20';
+
+        els.progressBar.className = isWork
+          ? 'h-full rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-300'
+          : 'h-full rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 transition-all duration-300';
+      }
+
+      function updateStatus() {
+        if (state.running) {
+          els.statusBadge.textContent = state.mode === 'work' ? 'Focusing' : 'Resting';
+          els.statusBadge.className = state.mode === 'work'
+            ? 'w-fit rounded-2xl border border-cyan-400/30 bg-cyan-400/10 px-5 py-3 text-sm font-semibold text-cyan-200'
+            : 'w-fit rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-5 py-3 text-sm font-semibold text-emerald-200';
+        } else {
+          els.statusBadge.textContent = 'Paused / Ready to start';
+          els.statusBadge.className = 'w-fit rounded-2xl border border-slate-400/30 bg-slate-400/10 px-5 py-3 text-sm font-semibold text-slate-200';
+        }
+      }
+
+      function render() {
+        const time = formatTime(state.remainingSeconds);
+        els.timerDisplay.textContent = time;
+        els.completedCount.textContent = `${state.completed} rounds`;
+        els.soundState.textContent = state.soundEnabled ? '开启' : '关闭';
+        els.soundBtn.textContent = state.soundEnabled ? '静音' : '开声音';
+        els.startPauseBtn.textContent = state.running ? '暂停' : '开始';
+
+        const ratio = state.totalSeconds > 0 ? Math.max(0, Math.min(1, state.remainingSeconds / state.totalSeconds)) : 0;
+        els.progressBar.style.width = `${ratio * 100}%`;
+
+        setModeVisuals();
+        updateStatus();
+
+        const phase = state.mode === 'work' ? '工作' : '休息';
+        document.title = `${time} · ${phase} · pomodoro-timer`;
+      }
+
+      function unlockAudio() {
+        try {
+          const AudioCtx = window.AudioContext || window.webkitAudioContext;
+          if (!AudioCtx) return;
+          if (!state.audioContext) state.audioContext = new AudioCtx();
+          if (state.audioContext.state === 'suspended') state.audioContext.resume().catch(() => {});
+        } catch (_) {}
+      }
+
+      function playBeep() {
+        if (!state.soundEnabled) return;
+        try {
+          unlockAudio();
+          const ctx = state.audioContext;
+          if (!ctx) return;
+
+          const now = ctx.currentTime;
+          const notes = [880, 1174.66, 880];
+          notes.forEach((freq, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now + i * 0.18);
+            gain.gain.setValueAtTime(0.0001, now + i * 0.18);
+            gain.gain.exponentialRampToValueAtTime(0.22, now + i * 0.18 + 0.025);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.18 + 0.14);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(now + i * 0.18);
+            osc.stop(now + i * 0.18 + 0.16);
+          });
+        } catch (_) {}
+      }
+
+      function notifyPhaseEnd() {
+        playBeep();
+        const message = state.mode === 'work' ? 'Work time is over. Starting break.' : 'Break ended, back to focus.';
+        if ('Notification' in window && Notification.permission === 'granted') {
+          try {
+            new Notification('pomodoro-timer', { body: message });
+          } catch (_) {}
+        }
+      }
+
+      function switchPhase() {
+        notifyPhaseEnd();
+
+        if (state.mode === 'work') {
+          state.completed += 1;
+          state.mode = 'break';
+          state.totalSeconds = state.breakMinutes * 60;
+          state.remainingSeconds = state.totalSeconds;
+        } else {
+          state.mode = 'work';
+          state.totalSeconds = state.workMinutes * 60;
+          state.remainingSeconds = state.totalSeconds;
+        }
+        state.lastTickTime = Date.now();
+        render();
+      }
+
+      function tick() {
+        if (!state.running) return;
+
+        const now = Date.now();
+        const elapsed = state.lastTickTime ? Math.floor((now - state.lastTickTime) / 1000) : 1;
+
+        if (elapsed >= 1) {
+          state.remainingSeconds -= elapsed;
+          state.lastTickTime = now;
+
+          if (state.remainingSeconds <= 0) {
+            state.remainingSeconds = 0;
+            render();
+            switchPhase();
+          } else {
+            render();
+          }
+        }
+
+        state.timerId = window.setTimeout(tick, 250);
+      }
+
+      function start() {
+        unlockAudio();
+        if ('Notification' in window && Notification.permission === 'default') {
+          Notification.requestPermission().catch(() => {});
+        }
+        if (state.running) return;
+        state.running = true;
+        state.lastTickTime = Date.now();
+        render();
+        tick();
+      }
+
+      function pause() {
+        state.running = false;
+        state.lastTickTime = null;
+        if (state.timerId) {
+          window.clearTimeout(state.timerId);
+          state.timerId = null;
+        }
+        render();
+      }
+
+      function reset() {
+        pause();
+        state.mode = 'work';
+        state.totalSeconds = state.workMinutes * 60;
+        state.remainingSeconds = state.totalSeconds;
+        document.title = DEFAULT_TITLE;
+        render();
+      }
+
+      function skip() {
+        unlockAudio();
+        switchPhase();
+      }
+
+      function applySettings(event) {
+        event.preventDefault();
+        const work = clampNumber(els.workInput.value, 1, 180);
+        const rest = clampNumber(els.breakInput.value, 1, 180);
+
+        if (work === null || rest === null) {
+          showError('Enter an integer number of minutes from 1 to 180, such as 25 for work or 5 for break.');
+          return;
+        }
+
+        state.workMinutes = work;
+        state.breakMinutes = rest;
+
+        if (!state.running) {
+          state.mode = 'work';
+          state.totalSeconds = state.workMinutes * 60;
+          state.remainingSeconds = state.totalSeconds;
+        } else {
+          showSuccess('Settings saved and will fully take effect on the next reset or stage switch.');
+          render();
+          return;
+        }
+
+        showSuccess(`Applied: work ${work} minutes, rest ${rest} minutes.`);
+        render();
+      }
+
+      els.startPauseBtn.addEventListener('click', () => {
+        state.running ? pause() : start();
+      });
+
+      els.resetBtn.addEventListener('click', () => {
+        unlockAudio();
+        reset();
+        showSuccess('Timer reset.');
+      });
+
+      els.skipBtn.addEventListener('click', () => {
+        skip();
+        showSuccess('Current stage skipped.');
+      });
+
+      els.soundBtn.addEventListener('click', () => {
+        unlockAudio();
+        state.soundEnabled = !state.soundEnabled;
+        render();
+        showSuccess(state.soundEnabled ? 'Sound cues on.' : 'Sound cues off.');
+      });
+
+      els.form.addEventListener('submit', applySettings);
+
+      [els.workInput, els.breakInput].forEach((input) => {
+        input.addEventListener('input', () => {
+          hideMessage(els.errorBox);
+          const value = input.value.trim();
+          if (value === '') return;
+          const parsed = clampNumber(value, 1, 180);
+          if (parsed === null) {
+            showError('Duration must be an integer between 1 and 180.');
+          }
+        });
+      });
+
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && state.running) render();
+      });
+
+      window.addEventListener('beforeunload', () => {
+        if (state.timerId) window.clearTimeout(state.timerId);
+      });
+
+      render();
+      document.title = DEFAULT_TITLE;
+    })();
+  </script>
+</body>
+</html>
