@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="????????????? JSON?CSV?LaTeX?Base64????????????????????????????????????????">
+  <meta name="keywords" content="??????????, ???????, ?? JSON ??, ????????, ??????, ?? Web ??">
+  <title>?????????? | ???????</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-950">
+  <header class="bg-slate-950 text-white">
+    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+      <p class="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-cyan-300">Micro Tools Matrix</p>
+      <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end">
+        <div>
+          <h1 class="max-w-4xl text-4xl font-bold tracking-tight sm:text-6xl">??????????</h1>
+          <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-300">???????????????????????????????????????????????</p>
+        </div>
+        <div class="rounded-lg border border-white/10 bg-white/5 p-5">
+          <div class="grid grid-cols-3 gap-3 text-center">
+            <div class="rounded-md bg-white/10 px-3 py-4">
+              <strong id="totalCountHero" class="block text-2xl text-cyan-200">0</strong>
+              <span class="text-xs text-slate-300">??</span>
+            </div>
+            <div class="rounded-md bg-white/10 px-3 py-4">
+              <strong class="block text-2xl text-emerald-200">0</strong>
+              <span class="text-xs text-slate-300">??</span>
+            </div>
+            <div class="rounded-md bg-white/10 px-3 py-4">
+              <strong class="block text-2xl text-amber-200">?</strong>
+              <span class="text-xs text-slate-300">????</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm" aria-label="????">
+      <label for="searchInput" class="sr-only">????</label>
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <input id="searchInput" type="search" class="h-12 flex-1 rounded-md border border-slate-300 bg-slate-50 px-4 text-base outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-cyan-200" placeholder="???????????? JSON?Base64???????...">
+        <div class="rounded-md bg-slate-100 px-4 py-3 text-sm font-medium text-slate-700">
+          ???? <span id="visibleCount" class="text-slate-950">0</span> / <span id="totalCount">0</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="toolGrid" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" aria-label="????"></section>
+
+    <div id="emptyState" class="mt-10 hidden rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-slate-600">????????????????????</div>
+
+    <article class="mt-12 border-t border-slate-200 pt-8 leading-8 text-slate-700">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950">???????????</h2>
+      <p>
+        ??????????????????????????????????????????????????? JSON ????CSV ???Base64 ???????????????????????????????????? CSS ???????????????? Web ???????????????????????????????????????????????????????????????????????????????????????????????Token????????????????????????????????????????????????????????????????????????????????????????
+      </p>
+    </article>
+  </main>
+
+  <footer class="border-t border-slate-200 bg-white">
+    <div class="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+      <p>? 2026 Micro Tools Matrix</p>
+      <p>Pure front-end micro tools for daily productivity.</p>
+    </div>
+  </footer>
+
+  <script>
+    const tools = [{"name":"latex-formula-editor","description":"LaTeX 矩阵与复杂公式在线可视化编辑器。通过 CDN 引入 MathJax 库用于公式渲染。提供一个代码输入区，用户可以输入 LaTeX 语法。监听输入区变化，使用 debounce 防抖处理，延迟 300ms 后在下方可视化输出区实时渲染数学公式。提供预设按钮：插入2x2矩阵、插入积分公式、插入求和公式。输入错误 LaTeX 语法时不能白屏，而是提示“语法解析错误”。"},{"name":"json-to-csv","description":"JSON与CSV双向转换与校验工具。包含输入输出框，错误提示，以及一键复制功能。"},{"name":"latex-matrix-editor","description":"LaTeX矩阵与复杂公式在线可视化编辑器。集成MathJax，实时渲染输入区的LaTeX代码。"},{"name":"base64-encoder","description":"Base64 文本和图片双向编解码器。支持拖拽上传图片转换为Base64字符串。"},{"name":"regex-tester","description":"正则表达式在线测试工具。支持高亮匹配结果，内置常用正则片段（如邮箱、手机号）的快捷插入。"},{"name":"cron-generator","description":"CRON 表达式生成与解析器。提供UI组件（下拉框/单选按钮）来生成复杂的CRON语法，并用中文解释下5次执行时间。"},{"name":"url-encoder","description":"URL 编码/解码工具。支持批量处理多行URL，并处理特殊字符的转义。"},{"name":"jwt-decoder","description":"JWT (JSON Web Token) 本地解码器。纯前端解析Header和Payload，不向服务器发送任何数据以保证安全。"},{"name":"color-converter","description":"HEX、RGB、HSL、CMYK 颜色互转工具。带有一个可视化的颜色选择器（Color Picker）和色彩预览面板。"},{"name":"md5-hash-generator","description":"MD5、SHA-1、SHA-256 哈希值在线生成器。纯前端计算，支持实时输入实时输出。"},{"name":"markdown-table-generator","description":"可视化 Markdown 表格生成器。支持通过按钮增加行列，并在单元格填入内容后实时生成标准的Markdown表格代码。"},{"name":"lorem-ipsum-generator","description":"乱数假文 (Lorem Ipsum) 生成器。可设置生成的段落数、单词数，支持生成英文和中文占位文本。"},{"name":"word-counter","description":"高级字数统计工具。实时统计输入的字符数、单词数、句子数、段落数，以及预估的阅读时间。"},{"name":"case-converter","description":"字母大小写转换工具。支持全大写、全小写、首字母大写、驼峰命名法（camelCase）、蛇形命名法（snake_case）一键转换。"},{"name":"password-generator","description":"强密码随机生成器。支持勾选包含大写、小写、数字、特殊符号，并可拖动滑块调整密码长度（8-64位）。"},{"name":"qr-code-generator","description":"在线二维码生成器。利用纯前端库将输入的URL或文本生成二维码，支持调整尺寸和前景色，并可下载为PNG。"},{"name":"css-gradient-generator","description":"CSS 渐变色代码生成器。可视化调整两个或多个颜色的渐变方向和比例，实时预览并输出对应的CSS代码。"},{"name":"box-shadow-generator","description":"CSS 阴影 (Box-Shadow) 调试与生成器。通过滑动条调整偏移量、模糊半径、扩散半径和颜色，实时预览并生成CSS。"},{"name":"html-entity-encoder","description":"HTML 实体转义工具。将特殊字符（如 <, >, &）转换为HTML实体代码，防止XSS攻击。"},{"name":"text-diff-checker","description":"文本对比检查工具。提供左右两个文本域，高亮显示两段文本之间的差异（增加、删除或修改的字符）。"},{"name":"unix-timestamp-converter","description":"Unix 时间戳转换器。支持将当前时间转换为时间戳，或将时间戳转换为人类可读的标准日期时间格式。"},{"name":"uuid-v4-generator","description":"UUID v4 批量生成器。支持一次性生成1到100个标准UUID，并提供复制所有结果的按钮。"},{"name":"sql-formatter","description":"SQL 语句美化与格式化工具。支持将混乱的单行SQL语句按照标准缩进格式排版，高亮关键字。"},{"name":"image-compressor","description":"纯前端 WebP 图片压缩转换器。利用HTML5 Canvas将上传的PNG/JPG图片在浏览器端转换为高压缩比的WebP格式并下载。"},{"name":"pomodoro-timer","description":"番茄工作法网页计时器。极简界面，25分钟工作/5分钟休息倒计时，带有浏览器标题栏倒计时显示和结束提示音。"},{"name":"bmi-calculator","description":"BMI 身体质量指数计算器。输入身高（厘米）和体重（公斤），计算BMI值并带有动态的健康状态指示条。"},{"name":"percentage-calculator","description":"多功能百分比计算器。例如'X是Y的百分之几'、'X增加Y%是多少'，实时响应输入并给出计算过程。"},{"name":"binary-decimal-converter","description":"二进制/十进制/十六进制/八进制 互转计算器。在任意输入框输入数字，其他进制框自动同步转换结果。"},{"name":"json-minify","description":"JSON 压缩/去空格工具。将格式化后的JSON代码压缩为一行，去除所有多余空格和换行符，减小体积。"},{"name":"ip-address-lookup","description":"我的IP地址查看器。纯前端调用免费的IP API（如ipify），显示用户当前的公网IP地址及大致地理位置。"},{"name":"aspect-ratio-calculator","description":"图片/视频宽高比计算器。输入原始宽高，给定一个新的宽度，自动计算出保持原有比例的等比高度。"},{"name":"meta-tag-generator","description":"SEO Meta 标签生成器。填入网站标题、描述、关键词和作者，一键生成标准的 `<head>` 区域 Meta 代码。"},{"name":"htaccess-generator","description":".htaccess 重定向代码生成器。通过简单的表单生成 Apache 服务器常用的 301 重定向、强制 HTTPS 等配置代码。"},{"name":"utm-builder","description":"营销 URL UTM 参数构建器。填入目标网址、来源、媒介和活动名称，自动拼接成包含 UTM 追踪参数的完整链接。"},{"name":"svg-to-base64","description":"SVG 代码转 Base64 背景图工具。专为前端开发设计，将SVG代码转换为可在CSS `background-image` 中直接使用的代码。"},{"name":"text-to-binary","description":"文本转二进制字符串工具。将用户输入的普通文本编码为由0和1组成的二进制流，并支持反向解码。"},{"name":"stopwatch","description":"网页版秒表与计次器。提供开始、暂停、重置功能，并包含一个‘计次’按钮，在下方列表记录每一次的中间时间。"},{"name":"random-name-generator","description":"虚构人物/网名随机生成器。包含男/女选项，点击生成带有中英双语的随机姓名组合。"},{"name":"csv-to-html-table","description":"CSV 转 HTML `<table>` 代码生成器。粘贴CSV数据，直接输出带有基础CSS样式的HTML表格代码。"},{"name":"bland-altman-plot","description":"极简数据绘图工具。输入两列X/Y坐标数据，利用纯前端图表库（如Chart.js CDN）实时绘制简单的折线图/散点图。"},{"name":"keycode-info","description":"键盘键值 (Keycode) 捕获器。按键盘上的任意键，屏幕中央显示该按键的 event.keyCode、event.key 和 event.code。"},{"name":"xml-formatter","description":"XML 美化与压缩工具。修复错乱的XML标签缩进，或者将其压缩为单行。"},{"name":"morse-code-translator","description":"摩斯密码双向翻译器。将英文文本转换为点和划组成的摩斯密码，支持播放简单的摩斯密码提示音（通过Web Audio API）。"},{"name":"fraction-calculator","description":"分数加减乘除计算器。输入两个分数，给出计算结果并自动约分到最简分数形式。"},{"name":"loan-calculator","description":"房贷/贷款等额本息计算器。输入总金额、年化利率和贷款期数，生成每月的还款计划明细表。"},{"name":"text-to-speech-test","description":"浏览器原生 TTS 测试工具。调用浏览器自带的 `window.speechSynthesis` API，将输入的文本转为语音朗读，支持调节语速和音调。"},{"name":"subnets-calculator","description":"IP 子网掩码计算器。输入IP地址和CIDR前缀，计算网络地址、广播地址和可用IP范围（适合网络工程师）。"},{"name":"margin-padding-generator","description":"CSS 边距可视化工具。四个滑块控制上下左右的 Margin 和 Padding，中心盒子实时改变大小并输出代码。"},{"name":"text-reverser","description":"文字翻转与倒序工具。将输入的字符串完全倒序排列，或者按单词级别倒序。"},{"name":"chords-generator","description":"吉他/钢琴和弦指法查询字典（基础版）。选择一个根音（如C）和类型（如maj7），利用前端逻辑展示其组成的音阶名称。"},{"name":"roman-numeral-converter","description":"罗马数字与阿拉伯数字互转工具。最高支持转换到3999的罗马数字系统，包含非法输入的错误提示。"}];
+    const grid = document.getElementById('toolGrid');
+    const searchInput = document.getElementById('searchInput');
+    const visibleCount = document.getElementById('visibleCount');
+    const totalCount = document.getElementById('totalCount');
+    const totalCountHero = document.getElementById('totalCountHero');
+    const emptyState = document.getElementById('emptyState');
+
+    function normalizeText(value) {
+      return String(value || '').toLowerCase().replace(/[-_\s]+/g, '');
+    }
+
+    function createCard(tool) {
+      const link = document.createElement('a');
+      link.href = './' + tool.name + '.html';
+      link.className = 'group flex min-h-56 flex-col rounded-lg border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-cyan-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-cyan-300';
+      link.dataset.search = normalizeText(tool.name + ' ' + tool.description);
+
+      const title = document.createElement('h3');
+      title.className = 'text-lg font-semibold text-slate-950 group-hover:text-cyan-700';
+      title.textContent = tool.name;
+
+      const description = document.createElement('p');
+      description.className = 'mt-3 flex-1 text-sm leading-6 text-slate-600';
+      description.textContent = tool.description;
+
+      const action = document.createElement('span');
+      action.className = 'mt-5 inline-flex w-fit items-center rounded-md bg-slate-950 px-3 py-2 text-sm font-semibold text-white transition group-hover:bg-cyan-600';
+      action.textContent = '????';
+
+      link.appendChild(title);
+      link.appendChild(description);
+      link.appendChild(action);
+      return link;
+    }
+
+    function renderTools() {
+      grid.innerHTML = '';
+      const fragment = document.createDocumentFragment();
+      tools.forEach(tool => fragment.appendChild(createCard(tool)));
+      grid.appendChild(fragment);
+      totalCount.textContent = String(tools.length);
+      totalCountHero.textContent = String(tools.length);
+      filterTools();
+    }
+
+    function filterTools() {
+      const query = normalizeText(searchInput.value);
+      let count = 0;
+      Array.from(grid.children).forEach(card => {
+        const matched = !query || card.dataset.search.includes(query);
+        card.classList.toggle('hidden', !matched);
+        if (matched) count += 1;
+      });
+      visibleCount.textContent = String(count);
+      emptyState.classList.toggle('hidden', count !== 0);
+    }
+
+    searchInput.addEventListener('input', filterTools);
+    renderTools();
+  </script>
+</body>
+</html>
