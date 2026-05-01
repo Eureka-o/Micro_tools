@@ -3,15 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>URL Encoder and Decoder | Free Online Tool</title>
-  <meta name="description" content="URL encode/decode tool. Supports batch processing of multi-line URLs and escaping special characters.">
-  <meta name="keywords" content="URL Encoder and Decoder, online tool, browser tool, productivity tool">
-  <meta name="robots" content="index,follow">
+  <title>url-encoder｜URL 编码/解码工具</title>
+  <meta name="description" content="URL 编码/解码工具。支持批量处理多行URL，并处理特殊字符的转义。">
+  <meta name="keywords" content="url-encoder,URL编码,URL解码,在线URL编码工具,批量URL解码,encodeURIComponent,decodeURIComponent,特殊字符转义,百分号编码">
   <meta name="theme-color" content="#0f172a">
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
@@ -19,6 +16,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/url-encoder.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/url-encoder.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/url-encoder.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/url-encoder.html">
+  <meta property="og:title" content="url-encoder｜URL 编码/解码工具">
+  <meta property="og:description" content="URL 编码/解码工具。支持批量处理多行URL，并处理特殊字符的转义。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="url-encoder｜URL 编码/解码工具">
+  <meta name="twitter:description" content="URL 编码/解码工具。支持批量处理多行URL，并处理特殊字符的转义。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
@@ -43,6 +50,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <div class="pointer-events-none fixed inset-0 overflow-hidden">
     <div class="absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
     <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl"></div>
@@ -52,22 +64,22 @@
     <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
-          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">Online Developer Tools</p>
-          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">URL Encoder and Decoder</h1>
-          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">URL encoding/decoding tool. Supports batch processing of multiline URLs, query parameters, and escaping special characters such as Chinese, spaces, and symbols.</p>
+          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">在线开发者工具</p>
+          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">URL 编码/解码工具</h1>
+          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">URL 编码/解码工具，支持批量处理多行 URL、查询参数以及Chinese、空格、符号等特殊字符转义。</p>
         </div>
         <div class="grid grid-cols-3 gap-3 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-3 text-center shadow-2xl shadow-cyan-950/20">
           <div class="rounded-xl bg-white dark:bg-slate-900/80 px-4 py-3">
             <div class="text-lg font-bold text-cyan-300" id="lineCount">0</div>
-            <div class="text-xs text-slate-400">Lines</div>
+            <div class="text-xs text-slate-400">行数</div>
           </div>
           <div class="rounded-xl bg-white dark:bg-slate-900/80 px-4 py-3">
             <div class="text-lg font-bold text-indigo-300" id="charCount">0</div>
-            <div class="text-xs text-slate-400">Characters</div>
+            <div class="text-xs text-slate-400">字符</div>
           </div>
           <div class="rounded-xl bg-white dark:bg-slate-900/80 px-4 py-3">
             <div class="text-lg font-bold text-emerald-300" id="resultCount">0</div>
-            <div class="text-xs text-slate-400">Result</div>
+            <div class="text-xs text-slate-400">结果</div>
           </div>
         </div>
       </div>
@@ -75,34 +87,34 @@
   </header>
 
   <main class="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-2" aria-label="URL encode/decode panel">
+    <section class="grid gap-6 lg:grid-cols-2" aria-label="URL 编码解码操作区">
       <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-900/90 p-5 shadow-2xl shadow-black/30">
         <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Input</h2>
-            <p class="mt-1 text-sm text-slate-400">One URL or text snippet per line; batch processing is supported.</p>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入区</h2>
+            <p class="mt-1 text-sm text-slate-400">每行一个 URL 或文本片段，可批量处理。</p>
           </div>
-          <button id="sampleBtn" type="button" class="rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">Fill Example</button>
+          <button id="sampleBtn" type="button" class="rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">填入示例</button>
         </div>
 
-        <label for="inputText" class="sr-only">Please enter the URL to encode or decode</label>
+        <label for="inputText" class="sr-only">Please enter需要编码或解码的 URL</label>
         <textarea id="inputText" spellcheck="false" class="min-h-[320px] w-full resize-y rounded-2xl border border-slate-700 bg-slate-950/90 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="例如：https://example.com/search?q=Chinese 空格&tag=a+b%20c"></textarea>
 
         <div class="mt-5 grid gap-4">
           <fieldset class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/60 p-4">
-            <legend class="px-2 text-sm font-semibold text-slate-800 dark:text-slate-200">Processing Mode</legend>
+            <legend class="px-2 text-sm font-semibold text-slate-800 dark:text-slate-200">处理模式</legend>
             <div class="grid gap-3 sm:grid-cols-3">
               <label class="flex cursor-pointer items-center gap-2 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-3 text-sm transition hover:bg-white/10">
                 <input class="h-4 w-4 accent-cyan-400" type="radio" name="mode" value="encodeURI" checked>
-                <span>Encode full URL</span>
+                <span>编码完整 URL</span>
               </label>
               <label class="flex cursor-pointer items-center gap-2 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-3 text-sm transition hover:bg-white/10">
                 <input class="h-4 w-4 accent-cyan-400" type="radio" name="mode" value="encodeURIComponent">
-                <span>Encoded Parameter Fragment</span>
+                <span>编码参数片段</span>
               </label>
               <label class="flex cursor-pointer items-center gap-2 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-3 text-sm transition hover:bg-white/10">
                 <input class="h-4 w-4 accent-cyan-400" type="radio" name="mode" value="decode">
-                <span>Decode URL</span>
+                <span>解码 URL</span>
               </label>
             </div>
           </fieldset>
@@ -110,21 +122,21 @@
           <div class="grid gap-3 sm:grid-cols-2">
             <label class="flex cursor-pointer items-center gap-3 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/60 p-4 text-sm text-slate-800 dark:text-slate-200">
               <input id="trimLines" type="checkbox" class="h-4 w-4 accent-cyan-400">
-              <span>Trim leading and trailing whitespace on each line before processing</span>
+              <span>处理前去除每行首尾空白</span>
             </label>
             <label class="flex cursor-pointer items-center gap-3 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/60 p-4 text-sm text-slate-800 dark:text-slate-200">
               <input id="plusAsSpace" type="checkbox" class="h-4 w-4 accent-cyan-400">
-              <span>Treat “+” as a space when decoding</span>
+              <span>解码时将 “+” 识别为空格</span>
             </label>
           </div>
 
           <div id="errorBox" class="hidden rounded-2xl border border-red-400/30 bg-red-500/10 p-4 text-sm leading-6 text-red-100" role="alert"></div>
 
           <div class="grid gap-3 sm:grid-cols-4">
-            <button id="processBtn" type="button" class="rounded-2xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-95">Start processing</button>
-            <button id="swapBtn" type="button" class="rounded-2xl border border-indigo-400/30 bg-indigo-400/10 px-5 py-3 font-bold text-indigo-100 transition hover:bg-indigo-400/20 active:scale-95">Swap</button>
+            <button id="processBtn" type="button" class="rounded-2xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-95">开始处理</button>
+            <button id="swapBtn" type="button" class="rounded-2xl border border-indigo-400/30 bg-indigo-400/10 px-5 py-3 font-bold text-indigo-100 transition hover:bg-indigo-400/20 active:scale-95">交换</button>
             <button id="clearBtn" type="button" class="rounded-2xl border border-slate-600 bg-slate-50 dark:bg-slate-800 px-5 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-700 active:scale-95">Clear</button>
-            <button id="copyBtn" type="button" class="rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-5 py-3 font-bold text-emerald-100 transition hover:bg-emerald-400/20 active:scale-95">Copy Result</button>
+            <button id="copyBtn" type="button" class="rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-5 py-3 font-bold text-emerald-100 transition hover:bg-emerald-400/20 active:scale-95">Copy result</button>
           </div>
         </div>
       </div>
@@ -132,27 +144,28 @@
       <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/20 p-5 shadow-2xl shadow-cyan-950/20">
         <div class="mb-4 flex items-center justify-between gap-3">
           <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Output</h2>
-            <p class="mt-1 text-sm text-cyan-100/70">Results keep the multiline structure of the input for easy copying.</p>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输出区</h2>
+            <p class="mt-1 text-sm text-cyan-100/70">结果会保持输入的多行结构，便于直接Copy使用。</p>
           </div>
-          <span id="statusBadge" class="rounded-full border border-slate-600 bg-slate-100 dark:bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-700 dark:text-slate-300">Waiting for Processing</span>
+          <span id="statusBadge" class="rounded-full border border-slate-600 bg-slate-100 dark:bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-700 dark:text-slate-300">等待处理</span>
         </div>
-        <label for="outputText" class="sr-only">Encoded or decoded output</label>
-        <textarea id="outputText" readonly spellcheck="false" class="min-h-[560px] w-full resize-y rounded-2xl border border-cyan-400/20 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-cyan-50 outline-none placeholder:text-slate-600 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-400/10" placeholder="Processing results will appear here"></textarea>
+        <label for="outputText" class="sr-only">编码或解码后的输出结果</label>
+        <textarea id="outputText" readonly spellcheck="false" class="min-h-[560px] w-full resize-y rounded-2xl border border-cyan-400/20 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-cyan-50 outline-none placeholder:text-slate-600 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-400/10" placeholder="处理结果将显示在这里"></textarea>
       </div>
     </section>
 
     <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl shadow-black/20">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About URL Encoder and Decoder</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">URL encode/decode tool. Supports batch processing of multi-line URLs and escaping special characters. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use URL Encoder and Decoder for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 URL 编码/解码工具</h2>
+      <p>
+        url-encoder 是一款面向前端开发、后端调试、SEO 运营和数据清洗场景的在线 URL 编码解码工具。浏览器地址、接口参数、广告落地页链接中经常包含Chinese、空格、井号、百分号、等号和 &amp; 等特殊字符，如果没有正确进行百分号编码，就可能导致链接截断、参数解析错误或搜索引擎抓取异常。本工具支持多行批量 URL 编码、批量 URL 解码，并提供完整 URL 编码与参数片段编码两种模式：前者适合处理整条链接，后者适合处理 query 参数值、表单字段或需要 encodeURIComponent 的内容。使用时只需将 URL 按行粘贴到输入区，选择编码或解码模式，点击开始处理即可获得可Copy result。对于非法百分号转义、异常字符等情况，工具会给出清晰的红色错误提示，帮助你快速定位问题，提升链接处理效率。
+      </p>
     </article>
   </main>
 
   <div id="toast" class="pointer-events-none fixed left-1/2 top-5 z-50 hidden -translate-x-1/2 rounded-2xl border px-5 py-3 text-sm font-semibold shadow-2xl"></div>
 
   <footer class="relative border-t border-gray-200 dark:border-white/10 py-6 text-center text-sm text-slate-500">
-    <p>url-encoder · Online URL encoder/decoder</p>
+    <p>url-encoder · 在线 URL 编码/解码工具</p>
   </footer>
 
   <script>
@@ -176,7 +189,7 @@
       const sample = [
         'https://example.com/search?q=Chinese 空格&tag=a+b&from=测试',
         'https://www.example.com/path/产品详情.html#规格 参数',
-        'name=ZhangSan&city=Shanghai&redirect=https://example.com/a?x=1&y=2',
+        'name=张三&city=上海&redirect=https://example.com/a?x=1&y=2',
         'https%3A%2F%2Fexample.com%2Fsearch%3Fq%3DURL%2520%E7%BC%96%E7%A0%81'
       ].join('\n');
 
@@ -202,7 +215,7 @@
         errorBox.innerHTML = '';
         const title = document.createElement('div');
         title.className = 'mb-2 font-bold';
-        title.textContent = 'Processing failed or issues need attention:';
+        title.textContent = '处理失败或存在需要注意的问题：';
         errorBox.appendChild(title);
         const ul = document.createElement('ul');
         ul.className = 'list-disc space-y-1 pl-5';
@@ -213,7 +226,7 @@
         });
         if (list.length > 8) {
           const li = document.createElement('li');
-          li.textContent = `${list.length - 8} more errors are not shown; please check your input.`;
+          li.textContent = `还有 ${list.length - 8} 条错误未显示，请检查输入内容。`;
           ul.appendChild(li);
         }
         errorBox.appendChild(ul);
@@ -268,7 +281,7 @@
             return decodeURI(prepared);
           }
         } catch (error) {
-          throw new Error(`第 ${lineNumber} 行格式非法，无法${mode === 'decode' ? '解码' : '编码'}：${error && error.message ? error.message : 'Unknown Error'}`);
+          throw new Error(`第 ${lineNumber} 行格式非法，无法${mode === 'decode' ? '解码' : '编码'}：${error && error.message ? error.message : 'Unknown错误'}`);
         }
       }
 
@@ -278,9 +291,9 @@
         if (!raw.trim()) {
           outputText.value = '';
           updateStats();
-          setStatus('Input Is Empty', 'error');
-          showError('Please enter at least one line of URL or text to process.');
-          showToast('Please enter content before processing', 'error');
+          setStatus('输入为空', 'error');
+          showError('Please enter至少一行需要处理的 URL 或文本。');
+          showToast('Please enter内容后再处理', 'error');
           return;
         }
 
@@ -303,11 +316,11 @@
 
         if (errors.length) {
           showError(errors);
-          setStatus('Partially failed', 'error');
-          showToast('Some rows failed to process. Please check the tips.', 'error');
+          setStatus('部分失败', 'error');
+          showToast('部分行处理失败，请查看提示', 'error');
         } else {
-          setStatus('Processing Complete', 'success');
-          showToast('Processing Complete');
+          setStatus('处理完成', 'success');
+          showToast('处理完成');
         }
       }
 
@@ -315,8 +328,8 @@
         clearError();
         const value = outputText.value;
         if (!value) {
-          showError('No output result available to copy.');
-          showToast('No result to copy', 'error');
+          showError('当前没有可Copy的输出结果。');
+          showToast('没有可Copy的结果', 'error');
           setStatus('无结果', 'error');
           return;
         }
@@ -329,14 +342,14 @@
             outputText.select();
             const ok = document.execCommand('copy');
             window.getSelection().removeAllRanges();
-            if (!ok) throw new Error('Browser denied the copy operation');
+            if (!ok) throw new Error('浏览器拒绝Copy操作');
           }
-          showToast('Result copied to clipboard');
+          showToast('结果Copied到剪贴板');
           setStatus('Copied', 'success');
         } catch (err) {
-          showError(`Copy failed: ${err && err.message ? err.message : 'Please manually select and copy the output content.'}`);
-          showToast('Copy failed. Please copy manually.', 'error');
-          setStatus('Copy Failed', 'error');
+          showError(`Copy failed：${err && err.message ? err.message : '请手动选择输出内容Copy。'}`);
+          showToast('Copy failed，请手动Copy', 'error');
+          setStatus('Copy failed', 'error');
         }
       }
 
@@ -345,7 +358,7 @@
         outputText.value = '';
         clearError();
         updateStats();
-        setStatus('Waiting for Processing', 'idle');
+        setStatus('等待处理', 'idle');
         showToast('已Clear');
         inputText.focus();
       }
@@ -353,9 +366,9 @@
       function swapText() {
         clearError();
         if (!outputText.value) {
-          showError('The output area is empty and cannot be swapped.');
-          showToast('Output area is empty', 'error');
-          setStatus('Cannot swap', 'error');
+          showError('输出区为空，无法交换。');
+          showToast('输出区为空', 'error');
+          setStatus('无法交换', 'error');
           return;
         }
         const temp = inputText.value;
@@ -363,7 +376,7 @@
         outputText.value = temp;
         updateStats();
         setStatus('已交换', 'success');
-        showToast('Input and output swapped');
+        showToast('输入与输出已交换');
       }
 
       function fillSample() {
@@ -371,8 +384,8 @@
         outputText.value = '';
         clearError();
         updateStats();
-        setStatus('Example filled in', 'success');
-        showToast('Example filled in');
+        setStatus('示例已填入', 'success');
+        showToast('示例已填入');
         inputText.focus();
       }
 
@@ -385,7 +398,7 @@
       inputText.addEventListener('input', () => {
         clearError();
         updateStats();
-        setStatus('Waiting for Processing', 'idle');
+        setStatus('等待处理', 'idle');
       });
 
       document.addEventListener('keydown', event => {
@@ -396,7 +409,7 @@
       });
 
       updateStats();
-      setStatus('Waiting for Processing', 'idle');
+      setStatus('等待处理', 'idle');
     })();
   </script>
 </body>

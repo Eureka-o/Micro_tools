@@ -3,15 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CSV to HTML Table Generator | Free Online Tool</title>
-  <meta name="description" content="CSV to HTML `&lt;table&gt;` code generator. Paste CSV data to directly output HTML table code with basic CSS styles.">
-  <meta name="keywords" content="CSV to HTML Table Generator, online tool, browser tool, productivity tool">
-  <meta name="robots" content="index, follow" />
+  <title>csv-to-html-table - CSV 转 HTML table 代码Generate器</title>
+  <meta name="description" content="CSV 转 HTML `&lt;table&gt;` 代码Generate器。粘贴CSV数据，直接输出带有基础CSS样式的HTML表格代码。">
+  <meta name="keywords" content="CSV转HTML表格,CSV to HTML table,HTML table代码Generate器,在线CSV转换工具,CSVGenerateHTML,带CSS样式HTML表格,CSV表格转换">
   <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
@@ -19,6 +16,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/csv-to-html-table.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/csv-to-html-table.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/csv-to-html-table.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/csv-to-html-table.html">
+  <meta property="og:title" content="csv-to-html-table - CSV 转 HTML table 代码Generate器">
+  <meta property="og:description" content="CSV 转 HTML `&lt;table&gt;` 代码Generate器。粘贴CSV数据，直接输出带有基础CSS样式的HTML表格代码。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="csv-to-html-table - CSV 转 HTML table 代码Generate器">
+  <meta name="twitter:description" content="CSV 转 HTML `&lt;table&gt;` 代码Generate器。粘贴CSV数据，直接输出带有基础CSS样式的HTML表格代码。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -43,6 +50,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <div class="pointer-events-none fixed inset-0 overflow-hidden">
     <div class="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
     <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
@@ -53,43 +65,43 @@
       <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-            Free online tool · no uploads · local conversion
+            免费在线工具 · 零上传 · 本地转换
           </p>
-          <h1 class="text-3xl font-black tracking-tight text-gray-900 dark:text-white sm:text-4xl md:text-5xl">CSV to HTML Table Generator</h1>
+          <h1 class="text-3xl font-black tracking-tight text-gray-900 dark:text-white sm:text-4xl md:text-5xl">CSV 转 HTML table 代码Generate器</h1>
           <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300 md:text-lg">
-            Paste CSV data and generate HTML with basic CSS styling in one click <code class="rounded bg-white dark:bg-slate-900/80 px-1.5 py-0.5 text-cyan-200">&lt;table&gt;</code> code, with instant preview, copy, or download.
+            粘贴 CSV 数据，一键Generate带基础 CSS 样式的 HTML <code class="rounded bg-white dark:bg-slate-900/80 px-1.5 py-0.5 text-cyan-200">&lt;table&gt;</code> 代码，并可即时预览、Copy或Download。
           </p>
         </div>
         <div class="grid grid-cols-3 gap-3 text-center">
           <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-3">
             <div id="statRows" class="text-2xl font-bold text-cyan-200">0</div>
-            <div class="text-xs text-slate-400">row</div>
+            <div class="text-xs text-slate-400">行</div>
           </div>
           <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-3">
             <div id="statCols" class="text-2xl font-bold text-indigo-200">0</div>
-            <div class="text-xs text-slate-400">column</div>
+            <div class="text-xs text-slate-400">列</div>
           </div>
           <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/60 px-4 py-3">
             <div id="statChars" class="text-2xl font-bold text-emerald-200">0</div>
-            <div class="text-xs text-slate-400">Characters</div>
+            <div class="text-xs text-slate-400">字符</div>
           </div>
         </div>
       </div>
     </header>
 
-    <section class="grid gap-6 lg:grid-cols-2" aria-label="CSV to HTML Table Tool">
+    <section class="grid gap-6 lg:grid-cols-2" aria-label="CSV 转 HTML 表格工具">
       <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-xl shadow-black/20 backdrop-blur">
         <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Input CSV Data</h2>
-            <p class="mt-1 text-sm text-slate-400">Supports common CSV formats, including quoted fields, line breaks within fields, commas, and tabs.</p>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入 CSV 数据</h2>
+            <p class="mt-1 text-sm text-slate-400">支持双引号包裹字段、字段内换行、逗号、制表符等常见 CSV 格式。</p>
           </div>
           <button id="sampleBtn" type="button" class="rounded-xl border border-cyan-300/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">
-            Fill Example
+            填入示例
           </button>
         </div>
 
-        <label for="csvInput" class="sr-only">CSV Input Box</label>
+        <label for="csvInput" class="sr-only">CSV 输入框</label>
         <textarea id="csvInput" spellcheck="false" class="h-80 w-full resize-y rounded-2xl border border-slate-700 bg-slate-950/90 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="例如：
 姓名,职位,城市
 张三,前端工程师,上海
@@ -97,17 +109,17 @@
 
         <div class="mt-4 grid gap-3 sm:grid-cols-2">
           <label class="block">
-            <span class="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Delimiter</span>
+            <span class="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">分隔符</span>
             <select id="delimiterSelect" class="w-full rounded-xl border border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
-              <option value="auto">Auto Detect</option>
-              <option value=",">Comma ,</option>
-              <option value=";">Semicolon ;</option>
-              <option value="tab">Tab character</option>
-              <option value="|">Vertical Bar |</option>
+              <option value="auto">自动识别</option>
+              <option value=",">逗号 ,</option>
+              <option value=";">分号 ;</option>
+              <option value="tab">制表符 Tab</option>
+              <option value="|">竖线 |</option>
             </select>
           </label>
           <label class="block">
-            <span class="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Table Class Name</span>
+            <span class="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">表格类名</span>
             <input id="classNameInput" type="text" value="csv-html-table" maxlength="80" class="w-full rounded-xl border border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
           </label>
         </div>
@@ -115,21 +127,21 @@
         <div class="mt-4 grid gap-3 sm:grid-cols-3">
           <label class="flex cursor-pointer items-center gap-2 rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-slate-700 dark:text-slate-300">
             <input id="headerCheckbox" type="checkbox" checked class="h-4 w-4 accent-cyan-400" />
-            First Row as Header
+            第一行为表头
           </label>
           <label class="flex cursor-pointer items-center gap-2 rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-slate-700 dark:text-slate-300">
             <input id="trimCheckbox" type="checkbox" checked class="h-4 w-4 accent-cyan-400" />
-            Trim leading and trailing spaces
+            去除首尾空格
           </label>
           <label class="flex cursor-pointer items-center gap-2 rounded-xl border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-slate-700 dark:text-slate-300">
             <input id="captionCheckbox" type="checkbox" class="h-4 w-4 accent-cyan-400" />
-            Add Title
+            添加标题
           </label>
         </div>
 
         <div id="captionWrap" class="mt-3 hidden">
-          <label for="captionInput" class="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">Table Title</label>
-          <input id="captionInput" type="text" maxlength="120" placeholder="Example: employee information table" class="w-full rounded-xl border border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
+          <label for="captionInput" class="mb-1 block text-sm font-medium text-slate-700 dark:text-slate-300">表格标题</label>
+          <input id="captionInput" type="text" maxlength="120" placeholder="例如：员工信息表" class="w-full rounded-xl border border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
         </div>
 
         <div id="errorBox" class="mt-4 hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200" role="alert"></div>
@@ -137,7 +149,7 @@
 
         <div class="mt-5 flex flex-col gap-3 sm:flex-row">
           <button id="generateBtn" type="button" class="flex-1 rounded-2xl bg-gradient-to-r from-cyan-400 to-indigo-500 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:brightness-110 active:scale-[0.98]">
-            Generate HTML table code
+            Generate HTML 表格代码
           </button>
           <button id="clearBtn" type="button" class="rounded-2xl border border-slate-600 bg-slate-50 dark:bg-slate-800 px-5 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-slate-700 active:scale-[0.98]">
             Clear
@@ -148,8 +160,8 @@
       <div class="rounded-3xl border border-cyan-300/20 bg-cyan-950/20 p-5 shadow-xl shadow-black/20 backdrop-blur">
         <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Output HTML code</h2>
-            <p class="mt-1 text-sm text-cyan-100/70">Generated result contains inline <code>&lt;style&gt;</code>, ready to copy into a web page.</p>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输出 HTML 代码</h2>
+            <p class="mt-1 text-sm text-cyan-100/70">Generate结果包含内联 <code>&lt;style&gt;</code>，可直接Copy到网页中使用。</p>
           </div>
           <div class="flex gap-2">
             <button id="copyBtn" type="button" class="rounded-xl border border-emerald-300/30 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-400/20 active:scale-95">
@@ -161,29 +173,33 @@
           </div>
         </div>
 
-        <label for="htmlOutput" class="sr-only">HTML output box</label>
-        <textarea id="htmlOutput" readonly spellcheck="false" class="h-80 w-full resize-y rounded-2xl border border-cyan-900/80 bg-slate-950/95 p-4 font-mono text-sm leading-6 text-cyan-50 outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="The generated HTML table code will appear here"></textarea>
+        <label for="htmlOutput" class="sr-only">HTML 输出框</label>
+        <textarea id="htmlOutput" readonly spellcheck="false" class="h-80 w-full resize-y rounded-2xl border border-cyan-900/80 bg-slate-950/95 p-4 font-mono text-sm leading-6 text-cyan-50 outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="Generate的 HTML table 代码会显示在这里"></textarea>
 
         <div class="mt-5">
           <div class="mb-3 flex items-center justify-between">
-            <h3 class="font-bold text-gray-900 dark:text-white">Live Preview</h3>
-            <span class="text-xs text-slate-400">The preview area has isolated base styles</span>
+            <h3 class="font-bold text-gray-900 dark:text-white">实时预览</h3>
+            <span class="text-xs text-slate-400">预览区域已隔离基础样式</span>
           </div>
           <div id="preview" class="min-h-40 overflow-auto rounded-2xl border border-gray-200 dark:border-white/10 bg-white p-4 text-slate-900 dark:text-slate-100">
-            <p class="text-sm text-slate-500">The HTML table preview will appear here after generation.</p>
+            <p class="text-sm text-slate-500">Generate后将在这里预览 HTML 表格。</p>
           </div>
         </div>
       </div>
     </section>
 
     <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 p-6 leading-8 text-slate-800 dark:text-slate-200 shadow-xl shadow-black/20 backdrop-blur md:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About CSV to HTML Table Generator</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">CSV to HTML `&lt;table&gt;` code generator. Paste CSV data to directly output HTML table code with basic CSS styles. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use CSV to HTML Table Generator for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 CSV 转 HTML table 代码Generate器</h2>
+      <p>
+        csv-to-html-table 是一款面向前端开发者、运营人员和内容编辑的在线 CSV 转 HTML 表格工具。很多时候，数据来自 Excel、Google Sheets、数据库导出文件或后台报表，格式通常是 CSV；但在网页、博客、CMS 文章或静态页面中发布时，又需要标准的 HTML table 代码。手工编写表格不仅耗时，还容易出现标签嵌套错误、特殊字符未转义、列数不一致等问题。本工具可以在浏览器本地完成 CSV Generate HTML table 的全过程，无需上传文件，适合处理员工名单、价格表、产品参数、课程安排、统计报表等数据。
+      </p>
+      <p class="mt-4">
+        使用方法非常简单：将 CSV 数据粘贴到输入框，选择是否把第一行作为表头，并按需要设置分隔符、表格类名和标题，然后点击“Generate HTML 表格代码”。工具会自动解析带引号的字段、字段内逗号和换行，并输出带基础 CSS 样式的 HTML 表格代码，同时提供实时预览、Copy和Download功能。如果你正在寻找“CSV 转 HTML table 在线工具”“带 CSS 样式的 HTML 表格代码Generate器”或“无需上传的 CSV 表格转换工具”，这个页面可以帮助你快速、安全、准确地完成转换。
+      </p>
     </article>
 
     <footer class="mt-8 pb-6 text-center text-sm text-slate-500">
-      <p>All conversions are completed in the current browser; CSV data is not uploaded to the server.</p>
+      <p>所有转换均在当前浏览器中完成，CSV 数据不会上传到服务器。</p>
     </footer>
   </main>
 
@@ -448,14 +464,14 @@
 
           if (!raw.trim()) {
             htmlOutput.value = "";
-            preview.innerHTML = '<p class="text-sm text-slate-500">The HTML table preview will appear here after generation.</p>';
+            preview.innerHTML = '<p class="text-sm text-slate-500">Generate后将在这里预览 HTML 表格。</p>';
             updateStats([], raw.length);
-            showError("请Input CSV Data后再Generate HTML table code。");
+            showError("Please enter CSV 数据后再Generate HTML 表格代码。");
             return;
           }
 
           if (raw.length > 1000000) {
-            showError("Input Content过大。为保证浏览器稳定运行，请将 CSV 内容控制在 100 万字符以内。");
+            showError("输入内容过大。为保证浏览器稳定运行，请将 CSV 内容控制在 100 万字符以内。");
             return;
           }
 
@@ -471,7 +487,7 @@
             htmlOutput.value = "";
             preview.innerHTML = '<p class="text-sm text-slate-500">未解析到有效数据。</p>';
             updateStats([], raw.length);
-            showError("未解析到有效 CSV 数据，请检查Input Content。");
+            showError("未解析到有效 CSV 数据，请检查输入内容。");
             return;
           }
 
@@ -479,7 +495,7 @@
           const maxCols = rows.reduce((max, row) => Math.max(max, row.length), 0);
 
           if (maxCols === 0) {
-            showError("CSV 数据没有有效列，请检查Input Content。");
+            showError("CSV 数据没有有效列，请检查输入内容。");
             return;
           }
 
@@ -500,9 +516,9 @@
           updateStats(rows, raw.length);
 
           const delimiterName = delimiter === "\t" ? "Tab" : delimiter;
-          showSuccess(`Generated Successfully：共 ${rows.length} 行、${maxCols} 列，使用分隔符 ${delimiterName}。`);
+          showSuccess(`Generate成功：共 ${rows.length} 行、${maxCols} 列，使用分隔符 ${delimiterName}。`);
         } catch (err) {
-          const message = err && err.message ? err.message : "解析 CSV 时发生Unknown Error，请检查输入格式。";
+          const message = err && err.message ? err.message : "解析 CSV 时发生Unknown错误，请检查输入格式。";
           showError(message);
         }
       }
@@ -521,9 +537,9 @@
             document.execCommand("copy");
             window.getSelection().removeAllRanges();
           }
-          showSuccess("HTML 表格代码Copied to clipboard.");
+          showSuccess("HTML 表格代码Copied到剪贴板。");
         } catch (err) {
-          showError("Copy Failed，请手动选中输出框内容进行Copy。");
+          showError("Copy failed，请手动选中输出框内容进行Copy。");
         }
       }
 
@@ -542,16 +558,16 @@
           a.click();
           a.remove();
           URL.revokeObjectURL(url);
-          showSuccess("HTML File download started.");
+          showSuccess("HTML 文件已开始Download。");
         } catch (err) {
-          showError("Download失败，请Copy Code后手动保存为 .html 文件。");
+          showError("Download失败，请Copy代码后手动保存为 .html 文件。");
         }
       }
 
       function clearAll() {
         csvInput.value = "";
         htmlOutput.value = "";
-        preview.innerHTML = '<p class="text-sm text-slate-500">The HTML table preview will appear here after generation.</p>';
+        preview.innerHTML = '<p class="text-sm text-slate-500">Generate后将在这里预览 HTML 表格。</p>';
         updateStats([], 0);
         clearMessages();
         csvInput.focus();
@@ -589,7 +605,7 @@
           if (csvInput.value.trim()) generate();
           else {
             htmlOutput.value = "";
-            preview.innerHTML = '<p class="text-sm text-slate-500">The HTML table preview will appear here after generation.</p>';
+            preview.innerHTML = '<p class="text-sm text-slate-500">Generate后将在这里预览 HTML 表格。</p>';
             updateStats([], 0);
             clearMessages();
           }

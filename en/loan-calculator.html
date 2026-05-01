@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Loan Calculator | Free Online Tool</title>
-  <meta name="description" content="Mortgage/loan equal principal and interest calculator. Enter the total amount, annual interest rate, and loan term to generate a detailed monthly repayment schedule.">
-  <meta name="keywords" content="Loan Calculator, online tool, browser tool, productivity tool">
+  <title>loan-calculator｜房贷/贷款等额本息计算器</title>
+  <meta name="description" content="房贷/贷款等额本息计算器。输入总金额、年化利率和贷款期数，Generate每月的还款计划明细表。">
+  <meta name="keywords" content="loan-calculator, 房贷计算器, 贷款计算器, 等额本息计算器, 每月还款计划, 房贷还款明细, 贷款利息计算, 月供计算器">
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -31,6 +29,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/loan-calculator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/loan-calculator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/loan-calculator.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/loan-calculator.html">
+  <meta property="og:title" content="loan-calculator｜房贷/贷款等额本息计算器">
+  <meta property="og:description" content="房贷/贷款等额本息计算器。输入总金额、年化利率和贷款期数，Generate每月的还款计划明细表。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="loan-calculator｜房贷/贷款等额本息计算器">
+  <meta name="twitter:description" content="房贷/贷款等额本息计算器。输入总金额、年化利率和贷款期数，Generate每月的还款计划明细表。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
@@ -55,6 +63,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <div class="fixed inset-0 -z-10 overflow-hidden">
     <div class="absolute left-1/2 top-[-10rem] h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
     <div class="absolute bottom-[-12rem] right-[-8rem] h-[30rem] w-[30rem] rounded-full bg-indigo-500/20 blur-3xl"></div>
@@ -65,16 +78,16 @@
       <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-            Equal principal and interest · monthly payment details · online calculator
+            等额本息 · 月供明细 · 在线计算
           </p>
-          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">Loan Calculator</h1>
+          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">房贷/贷款等额本息计算器</h1>
           <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            Enter the total loan amount, annual interest rate, and number of periods to quickly generate a complete monthly repayment schedule.
+            输入贷款总金额、年化利率与期数，快速Generate完整的每月还款计划表。
           </p>
         </div>
         <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 shadow-glow">
-          <p class="text-sm text-slate-400">Calculation Method</p>
-          <p class="mt-1 text-lg font-semibold text-cyan-200">Equal Principal and Interest</p>
+          <p class="text-sm text-slate-400">计算方式</p>
+          <p class="mt-1 text-lg font-semibold text-cyan-200">等额本息</p>
         </div>
       </div>
     </div>
@@ -85,45 +98,45 @@
       <div class="lg:col-span-4">
         <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-6 shadow-glow backdrop-blur">
           <div class="mb-6">
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Enter Loan Information</h2>
-            <p class="mt-2 text-sm text-slate-400">Supports mortgages, car loans, consumer loans, and other loans calculated with equal principal and interest.</p>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输入贷款信息</h2>
+            <p class="mt-2 text-sm text-slate-400">支持房贷、车贷、消费贷等按等额本息方式计算的贷款。</p>
           </div>
 
           <div id="errorBox" class="mb-5 hidden rounded-2xl border border-red-400/40 bg-red-500/15 px-4 py-3 text-sm leading-6 text-red-100"></div>
 
           <form id="loanForm" class="space-y-5" novalidate>
             <div>
-              <label for="amount" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Total loan amount</label>
+              <label for="amount" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">贷款总金额</label>
               <div class="relative">
-                <input id="amount" name="amount" type="text" inputmode="decimal" autocomplete="off" placeholder="Example: 1000000"
+                <input id="amount" name="amount" type="text" inputmode="decimal" autocomplete="off" placeholder="例如：1000000"
                   class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-3 pr-16 text-gray-900 dark:text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
-                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">yuan</span>
+                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">元</span>
               </div>
             </div>
 
             <div>
-              <label for="rate" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Annual Interest Rate</label>
+              <label for="rate" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">年化利率</label>
               <div class="relative">
-                <input id="rate" name="rate" type="text" inputmode="decimal" autocomplete="off" placeholder="Example: 3.85"
+                <input id="rate" name="rate" type="text" inputmode="decimal" autocomplete="off" placeholder="例如：3.85"
                   class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-3 pr-16 text-gray-900 dark:text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
                 <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">%</span>
               </div>
             </div>
 
             <div>
-              <label for="months" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Loan Periods</label>
+              <label for="months" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">贷款期数</label>
               <div class="relative">
-                <input id="months" name="months" type="text" inputmode="numeric" autocomplete="off" placeholder="e.g., 360"
+                <input id="months" name="months" type="text" inputmode="numeric" autocomplete="off" placeholder="例如：360"
                   class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-3 pr-16 text-gray-900 dark:text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
-                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">month</span>
+                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">月</span>
               </div>
-              <p class="mt-2 text-xs text-slate-500">Common: 20 years = 240 periods, 30 years = 360 periods.</p>
+              <p class="mt-2 text-xs text-slate-500">常见：20 年 = 240 期，30 年 = 360 期。</p>
             </div>
 
             <div class="grid grid-cols-2 gap-3 pt-2">
               <button type="submit" id="calcBtn"
                 class="rounded-2xl bg-cyan-400 px-4 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98]">
-                Start calculation
+                开始计算
               </button>
               <button type="button" id="resetBtn"
                 class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 font-bold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-[0.98]">
@@ -138,8 +151,8 @@
         <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-900/70 p-6 shadow-glow backdrop-blur">
           <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Calculation Result</h2>
-              <p class="mt-2 text-sm text-slate-400">Monthly payment, total interest, and month-by-month repayment details are shown below.</p>
+              <h2 class="text-2xl font-bold text-gray-900 dark:text-white">计算结果</h2>
+              <p class="mt-2 text-sm text-slate-400">下方展示月供、总利息与逐月还款明细。</p>
             </div>
             <button id="downloadBtn" type="button" disabled
               class="rounded-2xl border border-cyan-300/30 bg-cyan-300/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-300/15 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40">
@@ -149,26 +162,26 @@
 
           <div id="emptyState" class="rounded-3xl border border-dashed border-gray-200 dark:border-white/15 bg-white/[0.03] px-6 py-12 text-center">
             <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-400/10 text-2xl">⌁</div>
-            <p class="text-lg font-semibold text-slate-800 dark:text-slate-200">Repayment schedule not generated yet</p>
-            <p class="mt-2 text-sm text-slate-400">Enter the loan information on the left, then click “Start Calculation”.</p>
+            <p class="text-lg font-semibold text-slate-800 dark:text-slate-200">尚未Generate还款计划</p>
+            <p class="mt-2 text-sm text-slate-400">请在左侧输入贷款信息后点击“开始计算”。</p>
           </div>
 
           <div id="resultArea" class="hidden">
             <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
               <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-4">
-                <p class="text-sm text-slate-400">Monthly Payment</p>
+                <p class="text-sm text-slate-400">每月还款</p>
                 <p id="monthlyPayment" class="mt-2 text-2xl font-extrabold text-cyan-200">--</p>
               </div>
               <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-4">
-                <p class="text-sm text-slate-400">Total repayment</p>
+                <p class="text-sm text-slate-400">还款总额</p>
                 <p id="totalPayment" class="mt-2 text-2xl font-extrabold text-gray-900 dark:text-white">--</p>
               </div>
               <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-4">
-                <p class="text-sm text-slate-400">Total Interest</p>
+                <p class="text-sm text-slate-400">总利息</p>
                 <p id="totalInterest" class="mt-2 text-2xl font-extrabold text-amber-200">--</p>
               </div>
               <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-4">
-                <p class="text-sm text-slate-400">Loan Periods</p>
+                <p class="text-sm text-slate-400">贷款期数</p>
                 <p id="totalMonths" class="mt-2 text-2xl font-extrabold text-gray-900 dark:text-white">--</p>
               </div>
             </div>
@@ -178,11 +191,11 @@
                 <table class="min-w-full divide-y divide-white/10 text-sm">
                   <thead class="sticky top-0 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200">
                     <tr>
-                      <th class="whitespace-nowrap px-4 py-3 text-left font-semibold">Periods</th>
-                      <th class="whitespace-nowrap px-4 py-3 text-right font-semibold">Monthly Payment</th>
-                      <th class="whitespace-nowrap px-4 py-3 text-right font-semibold">Principal</th>
-                      <th class="whitespace-nowrap px-4 py-3 text-right font-semibold">Interest</th>
-                      <th class="whitespace-nowrap px-4 py-3 text-right font-semibold">Remaining principal</th>
+                      <th class="whitespace-nowrap px-4 py-3 text-left font-semibold">期数</th>
+                      <th class="whitespace-nowrap px-4 py-3 text-right font-semibold">月供</th>
+                      <th class="whitespace-nowrap px-4 py-3 text-right font-semibold">本金</th>
+                      <th class="whitespace-nowrap px-4 py-3 text-right font-semibold">利息</th>
+                      <th class="whitespace-nowrap px-4 py-3 text-right font-semibold">剩余本金</th>
                     </tr>
                   </thead>
                   <tbody id="scheduleBody" class="divide-y divide-white/10 bg-slate-950/40"></tbody>
@@ -195,14 +208,15 @@
     </section>
 
     <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-glow backdrop-blur">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Loan Calculator</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Mortgage/loan equal principal and interest calculator. Enter the total amount, annual interest rate, and loan term to generate a detailed monthly repayment schedule. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Loan Calculator for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于等额本息贷款计算器</h2>
+      <p>
+        loan-calculator 是一款面向购房者、贷款申请人和财务规划用户的在线房贷计算器。它采用常见的等额本息计算方式，只需输入贷款总金额、年化利率和贷款期数，即可快速得到每月月供、还款总额、总利息以及完整的每月还款计划明细。很多人在比较房贷方案、车贷方案或消费贷款方案时，常常难以直观看清长期利息成本，本工具可以帮助你提前评估现金流压力，判断不同利率和期限下的真实还款负担。使用时，在输入区填写本金、贷款年利率和期数，点击开始计算，系统会自动Generate包含每期本金、利息和剩余本金的明细表。无论你需要“房贷等额本息月供计算”“贷款利息明细查询”还是“30年房贷还款计划表”，都可以通过本页面快速完成测算。
+      </p>
     </article>
   </main>
 
   <footer class="mx-auto max-w-7xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-    © <span id="year"></span> loan-calculator. Calculation results are for reference only; actual repayments are subject to the loan institution’s contract.
+    © <span id="year"></span> loan-calculator. 计算结果仅供参考，实际还款以贷款机构合同为准。
   </footer>
 
   <script>
@@ -258,22 +272,22 @@
         const monthsRaw = parseNumber(monthsInput.value);
 
         if (!Number.isFinite(amount) || amount <= 0) {
-          return { ok: false, message: 'Please enter a valid total loan amount. The amount must be greater than 0.' };
+          return { ok: false, message: 'Please enter有效的贷款总金额，金额必须大于 0。' };
         }
         if (amount > 1000000000000) {
-          return { ok: false, message: 'The total loan amount is too large. Please enter a value no greater than 1,000,000,000,000 yuan.' };
+          return { ok: false, message: '贷款总金额过大，Please enter不超过 1,000,000,000,000 元的数值。' };
         }
         if (!Number.isFinite(annualRate) || annualRate < 0) {
-          return { ok: false, message: 'Please enter a valid annual interest rate. The rate cannot be negative.' };
+          return { ok: false, message: 'Please enter有效的年化利率，利率不能为负数。' };
         }
         if (annualRate > 100) {
-          return { ok: false, message: 'Annual interest rate is too high. Enter a percentage between 0 and 100.' };
+          return { ok: false, message: '年化利率过高，Please enter 0 到 100 之间的百分比数值。' };
         }
         if (!Number.isFinite(monthsRaw) || monthsRaw <= 0 || !Number.isInteger(monthsRaw)) {
-          return { ok: false, message: 'Enter a valid loan term; the term must be an integer number of months greater than 0.' };
+          return { ok: false, message: 'Please enter有效的贷款期数，期数必须为大于 0 的整数月。' };
         }
         if (monthsRaw > 1200) {
-          return { ok: false, message: 'The loan term is too long. Please enter an integer no greater than 1200 periods.' };
+          return { ok: false, message: '贷款期数过长，Please enter不超过 1200 期的整数。' };
         }
 
         return { ok: true, amount, annualRate, months: monthsRaw };
@@ -375,12 +389,12 @@
         try {
           const data = calculateSchedule(valid.amount, valid.annualRate, valid.months);
           if (!data.rows.length || !Number.isFinite(data.totalPayment)) {
-            showError('Calculation failed. Please check whether the input values are valid.');
+            showError('计算失败，请检查输入数值是否合理。');
             return;
           }
           render(data, valid.months);
         } catch (error) {
-          showError('An error occurred during calculation. Please adjust your input and try again.');
+          showError('计算过程中出现异常，请调整输入后重试。');
         }
       });
 
@@ -399,11 +413,11 @@
 
       downloadBtn.addEventListener('click', () => {
         if (!Array.isArray(currentSchedule) || currentSchedule.length === 0) {
-          showError('No downloadable repayment schedule is available. Please complete the calculation first.');
+          showError('当前没有可Download的还款计划，请先完成计算。');
           return;
         }
 
-        const header = ['期数', '月供', '本金', '利息', 'Remaining principal'];
+        const header = ['期数', '月供', '本金', '利息', '剩余本金'];
         const lines = currentSchedule.map(row => [
           row.period,
           row.payment.toFixed(2),

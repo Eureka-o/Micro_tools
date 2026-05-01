@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bland-Altman Plot Tool | Free Online Tool</title>
-  <meta name="description" content="Minimal data plotting tool. Enter two columns of X/Y coordinate data and use a pure frontend chart library such as Chart.js CDN to draw simple line or scatter charts in real time.">
-  <meta name="keywords" content="Bland-Altman Plot Tool, online tool, browser tool, productivity tool">
+  <title>bland-altman-plot｜极简 X/Y 数据绘图工具</title>
+  <meta name="description" content="极简数据绘图工具。输入两列X/Y坐标数据，利用纯前端图表库（如Chart.js CDN）实时绘制简单的折线图/散点图。">
+  <meta name="keywords" content="bland-altman-plot,Bland Altman 图,在线散点图工具,在线折线图工具,两列数据绘图,X Y 坐标绘图,实验数据可视化,纯前端图表工具">
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
@@ -18,6 +16,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/bland-altman-plot.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/bland-altman-plot.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/bland-altman-plot.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/bland-altman-plot.html">
+  <meta property="og:title" content="bland-altman-plot｜极简 X/Y 数据绘图工具">
+  <meta property="og:description" content="极简数据绘图工具。输入两列X/Y坐标数据，利用纯前端图表库（如Chart.js CDN）实时绘制简单的折线图/散点图。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="bland-altman-plot｜极简 X/Y 数据绘图工具">
+  <meta name="twitter:description" content="极简数据绘图工具。输入两列X/Y坐标数据，利用纯前端图表库（如Chart.js CDN）实时绘制简单的折线图/散点图。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
@@ -42,6 +50,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <div class="absolute inset-0 -z-10 overflow-hidden">
     <div class="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
     <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl"></div>
@@ -54,14 +67,14 @@
           <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
             Pure Frontend Data Visualization
           </p>
-          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">Bland-Altman Plot Tool</h1>
+          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">极简 X/Y 数据绘图工具</h1>
           <p class="mt-3 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            Enter two columns of X/Y data to draw a scatter plot, line chart, or Bland-Altman analysis plot in real time.
+            输入两列 X/Y 数据，实时绘制散点图、折线图或 Bland-Altman 分析图。
           </p>
         </div>
         <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 text-sm text-slate-700 dark:text-slate-300 shadow-2xl">
-          <div class="font-semibold text-gray-900 dark:text-white">Calculated locally · No data uploaded</div>
-          <div class="mt-1">Suitable for research, quality control, experiments, and quick exploratory analysis</div>
+          <div class="font-semibold text-gray-900 dark:text-white">本地计算 · 不上传数据</div>
+          <div class="mt-1">适合科研、质控、实验与快速探索分析</div>
         </div>
       </div>
     </div>
@@ -73,13 +86,13 @@
         <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-900/90 p-5 shadow-2xl">
           <div class="mb-5 flex items-center justify-between gap-3">
             <div>
-              <h2 class="text-xl font-bold text-gray-900 dark:text-white">Input</h2>
-              <p class="mt-1 text-sm text-slate-400">One data set per line. Supports spaces, commas, Tabs, and semicolons as separators.</p>
+              <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入区</h2>
+              <p class="mt-1 text-sm text-slate-400">每行一组数据，支持空格、逗号、Tab、分号分隔。</p>
             </div>
-            <span class="rounded-full bg-indigo-500/15 px-3 py-1 text-xs font-semibold text-indigo-200">Live Parsing</span>
+            <span class="rounded-full bg-indigo-500/15 px-3 py-1 text-xs font-semibold text-indigo-200">实时解析</span>
           </div>
 
-          <label for="dataInput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Two columns of X/Y coordinate data</label>
+          <label for="dataInput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">两列 X/Y 坐标数据</label>
           <textarea id="dataInput" spellcheck="false" class="h-72 w-full resize-y rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="例如：
 1, 1.2
 2, 2.4
@@ -89,43 +102,43 @@
 
           <div id="errorBox" class="mt-4 hidden rounded-2xl border border-red-400/30 bg-red-500/10 p-4 text-sm leading-6 text-red-100"></div>
           <div id="successBox" class="mt-4 rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-4 text-sm leading-6 text-emerald-100">
-            Sample data loaded. You can plot directly or paste your own two-column data.
+            已载入示例数据，可直接绘图或粘贴自己的两列数据。
           </div>
 
           <div class="mt-5 grid gap-4 sm:grid-cols-2">
             <div>
-              <label for="chartType" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Chart type</label>
+              <label for="chartType" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">图表类型</label>
               <select id="chartType" class="w-full rounded-xl border border-slate-700 bg-white dark:bg-slate-950 px-3 py-3 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
-                <option value="scatter">Scatter Plot</option>
-                <option value="line">Line Chart</option>
-                <option value="ba">Bland-Altman plot</option>
+                <option value="scatter">散点图</option>
+                <option value="line">折线图</option>
+                <option value="ba">Bland-Altman 图</option>
               </select>
             </div>
             <div>
-              <label for="pointColor" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Theme color</label>
+              <label for="pointColor" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">主题颜色</label>
               <select id="pointColor" class="w-full rounded-xl border border-slate-700 bg-white dark:bg-slate-950 px-3 py-3 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
-                <option value="#22d3ee">Tech Cyan</option>
-                <option value="#818cf8">Indigo Purple</option>
-                <option value="#34d399">Emerald Green</option>
-                <option value="#fb7185">Rose Red</option>
-                <option value="#fbbf24">Amber</option>
+                <option value="#22d3ee">科技青</option>
+                <option value="#818cf8">靛蓝紫</option>
+                <option value="#34d399">翡翠绿</option>
+                <option value="#fb7185">玫瑰红</option>
+                <option value="#fbbf24">琥珀黄</option>
               </select>
             </div>
           </div>
 
           <div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <button id="drawBtn" type="button" class="rounded-xl bg-cyan-400 px-4 py-3 text-sm font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-95">Draw</button>
-            <button id="sampleBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-4 py-3 text-sm font-bold text-gray-900 dark:text-white transition hover:bg-white/15 active:scale-95">Example</button>
+            <button id="drawBtn" type="button" class="rounded-xl bg-cyan-400 px-4 py-3 text-sm font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-95">绘制</button>
+            <button id="sampleBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-4 py-3 text-sm font-bold text-gray-900 dark:text-white transition hover:bg-white/15 active:scale-95">示例</button>
             <button id="clearBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-4 py-3 text-sm font-bold text-gray-900 dark:text-white transition hover:bg-white/15 active:scale-95">Clear</button>
             <button id="downloadBtn" type="button" class="rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-3 text-sm font-bold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">Download</button>
           </div>
 
           <div class="mt-5 rounded-2xl bg-slate-950/70 p-4">
-            <h3 class="text-sm font-bold text-gray-900 dark:text-white">Input Hint</h3>
+            <h3 class="text-sm font-bold text-gray-900 dark:text-white">输入提示</h3>
             <ul class="mt-2 space-y-1 text-sm leading-6 text-slate-400">
-              <li>Supported formats:<code class="text-cyan-200">1,2</code>、<code class="text-cyan-200">1 2</code>、<code class="text-cyan-200">1;2</code>、<code class="text-cyan-200">1	2</code></li>
-              <li>Blank lines are ignored automatically, and non-numeric content will show a clear error message.</li>
-              <li>A Bland-Altman plot treats X/Y as two measurement methods, with the mean on the X-axis and the difference on the Y-axis.</li>
+              <li>支持格式：<code class="text-cyan-200">1,2</code>、<code class="text-cyan-200">1 2</code>、<code class="text-cyan-200">1;2</code>、<code class="text-cyan-200">1	2</code></li>
+              <li>空行会自动忽略，非数字内容会给出明确错误提示。</li>
+              <li>Bland-Altman 图会将 X/Y 视为两种测量方法，横轴为均值，纵轴为差值。</li>
             </ul>
           </div>
         </div>
@@ -135,20 +148,20 @@
         <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5 shadow-2xl">
           <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h2 class="text-xl font-bold text-gray-900 dark:text-white">Output</h2>
-              <p id="chartSubtitle" class="mt-1 text-sm text-slate-400">The chart will update here in real time.</p>
+              <h2 class="text-xl font-bold text-gray-900 dark:text-white">输出区</h2>
+              <p id="chartSubtitle" class="mt-1 text-sm text-slate-400">图表将在此处实时更新。</p>
             </div>
             <div class="flex flex-wrap gap-2 text-xs">
-              <span id="countBadge" class="rounded-full bg-white dark:bg-white/10 px-3 py-1 font-semibold text-slate-800 dark:text-slate-200">0 points</span>
+              <span id="countBadge" class="rounded-full bg-white dark:bg-white/10 px-3 py-1 font-semibold text-slate-800 dark:text-slate-200">0 点</span>
               <span id="xRangeBadge" class="rounded-full bg-white dark:bg-white/10 px-3 py-1 font-semibold text-slate-800 dark:text-slate-200">X: -</span>
               <span id="yRangeBadge" class="rounded-full bg-white dark:bg-white/10 px-3 py-1 font-semibold text-slate-800 dark:text-slate-200">Y: -</span>
             </div>
           </div>
 
           <div class="relative h-[420px] rounded-3xl border border-slate-700/80 bg-white dark:bg-slate-950/80 p-4 sm:h-[540px]">
-            <canvas id="chartCanvas" aria-label="Data plotting canvas" role="img"></canvas>
+            <canvas id="chartCanvas" aria-label="数据绘图画布" role="img"></canvas>
             <div id="chartFallback" class="pointer-events-none absolute inset-0 hidden items-center justify-center rounded-3xl bg-slate-950/90 p-6 text-center text-sm leading-6 text-red-100">
-              Failed to load the chart library. Please check your network connection and refresh the page.
+              图表库加载失败，请检查网络连接后刷新页面。
             </div>
           </div>
 
@@ -171,9 +184,10 @@
     </section>
 
     <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Bland-Altman Plot Tool</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Minimal data plotting tool. Enter two columns of X/Y coordinate data and use a pure frontend chart library such as Chart.js CDN to draw simple line or scatter charts in real time. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Bland-Altman Plot Tool for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="mb-4 text-2xl font-black text-gray-900 dark:text-white">关于 bland-altman-plot 在线绘图工具</h2>
+      <p>
+        bland-altman-plot 是一款面向科研人员、工程师、数据分析师和学生的极简在线数据绘图工具。很多实验数据只需要快速查看两列 X/Y 坐标之间的趋势、离散程度或两种测量方法的一致性，传统软件往往安装复杂、导入步骤繁琐。本工具基于浏览器纯前端运行，用户只需粘贴两列数字数据，即可Generate在线散点图、在线折线图以及 Bland-Altman 一致性分析图。它特别适合用于医学检验方法比较、仪器测量误差评估、实验结果初筛、课堂统计演示和小规模数据可视化。使用时，将每组数据按行输入，选择图表类型并点击绘制即可；若选择 Bland-Altman 图，系统会自动计算均值、差值、偏倚和一致性限。整个过程无需上传文件，数据保留在本地浏览器中，兼顾效率与隐私，是快速完成两列数据绘图和 Bland Altman plot 在线分析的实用工具。
+      </p>
     </article>
   </main>
 
@@ -252,7 +266,7 @@
       function parseInput(raw) {
         const text = String(raw || '').trim();
         if (!text) {
-          return { ok: false, message: 'Please enter at least two rows or two groups of valid X/Y numeric data.', points: [] };
+          return { ok: false, message: 'Please enter至少两行或两组有效的 X/Y 数字数据。', points: [] };
         }
 
         const lines = text.split(/\r?\n/);
@@ -267,7 +281,7 @@
           const parts = normalized.split(/[\s,;]+/).filter(Boolean);
 
           if (parts.length < 2) {
-            errors.push(`Line ${index + 1} is missing the second column of data: ${original}`);
+            errors.push(`第 ${index + 1} 行缺少第二列数据：${original}`);
             return;
           }
 
@@ -275,7 +289,7 @@
             const firstTwo = parts.slice(0, 2);
             const rest = parts.slice(2).join(' ');
             if (rest.length > 0) {
-              errors.push(`Line ${index + 1} contains extra fields. Please keep only two columns: ${original}`);
+              errors.push(`第 ${index + 1} 行包含多余字段，请仅保留两列：${original}`);
               return;
             }
             parts.length = 2;
@@ -285,7 +299,7 @@
           const y = Number(parts[1]);
 
           if (!Number.isFinite(x) || !Number.isFinite(y)) {
-            errors.push(`Line ${index + 1} contains non-numeric content: ${original}`);
+            errors.push(`第 ${index + 1} 行存在非数字内容：${original}`);
             return;
           }
 
@@ -293,11 +307,11 @@
         });
 
         if (errors.length > 0) {
-          return { ok: false, message: errors.slice(0, 5).join('\n') + (errors.length > 5 ? `\n${errors.length - 5} more errors.` : ''), points: [] };
+          return { ok: false, message: errors.slice(0, 5).join('\n') + (errors.length > 5 ? `\n另有 ${errors.length - 5} 处错误。` : ''), points: [] };
         }
 
         if (points.length < 2) {
-          return { ok: false, message: 'Not enough valid data points. Enter at least 2 sets of X/Y numeric data.', points: [] };
+          return { ok: false, message: '有效数据点不足。请至少输入 2 组 X/Y 数字数据。', points: [] };
         }
 
         return { ok: true, message: '', points };
@@ -342,13 +356,13 @@
       function updateStats(points) {
         const xs = points.map(p => p.x);
         const ys = points.map(p => p.y);
-        countBadge.textContent = `${points.length} points`;
+        countBadge.textContent = `${points.length} 点`;
         xRangeBadge.textContent = `X: ${getRange(xs)}`;
         yRangeBadge.textContent = `Y: ${getRange(ys)}`;
         meanXEl.textContent = formatNumber(mean(xs));
         meanYEl.textContent = formatNumber(mean(ys));
         const corr = correlation(points);
-        corrValueEl.textContent = Number.isFinite(corr) ? formatNumber(corr, 4) : 'Cannot calculate';
+        corrValueEl.textContent = Number.isFinite(corr) ? formatNumber(corr, 4) : '无法计算';
       }
 
       function resetStats() {
@@ -400,14 +414,14 @@
           const x1 = minMean - pad;
           const x2 = maxMean + pad;
 
-          chartSubtitle.textContent = `Bland-Altman: bias ${formatNumber(bias)}, 95% limits of agreement ${formatNumber(lower)} to ${formatNumber(upper)}.`;
+          chartSubtitle.textContent = `Bland-Altman：偏倚 ${formatNumber(bias)}，95% 一致性限 ${formatNumber(lower)} 到 ${formatNumber(upper)}。`;
 
           config = {
             type: 'scatter',
             data: {
               datasets: [
                 {
-                  label: 'Difference point (Y - X)',
+                  label: '差值点（Y - X）',
                   data: baPoints,
                   backgroundColor: color,
                   borderColor: color,
@@ -443,11 +457,11 @@
                 }
               ]
             },
-            options: baseOptions('Mean (average of X and Y)', 'Difference (Y - X)', gridColor, tickColor)
+            options: baseOptions('均值（X 与 Y 的平均）', '差值（Y - X）', gridColor, tickColor)
           };
         } else if (type === 'line') {
           const sorted = [...points].sort((a, b) => a.x - b.x);
-          chartSubtitle.textContent = 'Line chart: Connects data points in ascending X-value order, ideal for viewing continuous trends.';
+          chartSubtitle.textContent = '折线图：按 X 值升序连接数据点，适合观察连续趋势。';
           config = {
             type: 'line',
             data: {
@@ -469,7 +483,7 @@
             options: baseOptions('X', 'Y', gridColor, tickColor)
           };
         } else {
-          chartSubtitle.textContent = 'Scatter plot: shows the distribution relationship between two columns of X/Y coordinates, useful for quickly finding correlations and outliers.';
+          chartSubtitle.textContent = '散点图：展示两列 X/Y 坐标的分布关系，适合快速发现相关性与异常点。';
           config = {
             type: 'scatter',
             data: {
@@ -522,7 +536,7 @@
               callbacks: {
                 label: (ctx) => {
                   const p = ctx.raw || {};
-                  return `${ctx.dataset.label || 'Data'}: (${formatNumber(p.x)}, ${formatNumber(p.y)})`;
+                  return `${ctx.dataset.label || '数据'}：(${formatNumber(p.x)}, ${formatNumber(p.y)})`;
                 }
               }
             }
@@ -559,18 +573,18 @@
           if (!result.ok) {
             destroyChart();
             resetStats();
-            chartSubtitle.textContent = 'Please fix the input errors and redraw.';
+            chartSubtitle.textContent = '请修正输入错误后重新绘制。';
             showError(result.message);
             return;
           }
           updateStats(result.points);
           buildChart(result.points);
-          showSuccess(`Successfully parsed ${result.points.length} data points; the chart has been updated.`);
+          showSuccess(`成功解析 ${result.points.length} 个数据点，图表已更新。`);
         } catch (err) {
           destroyChart();
           resetStats();
-          chartSubtitle.textContent = 'An error occurred. Please check your input and try again.';
-          showError('An error occurred while processing the data, but the app can continue running. Check that the input format is two columns of numbers.');
+          chartSubtitle.textContent = '发生异常，请检查输入后重试。';
+          showError('处理数据时出现异常，但应用仍可继续使用。请检查输入格式是否为两列数字。');
         }
       }
 
@@ -602,14 +616,14 @@
         destroyChart();
         resetStats();
         clearMessages();
-        chartSubtitle.textContent = 'Data cleared. Please enter two columns of X/Y coordinates.';
+        chartSubtitle.textContent = '已Clear数据，Please enter两列 X/Y 坐标。';
       });
 
       downloadBtn.addEventListener('click', () => {
         flashButton(downloadBtn);
         try {
           if (!chart) {
-            showError('No chart is available to download. Please enter valid data and draw a chart first.');
+            showError('当前没有可Download的图表。请先输入有效数据并绘制图表。');
             return;
           }
           const link = document.createElement('a');
@@ -618,9 +632,9 @@
           document.body.appendChild(link);
           link.click();
           link.remove();
-          showSuccess('Chart PNG download has started.');
+          showSuccess('图表 PNG 已开始Download。');
         } catch (err) {
-          showError('Download failed. Please make sure the browser allows this page to export canvas images.');
+          showError('Download失败。请确认浏览器允许当前页面导出画布图片。');
         }
       });
 

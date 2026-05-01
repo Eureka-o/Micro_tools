@@ -3,15 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Browser-native TTS testing tool. Uses the browser&#x27;s built-in `window.speechSynthesis` API to read input text aloud, with adjustable speech rate and pitch.">
-  <meta name="keywords" content="Text to Speech Tester, online tool, browser tool, productivity tool">
-  <meta name="robots" content="index,follow" />
+  <meta name="description" content="浏览器原生 TTS 测试工具。调用浏览器自带的 `window.speechSynthesis` API，将输入的文本转为语音朗读，支持调节语速和音调。">
+  <meta name="keywords" content="text-to-speech-test, 浏览器原生TTS测试工具, 在线文字转语音, speechSynthesis API, 文本转语音朗读, TTS语速音调测试, Web语音合成工具">
   <meta name="theme-color" content="#0f172a" />
-  <title>Text to Speech Tester | Free Online Tool</title>
+  <title>text-to-speech-test｜浏览器原生 TTS 测试工具</title>
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
@@ -19,6 +16,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/text-to-speech-test.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/text-to-speech-test.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/text-to-speech-test.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/text-to-speech-test.html">
+  <meta property="og:title" content="text-to-speech-test｜浏览器原生 TTS 测试工具">
+  <meta property="og:description" content="浏览器原生 TTS 测试工具。调用浏览器自带的 `window.speechSynthesis` API，将输入的文本转为语音朗读，支持调节语速和音调。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="text-to-speech-test｜浏览器原生 TTS 测试工具">
+  <meta name="twitter:description" content="浏览器原生 TTS 测试工具。调用浏览器自带的 `window.speechSynthesis` API，将输入的文本转为语音朗读，支持调节语速和音调。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
@@ -43,6 +50,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <div class="fixed inset-0 -z-10 overflow-hidden">
     <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
     <div class="absolute right-0 top-40 h-96 w-96 rounded-full bg-indigo-500/10 blur-3xl"></div>
@@ -56,44 +68,44 @@
           <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
             Browser Native TTS Tester
           </p>
-          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">Text to Speech Tester</h1>
+          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">浏览器原生 TTS 测试工具</h1>
           <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            Use the browser's built-in <code class="rounded bg-white dark:bg-white/10 px-1.5 py-0.5 text-cyan-200">window.speechSynthesis</code> API that instantly converts text to speech.
+            使用浏览器自带的 <code class="rounded bg-white dark:bg-white/10 px-1.5 py-0.5 text-cyan-200">window.speechSynthesis</code> API，将文本即时转换为语音朗读。
           </p>
         </div>
         <div id="supportBadge" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 text-sm text-slate-700 dark:text-slate-300 shadow-2xl">
-          Checking browser support...
+          正在检测浏览器支持情况...
         </div>
       </div>
     </div>
   </header>
 
   <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-5" aria-label="TTS test tool main interface">
+    <section class="grid gap-6 lg:grid-cols-5" aria-label="TTS 测试工具主界面">
       <div class="lg:col-span-3">
         <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-6">
           <div class="mb-5 flex items-center justify-between gap-4">
             <div>
-              <h2 class="text-xl font-bold text-gray-900 dark:text-white">Input Text</h2>
-              <p class="mt-1 text-sm text-slate-400">Enter the content to read aloud, preferably no more than 5000 characters.</p>
+              <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入文本</h2>
+              <p class="mt-1 text-sm text-slate-400">Please enter需要朗读的内容，建议不超过 5000 个字符。</p>
             </div>
             <span id="charCount" class="shrink-0 rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">0 characters</span>
           </div>
 
-          <label for="textInput" class="sr-only">Text to convert to speech</label>
+          <label for="textInput" class="sr-only">需要转语音的文本</label>
           <textarea
             id="textInput"
             class="min-h-64 w-full resize-y rounded-2xl border border-slate-700 bg-slate-950/70 p-4 text-base leading-7 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
-            placeholder="Example: Hello, this is a browser-native text-to-speech test tool. You can adjust the speed and pitch to experience different reading effects."
+            placeholder="例如：你好，这是一个浏览器原生文字转语音测试工具。你可以调整语速和音调，体验不同的朗读效果。"
             maxlength="5000"
           ></textarea>
 
           <div class="mt-4 flex flex-wrap gap-3">
             <button id="sampleBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-95">
-              Fill Example
+              填入示例
             </button>
             <button id="clearBtn" type="button" class="rounded-xl border border-red-400/20 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-200 transition hover:bg-red-500/20 active:scale-95">
-              Clear Text
+              Clear文本
             </button>
           </div>
         </div>
@@ -101,20 +113,20 @@
 
       <div class="lg:col-span-2">
         <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/30 p-5 shadow-2xl shadow-cyan-950/20 backdrop-blur-xl sm:p-6">
-          <h2 class="text-xl font-bold text-gray-900 dark:text-white">Voice Parameters</h2>
-          <p class="mt-1 text-sm text-cyan-100/70">Choose a browser-available voice and adjust the reading effect.</p>
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">语音参数</h2>
+          <p class="mt-1 text-sm text-cyan-100/70">选择浏览器可用的语音并调整朗读效果。</p>
 
           <div class="mt-5 space-y-5">
             <div>
-              <label for="voiceSelect" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Voice Role</label>
+              <label for="voiceSelect" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">语音角色</label>
               <select id="voiceSelect" class="w-full rounded-xl border border-slate-700 bg-white dark:bg-slate-950/80 px-3 py-3 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
-                <option value="">Loading voice list...</option>
+                <option value="">正在加载语音列表...</option>
               </select>
             </div>
 
             <div>
               <div class="mb-2 flex items-center justify-between">
-                <label for="rateRange" class="text-sm font-medium text-slate-800 dark:text-slate-200">Speech Rate</label>
+                <label for="rateRange" class="text-sm font-medium text-slate-800 dark:text-slate-200">语速</label>
                 <span id="rateValue" class="rounded-full bg-slate-100 dark:bg-slate-900 px-2.5 py-1 text-xs text-cyan-200">1.0</span>
               </div>
               <input id="rateRange" type="range" min="0.1" max="2" step="0.1" value="1" class="w-full accent-cyan-400" />
@@ -122,7 +134,7 @@
 
             <div>
               <div class="mb-2 flex items-center justify-between">
-                <label for="pitchRange" class="text-sm font-medium text-slate-800 dark:text-slate-200">Pitch</label>
+                <label for="pitchRange" class="text-sm font-medium text-slate-800 dark:text-slate-200">音调</label>
                 <span id="pitchValue" class="rounded-full bg-slate-100 dark:bg-slate-900 px-2.5 py-1 text-xs text-cyan-200">1.0</span>
               </div>
               <input id="pitchRange" type="range" min="0" max="2" step="0.1" value="1" class="w-full accent-cyan-400" />
@@ -130,7 +142,7 @@
 
             <div>
               <div class="mb-2 flex items-center justify-between">
-                <label for="volumeRange" class="text-sm font-medium text-slate-800 dark:text-slate-200">Volume</label>
+                <label for="volumeRange" class="text-sm font-medium text-slate-800 dark:text-slate-200">音量</label>
                 <span id="volumeValue" class="rounded-full bg-slate-100 dark:bg-slate-900 px-2.5 py-1 text-xs text-cyan-200">1.0</span>
               </div>
               <input id="volumeRange" type="range" min="0" max="1" step="0.1" value="1" class="w-full accent-cyan-400" />
@@ -139,62 +151,66 @@
 
           <div class="mt-6 grid grid-cols-2 gap-3">
             <button id="speakBtn" type="button" class="rounded-xl bg-cyan-400 px-4 py-3 text-sm font-extrabold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-95 disabled:cursor-not-allowed disabled:bg-slate-600 disabled:text-slate-300">
-              Start reading
+              开始朗读
             </button>
             <button id="stopBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-sm font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-800 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
-              Stop
+              停止
             </button>
             <button id="pauseBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-sm font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-800 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
-              Pause
+              暂停
             </button>
             <button id="resumeBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-sm font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-800 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50">
-              Continue
+              继续
             </button>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="mt-6 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-5 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-6" aria-label="Output status area">
+    <section class="mt-6 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-5 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-6" aria-label="输出状态区">
       <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 class="text-xl font-bold text-gray-900 dark:text-white">Output status</h2>
-          <p class="mt-1 text-sm text-slate-400">Reading status, error messages, and current parameters will appear here.</p>
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">输出状态</h2>
+          <p class="mt-1 text-sm text-slate-400">这里会显示朗读状态、错误提示和当前参数。</p>
         </div>
         <div id="statePill" class="inline-flex w-fit items-center rounded-full border border-slate-700 bg-slate-100 dark:bg-slate-900 px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300">
-          Idle
+          空闲
         </div>
       </div>
 
       <div id="messageBox" class="mt-5 rounded-2xl border border-slate-700 bg-slate-950/70 p-4 text-sm leading-6 text-slate-700 dark:text-slate-300">
-        Please enter text and click "Start Reading".
+        Please enter文本并点击“开始朗读”。
       </div>
 
       <div class="mt-4 grid gap-3 text-sm sm:grid-cols-3">
         <div class="rounded-2xl bg-slate-950/50 p-4">
-          <p class="text-slate-500">Current speech rate</p>
+          <p class="text-slate-500">当前语速</p>
           <p id="summaryRate" class="mt-1 font-bold text-cyan-200">1.0</p>
         </div>
         <div class="rounded-2xl bg-slate-950/50 p-4">
-          <p class="text-slate-500">Current pitch</p>
+          <p class="text-slate-500">当前音调</p>
           <p id="summaryPitch" class="mt-1 font-bold text-cyan-200">1.0</p>
         </div>
         <div class="rounded-2xl bg-slate-950/50 p-4">
-          <p class="text-slate-500">Current volume</p>
+          <p class="text-slate-500">当前音量</p>
           <p id="summaryVolume" class="mt-1 font-bold text-cyan-200">1.0</p>
         </div>
       </div>
     </section>
 
     <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/60 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl shadow-black/20 backdrop-blur-xl">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Text to Speech Tester</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Browser-native TTS testing tool. Uses the browser&#x27;s built-in `window.speechSynthesis` API to read input text aloud, with adjustable speech rate and pitch. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Text to Speech Tester for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 text-to-speech-test 浏览器原生 TTS 测试工具</h2>
+      <p>
+        text-to-speech-test 是一款面向开发者、内容创作者和产品测试人员的在线文字转语音工具。它直接调用浏览器内置的 window.speechSynthesis API，无需安装插件，也不需要上传文本到服务器，即可完成浏览器原生 TTS 测试。对于需要快速验证 Web 语音合成效果、检查不同语音角色、测试Chinese朗读清晰度以及调整朗读语速和音调的场景，本工具能够显著降低调试成本。
+      </p>
+      <p class="mt-3">
+        使用方法非常简单：在输入框中粘贴或输入需要朗读的文本，从语音角色列表中选择浏览器提供的声音，然后拖动语速、音调和音量滑块，最后点击“开始朗读”。如果朗读过程中需要中断、暂停或继续，也可以通过对应按钮实时控制。由于不同系统和浏览器内置的语音库不同，实际可选声音会有所差异。无论是进行在线文本转语音测试、Web TTS 功能兼容性验证，还是制作语音交互原型，text-to-speech-test 都能提供轻量、直观、隐私友好的测试体验。
+      </p>
     </article>
   </main>
 
   <footer class="mx-auto max-w-6xl px-4 pb-8 pt-2 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-    <p>Built with the browser-native SpeechSynthesis API. All text is processed only in the local browser.</p>
+    <p>基于浏览器原生 SpeechSynthesis API 构建，所有文本仅在本地浏览器中处理。</p>
   </footer>
 
   <script>
@@ -236,7 +252,7 @@
         voiceLoadAttempts: 0
       };
 
-      const sampleText = 'Hello, this is the text-to-speech-test native browser TTS testing tool. You can enter any text and adjust the speed, pitch, and volume to quickly test the current browser's text-to-speech effect.';
+      const sampleText = '你好，这是 text-to-speech-test 浏览器原生 TTS 测试工具。你可以输入任意文本，并调整语速、音调和音量，快速测试当前浏览器的文字转语音朗读效果。';
 
       function escapeText(value) {
         return String(value ?? '').replace(/[<>&"']/g, (char) => {
@@ -300,7 +316,7 @@
       function validateText(rawText) {
         const text = String(rawText ?? '').trim();
         if (!text) {
-          return { ok: false, message: 'Please enter需要朗读的文本，文本Cannot be empty.' };
+          return { ok: false, message: 'Please enter需要朗读的文本，文本不能为空。' };
         }
         if (text.length > 5000) {
           return { ok: false, message: '文本过长，请将内容控制在 5000 个字符以内。' };
@@ -472,7 +488,7 @@
           state.currentUtterance = null;
           const errorName = event && event.error ? event.error : 'unknown';
           setStatePill('error', '朗读错误');
-          setMessage('error', `语音合成失败：${errorName}。请尝试更换Voice Role、缩短文本或刷新页面。`);
+          setMessage('error', `语音合成失败：${errorName}。请尝试更换语音角色、缩短文本或刷新页面。`);
           updateButtons();
         };
 
@@ -547,7 +563,7 @@
         elements.sampleBtn.addEventListener('click', () => {
           elements.textInput.value = sampleText;
           updateCounters();
-          setMessage('info', '已Fill Example文本，可直接点击“Start reading”。');
+          setMessage('info', '已填入示例文本，可直接点击“开始朗读”。');
           elements.textInput.focus();
         });
 

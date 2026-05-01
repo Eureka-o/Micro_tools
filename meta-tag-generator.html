@@ -7,11 +7,8 @@
   <meta name="description" content="SEO Meta 标签生成器。填入网站标题、描述、关键词和作者，一键生成标准的 `&lt;head&gt;` 区域 Meta 代码。">
   <meta name="keywords" content="meta-tag-generator,SEO Meta标签生成器,Meta代码生成,网站标题描述关键词,head标签生成工具">
   <meta name="author" content="meta-tag-generator">
-  <meta name="robots" content="index,follow">
   <link rel="icon" type="image/png" href="./assets/logo.png">
   <link rel="apple-touch-icon" href="./assets/logo.png">
-  <meta property="og:image" content="./assets/logo.png">
-  <meta name="twitter:image" content="./assets/logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -39,6 +36,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/meta-tag-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/meta-tag-generator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/meta-tag-generator.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/meta-tag-generator.html">
+  <meta property="og:title" content="meta-tag-generator｜SEO Meta 标签生成器">
+  <meta property="og:description" content="SEO Meta 标签生成器。填入网站标题、描述、关键词和作者，一键生成标准的 `&lt;head&gt;` 区域 Meta 代码。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="meta-tag-generator｜SEO Meta 标签生成器">
+  <meta name="twitter:description" content="SEO Meta 标签生成器。填入网站标题、描述、关键词和作者，一键生成标准的 `&lt;head&gt;` 区域 Meta 代码。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
@@ -62,6 +69,11 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
+
+
+
 
   <div class="absolute inset-0 -z-10 overflow-hidden">
     <div class="absolute left-1/2 top-[-12rem] h-[30rem] w-[30rem] -translate-x-1/2 rounded-full bg-sky-500/20 blur-3xl"></div>
@@ -392,24 +404,24 @@
           '  <meta name="description" content="' + description + '">',
           '  <meta name="keywords" content="' + keywords + '">',
           '  <meta name="author" content="' + author + '">',
-          '  <meta name="robots" content="index,follow">',
+          '',
           '  <meta name="theme-color" content="#0f172a">',
           '',
-          '  <meta property="og:type" content="website">',
-          '  <meta property="og:title" content="' + title + '">',
-          '  <meta property="og:description" content="' + description + '">'
+          '',
+          '',
+          ''
         ];
 
         if (canonicalUrl) {
-          lines.push('  <meta property="og:url" content="' + canonicalUrl + '">');
+          lines.push('');
           lines.push('');
         }
 
         lines.push(
           '',
-          '  <meta name="twitter:card" content="summary">',
-          '  <meta name="twitter:title" content="' + title + '">',
-          '  <meta name="twitter:description" content="' + description + '">',
+          '',
+          '',
+          '',
           '</head>'
         );
 

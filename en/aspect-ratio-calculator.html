@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aspect Ratio Calculator | Free Online Tool</title>
-  <meta name="description" content="Image/video aspect ratio calculator. Enter the original width and height, then provide a new width to automatically calculate the proportional height.">
-  <meta name="keywords" content="Aspect Ratio Calculator, online tool, browser tool, productivity tool">
+  <title>Aspect Ratio Calculator - 图片/视频宽高比计算器</title>
+  <meta name="description" content="图片/视频宽高比计算器。输入原始宽高，给定一个新的宽度，自动计算出保持原有比例的等比高度。">
+  <meta name="keywords" content="aspect ratio calculator, 宽高比计算器, 图片宽高比计算, 视频比例计算器, 等比缩放计算器, 图片尺寸计算, 视频尺寸换算, 保持比例计算高度">
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
@@ -17,6 +15,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/aspect-ratio-calculator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/aspect-ratio-calculator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/aspect-ratio-calculator.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/aspect-ratio-calculator.html">
+  <meta property="og:title" content="Aspect Ratio Calculator - 图片/视频宽高比计算器">
+  <meta property="og:description" content="图片/视频宽高比计算器。输入原始宽高，给定一个新的宽度，自动计算出保持原有比例的等比高度。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Aspect Ratio Calculator - 图片/视频宽高比计算器">
+  <meta name="twitter:description" content="图片/视频宽高比计算器。输入原始宽高，给定一个新的宽度，自动计算出保持原有比例的等比高度。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -41,6 +49,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <div class="pointer-events-none fixed inset-0 overflow-hidden">
     <div class="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
     <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
@@ -49,11 +62,11 @@
   <main class="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 py-6 sm:px-6 lg:px-8">
     <header class="mb-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-6 py-8 text-center shadow-2xl shadow-cyan-950/30 backdrop-blur md:py-12">
       <div class="mx-auto mb-4 inline-flex items-center rounded-full border border-cyan-300/30 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-200">
-        Aspect ratio scaling tool for images / videos / design drafts
+        图片 / 视频 / 设计稿等比缩放工具
       </div>
-      <h1 class="bg-gradient-to-r from-cyan-200 via-white to-indigo-200 bg-clip-text text-4xl font-black tracking-tight text-transparent sm:text-5xl md:text-6xl">Aspect Ratio Calculator</h1>
+      <h1 class="bg-gradient-to-r from-cyan-200 via-white to-indigo-200 bg-clip-text text-4xl font-black tracking-tight text-transparent sm:text-5xl md:text-6xl">图片/视频宽高比计算器</h1>
       <p class="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
-        Enter the original width and height plus a new width to instantly calculate the new proportional height, ideal for image cropping, video publishing, responsive web design, and asset size conversion.
+        输入原始宽高与新的宽度，立即计算保持原始比例的新高度，适合图片裁切、视频发布、网页响应式设计与素材尺寸换算。
       </p>
     </header>
 
@@ -61,8 +74,8 @@
       <div class="lg:col-span-3 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-xl shadow-black/30 backdrop-blur sm:p-7">
         <div class="mb-6 flex items-center justify-between gap-4">
           <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Input Size</h2>
-            <p class="mt-1 text-sm text-slate-400">Please enter a number greater than 0. Decimals are allowed.</p>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输入尺寸</h2>
+            <p class="mt-1 text-sm text-slate-400">请填写大于 0 的数字，可输入小数。</p>
           </div>
           <span class="rounded-2xl bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-200 ring-1 ring-cyan-300/20">Input</span>
         </div>
@@ -70,24 +83,24 @@
         <form id="ratioForm" class="space-y-5" novalidate>
           <div class="grid gap-4 sm:grid-cols-2">
             <label class="block">
-              <span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Original width</span>
+              <span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">原始宽度</span>
               <input id="originalWidth" type="text" inputmode="decimal" autocomplete="off" value="1920"
                 class="w-full rounded-2xl border border-slate-700 bg-slate-950/70 px-4 py-3 text-lg text-gray-900 dark:text-white outline-none transition focus:border-cyan-300 focus:ring-4 focus:ring-cyan-400/10"
-                placeholder="e.g. 1920" />
+                placeholder="例如：1920" />
             </label>
             <label class="block">
-              <span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Original height</span>
+              <span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">原始高度</span>
               <input id="originalHeight" type="text" inputmode="decimal" autocomplete="off" value="1080"
                 class="w-full rounded-2xl border border-slate-700 bg-slate-950/70 px-4 py-3 text-lg text-gray-900 dark:text-white outline-none transition focus:border-cyan-300 focus:ring-4 focus:ring-cyan-400/10"
-                placeholder="e.g. 1080" />
+                placeholder="例如：1080" />
             </label>
           </div>
 
           <label class="block">
-            <span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">New width</span>
+            <span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">新的宽度</span>
             <input id="newWidth" type="text" inputmode="decimal" autocomplete="off" value="1280"
               class="w-full rounded-2xl border border-slate-700 bg-slate-950/70 px-4 py-3 text-lg text-gray-900 dark:text-white outline-none transition focus:border-cyan-300 focus:ring-4 focus:ring-cyan-400/10"
-              placeholder="e.g. 1280" />
+              placeholder="例如：1280" />
           </label>
 
           <div id="errorBox" class="hidden rounded-2xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200"></div>
@@ -95,7 +108,7 @@
           <div class="flex flex-col gap-3 sm:flex-row">
             <button id="calculateBtn" type="submit"
               class="flex-1 rounded-2xl bg-gradient-to-r from-cyan-400 to-indigo-500 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:scale-[1.01] hover:shadow-cyan-500/30 active:scale-[0.98]">
-              Calculate Proportional Height
+              Calculate proportional height
             </button>
             <button id="resetBtn" type="button"
               class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-[0.98]">
@@ -108,15 +121,15 @@
       <div class="lg:col-span-2 rounded-3xl border border-cyan-300/20 bg-cyan-950/30 p-5 shadow-xl shadow-cyan-950/30 backdrop-blur sm:p-7">
         <div class="mb-6 flex items-center justify-between gap-4">
           <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Calculation Result</h2>
-            <p class="mt-1 text-sm text-cyan-100/70">Automatically keep the original aspect ratio.</p>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">计算结果</h2>
+            <p class="mt-1 text-sm text-cyan-100/70">自动保持原始宽高比。</p>
           </div>
           <span class="rounded-2xl bg-white dark:bg-white/10 px-3 py-1 text-xs font-semibold text-cyan-100 ring-1 ring-white/10">Output</span>
         </div>
 
         <div class="space-y-4">
           <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/60 p-5">
-            <p class="text-sm font-medium text-slate-400">New height</p>
+            <p class="text-sm font-medium text-slate-400">新的高度</p>
             <div class="mt-3 flex items-end gap-2">
               <output id="newHeightOutput" class="break-all text-5xl font-black tracking-tight text-cyan-200">720</output>
               <span class="pb-2 text-slate-400">px</span>
@@ -125,18 +138,18 @@
 
           <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
             <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-4">
-              <p class="text-xs uppercase tracking-wider text-slate-400">Aspect ratio</p>
+              <p class="text-xs uppercase tracking-wider text-slate-400">宽高比</p>
               <output id="ratioOutput" class="mt-2 block text-xl font-bold text-gray-900 dark:text-white">16:9</output>
             </div>
             <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-4">
-              <p class="text-xs uppercase tracking-wider text-slate-400">New Size</p>
+              <p class="text-xs uppercase tracking-wider text-slate-400">新尺寸</p>
               <output id="sizeOutput" class="mt-2 block text-xl font-bold text-gray-900 dark:text-white">1280 × 720</output>
             </div>
           </div>
 
           <button id="copyBtn" type="button"
             class="w-full rounded-2xl border border-cyan-300/30 bg-cyan-300/10 px-5 py-3 font-semibold text-cyan-100 transition hover:bg-cyan-300/20 active:scale-[0.98]">
-            Copy Result
+            Copy result
           </button>
 
           <div id="copyBox" class="hidden rounded-2xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm font-medium text-emerald-200"></div>
@@ -145,9 +158,10 @@
     </section>
 
     <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl shadow-black/20 backdrop-blur sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Aspect Ratio Calculator</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Image/video aspect ratio calculator. Enter the original width and height, then provide a new width to automatically calculate the proportional height. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Aspect Ratio Calculator for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于图片/视频宽高比计算器</h2>
+      <p>
+        Aspect Ratio Calculator 是一款面向设计师、前端开发者、视频创作者和运营人员的在线宽高比计算器。日常处理图片缩放、视频封面制作、网页响应式布局或社交媒体素材时，经常需要在不拉伸、不变形的前提下调整尺寸。本工具只需输入原始宽度、原始高度以及新的宽度，就能自动计算保持原有比例的新高度，并同步显示宽高比和最终尺寸。无论你想进行 16:9 视频尺寸换算、图片等比缩放计算，还是快速得到适合网页展示的图片高度，都可以通过这个图片/视频宽高比计算器完成。使用方法非常简单：填写原始尺寸，输入目标宽度，点击计算即可获得精准结果，帮助你减少手动换算误差，提升内容制作与前端开发效率。
+      </p>
     </article>
 
     <footer class="py-8 text-center text-sm text-slate-500">
@@ -215,7 +229,7 @@
         calculateBtn.textContent = "Calculated";
         calculateBtn.classList.add("brightness-110");
         window.setTimeout(() => {
-          calculateBtn.textContent = "Calculate Proportional Height";
+          calculateBtn.textContent = "Calculate proportional height";
           calculateBtn.classList.remove("brightness-110");
         }, 650);
       };
@@ -228,32 +242,32 @@
         const newWidth = parsePositiveNumber(newWidthInput.value);
 
         if (!Number.isFinite(originalWidth)) {
-          showError("Please enter a valid original width. It must be a number greater than 0.");
+          showError("Please enter有效的原始宽度，必须是大于 0 的数字。");
           originalWidthInput.focus();
           return false;
         }
 
         if (!Number.isFinite(originalHeight)) {
-          showError("Please enter a valid original height. It must be a number greater than 0.");
+          showError("Please enter有效的原始高度，必须是大于 0 的数字。");
           originalHeightInput.focus();
           return false;
         }
 
         if (!Number.isFinite(newWidth)) {
-          showError("Please enter a valid new width. It must be a number greater than 0.");
+          showError("Please enter有效的新宽度，必须是大于 0 的数字。");
           newWidthInput.focus();
           return false;
         }
 
         if (originalWidth > 100000000 || originalHeight > 100000000 || newWidth > 100000000) {
-          showError("The input value is too large. Please enter a size no greater than 100,000,000.");
+          showError("输入数值过大，Please enter不超过 100,000,000 的尺寸。");
           return false;
         }
 
         const newHeight = (newWidth * originalHeight) / originalWidth;
 
         if (!Number.isFinite(newHeight) || newHeight <= 0) {
-          showError("Calculation failed. Please check whether the input dimensions are valid.");
+          showError("计算失败，请检查输入尺寸是否合理。");
           return false;
         }
 
@@ -305,7 +319,7 @@
         const ok = calculate();
         if (!ok) return;
 
-        const text = `Aspect ratio: ${ratioOutput.textContent}; new size: ${sizeOutput.textContent}px; new height: ${newHeightOutput.textContent}px`;
+        const text = `宽高比：${ratioOutput.textContent}；新尺寸：${sizeOutput.textContent}px；新高度：${newHeightOutput.textContent}px`;
 
         try {
           if (navigator.clipboard && window.isSecureContext) {
@@ -322,14 +336,14 @@
             document.body.removeChild(textarea);
           }
 
-          copyBox.textContent = "Result copied to clipboard.";
+          copyBox.textContent = "结果Copied到剪贴板。";
           copyBox.classList.remove("hidden");
-          copyBtn.textContent = "Copied Successfully";
+          copyBtn.textContent = "Copied";
           window.setTimeout(() => {
-            copyBtn.textContent = "Copy Result";
+            copyBtn.textContent = "Copy result";
           }, 900);
         } catch (error) {
-          showError("Copy failed. Please manually select the result and copy it.");
+          showError("Copy failed，请手动选择结果进行Copy。");
         }
       });
 

@@ -3,15 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lorem Ipsum Generator | Free Online Tool</title>
-  <meta name="description" content="Lorem Ipsum generator. Set the number of paragraphs and words, with support for English and Chinese placeholder text.">
-  <meta name="keywords" content="Lorem Ipsum Generator, online tool, browser tool, productivity tool">
-  <meta name="robots" content="index, follow" />
+  <title>lorem-ipsum-generator｜乱数假文Generate器</title>
+  <meta name="description" content="乱数假文 (Lorem Ipsum) Generate器。可设置Generate的段落数、单词数，支持Generate英文和Chinese占位文本。">
+  <meta name="keywords" content="lorem ipsum generator, 乱数假文Generate器, Chinese占位文本Generate器, 英文假文Generate器, Lorem Ipsum 在线Generate, 段落Generate器, 前端排版测试工具">
   <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
@@ -19,6 +16,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/lorem-ipsum-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/lorem-ipsum-generator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/lorem-ipsum-generator.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/lorem-ipsum-generator.html">
+  <meta property="og:title" content="lorem-ipsum-generator｜乱数假文Generate器">
+  <meta property="og:description" content="乱数假文 (Lorem Ipsum) Generate器。可设置Generate的段落数、单词数，支持Generate英文和Chinese占位文本。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="lorem-ipsum-generator｜乱数假文Generate器">
+  <meta name="twitter:description" content="乱数假文 (Lorem Ipsum) Generate器。可设置Generate的段落数、单词数，支持Generate英文和Chinese占位文本。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
@@ -43,6 +50,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <main class="relative overflow-hidden">
     <div class="pointer-events-none absolute inset-0">
       <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
@@ -55,9 +67,9 @@
           <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
             Free Online Text Placeholder Tool
           </p>
-          <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">Lorem Ipsum Generator</h1>
+          <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">乱数假文Generate器</h1>
           <p class="mt-4 text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
-            Lorem ipsum generator: generate English Lorem Ipsum or Chinese placeholder text as needed, for quick use in web design, UI prototypes, layout testing, and content placeholders.
+            乱数假文Generate器：按需Generate英文 Lorem Ipsum 或Chinese占位文本，快速用于网页设计、UI 原型、排版测试与内容占位。
           </p>
         </div>
       </div>
@@ -66,36 +78,36 @@
     <section class="relative mx-auto grid max-w-6xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-12 lg:px-8">
       <section class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5 shadow-2xl shadow-cyan-950/20 backdrop-blur lg:col-span-4 sm:p-6" aria-labelledby="input-title">
         <div class="mb-6">
-          <h2 id="input-title" class="text-xl font-semibold text-gray-900 dark:text-white">Generation Settings</h2>
-          <p class="mt-2 text-sm text-slate-400">Adjust the language, number of paragraphs, and words per paragraph to generate copyable placeholder text.</p>
+          <h2 id="input-title" class="text-xl font-semibold text-gray-900 dark:text-white">Generate设置</h2>
+          <p class="mt-2 text-sm text-slate-400">调整语言、段落数量和每段单词数，即可Generate可Copy的占位文本。</p>
         </div>
 
         <form id="generatorForm" class="space-y-5" novalidate>
           <div>
-            <label for="language" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Text language</label>
+            <label for="language" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">文本语言</label>
             <select id="language" name="language" class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
-              <option value="english">English Lorem Ipsum</option>
-              <option value="chinese">Chinese placeholder text</option>
+              <option value="english">英文 Lorem Ipsum</option>
+              <option value="chinese">Chinese占位文本</option>
             </select>
           </div>
 
           <div>
-            <label for="paragraphs" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Paragraph Count</label>
+            <label for="paragraphs" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">段落数</label>
             <input id="paragraphs" name="paragraphs" type="number" inputmode="numeric" min="1" max="50" value="3" class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
-            <p class="mt-2 text-xs text-slate-500">Range: 1 - 50</p>
+            <p class="mt-2 text-xs text-slate-500">范围：1 - 50</p>
           </div>
 
           <div>
-            <label for="words" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Words per segment</label>
+            <label for="words" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">每段单词数</label>
             <input id="words" name="words" type="number" inputmode="numeric" min="1" max="500" value="80" class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
-            <p class="mt-2 text-xs text-slate-500">English is counted by words; Chinese by phrases. Range: 1 - 500</p>
+            <p class="mt-2 text-xs text-slate-500">英文按单词计数，Chinese按词组计数。范围：1 - 500</p>
           </div>
 
           <div id="errorBox" class="hidden rounded-2xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-200" role="alert" aria-live="polite"></div>
 
           <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
             <button id="generateBtn" type="submit" class="rounded-2xl bg-cyan-400 px-5 py-3 font-semibold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-cyan-400/30">
-              Generate Placeholder Text
+              Generate假文
             </button>
             <button id="resetBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-5 py-3 font-semibold text-slate-900 dark:text-slate-100 transition hover:bg-slate-800 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-white/10">
               Reset
@@ -107,12 +119,12 @@
       <section class="rounded-3xl border border-cyan-400/20 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-slate-950/40 backdrop-blur lg:col-span-8 sm:p-6" aria-labelledby="output-title">
         <div class="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 id="output-title" class="text-xl font-semibold text-gray-900 dark:text-white">Generated Results</h2>
-            <p id="stats" class="mt-2 text-sm text-slate-400">Current: 3 sections, 80 phrases per section, English</p>
+            <h2 id="output-title" class="text-xl font-semibold text-gray-900 dark:text-white">Generate结果</h2>
+            <p id="stats" class="mt-2 text-sm text-slate-400">当前：3 段，每段 80 个词组，英文</p>
           </div>
           <div class="flex gap-3">
             <button id="copyBtn" type="button" class="rounded-2xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-cyan-400/20">
-              Copy Text
+              Copy文本
             </button>
             <button id="downloadBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-2 text-sm font-semibold text-slate-900 dark:text-slate-100 transition hover:bg-white/10 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-white/10">
               Download .txt
@@ -120,16 +132,19 @@
           </div>
         </div>
 
-        <textarea id="outputText" readonly class="min-h-[430px] w-full resize-y rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-950/90 p-5 text-sm leading-7 text-slate-800 dark:text-slate-200 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 sm:text-base" spellcheck="false" aria-label="Generated random dummy text"></textarea>
+        <textarea id="outputText" readonly class="min-h-[430px] w-full resize-y rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-950/90 p-5 text-sm leading-7 text-slate-800 dark:text-slate-200 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 sm:text-base" spellcheck="false" aria-label="Generate的乱数假文"></textarea>
 
         <div id="successBox" class="mt-4 hidden rounded-2xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200" aria-live="polite"></div>
       </section>
     </section>
 
     <article class="relative mx-auto max-w-6xl px-4 pb-12 sm:px-6 lg:px-8">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Lorem Ipsum Generator</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Lorem Ipsum generator. Set the number of paragraphs and words, with support for English and Chinese placeholder text. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Lorem Ipsum Generator for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-6 text-slate-700 dark:text-slate-300 shadow-2xl shadow-slate-950/30 sm:p-8">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">关于乱数假文Generate器</h2>
+        <p class="mt-4 leading-8">
+          lorem-ipsum-generator 是一款面向设计师、前端开发者、产品经理和内容编辑的在线乱数假文Generate器。制作网页原型、落地页、后台界面或移动端 UI 时，经常需要稳定、自然、长度可控的占位文案来验证版式、行高、卡片间距与响应式布局效果。本工具支持英文 Lorem Ipsum Generate和Chinese占位文本Generate，可自由设置Generate的段落数与每段单词数，避免手动Copy假文导致内容过短、重复或不适配设计稿的问题。使用时只需选择语言，输入段落数量和单词数量，点击“Generate假文”即可得到可Copy的测试文本；也可以一键Download为 TXT 文件，方便导入 CMS、Figma 标注或前端测试数据。对于需要“Chinese lorem ipsum 在线Generate”“网页排版测试占位文本”“多段假文Generate器”等场景的用户，这个零依赖工具能够快速提升原型搭建与内容排版效率。
+        </p>
+      </div>
     </article>
   </main>
 
@@ -142,7 +157,7 @@
       ];
 
       const chineseWords = [
-        "设计","内容","界面","布局","体验","产品","模块","页面","信息","结构","视觉","系统","组件","用户","数据","流程","文本","占位","原型","方案","功能","交互","场景","服务","平台","效率","管理","展示","卡片","导航","标题","段落","测试","应用","项目","品牌","需求","响应","优化","策略","空间","节奏","层级","细节","清晰","稳定","灵活","简洁","现代","科技","开发","前端","移动端","桌面端","文案","排版","预览","样式","主题","颜色","按钮","表单","输入","输出","Copy","Download","验证","规范","Page elements","Information architecture","Content area","User Journey","Core Values","Business scenarios","Quick generate","Natural Presentation","Efficient collaboration","Continuous iteration","可读性","一致性","可维护","响应式","轻量化","Online tools"
+        "设计","内容","界面","布局","体验","产品","模块","页面","信息","结构","视觉","系统","组件","用户","数据","流程","文本","占位","原型","方案","功能","交互","场景","服务","平台","效率","管理","展示","卡片","导航","标题","段落","测试","应用","项目","品牌","需求","响应","优化","策略","空间","节奏","层级","细节","清晰","稳定","灵活","简洁","现代","科技","开发","前端","移动端","桌面端","文案","排版","预览","样式","主题","颜色","按钮","表单","输入","输出","Copy","Download","验证","规范","页面元素","信息架构","内容区域","用户旅程","核心价值","业务场景","快速Generate","自然呈现","高效协作","持续迭代","可读性","一致性","可维护","响应式","轻量化","在线工具"
       ];
 
       const form = document.getElementById("generatorForm");
@@ -205,19 +220,19 @@
         const words = parseInteger(wordsEl.value);
 
         if (!["english", "chinese"].includes(language)) {
-          return { ok: false, message: "Please select a valid text language." };
+          return { ok: false, message: "Please select有效的文本语言。" };
         }
         if (!Number.isInteger(paragraphs)) {
-          return { ok: false, message: "The number of paragraphs must be an integer, e.g. 3." };
+          return { ok: false, message: "段落数必须是整数，例如 3。" };
         }
         if (paragraphs < 1 || paragraphs > 50) {
-          return { ok: false, message: "Paragraph count is out of range. Please enter an integer between 1 and 50." };
+          return { ok: false, message: "段落数超出范围，Please enter 1 到 50 之间的整数。" };
         }
         if (!Number.isInteger(words)) {
-          return { ok: false, message: "Words per paragraph must be an integer, e.g. 80." };
+          return { ok: false, message: "每段单词数必须是整数，例如 80。" };
         }
         if (words < 1 || words > 500) {
-          return { ok: false, message: "Words per paragraph is out of range. Enter an integer between 1 and 500." };
+          return { ok: false, message: "每段单词数超出范围，Please enter 1 到 500 之间的整数。" };
         }
 
         return { ok: true, language, paragraphs, words };
@@ -296,7 +311,7 @@
       const updateStats = (language, paragraphs, words) => {
         const langLabel = language === "english" ? "英文" : "Chinese";
         const unit = language === "english" ? "个单词" : "个词组";
-        stats.textContent = `Current: ${paragraphs} paragraphs, ${words} ${unit} per paragraph, ${langLabel}`;
+        stats.textContent = `当前：${paragraphs} 段，每段 ${words} ${unit}，${langLabel}`;
       };
 
       const runGenerate = () => {
@@ -313,10 +328,10 @@
           const text = generateText(validated);
           outputText.value = text;
           updateStats(validated.language, validated.paragraphs, validated.words);
-          showSuccess("Placeholder text generated successfully.");
+          showSuccess("假文已成功Generate。");
           return true;
         } catch (err) {
-          showError("An error occurred during generation. Please adjust the parameters and try again.");
+          showError("Generate过程中出现异常，请调整参数后重试。");
           return false;
         } finally {
           window.setTimeout(() => {
@@ -343,7 +358,7 @@
         hideError();
         const text = String(outputText.value || "");
         if (!text.trim()) {
-          showError("There is no content to copy. Please generate dummy text first.");
+          showError("当前没有可Copy的内容，请先Generate假文。");
           return;
         }
 
@@ -357,9 +372,9 @@
             window.getSelection && window.getSelection().removeAllRanges();
             if (!copied) throw new Error("copy failed");
           }
-          showSuccess("Text copied to clipboard.");
+          showSuccess("文本Copied到剪贴板。");
         } catch (err) {
-          showError("Copy failed. Please select the text manually and copy it.");
+          showError("Copy failed，请手动选Chinese本后Copy。");
         }
       });
 
@@ -367,7 +382,7 @@
         hideError();
         const text = String(outputText.value || "");
         if (!text.trim()) {
-          showError("There is no content to download. Please generate dummy text first.");
+          showError("当前没有可Download的内容，请先Generate假文。");
           return;
         }
 
@@ -382,9 +397,9 @@
           a.click();
           a.remove();
           URL.revokeObjectURL(url);
-          showSuccess("TXT file download has started.");
+          showSuccess("TXT download has started.");
         } catch (err) {
-          showError("Download failed. Please copy the text and save it manually.");
+          showError("Download失败，请Copy文本后手动保存。");
         }
       });
 

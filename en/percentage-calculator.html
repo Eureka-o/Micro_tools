@@ -3,14 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Percentage Calculator | Free Online Tool</title>
-  <meta name="description" content="Multi-purpose percentage calculator. Examples: &#x27;What percent is X of Y?&#x27; and &#x27;What is X increased by Y%?&#x27; Updates in real time with calculation steps.">
-  <meta name="keywords" content="Percentage Calculator, online tool, browser tool, productivity tool">
-  <meta name="robots" content="index,follow" />
+  <title>percentage-calculator - 多功能百分比计算器</title>
+  <meta name="description" content="多功能百分比计算器。例如&#x27;X是Y的百分之几&#x27;、&#x27;X增加Y%是多少&#x27;，实时响应输入并给出计算过程。">
+  <meta name="keywords" content="percentage-calculator,百分比计算器,在线百分比计算,X是Y的百分之几,X增加Y%是多少,百分比变化计算器,增长率计算,折扣计算器">
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
@@ -18,6 +15,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/percentage-calculator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/percentage-calculator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/percentage-calculator.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/percentage-calculator.html">
+  <meta property="og:title" content="percentage-calculator - 多功能百分比计算器">
+  <meta property="og:description" content="多功能百分比计算器。例如&#x27;X是Y的百分之几&#x27;、&#x27;X增加Y%是多少&#x27;，实时响应输入并给出计算过程。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="percentage-calculator - 多功能百分比计算器">
+  <meta name="twitter:description" content="多功能百分比计算器。例如&#x27;X是Y的百分之几&#x27;、&#x27;X增加Y%是多少&#x27;，实时响应输入并给出计算过程。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -42,6 +49,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <div class="absolute inset-0 -z-10 overflow-hidden">
     <div class="absolute left-1/2 top-0 h-80 w-80 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
     <div class="absolute right-0 top-48 h-72 w-72 rounded-full bg-violet-500/20 blur-3xl"></div>
@@ -53,53 +65,53 @@
       <div class="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
         <div>
           <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-            Real-time calculation · Clear steps · Zero-dependency tool
+            实时计算 · 清晰步骤 · 零依赖工具
           </p>
-          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">Percentage Calculator</h1>
+          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">多功能百分比计算器</h1>
           <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            Multi-purpose percentage calculator for quickly solving common questions like “What percentage of Y is X?”, “What is X increased by Y%?”, and “What is the percentage change from X to Y?”
+            多功能百分比计算器，快速解决“X 是 Y 的百分之几”“X 增加 Y% 是多少”“从 X 到 Y 变化了多少百分比”等常见问题。
           </p>
         </div>
         <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 shadow-2xl">
-          <p class="text-sm text-slate-400">Current calculation mode</p>
-          <p id="modeBadge" class="mt-1 text-lg font-semibold text-cyan-200">What percentage of Y is X?</p>
+          <p class="text-sm text-slate-400">当前计算模式</p>
+          <p id="modeBadge" class="mt-1 text-lg font-semibold text-cyan-200">X 是 Y 的百分之几</p>
         </div>
       </div>
     </div>
   </header>
 
   <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-5" aria-label="Percentage Calculator">
+    <section class="grid gap-6 lg:grid-cols-5" aria-label="百分比计算器">
       <div class="lg:col-span-3">
         <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5 shadow-2xl backdrop-blur sm:p-7">
           <div class="mb-6 flex items-center justify-between gap-4">
             <div>
-              <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Input</h2>
-              <p class="mt-1 text-sm text-slate-400">After selecting a calculation type, enter values and the result will update in real time.</p>
+              <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输入区</h2>
+              <p class="mt-1 text-sm text-slate-400">选择计算类型后输入数值，结果会实时更新。</p>
             </div>
             <button id="resetBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:border-cyan-300/60 hover:bg-cyan-400/10 active:scale-95">
               Reset
             </button>
           </div>
 
-          <label for="calcType" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Calculation Type</label>
+          <label for="calcType" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">计算类型</label>
           <select id="calcType" class="mb-5 w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10">
-            <option value="partOfTotal">What percentage of Y is X?</option>
-            <option value="percentOf">What is Y% of X?</option>
-            <option value="increase">What is X increased by Y%?</option>
-            <option value="decrease">What is X decreased by Y%?</option>
-            <option value="baseFromPercent">X is Y% of what number?</option>
-            <option value="change">What is the percentage change from X to Y?</option>
+            <option value="partOfTotal">X 是 Y 的百分之几？</option>
+            <option value="percentOf">X 的 Y% 是多少？</option>
+            <option value="increase">X 增加 Y% 是多少？</option>
+            <option value="decrease">X 减少 Y% 是多少？</option>
+            <option value="baseFromPercent">X 是哪个数的 Y%？</option>
+            <option value="change">从 X 到 Y 变化了百分之几？</option>
           </select>
 
           <div class="grid gap-4 sm:grid-cols-2">
             <div>
-              <label id="labelX" for="inputX" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">X value</label>
-              <input id="inputX" inputmode="decimal" autocomplete="off" placeholder="Example: 50" class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
+              <label id="labelX" for="inputX" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">X 数值</label>
+              <input id="inputX" inputmode="decimal" autocomplete="off" placeholder="例如：50" class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
             </div>
             <div>
-              <label id="labelY" for="inputY" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Y value</label>
-              <input id="inputY" inputmode="decimal" autocomplete="off" placeholder="e.g., 200" class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
+              <label id="labelY" for="inputY" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Y 数值</label>
+              <input id="inputY" inputmode="decimal" autocomplete="off" placeholder="例如：200" class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
             </div>
           </div>
 
@@ -107,16 +119,16 @@
 
           <div class="mt-6 grid gap-3 sm:grid-cols-2">
             <button id="calcBtn" type="button" class="rounded-2xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98]">
-              Calculate Now
+              立即计算
             </button>
             <button id="copyBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-5 py-3 font-bold text-slate-800 dark:text-slate-200 transition hover:border-emerald-300/60 hover:bg-emerald-400/10 active:scale-[0.98]">
-              Copy Result
+              Copy result
             </button>
           </div>
 
           <div class="mt-5 rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-900/70 p-4 text-sm leading-6 text-slate-400">
-            <strong class="text-slate-800 dark:text-slate-200">Input hint:</strong>
-            Supports negative numbers, decimals, thousands separators, and percentages, for example <span class="text-cyan-200">1,250.5</span>、<span class="text-cyan-200">12.8%</span>. If the divisor or percentage is 0 and cannot be calculated, an error will be shown.
+            <strong class="text-slate-800 dark:text-slate-200">输入提示：</strong>
+            支持负数、小数、千分位逗号和百分号，例如 <span class="text-cyan-200">1,250.5</span>、<span class="text-cyan-200">12.8%</span>。除数或百分率为 0 且无法计算时会给出错误提示。
           </div>
         </div>
       </div>
@@ -124,39 +136,43 @@
       <div class="lg:col-span-2">
         <div class="h-full rounded-3xl border border-cyan-300/20 bg-cyan-400/[0.08] p-5 shadow-2xl backdrop-blur sm:p-7">
           <div class="mb-6">
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Output</h2>
-            <p class="mt-1 text-sm text-slate-700 dark:text-slate-300">Results and calculation steps will appear here.</p>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输出区</h2>
+            <p class="mt-1 text-sm text-slate-700 dark:text-slate-300">结果与计算过程会在这里显示。</p>
           </div>
 
           <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-950/70 p-6">
             <p class="text-sm font-semibold uppercase tracking-widest text-cyan-200">Result</p>
             <div id="resultValue" class="mt-3 break-words text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">--</div>
-            <p id="resultSubtitle" class="mt-3 text-sm text-slate-400">Please enter a valid number to start calculating.</p>
+            <p id="resultSubtitle" class="mt-3 text-sm text-slate-400">Please enter有效数值开始计算。</p>
           </div>
 
           <div class="mt-5 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/60 p-5">
-            <h3 class="mb-3 text-lg font-bold text-gray-900 dark:text-white">Calculation Process</h3>
+            <h3 class="mb-3 text-lg font-bold text-gray-900 dark:text-white">计算过程</h3>
             <div id="steps" class="space-y-2 text-sm leading-6 text-slate-700 dark:text-slate-300">
-              <p>Select a calculation type and enter X and Y to automatically show the formula and steps.</p>
+              <p>选择计算类型并输入 X、Y 后，将自动展示公式和步骤。</p>
             </div>
           </div>
 
           <div id="copyNotice" class="mt-5 hidden rounded-2xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm font-semibold text-emerald-200">
-            Copied to clipboard.
+            Copied到剪贴板。
           </div>
         </div>
       </div>
     </section>
 
     <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Percentage Calculator</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Multi-purpose percentage calculator. Examples: &#x27;What percent is X of Y?&#x27; and &#x27;What is X increased by Y%?&#x27; Updates in real time with calculation steps. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Percentage Calculator for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 percentage-calculator 百分比计算器</h2>
+      <p>
+        percentage-calculator 是一个面向学习、办公、财务核算和电商运营场景的在线百分比计算器。很多人在处理折扣、增长率、利润率、考试得分比例或数据报表时，都会遇到“X 是 Y 的百分之几”“X 增加 Y% 是多少”“从 X 到 Y 变化了多少百分比”等问题。手动计算不仅容易混淆公式，还可能因小数、负数或除数为零导致结果错误。本工具将常见百分比问题整合到同一个界面中，输入数值后实时响应，并同步展示完整计算过程，帮助用户快速核对公式与结果。
+      </p>
+      <p class="mt-4">
+        使用时只需选择对应的计算类型，在输入框中填写 X 与 Y，即可得到精确结果。它支持小数、负数、千分位数字以及带百分号的输入，适合用于在线折扣计算、百分比变化计算、增长率计算、占比计算和基础数反推。无论你是在制作数据分析报告、比较销售业绩，还是计算商品涨价或降价后的金额，这款免费多功能百分比计算器都能提供简洁、稳定、可Copy的计算结果。
+      </p>
     </article>
   </main>
 
   <footer class="border-t border-gray-200 dark:border-white/10 py-8 text-center text-sm text-slate-500">
-    <p>percentage-calculator · Online Multifunction Percentage Calculator</p>
+    <p>percentage-calculator · 在线多功能百分比计算工具</p>
   </footer>
 
   <script>
@@ -178,46 +194,46 @@
 
       const modes = {
         partOfTotal: {
-          badge: 'What percentage of Y is X?',
-          x: 'X: partial value',
-          y: 'Y: Total value',
-          px: 'Example: 50',
-          py: 'e.g., 200'
+          badge: 'X 是 Y 的百分之几',
+          x: 'X：部分数值',
+          y: 'Y：总数值',
+          px: '例如：50',
+          py: '例如：200'
         },
         percentOf: {
-          badge: 'What is Y% of X?',
-          x: 'X: base value',
-          y: 'Y: Percentage',
-          px: 'e.g., 200',
-          py: 'e.g., 15%'
+          badge: 'X 的 Y% 是多少',
+          x: 'X：基础数值',
+          y: 'Y：百分比',
+          px: '例如：200',
+          py: '例如：15%'
         },
         increase: {
-          badge: 'What is X increased by Y%?',
-          x: 'X: original value',
-          y: 'Y: Increase Percentage',
-          px: 'e.g., 100',
-          py: 'e.g., 20%'
+          badge: 'X 增加 Y% 是多少',
+          x: 'X：原始数值',
+          y: 'Y：增加百分比',
+          px: '例如：100',
+          py: '例如：20%'
         },
         decrease: {
-          badge: 'What is X decreased by Y%?',
-          x: 'X: original value',
-          y: 'Y: Decrease Percentage',
-          px: 'e.g., 100',
-          py: 'e.g., 20%'
+          badge: 'X 减少 Y% 是多少',
+          x: 'X：原始数值',
+          y: 'Y：减少百分比',
+          px: '例如：100',
+          py: '例如：20%'
         },
         baseFromPercent: {
-          badge: 'What number is X's Y%?',
-          x: 'X: known partial values',
-          y: 'Y: Percentage',
-          px: 'Example: 30',
-          py: 'e.g., 15%'
+          badge: 'X 是哪个数的 Y%',
+          x: 'X：已知部分数值',
+          y: 'Y：百分比',
+          px: '例如：30',
+          py: '例如：15%'
         },
         change: {
-          badge: 'Percentage change from X to Y',
-          x: 'X: original value',
-          y: 'Y: New value',
-          px: 'Example: 80',
-          py: 'e.g., 100'
+          badge: '从 X 到 Y 的百分比变化',
+          x: 'X：原始数值',
+          y: 'Y：新数值',
+          px: '例如：80',
+          py: '例如：100'
         }
       };
 
@@ -231,29 +247,29 @@
       const parseNumber = (raw, name) => {
         const original = String(raw ?? '').trim();
         if (original === '') {
-          return { ok: false, message: `Please fill in ${name}.` };
+          return { ok: false, message: `请填写 ${name}。` };
         }
 
         let normalized = original.replace(/\s+/g, '').replace(/,/g, '');
         const percentSigns = (normalized.match(/%/g) || []).length;
         if (percentSigns > 1 || (percentSigns === 1 && !normalized.endsWith('%'))) {
-          return { ok: false, message: `The percentage format of ${name} is invalid. Enter a value like 12% or 12.5.` };
+          return { ok: false, message: `${name} 的百分号格式不正确，Please enter如 12% 或 12.5。` };
         }
         normalized = normalized.replace(/%$/, '');
 
         if (!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(normalized)) {
-          return { ok: false, message: `${name} is not a valid number. Check for invalid characters.` };
+          return { ok: false, message: `${name} 不是有效数字，请检查是否包含非法字符。` };
         }
 
         const value = Number(normalized);
         if (!Number.isFinite(value)) {
-          return { ok: false, message: `${name} is outside the calculable range. Please enter a more reasonable number.` };
+          return { ok: false, message: `${name} 超出可计算范围，Please enter更合理的数字。` };
         }
         return { ok: true, value };
       };
 
       const formatNumber = (num, suffix = '') => {
-        if (!Number.isFinite(num)) return 'Cannot calculate';
+        if (!Number.isFinite(num)) return '无法计算';
         const abs = Math.abs(num);
         let formatted;
         if ((abs !== 0 && abs < 0.000001) || abs >= 1e15) {
@@ -271,7 +287,7 @@
         errorBox.textContent = message;
         errorBox.classList.remove('hidden');
         resultValue.textContent = '--';
-        resultSubtitle.textContent = 'Please correct the input and recalculate.';
+        resultSubtitle.textContent = '请修正输入后重新计算。';
         steps.innerHTML = `<p class="text-red-200">${escapeHtml(message)}</p>`;
       };
 
@@ -297,8 +313,8 @@
           if (inputX.value.trim() === '' && inputY.value.trim() === '') {
             clearError();
             resultValue.textContent = '--';
-            resultSubtitle.textContent = 'Please enter a valid number to start calculating.';
-            steps.innerHTML = '<p>Select a calculation type and enter X and Y to automatically show the formula and steps.</p>';
+            resultSubtitle.textContent = 'Please enter有效数值开始计算。';
+            steps.innerHTML = '<p>选择计算类型并输入 X、Y 后，将自动展示公式和步骤。</p>';
             return null;
           }
           showError(xParsed.message);
@@ -320,75 +336,75 @@
 
         if (type === 'partOfTotal') {
           if (y === 0) {
-            showError('Y cannot be 0 because calculating “what percentage X is of Y” requires X ÷ Y.');
+            showError('Y 不能为 0，因为计算 “X 是 Y 的百分之几” 需要用 X ÷ Y。');
             return null;
           }
           result = (x / y) * 100;
-          subtitle = `${formatNumber(x)} is ${formatNumber(result, '%')} of ${formatNumber(y)}`;
+          subtitle = `${formatNumber(x)} 是 ${formatNumber(y)} 的 ${formatNumber(result, '%')}`;
           stepItems = [
-            `Formula: Percentage = X ÷ Y × 100%`,
-            `Substitute: ${formatNumber(x)} ÷ ${formatNumber(y)} × 100%`,
-            `Result: ${formatNumber(result, '%')}`
+            `公式：百分比 = X ÷ Y × 100%`,
+            `代入：${formatNumber(x)} ÷ ${formatNumber(y)} × 100%`,
+            `结果：${formatNumber(result, '%')}`
           ];
           setResult(formatNumber(result, '%'), subtitle, stepItems);
         } else if (type === 'percentOf') {
           result = x * y / 100;
-          subtitle = `${formatNumber(y, '%')} of ${formatNumber(x)} is ${formatNumber(result)}`;
+          subtitle = `${formatNumber(x)} 的 ${formatNumber(y, '%')} 是 ${formatNumber(result)}`;
           stepItems = [
-            `Formula: result = X × Y ÷ 100`,
-            `Substitute: ${formatNumber(x)} × ${formatNumber(y)} ÷ 100`,
-            `Result: ${formatNumber(result)}`
+            `公式：结果 = X × Y ÷ 100`,
+            `代入：${formatNumber(x)} × ${formatNumber(y)} ÷ 100`,
+            `结果：${formatNumber(result)}`
           ];
           setResult(formatNumber(result), subtitle, stepItems);
         } else if (type === 'increase') {
           result = x * (1 + y / 100);
           const added = result - x;
-          subtitle = `${formatNumber(x)} increased by ${formatNumber(y, '%')} is ${formatNumber(result)}`;
+          subtitle = `${formatNumber(x)} 增加 ${formatNumber(y, '%')} 后为 ${formatNumber(result)}`;
           stepItems = [
-            `Formula: Result = X × (1 + Y ÷ 100)`,
-            `Substitute: ${formatNumber(x)} × (1 + ${formatNumber(y)} ÷ 100)`,
-            `Increase: ${formatNumber(added)}`,
-            `Result: ${formatNumber(result)}`
+            `公式：结果 = X × (1 + Y ÷ 100)`,
+            `代入：${formatNumber(x)} × (1 + ${formatNumber(y)} ÷ 100)`,
+            `增加量：${formatNumber(added)}`,
+            `结果：${formatNumber(result)}`
           ];
           setResult(formatNumber(result), subtitle, stepItems);
         } else if (type === 'decrease') {
           result = x * (1 - y / 100);
           const reduced = x - result;
-          subtitle = `${formatNumber(x)} decreased by ${formatNumber(y, '%')} is ${formatNumber(result)}`;
+          subtitle = `${formatNumber(x)} 减少 ${formatNumber(y, '%')} 后为 ${formatNumber(result)}`;
           stepItems = [
-            `Formula: Result = X × (1 - Y ÷ 100)`,
-            `Substitute: ${formatNumber(x)} × (1 - ${formatNumber(y)} ÷ 100)`,
-            `Reduction: ${formatNumber(reduced)}`,
-            `Result: ${formatNumber(result)}`
+            `公式：结果 = X × (1 - Y ÷ 100)`,
+            `代入：${formatNumber(x)} × (1 - ${formatNumber(y)} ÷ 100)`,
+            `减少量：${formatNumber(reduced)}`,
+            `结果：${formatNumber(result)}`
           ];
           setResult(formatNumber(result), subtitle, stepItems);
         } else if (type === 'baseFromPercent') {
           if (y === 0) {
-            showError('Y cannot be 0, because calculating “X is Y% of what number” requires X ÷ (Y ÷ 100).');
+            showError('Y 不能为 0，因为计算 “X 是哪个数的 Y%” 需要用 X ÷ (Y ÷ 100)。');
             return null;
           }
           result = x / (y / 100);
-          subtitle = `${formatNumber(x)} is ${formatNumber(y, '%')} of ${formatNumber(result)}`;
+          subtitle = `${formatNumber(x)} 是 ${formatNumber(result)} 的 ${formatNumber(y, '%')}`;
           stepItems = [
-            `Formula: Base number = X ÷ (Y ÷ 100)`,
-            `Substitute: ${formatNumber(x)} ÷ (${formatNumber(y)} ÷ 100)`,
-            `Result: ${formatNumber(result)}`
+            `公式：基础数 = X ÷ (Y ÷ 100)`,
+            `代入：${formatNumber(x)} ÷ (${formatNumber(y)} ÷ 100)`,
+            `结果：${formatNumber(result)}`
           ];
           setResult(formatNumber(result), subtitle, stepItems);
         } else if (type === 'change') {
           if (x === 0) {
-            showError('X cannot be 0 because percentage change requires (Y - X) ÷ X.');
+            showError('X 不能为 0，因为百分比变化需要用 (Y - X) ÷ X。');
             return null;
           }
           result = ((y - x) / x) * 100;
           const diff = y - x;
-          const direction = result > 0 ? '增加' : result < 0 ? '减少' : 'No Changes';
-          subtitle = `From ${formatNumber(x)} to ${formatNumber(y)}, ${direction} ${formatNumber(Math.abs(result), '%')}`;
+          const direction = result > 0 ? '增加' : result < 0 ? '减少' : '没有变化';
+          subtitle = `从 ${formatNumber(x)} 到 ${formatNumber(y)}，${direction} ${formatNumber(Math.abs(result), '%')}`;
           stepItems = [
-            `Formula: Percentage change = (Y - X) ÷ X × 100%`,
-            `Difference: ${formatNumber(y)} - ${formatNumber(x)} = ${formatNumber(diff)}`,
-            `Substitute: ${formatNumber(diff)} ÷ ${formatNumber(x)} × 100%`,
-            `Result: ${formatNumber(result, '%')} (${direction})`
+            `公式：变化百分比 = (Y - X) ÷ X × 100%`,
+            `差值：${formatNumber(y)} - ${formatNumber(x)} = ${formatNumber(diff)}`,
+            `代入：${formatNumber(diff)} ÷ ${formatNumber(x)} × 100%`,
+            `结果：${formatNumber(result, '%')}（${direction}）`
           ];
           setResult(formatNumber(result, '%'), subtitle, stepItems);
         }
@@ -423,7 +439,7 @@
       const copyResult = async () => {
         const data = validateAndCalculate();
         if (!data) return;
-        const text = `percentage-calculator result: ${data.resultText}\n${data.subtitle}\n${data.steps}`;
+        const text = `percentage-calculator 计算结果：${data.resultText}\n${data.subtitle}\n${data.steps}`;
         try {
           if (navigator.clipboard && window.isSecureContext) {
             await navigator.clipboard.writeText(text);
@@ -441,7 +457,7 @@
           copyNotice.classList.remove('hidden');
           window.setTimeout(() => copyNotice.classList.add('hidden'), 1800);
         } catch (err) {
-          showError('Copy failed. Please manually select the result text to copy.');
+          showError('Copy failed，请手动选择结果文本进行Copy。');
         }
       };
 
@@ -459,8 +475,8 @@
         inputY.value = '';
         clearError();
         resultValue.textContent = '--';
-        resultSubtitle.textContent = 'Please enter a valid number to start calculating.';
-        steps.innerHTML = '<p>Select a calculation type and enter X and Y to automatically show the formula and steps.</p>';
+        resultSubtitle.textContent = 'Please enter有效数值开始计算。';
+        steps.innerHTML = '<p>选择计算类型并输入 X、Y 后，将自动展示公式和步骤。</p>';
         copyNotice.classList.add('hidden');
         flashButton(resetBtn, 'Reset');
         inputX.focus();

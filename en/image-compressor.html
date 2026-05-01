@@ -3,15 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Pure frontend WebP image compression converter. Uses HTML5 Canvas to convert uploaded PNG/JPG images to highly compressed WebP format in the browser and download them.">
-  <meta name="keywords" content="Image Compressor, online tool, browser tool, productivity tool">
-  <meta name="robots" content="index, follow" />
+  <meta name="description" content="纯前端 WebP 图片压缩转换器。利用HTML5 Canvas将上传的PNG/JPG图片在浏览器端转换为高压缩比的WebP格式并Download。">
+  <meta name="keywords" content="image-compressor, WebP图片压缩, PNG转WebP, JPG转WebP, 图片压缩工具, 在线图片转换器, 前端图片压缩, Canvas图片压缩, 高压缩比WebP">
   <meta name="theme-color" content="#0f172a" />
-  <title>Image Compressor | Free Online Tool</title>
+  <title>image-compressor - 纯前端 WebP 图片压缩转换器</title>
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
@@ -19,6 +16,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/image-compressor.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/image-compressor.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/image-compressor.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/image-compressor.html">
+  <meta property="og:title" content="image-compressor - 纯前端 WebP 图片压缩转换器">
+  <meta property="og:description" content="纯前端 WebP 图片压缩转换器。利用HTML5 Canvas将上传的PNG/JPG图片在浏览器端转换为高压缩比的WebP格式并Download。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="image-compressor - 纯前端 WebP 图片压缩转换器">
+  <meta name="twitter:description" content="纯前端 WebP 图片压缩转换器。利用HTML5 Canvas将上传的PNG/JPG图片在浏览器端转换为高压缩比的WebP格式并Download。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -43,6 +50,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <div class="absolute inset-0 -z-10 overflow-hidden">
     <div class="absolute left-1/2 top-[-10rem] h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
     <div class="absolute bottom-[-12rem] right-[-8rem] h-[30rem] w-[30rem] rounded-full bg-indigo-500/20 blur-3xl"></div>
@@ -53,17 +65,17 @@
       <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-            Frontend only · Privacy-safe · High-compression WebP
+            纯前端 · 隐私安全 · WebP 高压缩
           </p>
-          <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">Image Compressor</h1>
+          <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">纯前端 WebP 图片压缩转换器</h1>
           <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            Upload a PNG / JPG image and convert and compress it to WebP locally in the browser via HTML5 Canvas, with no server upload required.
+            上传 PNG / JPG 图片，在浏览器本地通过 HTML5 Canvas 转换并压缩为 WebP 格式，无需上传服务器。
           </p>
         </div>
         <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 text-sm text-slate-700 dark:text-slate-300 shadow-2xl">
           <div class="flex items-center gap-2">
             <span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
-            <span>Processed locally; files never leave your device</span>
+            <span>本地处理，文件不离开你的设备</span>
           </div>
         </div>
       </div>
@@ -75,8 +87,8 @@
       <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl sm:p-7">
         <div class="mb-6 flex items-center justify-between gap-4">
           <div>
-            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">Input</h2>
-            <p class="mt-1 text-sm text-slate-400">Select PNG, JPG, or JPEG images. Multiple files can be selected at once.</p>
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">输入区</h2>
+            <p class="mt-1 text-sm text-slate-400">选择 PNG、JPG 或 JPEG 图片，可一次选择多张。</p>
           </div>
           <span class="rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">Input</span>
         </div>
@@ -85,8 +97,8 @@
           <svg class="mb-4 h-12 w-12 text-cyan-300 transition group-hover:scale-110" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5a4.5 4.5 0 0 1-.96-8.898 5.25 5.25 0 0 1 10.233-2.33 3.75 3.75 0 0 1 1.977 7.071M6.75 19.5h10.5" />
           </svg>
-          <p class="text-lg font-medium text-gray-900 dark:text-white">Click to select an image or drag it here</p>
-          <p class="mt-2 text-sm text-slate-400">Supports .png, .jpg, .jpeg; recommended single file size is under 20MB</p>
+          <p class="text-lg font-medium text-gray-900 dark:text-white">点击选择图片或拖拽到此处</p>
+          <p class="mt-2 text-sm text-slate-400">支持 .png、.jpg、.jpeg，单张建议不超过 20MB</p>
           <input id="fileInput" type="file" accept="image/png,image/jpeg" multiple class="hidden" />
         </div>
 
@@ -96,23 +108,23 @@
         <div class="mt-6 grid gap-5 sm:grid-cols-2">
           <label class="block rounded-2xl bg-white dark:bg-slate-950/60 p-4">
             <span class="mb-3 flex items-center justify-between text-sm font-medium text-slate-800 dark:text-slate-200">
-              WebP Quality
+              WebP 质量
               <strong id="qualityValue" class="text-cyan-300">75%</strong>
             </span>
             <input id="qualityRange" type="range" min="10" max="100" value="75" class="h-2 w-full cursor-pointer accent-cyan-400" />
-            <span class="mt-2 block text-xs text-slate-500">Lower values reduce size but also lower image quality.</span>
+            <span class="mt-2 block text-xs text-slate-500">数值越低体积越小，画质也会下降。</span>
           </label>
 
           <label class="block rounded-2xl bg-white dark:bg-slate-950/60 p-4">
-            <span class="mb-3 block text-sm font-medium text-slate-800 dark:text-slate-200">Maximum width (optional)</span>
-            <input id="maxWidthInput" type="number" min="1" max="20000" placeholder="e.g. 1920" class="w-full rounded-xl border border-slate-700 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20" />
-            <span class="mt-2 block text-xs text-slate-500">Leave blank to keep the original size. Enter a value to scale proportionally.</span>
+            <span class="mb-3 block text-sm font-medium text-slate-800 dark:text-slate-200">最大宽度（可选）</span>
+            <input id="maxWidthInput" type="number" min="1" max="20000" placeholder="例如 1920" class="w-full rounded-xl border border-slate-700 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20" />
+            <span class="mt-2 block text-xs text-slate-500">留空则保持原始尺寸，输入后按比例缩放。</span>
           </label>
         </div>
 
         <div class="mt-6 flex flex-col gap-3 sm:flex-row">
           <button id="compressBtn" class="inline-flex flex-1 items-center justify-center rounded-2xl bg-cyan-400 px-5 py-3 font-semibold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-slate-400 disabled:shadow-none">
-            Start compression and conversion
+            开始压缩转换
           </button>
           <button id="resetBtn" class="inline-flex items-center justify-center rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-[0.98]">
             Clear
@@ -125,34 +137,34 @@
       <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/20 p-5 shadow-2xl sm:p-7">
         <div class="mb-6 flex items-center justify-between gap-4">
           <div>
-            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">Output</h2>
-            <p class="mt-1 text-sm text-cyan-100/70">View the compression result and download the WebP image.</p>
+            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">输出区</h2>
+            <p class="mt-1 text-sm text-cyan-100/70">查看压缩结果，Download WebP 图片。</p>
           </div>
           <span class="rounded-full bg-cyan-400/10 px-3 py-1 text-xs text-cyan-200">Output</span>
         </div>
 
         <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
           <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/50 p-4">
-            <p class="text-xs text-slate-400">Selected File</p>
+            <p class="text-xs text-slate-400">已选文件</p>
             <p id="statFiles" class="mt-2 text-2xl font-bold text-gray-900 dark:text-white">0</p>
           </div>
           <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/50 p-4">
-            <p class="text-xs text-slate-400">Original size</p>
+            <p class="text-xs text-slate-400">原始大小</p>
             <p id="statOriginal" class="mt-2 text-2xl font-bold text-gray-900 dark:text-white">0 KB</p>
           </div>
           <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/50 p-4">
-            <p class="text-xs text-slate-400">Compressed</p>
+            <p class="text-xs text-slate-400">压缩后</p>
             <p id="statCompressed" class="mt-2 text-2xl font-bold text-gray-900 dark:text-white">0 KB</p>
           </div>
           <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/50 p-4">
-            <p class="text-xs text-slate-400">Savings Ratio</p>
+            <p class="text-xs text-slate-400">节省比例</p>
             <p id="statSaved" class="mt-2 text-2xl font-bold text-emerald-300">0%</p>
           </div>
         </div>
 
         <div id="progressWrap" class="mt-6 hidden">
           <div class="mb-2 flex items-center justify-between text-sm text-slate-700 dark:text-slate-300">
-            <span id="progressText">Processing...</span>
+            <span id="progressText">处理中...</span>
             <span id="progressPercent">0%</span>
           </div>
           <div class="h-3 overflow-hidden rounded-full bg-slate-50 dark:bg-slate-800">
@@ -162,25 +174,26 @@
 
         <div class="mt-6 flex flex-col gap-3 sm:flex-row">
           <button id="downloadAllBtn" disabled class="inline-flex flex-1 items-center justify-center rounded-2xl bg-emerald-400 px-5 py-3 font-semibold text-slate-950 dark:text-slate-100 shadow-lg shadow-emerald-400/20 transition hover:bg-emerald-300 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-slate-400 disabled:shadow-none">
-            Download all WebP
+            Download全部 WebP
           </button>
           <button id="copyReportBtn" disabled class="inline-flex items-center justify-center rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-[0.98] disabled:cursor-not-allowed disabled:text-slate-500">
-            Copy Result
+            Copy result
           </button>
         </div>
 
         <div id="resultList" class="mt-6 space-y-4">
           <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-950/40 p-8 text-center text-slate-400">
-            The converted WebP image will appear here.
+            转换后的 WebP 图片会显示在这里。
           </div>
         </div>
       </div>
     </section>
 
     <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Image Compressor</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Pure frontend WebP image compression converter. Uses HTML5 Canvas to convert uploaded PNG/JPG images to highly compressed WebP format in the browser and download them. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Image Compressor for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 image-compressor WebP 图片压缩转换器</h2>
+      <p>
+        image-compressor 是一款面向设计师、站长、前端开发者和内容运营人员的纯前端 WebP 图片压缩工具。它通过 HTML5 Canvas 在浏览器本地读取 PNG、JPG、JPEG 图片，并将其转换为体积更小、加载更快的 WebP 格式，适合用于网站性能优化、移动端页面提速、博客配图压缩和电商商品图处理。与传统在线图片压缩网站不同，本工具不会把图片上传到服务器，所有转换过程都在你的设备中完成，既能减少等待时间，也能更好地保护隐私数据。使用时只需拖拽或选择图片，调整 WebP 质量参数，必要时设置最大宽度，然后点击开始压缩转换，即可DownloadGenerate的 WebP 文件。对于正在寻找“PNG 转 WebP 在线工具”“JPG 图片压缩为 WebP”“无需上传的前端图片压缩器”等解决方案的用户，image-compressor 能提供快速、简洁、可靠的体验，帮助降低图片体积、提升网页打开速度，并改善 SEO 与核心网页指标表现。
+      </p>
     </article>
   </main>
 
@@ -317,7 +330,7 @@
       progressWrap.classList.remove('hidden');
       progressBar.style.width = `${percent}%`;
       progressPercent.textContent = `${percent}%`;
-      progressText.textContent = current >= total ? 'Processing Complete' : `正在处理 ${current} / ${total}`;
+      progressText.textContent = current >= total ? '处理完成' : `正在处理 ${current} / ${total}`;
     }
 
     function resetProgress() {
@@ -329,7 +342,7 @@
 
     function renderResults() {
       if (!results.length) {
-        resultList.innerHTML = '<div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-950/40 p-8 text-center text-slate-400">The converted WebP image will appear here.</div>';
+        resultList.innerHTML = '<div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-950/40 p-8 text-center text-slate-400">转换后的 WebP 图片会显示在这里。</div>';
         return;
       }
 
@@ -431,7 +444,7 @@
       const originalHeight = img.naturalHeight || img.height;
 
       if (!originalWidth || !originalHeight) {
-        throw new Error(`“${file.name}”无法获取Image dimensions。`);
+        throw new Error(`“${file.name}”无法获取图片尺寸。`);
       }
 
       let targetWidth = originalWidth;
@@ -496,7 +509,7 @@
       if (invalid.length) {
         showError(`已忽略不支持的文件：${invalid.slice(0, 5).join('、')}${invalid.length > 5 ? ' 等' : ''}。请上传 PNG、JPG 或 JPEG 图片。`);
       } else {
-        showSuccess(`已选择 ${valid.length} 张图片，可Start compression and conversion。`);
+        showSuccess(`已选择 ${valid.length} 张图片，可开始压缩转换。`);
       }
 
       selectedFiles = selectedFiles.concat(valid);
@@ -572,20 +585,20 @@
           renderResults();
           updateStats();
         } catch (err) {
-          errors.push(err && err.message ? err.message : `第 ${i + 1} 张图片Processing Failed。`);
+          errors.push(err && err.message ? err.message : `第 ${i + 1} 张图片处理失败。`);
         }
       }
 
       setProgress(selectedFiles.length, selectedFiles.length);
       isProcessing = false;
       compressBtn.disabled = false;
-      compressBtn.textContent = 'Start compression and conversion';
+      compressBtn.textContent = '开始压缩转换';
       updateStats();
 
       if (results.length && errors.length) {
-        showError(`部分图片Processing Complete，但有 ${errors.length} 个错误：${errors.slice(0, 3).join('；')}`);
+        showError(`部分图片处理完成，但有 ${errors.length} 个错误：${errors.slice(0, 3).join('；')}`);
       } else if (results.length) {
-        showSuccess(`Conversion Complete！已Generate ${results.length} 个 WebP 文件。`);
+        showSuccess(`转换完成！已Generate ${results.length} 个 WebP 文件。`);
       } else {
         showError(errors.length ? errors.slice(0, 3).join('；') : '未能Generate WebP 文件，请检查图片是否有效。');
       }
@@ -619,7 +632,7 @@
 
     async function copyReport() {
       if (!results.length) {
-        showError('No conversion result to copy.');
+        showError('没有可Copy的转换结果。');
         return;
       }
 
@@ -627,19 +640,19 @@
       const totalCompressed = results.reduce((sum, item) => sum + item.blob.size, 0);
       const saved = totalOriginal > 0 ? Math.round((1 - totalCompressed / totalOriginal) * 100) : 0;
       const lines = [
-        'image-compressor Conversion Result',
+        'image-compressor 转换结果',
         `文件数量：${results.length}`,
-        `Original size：${formatBytes(totalOriginal)}`,
+        `原始Size:${formatBytes(totalOriginal)}`,
         `压缩后：${formatBytes(totalCompressed)}`,
-        `Savings Ratio：${saved}%`,
+        `节省比例：${saved}%`,
         ...results.map(item => `${item.originalName} -> ${item.outputName}，${formatBytes(item.originalSize)} -> ${formatBytes(item.blob.size)}，${item.width}x${item.height}px`)
       ];
 
       try {
         await navigator.clipboard.writeText(lines.join('\n'));
-        showSuccess('转换Result copied to clipboard.');
+        showSuccess('转换结果Copied到剪贴板。');
       } catch (err) {
-        showError('Copy Failed：当前浏览器或页面权限不允许访问剪贴板。');
+        showError('Copy failed：当前浏览器或页面权限不允许访问剪贴板。');
       }
     }
 

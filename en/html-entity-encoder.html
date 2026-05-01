@@ -3,14 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="HTML entity escaping tool. Convert special characters such as &lt;, &gt;, and &amp; into HTML entities to help prevent XSS attacks.">
-  <meta name="keywords" content="HTML Entity Encoder, online tool, browser tool, productivity tool">
-  <meta name="robots" content="index, follow" />
-  <title>HTML Entity Encoder | Free Online Tool</title>
+  <meta name="description" content="HTML 实体转义工具。将特殊字符（如 &lt;, &gt;, &amp;）转换为HTML实体代码，防止XSS攻击。">
+  <meta name="keywords" content="HTML实体转义工具, HTML Entity Encoder, HTML转义, XSS防护工具, 特殊字符转义, HTML编码, 前端安全工具">
+  <title>html-entity-encoder - HTML 实体转义工具</title>
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -27,6 +24,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/html-entity-encoder.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/html-entity-encoder.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/html-entity-encoder.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/html-entity-encoder.html">
+  <meta property="og:title" content="html-entity-encoder - HTML 实体转义工具">
+  <meta property="og:description" content="HTML 实体转义工具。将特殊字符（如 &lt;, &gt;, &amp;）转换为HTML实体代码，防止XSS攻击。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="html-entity-encoder - HTML 实体转义工具">
+  <meta name="twitter:description" content="HTML 实体转义工具。将特殊字符（如 &lt;, &gt;, &amp;）转换为HTML实体代码，防止XSS攻击。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -51,6 +58,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <div class="fixed inset-0 -z-10 overflow-hidden">
     <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/30 blur-3xl"></div>
     <div class="absolute bottom-10 left-10 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
@@ -64,13 +76,13 @@
           <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
             Frontend Security Utility
           </p>
-          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">HTML Entity Encoder</h1>
+          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">HTML 实体转义工具</h1>
           <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            HTML entity escape tool: converts special characters into safe HTML entity codes, reducing XSS injection risk and making page content display more reliably.
+            HTML 实体转义工具：将特殊字符转换为安全的 HTML 实体代码，降低 XSS 注入风险，让页面内容展示更可靠。
           </p>
         </div>
         <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 text-sm text-slate-700 dark:text-slate-300 shadow-2xl">
-          <div class="font-semibold text-gray-900 dark:text-white">Supports escaping</div>
+          <div class="font-semibold text-gray-900 dark:text-white">支持转义</div>
           <div class="mt-1 font-mono text-cyan-200">&lt; &gt; &amp; " ' ` = /</div>
         </div>
       </div>
@@ -78,12 +90,12 @@
   </header>
 
   <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-2" aria-label="HTML entity escape tool main interface">
+    <section class="grid gap-6 lg:grid-cols-2" aria-label="HTML 实体转义工具主界面">
       <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl">
         <div class="mb-4 flex items-center justify-between gap-3">
           <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Input Content</h2>
-            <p class="mt-1 text-sm text-slate-400">Paste HTML, script snippets, or plain text that need to be displayed safely.</p>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入内容</h2>
+            <p class="mt-1 text-sm text-slate-400">粘贴需要安全展示的 HTML、脚本片段或普通文本。</p>
           </div>
           <span id="inputCount" class="shrink-0 rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">0 characters</span>
         </div>
@@ -91,29 +103,29 @@
         <textarea
           id="inputText"
           class="min-h-80 w-full rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
-          placeholder="Example: <script>alert('XSS')</script>"
+          placeholder="示例：<script>alert('XSS')</script>"
           spellcheck="false"
           maxlength="200000"
-          aria-label="HTML text to escape"
+          aria-label="待转义的 HTML 文本"
         ></textarea>
 
         <div class="mt-4 grid gap-3 sm:grid-cols-2">
           <label class="flex cursor-pointer items-center gap-3 rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/60 p-3 text-sm text-slate-700 dark:text-slate-300">
             <input id="encodeQuotes" type="checkbox" checked class="h-4 w-4 accent-cyan-400" />
-            Escape Single and Double Quotes
+            转义单双引号
           </label>
           <label class="flex cursor-pointer items-center gap-3 rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/60 p-3 text-sm text-slate-700 dark:text-slate-300">
             <input id="encodeNonAscii" type="checkbox" class="h-4 w-4 accent-cyan-400" />
-            Non-ASCII to numeric entities
+            非 ASCII 转数字实体
           </label>
         </div>
 
         <div class="mt-5 flex flex-col gap-3 sm:flex-row">
           <button id="encodeBtn" class="inline-flex flex-1 items-center justify-center rounded-2xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-[0.98]">
-            Escape Now
+            立即转义
           </button>
           <button id="sampleBtn" class="inline-flex items-center justify-center rounded-2xl border border-slate-600 bg-slate-50 dark:bg-slate-800 px-5 py-3 font-semibold text-slate-900 dark:text-slate-100 transition hover:bg-slate-700 active:scale-[0.98]">
-            Fill Example
+            填入示例
           </button>
           <button id="clearBtn" class="inline-flex items-center justify-center rounded-2xl border border-rose-400/40 bg-rose-500/10 px-5 py-3 font-semibold text-rose-200 transition hover:bg-rose-500/20 active:scale-[0.98]">
             Clear
@@ -124,8 +136,8 @@
       <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/30 p-5 shadow-2xl">
         <div class="mb-4 flex items-center justify-between gap-3">
           <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Output result</h2>
-            <p class="mt-1 text-sm text-cyan-100/70">Encoded HTML entities, ready to copy into a page for safe display.</p>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输出结果</h2>
+            <p class="mt-1 text-sm text-cyan-100/70">已编码的 HTML 实体，可直接Copy到页面中安全展示。</p>
           </div>
           <span id="outputCount" class="shrink-0 rounded-full bg-cyan-400/10 px-3 py-1 text-xs text-cyan-200">0 characters</span>
         </div>
@@ -133,24 +145,24 @@
         <textarea
           id="outputText"
           class="min-h-80 w-full rounded-2xl border border-cyan-400/20 bg-slate-950/90 p-4 font-mono text-sm leading-6 text-cyan-50 outline-none transition focus:border-cyan-300 focus:ring-4 focus:ring-cyan-400/10"
-          placeholder="Escaped result will appear here..."
+          placeholder="转义结果将显示在这里..."
           spellcheck="false"
           readonly
-          aria-label="HTML entity escape result"
+          aria-label="HTML 实体转义结果"
         ></textarea>
 
         <div class="mt-5 flex flex-col gap-3 sm:flex-row">
           <button id="copyBtn" class="inline-flex flex-1 items-center justify-center rounded-2xl bg-white px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg transition hover:bg-cyan-50 active:scale-[0.98]">
-            Copy Result
+            Copy result
           </button>
           <button id="selectBtn" class="inline-flex items-center justify-center rounded-2xl border border-cyan-300/30 bg-cyan-400/10 px-5 py-3 font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-[0.98]">
-            Select all results
+            全选结果
           </button>
         </div>
 
         <div class="mt-4 rounded-2xl border border-cyan-400/20 bg-slate-950/50 p-4 text-sm leading-6 text-slate-700 dark:text-slate-300">
-          <strong class="text-cyan-200">Tip:</strong>
-          The encoded content is suitable for display in HTML text nodes. If writing to attributes, URLs, or JavaScript contexts, apply context-specific security handling as needed.
+          <strong class="text-cyan-200">提示：</strong>
+          编码后的内容适合放入 HTML 文本节点中展示。如果要写入属性、URL 或 JavaScript 上下文，请结合对应场景继续进行上下文安全处理。
         </div>
       </div>
     </section>
@@ -158,14 +170,19 @@
     <div id="messageBox" class="mt-6 hidden rounded-2xl border px-4 py-3 text-sm font-medium" role="alert" aria-live="polite"></div>
 
     <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-6 shadow-2xl sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About HTML Entity Encoder</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">HTML entity escaping tool. Convert special characters such as &lt;, &gt;, and &amp; into HTML entities to help prevent XSS attacks. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use HTML Entity Encoder for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">关于 HTML 实体转义工具</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">
+        html-entity-encoder 是一款面向前端开发者、内容运营人员和安全测试人员的在线 HTML 实体转义工具。它可以将
+        &lt;、&gt;、&amp;、双引号、单引号等特殊字符转换为标准 HTML 实体代码，避免浏览器把用户输入误解析为真实标签或脚本，从而降低 XSS 跨站脚本攻击风险。在评论系统、富文本预览、日志展示、代码片段发布以及后台管理页面中，经常需要安全输出不可信文本，本工具正是为这些场景提供快速、可靠的 HTML 编码能力。
+      </p>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">
+        使用方法非常简单：将需要处理的 HTML characters串、JavaScript 片段或普通文本粘贴到输入框，按下“立即转义”即可获得编码结果；如需处理Chinese、Emoji 或其他非 ASCII characters，也可以启用“非 ASCII 转数字实体”。通过这个免费的 HTML Entity Encoder，你可以快速完成特殊字符转义、HTML 文本安全展示和基础 XSS 防护检查，提升前端页面的安全性与可维护性。
+      </p>
     </article>
   </main>
 
   <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-    <p>html-entity-encoder · HTML Entity Escaping and Front-End Security Helper</p>
+    <p>html-entity-encoder · HTML 实体转义与前端安全辅助工具</p>
   </footer>
 
   <script>
@@ -244,13 +261,13 @@
           if (!raw.trim()) {
             outputText.value = '';
             updateCounts();
-            showMessage('Please enter需要转义的内容，输入Cannot be empty.', 'error');
+            showMessage('Please enter需要转义的内容，输入不能为空。', 'error');
             inputText.focus();
             return;
           }
 
           if (raw.length > MAX_LENGTH) {
-            showMessage(`Input Content过长，最多允许 ${MAX_LENGTH} 个字符。`, 'error');
+            showMessage(`输入内容过长，最多允许 ${MAX_LENGTH} 个字符。`, 'error');
             return;
           }
 
@@ -259,21 +276,21 @@
           updateCounts();
 
           if (result === raw) {
-            showMessage('Processing Complete：未发现需要转义的特殊字符。', 'warning');
+            showMessage('处理完成：未发现需要转义的特殊字符。', 'warning');
           } else {
             showMessage('转义成功，结果已Generate。', 'success');
           }
         } catch (error) {
           outputText.value = '';
           updateCounts();
-          showMessage('Processing Failed：Input Content无法安全解析，请检查后重试。', 'error');
+          showMessage('处理失败：输入内容无法安全解析，请检查后重试。', 'error');
         }
       }
 
       async function copyOutput() {
         const text = outputText.value;
         if (!text) {
-          showMessage('No result to copy，请先进行转义。', 'error');
+          showMessage('没有可Copy的结果，请先进行转义。', 'error');
           return;
         }
 
@@ -291,14 +308,14 @@
           const original = copyBtn.textContent;
           copyBtn.textContent = 'Copied';
           copyBtn.classList.add('bg-emerald-300');
-          showMessage('Result copied to clipboard.', 'success');
+          showMessage('结果Copied到剪贴板。', 'success');
 
           window.setTimeout(() => {
             copyBtn.textContent = original;
             copyBtn.classList.remove('bg-emerald-300');
           }, 1200);
         } catch (error) {
-          showMessage('Copy failed. Please select the result manually and copy it.', 'error');
+          showMessage('Copy failed，请手动选择结果后Copy。', 'error');
         }
       }
 
@@ -306,7 +323,7 @@
         inputText.value = '';
         outputText.value = '';
         updateCounts();
-        showMessage('Content cleared.', 'success');
+        showMessage('内容已Clear。', 'success');
         inputText.focus();
       }
 
@@ -314,7 +331,7 @@
         inputText.value = `<div class="comment">
   <strong>用户输入：</strong>
   <script>alert('XSS & HTML injection')</script>
-  <a href="/search?q=<test>">View Details</a>
+  <a href="/search?q=<test>">查看详情</a>
 </div>`;
         handleEncode();
       }
@@ -326,7 +343,7 @@
         }
         outputText.focus();
         outputText.select();
-        showMessage('All output results selected.', 'success');
+        showMessage('已全选输出结果。', 'success');
       }
 
       inputText.addEventListener('input', () => {

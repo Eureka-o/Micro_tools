@@ -3,15 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Roman numeral and Arabic numeral conversion tool. Supports Roman numerals up to 3999 and includes error prompts for invalid input.">
-  <meta name="keywords" content="Roman Numeral Converter, online tool, browser tool, productivity tool">
-  <meta name="robots" content="index,follow" />
+  <meta name="description" content="罗马数字与阿拉伯数字互转工具。最高支持转换到3999的罗马数字系统，包含非法输入的错误提示。">
+  <meta name="keywords" content="roman-numeral-converter,罗马数字转换器,阿拉伯数字转罗马数字,罗马数字转阿拉伯数字,罗马数字在线转换,数字转换工具">
   <meta name="theme-color" content="#0f172a" />
-  <title>Roman Numeral Converter | Free Online Tool</title>
+  <title>roman-numeral-converter｜罗马数字与阿拉伯数字互转工具</title>
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -29,6 +26,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/roman-numeral-converter.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/roman-numeral-converter.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/roman-numeral-converter.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/roman-numeral-converter.html">
+  <meta property="og:title" content="roman-numeral-converter｜罗马数字与阿拉伯数字互转工具">
+  <meta property="og:description" content="罗马数字与阿拉伯数字互转工具。最高支持转换到3999的罗马数字系统，包含非法输入的错误提示。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="roman-numeral-converter｜罗马数字与阿拉伯数字互转工具">
+  <meta name="twitter:description" content="罗马数字与阿拉伯数字互转工具。最高支持转换到3999的罗马数字系统，包含非法输入的错误提示。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
@@ -53,6 +60,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <div class="pointer-events-none fixed inset-0 overflow-hidden">
     <div class="absolute -top-32 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-blue-500/20 blur-3xl"></div>
     <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-cyan-400/10 blur-3xl"></div>
@@ -62,36 +74,36 @@
     <div class="mx-auto flex max-w-6xl flex-col gap-5 px-5 py-10 sm:px-8 lg:px-10">
       <div class="inline-flex w-fit items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/10 px-4 py-2 text-sm text-blue-200">
         <span class="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_16px_rgba(52,211,153,0.85)]"></span>
-        Supports the standard Roman numeral system from 1 to 3999
+        支持 1 - 3999 标准罗马数字系统
       </div>
       <div>
-        <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">Roman Numeral Converter</h1>
+        <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">罗马数字与阿拉伯数字互转工具</h1>
         <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
-          Quickly convert between Roman numerals and Arabic numbers with automatic invalid format checking. Useful for learning, writing, typography, historical data, and development testing.
+          快速完成罗马数字与阿拉伯数字互转，自动校验非法格式，适合学习、写作、排版、历史资料整理与开发测试场景。
         </p>
       </div>
     </div>
   </header>
 
   <main class="relative mx-auto max-w-6xl px-5 py-8 sm:px-8 lg:px-10">
-    <section class="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]" aria-label="Roman numeral conversion tool">
+    <section class="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]" aria-label="罗马数字转换工具">
       <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5 shadow-glow backdrop-blur sm:p-7">
         <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Input</h2>
-            <p class="mt-1 text-sm text-slate-400">Select a conversion direction and enter the content to convert.</p>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输入区</h2>
+            <p class="mt-1 text-sm text-slate-400">选择转换方向并输入需要转换的内容。</p>
           </div>
           <div class="rounded-2xl bg-white dark:bg-slate-900/80 p-1">
             <button id="modeNumberToRoman" type="button" class="mode-btn rounded-xl px-4 py-2 text-sm font-semibold transition bg-blue-500 text-gray-900 dark:text-white shadow-lg shadow-blue-500/25" data-mode="numberToRoman">
-              Number → Roman
+              数字 → 罗马
             </button>
             <button id="modeRomanToNumber" type="button" class="mode-btn rounded-xl px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300 transition hover:bg-white/10" data-mode="romanToNumber">
-              Roman → Number
+              罗马 → 数字
             </button>
           </div>
         </div>
 
-        <label for="converterInput" id="inputLabel" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Please enter an integer from 1 to 3999</label>
+        <label for="converterInput" id="inputLabel" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Please enter 1 到 3999 的整数</label>
         <div class="relative">
           <input
             id="converterInput"
@@ -100,22 +112,22 @@
             autocomplete="off"
             spellcheck="false"
             maxlength="40"
-            placeholder="e.g. 2024"
+            placeholder="例如：2024"
             class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-900/90 px-4 py-4 pr-12 text-lg text-gray-900 dark:text-white outline-none transition placeholder:text-slate-600 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20"
             aria-describedby="helperText errorBox"
           />
           <div class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500" aria-hidden="true">↵</div>
         </div>
-        <p id="helperText" class="mt-3 text-sm text-slate-400">Arabic numerals only support integers from 1 to 3999.</p>
+        <p id="helperText" class="mt-3 text-sm text-slate-400">阿拉伯数字只支持整数 1-3999。</p>
 
         <div id="errorBox" class="mt-4 hidden rounded-2xl border border-red-400/40 bg-red-500/15 px-4 py-3 text-sm font-medium text-red-100" role="alert"></div>
 
         <div class="mt-6 grid gap-3 sm:grid-cols-3">
           <button id="convertBtn" type="button" class="rounded-2xl bg-blue-500 px-5 py-3 font-bold text-gray-900 dark:text-white shadow-lg shadow-blue-500/25 transition hover:bg-blue-400 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-blue-500/30">
-            Start conversion
+            开始转换
           </button>
           <button id="swapBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-5 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:bg-white/15 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-white/10">
-            Switch direction
+            切换方向
           </button>
           <button id="clearBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-5 py-3 font-bold text-slate-700 dark:text-slate-300 transition hover:bg-slate-800 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-white/10">
             Clear
@@ -126,10 +138,10 @@
       <div class="rounded-3xl border border-cyan-300/15 bg-cyan-950/20 p-5 shadow-glow backdrop-blur sm:p-7">
         <div class="mb-6 flex items-start justify-between gap-4">
           <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Output</h2>
-            <p class="mt-1 text-sm text-cyan-100/70">The conversion result will appear here.</p>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输出区</h2>
+            <p class="mt-1 text-sm text-cyan-100/70">转换结果会显示在这里。</p>
           </div>
-          <span id="statusBadge" class="rounded-full border border-slate-600 bg-slate-100 dark:bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-400">Waiting for Input</span>
+          <span id="statusBadge" class="rounded-full border border-slate-600 bg-slate-100 dark:bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-400">等待输入</span>
         </div>
 
         <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-950/75 p-5">
@@ -139,28 +151,29 @@
 
         <div class="mt-5 grid gap-3 sm:grid-cols-2">
           <button id="copyBtn" type="button" class="rounded-2xl bg-emerald-500 px-5 py-3 font-bold text-emerald-950 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-400 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-emerald-500/30">
-            Copy Result
+            Copy result
           </button>
           <button id="exampleBtn" type="button" class="rounded-2xl border border-cyan-300/20 bg-cyan-400/10 px-5 py-3 font-bold text-cyan-100 transition hover:bg-cyan-400/15 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-cyan-400/20">
-            Fill Example
+            填入示例
           </button>
         </div>
 
         <div class="mt-6 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-4 text-sm leading-6 text-slate-700 dark:text-slate-300">
-          <p class="font-semibold text-gray-900 dark:text-white">Rule Hint</p>
+          <p class="font-semibold text-gray-900 dark:text-white">规则提示</p>
           <ul class="mt-2 list-inside list-disc space-y-1">
-            <li>Supports up to 3999, i.e. Roman numeral MMMCMXCIX.</li>
-            <li>Supports standard subtractive notation, such as IV, IX, XL, XC, CD, and CM.</li>
-            <li>Non-standard forms such as IIII, VV, IC, and MMMM will be treated as invalid input.</li>
+            <li>最大支持 3999，即罗马数字 MMMCMXCIX。</li>
+            <li>支持标准减法写法，例如 IV、IX、XL、XC、CD、CM。</li>
+            <li>IIII、VV、IC、MMMM 等非标准写法会被判定为非法输入。</li>
           </ul>
         </div>
       </div>
     </section>
 
     <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-6 leading-8 text-slate-700 dark:text-slate-300 backdrop-blur sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Roman Numeral Converter</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Roman numeral and Arabic numeral conversion tool. Supports Roman numerals up to 3999 and includes error prompts for invalid input. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Roman Numeral Converter for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于罗马数字与阿拉伯数字互转工具</h2>
+      <p>
+        roman-numeral-converter 是一款面向学习、办公与开发场景的在线罗马数字转换器，可在浏览器中快速完成阿拉伯数字转罗马数字、罗马数字转阿拉伯数字等常见需求。传统罗马数字存在固定书写规则，例如 I、V、X、L、C、D、M 的组合以及 IV、IX、XL、XC、CD、CM 等减法表示，手动换算容易出错。本工具最高支持 3999 的标准罗马数字系统，并内置严格校验机制，当输入为空、数字超出范围，或出现 IIII、IC、MMMM 等非法罗马数字格式时，会立即给出清晰的错误提示。使用时只需选择转换方向，输入整数或罗马数字，点击“开始转换”即可得到结果，还可以一键Copy。无论你是在整理历史资料、设计章节编号、校对文档标题，还是寻找一个免费的罗马数字在线转换工具，本页面都能提供简洁、准确、响应迅速的转换体验。
+      </p>
     </article>
   </main>
 
@@ -211,7 +224,7 @@
         elements.errorBox.textContent = message;
         elements.errorBox.classList.remove('hidden');
         elements.input.classList.add('border-red-400', 'focus:border-red-400', 'focus:ring-red-500/20');
-        setStatus('Invalid Input', 'error');
+        setStatus('输入有误', 'error');
       }
 
       function setStatus(text, type) {
@@ -258,27 +271,27 @@
           const raw = String(elements.input.value || '').trim();
 
           if (raw.length === 0) {
-            throw new Error('Please enter content to convert.');
+            throw new Error('Please enter需要转换的内容。');
           }
 
           if (raw.length > 30) {
-            throw new Error('Input is too long. Please check and enter it again.');
+            throw new Error('输入内容过长，请检查后重新输入。');
           }
 
           let result = '';
 
           if (mode === 'numberToRoman') {
             if (!/^[+-]?\d+$/.test(raw)) {
-              throw new Error('Please enter a valid integer, such as 2024. Do not include decimals, spaces, or other characters.');
+              throw new Error('Please enter有效整数，例如 2024。不要包含小数、空格或其他字符。');
             }
 
             const num = Number(raw);
             if (!Number.isSafeInteger(num)) {
-              throw new Error('The number is too large. Please enter an integer from 1 to 3999.');
+              throw new Error('数字过大，Please enter 1 到 3999 之间的整数。');
             }
 
             if (num < 1 || num > 3999) {
-              throw new Error('Out of supported range: enter an integer from 1 to 3999.');
+              throw new Error('超出支持范围：Please enter 1 到 3999 之间的整数。');
             }
 
             result = numberToRoman(num);
@@ -286,16 +299,16 @@
           } else {
             const roman = raw.toUpperCase().replace(/\s+/g, '');
             if (!/^[IVXLCDM]+$/i.test(roman)) {
-              throw new Error('Roman numerals can only contain I, V, X, L, C, D, and M.');
+              throw new Error('罗马数字只能包含 I、V、X、L、C、D、M 这些字符。');
             }
 
             if (!validRomanPattern.test(roman)) {
-              throw new Error('Invalid Roman numeral format. Use standard notation, such as IV, IX, XL, XC, CD, or CM.');
+              throw new Error('非法罗马数字格式。请使用标准写法，例如 IV、IX、XL、XC、CD、CM。');
             }
 
             const num = romanToNumber(roman);
             if (num < 1 || num > 3999 || numberToRoman(num) !== roman) {
-              throw new Error('This Roman numeral is outside the standard range of 1 to 3999.');
+              throw new Error('该罗马数字不在 1 到 3999 的标准范围内。');
             }
 
             result = String(num);
@@ -305,18 +318,18 @@
 
           lastResult = result;
           elements.resultOutput.textContent = result;
-          setStatus('Conversion Successful', 'success');
+          setStatus('转换成功', 'success');
 
           elements.convertBtn.textContent = '已转换';
           elements.convertBtn.classList.add('bg-blue-400');
           window.setTimeout(() => {
-            elements.convertBtn.textContent = 'Start conversion';
+            elements.convertBtn.textContent = '开始转换';
             elements.convertBtn.classList.remove('bg-blue-400');
           }, 650);
         } catch (err) {
           lastResult = '';
           elements.resultOutput.textContent = '—';
-          setError(err && err.message ? err.message : 'An unknown error occurred. Please check the input and try again.');
+          setError(err && err.message ? err.message : '发生Unknown错误，请检查输入内容后重试。');
         }
       }
 
@@ -325,7 +338,7 @@
         setError('');
         lastResult = '';
         elements.resultOutput.textContent = '—';
-        setStatus('Waiting for Input', 'idle');
+        setStatus('等待输入', 'idle');
 
         elements.modeButtons.forEach((btn) => {
           const active = btn.dataset.mode === mode;
@@ -335,15 +348,15 @@
         });
 
         if (mode === 'numberToRoman') {
-          elements.inputLabel.textContent = 'Please enter an integer from 1 to 3999';
-          elements.helperText.textContent = 'Arabic numerals only support integers from 1 to 3999.';
-          elements.input.placeholder = 'e.g. 2024';
+          elements.inputLabel.textContent = 'Please enter 1 到 3999 的整数';
+          elements.helperText.textContent = '阿拉伯数字只支持整数 1-3999。';
+          elements.input.placeholder = '例如：2024';
           elements.input.inputMode = 'numeric';
           elements.outputType.textContent = 'Roman Numeral';
         } else {
-          elements.inputLabel.textContent = 'Please enter a standard Roman numeral';
-          elements.helperText.textContent = 'Roman numerals only support I, V, X, L, C, D, M, up to MMMCMXCIX.';
-          elements.input.placeholder = 'Example: MMXXIV';
+          elements.inputLabel.textContent = 'Please enter标准罗马数字';
+          elements.helperText.textContent = '罗马数字仅支持 I、V、X、L、C、D、M，最大 MMMCMXCIX。';
+          elements.input.placeholder = '例如：MMXXIV';
           elements.input.inputMode = 'text';
           elements.outputType.textContent = 'Arabic Number';
         }
@@ -354,7 +367,7 @@
         elements.resultOutput.textContent = '—';
         lastResult = '';
         setError('');
-        setStatus('Waiting for Input', 'idle');
+        setStatus('等待输入', 'idle');
         elements.input.focus();
       }
 
@@ -362,7 +375,7 @@
         try {
           setError('');
           if (!lastResult) {
-            throw new Error('No conversion result available to copy.');
+            throw new Error('当前没有可Copy的转换结果。');
           }
 
           if (navigator.clipboard && window.isSecureContext) {
@@ -377,7 +390,7 @@
             temp.select();
             const ok = document.execCommand('copy');
             document.body.removeChild(temp);
-            if (!ok) throw new Error('Copy failed. Please manually select and copy the result.');
+            if (!ok) throw new Error('Copy failed，请手动选择结果Copy。');
           }
 
           const original = elements.copyBtn.textContent;
@@ -388,7 +401,7 @@
             elements.copyBtn.classList.remove('bg-emerald-400');
           }, 900);
         } catch (err) {
-          setError(err && err.message ? err.message : 'Copy failed. Please try again later.');
+          setError(err && err.message ? err.message : 'Copy failed，请稍后重试。');
         }
       }
 
@@ -421,7 +434,7 @@
 
       elements.input.addEventListener('input', () => {
         setError('');
-        setStatus('Waiting for Conversion', 'idle');
+        setStatus('等待转换', 'idle');
         if (mode === 'romanToNumber') {
           const start = elements.input.selectionStart;
           const end = elements.input.selectionEnd;

@@ -3,15 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JSON Minifier | Free Online Tool</title>
-  <meta name="description" content="JSON minifier/whitespace remover. Compress formatted JSON into one line by removing extra spaces and line breaks to reduce size.">
-  <meta name="keywords" content="JSON Minifier, online tool, browser tool, productivity tool">
-  <meta name="robots" content="index,follow" />
+  <title>json-minify - JSON 压缩/去空格工具</title>
+  <meta name="description" content="JSON 压缩/去空格工具。将格式化后的JSON代码压缩为一行，去除所有多余空格和换行符，减小体积。">
+  <meta name="keywords" content="json-minify, JSON压缩, JSON去空格, JSON压缩工具,在线JSON压缩, JSON一行化, JSON格式压缩, JSON代码压缩">
   <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
@@ -19,6 +16,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/json-minify.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/json-minify.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/json-minify.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/json-minify.html">
+  <meta property="og:title" content="json-minify - JSON 压缩/去空格工具">
+  <meta property="og:description" content="JSON 压缩/去空格工具。将格式化后的JSON代码压缩为一行，去除所有多余空格和换行符，减小体积。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="json-minify - JSON 压缩/去空格工具">
+  <meta name="twitter:description" content="JSON 压缩/去空格工具。将格式化后的JSON代码压缩为一行，去除所有多余空格和换行符，减小体积。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -43,6 +50,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <div class="fixed inset-0 -z-10 overflow-hidden">
     <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
     <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl"></div>
@@ -55,28 +67,28 @@
           <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
             Online JSON Minifier
           </p>
-          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">JSON Minifier</h1>
+          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">JSON 压缩/去空格工具</h1>
           <p class="mt-3 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            JSON minifier/whitespace remover: compress formatted JSON into one line by removing extra spaces and line breaks to reduce data size.
+            JSON 压缩/去空格工具：将格式化后的 JSON 代码压缩为一行，去除多余空格和换行符，减小数据体积。
           </p>
         </div>
         <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm text-slate-700 dark:text-slate-300 shadow-2xl">
-          <span class="text-cyan-300">Zero-dependency logic</span> · Processed locally in your browser · No data uploaded
+          <span class="text-cyan-300">零依赖逻辑</span> · 本地浏览器处理 · 不上传数据
         </div>
       </div>
     </div>
   </header>
 
   <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-2" aria-label="JSON minifier">
+    <section class="grid gap-6 lg:grid-cols-2" aria-label="JSON 压缩工具">
       <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl">
         <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Input JSON</h2>
-            <p class="mt-1 text-sm text-slate-400">Paste formatted or unformatted JSON content</p>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入 JSON</h2>
+            <p class="mt-1 text-sm text-slate-400">粘贴格式化或未格式化的 JSON 内容</p>
           </div>
           <button id="sampleBtn" type="button" class="rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">
-            Fill Example
+            填入示例
           </button>
         </div>
         <textarea id="inputJson" spellcheck="false" class="h-96 w-full resize-y rounded-2xl border border-slate-700 bg-slate-950/90 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder='Please enter JSON，例如：
@@ -85,25 +97,25 @@
   "features": ["compress", "remove whitespace"]
 }'></textarea>
         <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-400">
-          <span id="inputStats" class="rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1">Input: 0 characters</span>
-          <span class="rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1">Supports objects, arrays, strings, numbers, booleans, and null</span>
+          <span id="inputStats" class="rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1">输入：0 characters</span>
+          <span class="rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1">支持对象、数组、字符串、数字、布尔值和 null</span>
         </div>
       </div>
 
       <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/20 p-5 shadow-2xl">
         <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Compression result</h2>
-            <p class="mt-1 text-sm text-slate-400">Output as single-line JSON, ready to copy and use</p>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">压缩结果</h2>
+            <p class="mt-1 text-sm text-slate-400">输出为单行 JSON，可直接Copy使用</p>
           </div>
           <button id="copyBtn" type="button" class="rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-400/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50" disabled>
-            Copy Result
+            Copy result
           </button>
         </div>
-        <textarea id="outputJson" spellcheck="false" readonly class="h-96 w-full resize-y rounded-2xl border border-cyan-500/30 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-cyan-50 outline-none placeholder:text-slate-600" placeholder="The compressed JSON will appear here"></textarea>
+        <textarea id="outputJson" spellcheck="false" readonly class="h-96 w-full resize-y rounded-2xl border border-cyan-500/30 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-cyan-50 outline-none placeholder:text-slate-600" placeholder="压缩后的 JSON 将显示在这里"></textarea>
         <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-400">
-          <span id="outputStats" class="rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1">Output: 0 characters</span>
-          <span id="saveStats" class="rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1">Saved: 0%</span>
+          <span id="outputStats" class="rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1">输出：0 characters</span>
+          <span id="saveStats" class="rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1">节省：0%</span>
         </div>
       </div>
     </section>
@@ -111,11 +123,11 @@
     <section class="mt-6 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-4 shadow-2xl">
       <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div id="message" class="min-h-10 flex-1 rounded-2xl border border-slate-700 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-sm text-slate-700 dark:text-slate-300">
-          Ready: enter JSON and click “Minify JSON”.
+          准备就绪：Please enter JSON 后点击“压缩 JSON”。
         </div>
         <div class="flex flex-col gap-3 sm:flex-row">
           <button id="minifyBtn" type="button" class="rounded-2xl bg-cyan-400 px-6 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-95">
-            Minify JSON
+            压缩 JSON
           </button>
           <button id="clearBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-50 dark:bg-slate-800 px-6 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-700 active:scale-95">
             Clear
@@ -125,14 +137,18 @@
     </section>
 
     <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About JSON Minifier</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">JSON minifier/whitespace remover. Compress formatted JSON into one line by removing extra spaces and line breaks to reduce size. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use JSON Minifier for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 json-minify JSON 压缩/去空格工具</h2>
+      <p>
+        json-minify 是一款面向前端开发者、后端工程师、测试人员和接口调试场景的在线 JSON 压缩工具。日常开发中，格式化后的 JSON 虽然便于阅读，但会包含大量缩进、空格和换行符，在配置发布、接口传输、日志存储或嵌入脚本时可能造成不必要的体积浪费。本工具可以将 JSON 代码压缩为一行，自动去除多余空白字符，同时通过标准 JSON 解析确保输出内容合法可靠。
+      </p>
+      <p class="mt-4">
+        使用方法非常简单：将需要处理的 JSON 文本粘贴到输入框，点击“压缩 JSON”，即可在结果区获得一行化的 JSON characters串。如果输入存在缺少逗号、引号不匹配、尾随逗号等非法格式，页面会给出清晰的错误提示，帮助你快速定位问题。所有处理均在浏览器本地完成，不会上传你的数据，适合处理接口响应、Mock 数据、前端配置文件和在线 JSON 去空格等需求。对于需要减小 JSON 体积、优化网络传输、快速Copy压缩 JSON 的用户来说，json-minify 是一个轻量、高效且易用的选择。
+      </p>
     </article>
   </main>
 
   <footer class="mx-auto max-w-7xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-    <p>© <span id="year"></span> json-minify · JSON minify/whitespace removal tool</p>
+    <p>© <span id="year"></span> json-minify · JSON 压缩/去空格工具</p>
   </footer>
 
   <script>
@@ -153,12 +169,12 @@
 
       const sample = {
         name: "json-minify",
-        description: "JSON Minifier",
+        description: "JSON 压缩/去空格工具",
         features: [
-          "Compress formatted JSON into one line",
-          "Remove extra spaces and line breaks",
-          "Validate JSON format",
-          "Processed in your browser"
+          "将格式化 JSON 压缩为一行",
+          "去除多余空格和换行",
+          "校验 JSON 格式",
+          "本地浏览器处理"
         ],
         config: {
           safe: true,
@@ -187,22 +203,22 @@
       function updateStats() {
         const inputLen = inputJson.value.length;
         const outputLen = outputJson.value.length;
-        inputStats.textContent = `Input: ${inputLen.toLocaleString('zh-CN')} characters`;
-        outputStats.textContent = `Output: ${outputLen.toLocaleString('zh-CN')} characters`;
+        inputStats.textContent = `输入：${inputLen.toLocaleString('zh-CN')} characters`;
+        outputStats.textContent = `输出：${outputLen.toLocaleString('zh-CN')} characters`;
 
         if (inputLen > 0 && outputLen > 0) {
           const saved = Math.max(0, ((inputLen - outputLen) / inputLen) * 100);
-          saveStats.textContent = `Saved: ${saved.toFixed(2)}%`;
+          saveStats.textContent = `节省：${saved.toFixed(2)}%`;
         } else {
-          saveStats.textContent = 'Saved: 0%';
+          saveStats.textContent = '节省：0%';
         }
 
         copyBtn.disabled = outputLen === 0;
       }
 
       function getFriendlyJsonError(error) {
-        const raw = error && error.message ? error.message : 'Unknown Error';
-        let hint = 'Invalid JSON format. Please check quotes, commas, brackets, or trailing commas.';
+        const raw = error && error.message ? error.message : 'Unknown错误';
+        let hint = 'JSON 格式无效，请检查引号、逗号、括号或是否存在尾随逗号。';
         const posMatch = raw.match(/position\s+(\d+)/i);
         if (posMatch) {
           const pos = Number(posMatch[1]);
@@ -210,10 +226,10 @@
             const before = inputJson.value.slice(0, pos);
             const line = before.split('\n').length;
             const col = before.length - before.lastIndexOf('\n');
-            hint = `Invalid JSON format. Error position is around line ${line}, column ${col}. Check nearby punctuation, quotes, or brackets.`;
+            hint = `JSON 格式无效，错误位置约在第 ${line} 行，第 ${col} 列。请检查附近的标点、引号或括号。`;
           }
         }
-        return `${hint} Raw error: ${raw}`;
+        return `${hint} 原始错误：${raw}`;
       }
 
       function minifyJson() {
@@ -222,7 +238,7 @@
           if (!raw.trim()) {
             outputJson.value = '';
             updateStats();
-            setMessage('Please enter the JSON content to compress.', 'error');
+            setMessage('Please enter需要压缩的 JSON 内容。', 'error');
             return;
           }
 
@@ -234,7 +250,7 @@
 
           if (typeof minified !== 'string') {
             outputJson.value = '';
-            setMessage('Could not generate the minified result. Please confirm the input is valid JSON.', 'error');
+            setMessage('无法Generate压缩结果，请确认输入内容是否为有效 JSON。', 'error');
             return;
           }
 
@@ -244,7 +260,7 @@
           const inputLen = raw.length;
           const outputLen = minified.length;
           const saved = inputLen > 0 ? Math.max(0, ((inputLen - outputLen) / inputLen) * 100) : 0;
-          setMessage(`Compression successful: generated single-line JSON, reducing characters from ${inputLen.toLocaleString('zh-CN')} to ${outputLen.toLocaleString('zh-CN')}, saving about ${saved.toFixed(2)}%.`, 'success');
+          setMessage(`压缩成功：已Generate单行 JSON，字符数由 ${inputLen.toLocaleString('zh-CN')} 减少到 ${outputLen.toLocaleString('zh-CN')}，约节省 ${saved.toFixed(2)}%。`, 'success');
         } catch (error) {
           outputJson.value = '';
           updateStats();
@@ -258,7 +274,7 @@
       async function copyOutput() {
         const text = outputJson.value;
         if (!text) {
-          setMessage('No compressed result available to copy.', 'error');
+          setMessage('当前没有可Copy的压缩结果。', 'error');
           return;
         }
 
@@ -270,16 +286,16 @@
             outputJson.select();
             const ok = document.execCommand('copy');
             window.getSelection().removeAllRanges();
-            if (!ok) throw new Error('Copy command failed');
+            if (!ok) throw new Error('Copy命令未成功执行');
           }
           const oldText = copyBtn.textContent;
           copyBtn.textContent = 'Copied';
-          setMessage('Compressed result copied to clipboard.', 'success');
+          setMessage('压缩结果Copied到剪贴板。', 'success');
           setTimeout(() => {
             copyBtn.textContent = oldText;
           }, 1200);
         } catch (error) {
-          setMessage('Copy failed. Please manually select the result content and copy it.', 'error');
+          setMessage('Copy failed，请手动选中结果内容后Copy。', 'error');
         }
       }
 
@@ -287,7 +303,7 @@
         inputJson.value = '';
         outputJson.value = '';
         updateStats();
-        setMessage('Input and output have been cleared.', 'info');
+        setMessage('已Clear输入和输出内容。', 'info');
         inputJson.focus();
       }
 
@@ -295,7 +311,7 @@
         inputJson.value = JSON.stringify(sample, null, 2);
         outputJson.value = '';
         updateStats();
-        setMessage('Sample JSON has been filled in. Click “Minify JSON” to see the result.', 'info');
+        setMessage('已填入示例 JSON，点击“压缩 JSON”查看效果。', 'info');
         inputJson.focus();
       }
 
@@ -304,7 +320,7 @@
         if (!inputJson.value.trim()) {
           outputJson.value = '';
           updateStats();
-          setMessage('Ready: enter JSON and click “Minify JSON”.', 'neutral');
+          setMessage('准备就绪：Please enter JSON 后点击“压缩 JSON”。', 'neutral');
         }
       });
 

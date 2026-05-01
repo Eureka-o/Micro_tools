@@ -3,15 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Text Reverser | Free Online Tool</title>
-  <meta name="description" content="Text reverse tool. Reverse the input string completely or by word.">
-  <meta name="keywords" content="Text Reverser, online tool, browser tool, productivity tool">
-  <meta name="robots" content="index,follow" />
+  <title>text-reverser - 文字翻转与倒序工具</title>
+  <meta name="description" content="文字翻转与倒序工具。将输入的字符串完全倒序排列，或者按单词级别倒序。">
+  <meta name="keywords" content="text-reverser,文字翻转工具,字符串倒序,在线文本倒序,单词倒序工具,文本反转,Chinese倒序,英文单词倒序">
   <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
@@ -19,6 +16,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/text-reverser.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/text-reverser.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/text-reverser.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/text-reverser.html">
+  <meta property="og:title" content="text-reverser - 文字翻转与倒序工具">
+  <meta property="og:description" content="文字翻转与倒序工具。将输入的字符串完全倒序排列，或者按单词级别倒序。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="text-reverser - 文字翻转与倒序工具">
+  <meta name="twitter:description" content="文字翻转与倒序工具。将输入的字符串完全倒序排列，或者按单词级别倒序。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
@@ -43,6 +50,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <div class="relative overflow-hidden">
     <div class="absolute inset-0 -z-10">
       <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
@@ -55,40 +67,40 @@
           <span class="inline-flex w-fit items-center rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
             Online Text Utility
           </span>
-          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">Text Reverser</h1>
+          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">文字翻转与倒序工具</h1>
           <p class="max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
-            Text flip and reverse tool: reverse the input string completely or by word, quickly handling text reversal, word reordering, and content testing.
+            文字翻转与倒序工具：支持将输入字符串完全倒序排列，也可以按单词级别倒序，快速完成文本反转、单词重排与内容测试。
           </p>
         </div>
       </div>
     </header>
 
     <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-      <section class="grid gap-6 lg:grid-cols-2" aria-label="Text Flip Tool Main Interface">
+      <section class="grid gap-6 lg:grid-cols-2" aria-label="文字翻转工具主界面">
         <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-cyan-950/20">
           <div class="mb-4 flex items-center justify-between gap-3">
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Input Text</h2>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入文本</h2>
             <button id="clearBtn" type="button" class="rounded-lg border border-slate-700 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 transition hover:border-red-400 hover:bg-red-500/10 hover:text-red-200 active:scale-95">
               Clear
             </button>
           </div>
 
-          <label for="inputText" class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">Please enter the string to reverse</label>
+          <label for="inputText" class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">Please enter需要倒序的字符串</label>
           <textarea id="inputText" rows="12" maxlength="200000" class="w-full resize-y rounded-xl border border-slate-700 bg-white dark:bg-slate-950/80 p-4 text-base leading-7 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="例如：Hello world 你好世界"></textarea>
 
           <div class="mt-4 grid gap-3 sm:grid-cols-2">
             <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-cyan-400/30 bg-cyan-400/10 p-4 transition hover:bg-cyan-400/15">
               <input class="h-4 w-4 accent-cyan-400" type="radio" name="mode" value="chars" checked />
               <span>
-                <span class="block font-semibold text-cyan-100">Full Reverse</span>
-                <span class="text-sm text-slate-400">Reverse all content character by character</span>
+                <span class="block font-semibold text-cyan-100">完全倒序</span>
+                <span class="text-sm text-slate-400">逐字符反转全部内容</span>
               </span>
             </label>
             <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-indigo-400/30 bg-indigo-400/10 p-4 transition hover:bg-indigo-400/15">
               <input class="h-4 w-4 accent-indigo-400" type="radio" name="mode" value="words" />
               <span>
-                <span class="block font-semibold text-indigo-100">Reverse by word</span>
-                <span class="text-sm text-slate-400">Keep words intact and reorder them</span>
+                <span class="block font-semibold text-indigo-100">按单词倒序</span>
+                <span class="text-sm text-slate-400">保留单词本身并重排顺序</span>
               </span>
             </label>
           </div>
@@ -97,51 +109,52 @@
 
           <div class="mt-5 flex flex-col gap-3 sm:flex-row">
             <button id="reverseBtn" type="button" class="inline-flex flex-1 items-center justify-center rounded-xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60">
-              Start Reversing
+              开始倒序
             </button>
             <button id="sampleBtn" type="button" class="inline-flex items-center justify-center rounded-xl border border-slate-700 px-5 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-[0.98]">
-              Fill Example
+              填入示例
             </button>
           </div>
 
           <div class="mt-4 flex flex-wrap gap-3 text-sm text-slate-400">
-            <span>Character Count:<strong id="charCount" class="text-slate-800 dark:text-slate-200">0</strong></span>
-            <span>Words/fragments:<strong id="wordCount" class="text-slate-800 dark:text-slate-200">0</strong></span>
+            <span>字符数：<strong id="charCount" class="text-slate-800 dark:text-slate-200">0</strong></span>
+            <span>单词/片段数：<strong id="wordCount" class="text-slate-800 dark:text-slate-200">0</strong></span>
           </div>
         </div>
 
         <div class="rounded-2xl border border-cyan-400/20 bg-cyan-950/20 p-5 shadow-2xl shadow-cyan-950/20">
           <div class="mb-4 flex items-center justify-between gap-3">
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Output result</h2>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输出结果</h2>
             <button id="copyBtn" type="button" class="rounded-lg border border-cyan-400/30 px-3 py-2 text-sm font-medium text-cyan-100 transition hover:bg-cyan-400/10 active:scale-95">
-              Copy Result
+              Copy result
             </button>
           </div>
 
-          <label for="outputText" class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">Reversed text</label>
-          <textarea id="outputText" rows="12" readonly class="w-full resize-y rounded-xl border border-cyan-400/20 bg-white dark:bg-slate-950/60 p-4 text-base leading-7 text-cyan-50 outline-none placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="Results will appear here"></textarea>
+          <label for="outputText" class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">倒序后的文本</label>
+          <textarea id="outputText" rows="12" readonly class="w-full resize-y rounded-xl border border-cyan-400/20 bg-white dark:bg-slate-950/60 p-4 text-base leading-7 text-cyan-50 outline-none placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="结果会显示在这里"></textarea>
 
           <div id="statusBox" class="mt-4 hidden rounded-xl border border-emerald-400/40 bg-emerald-500/10 px-4 py-3 text-sm font-medium text-emerald-200" role="status"></div>
 
           <div class="mt-5 grid gap-3 sm:grid-cols-3">
             <button id="swapBtn" type="button" class="rounded-xl border border-slate-700 px-4 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-[0.98]">
-              Send result to input
+              结果转输入
             </button>
             <button id="downloadBtn" type="button" class="rounded-xl border border-slate-700 px-4 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-[0.98]">
               Download TXT
             </button>
             <button id="selectBtn" type="button" class="rounded-xl border border-slate-700 px-4 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:border-cyan-400 hover:bg-cyan-400/10 active:scale-[0.98]">
-              Select all results
+              全选结果
             </button>
           </div>
         </div>
       </section>
 
       <article class="mt-10 rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Text Reverser</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Text reverse tool. Reverse the input string completely or by word. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Text Reverser for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
-    </article>
+        <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 text-reverser 文字翻转与倒序工具</h2>
+        <p>
+          text-reverser 是一款轻量、快速、无需安装的在线文字翻转工具，适用于需要进行字符串倒序、文本反转、单词倒序重排等场景。无论你是在做前端开发调试、数据清洗、文案编辑，还是进行编码学习与字符串处理测试，都可以通过这个工具迅速获得可靠结果。用户只需将文本粘贴到输入框，选择“完全倒序”即可把整段内容按字符反向排列，例如将Chinese、英文、数字、符号统一从末尾翻转到开头；如果选择“按单词倒序”，工具会保留每个单词或连续文本片段本身，仅调整它们的排列顺序，非常适合处理英文句子、关键词组合和标题结构优化。该在线文本倒序工具支持移动端与桌面端访问，界面简洁，响应迅速，并提供Copy、Download、结果转输入等实用操作，帮助你减少重复劳动。对于正在寻找“在线字符串倒序工具”“Chinese文字反转工具”或“英文单词倒序Generate器”的用户来说，text-reverser 能以直观方式解决文本顺序转换的痛点。
+        </p>
+      </article>
     </main>
   </div>
 
@@ -239,13 +252,13 @@
 
       const validateInput = (text) => {
         if (typeof text !== "string") {
-          return "The input format is invalid. Please re-enter the text.";
+          return "输入内容格式异常，请重新输入文本。";
         }
         if (text.length === 0) {
-          return "Please enter the text to reverse.";
+          return "Please enter需要倒序的文本。";
         }
         if (text.length > MAX_LENGTH) {
-          return `Input text is too long. Please keep it within ${MAX_LENGTH.toLocaleString("zh-CN")} characters.`;
+          return `输入文本过长，请控制在 ${MAX_LENGTH.toLocaleString("zh-CN")} 个字符以内。`;
         }
         return "";
       };
@@ -267,12 +280,12 @@
           const mode = getMode();
           const result = mode === "words" ? reverseByWords(text) : reverseByChars(text);
           outputText.value = result;
-          showStatus(mode === "words" ? "Word-level reversal completed." : "Full string reversal completed.");
+          showStatus(mode === "words" ? "已按单词级别完成倒序。" : "已完成字符串完全倒序。");
         } catch {
-          showError("An error occurred during processing. Please check your input and try again.");
+          showError("处理过程中出现异常，请检查输入内容后重试。");
         } finally {
           reverseBtn.disabled = false;
-          reverseBtn.textContent = "Start Reversing";
+          reverseBtn.textContent = "开始倒序";
         }
       };
 
@@ -280,7 +293,7 @@
         try {
           const result = safeString(outputText.value);
           if (!result) {
-            showError("No result is available to copy. Please generate reversed text first.");
+            showError("当前没有可Copy的结果，请先Generate倒序文本。");
             return;
           }
 
@@ -292,9 +305,9 @@
             const ok = document.execCommand("copy");
             if (!ok) throw new Error("copy failed");
           }
-          showStatus("Result copied to clipboard.");
+          showStatus("结果Copied到剪贴板。");
         } catch {
-          showError("Copy failed. Please select the result manually and copy it.");
+          showError("Copy failed，请手动选择结果后Copy。");
         }
       };
 
@@ -302,7 +315,7 @@
         try {
           const result = safeString(outputText.value);
           if (!result) {
-            showError("No downloadable result is available. Please generate reversed text first.");
+            showError("当前没有可Download的结果，请先Generate倒序文本。");
             return;
           }
           const blob = new Blob([result], { type: "text/plain;charset=utf-8" });
@@ -315,23 +328,23 @@
           link.click();
           link.remove();
           URL.revokeObjectURL(url);
-          showStatus("TXT file download has started.");
+          showStatus("TXT download has started.");
         } catch {
-          showError("Download failed. Please try again later or copy the result to save it.");
+          showError("Download失败，请稍后重试或Copy result保存。");
         }
       };
 
       const selectResult = () => {
         try {
           if (!outputText.value) {
-            showError("There are currently no results to select.");
+            showError("当前没有可选择的结果。");
             return;
           }
           outputText.focus();
           outputText.select();
-          showStatus("All output results selected.");
+          showStatus("已全选输出结果。");
         } catch {
-          showError("Select all failed. Please select the text manually.");
+          showError("全选失败，请手动选择文本。");
         }
       };
 
@@ -340,7 +353,7 @@
         outputText.value = "";
         updateStats();
         hideError();
-        showStatus("Content cleared.");
+        showStatus("内容已Clear。");
         inputText.focus();
       };
 
@@ -353,12 +366,12 @@
       const swapOutputToInput = () => {
         const result = safeString(outputText.value);
         if (!result) {
-          showError("No result to move to the input box.");
+          showError("当前没有可转入输入框的结果。");
           return;
         }
         inputText.value = result;
         updateStats();
-        showStatus("The result has been moved to the input box for further processing.");
+        showStatus("结果已转入输入框，可继续处理。");
         inputText.focus();
       };
 
@@ -366,11 +379,11 @@
         try {
           if (inputText.value.length > MAX_LENGTH) {
             inputText.value = inputText.value.slice(0, MAX_LENGTH);
-            showError(`Input was automatically truncated to ${MAX_LENGTH.toLocaleString("zh-CN")} characters.`);
+            showError(`输入已自动截断至 ${MAX_LENGTH.toLocaleString("zh-CN")} 个字符。`);
           }
           updateStats();
         } catch {
-          showError("An error occurred while reading the input. Please enter it again.");
+          showError("读取输入时出现异常，请重新输入。");
         }
       });
 
@@ -391,7 +404,7 @@
             performReverse();
           }
         } catch {
-          showError("Shortcut handling error. Please use the button instead.");
+          showError("快捷键处理异常，请使用按钮操作。");
         }
       });
 

@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CSS Gradient Generator | Free Online Tool</title>
-  <meta name="description" content="CSS gradient code generator. Visually adjust the direction and ratio of gradients with two or more colors, preview in real time, and output the corresponding CSS code.">
-  <meta name="keywords" content="CSS Gradient Generator, online tool, browser tool, productivity tool">
+  <title>css-gradient-generator - CSS 渐变色代码Generate器</title>
+  <meta name="description" content="CSS 渐变色代码Generate器。可视化调整两个或多个颜色的渐变方向和比例，实时预览并输出对应的CSS代码。">
+  <meta name="keywords" content="CSS渐变色代码Generate器, css-gradient-generator, CSS linear-gradient, 渐变背景Generate器, 在线CSS渐变工具, 多颜色渐变Generate, CSS代码Copy">
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -29,6 +27,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/css-gradient-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/css-gradient-generator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/css-gradient-generator.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/css-gradient-generator.html">
+  <meta property="og:title" content="css-gradient-generator - CSS 渐变色代码Generate器">
+  <meta property="og:description" content="CSS 渐变色代码Generate器。可视化调整两个或多个颜色的渐变方向和比例，实时预览并输出对应的CSS代码。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="css-gradient-generator - CSS 渐变色代码Generate器">
+  <meta name="twitter:description" content="CSS 渐变色代码Generate器。可视化调整两个或多个颜色的渐变方向和比例，实时预览并输出对应的CSS代码。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -53,16 +61,21 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
     <div class="absolute inset-0 opacity-30 checker"></div>
     <div class="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <div class="max-w-3xl">
         <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-1 text-sm font-medium text-cyan-200">
-          Online visual CSS tools
+          在线可视化 CSS 工具
         </p>
-        <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">CSS Gradient Generator</h1>
+        <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">CSS 渐变色代码Generate器</h1>
         <p class="mt-5 text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
-          Visually adjust the direction and ratio of gradients with two or more colors, preview in real time, and generate CSS gradient code ready to paste into your project.
+          可视化调整两个或多个颜色的渐变方向和比例，实时预览效果，并Generate可直接粘贴到项目中的 CSS 渐变色代码。
         </p>
       </div>
     </div>
@@ -71,14 +84,14 @@
   <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
     <section class="grid gap-6 lg:grid-cols-12">
       <div class="lg:col-span-5">
-        <div class="rounded-3xl border border-slate-200 dark:border-slate-700/70 bg-slate-900/90 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
+        <div class="rounded-3xl border border-slate-200 dark:border-white/10 dark:border-slate-700/70 bg-slate-900/90 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
           <div class="mb-5 flex items-center justify-between gap-3">
             <div>
-              <h2 class="text-xl font-bold text-gray-900 dark:text-white">Input Settings</h2>
-              <p class="mt-1 text-sm text-slate-400">Select the gradient type, direction, colors, and ratio.</p>
+              <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入设置</h2>
+              <p class="mt-1 text-sm text-slate-400">选择渐变类型、方向、颜色与比例。</p>
             </div>
             <button id="randomBtn" type="button" class="rounded-xl bg-cyan-500 px-4 py-2 text-sm font-bold text-slate-950 dark:text-slate-100 transition hover:bg-cyan-300 active:scale-95">
-              Random color scheme
+              随机配色
             </button>
           </div>
 
@@ -87,17 +100,17 @@
 
           <div class="space-y-5">
             <div>
-              <label for="gradientType" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Gradient Type</label>
+              <label for="gradientType" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">渐变类型</label>
               <select id="gradientType" class="w-full rounded-2xl border border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
-                <option value="linear">Linear gradient linear-gradient</option>
-                <option value="radial">Radial gradient radial-gradient</option>
-                <option value="conic">Conic gradient conic-gradient</option>
+                <option value="linear">线性渐变 linear-gradient</option>
+                <option value="radial">径向渐变 radial-gradient</option>
+                <option value="conic">锥形渐变 conic-gradient</option>
               </select>
             </div>
 
             <div id="anglePanel">
               <div class="mb-2 flex items-center justify-between">
-                <label for="angleRange" class="text-sm font-semibold text-slate-800 dark:text-slate-200">Direction angle</label>
+                <label for="angleRange" class="text-sm font-semibold text-slate-800 dark:text-slate-200">方向角度</label>
                 <span id="angleLabel" class="rounded-lg bg-slate-50 dark:bg-slate-800 px-2 py-1 text-sm text-cyan-200">90deg</span>
               </div>
               <input id="angleRange" type="range" min="0" max="360" step="1" value="90" class="w-full" />
@@ -105,7 +118,7 @@
             </div>
 
             <div id="radialPanel" class="hidden">
-              <label for="radialPosition" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Radial gradient position</label>
+              <label for="radialPosition" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">径向渐变位置</label>
               <select id="radialPosition" class="w-full rounded-2xl border border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
                 <option value="circle at center">circle at center</option>
                 <option value="circle at top">circle at top</option>
@@ -119,11 +132,11 @@
             <div>
               <div class="mb-3 flex items-center justify-between gap-3">
                 <div>
-                  <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200">Color nodes</h3>
-                  <p class="mt-1 text-xs text-slate-500">Supports 2 to 10 color stops, with positions from 0% to 100%.</p>
+                  <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200">颜色节点</h3>
+                  <p class="mt-1 text-xs text-slate-500">支持 2 到 10 个颜色节点，位置范围为 0% - 100%。</p>
                 </div>
                 <button id="addStopBtn" type="button" class="rounded-xl border border-cyan-400/40 bg-cyan-400/10 px-4 py-2 text-sm font-bold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">
-                  Add Color
+                  添加颜色
                 </button>
               </div>
               <div id="stopsContainer" class="space-y-3"></div>
@@ -131,7 +144,7 @@
 
             <div class="grid grid-cols-2 gap-3">
               <button id="reverseBtn" type="button" class="rounded-2xl border border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:border-cyan-400 hover:bg-slate-700 active:scale-95">
-                Invert colors
+                反转颜色
               </button>
               <button id="resetBtn" type="button" class="rounded-2xl border border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:border-cyan-400 hover:bg-slate-700 active:scale-95">
                 Reset
@@ -144,24 +157,24 @@
       <div class="lg:col-span-7">
         <div class="rounded-3xl border border-cyan-400/20 bg-slate-800/70 p-5 shadow-2xl shadow-cyan-950/20 sm:p-6">
           <div class="mb-5">
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Real-time preview and output</h2>
-            <p class="mt-1 text-sm text-slate-400">The preview below updates instantly with your settings.</p>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">实时预览与输出</h2>
+            <p class="mt-1 text-sm text-slate-400">下方预览会随设置即时更新。</p>
           </div>
 
           <div class="overflow-hidden rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950 p-3">
             <div id="preview" class="flex min-h-[320px] items-center justify-center rounded-2xl text-center shadow-inner transition-all duration-300 sm:min-h-[420px]">
               <div class="rounded-3xl border border-white/20 bg-slate-950/35 px-6 py-5 backdrop-blur-md">
                 <p class="text-2xl font-black text-gray-900 dark:text-white drop-shadow-lg">Gradient Preview</p>
-                <p class="mt-2 text-sm text-white/80">Live CSS gradient background preview</p>
+                <p class="mt-2 text-sm text-white/80">实时 CSS 渐变背景预览</p>
               </div>
             </div>
           </div>
 
           <div class="mt-6 rounded-3xl border border-slate-700 bg-white dark:bg-slate-950 p-4">
             <div class="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <h3 class="font-bold text-gray-900 dark:text-white">Generated CSS code</h3>
+              <h3 class="font-bold text-gray-900 dark:text-white">Generate的 CSS 代码</h3>
               <button id="copyBtn" type="button" class="rounded-xl bg-emerald-400 px-4 py-2 text-sm font-black text-slate-950 dark:text-slate-100 transition hover:bg-emerald-300 active:scale-95">
-                Copy Code
+                Copy代码
               </button>
             </div>
             <textarea id="cssOutput" readonly rows="6" class="w-full resize-none rounded-2xl border border-slate-800 bg-slate-100 dark:bg-slate-900 p-4 font-mono text-sm leading-6 text-cyan-100 outline-none focus:border-cyan-400"></textarea>
@@ -170,15 +183,19 @@
       </div>
     </section>
 
-    <article class="mt-10 rounded-3xl border border-slate-200 dark:border-slate-700/70 bg-white dark:bg-slate-900/80 p-6 text-slate-700 dark:text-slate-300 shadow-xl sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About CSS Gradient Generator</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">CSS gradient code generator. Visually adjust the direction and ratio of gradients with two or more colors, preview in real time, and output the corresponding CSS code. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use CSS Gradient Generator for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+    <article class="mt-10 rounded-3xl border border-slate-200 dark:border-white/10 dark:border-slate-700/70 bg-white dark:bg-slate-900/80 p-6 text-slate-700 dark:text-slate-300 shadow-xl sm:p-8">
+      <h2 class="text-2xl font-black text-gray-900 dark:text-white">关于 CSS 渐变色代码Generate器</h2>
+      <p class="mt-4 leading-8">
+        css-gradient-generator 是一款面向前端开发者、设计师和独立站运营者的在线 CSS 渐变色代码Generate器。传统编写 linear-gradient、radial-gradient 或 conic-gradient 时，常常需要反复调整角度、颜色节点和百分比位置，既耗时又难以精准预览。本工具通过可视化界面解决这一痛点：你可以直接选择渐变类型，拖动方向角度，添加两个或多个颜色节点，并精确设置每个颜色在渐变中的比例位置，页面会实时展示最终背景效果。
+      </p>
+      <p class="mt-4 leading-8">
+        使用方法非常简单：先选择线性、径向或锥形渐变，再通过颜色选择器或十六进制颜色值输入品牌色，最后调整 0% 到 100% 的色标位置即可。Generate结果会同步输出为标准 CSS background 代码，点击Copy后即可用于网站 Banner、按钮、卡片背景、落地页首屏和移动端界面。对于搜索“在线 CSS 渐变背景Generate器”“多颜色 CSS 渐变代码Copy工具”“linear-gradient 可视化编辑器”的用户来说，它能显著提升设计验证与前端开发效率。
+      </p>
     </article>
   </main>
 
   <footer class="mx-auto max-w-7xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-    <p>css-gradient-generator · Built with native HTML / JavaScript</p>
+    <p>css-gradient-generator · 原生 HTML / JavaScript 构建</p>
   </footer>
 
   <script>
@@ -290,14 +307,14 @@
           colorInput.type = "color";
           colorInput.value = normalizeHex(stop.color) || "#000000";
           colorInput.className = "h-11 w-14 cursor-pointer rounded-xl border border-slate-700 bg-transparent";
-          colorInput.setAttribute("aria-label", `Color node ${index + 1}`);
+          colorInput.setAttribute("aria-label", `颜色节点 ${index + 1}`);
 
           const hexInput = document.createElement("input");
           hexInput.type = "text";
           hexInput.value = normalizeHex(stop.color) || "#000000";
           hexInput.inputMode = "text";
           hexInput.className = "min-w-0 flex-1 rounded-xl border border-slate-700 bg-slate-900 px-3 py-2 font-mono text-sm text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10";
-          hexInput.setAttribute("aria-label", `Hex color ${index + 1}`);
+          hexInput.setAttribute("aria-label", `十六进制颜色 ${index + 1}`);
 
           const removeBtn = document.createElement("button");
           removeBtn.type = "button";
@@ -319,7 +336,7 @@
           range.step = "1";
           range.value = String(clampNumber(stop.position, 0, 100, 0));
           range.className = "col-span-8 sm:col-span-9";
-          range.setAttribute("aria-label", `Color position slider ${index + 1}`);
+          range.setAttribute("aria-label", `颜色位置滑块 ${index + 1}`);
 
           const number = document.createElement("input");
           number.type = "number";
@@ -328,7 +345,7 @@
           number.step = "1";
           number.value = String(clampNumber(stop.position, 0, 100, 0));
           number.className = "col-span-4 sm:col-span-3 rounded-xl border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10";
-          number.setAttribute("aria-label", `Color position percentage ${index + 1}`);
+          number.setAttribute("aria-label", `颜色位置百分比 ${index + 1}`);
 
           bottom.appendChild(range);
           bottom.appendChild(number);
@@ -360,7 +377,7 @@
             if (!normalized) {
               hexInput.value = normalizeHex(stops[index].color) || "#000000";
               hexInput.classList.remove("border-red-400");
-              showError("Invalid color format. Enter #RRGGBB or #RGB format, for example #22D3EE.");
+              showError("颜色格式无效，Please enter #RRGGBB 或 #RGB 格式，例如 #22D3EE。");
             }
           });
 
@@ -388,7 +405,7 @@
           number.addEventListener("blur", () => {
             const value = clampNumber(number.value, 0, 100, stops[index].position);
             if (String(number.value).trim() === "" || Number(number.value) !== value) {
-              showError("Color position must be a number between 0 and 100. It has been corrected automatically.");
+              showError("颜色位置必须是 0 到 100 之间的数字，已自动修正。");
             }
             stops[index].position = Math.round(value);
             range.value = String(stops[index].position);
@@ -399,7 +416,7 @@
 
           removeBtn.addEventListener("click", () => {
             if (stops.length <= 2) {
-              showError("At least two color stops are required to generate a gradient.");
+              showError("至少需要保留两个颜色节点才能Generate渐变。");
               return;
             }
             stops.splice(index, 1);
@@ -435,7 +452,7 @@
       function update() {
         try {
           if (stops.length < 2) {
-            showError("At least two color nodes are required.");
+            showError("至少需要两个颜色节点。");
             return;
           }
 
@@ -448,7 +465,7 @@
           preview.style.background = gradient;
           cssOutput.value = `background: ${gradient};\nbackground-repeat: no-repeat;\nbackground-size: cover;`;
         } catch (err) {
-          showError("An error occurred while generating the gradient. Please check your input and try again.");
+          showError("Generate渐变时遇到异常，请检查输入内容后重试。");
         }
       }
 
@@ -459,14 +476,14 @@
 
       addStopBtn.addEventListener("click", () => {
         if (stops.length >= 10) {
-          showError("You can add up to 10 color stops.");
+          showError("最多只能添加 10 个颜色节点。");
           return;
         }
         const position = stops.length === 0 ? 0 : Math.round(100 / Math.min(9, stops.length + 1) * stops.length);
         stops.push({ color: randomHex(), position });
         renderStops();
         update();
-        showSuccess("New color stop added.");
+        showSuccess("已添加新的颜色节点。");
       });
 
       reverseBtn.addEventListener("click", () => {
@@ -474,7 +491,7 @@
         stops = stops.map((s, i) => ({ color: reversedColors[i], position: s.position }));
         renderStops();
         update();
-        showSuccess("Color order reversed.");
+        showSuccess("颜色顺序已反转。");
       });
 
       resetBtn.addEventListener("click", () => {
@@ -485,7 +502,7 @@
         updatePanels();
         renderStops();
         update();
-        showSuccess("Default gradient restored.");
+        showSuccess("已恢复默认渐变。");
       });
 
       randomBtn.addEventListener("click", () => {
@@ -496,14 +513,14 @@
         }));
         renderStops();
         update();
-        showSuccess("Random gradient colors generated.");
+        showSuccess("已Generate随机渐变配色。");
       });
 
       copyBtn.addEventListener("click", async () => {
         try {
           const text = cssOutput.value || "";
           if (!text.trim()) {
-            showError("No CSS code available to copy.");
+            showError("当前没有可Copy的 CSS 代码。");
             return;
           }
 
@@ -520,15 +537,15 @@
           copyBtn.textContent = "Copied";
           copyBtn.classList.remove("bg-emerald-400");
           copyBtn.classList.add("bg-cyan-300");
-          showSuccess("CSS code copied to clipboard.");
+          showSuccess("CSS 代码Copied到剪贴板。");
 
           setTimeout(() => {
-            copyBtn.textContent = "Copy Code";
+            copyBtn.textContent = "Copy代码";
             copyBtn.classList.add("bg-emerald-400");
             copyBtn.classList.remove("bg-cyan-300");
           }, 1400);
         } catch (err) {
-          showError("Copy failed. Please manually select the code and copy it.");
+          showError("Copy failed，请手动选中代码进行Copy。");
         }
       });
 
@@ -556,14 +573,14 @@
         const before = angleNumber.value;
         const safe = clampNumber(before, 0, 360, 90);
         if (String(before).trim() === "" || Number(before) !== safe) {
-          showError("Angle must be a number between 0 and 360 and has been automatically corrected.");
+          showError("角度必须是 0 到 360 之间的数字，已自动修正。");
         }
         angleNumber.classList.remove("border-red-400");
         updateAngle(safe);
       });
 
       window.addEventListener("error", () => {
-        showError("An exception was caught while the page was running, but the app remains usable.");
+        showError("页面运行时捕获到异常，但应用已保持可用。");
       });
 
       renderStops();

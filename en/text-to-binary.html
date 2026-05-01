@@ -3,15 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Text to Binary Converter | Free Online Tool</title>
-  <meta name="description" content="Text to binary string tool. Encode plain text entered by the user into a binary stream of 0s and 1s, with reverse decoding supported.">
-  <meta name="keywords" content="Text to Binary Converter, online tool, browser tool, productivity tool">
-  <meta name="robots" content="index,follow" />
+  <title>text-to-binary｜文本转二进制字符串工具</title>
+  <meta name="description" content="文本转二进制字符串工具。将用户输入的普通文本编码为由0和1组成的二进制流，并支持反向解码。">
+  <meta name="keywords" content="text-to-binary,文本转二进制,二进制转文本,字符串转二进制,在线二进制转换工具,UTF-8二进制编码,0和1转换器">
   <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
@@ -19,6 +16,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/text-to-binary.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/text-to-binary.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/text-to-binary.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/text-to-binary.html">
+  <meta property="og:title" content="text-to-binary｜文本转二进制字符串工具">
+  <meta property="og:description" content="文本转二进制字符串工具。将用户输入的普通文本编码为由0和1组成的二进制流，并支持反向解码。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="text-to-binary｜文本转二进制字符串工具">
+  <meta name="twitter:description" content="文本转二进制字符串工具。将用户输入的普通文本编码为由0和1组成的二进制流，并支持反向解码。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
@@ -43,6 +50,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <div class="pointer-events-none fixed inset-0 overflow-hidden">
     <div class="absolute left-1/2 top-[-12rem] h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
     <div class="absolute bottom-[-14rem] right-[-8rem] h-[32rem] w-[32rem] rounded-full bg-indigo-500/20 blur-3xl"></div>
@@ -53,16 +65,16 @@
       <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-            Online encoding / decoding tool
+            在线编码 / 解码工具
           </p>
-          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">Text to Binary Converter</h1>
+          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">文本转二进制字符串工具</h1>
           <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            Quickly encode plain text into a binary stream of 0s and 1s, or decode a valid binary string back into text.
+            将普通文本快速编码为由 0 和 1 组成的二进制流，也可以把合法的二进制字符串反向还原为文本。
           </p>
         </div>
         <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 text-sm text-slate-700 dark:text-slate-300 shadow-2xl">
-          <div class="font-semibold text-gray-900 dark:text-white">Encoding Standard</div>
-          <div class="mt-1">UTF-8 byte encoding · 8 bits per group</div>
+          <div class="font-semibold text-gray-900 dark:text-white">编码标准</div>
+          <div class="mt-1">UTF-8 字节编码 · 8 位一组</div>
         </div>
       </div>
     </div>
@@ -73,47 +85,47 @@
       <div class="grid gap-6 lg:grid-cols-2">
         <div class="rounded-2xl border border-cyan-400/20 bg-slate-900/90 p-5">
           <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Input</h2>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入区</h2>
             <div class="inline-flex rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 p-1">
               <button id="encodeMode" type="button" class="mode-btn rounded-lg px-4 py-2 text-sm font-semibold transition bg-cyan-400 text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20">
-                Text to Binary
+                文本转二进制
               </button>
               <button id="decodeMode" type="button" class="mode-btn rounded-lg px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300 transition hover:bg-white/10">
-                Binary to text
+                二进制转文本
               </button>
             </div>
           </div>
 
           <label for="inputText" id="inputLabel" class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
-            Please enter the text to convert
+            Please enter要转换的文本
           </label>
-          <textarea id="inputText" rows="12" spellcheck="false" class="w-full resize-y rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none ring-0 transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" placeholder="Example: Hello, world!"></textarea>
+          <textarea id="inputText" rows="12" spellcheck="false" class="w-full resize-y rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none ring-0 transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" placeholder="例如：Hello，世界！"></textarea>
 
           <div id="errorBox" class="mt-4 hidden rounded-2xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm leading-6 text-red-200"></div>
 
           <div class="mt-5 grid gap-4 sm:grid-cols-2">
             <div>
-              <label for="separatorSelect" class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">Output separator</label>
+              <label for="separatorSelect" class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">输出分隔符</label>
               <select id="separatorSelect" class="w-full rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 px-4 py-3 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10">
-                <option value="space">Space-Separated</option>
-                <option value="none">Continuous Binary Stream</option>
-                <option value="newline">Separate with line breaks</option>
-                <option value="comma">Comma-separated</option>
+                <option value="space">空格分隔</option>
+                <option value="none">连续二进制流</option>
+                <option value="newline">换行分隔</option>
+                <option value="comma">逗号分隔</option>
               </select>
             </div>
             <div class="flex items-end">
               <button id="sampleBtn" type="button" class="w-full rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm font-semibold text-slate-900 dark:text-slate-100 transition hover:bg-white/10 active:scale-[0.98]">
-                Fill Example
+                填入示例
               </button>
             </div>
           </div>
 
           <div class="mt-5 grid gap-3 sm:grid-cols-3">
             <button id="convertBtn" type="button" class="rounded-xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-[0.98]">
-              Start conversion
+              开始转换
             </button>
             <button id="swapBtn" type="button" class="rounded-xl border border-indigo-300/30 bg-indigo-400/10 px-5 py-3 font-semibold text-indigo-100 transition hover:bg-indigo-400/20 active:scale-[0.98]">
-              Swap input and output
+              交换输入输出
             </button>
             <button id="clearBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-3 font-semibold text-slate-900 dark:text-slate-100 transition hover:bg-white/10 active:scale-[0.98]">
               Clear
@@ -123,20 +135,20 @@
 
         <div class="rounded-2xl border border-indigo-400/20 bg-indigo-950/30 p-5">
           <div class="mb-4 flex items-center justify-between gap-3">
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Output</h2>
-            <span id="statsText" class="rounded-full border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">Waiting for Conversion</span>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输出区</h2>
+            <span id="statsText" class="rounded-full border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">等待转换</span>
           </div>
 
           <label for="outputText" class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
-            Conversion Result
+            转换结果
           </label>
-          <textarea id="outputText" rows="12" readonly spellcheck="false" class="w-full resize-y rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/70 p-4 font-mono text-sm leading-6 text-cyan-100 outline-none placeholder:text-slate-500" placeholder="Conversion result will appear here"></textarea>
+          <textarea id="outputText" rows="12" readonly spellcheck="false" class="w-full resize-y rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/70 p-4 font-mono text-sm leading-6 text-cyan-100 outline-none placeholder:text-slate-500" placeholder="转换结果会显示在这里"></textarea>
 
           <div id="successBox" class="mt-4 hidden rounded-2xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm leading-6 text-emerald-200"></div>
 
           <div class="mt-5 grid gap-3 sm:grid-cols-2">
             <button id="copyBtn" type="button" class="rounded-xl bg-white px-5 py-3 font-bold text-slate-950 dark:text-slate-100 transition hover:bg-slate-200 active:scale-[0.98]">
-              Copy Result
+              Copy result
             </button>
             <button id="downloadBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-3 font-semibold text-slate-900 dark:text-slate-100 transition hover:bg-white/10 active:scale-[0.98]">
               Download .txt
@@ -144,22 +156,28 @@
           </div>
 
           <div class="mt-5 rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/50 p-4 text-sm leading-6 text-slate-700 dark:text-slate-300">
-            <p class="font-semibold text-gray-900 dark:text-white">Tip</p>
-            <p class="mt-1">During encoding, text is converted to bytes using UTF-8, with each byte output as 8-bit binary. During decoding, common separators such as spaces, line breaks, commas, semicolons, vertical bars, underscores, and hyphens are automatically ignored.</p>
+            <p class="font-semibold text-gray-900 dark:text-white">提示</p>
+            <p class="mt-1">编码时会将文本按 UTF-8 转为字节，每个字节输出 8 位二进制；解码时会自动忽略空格、换行、逗号、分号、竖线、下划线和短横线等常见分隔符。</p>
           </div>
         </div>
       </div>
     </section>
 
     <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-900/70 p-6 shadow-xl sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Text to Binary Converter</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Text to binary string tool. Encode plain text entered by the user into a binary stream of 0s and 1s, with reverse decoding supported. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Text to Binary Converter for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">关于 text-to-binary 文本转二进制字符串工具</h2>
+      <div class="mt-4 space-y-4 text-base leading-8 text-slate-700 dark:text-slate-300">
+        <p>
+          text-to-binary 是一款面向开发者、学生和技术文档编写者的在线文本转二进制工具，可将Chinese、英文、数字、标点和 Emoji 等普通文本编码为由 0 和 1 组成的二进制字符串。工具采用 UTF-8 字节编码方式，每个字节固定输出 8 位，适合用于学习计算机编码原理、调试数据传输内容、Generate二进制示例以及验证字符串底层表示。
+        </p>
+        <p>
+          传统手动转换容易出现位数不足、分隔混乱或Chinese乱码等问题，本工具提供文本转二进制和二进制转文本双向转换能力，并支持空格、换行、逗号或连续二进制流等输出格式。使用时只需在输入区粘贴文本，点击“开始转换”即可得到结果；若需要反向解码，切换到“二进制转文本”模式并输入合法的 0 和 1 characters串即可。对于搜索“在线字符串转二进制”“二进制转文本解码”“UTF-8 二进制编码转换器”的用户来说，这是一款简洁、安全、无需安装的软件工具。
+        </p>
+      </div>
     </article>
   </main>
 
   <footer class="relative mx-auto max-w-6xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-    <p>text-to-binary · Convert locally in the browser without uploading input</p>
+    <p>text-to-binary · 本地浏览器内完成转换，不上传输入内容</p>
   </footer>
 
   <script>
@@ -198,8 +216,8 @@
           els.encodeMode.classList.remove(...inactiveClass);
           els.decodeMode.classList.remove(...activeClass);
           els.decodeMode.classList.add(...inactiveClass);
-          els.inputLabel.textContent = 'Please enter the text to convert';
-          els.inputText.placeholder = 'Example: Hello, world!';
+          els.inputLabel.textContent = 'Please enter要转换的文本';
+          els.inputText.placeholder = '例如：Hello，世界！';
           els.separatorSelect.disabled = false;
           els.separatorSelect.classList.remove('opacity-50', 'cursor-not-allowed');
         } else {
@@ -207,8 +225,8 @@
           els.decodeMode.classList.remove(...inactiveClass);
           els.encodeMode.classList.remove(...activeClass);
           els.encodeMode.classList.add(...inactiveClass);
-          els.inputLabel.textContent = 'Please enter the binary string to decode.';
-          els.inputText.placeholder = 'Example: 01001000 01100101 01101100 01101100 01101111';
+          els.inputLabel.textContent = 'Please enter要解码的二进制字符串';
+          els.inputText.placeholder = '例如：01001000 01100101 01101100 01101100 01101111';
           els.separatorSelect.disabled = true;
           els.separatorSelect.classList.add('opacity-50', 'cursor-not-allowed');
         }
@@ -263,21 +281,21 @@
       function decodeBinaryToText(input) {
         const trimmed = input.trim();
         if (!trimmed) {
-          throw new Error('Please enter the binary content to decode.');
+          throw new Error('Please enter需要解码的二进制内容。');
         }
 
         if (!/^[01\s,;|_\-]+$/.test(trimmed)) {
           const invalid = trimmed.match(/[^01\s,;|_\-]/);
-          throw new Error(`Binary content can only contain 0, 1, and common separators. Illegal character detected: ${invalid ? invalid[0] : 'unknown character'}`);
+          throw new Error(`二进制内容只能包含 0、1 以及常见分隔符。检测到非法字符：${invalid ? invalid[0] : 'Unknown字符'}`);
         }
 
         const compact = trimmed.replace(/[\s,;|_\-]/g, '');
         if (!compact) {
-          throw new Error('No valid 0 or 1 detected.');
+          throw new Error('未检测到有效的 0 或 1。');
         }
 
         if (compact.length % 8 !== 0) {
-          throw new Error(`The binary length must be a multiple of 8. Current length is ${compact.length} bits, short by ${8 - (compact.length % 8)} bits.`);
+          throw new Error(`二进制位数必须是 8 的倍数。当前为 ${compact.length} 位，还差 ${8 - (compact.length % 8)} 位。`);
         }
 
         const bytes = new Uint8Array(compact.length / 8);
@@ -285,7 +303,7 @@
           const chunk = compact.slice(i, i + 8);
           const value = Number.parseInt(chunk, 2);
           if (!Number.isFinite(value) || value < 0 || value > 255) {
-            throw new Error(`Unable to parse binary chunk: ${chunk}`);
+            throw new Error(`无法解析二进制片段：${chunk}`);
           }
           bytes[i / 8] = value;
         }
@@ -293,7 +311,7 @@
         try {
           return decoder.decode(bytes);
         } catch (err) {
-          throw new Error('This binary data is not valid UTF-8 text encoding and cannot be safely decoded.');
+          throw new Error('该二进制数据不是有效的 UTF-8 文本编码，无法安全解码。');
         }
       }
 
@@ -301,17 +319,17 @@
         const input = els.inputText.value || '';
         const output = els.outputText.value || '';
         if (!input && !output) {
-          els.statsText.textContent = 'Waiting for Conversion';
+          els.statsText.textContent = '等待转换';
           return;
         }
 
         if (mode === 'encode') {
           const byteCount = encoder.encode(input).length;
           const bitCount = byteCount * 8;
-          els.statsText.textContent = `Input ${input.length} characters · ${byteCount} bytes · ${bitCount} bits`;
+          els.statsText.textContent = `输入 ${input.length} characters · ${byteCount} 字节 · ${bitCount} 位`;
         } else {
           const bits = input.replace(/[\s,;|_\-]/g, '');
-          els.statsText.textContent = `Input ${bits.length} bits · Output ${output.length} characters`;
+          els.statsText.textContent = `输入 ${bits.length} 位 · 输出 ${output.length} characters`;
         }
       }
 
@@ -322,22 +340,22 @@
           const input = els.inputText.value;
           if (mode === 'encode') {
             if (input.length === 0) {
-              showError('Please enter the text to convert. Input cannot be empty.');
+              showError('Please enter要转换的文本，输入不能为空。');
               els.outputText.value = '';
               updateStats();
               return;
             }
             els.outputText.value = encodeTextToBinary(input);
-            showSuccess('The text was successfully converted to a binary string.');
+            showSuccess('文本已成功转换为二进制字符串。');
           } else {
             els.outputText.value = decodeBinaryToText(input);
-            showSuccess('The binary string was successfully decoded to text.');
+            showSuccess('二进制字符串已成功解码为文本。');
           }
           updateStats();
-          pressFeedback(els.convertBtn, 'Conversion Complete');
+          pressFeedback(els.convertBtn, '转换完成');
         } catch (err) {
           els.outputText.value = '';
-          showError(err && err.message ? err.message : 'Conversion failed. Please check the input format and try again.');
+          showError(err && err.message ? err.message : '转换失败，请检查输入格式后重试。');
           updateStats();
         }
       }
@@ -346,7 +364,7 @@
         hideMessages();
         const text = els.outputText.value;
         if (!text) {
-          showError('No conversion result available to copy.');
+          showError('当前没有可Copy的转换结果。');
           return;
         }
 
@@ -360,10 +378,10 @@
             window.getSelection().removeAllRanges();
             if (!ok) throw new Error('copy failed');
           }
-          showSuccess('Result copied to clipboard.');
+          showSuccess('结果Copied到剪贴板。');
           pressFeedback(els.copyBtn, 'Copied');
         } catch (err) {
-          showError('Copy failed. Please manually select the output content and copy it.');
+          showError('Copy failed，请手动选中输出内容进行Copy。');
         }
       }
 
@@ -371,7 +389,7 @@
         hideMessages();
         const text = els.outputText.value;
         if (!text) {
-          showError('No conversion result available to download.');
+          showError('当前没有可Download的转换结果。');
           return;
         }
 
@@ -386,17 +404,17 @@
           a.click();
           a.remove();
           URL.revokeObjectURL(url);
-          showSuccess('File download started.');
+          showSuccess('文件已开始Download。');
           pressFeedback(els.downloadBtn, '已Download');
         } catch (err) {
-          showError('Download failed. Please copy the result and save it manually.');
+          showError('Download失败，请Copy result后手动保存。');
         }
       }
 
       function fillSample() {
         hideMessages();
         if (mode === 'encode') {
-          els.inputText.value = 'Hello, World!';
+          els.inputText.value = 'Hello，世界！';
         } else {
           els.inputText.value = '01001000 01100101 01101100 01101100 01101111';
         }

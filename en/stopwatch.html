@@ -3,15 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Web stopwatch and lap timer. Provides start, pause, and reset controls, plus a &#x27;Lap&#x27; button to record each split time in the list below.">
-  <meta name="keywords" content="Stopwatch, online tool, browser tool, productivity tool">
-  <meta name="robots" content="index,follow" />
+  <meta name="description" content="网页版秒表与计次器。提供开始、暂停、Reset功能，并包含一个‘计次’按钮，在下方列表记录每一次的中间时间。">
+  <meta name="keywords" content="stopwatch,在线秒表,网页版秒表,秒表计次器,计次秒表,免费秒表工具,运动计时器,学习计时器,工作计时工具">
   <meta name="theme-color" content="#0f172a" />
-  <title>Stopwatch | Free Online Tool</title>
+  <title>stopwatch - 在线网页版秒表与计次器</title>
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
@@ -19,6 +16,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/stopwatch.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/stopwatch.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/stopwatch.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/stopwatch.html">
+  <meta property="og:title" content="stopwatch - 在线网页版秒表与计次器">
+  <meta property="og:description" content="网页版秒表与计次器。提供开始、暂停、Reset功能，并包含一个‘计次’按钮，在下方列表记录每一次的中间时间。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="stopwatch - 在线网页版秒表与计次器">
+  <meta name="twitter:description" content="网页版秒表与计次器。提供开始、暂停、Reset功能，并包含一个‘计次’按钮，在下方列表记录每一次的中间时间。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
@@ -43,6 +50,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <div class="pointer-events-none fixed inset-0 overflow-hidden">
     <div class="absolute left-1/2 top-[-10rem] h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
     <div class="absolute bottom-[-12rem] right-[-8rem] h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl"></div>
@@ -53,16 +65,16 @@
       <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-            Free online tool
+            免费在线工具
           </p>
-          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl">Stopwatch</h1>
+          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl">在线网页版秒表与计次器</h1>
           <p class="mt-3 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            Modern web stopwatch and lap timer, accurately recording every start, pause, reset, and lap.
+            现代化网页版秒表与计次器，精准记录每一次开始、暂停、Reset与中间计次。
           </p>
         </div>
         <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-900/70 px-4 py-3 text-sm text-slate-700 dark:text-slate-300">
           <span class="mr-2 inline-block h-2 w-2 rounded-full bg-emerald-400"></span>
-          Runs locally · no installation required
+          本地运行 · 无需安装
         </div>
       </div>
     </header>
@@ -71,11 +83,11 @@
       <section aria-labelledby="timer-title" class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-black/30 backdrop-blur sm:p-7">
         <div class="mb-6 flex items-center justify-between gap-4">
           <div>
-            <h2 id="timer-title" class="text-xl font-bold text-gray-900 dark:text-white">Stopwatch controls</h2>
-            <p class="mt-1 text-sm text-slate-400">Click the buttons to start, pause, reset, or record laps.</p>
+            <h2 id="timer-title" class="text-xl font-bold text-gray-900 dark:text-white">秒表控制区</h2>
+            <p class="mt-1 text-sm text-slate-400">点击按钮即可开始计时、暂停、Reset或记录计次。</p>
           </div>
           <div id="statusBadge" class="rounded-full border border-slate-600 bg-slate-50 dark:bg-slate-800 px-3 py-1 text-sm font-semibold text-slate-700 dark:text-slate-300">
-            Not Started
+            未开始
           </div>
         </div>
 
@@ -83,20 +95,20 @@
           <div id="timeDisplay" class="select-none break-words font-mono text-5xl font-black tracking-tight text-cyan-200 drop-shadow sm:text-7xl md:text-8xl" aria-live="polite">
             00:00:00.000
           </div>
-          <p class="mt-4 text-sm text-slate-400">Format: hours : minutes : seconds . milliseconds</p>
+          <p class="mt-4 text-sm text-slate-400">格式：小时 : 分钟 : 秒 . 毫秒</p>
         </div>
 
         <div id="errorBox" class="mt-5 hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200" role="alert"></div>
 
         <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
           <button id="startBtn" type="button" class="rounded-2xl bg-cyan-400 px-5 py-4 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-95 focus:outline-none focus:ring-4 focus:ring-cyan-300/30">
-            Start
+            开始
           </button>
           <button id="pauseBtn" type="button" class="rounded-2xl bg-amber-400 px-5 py-4 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-amber-500/20 transition hover:bg-amber-300 active:scale-95 focus:outline-none focus:ring-4 focus:ring-amber-300/30 disabled:cursor-not-allowed disabled:opacity-45" disabled>
-            Pause
+            暂停
           </button>
           <button id="lapBtn" type="button" class="rounded-2xl bg-indigo-400 px-5 py-4 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-300 active:scale-95 focus:outline-none focus:ring-4 focus:ring-indigo-300/30 disabled:cursor-not-allowed disabled:opacity-45" disabled>
-            Count
+            计次
           </button>
           <button id="resetBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-50 dark:bg-slate-800 px-5 py-4 font-bold text-slate-900 dark:text-slate-100 shadow-lg shadow-black/20 transition hover:bg-slate-700 active:scale-95 focus:outline-none focus:ring-4 focus:ring-slate-400/20">
             Reset
@@ -105,15 +117,15 @@
 
         <div class="mt-6 grid gap-3 sm:grid-cols-3">
           <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-4">
-            <p class="text-sm text-slate-400">Cumulative Count</p>
+            <p class="text-sm text-slate-400">累计计次</p>
             <p id="lapCount" class="mt-1 text-2xl font-black text-gray-900 dark:text-white">0</p>
           </div>
           <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-4">
-            <p class="text-sm text-slate-400">Fastest Lap</p>
+            <p class="text-sm text-slate-400">最快单圈</p>
             <p id="bestLap" class="mt-1 font-mono text-lg font-bold text-emerald-300">--:--:--.---</p>
           </div>
           <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-4">
-            <p class="text-sm text-slate-400">Slowest Lap</p>
+            <p class="text-sm text-slate-400">最慢单圈</p>
             <p id="slowestLap" class="mt-1 font-mono text-lg font-bold text-rose-300">--:--:--.---</p>
           </div>
         </div>
@@ -122,23 +134,23 @@
       <section aria-labelledby="laps-title" class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-800/70 p-5 shadow-2xl shadow-black/30 backdrop-blur sm:p-7">
         <div class="mb-5 flex items-center justify-between gap-4">
           <div>
-            <h2 id="laps-title" class="text-xl font-bold text-gray-900 dark:text-white">Counter log area</h2>
-            <p class="mt-1 text-sm text-slate-400">Each click of “Lap” saves the current split time.</p>
+            <h2 id="laps-title" class="text-xl font-bold text-gray-900 dark:text-white">计次记录区</h2>
+            <p class="mt-1 text-sm text-slate-400">每次点击“计次”都会保存当前中间时间。</p>
           </div>
           <button id="clearLapsBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-3 py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-slate-700 active:scale-95 focus:outline-none focus:ring-4 focus:ring-slate-400/20 disabled:cursor-not-allowed disabled:opacity-45" disabled>
-            Clear Records
+            Clear记录
           </button>
         </div>
 
         <div class="overflow-hidden rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/70">
           <div class="grid grid-cols-[4rem_1fr_1fr] gap-2 border-b border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] px-4 py-3 text-sm font-bold text-slate-700 dark:text-slate-300">
-            <span>No.</span>
-            <span>Lap time</span>
-            <span>Total Time</span>
+            <span>序号</span>
+            <span>单圈时间</span>
+            <span>总时间</span>
           </div>
           <div id="lapsList" class="max-h-[27rem] overflow-y-auto">
             <div id="emptyState" class="px-4 py-10 text-center text-slate-400">
-              No lap records yet. Start the timer, then click “Lap” to add one.
+              暂无计次记录。开始计时后点击“计次”即可添加。
             </div>
           </div>
         </div>
@@ -146,13 +158,17 @@
     </main>
 
     <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl shadow-black/20 backdrop-blur md:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Stopwatch</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Web stopwatch and lap timer. Provides start, pause, and reset controls, plus a &#x27;Lap&#x27; button to record each split time in the list below. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Stopwatch for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于这款在线秒表与计次器</h2>
+      <p>
+        stopwatch 是一款专为浏览器设计的免费在线网页版秒表工具，适合需要快速、稳定、清晰计时的用户。无论你正在进行跑步训练、健身间歇、课堂实验、演讲排练，还是使用番茄工作法进行学习与工作效率统计，都可以通过这个秒表计次器完成精准记录。工具提供开始、暂停、Reset和计次功能，界面会实时显示小时、分钟、秒和毫秒，并在下方列表保存每一次中间时间，方便对比单圈表现与整体用时。
+      </p>
+      <p class="mt-4">
+        使用方法非常简单：点击“开始”启动计时，需要临时停止时点击“暂停”，想记录某个阶段的成绩时点击“计次”，系统会自动Generate单圈时间和总时间；如果需要重新开始，点击“Reset”即可Clear当前秒表。作为一款无需安装的在线秒表计时器，它在手机端和桌面端都能良好适配，打开网页即可使用，特别适合搜索“网页版秒表计次器”“免费在线秒表工具”“运动训练计时器”的用户。
+      </p>
     </article>
 
     <footer class="py-8 text-center text-sm text-slate-500">
-      stopwatch · Online web stopwatch and lap timer
+      stopwatch · 在线网页版秒表与计次器
     </footer>
   </div>
 
@@ -213,7 +229,7 @@
       };
 
       const showError = (message) => {
-        const text = typeof message === "string" && message.trim() ? message.trim() : "The operation could not be completed. Please try again later.";
+        const text = typeof message === "string" && message.trim() ? message.trim() : "操作无法完成，请稍后重试。";
         errorBox.textContent = text;
         errorBox.classList.remove("hidden");
         clearTimeout(errorTimer);
@@ -317,7 +333,7 @@
         try {
           hideError();
           if (isRunning) {
-            showError("The stopwatch is already running. No need to start again.");
+            showError("秒表已经在计时中，无需重复开始。");
             return;
           }
           startTime = safeNow();
@@ -327,14 +343,14 @@
           cancelAnimationFrame(animationId);
           tick();
         } catch (_) {
-          showError("An error occurred while starting the stopwatch. Please refresh the page and try again.");
+          showError("启动秒表时出现异常，请刷新页面后重试。");
         }
       };
 
       const pause = () => {
         try {
           if (!isRunning) {
-            showError("The stopwatch has not started and cannot be paused.");
+            showError("秒表尚未开始，无法暂停。");
             return;
           }
           elapsedBeforeStart = getElapsed();
@@ -344,7 +360,7 @@
           updateStatus();
           updateButtons();
         } catch (_) {
-          showError("An error occurred while pausing the stopwatch. Please try again.");
+          showError("暂停秒表时出现异常，请重试。");
         }
       };
 
@@ -361,20 +377,20 @@
           renderLaps();
           updateButtons();
         } catch (_) {
-          showError("Reset failed. Please refresh the page and try again.");
+          showError("Reset失败，请刷新页面后重试。");
         }
       };
 
       const addLap = () => {
         try {
           if (!isRunning) {
-            showError("Please click “Start” first. Lap records can only be added while timing.");
+            showError("请先点击“开始”，计时中才能添加计次记录。");
             return;
           }
 
           const totalTime = getElapsed();
           if (totalTime <= 0) {
-            showError("The current timer duration is too short. Please record the lap later.");
+            showError("当前计时时间过短，请稍后再记录计次。");
             return;
           }
 
@@ -389,21 +405,21 @@
 
           renderLaps();
         } catch (_) {
-          showError("Failed to add count record. Please try again.");
+          showError("添加计次记录失败，请重试。");
         }
       };
 
       const clearLaps = () => {
         try {
           if (laps.length === 0) {
-            showError("No count records available to clear.");
+            showError("当前没有可Clear的计次记录。");
             return;
           }
           laps = [];
           renderLaps();
           hideError();
         } catch (_) {
-          showError("Failed to clear count records. Please try again.");
+          showError("Clear计次记录失败，请重试。");
         }
       };
 

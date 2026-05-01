@@ -8,8 +8,6 @@
   <meta name="keywords" content="chords-generator, 和弦生成器, 吉他和弦查询, 钢琴和弦查询, 和弦组成音, maj7和弦, 基础和弦字典, 音程查询">
   <link rel="icon" type="image/png" href="./assets/logo.png">
   <link rel="apple-touch-icon" href="./assets/logo.png">
-  <meta property="og:image" content="./assets/logo.png">
-  <meta name="twitter:image" content="./assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
@@ -17,6 +15,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/chords-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/chords-generator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/chords-generator.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/chords-generator.html">
+  <meta property="og:title" content="chords-generator｜吉他/钢琴和弦组成音查询工具">
+  <meta property="og:description" content="吉他/钢琴和弦指法查询字典（基础版）。选择一个根音（如C）和类型（如maj7），利用前端逻辑展示其组成的音阶名称。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="chords-generator｜吉他/钢琴和弦组成音查询工具">
+  <meta name="twitter:description" content="吉他/钢琴和弦指法查询字典（基础版）。选择一个根音（如C）和类型（如maj7），利用前端逻辑展示其组成的音阶名称。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -41,6 +49,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
     <div class="absolute inset-0 opacity-30" aria-hidden="true">
       <div class="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-cyan-500 blur-3xl"></div>
@@ -59,7 +72,7 @@
 
   <main class="mx-auto max-w-6xl px-5 py-8 sm:py-12">
     <section class="grid gap-6 lg:grid-cols-5" aria-label="和弦生成工具">
-      <div class="lg:col-span-2 rounded-3xl border border-slate-200 dark:border-slate-700/70 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
+      <div class="lg:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 dark:border-slate-700/70 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
         <div class="mb-6">
           <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输入设置</h2>
           <p class="mt-2 text-sm text-slate-400">请选择根音和和弦类型，支持常见三和弦、七和弦、挂留和弦与扩展和弦。</p>
@@ -138,7 +151,7 @@
           </div>
         </div>
 
-        <div class="rounded-3xl border border-slate-200 dark:border-slate-700/70 bg-slate-950/70 p-5">
+        <div class="rounded-3xl border border-slate-200 dark:border-white/10 dark:border-slate-700/70 bg-slate-950/70 p-5">
           <p class="text-sm font-semibold uppercase tracking-widest text-cyan-300">Chord Name</p>
           <div id="chordName" class="mt-2 break-words text-4xl font-black text-gray-900 dark:text-white sm:text-5xl">Cmaj7</div>
 
@@ -172,7 +185,7 @@
       </div>
     </section>
 
-    <article class="mt-10 rounded-3xl border border-slate-200 dark:border-slate-700/70 bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl shadow-slate-950/30">
+    <article class="mt-10 rounded-3xl border border-slate-200 dark:border-white/10 dark:border-slate-700/70 bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl shadow-slate-950/30">
       <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 chords-generator 和弦查询工具</h2>
       <p>
         chords-generator 是一款面向吉他手、钢琴学习者、编曲人和音乐教师的基础版和弦生成器。很多人在练习 Cmaj7、Dm7、G7 或 sus4 等常见和弦时，常常需要快速确认和弦组成音与音程关系，本工具通过浏览器前端逻辑即时计算根音到各音的半音距离，帮助你准确理解和弦结构。使用时只需选择一个根音，再选择大三和弦、小七和弦、属七和弦、add9 和弦等类型，页面会自动显示完整组成音、音程结构，以及适合吉他和钢琴的基础练习建议。对于需要“吉他和弦组成音查询”“钢琴和弦音名生成”“maj7 和弦怎么构成”等长尾关键词答案的用户，这个工具能提供清晰、快速、无安装的查询体验，适合日常练琴、写歌配和声和课堂演示。

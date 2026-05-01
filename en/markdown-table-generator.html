@@ -3,15 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Markdown Table Generator | Free Online Tool</title>
-  <meta name="description" content="Visual Markdown table generator. Add rows and columns with buttons, then generate standard Markdown table code in real time after filling cell content.">
-  <meta name="keywords" content="Markdown Table Generator, online tool, browser tool, productivity tool">
-  <meta name="robots" content="index, follow" />
+  <title>markdown-table-generator - 可视化 Markdown 表格Generate器</title>
+  <meta name="description" content="可视化 Markdown 表格Generate器。支持通过按钮增加行列，并在单元格填入内容后实时Generate标准的Markdown表格代码。">
+  <meta name="keywords" content="Markdown表格Generate器, markdown-table-generator, 可视化Markdown表格, Markdown table generator, README表格工具, Markdown在线工具, Markdown表格代码Generate">
   <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
@@ -19,6 +16,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/markdown-table-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/markdown-table-generator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/markdown-table-generator.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/markdown-table-generator.html">
+  <meta property="og:title" content="markdown-table-generator - 可视化 Markdown 表格Generate器">
+  <meta property="og:description" content="可视化 Markdown 表格Generate器。支持通过按钮增加行列，并在单元格填入内容后实时Generate标准的Markdown表格代码。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="markdown-table-generator - 可视化 Markdown 表格Generate器">
+  <meta name="twitter:description" content="可视化 Markdown 表格Generate器。支持通过按钮增加行列，并在单元格填入内容后实时Generate标准的Markdown表格代码。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -43,6 +50,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
     <div class="absolute inset-0 opacity-30">
       <div class="absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-cyan-500 blur-3xl"></div>
@@ -53,27 +65,27 @@
         <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-1 text-sm font-medium text-cyan-200">
           Visual Markdown Table Builder
         </p>
-        <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">Markdown Table Generator</h1>
+        <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">可视化 Markdown 表格Generate器</h1>
         <p class="mt-5 text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
-          Edit content through a visual table and generate standard Markdown table code in real time. Ideal for README files, technical docs, blog posts, and project descriptions.
+          通过可视化表格编辑内容，实时Generate标准 Markdown 表格代码。适合 README、技术文档、博客文章与项目说明。
         </p>
       </div>
     </div>
   </header>
 
   <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-2" aria-label="Markdown Table Generator">
+    <section class="grid gap-6 lg:grid-cols-2" aria-label="Markdown 表格Generate工具">
       <div class="rounded-3xl border border-slate-700 bg-slate-900/90 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
         <div class="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Visual editor</h2>
-            <p class="mt-1 text-sm text-slate-400">The first row is the header, followed by table content. Markdown will be generated automatically after input.</p>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">可视化编辑区</h2>
+            <p class="mt-1 text-sm text-slate-400">第一行为表头，下面为表格内容。输入后会自动Generate Markdown。</p>
           </div>
           <div class="flex flex-wrap gap-2">
-            <button id="addRowBtn" type="button" class="rounded-xl bg-cyan-500 px-4 py-2 text-sm font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400 active:scale-95 focus:outline-none focus:ring-2 focus:ring-cyan-300">Add row</button>
-            <button id="addColBtn" type="button" class="rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-gray-900 dark:text-white shadow-lg shadow-blue-500/20 transition hover:bg-blue-400 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-300">Add column</button>
-            <button id="removeRowBtn" type="button" class="rounded-xl border border-rose-400/40 bg-rose-500/10 px-4 py-2 text-sm font-bold text-rose-200 transition hover:bg-rose-500/20 active:scale-95 focus:outline-none focus:ring-2 focus:ring-rose-300">Delete row</button>
-            <button id="removeColBtn" type="button" class="rounded-xl border border-amber-400/40 bg-amber-500/10 px-4 py-2 text-sm font-bold text-amber-200 transition hover:bg-amber-500/20 active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-300">Delete column</button>
+            <button id="addRowBtn" type="button" class="rounded-xl bg-cyan-500 px-4 py-2 text-sm font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400 active:scale-95 focus:outline-none focus:ring-2 focus:ring-cyan-300">增加行</button>
+            <button id="addColBtn" type="button" class="rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-gray-900 dark:text-white shadow-lg shadow-blue-500/20 transition hover:bg-blue-400 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-300">增加列</button>
+            <button id="removeRowBtn" type="button" class="rounded-xl border border-rose-400/40 bg-rose-500/10 px-4 py-2 text-sm font-bold text-rose-200 transition hover:bg-rose-500/20 active:scale-95 focus:outline-none focus:ring-2 focus:ring-rose-300">删除行</button>
+            <button id="removeColBtn" type="button" class="rounded-xl border border-amber-400/40 bg-amber-500/10 px-4 py-2 text-sm font-bold text-amber-200 transition hover:bg-amber-500/20 active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-300">删除列</button>
           </div>
         </div>
 
@@ -81,58 +93,59 @@
 
         <div class="mb-4 grid gap-3 sm:grid-cols-3">
           <div class="rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
-            <p class="text-xs uppercase tracking-widest text-slate-500">Current rows</p>
+            <p class="text-xs uppercase tracking-widest text-slate-500">当前行数</p>
             <p id="rowCount" class="mt-1 text-2xl font-black text-cyan-300">0</p>
           </div>
           <div class="rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
-            <p class="text-xs uppercase tracking-widest text-slate-500">Current columns</p>
+            <p class="text-xs uppercase tracking-widest text-slate-500">当前列数</p>
             <p id="colCount" class="mt-1 text-2xl font-black text-blue-300">0</p>
           </div>
           <div class="rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
-            <p class="text-xs uppercase tracking-widest text-slate-500">Live Status</p>
-            <p id="statusText" class="mt-2 text-sm font-semibold text-emerald-300">Ready</p>
+            <p class="text-xs uppercase tracking-widest text-slate-500">实时状态</p>
+            <p id="statusText" class="mt-2 text-sm font-semibold text-emerald-300">已就绪</p>
           </div>
         </div>
 
         <div class="overflow-x-auto rounded-2xl border border-slate-700 bg-white dark:bg-slate-950">
-          <table class="min-w-full border-collapse" aria-label="Editable Markdown Table">
+          <table class="min-w-full border-collapse" aria-label="可编辑 Markdown 表格">
             <thead id="tableHead"></thead>
             <tbody id="tableBody"></tbody>
           </table>
         </div>
 
         <div class="mt-4 flex flex-wrap gap-2">
-          <button id="resetBtn" type="button" class="rounded-xl border border-slate-600 bg-slate-50 dark:bg-slate-800 px-4 py-2 text-sm font-bold text-slate-800 dark:text-slate-200 transition hover:bg-slate-700 active:scale-95 focus:outline-none focus:ring-2 focus:ring-slate-400">Reset example</button>
-          <button id="clearBtn" type="button" class="rounded-xl border border-slate-600 bg-slate-50 dark:bg-slate-800 px-4 py-2 text-sm font-bold text-slate-800 dark:text-slate-200 transition hover:bg-slate-700 active:scale-95 focus:outline-none focus:ring-2 focus:ring-slate-400">Clear Content</button>
+          <button id="resetBtn" type="button" class="rounded-xl border border-slate-600 bg-slate-50 dark:bg-slate-800 px-4 py-2 text-sm font-bold text-slate-800 dark:text-slate-200 transition hover:bg-slate-700 active:scale-95 focus:outline-none focus:ring-2 focus:ring-slate-400">Reset示例</button>
+          <button id="clearBtn" type="button" class="rounded-xl border border-slate-600 bg-slate-50 dark:bg-slate-800 px-4 py-2 text-sm font-bold text-slate-800 dark:text-slate-200 transition hover:bg-slate-700 active:scale-95 focus:outline-none focus:ring-2 focus:ring-slate-400">Clear内容</button>
         </div>
       </div>
 
       <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/30 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
         <div class="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Markdown output area</h2>
-            <p class="mt-1 text-sm text-cyan-100/70">Copy the code below and paste it into a Markdown document.</p>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Markdown 输出区</h2>
+            <p class="mt-1 text-sm text-cyan-100/70">Copy下方代码即可粘贴到 Markdown 文档中使用。</p>
           </div>
-          <button id="copyBtn" type="button" class="rounded-xl bg-emerald-400 px-4 py-2 text-sm font-black text-slate-950 dark:text-slate-100 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-300 active:scale-95 focus:outline-none focus:ring-2 focus:ring-emerald-200">Copy Code</button>
+          <button id="copyBtn" type="button" class="rounded-xl bg-emerald-400 px-4 py-2 text-sm font-black text-slate-950 dark:text-slate-100 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-300 active:scale-95 focus:outline-none focus:ring-2 focus:ring-emerald-200">Copy代码</button>
         </div>
 
-        <textarea id="markdownOutput" readonly spellcheck="false" class="h-[420px] w-full resize-y rounded-2xl border border-cyan-300/20 bg-white dark:bg-slate-950 p-4 font-mono text-sm leading-6 text-cyan-100 shadow-inner outline-none focus:ring-2 focus:ring-cyan-400" aria-label="Generated Markdown table code"></textarea>
+        <textarea id="markdownOutput" readonly spellcheck="false" class="h-[420px] w-full resize-y rounded-2xl border border-cyan-300/20 bg-white dark:bg-slate-950 p-4 font-mono text-sm leading-6 text-cyan-100 shadow-inner outline-none focus:ring-2 focus:ring-cyan-400" aria-label="Generate的 Markdown 表格代码"></textarea>
 
         <div class="mt-4 rounded-2xl border border-cyan-300/20 bg-white dark:bg-slate-950/60 p-4">
-          <h3 class="font-bold text-cyan-100">Tip</h3>
+          <h3 class="font-bold text-cyan-100">提示</h3>
           <ul class="mt-2 list-disc space-y-1 pl-5 text-sm leading-6 text-slate-700 dark:text-slate-300">
-            <li>Vertical bar in cells <code class="rounded bg-slate-50 dark:bg-slate-800 px-1 text-cyan-200">|</code> Will be escaped automatically to avoid breaking the Markdown table structure.</li>
-            <li>Line breaks will be converted to <code class="rounded bg-slate-50 dark:bg-slate-800 px-1 text-cyan-200">&lt;br&gt;</code>, making it easy to keep multi-line content in the table.</li>
-            <li>Each column can be set to left, center, or right alignment independently.</li>
+            <li>单元格中的竖线 <code class="rounded bg-slate-50 dark:bg-slate-800 px-1 text-cyan-200">|</code> 会自动转义，避免破坏 Markdown 表格结构。</li>
+            <li>换行会被转换为 <code class="rounded bg-slate-50 dark:bg-slate-800 px-1 text-cyan-200">&lt;br&gt;</code>，便于在表格内保留多行内容。</li>
+            <li>每一列都可以单独设置左对齐、居中或右对齐。</li>
           </ul>
         </div>
       </div>
     </section>
 
     <article class="mt-8 rounded-3xl border border-slate-700 bg-white dark:bg-slate-900/80 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl shadow-slate-950/30 sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Markdown Table Generator</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Visual Markdown table generator. Add rows and columns with buttons, then generate standard Markdown table code in real time after filling cell content. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Markdown Table Generator for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于可视化 Markdown 表格Generate器</h2>
+      <p>
+        markdown-table-generator 是一个面向开发者、产品经理、技术写作者和内容创作者的在线 Markdown 表格Generate器。很多人在编写 README 文档、项目说明、接口文档或博客教程时，都遇到过手写 Markdown 表格容易错位、分隔符难以维护、列数增加后排版混乱的问题。本工具通过可视化表格编辑方式解决这些痛点：你只需要点击按钮增加行列，在单元格中填写内容，系统就会实时Generate标准 Markdown table 代码。它支持表头、普通单元格、列对齐方式、特殊字符自动转义和一键Copy，非常适合快速制作 GitHub README 表格、Markdown 技术文档表格、产品参数对比表和教程示例表。使用方法也很简单：先在编辑区调整需要的行数与列数，再输入表格内容，最后Copy输出区代码并粘贴到支持 Markdown 的编辑器中即可。对于需要高效Generate Markdown 表格代码的用户来说，这个可视化 Markdown 表格Generate工具可以显著减少格式错误，提高文档编写效率。
+      </p>
     </article>
   </main>
 
@@ -168,8 +181,8 @@
 
       let data = [
         ['名称', '说明', '示例'],
-        ['项目', 'Markdown table generator', 'README 文档'],
-        ['特点', 'Real-time generation and visual editing', 'One-click copy']
+        ['项目', 'Markdown 表格Generate器', 'README 文档'],
+        ['特点', '实时Generate、可视化编辑', '一键Copy']
       ];
       let aligns = ['left', 'center', 'right'];
       let errorTimer = null;
@@ -177,10 +190,10 @@
       const safeText = (value) => String(value ?? '');
 
       const showError = (message) => {
-        const text = safeText(message).trim() || 'An unknown error occurred. Please check your input and try again.';
+        const text = safeText(message).trim() || '发生Unknown错误，请检查输入后重试。';
         elements.errorBox.textContent = text;
         elements.errorBox.classList.remove('hidden');
-        elements.statusText.textContent = 'Needs processing';
+        elements.statusText.textContent = '需要处理';
         elements.statusText.className = 'mt-2 text-sm font-semibold text-red-300';
         clearTimeout(errorTimer);
         errorTimer = setTimeout(() => {
@@ -259,8 +272,8 @@
         input.dataset.col = String(colIndex);
         input.maxLength = 5000;
         input.className = 'min-h-[54px] w-44 resize-y rounded-xl border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-300 focus:ring-2 focus:ring-cyan-400/40 sm:w-52';
-        input.placeholder = rowIndex === 0 ? `Header ${colIndex + 1}` : `Content ${rowIndex}-${colIndex + 1}`;
-        input.setAttribute('aria-label', rowIndex === 0 ? `Column ${colIndex + 1} header` : `Row ${rowIndex}, column ${colIndex + 1} content`);
+        input.placeholder = rowIndex === 0 ? `表头 ${colIndex + 1}` : `内容 ${rowIndex}-${colIndex + 1}`;
+        input.setAttribute('aria-label', rowIndex === 0 ? `第 ${colIndex + 1} 列表头` : `第 ${rowIndex} 行第 ${colIndex + 1} 列内容`);
         return input;
       };
 
@@ -279,7 +292,7 @@
 
           const label = document.createElement('div');
           label.className = 'mb-2 flex items-center justify-between gap-2';
-          label.innerHTML = `<span class="rounded-full bg-cyan-400/10 px-2 py-1 text-xs font-bold text-cyan-200">Column ${colIndex + 1}</span>`;
+          label.innerHTML = `<span class="rounded-full bg-cyan-400/10 px-2 py-1 text-xs font-bold text-cyan-200">第 ${colIndex + 1} 列</span>`;
 
           const select = document.createElement('select');
           select.dataset.alignCol = String(colIndex);
@@ -331,73 +344,73 @@
       const addRow = () => {
         normalizeState();
         if (data.length >= MAX_ROWS) {
-          showError(`Supports up to ${MAX_ROWS} rows; the limit has been reached.`);
+          showError(`最多支持 ${MAX_ROWS} 行，当前已达到上限。`);
           return;
         }
         data.push(Array(data[0].length).fill(''));
         renderTable();
-        setStatus('Row added');
+        setStatus('已增加一行');
       };
 
       const addCol = () => {
         normalizeState();
         if (data[0].length >= MAX_COLS) {
-          showError(`Supports up to ${MAX_COLS} columns; the limit has been reached.`);
+          showError(`最多支持 ${MAX_COLS} 列，当前已达到上限。`);
           return;
         }
         const newIndex = data[0].length + 1;
-        data.forEach((row, index) => row.push(index === 0 ? `Column ${newIndex}` : ''));
+        data.forEach((row, index) => row.push(index === 0 ? `列 ${newIndex}` : ''));
         aligns.push('left');
         renderTable();
-        setStatus('Column added');
+        setStatus('已增加一列');
       };
 
       const removeRow = () => {
         normalizeState();
         if (data.length <= MIN_ROWS) {
-          showError('You must keep at least the header and one row. No more rows can be deleted.');
+          showError('至少需要保留表头和一行内容，不能继续删除行。');
           return;
         }
         data.pop();
         renderTable();
-        setStatus('Last row deleted');
+        setStatus('已删除最后一行');
       };
 
       const removeCol = () => {
         normalizeState();
         if (data[0].length <= MIN_COLS) {
-          showError('At least one column must remain; cannot delete more columns.');
+          showError('至少需要保留一列，不能继续删除列。');
           return;
         }
         data.forEach(row => row.pop());
         aligns.pop();
         renderTable();
-        setStatus('Last column deleted');
+        setStatus('已删除最后一列');
       };
 
       const clearContent = () => {
         normalizeState();
         data = data.map(row => row.map(() => ''));
         renderTable();
-        setStatus('Content cleared');
+        setStatus('内容已Clear');
       };
 
       const resetExample = () => {
         data = [
           ['名称', '说明', '示例'],
-          ['项目', 'Markdown table generator', 'README 文档'],
-          ['特点', 'Real-time generation and visual editing', 'One-click copy']
+          ['项目', 'Markdown 表格Generate器', 'README 文档'],
+          ['特点', '实时Generate、可视化编辑', '一键Copy']
         ];
         aligns = ['left', 'center', 'right'];
         renderTable();
-        setStatus('Example reset');
+        setStatus('示例Reset');
       };
 
       const copyOutput = async () => {
         try {
           const text = elements.output.value;
           if (!text.trim()) {
-            showError('No Markdown content available to copy.');
+            showError('当前没有可Copy的 Markdown 内容。');
             return;
           }
 
@@ -407,7 +420,7 @@
             elements.output.focus();
             elements.output.select();
             const successful = document.execCommand('copy');
-            if (!successful) throw new Error('Copy command failed');
+            if (!successful) throw new Error('Copy命令未成功执行');
             window.getSelection()?.removeAllRanges();
           }
 
@@ -415,14 +428,14 @@
           elements.copyBtn.textContent = 'Copied';
           elements.copyBtn.classList.remove('bg-emerald-400');
           elements.copyBtn.classList.add('bg-cyan-300');
-          setStatus('Markdown copied to clipboard');
+          setStatus('Markdown Copied到剪贴板');
           setTimeout(() => {
             elements.copyBtn.textContent = original;
             elements.copyBtn.classList.add('bg-emerald-400');
             elements.copyBtn.classList.remove('bg-cyan-300');
           }, 1200);
         } catch (err) {
-          showError('Copy failed. Please manually select the output area content to copy.');
+          showError('Copy failed，请手动选择输出区内容后Copy。');
         }
       };
 
@@ -435,16 +448,16 @@
           const col = Number.parseInt(target.dataset.col, 10);
 
           if (!Number.isInteger(row) || !Number.isInteger(col) || row < 0 || col < 0 || !data[row] || col >= data[row].length) {
-            showError('Cell position error. The table has been refreshed automatically.');
+            showError('单元格位置异常，已自动刷新表格。');
             renderTable();
             return;
           }
 
           data[row][col] = safeText(target.value);
           generateMarkdown();
-          setStatus('Updated in real time');
+          setStatus('已实时更新');
         } catch (err) {
-          showError('Input processing failed. Please refresh the page or try again.');
+          showError('输入处理失败，请刷新页面或重试。');
         }
       });
 
@@ -455,16 +468,16 @@
 
           const col = Number.parseInt(target.dataset.alignCol, 10);
           if (!Number.isInteger(col) || col < 0 || col >= aligns.length) {
-            showError('Column alignment settings are invalid and have been reset to default.');
+            showError('列对齐设置异常，已恢复默认值。');
             renderTable();
             return;
           }
 
           aligns[col] = ['left', 'center', 'right'].includes(target.value) ? target.value : 'left';
           generateMarkdown();
-          setStatus('Column alignment updated');
+          setStatus('列对齐已更新');
         } catch (err) {
-          showError('Failed to apply alignment settings. Please try again.');
+          showError('对齐设置失败，请重试。');
         }
       });
 
@@ -477,11 +490,11 @@
       elements.copyBtn.addEventListener('click', copyOutput);
 
       window.addEventListener('error', () => {
-        showError('The page encountered an error, but the tool has tried to remain usable.');
+        showError('页面遇到异常，但工具已尽力保持可用。');
       });
 
       window.addEventListener('unhandledrejection', () => {
-        showError('Async operation failed. Please try again later.');
+        showError('异步操作失败，请稍后重试。');
       });
 
       renderTable();

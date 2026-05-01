@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CRON Expression Generator | Free Online Tool</title>
-  <meta name="description" content="CRON expression generator and parser. Provides UI components (dropdowns/radio buttons) to generate complex CRON syntax and explain the next 5 run times in English.">
-  <meta name="keywords" content="CRON Expression Generator, online tool, browser tool, productivity tool">
+  <title>cron-generator - CRON 表达式Generate与解析器</title>
+  <meta name="description" content="CRON 表达式Generate与解析器。提供UI组件（下拉框/单选按钮）来Generate复杂的CRON语法，并用Chinese解释下5次执行时间。">
+  <meta name="keywords" content="cron-generator, CRON表达式Generate器, CRON解析器, 在线Cron工具, 定时任务表达式, Linux Cron, 未来执行时间, ChineseCron解释">
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
@@ -17,6 +15,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/cron-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/cron-generator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/cron-generator.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/cron-generator.html">
+  <meta property="og:title" content="cron-generator - CRON 表达式Generate与解析器">
+  <meta property="og:description" content="CRON 表达式Generate与解析器。提供UI组件（下拉框/单选按钮）来Generate复杂的CRON语法，并用Chinese解释下5次执行时间。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="cron-generator - CRON 表达式Generate与解析器">
+  <meta name="twitter:description" content="CRON 表达式Generate与解析器。提供UI组件（下拉框/单选按钮）来Generate复杂的CRON语法，并用Chinese解释下5次执行时间。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -41,6 +49,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
     <div class="absolute inset-0 opacity-30">
       <div class="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-cyan-500 blur-3xl"></div>
@@ -48,9 +61,9 @@
     </div>
     <div class="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       <div class="max-w-3xl">
-        <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-1 text-sm text-cyan-200">Zero dependencies · Chinese parsing · Future execution time prediction</p>
-        <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-6xl">CRON Expression Generator</h1>
-        <p class="mt-5 text-lg leading-8 text-slate-700 dark:text-slate-300">CRON expression generator and parser. Quickly generate scheduled task syntax through visual controls, or paste an expression directly for an English explanation and calculate the next 5 run times.</p>
+        <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-1 text-sm text-cyan-200">零依赖 · Chinese解析 · 未来执行时间预测</p>
+        <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-6xl">CRON 表达式Generate与解析器</h1>
+        <p class="mt-5 text-lg leading-8 text-slate-700 dark:text-slate-300">CRON 表达式Generate与解析器。通过可视化控件快速Generate定时任务语法，或直接粘贴表达式进行Chinese解释，并计算未来 5 次执行时间。</p>
       </div>
     </div>
   </header>
@@ -60,34 +73,34 @@
       <div class="rounded-3xl border border-slate-700 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
         <div class="mb-5 flex items-center justify-between gap-3">
           <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Input</h2>
-            <p class="mt-1 text-sm text-slate-400">Choose a template or use advanced fields to generate a 5-field Unix CRON expression: minute hour day-of-month month day-of-week</p>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输入区</h2>
+            <p class="mt-1 text-sm text-slate-400">选择模板或使用高级字段Generate 5 位 Unix CRON 表达式：分钟 小时 日期 月份 星期</p>
           </div>
-          <span class="rounded-xl bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-200">UTC? No, local time</span>
+          <span class="rounded-xl bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-200">UTC? 否，本地时间</span>
         </div>
 
         <div id="errorBox" class="mb-4 hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm text-red-200"></div>
 
         <div class="mb-5 rounded-2xl bg-slate-800/80 p-4">
-          <label for="modeSelect" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Generation Mode</label>
+          <label for="modeSelect" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Generate模式</label>
           <select id="modeSelect" class="w-full rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20">
-            <option value="preset">Common Templates</option>
-            <option value="advanced">Advanced Field Builder</option>
-            <option value="manual">Manual input / parse</option>
+            <option value="preset">常用模板</option>
+            <option value="advanced">高级字段构建</option>
+            <option value="manual">手动输入 / 解析</option>
           </select>
         </div>
 
         <div id="presetPanel" class="space-y-4">
           <div>
-            <label for="presetType" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Select Timer Type</label>
+            <label for="presetType" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">选择定时类型</label>
             <select id="presetType" class="w-full rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20">
-              <option value="everyMinute">Run every minute</option>
-              <option value="everyNMinutes">Run every N minutes</option>
-              <option value="hourly">Run at specified minute every hour</option>
-              <option value="daily">Run daily at a specified time</option>
-              <option value="weekly">Run weekly on specified days and times</option>
-              <option value="monthly">Run monthly on specified dates and times</option>
-              <option value="workday">Run at a specified time on weekdays</option>
+              <option value="everyMinute">每分钟执行</option>
+              <option value="everyNMinutes">每 N 分钟执行</option>
+              <option value="hourly">每小时指定分钟执行</option>
+              <option value="daily">每天指定时间执行</option>
+              <option value="weekly">每周指定星期和时间执行</option>
+              <option value="monthly">每月指定日期和时间执行</option>
+              <option value="workday">工作日指定时间执行</option>
             </select>
           </div>
 
@@ -97,10 +110,10 @@
         <div id="advancedPanel" class="hidden space-y-4">
           <div class="grid gap-4">
             <div class="rounded-2xl border border-slate-700 bg-slate-800/70 p-4">
-              <h3 class="mb-3 font-bold text-cyan-100">Minute field</h3>
+              <h3 class="mb-3 font-bold text-cyan-100">分钟字段</h3>
               <div class="grid gap-3 sm:grid-cols-3">
                 <select data-field="minute" data-role="mode" class="field-mode rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2">
-                  <option value="*">Per Minute</option><option value="specific">Specify</option><option value="step">Interval</option><option value="range">Range</option>
+                  <option value="*">每分钟</option><option value="specific">指定</option><option value="step">间隔</option><option value="range">范围</option>
                 </select>
                 <select data-field="minute" data-role="a" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
                 <select data-field="minute" data-role="b" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
@@ -108,10 +121,10 @@
             </div>
 
             <div class="rounded-2xl border border-slate-700 bg-slate-800/70 p-4">
-              <h3 class="mb-3 font-bold text-cyan-100">Hour Field</h3>
+              <h3 class="mb-3 font-bold text-cyan-100">小时字段</h3>
               <div class="grid gap-3 sm:grid-cols-3">
                 <select data-field="hour" data-role="mode" class="field-mode rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2">
-                  <option value="*">Per Hour</option><option value="specific">Specify</option><option value="step">Interval</option><option value="range">Range</option>
+                  <option value="*">每小时</option><option value="specific">指定</option><option value="step">间隔</option><option value="range">范围</option>
                 </select>
                 <select data-field="hour" data-role="a" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
                 <select data-field="hour" data-role="b" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
@@ -119,10 +132,10 @@
             </div>
 
             <div class="rounded-2xl border border-slate-700 bg-slate-800/70 p-4">
-              <h3 class="mb-3 font-bold text-cyan-100">Date Field</h3>
+              <h3 class="mb-3 font-bold text-cyan-100">日期字段</h3>
               <div class="grid gap-3 sm:grid-cols-3">
                 <select data-field="dom" data-role="mode" class="field-mode rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2">
-                  <option value="*">Daily</option><option value="specific">Specified date</option><option value="step">Interval</option><option value="range">Range</option>
+                  <option value="*">每天</option><option value="specific">指定日期</option><option value="step">间隔</option><option value="range">范围</option>
                 </select>
                 <select data-field="dom" data-role="a" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
                 <select data-field="dom" data-role="b" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
@@ -130,10 +143,10 @@
             </div>
 
             <div class="rounded-2xl border border-slate-700 bg-slate-800/70 p-4">
-              <h3 class="mb-3 font-bold text-cyan-100">Month Field</h3>
+              <h3 class="mb-3 font-bold text-cyan-100">月份字段</h3>
               <div class="grid gap-3 sm:grid-cols-3">
                 <select data-field="month" data-role="mode" class="field-mode rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2">
-                  <option value="*">Monthly</option><option value="specific">Specified month</option><option value="step">Interval</option><option value="range">Range</option>
+                  <option value="*">每月</option><option value="specific">指定月份</option><option value="step">间隔</option><option value="range">范围</option>
                 </select>
                 <select data-field="month" data-role="a" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
                 <select data-field="month" data-role="b" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
@@ -141,10 +154,10 @@
             </div>
 
             <div class="rounded-2xl border border-slate-700 bg-slate-800/70 p-4">
-              <h3 class="mb-3 font-bold text-cyan-100">Day of Week Field</h3>
+              <h3 class="mb-3 font-bold text-cyan-100">星期字段</h3>
               <div class="grid gap-3 sm:grid-cols-3">
                 <select data-field="dow" data-role="mode" class="field-mode rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2">
-                  <option value="*">Any day of week</option><option value="specific">Specified weekday</option><option value="step">Interval</option><option value="range">Range</option>
+                  <option value="*">每周任意日</option><option value="specific">指定星期</option><option value="step">间隔</option><option value="range">范围</option>
                 </select>
                 <select data-field="dow" data-role="a" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
                 <select data-field="dow" data-role="b" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
@@ -154,46 +167,46 @@
         </div>
 
         <div id="manualPanel" class="hidden">
-          <label for="manualCron" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">CRON expression</label>
-          <input id="manualCron" type="text" value="*/5 * * * *" class="w-full rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-4 py-3 font-mono text-cyan-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20" placeholder="Example: */5 * * * *" />
-          <p class="mt-2 text-xs text-slate-400">Supports *, ?, comma lists, ranges, and steps, for example: 0 9-18/2 * * 1-5</p>
+          <label for="manualCron" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">CRON 表达式</label>
+          <input id="manualCron" type="text" value="*/5 * * * *" class="w-full rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-4 py-3 font-mono text-cyan-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20" placeholder="例如：*/5 * * * *" />
+          <p class="mt-2 text-xs text-slate-400">支持 *、?、逗号列表、范围、步长，例如：0 9-18/2 * * 1-5</p>
         </div>
 
         <div class="mt-5 rounded-2xl border border-cyan-400/20 bg-cyan-400/5 p-4">
-          <label for="cronOutput" class="mb-2 block text-sm font-semibold text-cyan-100">Current expression</label>
+          <label for="cronOutput" class="mb-2 block text-sm font-semibold text-cyan-100">当前表达式</label>
           <div class="flex flex-col gap-3 sm:flex-row">
             <input id="cronOutput" type="text" class="flex-1 rounded-xl border border-cyan-400/30 bg-white dark:bg-slate-950 px-4 py-3 font-mono text-lg font-bold text-cyan-200 outline-none focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20" />
             <button id="copyBtn" class="rounded-xl bg-slate-700 px-5 py-3 font-bold text-gray-900 dark:text-white transition hover:bg-slate-600 active:scale-95">Copy</button>
-            <button id="analyzeBtn" class="rounded-xl bg-cyan-400 px-5 py-3 font-black text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-95">Parse</button>
+            <button id="analyzeBtn" class="rounded-xl bg-cyan-400 px-5 py-3 font-black text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-95">解析</button>
           </div>
         </div>
       </div>
 
       <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/30 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
         <div class="mb-5">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Output</h2>
-          <p class="mt-1 text-sm text-cyan-100/70">Chinese explanation and next 5 local run times</p>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输出区</h2>
+          <p class="mt-1 text-sm text-cyan-100/70">Chinese解释与未来 5 次本地执行时间</p>
         </div>
 
         <div class="space-y-4">
           <div class="rounded-2xl border border-cyan-300/20 bg-slate-950/70 p-5">
-            <h3 class="mb-2 text-sm font-bold uppercase tracking-widest text-cyan-300">Chinese explanation</h3>
-            <p id="explainText" class="text-lg leading-8 text-slate-900 dark:text-slate-100">Waiting to parse...</p>
+            <h3 class="mb-2 text-sm font-bold uppercase tracking-widest text-cyan-300">Chinese解释</h3>
+            <p id="explainText" class="text-lg leading-8 text-slate-900 dark:text-slate-100">等待解析...</p>
           </div>
 
           <div class="rounded-2xl border border-cyan-300/20 bg-slate-950/70 p-5">
-            <h3 class="mb-4 text-sm font-bold uppercase tracking-widest text-cyan-300">Next 5 run times</h3>
+            <h3 class="mb-4 text-sm font-bold uppercase tracking-widest text-cyan-300">未来 5 次执行时间</h3>
             <ol id="nextList" class="space-y-3"></ol>
           </div>
 
           <div class="rounded-2xl border border-slate-700 bg-slate-900/70 p-5">
-            <h3 class="mb-3 text-sm font-bold uppercase tracking-widest text-slate-700 dark:text-slate-300">Field Description</h3>
+            <h3 class="mb-3 text-sm font-bold uppercase tracking-widest text-slate-700 dark:text-slate-300">字段说明</h3>
             <div class="grid gap-2 text-sm text-slate-700 dark:text-slate-300 sm:grid-cols-2">
-              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-2"><b class="text-gray-900 dark:text-white">Minutes</b>：0-59</div>
-              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-2"><b class="text-gray-900 dark:text-white">Hours</b>：0-23</div>
-              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-2"><b class="text-gray-900 dark:text-white">Date</b>：1-31</div>
-              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-2"><b class="text-gray-900 dark:text-white">Month</b>：1-12</div>
-              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-2 sm:col-span-2"><b class="text-gray-900 dark:text-white">Week</b>: 0-7, where both 0 and 7 represent Sunday</div>
+              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-2"><b class="text-gray-900 dark:text-white">分钟</b>：0-59</div>
+              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-2"><b class="text-gray-900 dark:text-white">小时</b>：0-23</div>
+              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-2"><b class="text-gray-900 dark:text-white">日期</b>：1-31</div>
+              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-2"><b class="text-gray-900 dark:text-white">月份</b>：1-12</div>
+              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-2 sm:col-span-2"><b class="text-gray-900 dark:text-white">星期</b>：0-7，0 和 7 均代表星期日</div>
             </div>
           </div>
         </div>
@@ -201,14 +214,15 @@
     </section>
 
     <article class="mt-8 rounded-3xl border border-slate-700 bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About CRON Expression Generator</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">CRON expression generator and parser. Provides UI components (dropdowns/radio buttons) to generate complex CRON syntax and explain the next 5 run times in English. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use CRON Expression Generator for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 CRON 表达式Generate与解析器</h2>
+      <p>
+        cron-generator 是一款面向开发者、运维工程师和自动化任务配置人员的在线 CRON 表达式Generate器。传统定时任务语法虽然强大，但分钟、小时、日期、月份、星期之间的组合规则容易出错，尤其在配置“每 5 分钟执行一次”“每个工作日上午 9 点运行”“每月 1 号凌晨执行”等场景时，手写表达式常常需要反复查表。本工具通过Chinese可视化控件Generate复杂 CRON 语法，同时提供 CRON 表达式解析器能力，可将输入内容转换为自然语言说明，并预测未来 5 次执行时间，帮助你在上线前快速校验任务计划。使用时只需选择常用模板、高级字段构建或手动输入表达式，点击解析即可得到清晰结果。无论是 Linux Cron 定时任务、后台调度系统还是自动化脚本配置，这个Chinese在线 Cron 工具都能显著降低配置错误率。
+      </p>
     </article>
   </main>
 
   <footer class="mx-auto max-w-7xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-    <p>cron-generator · Calculated locally in the browser; no expressions are uploaded</p>
+    <p>cron-generator · 本地浏览器计算，不上传任何表达式</p>
   </footer>
 
   <script>
@@ -270,7 +284,7 @@
       }
 
       function makeWeekSelect(id, value) {
-        let html = `<label class="block"><span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Weekday</span><select id="${id}" class="w-full rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20">`;
+        let html = `<label class="block"><span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">星期</span><select id="${id}" class="w-full rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20">`;
         for (let i = 0; i <= 6; i++) html += `<option value="${i}" ${i === value ? "selected" : ""}>${zhWeek[i]}</option>`;
         html += `</select></label>`;
         return html;
@@ -279,11 +293,11 @@
       function renderPresetOptions() {
         const t = presetType.value;
         let html = "";
-        if (t === "everyNMinutes") html = makeSelectHtml("optN", "Interval in minutes", 1, 59, 5, " 分钟");
-        if (t === "hourly") html = makeSelectHtml("optMinute", "Minute of each hour", 0, 59, 0, " 分");
+        if (t === "everyNMinutes") html = makeSelectHtml("optN", "间隔分钟数", 1, 59, 5, " 分钟");
+        if (t === "hourly") html = makeSelectHtml("optMinute", "在每小时的第几分钟", 0, 59, 0, " 分");
         if (t === "daily") html = makeSelectHtml("optHour", "小时", 0, 23, 9, " 点") + makeSelectHtml("optMinute", "分钟", 0, 59, 0, " 分");
         if (t === "weekly") html = makeWeekSelect("optDow", 1) + makeSelectHtml("optHour", "小时", 0, 23, 9, " 点") + makeSelectHtml("optMinute", "分钟", 0, 59, 0, " 分");
-        if (t === "monthly") html = makeSelectHtml("optDom", "Monthly Date", 1, 31, 1, " 号") + makeSelectHtml("optHour", "小时", 0, 23, 0, " 点") + makeSelectHtml("optMinute", "分钟", 0, 59, 0, " 分");
+        if (t === "monthly") html = makeSelectHtml("optDom", "每月日期", 1, 31, 1, " 号") + makeSelectHtml("optHour", "小时", 0, 23, 0, " 点") + makeSelectHtml("optMinute", "分钟", 0, 59, 0, " 分");
         if (t === "workday") html = makeSelectHtml("optHour", "小时", 0, 23, 9, " 点") + makeSelectHtml("optMinute", "分钟", 0, 59, 0, " 分");
         presetOptions.innerHTML = html;
         presetOptions.querySelectorAll("select").forEach(el => el.addEventListener("change", updateFromUI));
@@ -307,7 +321,7 @@
           const [min, max] = fieldRanges[field];
           sel.innerHTML = "";
           for (let i = min; i <= max; i++) {
-            const label = field === "dow" ? `${i} ${i === 7 ? "Sunday" : zhWeek[i]}` : i;
+            const label = field === "dow" ? `${i} ${i === 7 ? "星期日" : zhWeek[i]}` : i;
             sel.add(new Option(label, i));
           }
           if (sel.dataset.role === "b") {
@@ -350,34 +364,34 @@
       function tokenToNumber(token, min, max) {
         const up = String(token).trim().toUpperCase();
         const val = aliases.hasOwnProperty(up) ? aliases[up] : Number(up);
-        if (!Number.isInteger(val)) throw new Error(`Field value “${token}” is not a valid number or alias`);
-        if (val < min || val > max) throw new Error(`Field value "${token}" is outside the allowed range ${min}-${max}`);
+        if (!Number.isInteger(val)) throw new Error(`字段值“${token}”不是有效数字或别名`);
+        if (val < min || val > max) throw new Error(`字段值“${token}”超出允许范围 ${min}-${max}`);
         return val;
       }
 
       function parseField(text, min, max, name, normalizeDow = false) {
         const raw = String(text || "").trim().toUpperCase();
-        if (!raw) throw new Error(`${name} field cannot be empty`);
-        if (!/^[A-Z0-9,*\/?\-]+$/.test(raw)) throw new Error(`${name} field contains invalid characters`);
+        if (!raw) throw new Error(`${name}字段不能为空`);
+        if (!/^[A-Z0-9,*\/?\-]+$/.test(raw)) throw new Error(`${name}字段包含非法字符`);
         const set = new Set();
         const parts = raw.split(",");
         for (const part of parts) {
-          if (!part) throw new Error(`Empty items exist in the ${name} field list`);
+          if (!part) throw new Error(`${name}字段列表中存在空项`);
           const stepPieces = part.split("/");
-          if (stepPieces.length > 2) throw new Error(`${name} field has an invalid step format`);
+          if (stepPieces.length > 2) throw new Error(`${name}字段步长格式错误`);
           const base = stepPieces[0];
           const step = stepPieces[1] === undefined ? 1 : Number(stepPieces[1]);
-          if (!Number.isInteger(step) || step <= 0) throw new Error(`${name} field step must be a positive integer`);
+          if (!Number.isInteger(step) || step <= 0) throw new Error(`${name}字段步长必须是正整数`);
 
           let start, end;
           if (base === "*" || base === "?") {
             start = min; end = max;
           } else if (base.includes("-")) {
             const pair = base.split("-");
-            if (pair.length !== 2 || !pair[0] || !pair[1]) throw new Error(`${name} field has an invalid range format`);
+            if (pair.length !== 2 || !pair[0] || !pair[1]) throw new Error(`${name}字段范围格式错误`);
             start = tokenToNumber(pair[0], min, max);
             end = tokenToNumber(pair[1], min, max);
-            if (start > end) throw new Error(`The start of the ${name} field range cannot be greater than the end`);
+            if (start > end) throw new Error(`${name}字段范围起点不能大于终点`);
           } else {
             start = tokenToNumber(base, min, max);
             end = stepPieces[1] === undefined ? start : max;
@@ -389,13 +403,13 @@
             set.add(v);
           }
         }
-        if (set.size === 0) throw new Error(`The ${name} field did not match any valid value`);
+        if (set.size === 0) throw new Error(`${name}字段没有匹配到任何有效值`);
         return { raw, set, any: raw === "*" || raw === "?" };
       }
 
       function parseCron(expr) {
         const parts = String(expr || "").trim().replace(/\s+/g, " ").split(" ").filter(Boolean);
-        if (parts.length !== 5) throw new Error("Please enter a 5-field Unix CRON expression in the format: minute hour day month weekday");
+        if (parts.length !== 5) throw new Error("Please enter 5 位 Unix CRON 表达式，格式为：分钟 小时 日期 月份 星期");
         return {
           minute: parseField(parts[0], 0, 59, "分钟"),
           hour: parseField(parts[1], 0, 23, "小时"),
@@ -407,29 +421,29 @@
       }
 
       function summarizeSet(parsed, label, formatter) {
-        if (parsed.any) return `${label} unlimited`;
+        if (parsed.any) return `${label}不限`;
         const arr = Array.from(parsed.set).sort((a, b) => a - b);
-        if (arr.length <= 10) return `${label} is ${arr.map(formatter).join("、")}`;
-        return `${label} matches ${arr.length} values (${formatter(arr[0])} to ${formatter(arr[arr.length - 1])}, etc.)`;
+        if (arr.length <= 10) return `${label}为 ${arr.map(formatter).join("、")}`;
+        return `${label}匹配 ${arr.length} 个取值（${formatter(arr[0])} 至 ${formatter(arr[arr.length - 1])} 等）`;
       }
 
       function explainCron(parsed) {
         const p = parsed.parts;
         const fragments = [
-          summarizeSet(parsed.minute, "分钟", v => `${v} min`),
-          summarizeSet(parsed.hour, "小时", v => `${v} o'clock`),
-          summarizeSet(parsed.dom, "日期", v => `${v} day`),
-          summarizeSet(parsed.month, "月份", v => `${v} month`),
+          summarizeSet(parsed.minute, "分钟", v => `${v}分`),
+          summarizeSet(parsed.hour, "小时", v => `${v}点`),
+          summarizeSet(parsed.dom, "日期", v => `${v}号`),
+          summarizeSet(parsed.month, "月份", v => `${v}月`),
           summarizeSet(parsed.dow, "星期", v => zhWeek[v])
         ];
 
         let hint = "";
         if (!parsed.dom.any && !parsed.dow.any) {
-          hint = " Note: When both day of month and day of week are restricted, this tool follows common Unix Cron behavior: either one matching is enough.";
+          hint = " 注意：日期和星期同时受限时，本工具按常见 Unix Cron 习惯处理为“日期或星期满足其一即可”。";
         }
 
-        if (p.join(" ") === "* * * * *") return "Run once every minute.";
-        return `This expression means: execute when ${fragments.join("，")}. ${hint}`;
+        if (p.join(" ") === "* * * * *") return "每分钟执行一次。";
+        return `该表达式表示：${fragments.join("，")} 时执行。${hint}`;
       }
 
       function dayMatches(d, parsed) {
@@ -459,7 +473,7 @@
           if (matches(d, parsed)) result.push(new Date(d));
           d.setMinutes(d.getMinutes() + 1);
         }
-        if (result.length < count) throw new Error("Not enough run times found within the next 5 years. Check whether the date, month, and weekday combination is reachable, for example February 31 usually cannot run.");
+        if (result.length < count) throw new Error("未来 5 年内未找到足够的执行时间，请检查日期、月份和星期组合是否可达，例如 2 月 31 日通常无法执行");
         return result;
       }
 
@@ -483,9 +497,9 @@
             setTimeout(() => analyzeBtn.textContent = "解析", 700);
           }
         } catch (err) {
-          showError(err && err.message ? err.message : "Parsing failed. Please check the expression format.");
-          explainText.textContent = "Unable to parse the current expression.";
-          nextList.innerHTML = `<li class="rounded-2xl border border-red-400/20 bg-red-500/10 px-4 py-3 text-red-200">Please fix the input and parse again.</li>`;
+          showError(err && err.message ? err.message : "解析失败，请检查表达式格式");
+          explainText.textContent = "无法解析当前表达式。";
+          nextList.innerHTML = `<li class="rounded-2xl border border-red-400/20 bg-red-500/10 px-4 py-3 text-red-200">请修正输入后重新解析。</li>`;
         }
       }
 

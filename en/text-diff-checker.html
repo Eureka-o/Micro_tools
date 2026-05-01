@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Text Diff Checker | Free Online Tool</title>
-  <meta name="description" content="Text comparison tool. Provides left and right text areas and highlights differences between two texts, including added, deleted, or modified characters.">
-  <meta name="keywords" content="Text Diff Checker, online tool, browser tool, productivity tool">
+  <title>text-diff-checker - 文本对比检查工具</title>
+  <meta name="description" content="文本对比检查工具。提供左右两个文本域，高亮显示两段文本之间的差异（增加、删除或修改的字符）。">
+  <meta name="keywords" content="text-diff-checker, 文本对比工具, 文本差异检查, 在线文本比较, characters差异高亮, 文案校对工具, 版本对比工具, 文本修改对比">
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
@@ -17,6 +15,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/text-diff-checker.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/text-diff-checker.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/text-diff-checker.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/text-diff-checker.html">
+  <meta property="og:title" content="text-diff-checker - 文本对比检查工具">
+  <meta property="og:description" content="文本对比检查工具。提供左右两个文本域，高亮显示两段文本之间的差异（增加、删除或修改的字符）。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="text-diff-checker - 文本对比检查工具">
+  <meta name="twitter:description" content="文本对比检查工具。提供左右两个文本域，高亮显示两段文本之间的差异（增加、删除或修改的字符）。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -41,6 +49,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <div class="absolute inset-0 -z-10 overflow-hidden">
     <div class="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
     <div class="absolute right-0 top-60 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
@@ -51,50 +64,50 @@
       <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-            Online character-level diff highlighting tool
+            在线字符级差异高亮工具
           </p>
-          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">Text Diff Checker</h1>
+          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">文本对比检查工具</h1>
           <p class="mt-3 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            Paste two pieces of text to identify additions, deletions, and changes in one click, helping you compare versions, proofread copy, and review content faster.
+            粘贴两段文本，一键识别新增、删除与修改内容，帮助你更快完成版本核对、文案校对和内容审查。
           </p>
         </div>
         <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm text-slate-700 dark:text-slate-300 shadow-2xl">
           <span class="inline-block h-2 w-2 rounded-full bg-emerald-400"></span>
-          Calculated locally in your browser; text is not uploaded
+          本地浏览器计算，不上传文本
         </div>
       </div>
     </div>
   </header>
 
   <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-2" aria-label="Text input area">
+    <section class="grid gap-6 lg:grid-cols-2" aria-label="文本输入区">
       <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-xl font-bold text-gray-900 dark:text-white">Original text</h2>
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">原始文本</h2>
           <span id="leftCount" class="rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">0 characters</span>
         </div>
-        <textarea id="leftText" class="h-72 w-full resize-y rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="Paste the first text here, such as old version content, original copy, or text to check."></textarea>
+        <textarea id="leftText" class="h-72 w-full resize-y rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="在此粘贴第一段文本，例如旧版本内容、原始文案或待核对文本。"></textarea>
       </div>
 
       <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-xl font-bold text-gray-900 dark:text-white">Compare Text</h2>
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">对比文本</h2>
           <span id="rightCount" class="rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">0 characters</span>
         </div>
-        <textarea id="rightText" class="h-72 w-full resize-y rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="Paste the second text here, such as new version content, revised copy, or target text."></textarea>
+        <textarea id="rightText" class="h-72 w-full resize-y rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="在此粘贴第二段文本，例如新版本内容、修改后文案或目标文本。"></textarea>
       </div>
     </section>
 
-    <section class="mt-6 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-5 shadow-2xl" aria-label="Actions">
+    <section class="mt-6 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-5 shadow-2xl" aria-label="操作区">
       <div id="errorBox" class="mb-4 hidden rounded-2xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200"></div>
 
       <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div class="flex flex-wrap gap-3">
           <button id="compareBtn" type="button" class="rounded-2xl bg-cyan-400 px-6 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60">
-            Start comparison
+            开始对比
           </button>
           <button id="swapBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-50 dark:bg-slate-800 px-6 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-700 active:scale-95">
-            Swap Left and Right
+            左右互换
           </button>
           <button id="clearBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-50 dark:bg-slate-800 px-6 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-700 active:scale-95">
             Clear
@@ -104,64 +117,68 @@
         <div class="grid grid-cols-3 gap-2 text-center text-xs sm:text-sm">
           <div class="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-2">
             <div class="font-black text-emerald-200" id="addedCount">0</div>
-            <div class="text-slate-400">Add</div>
+            <div class="text-slate-400">新增</div>
           </div>
           <div class="rounded-2xl border border-red-400/20 bg-red-400/10 px-4 py-2">
             <div class="font-black text-red-200" id="deletedCount">0</div>
-            <div class="text-slate-400">Delete</div>
+            <div class="text-slate-400">删除</div>
           </div>
           <div class="rounded-2xl border border-amber-400/20 bg-amber-400/10 px-4 py-2">
             <div class="font-black text-amber-200" id="changedCount">0</div>
-            <div class="text-slate-400">Edit</div>
+            <div class="text-slate-400">修改</div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="mt-6 grid gap-6 lg:grid-cols-2" aria-label="Text comparison output area">
+    <section class="mt-6 grid gap-6 lg:grid-cols-2" aria-label="文本对比输出区">
       <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-100 p-5 text-slate-950 dark:text-slate-100 shadow-2xl">
         <div class="mb-4 flex items-center justify-between">
-          <h2 class="text-xl font-bold">Original text diff</h2>
-          <span class="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700">Deletion/Change Highlight</span>
+          <h2 class="text-xl font-bold">原始文本差异</h2>
+          <span class="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700">删除/修改高亮</span>
         </div>
         <div id="leftOutput" class="min-h-72 overflow-auto rounded-2xl border border-slate-200 dark:border-white/10 bg-white p-4 font-mono text-sm leading-7 whitespace-pre-wrap break-words text-slate-800 dark:text-slate-200">
-          Comparison results will appear here.
+          对比结果将在这里显示。
         </div>
       </div>
 
       <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-100 p-5 text-slate-950 dark:text-slate-100 shadow-2xl">
         <div class="mb-4 flex items-center justify-between">
-          <h2 class="text-xl font-bold">Compare text differences</h2>
-          <span class="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">Addition/Change Highlight</span>
+          <h2 class="text-xl font-bold">对比文本差异</h2>
+          <span class="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">新增/修改高亮</span>
         </div>
         <div id="rightOutput" class="min-h-72 overflow-auto rounded-2xl border border-slate-200 dark:border-white/10 bg-white p-4 font-mono text-sm leading-7 whitespace-pre-wrap break-words text-slate-800 dark:text-slate-200">
-          Comparison results will appear here.
+          对比结果将在这里显示。
         </div>
       </div>
     </section>
 
-    <section class="mt-6 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl" aria-label="Legend">
-      <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Diff marker guide</h2>
+    <section class="mt-6 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl" aria-label="图例说明">
+      <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">差异标记说明</h2>
       <div class="grid gap-3 sm:grid-cols-3">
         <div class="rounded-2xl bg-white dark:bg-white/5 p-4">
-          <span class="rounded bg-emerald-200 px-2 py-1 font-mono text-sm text-emerald-950">New characters</span>
-          <p class="mt-2 text-sm text-slate-400">Content that exists only in the right comparison text.</p>
+          <span class="rounded bg-emerald-200 px-2 py-1 font-mono text-sm text-emerald-950">新增字符</span>
+          <p class="mt-2 text-sm text-slate-400">只存在于右侧对比文本中的内容。</p>
         </div>
         <div class="rounded-2xl bg-white dark:bg-white/5 p-4">
-          <span class="rounded bg-red-200 px-2 py-1 font-mono text-sm text-red-950 line-through">Delete character</span>
-          <p class="mt-2 text-sm text-slate-400">Content that exists only in the left original text.</p>
+          <span class="rounded bg-red-200 px-2 py-1 font-mono text-sm text-red-950 line-through">删除字符</span>
+          <p class="mt-2 text-sm text-slate-400">只存在于左侧原始文本中的内容。</p>
         </div>
         <div class="rounded-2xl bg-white dark:bg-white/5 p-4">
-          <span class="rounded bg-amber-200 px-2 py-1 font-mono text-sm text-amber-950">Modify character</span>
-          <p class="mt-2 text-sm text-slate-400">Adjacent deletions and additions will be identified as modifications.</p>
+          <span class="rounded bg-amber-200 px-2 py-1 font-mono text-sm text-amber-950">修改字符</span>
+          <p class="mt-2 text-sm text-slate-400">删除与新增相邻出现时，会被识别为修改。</p>
         </div>
       </div>
     </section>
 
     <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Text Diff Checker</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Text comparison tool. Provides left and right text areas and highlights differences between two texts, including added, deleted, or modified characters. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Text Diff Checker for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="mb-4 text-2xl font-black text-gray-900 dark:text-white">关于 text-diff-checker 文本对比检查工具</h2>
+      <p>
+        text-diff-checker 是一款面向文案编辑、产品经理、开发者和法务人员的在线文本对比检查工具，能够以字符级粒度高亮展示两段文本之间的新增、删除和修改内容。日常工作中，合同条款、需求文档、代码片段、公告文案或翻译稿件经常会经历多轮改动，人工逐字核对不仅耗时，而且容易遗漏细微差异。使用这款在线文本差异高亮工具，只需将旧版本内容粘贴到左侧，将新版本内容粘贴到右侧，点击“开始对比”，即可快速获得清晰的差异结果。
+      </p>
+      <p class="mt-4">
+        本工具适合用于文案修改对比、版本差异检查、文本校对、网页内容更新核验以及代码审查前的初步比对。所有计算都在浏览器本地完成，不会上传你的文本内容，兼顾效率与隐私。通过颜色区分新增字符、删除字符和修改字符，用户可以直观定位变更位置，减少重复沟通成本，提升内容审核和版本管理效率。
+      </p>
     </article>
   </main>
 
@@ -386,10 +403,10 @@
             setStats(0, 0, 0);
           }
         } catch (err) {
-          showError('对比过程中发生异常，请检查Input Content或缩短文本后重试。');
+          showError('对比过程中发生异常，请检查输入内容或缩短文本后重试。');
         } finally {
           compareBtn.disabled = false;
-          compareBtn.textContent = 'Start comparison';
+          compareBtn.textContent = '开始对比';
         }
       }, 30);
     }
@@ -412,8 +429,8 @@
       hideError();
       leftText.value = '';
       rightText.value = '';
-      leftOutput.textContent = 'Comparison results will appear here.';
-      rightOutput.textContent = 'Comparison results will appear here.';
+      leftOutput.textContent = '对比结果将在这里显示。';
+      rightOutput.textContent = '对比结果将在这里显示。';
       setStats(0, 0, 0);
       updateCounts();
       leftText.focus();

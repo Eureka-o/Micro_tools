@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="SQL beautifier and formatter. Format messy single-line SQL statements with standard indentation and highlight keywords.">
-  <meta name="keywords" content="SQL Formatter, online tool, browser tool, productivity tool">
-  <title>SQL Formatter | Free Online Tool</title>
+  <meta name="description" content="SQL 语句美化与格式化工具。支持将混乱的单行SQL语句按照标准缩进格式排版，高亮关键字。">
+  <meta name="keywords" content="sql formatter, SQL格式化工具, SQL美化工具, SQL语句格式化,在线SQL格式化, SQL关键字高亮, SQL排版工具">
+  <title>sql-formatter - 在线 SQL 语句美化与格式化工具</title>
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
@@ -17,6 +15,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/sql-formatter.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/sql-formatter.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/sql-formatter.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/sql-formatter.html">
+  <meta property="og:title" content="sql-formatter - 在线 SQL 语句美化与格式化工具">
+  <meta property="og:description" content="SQL 语句美化与格式化工具。支持将混乱的单行SQL语句按照标准缩进格式排版，高亮关键字。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="sql-formatter - 在线 SQL 语句美化与格式化工具">
+  <meta name="twitter:description" content="SQL 语句美化与格式化工具。支持将混乱的单行SQL语句按照标准缩进格式排版，高亮关键字。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
@@ -41,37 +49,42 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <header class="relative overflow-hidden border-b border-cyan-400/20 bg-white dark:bg-slate-950">
     <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.25),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(99,102,241,0.2),transparent_35%)]"></div>
     <div class="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
           <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-1 text-sm font-medium text-cyan-200">Online SQL Formatter</p>
-          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">SQL Formatter</h1>
-          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">Quickly beautify messy single-line SQL statements into readable, standard-indented format and automatically highlight core SQL keywords.</p>
+          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">在线 SQL 语句美化与格式化工具</h1>
+          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">将混乱的单行 SQL 语句快速美化为可读、标准缩进的格式，并自动高亮核心 SQL 关键字。</p>
         </div>
         <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 shadow-2xl backdrop-blur">
-          <p class="text-sm text-slate-700 dark:text-slate-300">Zero-dependency logic · Local browser processing · No data upload</p>
+          <p class="text-sm text-slate-700 dark:text-slate-300">零依赖逻辑 · 本地浏览器处理 · 不上传数据</p>
         </div>
       </div>
     </div>
   </header>
 
   <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-2" aria-label="SQL Formatting Workspace">
+    <section class="grid gap-6 lg:grid-cols-2" aria-label="SQL 格式化工作区">
       <div class="rounded-3xl border border-slate-700/80 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-cyan-950/20">
         <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Input SQL</h2>
-            <p class="mt-1 text-sm text-slate-400">Paste the SQL statement to format.</p>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入 SQL</h2>
+            <p class="mt-1 text-sm text-slate-400">粘贴需要格式化的 SQL 语句。</p>
           </div>
-          <button id="sampleBtn" type="button" class="rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">Fill Example</button>
+          <button id="sampleBtn" type="button" class="rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">填入示例</button>
         </div>
-        <textarea id="sqlInput" class="h-[420px] w-full resize-y rounded-2xl border border-slate-700 bg-white dark:bg-slate-950 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" spellcheck="false" placeholder="Example: select id,name from users where status='active' order by created_at desc;"></textarea>
+        <textarea id="sqlInput" class="h-[420px] w-full resize-y rounded-2xl border border-slate-700 bg-white dark:bg-slate-950 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" spellcheck="false" placeholder="例如：select id,name from users where status='active' order by created_at desc;"></textarea>
         <div id="errorBox" class="mt-4 hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200" role="alert"></div>
         <div class="mt-5 flex flex-wrap gap-3">
-          <button id="formatBtn" type="button" class="rounded-xl bg-cyan-400 px-5 py-2.5 text-sm font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-95">Format SQL</button>
-          <button id="minifyBtn" type="button" class="rounded-xl border border-slate-600 bg-slate-50 dark:bg-slate-800 px-5 py-2.5 text-sm font-semibold text-slate-900 dark:text-slate-100 transition hover:bg-slate-700 active:scale-95">Compress to single line</button>
+          <button id="formatBtn" type="button" class="rounded-xl bg-cyan-400 px-5 py-2.5 text-sm font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-95">格式化 SQL</button>
+          <button id="minifyBtn" type="button" class="rounded-xl border border-slate-600 bg-slate-50 dark:bg-slate-800 px-5 py-2.5 text-sm font-semibold text-slate-900 dark:text-slate-100 transition hover:bg-slate-700 active:scale-95">压缩为单行</button>
           <button id="clearBtn" type="button" class="rounded-xl border border-slate-600 bg-transparent px-5 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-300 transition hover:bg-slate-800 active:scale-95">Clear</button>
         </div>
       </div>
@@ -79,22 +92,23 @@
       <div class="rounded-3xl border border-cyan-400/20 bg-gradient-to-b from-slate-900 to-slate-950 p-5 shadow-2xl shadow-indigo-950/20">
         <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Formatted result</h2>
-            <p class="mt-1 text-sm text-slate-400">Output includes indentation and keyword highlighting.</p>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">格式化结果</h2>
+            <p class="mt-1 text-sm text-slate-400">输出包含缩进排版与关键字高亮。</p>
           </div>
-          <button id="copyBtn" type="button" class="rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-400/20 active:scale-95">Copy plain text</button>
+          <button id="copyBtn" type="button" class="rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-400/20 active:scale-95">Copy纯文本</button>
         </div>
         <div class="relative h-[420px] overflow-auto rounded-2xl border border-slate-700 bg-white dark:bg-slate-950">
-          <pre id="sqlOutput" class="min-h-full whitespace-pre p-4 font-mono text-sm leading-6 text-slate-800 dark:text-slate-200"><span class="text-slate-500">Formatted SQL will appear here.</span></pre>
+          <pre id="sqlOutput" class="min-h-full whitespace-pre p-4 font-mono text-sm leading-6 text-slate-800 dark:text-slate-200"><span class="text-slate-500">格式化后的 SQL 将显示在这里。</span></pre>
         </div>
         <div id="statusBox" class="mt-4 hidden rounded-2xl border border-emerald-400/40 bg-emerald-500/10 px-4 py-3 text-sm font-medium text-emerald-200" role="status"></div>
       </div>
     </section>
 
-    <article class="mt-10 rounded-3xl border border-slate-200 dark:border-slate-700/70 bg-slate-900/70 p-6 shadow-xl">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About SQL Formatter</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">SQL beautifier and formatter. Format messy single-line SQL statements with standard indentation and highlight keywords. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use SQL Formatter for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+    <article class="mt-10 rounded-3xl border border-slate-200 dark:border-white/10 dark:border-slate-700/70 bg-slate-900/70 p-6 shadow-xl">
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">在线 SQL 格式化工具的作用与使用方法</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">
+        sql-formatter 是一款面向开发者、数据分析师和数据库管理员的在线 SQL 语句美化与格式化工具。实际开发中，SQL 往往来自日志、接口参数、ORM 输出或临时拼接脚本，常见问题是整段语句挤在一行，SELECT、FROM、WHERE、JOIN、GROUP BY 等结构不清晰，排查条件和性能问题非常低效。本工具可以将混乱的单行 SQL 自动转换为标准缩进格式，并对常用 SQL 关键字进行高亮展示，让查询结构、嵌套括号、排序分组和过滤条件一目了然。使用方式很简单：将需要处理的 SQL 粘贴到输入框，点击“格式化 SQL”即可获得可读性更强的排版结果；如果需要放入日志或脚本，也可以使用“压缩为单行”。对于正在寻找在线 SQL 格式化、SQL 美化工具、SQL 关键字高亮、数据库查询语句排版工具的用户，这个页面提供了轻量、快速且无需上传数据的本地化处理体验。
+      </p>
     </article>
   </main>
 
@@ -252,11 +266,11 @@
 
       function formatSql(sql) {
         const trimmed = String(sql || "").trim();
-        if (!trimmed) throw new Error("Please enter the SQL statement to format.");
-        if (trimmed.length > 200000) throw new Error("Input too long; keep it within 200,000 characters.");
+        if (!trimmed) throw new Error("Please enter需要格式化的 SQL 语句。");
+        if (trimmed.length > 200000) throw new Error("输入内容过长，请控制在 200,000 个字符以内。");
 
         const tokens = tokenize(trimmed);
-        if (!tokens.length) throw new Error("No valid SQL content detected.");
+        if (!tokens.length) throw new Error("未识别到有效的 SQL 内容。");
 
         let lines = [""];
         let indent = 0;
@@ -387,8 +401,8 @@
 
       function minifySql(sql) {
         const trimmed = String(sql || "").trim();
-        if (!trimmed) throw new Error("Please enter the SQL statement to compress.");
-        if (trimmed.length > 200000) throw new Error("Input too long; keep it within 200,000 characters.");
+        if (!trimmed) throw new Error("Please enter需要压缩的 SQL 语句。");
+        if (trimmed.length > 200000) throw new Error("输入内容过长，请控制在 200,000 个字符以内。");
         const tokens = tokenize(trimmed);
         let result = "";
         for (const token of tokens) {
@@ -461,9 +475,9 @@
             hideError();
             const formatted = formatSql(input.value);
             renderResult(formatted);
-            showStatus("SQL formatting complete.");
+            showStatus("SQL 格式化完成。");
           } catch (err) {
-            showError(err && err.message ? err.message : "Formatting failed. Please check your input.");
+            showError(err && err.message ? err.message : "格式化失败，请检查输入内容。");
           }
         });
       });
@@ -474,9 +488,9 @@
             hideError();
             const minified = minifySql(input.value);
             renderResult(minified);
-            showStatus("SQL compressed into a single line.");
+            showStatus("SQL 已压缩为单行。");
           } catch (err) {
-            showError(err && err.message ? err.message : "Compression failed. Please check the input.");
+            showError(err && err.message ? err.message : "压缩失败，请检查输入内容。");
           }
         });
       });
@@ -484,22 +498,22 @@
       clearBtn.addEventListener("click", () => {
         input.value = "";
         plainResult = "";
-        output.innerHTML = '<span class="text-slate-500">Formatted SQL will appear here.</span>';
+        output.innerHTML = '<span class="text-slate-500">格式化后的 SQL 将显示在这里。</span>';
         hideError();
-        showStatus("Content cleared.");
+        showStatus("内容已Clear。");
         input.focus();
       });
 
       sampleBtn.addEventListener("click", () => {
         input.value = "select u.id,u.name,u.email,count(o.id) as order_count,sum(o.amount) total_amount from users u left join orders o on u.id=o.user_id where u.status='active' and o.created_at between '2024-01-01' and '2024-12-31' group by u.id,u.name,u.email having count(o.id)>0 order by total_amount desc limit 20;";
         hideError();
-        showStatus("Sample SQL has been inserted.");
+        showStatus("示例 SQL 已填入。");
         input.focus();
       });
 
       copyBtn.addEventListener("click", async () => {
         try {
-          if (!plainResult.trim()) throw new Error("No formatted result to copy.");
+          if (!plainResult.trim()) throw new Error("当前没有可Copy的格式化结果。");
           if (navigator.clipboard && window.isSecureContext) {
             await navigator.clipboard.writeText(plainResult);
           } else {
@@ -512,11 +526,11 @@
             temp.select();
             const ok = document.execCommand("copy");
             document.body.removeChild(temp);
-            if (!ok) throw new Error("Browser blocked copying. Please manually select and copy the result text.");
+            if (!ok) throw new Error("浏览器拒绝Copy，请手动选择结果文本Copy。");
           }
-          showStatus("Copied to clipboard.");
+          showStatus("Copied到剪贴板。");
         } catch (err) {
-          showError(err && err.message ? err.message : "Copy failed. Please copy manually.");
+          showError(err && err.message ? err.message : "Copy failed，请手动Copy。");
         }
       });
 

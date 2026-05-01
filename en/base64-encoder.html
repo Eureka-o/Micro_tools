@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Base64 Encoder and Decoder | Free Online Tool</title>
-  <meta name="description" content="Two-way Base64 text and image encoder/decoder. Supports dragging and dropping images to convert them to Base64 strings.">
-  <meta name="keywords" content="Base64 Encoder and Decoder, online tool, browser tool, productivity tool">
+  <title>base64-encoder - Base64 文本和图片双向编解码器</title>
+  <meta name="description" content="Base64 文本和图片双向编解码器。支持拖拽上传图片转换为Base64字符串。">
+  <meta name="keywords" content="base64-encoder,Base64编码,Base64解码,在线Base64工具,图片转Base64,Base64转图片,ChineseBase64编码解码,Data URL转换">
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
@@ -17,6 +15,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/base64-encoder.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/base64-encoder.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/base64-encoder.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/base64-encoder.html">
+  <meta property="og:title" content="base64-encoder - Base64 文本和图片双向编解码器">
+  <meta property="og:description" content="Base64 文本和图片双向编解码器。支持拖拽上传图片转换为Base64字符串。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="base64-encoder - Base64 文本和图片双向编解码器">
+  <meta name="twitter:description" content="Base64 文本和图片双向编解码器。支持拖拽上传图片转换为Base64字符串。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -41,6 +49,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <div class="pointer-events-none fixed inset-0 overflow-hidden">
     <div class="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
     <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl"></div>
@@ -50,22 +63,22 @@
     <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
-          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm text-cyan-200">Online tools · Zero dependencies · Local processing</p>
-          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">Base64 Encoder and Decoder</h1>
-          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300">Base64 text and image encoder/decoder, supporting UTF-8 Chinese text processing, drag-and-drop image upload to convert to Base64 strings, and restoring Base64/Data URL to image preview.</p>
+          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm text-cyan-200">在线工具 · 零依赖 · 本地处理</p>
+          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">Base64 文本和图片双向编解码器</h1>
+          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300">Base64 文本和图片双向编解码器，支持 UTF-8 Chinese文本处理、拖拽上传图片转换为 Base64 characters串，以及 Base64/Data URL 还原图片预览。</p>
         </div>
         <div class="grid grid-cols-3 gap-3 text-center">
           <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3">
             <div class="text-xl font-bold text-cyan-300">Text</div>
-            <div class="text-xs text-slate-400">Text encoding/decoding</div>
+            <div class="text-xs text-slate-400">文本编解码</div>
           </div>
           <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3">
             <div class="text-xl font-bold text-indigo-300">Image</div>
-            <div class="text-xs text-slate-400">Image conversion</div>
+            <div class="text-xs text-slate-400">图片转换</div>
           </div>
           <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3">
             <div class="text-xl font-bold text-emerald-300">Local</div>
-            <div class="text-xs text-slate-400">Browser local</div>
+            <div class="text-xs text-slate-400">浏览器本地</div>
           </div>
         </div>
       </div>
@@ -75,8 +88,8 @@
   <main class="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
     <section class="mb-6 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-2 shadow-2xl shadow-black/20 backdrop-blur">
       <div class="grid grid-cols-2 gap-2">
-        <button id="textTab" class="tab-btn rounded-2xl bg-cyan-500 px-4 py-3 font-semibold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition active:scale-[0.99]" type="button">Text Base64</button>
-        <button id="imageTab" class="tab-btn rounded-2xl px-4 py-3 font-semibold text-slate-700 dark:text-slate-300 transition hover:bg-white/10 active:scale-[0.99]" type="button">Image Base64</button>
+        <button id="textTab" class="tab-btn rounded-2xl bg-cyan-500 px-4 py-3 font-semibold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition active:scale-[0.99]" type="button">文本 Base64</button>
+        <button id="imageTab" class="tab-btn rounded-2xl px-4 py-3 font-semibold text-slate-700 dark:text-slate-300 transition hover:bg-white/10 active:scale-[0.99]" type="button">图片 Base64</button>
       </div>
     </section>
 
@@ -86,15 +99,15 @@
       <div class="rounded-3xl border border-cyan-400/20 bg-slate-900/90 p-5 shadow-xl">
         <div class="mb-4 flex items-center justify-between gap-3">
           <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Text input area</h2>
-            <p class="mt-1 text-sm text-slate-400">Enter plain text or a Base64 string</p>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">文本输入区</h2>
+            <p class="mt-1 text-sm text-slate-400">输入普通文本或 Base64 characters串</p>
           </div>
           <span id="inputCount" class="shrink-0 rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">0 characters</span>
         </div>
-        <textarea id="textInput" class="h-80 w-full resize-y rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none ring-cyan-400/30 transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4" placeholder="Example: Hello, Base64!"></textarea>
+        <textarea id="textInput" class="h-80 w-full resize-y rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none ring-cyan-400/30 transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4" placeholder="示例：你好，Base64！"></textarea>
         <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <button id="encodeBtn" class="rounded-2xl bg-cyan-500 px-4 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400 active:scale-[0.98]" type="button">Encode as Base64</button>
-          <button id="decodeBtn" class="rounded-2xl bg-indigo-500 px-4 py-3 font-bold text-gray-900 dark:text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-400 active:scale-[0.98]" type="button">Decode as text</button>
+          <button id="encodeBtn" class="rounded-2xl bg-cyan-500 px-4 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400 active:scale-[0.98]" type="button">编码为 Base64</button>
+          <button id="decodeBtn" class="rounded-2xl bg-indigo-500 px-4 py-3 font-bold text-gray-900 dark:text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-400 active:scale-[0.98]" type="button">解码为文本</button>
           <button id="clearTextBtn" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 font-bold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-[0.98]" type="button">Clear</button>
         </div>
       </div>
@@ -102,16 +115,16 @@
       <div class="rounded-3xl border border-indigo-400/20 bg-slate-800/90 p-5 shadow-xl">
         <div class="mb-4 flex items-center justify-between gap-3">
           <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Text output area</h2>
-            <p class="mt-1 text-sm text-slate-400">Results can be copied or downloaded as TXT</p>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">文本输出区</h2>
+            <p class="mt-1 text-sm text-slate-400">结果可Copy或Download为 TXT</p>
           </div>
           <span id="outputCount" class="shrink-0 rounded-full bg-slate-100 dark:bg-slate-900 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">0 characters</span>
         </div>
-        <textarea id="textOutput" class="h-80 w-full resize-y rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/60 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none ring-indigo-400/30 transition placeholder:text-slate-600 focus:border-indigo-400 focus:ring-4" placeholder="Encoding or decoding results will appear here"></textarea>
+        <textarea id="textOutput" class="h-80 w-full resize-y rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/60 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none ring-indigo-400/30 transition placeholder:text-slate-600 focus:border-indigo-400 focus:ring-4" placeholder="编码或解码结果会显示在这里"></textarea>
         <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <button id="copyTextBtn" class="rounded-2xl bg-emerald-500 px-4 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-400 active:scale-[0.98]" type="button">Copy Result</button>
+          <button id="copyTextBtn" class="rounded-2xl bg-emerald-500 px-4 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-400 active:scale-[0.98]" type="button">Copy result</button>
           <button id="downloadTextBtn" class="rounded-2xl bg-slate-100 px-4 py-3 font-bold text-slate-950 dark:text-slate-100 transition hover:bg-white active:scale-[0.98]" type="button">Download TXT</button>
-          <button id="swapTextBtn" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 font-bold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-[0.98]" type="button">Send result to input</button>
+          <button id="swapTextBtn" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 font-bold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-[0.98]" type="button">结果转输入</button>
         </div>
       </div>
     </section>
@@ -119,16 +132,16 @@
     <section id="imagePanel" class="hidden grid gap-6 lg:grid-cols-2">
       <div class="rounded-3xl border border-cyan-400/20 bg-slate-900/90 p-5 shadow-xl">
         <div class="mb-4">
-          <h2 class="text-xl font-bold text-gray-900 dark:text-white">Image input area</h2>
-          <p class="mt-1 text-sm text-slate-400">Drag or select an image to automatically convert it to a Base64 Data URL</p>
+          <h2 class="text-xl font-bold text-gray-900 dark:text-white">图片输入区</h2>
+          <p class="mt-1 text-sm text-slate-400">拖拽或选择图片，自动转换为 Base64 Data URL</p>
         </div>
 
         <div id="dropZone" class="flex min-h-72 cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed border-cyan-400/40 bg-cyan-400/5 p-6 text-center transition hover:border-cyan-300 hover:bg-cyan-400/10">
           <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-cyan-400/10 text-3xl">🖼️</div>
-          <p class="text-lg font-bold text-gray-900 dark:text-white">Drag an image here</p>
-          <p class="mt-2 text-sm text-slate-400">Supports common image formats such as PNG, JPG, JPEG, GIF, WebP, and SVG</p>
+          <p class="text-lg font-bold text-gray-900 dark:text-white">拖拽图片到这里</p>
+          <p class="mt-2 text-sm text-slate-400">支持 PNG、JPG、JPEG、GIF、WebP、SVG 等常见图片格式</p>
           <label class="mt-5 inline-flex cursor-pointer rounded-2xl bg-cyan-500 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400 active:scale-[0.98]">
-            Select image
+            选择图片
             <input id="fileInput" class="hidden" type="file" accept="image/*" />
           </label>
         </div>
@@ -139,32 +152,36 @@
       <div class="rounded-3xl border border-indigo-400/20 bg-slate-800/90 p-5 shadow-xl">
         <div class="mb-4 flex items-center justify-between gap-3">
           <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Image Base64 output area</h2>
-            <p class="mt-1 text-sm text-slate-400">Copy the Data URL, or paste Base64 to restore the image</p>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">图片 Base64 输出区</h2>
+            <p class="mt-1 text-sm text-slate-400">可Copy Data URL，或粘贴 Base64 还原图片</p>
           </div>
           <span id="imageBase64Count" class="shrink-0 rounded-full bg-slate-100 dark:bg-slate-900 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">0 characters</span>
         </div>
-        <textarea id="imageBase64" class="h-64 w-full resize-y rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/60 p-4 font-mono text-xs leading-5 text-slate-900 dark:text-slate-100 outline-none ring-indigo-400/30 transition placeholder:text-slate-600 focus:border-indigo-400 focus:ring-4" placeholder="Image Base64 Data URL will appear here; you can also paste data:image/png;base64,... or a plain Base64 string and click “Restore Image”"></textarea>
+        <textarea id="imageBase64" class="h-64 w-full resize-y rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/60 p-4 font-mono text-xs leading-5 text-slate-900 dark:text-slate-100 outline-none ring-indigo-400/30 transition placeholder:text-slate-600 focus:border-indigo-400 focus:ring-4" placeholder="图片 Base64 Data URL 会显示在这里；也可以粘贴 data:image/png;base64,... 或纯 Base64 characters串后点击“还原图片”"></textarea>
         <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
           <button id="copyImageBtn" class="rounded-2xl bg-emerald-500 px-4 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-400 active:scale-[0.98]" type="button">Copy Base64</button>
-          <button id="previewImageBtn" class="rounded-2xl bg-indigo-500 px-4 py-3 font-bold text-gray-900 dark:text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-400 active:scale-[0.98]" type="button">Restore image</button>
+          <button id="previewImageBtn" class="rounded-2xl bg-indigo-500 px-4 py-3 font-bold text-gray-900 dark:text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-400 active:scale-[0.98]" type="button">还原图片</button>
           <button id="clearImageBtn" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 font-bold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-[0.98]" type="button">Clear</button>
         </div>
 
         <div id="previewWrap" class="mt-5 hidden rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/60 p-4">
           <div class="mb-3 flex items-center justify-between gap-3">
-            <h3 class="font-bold text-gray-900 dark:text-white">Image preview</h3>
-            <button id="downloadImageBtn" class="rounded-xl bg-slate-100 px-3 py-2 text-sm font-bold text-slate-950 dark:text-slate-100 transition hover:bg-white active:scale-[0.98]" type="button">Download image</button>
+            <h3 class="font-bold text-gray-900 dark:text-white">图片预览</h3>
+            <button id="downloadImageBtn" class="rounded-xl bg-slate-100 px-3 py-2 text-sm font-bold text-slate-950 dark:text-slate-100 transition hover:bg-white active:scale-[0.98]" type="button">Download图片</button>
           </div>
-          <img id="imagePreview" class="max-h-96 w-full rounded-2xl object-contain ring-1 ring-white/10" alt="Base64 restored image preview" />
+          <img id="imagePreview" class="max-h-96 w-full rounded-2xl object-contain ring-1 ring-white/10" alt="Base64 还原图片预览" />
         </div>
       </div>
     </section>
 
     <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl backdrop-blur md:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Base64 Encoder and Decoder</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Two-way Base64 text and image encoder/decoder. Supports dragging and dropping images to convert them to Base64 strings. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Base64 Encoder and Decoder for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="mb-4 text-2xl font-black text-gray-900 dark:text-white">关于 base64-encoder 在线 Base64 编解码工具</h2>
+      <p>
+        base64-encoder 是一款面向开发者、运营人员和内容编辑的在线 Base64 文本和图片双向编解码器。它可以将普通文本快速转换为 Base64 characters串，也能把合法的 Base64 内容解码回可读文本，特别适合处理接口调试、配置传输、日志排查、邮件内容编码和前端数据嵌入等场景。工具采用浏览器本地计算方式完成转换，输入内容不会上传到服务器，使用更安心。
+      </p>
+      <p class="mt-3">
+        对于图片处理，本工具支持拖拽上传图片转换为 Base64 Data URL，Generate的字符串可直接用于 CSS、HTML img 标签、小图标内联、Markdown 文档或 JSON 配置中，减少静态资源请求；同时也支持粘贴 data:image/png;base64 形式或纯 Base64 图片字符串，一键还原为图片预览并Download。使用方法非常简单：在文本区域输入内容后点击“编码为 Base64”或“解码为文本”；在图片区域拖入文件即可自动Generate结果。如果你正在寻找Chinese Base64 编码解码、图片转 Base64 在线工具、Base64 转图片预览工具，base64-encoder 可以提供高效、干净且响应式的体验。
+      </p>
     </article>
   </main>
 
@@ -274,23 +291,23 @@
 
       function decodeBase64ToUtf8(base64) {
         const clean = base64.replace(/\s+/g, '');
-        if (!clean) throw new Error('Please enter the Base64 string to decode.');
+        if (!clean) throw new Error('Please enter需要解码的 Base64 characters串。');
         if (!/^[A-Za-z0-9+/]*={0,2}$/.test(clean) || clean.length % 4 === 1) {
-          throw new Error('Invalid Base64 format. Please check for illegal characters or missing padding.');
+          throw new Error('Base64 格式不正确，请检查是否包含非法字符或缺少补位符。');
         }
         const padded = clean + '='.repeat((4 - clean.length % 4) % 4);
         let binary;
         try {
           binary = atob(padded);
         } catch (e) {
-          throw new Error('Base64 decoding failed. Please make sure the input is complete and valid.');
+          throw new Error('Base64 解码失败，请确认输入内容完整有效。');
         }
         const bytes = new Uint8Array(binary.length);
         for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
         try {
           return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
         } catch (e) {
-          throw new Error('The decoded content is not valid UTF-8 text; it may be an image, binary file, or other data.');
+          throw new Error('解码后的内容不是有效的 UTF-8 文本，可能是图片、二进制文件或其他数据。');
         }
       }
 
@@ -307,7 +324,7 @@
       }
 
       async function copyToClipboard(text) {
-        if (!text) throw new Error('No content to copy.');
+        if (!text) throw new Error('没有可Copy的内容。');
         if (navigator.clipboard && window.isSecureContext) {
           await navigator.clipboard.writeText(text);
           return;
@@ -321,30 +338,30 @@
         temp.select();
         const ok = document.execCommand('copy');
         temp.remove();
-        if (!ok) throw new Error('Copy failed. Please manually select and copy the content.');
+        if (!ok) throw new Error('Copy failed，请手动选择内容Copy。');
       }
 
       function handleFile(file) {
         if (!file) {
-          showAlert('No file selected.');
+          showAlert('未选择任何文件。');
           return;
         }
         if (!file.type || !file.type.startsWith('image/')) {
-          showAlert('Please select a valid image file, such as PNG, JPG, GIF, WebP, or SVG.');
+          showAlert('Please select有效的图片文件，例如 PNG、JPG、GIF、WebP 或 SVG。');
           return;
         }
         const maxSize = 15 * 1024 * 1024;
         if (file.size > maxSize) {
-          showAlert('Image is too large. Please choose an image under 15MB to avoid slow browser processing.');
+          showAlert('图片过大，Please select 15MB 以内的图片，以避免浏览器处理缓慢。');
           return;
         }
 
         const reader = new FileReader();
-        reader.onerror = () => showAlert('Failed to read the image. Please try again or choose another file.');
+        reader.onerror = () => showAlert('读取图片失败，请重试或更换文件。');
         reader.onload = () => {
           const result = typeof reader.result === 'string' ? reader.result : '';
           if (!result.startsWith('data:image/')) {
-            showAlert('Image conversion failed. The generated Data URL format is invalid.');
+            showAlert('图片转换失败，Generate的 Data URL 格式异常。');
             return;
           }
           currentImageDataUrl = result;
@@ -361,7 +378,7 @@
             </div>
           `;
           updateCounts();
-          showAlert('Image successfully converted to Base64.', 'success');
+          showAlert('图片已成功转换为 Base64。', 'success');
         };
         reader.readAsDataURL(file);
       }
@@ -454,7 +471,7 @@
         try {
           elements.textOutput.value = decodeBase64ToUtf8(elements.textInput.value);
           updateCounts();
-          showAlert('Base64 已成功Decode as text。', 'success');
+          showAlert('Base64 已成功解码为文本。', 'success');
         } catch (e) {
           showAlert(e.message || 'Decoding failed. Please check the input.');
         } finally {
@@ -474,7 +491,7 @@
           await copyToClipboard(elements.textOutput.value);
           showAlert('Text result copied to clipboard.', 'success');
         } catch (e) {
-          showAlert(e.message || 'Copy Failed。');
+          showAlert(e.message || 'Copy failed。');
         }
       });
 
@@ -485,7 +502,7 @@
           return;
         }
         downloadBlob(content, `base64-result-${Date.now()}.txt`, 'text/plain;charset=utf-8');
-        showAlert('TXT file download has started.', 'success');
+        showAlert('TXT download has started.', 'success');
       });
 
       elements.swapTextBtn.addEventListener('click', () => {
@@ -532,9 +549,9 @@
       elements.copyImageBtn.addEventListener('click', async () => {
         try {
           await copyToClipboard(elements.imageBase64.value);
-          showAlert('图片 Base64 Copied to clipboard.', 'success');
+          showAlert('图片 Base64 Copied到剪贴板。', 'success');
         } catch (e) {
-          showAlert(e.message || 'Copy Failed。');
+          showAlert(e.message || 'Copy failed。');
         }
       });
 
@@ -557,7 +574,7 @@
           };
           img.src = dataUrl;
         } catch (e) {
-          showAlert(e.message || 'Restore image失败。');
+          showAlert(e.message || '还原图片失败。');
           stop();
         }
       });

@@ -3,15 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="CSS spacing visualizer. Four sliders control the top, bottom, left, and right Margin and Padding, while the center box updates in real time and outputs code.">
-  <meta name="keywords" content="CSS Margin and Padding Generator, online tool, browser tool, productivity tool">
-  <meta name="robots" content="index, follow" />
+  <meta name="description" content="CSS 边距可视化工具。四个滑块控制上下左右的 Margin 和 Padding，中心盒子实时改变大小并输出代码。">
+  <meta name="keywords" content="margin-padding-generator,CSS边距可视化工具,marginGenerate器,paddingGenerate器,CSS盒模型工具,CSS margin padding代码Generate器,前端布局工具">
   <meta name="theme-color" content="#0f172a" />
-  <title>CSS Margin and Padding Generator | Free Online Tool</title>
+  <title>margin-padding-generator - CSS 边距可视化工具</title>
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -29,6 +26,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/margin-padding-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/margin-padding-generator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/margin-padding-generator.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/margin-padding-generator.html">
+  <meta property="og:title" content="margin-padding-generator - CSS 边距可视化工具">
+  <meta property="og:description" content="CSS 边距可视化工具。四个滑块控制上下左右的 Margin 和 Padding，中心盒子实时改变大小并输出代码。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="margin-padding-generator - CSS 边距可视化工具">
+  <meta name="twitter:description" content="CSS 边距可视化工具。四个滑块控制上下左右的 Margin 和 Padding，中心盒子实时改变大小并输出代码。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
@@ -53,6 +60,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <div class="pointer-events-none fixed inset-0 overflow-hidden">
     <div class="absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
     <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-violet-600/20 blur-3xl"></div>
@@ -65,13 +77,13 @@
           <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
             CSS Box Model Visual Generator
           </p>
-          <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">CSS Margin and Padding Generator</h1>
+          <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">CSS 边距可视化工具</h1>
           <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            Use sliders to adjust top, right, bottom, and left Margin and Padding in real time, visualize the CSS box model, and instantly generate copy-ready production CSS code.
+            使用滑块实时调整上下左右 Margin 与 Padding，可视化理解 CSS 盒模型，并立即Generate可Copy的生产级 CSS 代码。
           </p>
         </div>
         <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 shadow-glow">
-          <p class="text-sm text-slate-400">Current unit</p>
+          <p class="text-sm text-slate-400">当前单位</p>
           <p class="text-2xl font-semibold text-cyan-200">px</p>
         </div>
       </div>
@@ -84,8 +96,8 @@
         <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl backdrop-blur">
           <div class="mb-5 flex items-center justify-between gap-3">
             <div>
-              <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Input control area</h2>
-              <p class="mt-1 text-sm text-slate-400">Drag the slider or enter a value, range 0 - 120 px.</p>
+              <h2 class="text-xl font-semibold text-gray-900 dark:text-white">输入控制区</h2>
+              <p class="mt-1 text-sm text-slate-400">拖动滑块或输入数值，范围 0 - 120 px。</p>
             </div>
             <button id="resetBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-2 text-sm font-medium text-slate-800 dark:text-slate-200 transition hover:border-cyan-300/50 hover:bg-cyan-400/10 active:scale-95">
               Reset
@@ -98,7 +110,7 @@
             <div class="rounded-2xl bg-slate-950/70 p-4 ring-1 ring-white/10">
               <h3 class="mb-4 flex items-center gap-2 font-semibold text-cyan-200">
                 <span class="h-2 w-2 rounded-full bg-cyan-300"></span>
-                Margin
+                Margin 外边距
               </h3>
               <div class="space-y-4" id="marginControls"></div>
             </div>
@@ -106,7 +118,7 @@
             <div class="rounded-2xl bg-slate-950/70 p-4 ring-1 ring-white/10">
               <h3 class="mb-4 flex items-center gap-2 font-semibold text-violet-200">
                 <span class="h-2 w-2 rounded-full bg-violet-300"></span>
-                Padding
+                Padding 内边距
               </h3>
               <div class="space-y-4" id="paddingControls"></div>
             </div>
@@ -117,8 +129,8 @@
       <div class="lg:col-span-5">
         <div class="h-full rounded-3xl border border-gray-200 dark:border-white/10 bg-gradient-to-br from-slate-900 to-slate-950 p-5 shadow-2xl">
           <div class="mb-5">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Real-time visual preview</h2>
-            <p class="mt-1 text-sm text-slate-400">The cyan area represents Margin, the purple area represents Padding, and the center is the content box.</p>
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white">实时可视化预览</h2>
+            <p class="mt-1 text-sm text-slate-400">青色区域代表 Margin，紫色区域代表 Padding，中间为内容盒子。</p>
           </div>
 
           <div class="overflow-auto rounded-3xl border border-gray-200 dark:border-white/10 bg-[radial-gradient(circle_at_1px_1px,rgba(148,163,184,0.24)_1px,transparent_0)] [background-size:18px_18px] p-4 sm:p-8">
@@ -160,8 +172,8 @@
         <div class="sticky top-6 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5 shadow-2xl backdrop-blur">
           <div class="mb-4 flex items-center justify-between gap-3">
             <div>
-              <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Output code area</h2>
-              <p class="mt-1 text-sm text-slate-400">CSS generated automatically.</p>
+              <h2 class="text-xl font-semibold text-gray-900 dark:text-white">输出代码区</h2>
+              <p class="mt-1 text-sm text-slate-400">自动Generate CSS。</p>
             </div>
             <button id="copyBtn" type="button" class="rounded-xl bg-cyan-400 px-4 py-2 text-sm font-bold text-slate-950 dark:text-slate-100 transition hover:bg-cyan-300 active:scale-95">
               Copy
@@ -176,9 +188,10 @@
     </section>
 
     <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl backdrop-blur sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About CSS Margin and Padding Generator</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">CSS spacing visualizer. Four sliders control the top, bottom, left, and right Margin and Padding, while the center box updates in real time and outputs code. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use CSS Margin and Padding Generator for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 CSS 边距可视化工具</h2>
+      <p>
+        margin-padding-generator 是一款面向前端开发者、网页设计师和学习者的 CSS 边距可视化工具。许多布局问题都来自对 CSS 盒模型理解不清，例如元素之间为什么出现空隙、内容区域为什么被挤压、组件在响应式页面中为什么对不齐。本工具通过上下左右 Margin 与 Padding 滑块，把抽象的外边距和内边距转换成直观的实时预览，让你快速观察内容盒子、内边距区域和外边距区域的变化关系。使用时，只需拖动滑块或输入具体像素值，页面会立即更新中心盒子的视觉效果，并同步Generate可Copy的 CSS margin padding 代码。它适合用于快速制作按钮、卡片、表单、文章容器等常见组件的间距方案，也适合作为 CSS 盒模型在线练习工具。对于需要提升开发效率的人来说，这个 CSS margin padding 代码Generate器能够减少反复调试浏览器样式的时间，帮助你更准确地完成网页布局、组件间距设计和前端样式交付。
+      </p>
     </article>
   </main>
 
@@ -301,7 +314,7 @@
         range.addEventListener("input", () => {
           const next = clamp(Number(range.value));
           if (next === null) {
-            showError("Invalid slider value. It has been reset to 0 automatically.");
+            showError("滑块数值异常，已自动恢复为 0。");
             updateValue(group, side.key, 0);
             return;
           }
@@ -312,7 +325,7 @@
           const raw = number.value.trim();
           if (raw === "") {
             number.classList.add("border-red-400", "focus:border-red-300", "focus:ring-red-300/20");
-            showError("Please enter a number between 0 and 120.");
+            showError("Please enter 0 到 120 之间的数字。");
             return;
           }
 
@@ -320,7 +333,7 @@
           const next = clamp(parsed);
           if (next === null || parsed < MIN_VALUE || parsed > MAX_VALUE) {
             number.classList.add("border-red-400", "focus:border-red-300", "focus:ring-red-300/20");
-            showError("Invalid input: the value must be a number between 0 and 120.");
+            showError("输入无效：数值必须是 0 到 120 之间的数字。");
             return;
           }
 
@@ -396,7 +409,7 @@
       async function copyCode() {
         const code = els.cssOutput.textContent || "";
         if (!code.trim()) {
-          showStatus("No CSS code available to copy.", false);
+          showStatus("当前没有可Copy的 CSS 代码。", false);
           return;
         }
 
@@ -418,9 +431,9 @@
             document.body.removeChild(textarea);
             if (!ok) throw new Error("Copy command failed");
           }
-          showStatus("CSS code copied to clipboard.", true);
+          showStatus("CSS 代码Copied到剪贴板。", true);
         } catch (err) {
-          showStatus("Copy failed. Please manually select and copy the code.", false);
+          showStatus("Copy failed，请手动选中代码Copy。", false);
         }
       }
 
@@ -439,7 +452,7 @@
       els.resetBtn.addEventListener("click", resetAll);
 
       window.addEventListener("error", () => {
-        showError("The page encountered an error but handled it safely. Please continue or click reset.");
+        showError("页面遇到异常但已安全处理，请继续使用或点击Reset。");
       });
 
       renderControls();

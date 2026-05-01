@@ -3,13 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="JSON and CSV two-way conversion and validation tool. Includes input/output boxes, error messages, and one-click copy.">
-  <meta name="keywords" content="JSON to CSV Converter, online tool, browser tool, productivity tool">
-  <title>JSON to CSV Converter | Free Online Tool</title>
+  <meta name="description" content="JSON与CSV双向转换与校验工具。包含输入输出框，错误提示，以及一键Copy功能。">
+  <meta name="keywords" content="JSON转CSV, CSV转JSON, JSON格式化, JSON校验工具, CSV格式化转换, 在线数据转换工具, JSON CSV互转">
+  <title>JSON 与 CSV 双向格式化转换与校验工具</title>
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
@@ -17,6 +15,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/json-to-csv.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/json-to-csv.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/json-to-csv.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/json-to-csv.html">
+  <meta property="og:title" content="JSON 与 CSV 双向格式化转换与校验工具">
+  <meta property="og:description" content="JSON与CSV双向转换与校验工具。包含输入输出框，错误提示，以及一键Copy功能。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JSON 与 CSV 双向格式化转换与校验工具">
+  <meta name="twitter:description" content="JSON与CSV双向转换与校验工具。包含输入输出框，错误提示，以及一键Copy功能。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-[#f6f8fb] dark:bg-[#030712] text-slate-950 dark:text-slate-100">
@@ -41,26 +49,31 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <header class="bg-slate-100 dark:bg-[#101828] text-gray-900 dark:text-white">
     <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div class="max-w-4xl">
           <p class="mb-3 text-sm font-semibold uppercase tracking-widest text-cyan-300">Data Format Converter</p>
-          <h1 class="text-3xl font-bold tracking-tight sm:text-5xl">JSON to CSV Converter</h1>
-          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300">Structured data conversion is done locally in the browser, ideal for API debugging, table organization, and data cleaning before batch import.</p>
+          <h1 class="text-3xl font-bold tracking-tight sm:text-5xl">JSON 与 CSV 双向格式化转换与校验工具</h1>
+          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300">在浏览器本地完成结构化数据转换，适合接口调试、表格整理、批量导入前的数据清洗。</p>
         </div>
         <div class="grid grid-cols-3 gap-2 rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-2 text-center text-sm">
           <div class="rounded-md bg-white dark:bg-white/10 px-3 py-2">
-            <strong class="block text-cyan-200">Local</strong>
-            <span class="text-slate-700 dark:text-slate-300">Parse</span>
+            <strong class="block text-cyan-200">本地</strong>
+            <span class="text-slate-700 dark:text-slate-300">解析</span>
           </div>
           <div class="rounded-md bg-white dark:bg-white/10 px-3 py-2">
-            <strong class="block text-emerald-200">Two-way</strong>
-            <span class="text-slate-700 dark:text-slate-300">Convert between</span>
+            <strong class="block text-emerald-200">双向</strong>
+            <span class="text-slate-700 dark:text-slate-300">互转</span>
           </div>
           <div class="rounded-md bg-white dark:bg-white/10 px-3 py-2">
-            <strong class="block text-amber-200">Instant</strong>
-            <span class="text-slate-700 dark:text-slate-300">Validation</span>
+            <strong class="block text-amber-200">即时</strong>
+            <span class="text-slate-700 dark:text-slate-300">校验</span>
           </div>
         </div>
       </div>
@@ -68,28 +81,28 @@
   </header>
 
   <main class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-    <section class="rounded-lg border border-slate-200 dark:border-white/10 bg-white p-3 shadow-sm" aria-label="Conversion Operation">
+    <section class="rounded-lg border border-slate-200 dark:border-white/10 bg-white p-3 shadow-sm" aria-label="转换操作">
       <div class="grid gap-3 md:grid-cols-3">
-        <button id="jsonToCsvBtn" type="button" class="rounded-md bg-cyan-600 px-5 py-3 text-base font-semibold text-gray-900 dark:text-white transition hover:bg-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2">JSON to CSV</button>
-        <button id="csvToJsonBtn" type="button" class="rounded-md bg-emerald-600 px-5 py-3 text-base font-semibold text-gray-900 dark:text-white transition hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2">CSV to JSON</button>
-        <button id="formatJsonBtn" type="button" class="rounded-md bg-slate-100 dark:bg-slate-900 px-5 py-3 text-base font-semibold text-gray-900 dark:text-white transition hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2">Format / Validate JSON</button>
+        <button id="jsonToCsvBtn" type="button" class="rounded-md bg-cyan-600 px-5 py-3 text-base font-semibold text-gray-900 dark:text-white transition hover:bg-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2">JSON 转 CSV</button>
+        <button id="csvToJsonBtn" type="button" class="rounded-md bg-emerald-600 px-5 py-3 text-base font-semibold text-gray-900 dark:text-white transition hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2">CSV 转 JSON</button>
+        <button id="formatJsonBtn" type="button" class="rounded-md bg-slate-100 dark:bg-slate-900 px-5 py-3 text-base font-semibold text-gray-900 dark:text-white transition hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2">格式化 / 校验 JSON</button>
       </div>
     </section>
 
-    <section class="mt-6 grid gap-6 lg:grid-cols-2" aria-label="Data Input/Output Workspace">
+    <section class="mt-6 grid gap-6 lg:grid-cols-2" aria-label="数据输入输出工作区">
       <div class="rounded-lg border border-slate-200 dark:border-white/10 bg-white shadow-sm">
         <div class="flex flex-col gap-3 border-b border-slate-200 dark:border-white/10 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div class="flex items-center gap-2">
-              <span class="rounded-md bg-cyan-50 px-2 py-1 text-xs font-semibold text-cyan-700">Input</span>
-              <h2 class="text-lg font-semibold text-slate-950 dark:text-slate-100">Paste JSON or CSV</h2>
+              <span class="rounded-md bg-cyan-50 px-2 py-1 text-xs font-semibold text-cyan-700">输入</span>
+              <h2 class="text-lg font-semibold text-slate-950 dark:text-slate-100">粘贴 JSON 或 CSV</h2>
             </div>
             <p id="inputStats" class="mt-1 text-sm text-slate-500">0 characters</p>
           </div>
-          <button id="clearBtn" type="button" class="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 transition hover:border-cyan-400 hover:text-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-300">Clear Input</button>
+          <button id="clearBtn" type="button" class="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 transition hover:border-cyan-400 hover:text-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-300">Clear输入</button>
         </div>
         <div class="p-4">
-          <textarea id="inputText" spellcheck="false" class="h-80 w-full resize-y rounded-md border border-slate-300 bg-slate-50 p-4 font-mono text-sm leading-6 text-slate-950 dark:text-slate-100 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-cyan-200 lg:h-[28rem]" placeholder='Example JSON: [{"name":"Alice","age":28},{"name":"Bob","age":31}]'></textarea>
+          <textarea id="inputText" spellcheck="false" class="h-80 w-full resize-y rounded-md border border-slate-300 bg-slate-50 p-4 font-mono text-sm leading-6 text-slate-950 dark:text-slate-100 outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-cyan-200 lg:h-[28rem]" placeholder='示例 JSON：[{"name":"Alice","age":28},{"name":"Bob","age":31}]'></textarea>
           <div id="errorBox" class="mt-3 hidden rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm leading-6 text-red-700" role="alert" aria-live="polite"></div>
         </div>
       </div>
@@ -98,12 +111,12 @@
         <div class="flex flex-col gap-3 border-b border-emerald-100 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <div class="flex items-center gap-2">
-              <span class="rounded-md bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700">Output</span>
-              <h2 class="text-lg font-semibold text-slate-950 dark:text-slate-100">Conversion Result</h2>
+              <span class="rounded-md bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700">输出</span>
+              <h2 class="text-lg font-semibold text-slate-950 dark:text-slate-100">转换结果</h2>
             </div>
             <p id="outputStats" class="mt-1 text-sm text-slate-500">0 characters</p>
           </div>
-          <button id="copyBtn" type="button" class="rounded-md bg-emerald-600 px-4 py-2 text-sm font-semibold text-gray-900 dark:text-white transition hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300 disabled:cursor-not-allowed disabled:bg-slate-300">One-click copy</button>
+          <button id="copyBtn" type="button" class="rounded-md bg-emerald-600 px-4 py-2 text-sm font-semibold text-gray-900 dark:text-white transition hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300 disabled:cursor-not-allowed disabled:bg-slate-300">一键Copy</button>
         </div>
         <div class="p-4">
           <textarea id="outputText" spellcheck="false" readonly class="h-80 w-full resize-y rounded-md border border-emerald-200 bg-white p-4 font-mono text-sm leading-6 text-slate-950 dark:text-slate-100 outline-none lg:h-[28rem]"></textarea>
@@ -113,9 +126,10 @@
     </section>
 
     <article class="mt-10 border-t border-slate-200 dark:border-white/10 pt-8 leading-8 text-slate-700 dark:text-slate-300">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About JSON to CSV Converter</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">JSON and CSV two-way conversion and validation tool. Includes input/output boxes, error messages, and one-click copy. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use JSON to CSV Converter for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100">在线 JSON 与 CSV 转换工具说明</h2>
+      <p>
+        JSON 与 CSV 双向格式化转换与校验工具面向开发者、数据分析师、产品运营和内容管理人员，帮助用户快速处理接口返回、表格导出、日志记录和批量数据迁移中的结构化数据。很多场景下，接口数据常以 JSON 保存，而 Excel、数据库导入模板或运营报表更偏向 CSV 格式，手动Copy整理容易出现字段遗漏、引号转义错误和行列不匹配等问题。本工具支持 JSON 转 CSV、CSV 转 JSON、JSON 格式化校验和一键Copy，所有解析逻辑均在浏览器本地完成，适合需要在线 JSON CSV 互转、CSV 格式化转换、JSON 校验工具的用户。使用时只需将原始内容粘贴到输入区，选择对应按钮；若格式存在问题，页面会在输入框下方给出清晰的红色错误提示，方便快速定位并修正数据。
+      </p>
     </article>
   </main>
 
@@ -129,8 +143,8 @@
     const outputStats = document.getElementById('outputStats');
 
     function updateStats() {
-      inputStats.textContent = `${inputText.value.length} characters`;
-      outputStats.textContent = `${outputText.value.length} characters`;
+      inputStats.textContent = `${inputText.value.length} 个字符`;
+      outputStats.textContent = `${outputText.value.length} 个字符`;
       copyBtn.disabled = outputText.value.length === 0;
     }
 
@@ -156,7 +170,7 @@
     function requireInput() {
       const value = inputText.value.trim();
       if (!value) {
-        throw new Error('Input cannot be empty. Please paste JSON or CSV data before continuing.');
+        throw new Error('输入内容不能为空，请粘贴 JSON 或 CSV 数据后再操作。');
       }
       return value;
     }
@@ -171,9 +185,9 @@
           const before = text.slice(0, position);
           const line = before.split(/\n/).length;
           const column = before.length - before.lastIndexOf('\n');
-          throw new Error(`JSON parsing failed: incorrect format near line ${line}, column ${column}. ${err.message}`);
+          throw new Error(`JSON 解析失败：第 ${line} 行第 ${column} 列附近格式不正确。${err.message}`);
         }
-        throw new Error(`JSON parsing failed: ${err.message}`);
+        throw new Error(`JSON 解析失败：${err.message}`);
       }
     }
 
@@ -291,7 +305,7 @@
 
       const columnCount = rows[0].length;
       if (columnCount === 0 || rows[0].every(header => header.trim() === '')) {
-        throw new Error('CSV 解析失败：表头Cannot be empty.');
+        throw new Error('CSV 解析失败：表头不能为空。');
       }
 
       rows.forEach((currentRow, index) => {
@@ -344,7 +358,7 @@
       } catch (err) {
         outputText.value = '';
         updateStats();
-        showError(err.message || 'Conversion failed. Please check the input.');
+        showError(err.message || '转换失败，请检查输入内容。');
       }
     });
 
@@ -357,7 +371,7 @@
       } catch (err) {
         outputText.value = '';
         updateStats();
-        showError(err.message || 'Conversion failed. Please check the input.');
+        showError(err.message || '转换失败，请检查输入内容。');
       }
     });
 
@@ -370,7 +384,7 @@
       } catch (err) {
         outputText.value = '';
         updateStats();
-        showError(err.message || 'JSON 校验失败，请检查Input Content。');
+        showError(err.message || 'JSON 校验失败，请检查输入内容。');
       }
     });
 
@@ -405,7 +419,7 @@
         copyBtn.textContent = 'Copied';
         copyBtn.classList.remove('bg-emerald-600', 'hover:bg-emerald-500');
         copyBtn.classList.add('bg-cyan-600', 'hover:bg-cyan-500');
-        showSuccess('输出内容Copied to clipboard.');
+        showSuccess('输出内容Copied到剪贴板。');
 
         setTimeout(() => {
           copyBtn.textContent = original;
@@ -413,7 +427,7 @@
           copyBtn.classList.remove('bg-cyan-600', 'hover:bg-cyan-500');
         }, 1400);
       } catch (err) {
-        showError('Copy Failed，请手动选择输出内容后Copy。');
+        showError('Copy failed，请手动选择输出内容后Copy。');
       }
     });
 

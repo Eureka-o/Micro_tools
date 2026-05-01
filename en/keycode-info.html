@@ -3,15 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Keycode Info | Free Online Tool</title>
-  <meta name="description" content="Keyboard Keycode Capturer. Press any key on the keyboard to show its event.keyCode, event.key, and event.code in the center of the screen.">
-  <meta name="keywords" content="Keycode Info, online tool, browser tool, productivity tool">
-  <meta name="robots" content="index, follow" />
+  <title>keycode-info - 键盘键值 Keycode 捕获器</title>
+  <meta name="description" content="键盘键值 (Keycode) 捕获器。按键盘上的任意键，屏幕中央显示该按键的 event.keyCode、event.key 和 event.code。">
+  <meta name="keywords" content="keycode-info, Keycode 捕获器, 键盘键值, event.keyCode, event.key, event.code, JavaScript 键盘事件, 在线按键检测工具, 快捷键调试">
   <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
@@ -19,6 +16,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/keycode-info.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/keycode-info.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/keycode-info.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/keycode-info.html">
+  <meta property="og:title" content="keycode-info - 键盘键值 Keycode 捕获器">
+  <meta property="og:description" content="键盘键值 (Keycode) 捕获器。按键盘上的任意键，屏幕中央显示该按键的 event.keyCode、event.key 和 event.code。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="keycode-info - 键盘键值 Keycode 捕获器">
+  <meta name="twitter:description" content="键盘键值 (Keycode) 捕获器。按键盘上的任意键，屏幕中央显示该按键的 event.keyCode、event.key 和 event.code。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
@@ -43,6 +50,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <div class="pointer-events-none fixed inset-0 overflow-hidden">
     <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
     <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
@@ -55,14 +67,14 @@
           <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-200">
             Keyboard Event Inspector
           </p>
-          <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">Keycode Info</h1>
+          <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">键盘键值 Keycode 捕获器</h1>
           <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-700 dark:text-slate-300 sm:text-base">
-            Press any key on your keyboard to instantly view its corresponding <strong>event.keyCode</strong>、<strong>event.key</strong> and <strong>event.code</strong>。
+            按下键盘上的任意键，立即查看该按键对应的 <strong>event.keyCode</strong>、<strong>event.key</strong> 与 <strong>event.code</strong>。
           </p>
         </div>
         <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm text-slate-700 dark:text-slate-300 shadow-2xl">
           <span class="inline-block h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_#34d399]"></span>
-          <span class="ml-2">Listening in real time</span>
+          <span class="ml-2">实时监听中</span>
         </div>
       </div>
     </div>
@@ -72,25 +84,25 @@
     <section class="grid gap-6 lg:grid-cols-5">
       <div class="lg:col-span-2">
         <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl backdrop-blur">
-          <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Input</h2>
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-white">输入区</h2>
           <p class="mt-2 text-sm leading-6 text-slate-400">
-            Click the capture area below, then press any key. On desktop, press a key directly; on mobile, tap the input box to open the soft keyboard for testing.
+            点击下方捕获区域后按任意键。桌面端可直接按键；手机端可点击输入框唤起软键盘进行测试。
           </p>
 
           <div
             id="captureZone"
             tabindex="0"
             role="button"
-            aria-label="Keyboard key capture area"
+            aria-label="键盘按键捕获区域"
             class="mt-5 flex min-h-52 cursor-text select-none flex-col items-center justify-center rounded-2xl border border-dashed border-cyan-300/40 bg-cyan-300/10 p-6 text-center outline-none transition duration-200 focus:border-cyan-300 focus:bg-cyan-300/15 focus:ring-4 focus:ring-cyan-400/20"
           >
             <div class="mb-4 rounded-2xl bg-slate-950/70 px-5 py-4 shadow-inner">
-              <span id="bigKey" class="block break-all text-5xl font-black tracking-tight text-cyan-200 sm:text-6xl">Key</span>
+              <span id="bigKey" class="block break-all text-5xl font-black tracking-tight text-cyan-200 sm:text-6xl">按键</span>
             </div>
-            <p id="captureHint" class="text-sm text-slate-700 dark:text-slate-300">Press any key on your keyboard</p>
+            <p id="captureHint" class="text-sm text-slate-700 dark:text-slate-300">请按下键盘上的任意键</p>
           </div>
 
-          <label for="mobileInput" class="mt-5 block text-sm font-medium text-slate-700 dark:text-slate-300">Mobile input helper</label>
+          <label for="mobileInput" class="mt-5 block text-sm font-medium text-slate-700 dark:text-slate-300">移动端辅助输入</label>
           <input
             id="mobileInput"
             type="text"
@@ -98,7 +110,7 @@
             autocomplete="off"
             autocapitalize="off"
             spellcheck="false"
-            placeholder="Click here, then press a key"
+            placeholder="点击这里后按键"
             class="mt-2 w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/70 px-4 py-3 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-cyan-300 focus:ring-4 focus:ring-cyan-400/20"
           />
 
@@ -108,14 +120,14 @@
               type="button"
               class="rounded-2xl bg-cyan-400 px-4 py-3 text-sm font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98]"
             >
-              Focus Capture
+              聚焦捕获
             </button>
             <button
               id="copyBtn"
               type="button"
               class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-4 py-3 text-sm font-bold text-gray-900 dark:text-white transition hover:bg-white/15 active:scale-[0.98]"
             >
-              Copy Result
+              Copy result
             </button>
             <button
               id="clearBtn"
@@ -135,49 +147,50 @@
         <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5 shadow-2xl backdrop-blur">
           <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Output</h2>
-              <p class="mt-2 text-sm text-slate-400">Displays key KeyboardEvent fields in real time.</p>
+              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">输出区</h2>
+              <p class="mt-2 text-sm text-slate-400">实时显示 KeyboardEvent 的核心字段。</p>
             </div>
-            <p id="timeLabel" class="text-xs text-slate-500">Not Captured Yet</p>
+            <p id="timeLabel" class="text-xs text-slate-500">尚未捕获</p>
           </div>
 
           <div class="mt-6 grid gap-4 md:grid-cols-3">
             <div class="rounded-3xl border border-cyan-300/20 bg-slate-950/70 p-5">
               <p class="text-xs font-semibold uppercase tracking-wider text-cyan-200">event.keyCode</p>
               <p id="keyCodeValue" class="mt-4 break-all text-4xl font-black text-gray-900 dark:text-white sm:text-5xl">--</p>
-              <p class="mt-3 text-xs leading-5 text-slate-500">Legacy numeric key code, still commonly used for compatibility troubleshooting.</p>
+              <p class="mt-3 text-xs leading-5 text-slate-500">旧版数值键码，仍常用于兼容性排查。</p>
             </div>
 
             <div class="rounded-3xl border border-indigo-300/20 bg-slate-950/70 p-5">
               <p class="text-xs font-semibold uppercase tracking-wider text-indigo-200">event.key</p>
               <p id="keyValue" class="mt-4 break-all text-4xl font-black text-gray-900 dark:text-white sm:text-5xl">--</p>
-              <p class="mt-3 text-xs leading-5 text-slate-500">Indicates the key value pressed by the user, affected by the keyboard layout.</p>
+              <p class="mt-3 text-xs leading-5 text-slate-500">表示用户按下的键值，受键盘布局影响。</p>
             </div>
 
             <div class="rounded-3xl border border-emerald-300/20 bg-slate-950/70 p-5">
               <p class="text-xs font-semibold uppercase tracking-wider text-emerald-200">event.code</p>
               <p id="codeValue" class="mt-4 break-all text-4xl font-black text-gray-900 dark:text-white sm:text-5xl">--</p>
-              <p class="mt-3 text-xs leading-5 text-slate-500">Represents the physical key position, usually unaffected by keyboard layout.</p>
+              <p class="mt-3 text-xs leading-5 text-slate-500">表示物理按键位置，通常不受键盘布局影响。</p>
             </div>
           </div>
 
           <div class="mt-5 rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-950/70 p-5">
-            <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200">Full capture results</h3>
-            <pre id="jsonOutput" class="mt-3 max-h-72 overflow-auto whitespace-pre-wrap break-words rounded-2xl bg-black/40 p-4 text-sm leading-6 text-slate-700 dark:text-slate-300">Waiting for key input...</pre>
+            <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200">完整捕获结果</h3>
+            <pre id="jsonOutput" class="mt-3 max-h-72 overflow-auto whitespace-pre-wrap break-words rounded-2xl bg-black/40 p-4 text-sm leading-6 text-slate-700 dark:text-slate-300">等待按键输入...</pre>
           </div>
         </div>
       </div>
     </section>
 
     <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-900/75 p-6 shadow-2xl backdrop-blur sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About Keycode Info</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Keyboard Keycode Capturer. Press any key on the keyboard to show its event.keyCode, event.key, and event.code in the center of the screen. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use Keycode Info for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">关于 keycode-info 键盘键值捕获器</h2>
+      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">
+        keycode-info 是一款面向前端开发者、测试工程师和产品交互设计人员的在线键盘键值 Keycode 捕获器。开发快捷键、游戏控制、表单增强或后台管理系统热键时，经常需要确认某个按键在浏览器中的 event.keyCode、event.key 和 event.code。本工具可以在页面中央实时展示按键结果，避免反复编写临时代码或打开控制台调试。使用方法非常简单：打开页面后点击捕获区域，按下任意键即可获得对应的 JavaScript 键盘事件信息；如果需要记录结果，可一键Copy为 JSON。对于需要排查不同键盘布局、功能键、方向键、组合键触发差异的场景，这个在线按键检测工具能够快速定位问题，提升快捷键调试效率，并帮助你更准确地理解 KeyboardEvent 的实际表现。
+      </p>
     </article>
   </main>
 
   <footer class="relative mx-auto max-w-6xl px-4 pb-8 text-center text-xs text-slate-500 sm:px-6 lg:px-8">
-    <p>keycode-info · Native JavaScript Real-Time Keyboard Event Detection Tool</p>
+    <p>keycode-info · 原生 JavaScript 实时键盘事件检测工具</p>
   </footer>
 
   <script>
@@ -212,7 +225,7 @@
       function safeText(value) {
         if (value === undefined || value === null) return "未提供";
         const text = String(value);
-        if (text === "") return "Empty String";
+        if (text === "") return "空字符串";
         if (text === " ") return "Space (空格)";
         return text;
       }
@@ -225,7 +238,7 @@
       function showError(message) {
         if (!elements.errorBox) return;
         clearTimeout(state.hideErrorTimer);
-        elements.errorBox.textContent = message || "An unknown error occurred. Please try again.";
+        elements.errorBox.textContent = message || "发生Unknown错误，请重试。";
         elements.errorBox.classList.remove("hidden");
         state.hideErrorTimer = setTimeout(() => {
           elements.errorBox.classList.add("hidden");
@@ -235,7 +248,7 @@
       function showSuccess(message) {
         if (!elements.successBox) return;
         clearTimeout(state.hideSuccessTimer);
-        elements.successBox.textContent = message || "Operation successful.";
+        elements.successBox.textContent = message || "操作成功。";
         elements.successBox.classList.remove("hidden");
         state.hideSuccessTimer = setTimeout(() => {
           elements.successBox.classList.add("hidden");
@@ -259,7 +272,7 @@
 
       function normalizeKeyboardEvent(event) {
         if (!event || typeof event !== "object") {
-          throw new Error("No valid keyboard event detected.");
+          throw new Error("未检测到有效的键盘事件。");
         }
 
         const keyCodeRaw = event.keyCode ?? event.which ?? event.charCode ?? 0;
@@ -298,12 +311,12 @@
           if (result.shiftKey) modifiers.push("Shift");
           if (result.metaKey) modifiers.push("Meta");
           elements.captureHint.textContent = modifiers.length
-            ? "Key combination detected:" + modifiers.join(" + ") + " + " + safeText(result.key)
-            : "Captured keys:" + safeText(result.key);
+            ? "检测到组合键：" + modifiers.join(" + ") + " + " + safeText(result.key)
+            : "已捕获按键：" + safeText(result.key);
         }
 
         if (elements.timeLabel) {
-          elements.timeLabel.textContent = "Capture time:" + formatTime(new Date(result.capturedAt));
+          elements.timeLabel.textContent = "捕获时间：" + formatTime(new Date(result.capturedAt));
         }
 
         if (elements.jsonOutput) {
@@ -321,7 +334,7 @@
       function handleKeydown(event) {
         try {
           if (!event) {
-            showError("The browser did not return a valid key event. Please press a key again.");
+            showError("浏览器未返回有效按键事件，请重新按键。");
             return;
           }
 
@@ -343,13 +356,13 @@
             elements.mobileInput.value = "";
           }
         } catch (error) {
-          showError(error && error.message ? error.message : "Key parsing failed. Please try another key.");
+          showError(error && error.message ? error.message : "按键解析失败，请尝试其他按键。");
         }
       }
 
       async function copyText(text) {
         if (!text || typeof text !== "string") {
-          throw new Error("No content to copy.");
+          throw new Error("没有可Copy的内容。");
         }
 
         if (navigator.clipboard && window.isSecureContext) {
@@ -370,7 +383,7 @@
         document.body.removeChild(textarea);
 
         if (!ok) {
-          throw new Error("The current browser does not allow automatic copying. Please manually select and copy the result text.");
+          throw new Error("当前浏览器不允许自动Copy，请手动选择结果文本Copy。");
         }
       }
 
@@ -381,12 +394,12 @@
         setText(elements.keyValue, "--");
         setText(elements.codeValue, "--");
 
-        if (elements.captureHint) elements.captureHint.textContent = "Press any key on your keyboard";
-        if (elements.timeLabel) elements.timeLabel.textContent = "Not Captured Yet";
-        if (elements.jsonOutput) elements.jsonOutput.textContent = "Waiting for key input...";
+        if (elements.captureHint) elements.captureHint.textContent = "请按下键盘上的任意键";
+        if (elements.timeLabel) elements.timeLabel.textContent = "尚未捕获";
+        if (elements.jsonOutput) elements.jsonOutput.textContent = "等待按键输入...";
         if (elements.mobileInput) elements.mobileInput.value = "";
 
-        showSuccess("Capture results cleared.");
+        showSuccess("已Clear捕获结果。");
       }
 
       function addButtonFeedback(button) {
@@ -397,7 +410,7 @@
 
       function init() {
         if (!elements.captureZone || !elements.focusBtn || !elements.copyBtn || !elements.clearBtn) {
-          showError("Page initialization failed. Please refresh and try again.");
+          showError("页面初始化失败，请刷新后重试。");
           return;
         }
 
@@ -406,9 +419,9 @@
         elements.captureZone.addEventListener("click", () => {
           try {
             elements.captureZone.focus();
-            showSuccess("Capture area focused. Press any key.");
+            showSuccess("捕获区域已聚焦，请按任意键。");
           } catch (error) {
-            showError("Cannot focus the capture area. Please press a key directly or refresh the page.");
+            showError("无法聚焦捕获区域，请直接按键或刷新页面。");
           }
         });
 
@@ -416,9 +429,9 @@
           addButtonFeedback(elements.focusBtn);
           try {
             elements.captureZone.focus();
-            showSuccess("Capture area focused. Press any key.");
+            showSuccess("捕获区域已聚焦，请按任意键。");
           } catch (error) {
-            showError("Focus failed. Please click the capture area and try again.");
+            showError("聚焦失败，请点击捕获区域后再试。");
           }
         });
 
@@ -426,13 +439,13 @@
           addButtonFeedback(elements.copyBtn);
           try {
             if (!state.lastResult) {
-              showError("No capture result yet. Press any key first.");
+              showError("当前还没有捕获结果，请先按下任意键。");
               return;
             }
             await copyText(JSON.stringify(state.lastResult, null, 2));
-            showSuccess("Captured result copied to clipboard.");
+            showSuccess("捕获结果Copied到剪贴板。");
           } catch (error) {
-            showError(error && error.message ? error.message : "Copy failed. Please copy the result manually.");
+            showError(error && error.message ? error.message : "Copy failed，请手动Copy result。");
           }
         });
 
@@ -451,7 +464,7 @@
           try {
             elements.captureZone.focus();
           } catch (error) {
-            showError("Auto-focus failed. Please click the capture area to start.");
+            showError("自动聚焦失败，请点击捕获区域开始。");
           }
         }, 300);
       }

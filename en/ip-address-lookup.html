@@ -3,15 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IP Address Lookup | Free Online Tool</title>
-  <meta name="description" content="My IP address viewer. Calls a free IP API such as ipify entirely on the frontend to show the user&#x27;s current public IP address and approximate location.">
-  <meta name="keywords" content="IP Address Lookup, online tool, browser tool, productivity tool">
-  <meta name="robots" content="index,follow" />
+  <title>ip-address-lookup - 我的IP地址查看器</title>
+  <meta name="description" content="我的IP地址查看器。纯前端调用免费的IP API（如ipify），显示用户当前的公网IP地址及大致地理位置。">
+  <meta name="keywords" content="IP地址查询,公网IP查看器,我的IP地址,IP地理位置查询,ip-address-lookup,在线IP查询,IPv4查询,IPv6查询">
   <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
@@ -19,6 +16,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/ip-address-lookup.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/ip-address-lookup.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/ip-address-lookup.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/ip-address-lookup.html">
+  <meta property="og:title" content="ip-address-lookup - 我的IP地址查看器">
+  <meta property="og:description" content="我的IP地址查看器。纯前端调用免费的IP API（如ipify），显示用户当前的公网IP地址及大致地理位置。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ip-address-lookup - 我的IP地址查看器">
+  <meta name="twitter:description" content="我的IP地址查看器。纯前端调用免费的IP API（如ipify），显示用户当前的公网IP地址及大致地理位置。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
@@ -43,6 +50,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <div class="pointer-events-none fixed inset-0 overflow-hidden">
     <div class="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
     <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
@@ -55,16 +67,16 @@
           <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
             Free Online IP Address Lookup
           </p>
-          <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">IP Address Lookup</h1>
+          <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">我的IP地址查看器</h1>
           <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            My IP address viewer: Detect your current public IP address with one click, and show approximate location, ISP, and time zone.
+            我的 IP 地址查看器：一键检测当前公网 IP 地址，并显示大致地理位置、网络运营商与时区信息。
           </p>
         </div>
         <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-4 shadow-2xl">
-          <div class="text-sm text-slate-400">Current status</div>
+          <div class="text-sm text-slate-400">当前状态</div>
           <div id="statusBadge" class="mt-2 inline-flex items-center gap-2 rounded-full bg-slate-50 dark:bg-slate-800 px-4 py-2 text-sm font-semibold text-slate-800 dark:text-slate-200">
             <span class="h-2.5 w-2.5 rounded-full bg-slate-400"></span>
-            Waiting for Detection
+            等待检测
           </div>
         </div>
       </div>
@@ -74,9 +86,9 @@
   <main class="relative mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
     <section class="grid gap-6 lg:grid-cols-5">
       <div class="lg:col-span-2 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-6 shadow-2xl backdrop-blur">
-        <h2 class="text-xl font-bold text-gray-900 dark:text-white">Input and actions</h2>
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入与操作</h2>
         <p class="mt-2 text-sm leading-6 text-slate-400">
-          Click the button to automatically view your public IP, or enter a specific IPv4 / IPv6 address for geolocation lookup.
+          点击按钮自动查看你的公网 IP，或输入指定 IPv4 / IPv6 地址进行地理位置查询。
         </p>
 
         <div class="mt-6 space-y-4">
@@ -86,17 +98,17 @@
             class="flex w-full items-center justify-center gap-2 rounded-xl bg-cyan-500 px-5 py-3 font-semibold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
           >
             <span id="detectIcon">⚡</span>
-            <span id="detectText">Check My Public IP</span>
+            <span id="detectText">检测我的公网 IP</span>
           </button>
 
           <div class="relative">
-            <label for="ipInput" class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">Specify IP address (optional)</label>
+            <label for="ipInput" class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">指定 IP 地址（可选）</label>
             <input
               id="ipInput"
               type="text"
               inputmode="text"
               autocomplete="off"
-              placeholder="Example: 8.8.8.8 or 2001:4860:4860::8888"
+              placeholder="例如：8.8.8.8 或 2001:4860:4860::8888"
               class="w-full rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none ring-0 transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
             />
           </div>
@@ -107,7 +119,7 @@
               type="button"
               class="rounded-xl bg-indigo-500 px-4 py-3 font-semibold text-gray-900 dark:text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-400 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Look up a specific IP
+              查询指定 IP
             </button>
             <button
               id="clearBtn"
@@ -125,8 +137,8 @@
       <div class="lg:col-span-3 rounded-3xl border border-cyan-400/20 bg-gradient-to-br from-slate-900 to-slate-950 p-6 shadow-2xl">
         <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Query Results</h2>
-            <p class="mt-2 text-sm text-slate-400">Results come from public IP lookup APIs; the location is the approximate location of the network exit point.</p>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">查询结果</h2>
+            <p class="mt-2 text-sm text-slate-400">结果来自公开 IP 查询接口，地理位置为网络出口的大致位置。</p>
           </div>
           <button
             id="copyBtn"
@@ -139,29 +151,29 @@
         </div>
 
         <div class="mt-6 rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/70 p-5">
-          <div class="text-sm text-slate-400">Public IP address</div>
+          <div class="text-sm text-slate-400">公网 IP 地址</div>
           <div id="ipValue" class="mt-3 break-all text-3xl font-black tracking-tight text-cyan-300 sm:text-4xl">--</div>
         </div>
 
         <div class="mt-5 grid gap-4 sm:grid-cols-2">
           <div class="rounded-2xl bg-white dark:bg-white/[0.04] p-4 ring-1 ring-white/10">
-            <div class="text-xs uppercase tracking-wider text-slate-500">Country / Region</div>
+            <div class="text-xs uppercase tracking-wider text-slate-500">国家 / 地区</div>
             <div id="countryValue" class="mt-2 font-semibold text-slate-900 dark:text-slate-100">--</div>
           </div>
           <div class="rounded-2xl bg-white dark:bg-white/[0.04] p-4 ring-1 ring-white/10">
-            <div class="text-xs uppercase tracking-wider text-slate-500">City</div>
+            <div class="text-xs uppercase tracking-wider text-slate-500">城市</div>
             <div id="cityValue" class="mt-2 font-semibold text-slate-900 dark:text-slate-100">--</div>
           </div>
           <div class="rounded-2xl bg-white dark:bg-white/[0.04] p-4 ring-1 ring-white/10">
-            <div class="text-xs uppercase tracking-wider text-slate-500">Carrier / ISP</div>
+            <div class="text-xs uppercase tracking-wider text-slate-500">运营商 / ISP</div>
             <div id="ispValue" class="mt-2 font-semibold text-slate-900 dark:text-slate-100">--</div>
           </div>
           <div class="rounded-2xl bg-white dark:bg-white/[0.04] p-4 ring-1 ring-white/10">
-            <div class="text-xs uppercase tracking-wider text-slate-500">Time Zone</div>
+            <div class="text-xs uppercase tracking-wider text-slate-500">时区</div>
             <div id="timezoneValue" class="mt-2 font-semibold text-slate-900 dark:text-slate-100">--</div>
           </div>
           <div class="rounded-2xl bg-white dark:bg-white/[0.04] p-4 ring-1 ring-white/10 sm:col-span-2">
-            <div class="text-xs uppercase tracking-wider text-slate-500">Latitude and Longitude</div>
+            <div class="text-xs uppercase tracking-wider text-slate-500">经纬度</div>
             <div id="locationValue" class="mt-2 font-semibold text-slate-900 dark:text-slate-100">--</div>
           </div>
         </div>
@@ -169,14 +181,15 @@
     </section>
 
     <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About IP Address Lookup</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">My IP address viewer. Calls a free IP API such as ipify entirely on the frontend to show the user&#x27;s current public IP address and approximate location. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use IP Address Lookup for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">关于我的 IP 地址查看器</h2>
+      <p class="mt-4">
+        ip-address-lookup 是一个免费、轻量、无需安装的在线公网 IP 地址查看器，适合需要快速确认网络出口地址的个人用户、站长、运维工程师与跨境办公人员。很多时候，本机显示的内网地址并不能代表互联网上看到的真实地址，而本工具会通过纯前端调用公开 IP API，帮助你立即查看我的公网 IP 地址，并展示大致国家地区、城市、运营商、时区和经纬度信息。使用方法非常简单：打开页面后点击“检测我的公网 IP”，即可自动完成查询；如果你需要进行指定 IPv4 或 IPv6 地址地理位置查询，也可以在输入框中填入 IP 后点击查询。该在线 IP 查询工具无需注册账号，不会依赖后端服务器，适合排查代理、VPN、CDN、远程办公网络异常以及验证网站访问来源等场景。
+      </p>
     </article>
   </main>
 
   <footer class="relative border-t border-gray-200 dark:border-white/10 py-6 text-center text-sm text-slate-500">
-    <p>© <span id="year"></span> ip-address-lookup. Only public network query results are shown; geolocation may be inaccurate.</p>
+    <p>© <span id="year"></span> ip-address-lookup. 仅显示公开网络查询结果，地理位置可能存在偏差。</p>
   </footer>
 
   <script>
@@ -238,7 +251,7 @@
         els.detectBtn.disabled = isLoading;
         els.lookupBtn.disabled = isLoading;
         els.detectIcon.textContent = isLoading ? "⏳" : "⚡";
-        els.detectText.textContent = isLoading ? "Detecting..." : "Check My Public IP";
+        els.detectText.textContent = isLoading ? "正在检测..." : "检测我的公网 IP";
       }
 
       function resetResult() {
@@ -443,8 +456,8 @@
         const ip = els.ipInput.value.trim();
 
         if (!ip) {
-          showMessage("error", "Please enter要查询的 IPv4 或 IPv6 地址，或点击“Check My Public IP”。");
-          setStatus("error", "Input Is Empty");
+          showMessage("error", "Please enter要查询的 IPv4 或 IPv6 地址，或点击“检测我的公网 IP”。");
+          setStatus("error", "输入为空");
           els.ipInput.focus();
           return;
         }
@@ -458,7 +471,7 @@
 
         setLoading(true);
         setStatus("loading", "正在查询");
-        showMessage("info", "正在Look up a specific IP 的公开地理位置信息...");
+        showMessage("info", "正在查询指定 IP 的公开地理位置信息...");
         resetResult();
 
         try {
@@ -494,9 +507,9 @@
             document.execCommand("copy");
             document.body.removeChild(temp);
           }
-          showMessage("success", "IP 地址Copied to clipboard.");
+          showMessage("success", "IP 地址Copied到剪贴板。");
         } catch (err) {
-          showMessage("error", "Copy Failed，请手动选择 IP 地址进行Copy。");
+          showMessage("error", "Copy failed，请手动选择 IP 地址进行Copy。");
         }
       }
 
@@ -507,7 +520,7 @@
         els.ipInput.value = "";
         resetResult();
         showMessage("", "");
-        setStatus("idle", "Waiting for Detection");
+        setStatus("idle", "等待检测");
         els.ipInput.focus();
       });
 
@@ -515,7 +528,7 @@
         if (event.key === "Enter") lookupSpecifiedIP();
       });
 
-      setStatus("idle", "Waiting for Detection");
+      setStatus("idle", "等待检测");
       window.addEventListener("load", () => {
         setTimeout(detectMyIP, 350);
       });

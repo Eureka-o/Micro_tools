@@ -3,14 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="BMI calculator. Enter height (cm) and weight (kg) to calculate BMI, with a dynamic health status indicator bar.">
-  <meta name="keywords" content="BMI Calculator, online tool, browser tool, productivity tool">
-  <meta name="robots" content="index, follow" />
-  <title>BMI Calculator | Free Online Tool</title>
+  <meta name="description" content="BMI 身体质量指数计算器。输入身高（厘米）和体重（公斤），计算BMI值并带有动态的健康状态指示条。">
+  <meta name="keywords" content="BMI计算器,身体质量指数计算器,BMI身体质量指数,身高体重BMI计算,在线BMI计算,BMI健康状态,体重指数计算器">
+  <title>BMI Calculator - BMI 身体质量指数计算器</title>
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <link rel="apple-touch-icon" href="../assets/logo.png">
-  <meta property="og:image" content="../assets/logo.png">
-  <meta name="twitter:image" content="../assets/logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -37,6 +34,16 @@
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/bmi-calculator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/bmi-calculator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/bmi-calculator.html">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/bmi-calculator.html">
+  <meta property="og:title" content="BMI Calculator - BMI 身体质量指数计算器">
+  <meta property="og:description" content="BMI 身体质量指数计算器。输入身高（厘米）和体重（公斤），计算BMI值并带有动态的健康状态指示条。">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BMI Calculator - BMI 身体质量指数计算器">
+  <meta name="twitter:description" content="BMI 身体质量指数计算器。输入身高（厘米）和体重（公斤），计算BMI值并带有动态的健康状态指示条。">
+  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
@@ -61,6 +68,11 @@
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
 
+
+
+
+
+
   <div class="absolute inset-0 -z-10 overflow-hidden">
     <div class="absolute left-1/2 top-[-10rem] h-80 w-80 -translate-x-1/2 rounded-full bg-blue-500/25 blur-3xl"></div>
     <div class="absolute bottom-[-12rem] right-[-8rem] h-96 w-96 rounded-full bg-cyan-400/20 blur-3xl"></div>
@@ -70,28 +82,28 @@
     <div class="mx-auto flex max-w-6xl flex-col gap-5 px-5 py-10 sm:px-8 lg:px-10">
       <div class="inline-flex w-fit items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/10 px-4 py-2 text-sm text-blue-100">
         <span class="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(103,232,249,0.9)]"></span>
-        Online health assessment tool
+        在线健康评估工具
       </div>
       <div class="max-w-3xl">
-        <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">BMI Calculator</h1>
+        <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">BMI 身体质量指数计算器</h1>
         <p class="mt-4 text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
-          Enter height and weight to calculate BMI in real time, with a dynamic health status bar showing your current weight range.
+          输入身高与体重，实时计算 BMI 身体质量指数，并通过动态健康状态指示条直观了解当前体重范围。
         </p>
       </div>
     </div>
   </header>
 
   <main class="mx-auto max-w-6xl px-5 py-8 sm:px-8 lg:px-10">
-    <section class="grid gap-6 lg:grid-cols-5" aria-label="BMI Calculator">
+    <section class="grid gap-6 lg:grid-cols-5" aria-label="BMI 身体质量指数计算器">
       <div class="lg:col-span-2 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-6 shadow-glow backdrop-blur-xl sm:p-8">
         <div class="mb-6">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Input Information</h2>
-          <p class="mt-2 text-sm text-slate-400">Please enter your real height and weight, in centimeters and kilograms.</p>
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输入信息</h2>
+          <p class="mt-2 text-sm text-slate-400">请填写真实的身高和体重，单位分别为厘米与公斤。</p>
         </div>
 
         <form id="bmiForm" novalidate class="space-y-5">
           <div>
-            <label for="height" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Height (cm)</label>
+            <label for="height" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">身高（厘米）</label>
             <div class="relative">
               <input
                 id="height"
@@ -99,17 +111,17 @@
                 type="text"
                 inputmode="decimal"
                 autocomplete="off"
-                placeholder="e.g., 170"
+                placeholder="例如：170"
                 class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-4 pr-14 text-lg text-gray-900 dark:text-white outline-none transition placeholder:text-slate-600 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20"
                 aria-describedby="heightHelp"
               />
               <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">cm</span>
             </div>
-            <p id="heightHelp" class="mt-2 text-xs text-slate-500">Recommended range: 50 - 250 cm</p>
+            <p id="heightHelp" class="mt-2 text-xs text-slate-500">建议范围：50 - 250 cm</p>
           </div>
 
           <div>
-            <label for="weight" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Weight (kg)</label>
+            <label for="weight" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">体重（公斤）</label>
             <div class="relative">
               <input
                 id="weight"
@@ -117,13 +129,13 @@
                 type="text"
                 inputmode="decimal"
                 autocomplete="off"
-                placeholder="Example: 65"
+                placeholder="例如：65"
                 class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-4 pr-14 text-lg text-gray-900 dark:text-white outline-none transition placeholder:text-slate-600 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20"
                 aria-describedby="weightHelp"
               />
               <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">kg</span>
             </div>
-            <p id="weightHelp" class="mt-2 text-xs text-slate-500">Recommended range: 10 - 500 kg</p>
+            <p id="weightHelp" class="mt-2 text-xs text-slate-500">建议范围：10 - 500 kg</p>
           </div>
 
           <div id="errorBox" class="hidden rounded-2xl border border-red-400/40 bg-red-500/15 px-4 py-3 text-sm font-medium text-red-100" role="alert"></div>
@@ -134,7 +146,7 @@
               id="calculateBtn"
               class="rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-400 px-5 py-4 font-bold text-gray-900 dark:text-white shadow-lg shadow-blue-500/25 transition active:scale-[0.98] hover:brightness-110 focus:outline-none focus:ring-4 focus:ring-blue-400/30"
             >
-              Calculate BMI
+              计算 BMI
             </button>
             <button
               type="button"
@@ -150,32 +162,32 @@
       <div class="lg:col-span-3 rounded-3xl border border-blue-300/15 bg-gradient-to-br from-slate-900 via-slate-900 to-blue-950/80 p-6 shadow-glow sm:p-8">
         <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Calculation Result</h2>
-            <p class="mt-2 text-sm text-slate-400">Results are classified using common Chinese adult BMI reference ranges.</p>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">计算结果</h2>
+            <p class="mt-2 text-sm text-slate-400">结果会根据中国成人 BMI 常用参考范围进行分类。</p>
           </div>
           <div id="statusBadge" class="w-fit rounded-full border border-slate-600 bg-slate-50 dark:bg-slate-800 px-4 py-2 text-sm font-bold text-slate-700 dark:text-slate-300">
-            Waiting for Input
+            等待输入
           </div>
         </div>
 
         <div class="grid gap-4 sm:grid-cols-3">
           <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5">
-            <p class="text-sm text-slate-400">BMI value</p>
+            <p class="text-sm text-slate-400">BMI 值</p>
             <p id="bmiValue" class="mt-3 text-5xl font-black tracking-tight text-gray-900 dark:text-white">--</p>
           </div>
           <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5">
-            <p class="text-sm text-slate-400">Health status</p>
+            <p class="text-sm text-slate-400">健康状态</p>
             <p id="bmiCategory" class="mt-3 text-3xl font-black text-slate-800 dark:text-slate-200">--</p>
           </div>
           <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5">
-            <p class="text-sm text-slate-400">Health advice</p>
-            <p id="bmiAdvice" class="mt-3 text-sm leading-6 text-slate-700 dark:text-slate-300">Please enter height and weight to see recommendations.</p>
+            <p class="text-sm text-slate-400">健康建议</p>
+            <p id="bmiAdvice" class="mt-3 text-sm leading-6 text-slate-700 dark:text-slate-300">Please enter身高和体重后查看建议。</p>
           </div>
         </div>
 
         <div class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-950/50 p-5 sm:p-6">
           <div class="mb-4 flex items-center justify-between gap-4">
-            <h3 class="font-bold text-gray-900 dark:text-white">Dynamic health status indicator</h3>
+            <h3 class="font-bold text-gray-900 dark:text-white">动态健康状态指示条</h3>
             <span id="pointerText" class="text-sm text-slate-400">--</span>
           </div>
 
@@ -196,30 +208,31 @@
             </div>
 
             <div class="mt-3 grid grid-cols-5 gap-2 text-center text-[11px] text-slate-400 sm:text-xs">
-              <span>Slim<br />&lt;18.5</span>
-              <span>Normal<br />18.5-23.9</span>
-              <span>Overweight<br />24-27.9</span>
-              <span>Obesity<br />≥28</span>
-              <span>High Risk<br />≥32</span>
+              <span>偏瘦<br />&lt;18.5</span>
+              <span>正常<br />18.5-23.9</span>
+              <span>超重<br />24-27.9</span>
+              <span>肥胖<br />≥28</span>
+              <span>高风险<br />≥32</span>
             </div>
           </div>
         </div>
 
         <div class="mt-6 rounded-3xl border border-cyan-300/20 bg-cyan-400/10 p-5 text-sm leading-6 text-cyan-50">
-          <strong>Formula:</strong>BMI = weight (kg) ÷ height² (m²). BMI is a common initial screening indicator for weight management and cannot replace professional medical diagnosis.
+          <strong>计算公式：</strong>BMI = 体重（kg） ÷ 身高²（m²）。BMI 是体重管理的常用初筛指标，不能替代专业医学诊断。
         </div>
       </div>
     </section>
 
     <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-glow backdrop-blur-xl sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-slate-950 dark:text-slate-100 dark:text-white">About BMI Calculator</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">BMI calculator. Enter height (cm) and weight (kg) to calculate BMI, with a dynamic health status indicator bar. This page is designed as a lightweight, static, browser-friendly utility that opens quickly and keeps the core workflow focused.</p>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">Use BMI Calculator for everyday development, data cleanup, formatting, conversion, validation, or productivity tasks without installing extra desktop software. Whenever the tool processes input, it is intended to run locally in the browser as much as possible, helping reduce unnecessary uploads and keeping the experience fast.</p>
+      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 BMI 身体质量指数计算器</h2>
+      <p>
+        BMI 身体质量指数计算器是一款便捷的在线健康评估工具，适合希望快速了解自身体重状态的人群使用。很多人在减脂、增肌、体检或日常健康管理时，只知道身高和体重，却难以判断当前体重是否处于合理区间。本工具通过标准公式“体重公斤数除以身高米数平方”自动计算 BMI 值，并结合动态健康状态指示条，直观展示偏瘦、正常、超重和肥胖等分类结果。使用方法非常简单：在输入框中填写身高厘米数和体重公斤数，点击“计算 BMI”即可获得身体质量指数、健康状态与参考建议。对于搜索“身高体重 BMI 在线计算”“成人 BMI 身体质量指数计算器”“如何判断体重是否标准”的用户来说，本页面能够提供快速、清晰且易理解的结果。需要注意的是，BMI 适合作为大众体重风险的初步筛查指标，但运动员、孕妇、儿童及特殊疾病人群应结合体脂率、腰围和医生建议进行综合判断。
+      </p>
     </article>
   </main>
 
   <footer class="mx-auto max-w-6xl px-5 pb-8 text-center text-sm text-slate-500 sm:px-8 lg:px-10">
-    <p>© <span id="year"></span> bmi-calculator. Results are for health management reference only.</p>
+    <p>© <span id="year"></span> bmi-calculator. 结果仅供健康管理参考。</p>
   </footer>
 
   <script>
@@ -281,7 +294,7 @@
             label: '偏瘦',
             color: 'sky',
             badge: 'border-sky-300/40 bg-sky-400/15 text-sky-100',
-            text: 'Maintain regular meals, focus on protein and total energy intake, and consult a nutritionist if needed.'
+            text: '建议保持规律饮食，关注蛋白质与总能量摄入，必要时咨询营养师。'
           };
         }
         if (bmi < 24) {
@@ -289,7 +302,7 @@
             label: '正常',
             color: 'emerald',
             badge: 'border-emerald-300/40 bg-emerald-400/15 text-emerald-100',
-            text: 'Your current BMI is within the common healthy range. Keep maintaining a balanced diet and regular exercise.'
+            text: '当前 BMI 处于常见健康范围，建议继续保持均衡饮食与规律运动。'
           };
         }
         if (bmi < 28) {
@@ -297,14 +310,14 @@
             label: '超重',
             color: 'amber',
             badge: 'border-amber-300/40 bg-amber-400/15 text-amber-100',
-            text: 'Consider reducing high-calorie foods, increasing aerobic and strength training, and improving weight gradually.'
+            text: '建议控制高热量饮食，增加有氧运动和力量训练，逐步改善体重。'
           };
         }
         return {
           label: '肥胖',
           color: 'red',
           badge: 'border-red-300/40 bg-red-400/15 text-red-100',
-          text: 'Pay attention to weight management, consider waist circumference, blood pressure, blood sugar, and other indicators, and consider seeking professional medical advice.'
+          text: '建议重视体重管理，结合腰围、血压、血糖等指标，并考虑寻求专业医生建议。'
         };
       }
 
@@ -318,7 +331,7 @@
         bmiCategory.textContent = category.label;
         bmiAdvice.textContent = category.text;
         pointer.style.left = percent + '%';
-        pointerText.textContent = 'Current location: BMI ' + fixed;
+        pointerText.textContent = '当前位置：BMI ' + fixed;
 
         statusBadge.className = 'w-fit rounded-full border px-4 py-2 text-sm font-bold ' + category.badge;
         statusBadge.textContent = category.label;
@@ -345,9 +358,9 @@
         bmiValue.textContent = '--';
         bmiCategory.textContent = '--';
         bmiCategory.className = 'mt-3 text-3xl font-black text-slate-200';
-        bmiAdvice.textContent = 'Please enter height and weight to see recommendations.';
+        bmiAdvice.textContent = 'Please enter身高和体重后查看建议。';
         statusBadge.className = 'w-fit rounded-full border border-slate-600 bg-slate-800 px-4 py-2 text-sm font-bold text-slate-300';
-        statusBadge.textContent = 'Waiting for Input';
+        statusBadge.textContent = '等待输入';
         pointer.style.left = '0%';
         pointerText.textContent = '--';
         heightInput.focus();
@@ -365,18 +378,18 @@
 
         if (!Number.isFinite(height)) {
           invalidHeight = true;
-          messages.push('Please enter a valid height.');
+          messages.push('Please enter有效的身高数字。');
         } else if (height < 50 || height > 250) {
           invalidHeight = true;
-          messages.push('Height should be between 50 and 250 cm.');
+          messages.push('身高应在 50 到 250 厘米之间。');
         }
 
         if (!Number.isFinite(weight)) {
           invalidWeight = true;
-          messages.push('Please enter a valid weight.');
+          messages.push('Please enter有效的体重数字。');
         } else if (weight < 10 || weight > 500) {
           invalidWeight = true;
-          messages.push('Weight must be between 10 and 500 kg.');
+          messages.push('体重应在 10 到 500 公斤之间。');
         }
 
         setInputState(heightInput, invalidHeight);
@@ -391,7 +404,7 @@
         const bmi = weight / (heightMeters * heightMeters);
 
         if (!Number.isFinite(bmi) || bmi <= 0) {
-          showError('Calculation failed. Please check your input and try again.');
+          showError('计算失败，请检查输入内容后重试。');
           return;
         }
 
