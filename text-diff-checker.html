@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>text-diff-checker - 文本对比检查工具</title>
+  <meta name="description" content="text-diff-checker 是一款在线文本对比检查工具，可快速高亮显示两段文本之间增加、删除或修改的字符，适合代码审查、文案校对、合同内容核对与版本差异检查。" />
+  <meta name="keywords" content="text-diff-checker, 文本对比工具, 文本差异检查, 在线文本比较, 字符差异高亮, 文案校对工具, 版本对比工具, 文本修改对比" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <div class="absolute inset-0 -z-10 overflow-hidden">
+    <div class="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute right-0 top-60 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
+  </div>
+
+  <header class="border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+            在线字符级差异高亮工具
+          </p>
+          <h1 class="text-4xl font-black tracking-tight text-white sm:text-5xl">text-diff-checker</h1>
+          <p class="mt-3 max-w-2xl text-base leading-7 text-slate-300">
+            粘贴两段文本，一键识别新增、删除与修改内容，帮助你更快完成版本核对、文案校对和内容审查。
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-300 shadow-2xl">
+          <span class="inline-block h-2 w-2 rounded-full bg-emerald-400"></span>
+          本地浏览器计算，不上传文本
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-2" aria-label="文本输入区">
+      <div class="rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-2xl">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-xl font-bold text-white">原始文本</h2>
+          <span id="leftCount" class="rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-300">0 字符</span>
+        </div>
+        <textarea id="leftText" class="h-72 w-full resize-y rounded-2xl border border-slate-700 bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="在此粘贴第一段文本，例如旧版本内容、原始文案或待核对文本。"></textarea>
+      </div>
+
+      <div class="rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-2xl">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-xl font-bold text-white">对比文本</h2>
+          <span id="rightCount" class="rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-300">0 字符</span>
+        </div>
+        <textarea id="rightText" class="h-72 w-full resize-y rounded-2xl border border-slate-700 bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="在此粘贴第二段文本，例如新版本内容、修改后文案或目标文本。"></textarea>
+      </div>
+    </section>
+
+    <section class="mt-6 rounded-3xl border border-white/10 bg-white/[0.04] p-5 shadow-2xl" aria-label="操作区">
+      <div id="errorBox" class="mb-4 hidden rounded-2xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200"></div>
+
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div class="flex flex-wrap gap-3">
+          <button id="compareBtn" type="button" class="rounded-2xl bg-cyan-400 px-6 py-3 font-bold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-95 disabled:cursor-not-allowed disabled:opacity-60">
+            开始对比
+          </button>
+          <button id="swapBtn" type="button" class="rounded-2xl border border-white/10 bg-slate-800 px-6 py-3 font-bold text-slate-100 transition hover:bg-slate-700 active:scale-95">
+            左右互换
+          </button>
+          <button id="clearBtn" type="button" class="rounded-2xl border border-white/10 bg-slate-800 px-6 py-3 font-bold text-slate-100 transition hover:bg-slate-700 active:scale-95">
+            清空
+          </button>
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 text-center text-xs sm:text-sm">
+          <div class="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-4 py-2">
+            <div class="font-black text-emerald-200" id="addedCount">0</div>
+            <div class="text-slate-400">新增</div>
+          </div>
+          <div class="rounded-2xl border border-red-400/20 bg-red-400/10 px-4 py-2">
+            <div class="font-black text-red-200" id="deletedCount">0</div>
+            <div class="text-slate-400">删除</div>
+          </div>
+          <div class="rounded-2xl border border-amber-400/20 bg-amber-400/10 px-4 py-2">
+            <div class="font-black text-amber-200" id="changedCount">0</div>
+            <div class="text-slate-400">修改</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-6 grid gap-6 lg:grid-cols-2" aria-label="文本对比输出区">
+      <div class="rounded-3xl border border-white/10 bg-slate-100 p-5 text-slate-950 shadow-2xl">
+        <div class="mb-4 flex items-center justify-between">
+          <h2 class="text-xl font-bold">原始文本差异</h2>
+          <span class="rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700">删除/修改高亮</span>
+        </div>
+        <div id="leftOutput" class="min-h-72 overflow-auto rounded-2xl border border-slate-200 bg-white p-4 font-mono text-sm leading-7 whitespace-pre-wrap break-words text-slate-800">
+          对比结果将在这里显示。
+        </div>
+      </div>
+
+      <div class="rounded-3xl border border-white/10 bg-slate-100 p-5 text-slate-950 shadow-2xl">
+        <div class="mb-4 flex items-center justify-between">
+          <h2 class="text-xl font-bold">对比文本差异</h2>
+          <span class="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">新增/修改高亮</span>
+        </div>
+        <div id="rightOutput" class="min-h-72 overflow-auto rounded-2xl border border-slate-200 bg-white p-4 font-mono text-sm leading-7 whitespace-pre-wrap break-words text-slate-800">
+          对比结果将在这里显示。
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-6 rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-2xl" aria-label="图例说明">
+      <h2 class="mb-4 text-xl font-bold text-white">差异标记说明</h2>
+      <div class="grid gap-3 sm:grid-cols-3">
+        <div class="rounded-2xl bg-white/5 p-4">
+          <span class="rounded bg-emerald-200 px-2 py-1 font-mono text-sm text-emerald-950">新增字符</span>
+          <p class="mt-2 text-sm text-slate-400">只存在于右侧对比文本中的内容。</p>
+        </div>
+        <div class="rounded-2xl bg-white/5 p-4">
+          <span class="rounded bg-red-200 px-2 py-1 font-mono text-sm text-red-950 line-through">删除字符</span>
+          <p class="mt-2 text-sm text-slate-400">只存在于左侧原始文本中的内容。</p>
+        </div>
+        <div class="rounded-2xl bg-white/5 p-4">
+          <span class="rounded bg-amber-200 px-2 py-1 font-mono text-sm text-amber-950">修改字符</span>
+          <p class="mt-2 text-sm text-slate-400">删除与新增相邻出现时，会被识别为修改。</p>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-white/10 bg-white/[0.04] p-6 leading-8 text-slate-300 shadow-2xl">
+      <h2 class="mb-4 text-2xl font-black text-white">关于 text-diff-checker 文本对比检查工具</h2>
+      <p>
+        text-diff-checker 是一款面向文案编辑、产品经理、开发者和法务人员的在线文本对比检查工具，能够以字符级粒度高亮展示两段文本之间的新增、删除和修改内容。日常工作中，合同条款、需求文档、代码片段、公告文案或翻译稿件经常会经历多轮改动，人工逐字核对不仅耗时，而且容易遗漏细微差异。使用这款在线文本差异高亮工具，只需将旧版本内容粘贴到左侧，将新版本内容粘贴到右侧，点击“开始对比”，即可快速获得清晰的差异结果。
+      </p>
+      <p class="mt-4">
+        本工具适合用于文案修改对比、版本差异检查、文本校对、网页内容更新核验以及代码审查前的初步比对。所有计算都在浏览器本地完成，不会上传你的文本内容，兼顾效率与隐私。通过颜色区分新增字符、删除字符和修改字符，用户可以直观定位变更位置，减少重复沟通成本，提升内容审核和版本管理效率。
+      </p>
+    </article>
+  </main>
+
+  <footer class="mx-auto max-w-7xl px-4 pb-8 pt-2 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
+    © <span id="year"></span> text-diff-checker
+  </footer>
+
+  <script>
+    const leftText = document.getElementById('leftText');
+    const rightText = document.getElementById('rightText');
+    const leftCount = document.getElementById('leftCount');
+    const rightCount = document.getElementById('rightCount');
+    const compareBtn = document.getElementById('compareBtn');
+    const swapBtn = document.getElementById('swapBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const errorBox = document.getElementById('errorBox');
+    const leftOutput = document.getElementById('leftOutput');
+    const rightOutput = document.getElementById('rightOutput');
+    const addedCount = document.getElementById('addedCount');
+    const deletedCount = document.getElementById('deletedCount');
+    const changedCount = document.getElementById('changedCount');
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const MAX_CHARS = 8000;
+    const MAX_CELLS = 4000000;
+
+    function toChars(str) {
+      return Array.from(str || '');
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function showError(message) {
+      errorBox.textContent = message;
+      errorBox.classList.remove('hidden');
+    }
+
+    function hideError() {
+      errorBox.textContent = '';
+      errorBox.classList.add('hidden');
+    }
+
+    function updateCounts() {
+      leftCount.textContent = `${toChars(leftText.value).length} 字符`;
+      rightCount.textContent = `${toChars(rightText.value).length} 字符`;
+    }
+
+    function setStats(added, deleted, changed) {
+      addedCount.textContent = added;
+      deletedCount.textContent = deleted;
+      changedCount.textContent = changed;
+    }
+
+    function validateInput(a, b) {
+      const n = toChars(a).length;
+      const m = toChars(b).length;
+
+      if (n === 0 && m === 0) {
+        return '请输入至少一段文本后再进行对比。';
+      }
+
+      if (n > MAX_CHARS || m > MAX_CHARS) {
+        return `单侧文本最多支持 ${MAX_CHARS} 个字符。当前左侧 ${n} 个字符，右侧 ${m} 个字符，请缩短文本后重试。`;
+      }
+
+      if ((n + 1) * (m + 1) > MAX_CELLS) {
+        return '两段文本组合过长，字符级精确对比可能消耗过多浏览器内存。请减少文本长度后再试。';
+      }
+
+      return '';
+    }
+
+    function diffChars(a, b) {
+      const A = toChars(a);
+      const B = toChars(b);
+      const n = A.length;
+      const m = B.length;
+      const cols = m + 1;
+      const dp = new Uint16Array((n + 1) * (m + 1));
+
+      for (let i = n - 1; i >= 0; i--) {
+        const row = i * cols;
+        const nextRow = (i + 1) * cols;
+        for (let j = m - 1; j >= 0; j--) {
+          if (A[i] === B[j]) {
+            dp[row + j] = dp[nextRow + j + 1] + 1;
+          } else {
+            const down = dp[nextRow + j];
+            const right = dp[row + j + 1];
+            dp[row + j] = down >= right ? down : right;
+          }
+        }
+      }
+
+      const ops = [];
+      let i = 0;
+      let j = 0;
+
+      while (i < n && j < m) {
+        if (A[i] === B[j]) {
+          ops.push({ type: 'equal', value: A[i] });
+          i++;
+          j++;
+        } else if (dp[(i + 1) * cols + j] >= dp[i * cols + j + 1]) {
+          ops.push({ type: 'delete', value: A[i] });
+          i++;
+        } else {
+          ops.push({ type: 'insert', value: B[j] });
+          j++;
+        }
+      }
+
+      while (i < n) {
+        ops.push({ type: 'delete', value: A[i] });
+        i++;
+      }
+
+      while (j < m) {
+        ops.push({ type: 'insert', value: B[j] });
+        j++;
+      }
+
+      return mergeOps(ops);
+    }
+
+    function mergeOps(ops) {
+      if (!ops.length) return [];
+      const merged = [];
+
+      for (const op of ops) {
+        const last = merged[merged.length - 1];
+        if (last && last.type === op.type) {
+          last.value += op.value;
+        } else {
+          merged.push({ type: op.type, value: op.value });
+        }
+      }
+
+      const classified = [];
+      for (let i = 0; i < merged.length; i++) {
+        const current = merged[i];
+        const next = merged[i + 1];
+
+        if (current.type === 'delete' && next && next.type === 'insert') {
+          classified.push({ type: 'replace-delete', value: current.value });
+          classified.push({ type: 'replace-insert', value: next.value });
+          i++;
+        } else if (current.type === 'insert' && next && next.type === 'delete') {
+          classified.push({ type: 'replace-insert', value: current.value });
+          classified.push({ type: 'replace-delete', value: next.value });
+          i++;
+        } else {
+          classified.push(current);
+        }
+      }
+
+      return classified;
+    }
+
+    function renderDiff(ops) {
+      let leftHtml = '';
+      let rightHtml = '';
+      let added = 0;
+      let deleted = 0;
+      let changed = 0;
+
+      for (const op of ops) {
+        const safe = escapeHtml(op.value);
+        const len = toChars(op.value).length;
+
+        if (op.type === 'equal') {
+          leftHtml += safe;
+          rightHtml += safe;
+        } else if (op.type === 'delete') {
+          deleted += len;
+          leftHtml += `<span class="rounded bg-red-200 px-0.5 text-red-950 line-through">${safe}</span>`;
+        } else if (op.type === 'insert') {
+          added += len;
+          rightHtml += `<span class="rounded bg-emerald-200 px-0.5 text-emerald-950">${safe}</span>`;
+        } else if (op.type === 'replace-delete') {
+          changed += len;
+          leftHtml += `<span class="rounded bg-amber-200 px-0.5 text-amber-950 line-through decoration-amber-700">${safe}</span>`;
+        } else if (op.type === 'replace-insert') {
+          rightHtml += `<span class="rounded bg-amber-200 px-0.5 text-amber-950">${safe}</span>`;
+        }
+      }
+
+      leftOutput.innerHTML = leftHtml || '<span class="text-slate-400">左侧为空。</span>';
+      rightOutput.innerHTML = rightHtml || '<span class="text-slate-400">右侧为空。</span>';
+      setStats(added, deleted, changed);
+    }
+
+    function compareTexts() {
+      hideError();
+      const a = leftText.value;
+      const b = rightText.value;
+      const error = validateInput(a, b);
+
+      if (error) {
+        showError(error);
+        return;
+      }
+
+      compareBtn.disabled = true;
+      compareBtn.textContent = '对比中...';
+
+      window.setTimeout(() => {
+        try {
+          const ops = diffChars(a, b);
+          renderDiff(ops);
+          if (a === b) {
+            leftOutput.innerHTML = escapeHtml(a) || '<span class="text-slate-400">文本为空。</span>';
+            rightOutput.innerHTML = escapeHtml(b) || '<span class="text-slate-400">文本为空。</span>';
+            setStats(0, 0, 0);
+          }
+        } catch (err) {
+          showError('对比过程中发生异常，请检查输入内容或缩短文本后重试。');
+        } finally {
+          compareBtn.disabled = false;
+          compareBtn.textContent = '开始对比';
+        }
+      }, 30);
+    }
+
+    leftText.addEventListener('input', updateCounts);
+    rightText.addEventListener('input', updateCounts);
+
+    compareBtn.addEventListener('click', compareTexts);
+
+    swapBtn.addEventListener('click', () => {
+      hideError();
+      const temp = leftText.value;
+      leftText.value = rightText.value;
+      rightText.value = temp;
+      updateCounts();
+      compareTexts();
+    });
+
+    clearBtn.addEventListener('click', () => {
+      hideError();
+      leftText.value = '';
+      rightText.value = '';
+      leftOutput.textContent = '对比结果将在这里显示。';
+      rightOutput.textContent = '对比结果将在这里显示。';
+      setStats(0, 0, 0);
+      updateCounts();
+      leftText.focus();
+    });
+
+    updateCounts();
+  </script>
+</body>
+</html>

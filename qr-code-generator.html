@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>qr-code-generator 在线二维码生成器</title>
+  <meta name="description" content="qr-code-generator 是一款在线二维码生成器，可在浏览器中将 URL 或文本快速生成二维码，支持尺寸调整、前景色自定义和 PNG 下载。" />
+  <meta name="keywords" content="在线二维码生成器,二维码生成工具,URL生成二维码,文本生成二维码,二维码PNG下载,自定义颜色二维码,qr-code-generator" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
+    <div class="absolute inset-0 opacity-30">
+      <div class="absolute left-1/4 top-10 h-48 w-48 rounded-full bg-cyan-500 blur-3xl"></div>
+      <div class="absolute right-1/4 bottom-0 h-56 w-56 rounded-full bg-blue-600 blur-3xl"></div>
+    </div>
+    <div class="relative mx-auto max-w-6xl px-5 py-12 sm:py-16">
+      <div class="inline-flex items-center rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-1 text-sm text-cyan-100 shadow-lg shadow-cyan-950/40">
+        纯前端 · 隐私安全 · PNG 下载
+      </div>
+      <h1 class="mt-5 text-4xl font-black tracking-tight text-white sm:text-5xl md:text-6xl">qr-code-generator</h1>
+      <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
+        在线二维码生成器：输入 URL 或任意文本，即可快速生成可下载的高清二维码。
+      </p>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-5 py-8 sm:py-12">
+    <section class="grid gap-6 lg:grid-cols-2">
+      <div class="rounded-3xl border border-slate-700/70 bg-slate-900/80 p-5 shadow-2xl shadow-black/30 backdrop-blur sm:p-7">
+        <div class="mb-6 flex items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-bold text-white">输入设置</h2>
+            <p class="mt-1 text-sm text-slate-400">填写内容并调整二维码外观参数</p>
+          </div>
+          <span class="rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-200 ring-1 ring-cyan-300/20">INPUT</span>
+        </div>
+
+        <label for="qrText" class="mb-2 block text-sm font-semibold text-slate-200">URL 或文本内容</label>
+        <textarea id="qrText" rows="7" class="w-full resize-y rounded-2xl border border-slate-700 bg-slate-950/80 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="例如：https://example.com 或需要生成二维码的文本">https://example.com</textarea>
+        <div class="mt-2 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
+          <span id="byteInfo">0 bytes</span>
+          <span>建议输入简短 URL 或文本，过长内容会降低识别效率</span>
+        </div>
+
+        <div class="mt-6 grid gap-5 sm:grid-cols-2">
+          <div>
+            <label for="qrSize" class="mb-2 block text-sm font-semibold text-slate-200">图片尺寸</label>
+            <div class="rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
+              <input id="qrSize" type="range" min="128" max="1024" step="16" value="384" class="w-full accent-cyan-400" />
+              <div class="mt-3 flex items-center justify-between text-sm">
+                <span class="text-slate-400">128px</span>
+                <strong id="sizeLabel" class="text-cyan-200">384px</strong>
+                <span class="text-slate-400">1024px</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label for="qrColor" class="mb-2 block text-sm font-semibold text-slate-200">前景色</label>
+            <div class="flex items-center gap-3 rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
+              <input id="qrColor" type="color" value="#0f172a" class="h-12 w-16 cursor-pointer rounded-xl border border-slate-600 bg-transparent p-1" />
+              <input id="colorText" type="text" value="#0f172a" class="min-w-0 flex-1 rounded-xl border border-slate-700 bg-slate-900 px-3 py-3 text-sm text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
+            </div>
+          </div>
+        </div>
+
+        <div id="errorBox" class="mt-5 hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200"></div>
+
+        <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+          <button id="generateBtn" class="inline-flex flex-1 items-center justify-center rounded-2xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98]">
+            生成二维码
+          </button>
+          <button id="clearBtn" class="inline-flex items-center justify-center rounded-2xl border border-slate-700 bg-slate-800 px-5 py-3 font-bold text-slate-200 transition hover:bg-slate-700 active:scale-[0.98]">
+            清空
+          </button>
+        </div>
+      </div>
+
+      <div class="rounded-3xl border border-cyan-300/20 bg-cyan-50 p-5 text-slate-950 shadow-2xl shadow-cyan-950/20 sm:p-7">
+        <div class="mb-6 flex items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-bold text-slate-950">输出预览</h2>
+            <p class="mt-1 text-sm text-slate-600">生成结果会显示在下方，可直接下载 PNG</p>
+          </div>
+          <span class="rounded-full bg-slate-950 px-3 py-1 text-xs font-semibold text-cyan-100">OUTPUT</span>
+        </div>
+
+        <div class="flex min-h-[360px] items-center justify-center rounded-3xl border border-slate-200 bg-white p-5 shadow-inner">
+          <canvas id="qrCanvas" class="max-w-full rounded-2xl"></canvas>
+        </div>
+
+        <div class="mt-5 grid gap-3 sm:grid-cols-2">
+          <button id="downloadBtn" class="inline-flex items-center justify-center rounded-2xl bg-slate-950 px-5 py-3 font-bold text-white shadow-lg shadow-slate-950/20 transition hover:bg-slate-800 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50">
+            下载 PNG
+          </button>
+          <button id="copyBtn" class="inline-flex items-center justify-center rounded-2xl border border-slate-300 bg-white px-5 py-3 font-bold text-slate-900 transition hover:bg-slate-100 active:scale-[0.98]">
+            复制图片
+          </button>
+        </div>
+        <p id="statusText" class="mt-4 text-center text-sm font-medium text-slate-600">二维码已就绪</p>
+      </div>
+    </section>
+
+    <article class="mt-10 rounded-3xl border border-slate-700/70 bg-slate-900/70 p-6 leading-8 text-slate-300 shadow-xl shadow-black/20 sm:p-8">
+      <h2 class="mb-4 text-2xl font-bold text-white">在线二维码生成器，让链接与文本分享更高效</h2>
+      <p>
+        qr-code-generator 是一款无需安装软件的在线二维码生成器，适合将网站链接、活动页面、联系方式、产品说明或普通文本快速转换为可扫描的二维码。所有生成过程均在浏览器本地完成，输入内容不会上传到服务器，更适合重视隐私与效率的用户。使用时，只需在输入框中粘贴 URL 或文本，按需调整二维码尺寸与前景色，点击“生成二维码”即可实时预览结果，并支持一键下载 PNG 图片。对于需要制作宣传海报、名片、门店物料、社交媒体图片的运营人员和设计师，这个自定义颜色二维码生成工具可以显著减少沟通成本。通过“URL 生成二维码”“文本生成二维码”“二维码 PNG 下载”等功能，你可以快速获得清晰、易识别、便于传播的二维码素材。
+      </p>
+    </article>
+  </main>
+
+  <footer class="border-t border-slate-800 px-5 py-8 text-center text-sm text-slate-500">
+    <p>© <span id="year"></span> qr-code-generator. Built with native HTML, JavaScript and Tailwind CSS.</p>
+  </footer>
+
+  <script>
+    (() => {
+      const textEl = document.getElementById('qrText');
+      const sizeEl = document.getElementById('qrSize');
+      const sizeLabel = document.getElementById('sizeLabel');
+      const colorEl = document.getElementById('qrColor');
+      const colorTextEl = document.getElementById('colorText');
+      const canvas = document.getElementById('qrCanvas');
+      const ctx = canvas.getContext('2d');
+      const errorBox = document.getElementById('errorBox');
+      const generateBtn = document.getElementById('generateBtn');
+      const downloadBtn = document.getElementById('downloadBtn');
+      const clearBtn = document.getElementById('clearBtn');
+      const copyBtn = document.getElementById('copyBtn');
+      const statusText = document.getElementById('statusText');
+      const byteInfo = document.getElementById('byteInfo');
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      const VERSION_INFO = {
+        1: { data: 19, ecc: 7, align: [] },
+        2: { data: 34, ecc: 10, align: [6, 18] },
+        3: { data: 55, ecc: 15, align: [6, 22] },
+        4: { data: 80, ecc: 20, align: [6, 26] },
+        5: { data: 108, ecc: 26, align: [6, 30] }
+      };
+
+      const encoder = new TextEncoder();
+      let currentValid = false;
+
+      function showError(message) {
+        errorBox.textContent = message;
+        errorBox.classList.remove('hidden');
+        statusText.textContent = '生成失败，请检查输入';
+        statusText.className = 'mt-4 text-center text-sm font-medium text-red-600';
+        currentValid = false;
+        downloadBtn.disabled = true;
+      }
+
+      function hideError() {
+        errorBox.classList.add('hidden');
+        errorBox.textContent = '';
+      }
+
+      function setStatus(message, ok = true) {
+        statusText.textContent = message;
+        statusText.className = ok
+          ? 'mt-4 text-center text-sm font-medium text-slate-600'
+          : 'mt-4 text-center text-sm font-medium text-red-600';
+      }
+
+      function isHexColor(value) {
+        return /^#[0-9a-fA-F]{6}$/.test(String(value).trim());
+      }
+
+      function updateByteInfo() {
+        try {
+          const bytes = encoder.encode(textEl.value || '');
+          byteInfo.textContent = `${bytes.length} bytes`;
+        } catch {
+          byteInfo.textContent = '0 bytes';
+        }
+      }
+
+      function gfTables() {
+        const exp = new Array(512);
+        const log = new Array(256);
+        let x = 1;
+        for (let i = 0; i < 255; i++) {
+          exp[i] = x;
+          log[x] = i;
+          x <<= 1;
+          if (x & 0x100) x ^= 0x11d;
+        }
+        for (let i = 255; i < 512; i++) exp[i] = exp[i - 255];
+        return { exp, log };
+      }
+
+      const GF = gfTables();
+
+      function gfMul(a, b) {
+        if (a === 0 || b === 0) return 0;
+        return GF.exp[GF.log[a] + GF.log[b]];
+      }
+
+      function rsGenerator(degree) {
+        let poly = [1];
+        for (let i = 0; i < degree; i++) {
+          const next = new Array(poly.length + 1).fill(0);
+          for (let j = 0; j < poly.length; j++) {
+            next[j] ^= gfMul(poly[j], GF.exp[i]);
+            next[j + 1] ^= poly[j];
+          }
+          poly = next;
+        }
+        return poly;
+      }
+
+      function rsRemainder(data, degree) {
+        const gen = rsGenerator(degree);
+        const rem = new Array(degree).fill(0);
+        for (const b of data) {
+          const factor = b ^ rem.shift();
+          rem.push(0);
+          for (let i = 0; i < degree; i++) {
+            rem[i] ^= gfMul(gen[i], factor);
+          }
+        }
+        return rem;
+      }
+
+      function appendBits(arr, value, length) {
+        for (let i = length - 1; i >= 0; i--) arr.push((value >>> i) & 1);
+      }
+
+      function chooseVersion(byteLength) {
+        for (let v = 1; v <= 5; v++) {
+          const capacityBits = VERSION_INFO[v].data * 8;
+          const required = 4 + 8 + byteLength * 8;
+          if (required <= capacityBits) return v;
+        }
+        return null;
+      }
+
+      function createMatrix(size) {
+        return {
+          modules: Array.from({ length: size }, () => Array(size).fill(false)),
+          func: Array.from({ length: size }, () => Array(size).fill(false))
+        };
+      }
+
+      function setFunction(qr, r, c, dark) {
+        const size = qr.modules.length;
+        if (r < 0 || c < 0 || r >= size || c >= size) return;
+        qr.modules[r][c] = !!dark;
+        qr.func[r][c] = true;
+      }
+
+      function drawFinder(qr, r, c) {
+        for (let dy = -1; dy <= 7; dy++) {
+          for (let dx = -1; dx <= 7; dx++) {
+            const rr = r + dy, cc = c + dx;
+            const inCore = dx >= 0 && dx <= 6 && dy >= 0 && dy <= 6;
+            const dark = inCore && (dx === 0 || dx === 6 || dy === 0 || dy === 6 || (dx >= 2 && dx <= 4 && dy >= 2 && dy <= 4));
+            setFunction(qr, rr, cc, dark);
+          }
+        }
+      }
+
+      function drawAlignment(qr, centerR, centerC) {
+        for (let dy = -2; dy <= 2; dy++) {
+          for (let dx = -2; dx <= 2; dx++) {
+            const dist = Math.max(Math.abs(dx), Math.abs(dy));
+            setFunction(qr, centerR + dy, centerC + dx, dist === 2 || dist === 0);
+          }
+        }
+      }
+
+      function drawFunctionPatterns(qr, version) {
+        const size = qr.modules.length;
+        drawFinder(qr, 0, 0);
+        drawFinder(qr, 0, size - 7);
+        drawFinder(qr, size - 7, 0);
+
+        for (let i = 8; i < size - 8; i++) {
+          setFunction(qr, 6, i, i % 2 === 0);
+          setFunction(qr, i, 6, i % 2 === 0);
+        }
+
+        const positions = VERSION_INFO[version].align;
+        for (const r of positions) {
+          for (const c of positions) {
+            if ((r <= 8 && c <= 8) || (r <= 8 && c >= size - 9) || (r >= size - 9 && c <= 8)) continue;
+            drawAlignment(qr, r, c);
+          }
+        }
+
+        for (let i = 0; i < 9; i++) {
+          if (i !== 6) {
+            setFunction(qr, 8, i, false);
+            setFunction(qr, i, 8, false);
+          }
+        }
+        for (let i = 0; i < 8; i++) {
+          setFunction(qr, 8, size - 1 - i, false);
+          setFunction(qr, size - 1 - i, 8, false);
+        }
+        setFunction(qr, 4 * version + 9, 8, true);
+      }
+
+      function getFormatBits(mask) {
+        const eccLevelBits = 1;
+        let data = (eccLevelBits << 3) | mask;
+        let rem = data << 10;
+        const generator = 0x537;
+        for (let i = 14; i >= 10; i--) {
+          if ((rem >>> i) & 1) rem ^= generator << (i - 10);
+        }
+        return ((data << 10) | rem) ^ 0x5412;
+      }
+
+      function drawFormatBits(qr, mask) {
+        const size = qr.modules.length;
+        const bits = getFormatBits(mask);
+        const bit = i => ((bits >>> i) & 1) === 1;
+
+        for (let i = 0; i <= 5; i++) setFunction(qr, 8, i, bit(i));
+        setFunction(qr, 8, 7, bit(6));
+        setFunction(qr, 8, 8, bit(7));
+        setFunction(qr, 7, 8, bit(8));
+        for (let i = 9; i < 15; i++) setFunction(qr, 14 - i, 8, bit(i));
+
+        for (let i = 0; i < 8; i++) setFunction(qr, size - 1 - i, 8, bit(i));
+        for (let i = 8; i < 15; i++) setFunction(qr, 8, size - 15 + i, bit(i));
+        setFunction(qr, 4 * ((size - 17) / 4) + 9, 8, true);
+      }
+
+      function buildDataCodewords(bytes, version) {
+        const info = VERSION_INFO[version];
+        const bits = [];
+        appendBits(bits, 0b0100, 4);
+        appendBits(bits, bytes.length, 8);
+        for (const b of bytes) appendBits(bits, b, 8);
+
+        const capacityBits = info.data * 8;
+        const terminator = Math.min(4, capacityBits - bits.length);
+        appendBits(bits, 0, terminator);
+
+        while (bits.length % 8 !== 0) bits.push(0);
+
+        const data = [];
+        for (let i = 0; i < bits.length; i += 8) {
+          let val = 0;
+          for (let j = 0; j < 8; j++) val = (val << 1) | bits[i + j];
+          data.push(val);
+        }
+
+        const pads = [0xec, 0x11];
+        let p = 0;
+        while (data.length < info.data) data.push(pads[p++ % 2]);
+        return data;
+      }
+
+      function placeData(qr, codewords) {
+        const size = qr.modules.length;
+        const bits = [];
+        for (const cw of codewords) appendBits(bits, cw, 8);
+        let i = 0;
+        let upward = true;
+
+        for (let right = size - 1; right >= 1; right -= 2) {
+          if (right === 6) right--;
+          for (let vert = 0; vert < size; vert++) {
+            const r = upward ? size - 1 - vert : vert;
+            for (let j = 0; j < 2; j++) {
+              const c = right - j;
+              if (!qr.func[r][c]) {
+                let dark = i < bits.length ? bits[i++] === 1 : false;
+                if ((r + c) % 2 === 0) dark = !dark;
+                qr.modules[r][c] = dark;
+              }
+            }
+          }
+          upward = !upward;
+        }
+      }
+
+      function generateQRCode(text) {
+        const bytes = Array.from(encoder.encode(text));
+        if (bytes.length === 0) throw new Error('请输入需要生成二维码的 URL 或文本内容。');
+        if (bytes.length > 108) throw new Error('当前纯前端版本支持最多约 108 bytes 内容，请缩短文本或使用短链接后再生成。');
+
+        const version = chooseVersion(bytes.length);
+        if (!version) throw new Error('输入内容过长，请缩短文本或使用短链接后再试。');
+
+        const size = 21 + 4 * (version - 1);
+        const qr = createMatrix(size);
+        drawFunctionPatterns(qr, version);
+
+        const data = buildDataCodewords(bytes, version);
+        const ecc = rsRemainder(data, VERSION_INFO[version].ecc);
+        placeData(qr, data.concat(ecc));
+        drawFormatBits(qr, 0);
+
+        return qr.modules;
+      }
+
+      function renderQR(modules, pixelSize, fgColor) {
+        const count = modules.length;
+        const quiet = 4;
+        const total = count + quiet * 2;
+        const scale = Math.max(1, Math.floor(pixelSize / total));
+        const actualSize = total * scale;
+
+        canvas.width = actualSize;
+        canvas.height = actualSize;
+        canvas.style.width = Math.min(actualSize, 520) + 'px';
+        canvas.style.height = Math.min(actualSize, 520) + 'px';
+
+        ctx.clearRect(0, 0, actualSize, actualSize);
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, actualSize, actualSize);
+        ctx.fillStyle = fgColor;
+
+        for (let r = 0; r < count; r++) {
+          for (let c = 0; c < count; c++) {
+            if (modules[r][c]) {
+              ctx.fillRect((c + quiet) * scale, (r + quiet) * scale, scale, scale);
+            }
+          }
+        }
+      }
+
+      function generate() {
+        try {
+          hideError();
+          updateByteInfo();
+
+          const text = String(textEl.value || '').trim();
+          const pixelSize = Number(sizeEl.value);
+          const color = String(colorTextEl.value || '').trim();
+
+          if (!text) throw new Error('请输入 URL 或文本内容，不能为空。');
+          if (!Number.isFinite(pixelSize) || pixelSize < 128 || pixelSize > 1024) throw new Error('图片尺寸必须在 128px 到 1024px 之间。');
+          if (!isHexColor(color)) throw new Error('前景色格式不正确，请使用类似 #0f172a 的 6 位十六进制颜色。');
+
+          colorEl.value = color.toLowerCase();
+          colorTextEl.value = color.toLowerCase();
+
+          const modules = generateQRCode(text);
+          renderQR(modules, pixelSize, color.toLowerCase());
+
+          currentValid = true;
+          downloadBtn.disabled = false;
+          setStatus('二维码已生成，可下载 PNG', true);
+
+          generateBtn.classList.add('ring-4', 'ring-cyan-300/30');
+          setTimeout(() => generateBtn.classList.remove('ring-4', 'ring-cyan-300/30'), 250);
+        } catch (err) {
+          showError(err && err.message ? err.message : '生成二维码时发生未知错误，请检查输入后重试。');
+        }
+      }
+
+      sizeEl.addEventListener('input', () => {
+        sizeLabel.textContent = `${sizeEl.value}px`;
+        if (currentValid) generate();
+      });
+
+      colorEl.addEventListener('input', () => {
+        colorTextEl.value = colorEl.value;
+        if (currentValid) generate();
+      });
+
+      colorTextEl.addEventListener('input', () => {
+        const value = colorTextEl.value.trim();
+        if (isHexColor(value)) {
+          colorEl.value = value;
+          if (currentValid) generate();
+        }
+      });
+
+      textEl.addEventListener('input', () => {
+        updateByteInfo();
+        if (!errorBox.classList.contains('hidden')) hideError();
+      });
+
+      generateBtn.addEventListener('click', generate);
+
+      clearBtn.addEventListener('click', () => {
+        textEl.value = '';
+        updateByteInfo();
+        hideError();
+        currentValid = false;
+        downloadBtn.disabled = true;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvas.width = 320;
+        canvas.height = 320;
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        setStatus('内容已清空，请输入文本后生成', true);
+      });
+
+      downloadBtn.addEventListener('click', () => {
+        if (!currentValid) {
+          showError('请先成功生成二维码后再下载。');
+          return;
+        }
+        try {
+          const link = document.createElement('a');
+          link.download = `qr-code-${Date.now()}.png`;
+          link.href = canvas.toDataURL('image/png');
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          setStatus('PNG 图片已开始下载', true);
+        } catch {
+          showError('下载失败，请确认浏览器允许保存图片。');
+        }
+      });
+
+      copyBtn.addEventListener('click', async () => {
+        if (!currentValid) {
+          showError('请先成功生成二维码后再复制图片。');
+          return;
+        }
+        try {
+          if (!navigator.clipboard || !window.ClipboardItem) {
+            throw new Error('当前浏览器不支持直接复制图片，请使用下载 PNG 功能。');
+          }
+          canvas.toBlob(async blob => {
+            try {
+              if (!blob) throw new Error('图片数据生成失败，请重试。');
+              await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+              setStatus('二维码图片已复制到剪贴板', true);
+            } catch (e) {
+              showError(e && e.message ? e.message : '复制失败，请使用下载 PNG 功能。');
+            }
+          }, 'image/png');
+        } catch (err) {
+          showError(err && err.message ? err.message : '复制失败，请使用下载 PNG 功能。');
+        }
+      });
+
+      updateByteInfo();
+      downloadBtn.disabled = true;
+      generate();
+    })();
+  </script>
+</body>
+</html>
