@@ -5,13 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="番茄工作法网页计时器。极简界面，25分钟工作/5分钟休息倒计时，带有浏览器标题栏倒计时显示和结束提示音。">
   <meta name="keywords" content="pomodoro-timer, 番茄工作法计时器, 在线番茄钟, 25分钟工作5分钟休息, 专注倒计时工具, 网页计时器, 极简番茄钟">
-  <meta name="theme-color" content="#0f172a" />
   <title>pomodoro-timer | 番茄工作法网页计时器</title>
   <link rel="icon" type="image/png" href="../assets/logo.png">
-  <link rel="apple-touch-icon" href="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/en/pomodoro-timer.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/pomodoro-timer.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/pomodoro-timer.html">
@@ -49,6 +54,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -489,5 +496,14 @@
       document.title = DEFAULT_TITLE;
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

@@ -7,11 +7,17 @@
   <meta name="description" content="在线二维码生成器。利用纯前端库将输入的URL或文本生成二维码，支持调整尺寸和前景色，并可下载为PNG。">
   <meta name="keywords" content="在线二维码生成器,二维码生成工具,URL生成二维码,文本生成二维码,二维码PNG下载,自定义颜色二维码,qr-code-generator">
   <link rel="icon" type="image/png" href="./assets/logo.png">
-  <link rel="apple-touch-icon" href="./assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/qr-code-generator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/qr-code-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/qr-code-generator.html">
@@ -49,6 +55,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -600,5 +608,14 @@
       generate();
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

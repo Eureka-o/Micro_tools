@@ -7,10 +7,16 @@
   <meta name="description" content="Base64 文本和图片双向编解码器。支持拖拽上传图片转换为Base64字符串。">
   <meta name="keywords" content="base64-encoder,Base64编码,Base64解码,在线Base64工具,图片转Base64,Base64转图片,ChineseBase64编码解码,Data URL转换">
   <link rel="icon" type="image/png" href="../assets/logo.png">
-  <link rel="apple-touch-icon" href="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/en/base64-encoder.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/base64-encoder.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/base64-encoder.html">
@@ -48,6 +54,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -626,5 +634,14 @@
       updateCounts();
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

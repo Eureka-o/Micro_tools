@@ -7,10 +7,16 @@
   <meta name="description" content="多功能百分比计算器。例如&#x27;X是Y的百分之几&#x27;、&#x27;X增加Y%是多少&#x27;，实时响应输入并给出计算过程。">
   <meta name="keywords" content="percentage-calculator,百分比计算器,在线百分比计算,X是Y的百分之几,X增加Y%是多少,百分比变化计算器,增长率计算,折扣计算器">
   <link rel="icon" type="image/png" href="../assets/logo.png">
-  <link rel="apple-touch-icon" href="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/en/percentage-calculator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/percentage-calculator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/percentage-calculator.html">
@@ -48,6 +54,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -487,5 +495,14 @@
       updateMode();
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

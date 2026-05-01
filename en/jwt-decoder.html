@@ -6,12 +6,17 @@
   <title>jwt-decoder - JWT 本地解码器</title>
   <meta name="description" content="JWT (JSON Web Token) 本地解码器。纯前端解析Header和Payload，不向服务器发送任何数据以保证安全。">
   <meta name="keywords" content="jwt-decoder,JWT解码器,JSON Web Token解析,JWT本地解码,JWT Header Payload,在线JWT解析工具,前端JWT调试">
-  <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="../assets/logo.png">
-  <link rel="apple-touch-icon" href="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/en/jwt-decoder.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/jwt-decoder.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/jwt-decoder.html">
@@ -49,6 +54,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -447,5 +454,14 @@
       renderClaims({});
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

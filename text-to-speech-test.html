@@ -5,13 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="浏览器原生 TTS 测试工具。调用浏览器自带的 `window.speechSynthesis` API，将输入的文本转为语音朗读，支持调节语速和音调。">
   <meta name="keywords" content="text-to-speech-test, 浏览器原生TTS测试工具, 在线文字转语音, speechSynthesis API, 文本转语音朗读, TTS语速音调测试, Web语音合成工具">
-  <meta name="theme-color" content="#0f172a" />
   <title>text-to-speech-test｜浏览器原生 TTS 测试工具</title>
   <link rel="icon" type="image/png" href="./assets/logo.png">
-  <link rel="apple-touch-icon" href="./assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/text-to-speech-test.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/text-to-speech-test.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/text-to-speech-test.html">
@@ -49,6 +54,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -608,5 +615,14 @@
       tryLoadVoices();
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

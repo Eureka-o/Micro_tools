@@ -7,7 +7,6 @@
   <meta name="keywords" content="冷门工具, 开发者生产力, 免费在线开发者工具箱, 本地运行工具, 无需上传, 浏览器本地处理, 开源安全, 格式转换工具">
   <title>冷门工具与开发者生产力（100%隐私/本地运行）- 免费在线开发者工具箱 - Micro Tools Matrix</title>
   <link rel="icon" type="image/png" href="./assets/logo-web.png">
-  <link rel="apple-touch-icon" href="./assets/logo-web.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -25,6 +24,13 @@
     }
   </style>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/">
@@ -40,7 +46,7 @@
   <meta name="twitter:description" content="Micro Tools Matrix 是免费在线开发者生产力工具箱，支持 50+ 种格式转换，包括编码解码、正则测试、时间戳、二维码、颜色与文本处理。无需上传，浏览器本地处理，开源安全，适合冷门工具和日常开发场景。">
   <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":["SoftwareApplication","WebApplication"],"name":"Micro Tools Matrix","alternateName":"免费在线开发者工具箱","url":"https://mymicrotools.xyz/","description":"Micro Tools Matrix 是免费在线开发者生产力工具箱，支持 50+ 种格式转换，包括编码解码、正则测试、时间戳、二维码、颜色与文本处理。无需上传，浏览器本地处理，开源安全，适合冷门工具和日常开发场景。","applicationCategory":"DeveloperApplication","applicationSubCategory":"WebApplication","operatingSystem":"Windows, macOS, Android, iOS, Linux","browserRequirements":"Requires a modern web browser with JavaScript enabled.","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock"},"creator":{"@type":"Organization","name":"Micro Tools Matrix"},"inLanguage":"zh-CN"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Micro Tools Matrix","alternateName":["Free Online Developer Toolbox","Micro Tools Matrix"],"url":"https://mymicrotools.xyz/","description":"Micro Tools Matrix 是免费在线开发者生产力工具箱，支持 50+ 种格式转换，包括编码解码、正则测试、时间戳、二维码、颜色与文本处理。无需上传，浏览器本地处理，开源安全，适合冷门工具和日常开发场景。","applicationCategory":"DeveloperApplication","applicationSubCategory":"WebApplication","operatingSystem":"Windows, macOS, Android, iOS, Linux","browserRequirements":"Requires a modern web browser with JavaScript enabled.","featureList":["50+ free developer and productivity tools","Browser-local processing for supported tools","No upload required for local workflows","Format conversion, encoding, validation, QR, color, and text utilities","PWA-ready offline static pages"],"isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD","name":"Free","availability":"https://schema.org/InStock"},"creator":{"@type":"Organization","name":"Micro Tools Matrix"},"inLanguage":"zh-CN"}</script>
 </head>
 <body class="min-h-screen bg-white dark:bg-[#030712] text-slate-900 dark:text-slate-100 antialiased">
   <!-- static-controls:start -->
@@ -63,6 +69,8 @@
   </nav>
 
   <!-- static-controls:end -->
+
+
 
 
 
@@ -114,8 +122,8 @@
             <path d="m21 21-4.35-4.35m1.35-5.65a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <input id="searchInput" type="search" class="h-14 w-full min-w-0 rounded-full border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] px-12 pr-24 text-base text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400/60 focus:bg-white/[0.08] focus:ring-2 focus:ring-cyan-400/20 md:h-16" placeholder="搜索工具名称或描述，例如 JSON、Base64、颜色、时间戳...">
-          <kbd class="pointer-events-none absolute right-4 top-1/2 hidden -translate-y-1/2 rounded-full border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-3 py-1 text-[11px] font-semibold text-slate-400 shadow-inner sm:inline-flex">⌘ K</kbd>
-        </div>
+                    <kbd class="pointer-events-none absolute right-4 top-1/2 hidden -translate-y-1/2 rounded-full border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-white/5 px-3 py-1 text-[11px] font-semibold text-slate-500 dark:text-slate-300 shadow-inner backdrop-blur sm:inline-flex">&#8984; K</kbd>
+</div>
         <div class="min-h-12 w-full shrink-0 rounded-full border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] px-5 py-3 text-center text-sm font-medium text-slate-700 dark:text-slate-300 md:w-auto md:text-left md:whitespace-nowrap">
           当前显示 <span id="visibleCount" class="text-gray-900 dark:text-white">0</span> / <span id="totalCount">0</span>
         </div>
@@ -286,6 +294,7 @@
       if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault();
         searchInput.focus();
+        searchInput.select();
       }
     });
     renderTools();
@@ -362,5 +371,14 @@
       window.MicroToolsSponsor = { openModal, closeModal };
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

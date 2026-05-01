@@ -5,13 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="纯前端 WebP 图片压缩转换器。利用HTML5 Canvas将上传的PNG/JPG图片在浏览器端转换为高压缩比的WebP格式并Download。">
   <meta name="keywords" content="image-compressor, WebP图片压缩, PNG转WebP, JPG转WebP, 图片压缩工具, 在线图片转换器, 前端图片压缩, Canvas图片压缩, 高压缩比WebP">
-  <meta name="theme-color" content="#0f172a" />
   <title>image-compressor - 纯前端 WebP 图片压缩转换器</title>
   <link rel="icon" type="image/png" href="../assets/logo.png">
-  <link rel="apple-touch-icon" href="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/en/image-compressor.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/image-compressor.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/image-compressor.html">
@@ -49,6 +54,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -693,5 +700,14 @@
     updateQualityLabel();
     updateStats();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

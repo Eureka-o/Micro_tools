@@ -7,7 +7,6 @@
   <meta name="description" content="虚构人物/网名随机生成器。包含男/女选项，点击生成带有中英双语的随机姓名组合。">
   <meta name="keywords" content="random-name-generator, 随机姓名生成器, 网名生成器, 虚构人物名字生成器, 中英文名字生成器, 游戏角色名字生成器, 小说人物取名工具, 随机英文名, 随机中文名">
   <link rel="icon" type="image/png" href="./assets/logo.png">
-  <link rel="apple-touch-icon" href="./assets/logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -25,6 +24,13 @@
     };
   </script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/random-name-generator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/random-name-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/random-name-generator.html">
@@ -62,6 +68,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -388,5 +396,14 @@
       generate();
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

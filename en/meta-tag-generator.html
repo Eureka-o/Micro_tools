@@ -8,7 +8,6 @@
   <meta name="keywords" content="meta-tag-generator,SEO Meta标签Generate器,Meta代码Generate,网站标题描述关键词,head标签Generate工具">
   <meta name="author" content="meta-tag-generator">
   <link rel="icon" type="image/png" href="../assets/logo.png">
-  <link rel="apple-touch-icon" href="../assets/logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -32,6 +31,13 @@
     }
   </script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/en/meta-tag-generator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/meta-tag-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/meta-tag-generator.html">
@@ -69,6 +75,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -405,7 +413,7 @@
           '  <meta name="keywords" content="' + keywords + '">',
           '  <meta name="author" content="' + author + '">',
           '',
-          '  <meta name="theme-color" content="#0f172a">',
+          '',
           '',
           '',
           '',
@@ -542,5 +550,14 @@
       updateCounts();
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

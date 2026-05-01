@@ -6,9 +6,7 @@
   <title>word-counter｜高级字数统计工具</title>
   <meta name="description" content="高级字数统计工具。实时统计输入的字符数、单词数、句子数、段落数，以及预估的阅读时间。">
   <meta name="keywords" content="word-counter, 字数统计工具, 在线字数统计, characters数统计, 单词数统计, 句子统计, 段落统计, 阅读时间估算, SEO写作工具, Chinese字数统计">
-  <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="../assets/logo.png">
-  <link rel="apple-touch-icon" href="../assets/logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -22,6 +20,13 @@
     }
   </script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/en/word-counter.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/word-counter.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/word-counter.html">
@@ -59,6 +64,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -440,5 +447,14 @@
       render();
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

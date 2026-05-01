@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="罗马数字与阿拉伯数字互转工具。最高支持转换到3999的罗马数字系统，包含非法输入的错误提示。">
   <meta name="keywords" content="roman-numeral-converter,罗马数字转换器,阿拉伯数字转罗马数字,罗马数字转阿拉伯数字,罗马数字在线转换,数字转换工具">
-  <meta name="theme-color" content="#0f172a" />
   <title>roman-numeral-converter｜罗马数字与阿拉伯数字互转工具</title>
   <link rel="icon" type="image/png" href="./assets/logo.png">
-  <link rel="apple-touch-icon" href="./assets/logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -22,6 +20,13 @@
     };
   </script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/roman-numeral-converter.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/roman-numeral-converter.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/roman-numeral-converter.html">
@@ -59,6 +64,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -449,5 +456,14 @@
       updateMode('numberToRoman');
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

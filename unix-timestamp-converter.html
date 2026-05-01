@@ -6,12 +6,17 @@
   <title>unix-timestamp-converter - Unix 时间戳转换器</title>
   <meta name="description" content="Unix 时间戳转换器。支持将当前时间转换为时间戳，或将时间戳转换为人类可读的标准日期时间格式。">
   <meta name="keywords" content="unix timestamp converter, Unix时间戳转换器, 时间戳转日期, 日期转时间戳, 当前时间戳, 秒级时间戳, 毫秒级时间戳, UTC时间转换">
-  <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="./assets/logo.png">
-  <link rel="apple-touch-icon" href="./assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/unix-timestamp-converter.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/unix-timestamp-converter.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/unix-timestamp-converter.html">
@@ -49,6 +54,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -387,5 +394,14 @@
     updateClock();
     window.setInterval(updateClock, 1000);
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

@@ -7,10 +7,16 @@
   <meta name="description" content="正则表达式在线测试工具。支持高亮匹配结果，内置常用正则片段（如邮箱、手机号）的快捷插入。">
   <meta name="keywords" content="regex-tester, 正则表达式在线测试, Regex 在线工具, 正则匹配高亮, 邮箱正则, 手机号正则, JavaScript 正则测试工具">
   <link rel="icon" type="image/png" href="../assets/logo.png">
-  <link rel="apple-touch-icon" href="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/en/regex-tester.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/regex-tester.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/regex-tester.html">
@@ -48,6 +54,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -443,5 +451,14 @@
       update();
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

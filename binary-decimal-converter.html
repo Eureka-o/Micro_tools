@@ -6,9 +6,7 @@
   <title>binary-decimal-converter｜二进制/十进制/十六进制/八进制互转计算器</title>
   <meta name="description" content="二进制/十进制/十六进制/八进制 互转计算器。在任意输入框输入数字，其他进制框自动同步转换结果。">
   <meta name="keywords" content="binary decimal converter, 二进制十进制转换, 十六进制转换器, 八进制转换器, 进制转换计算器, 在线进制互转工具, 二进制转十进制, 十进制转十六进制">
-  <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="./assets/logo.png">
-  <link rel="apple-touch-icon" href="./assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -30,6 +28,13 @@
     }
   </style>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/binary-decimal-converter.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/binary-decimal-converter.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/binary-decimal-converter.html">
@@ -67,6 +72,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -466,5 +473,14 @@
       clearSummary();
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

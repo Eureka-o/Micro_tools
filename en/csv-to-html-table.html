@@ -6,12 +6,17 @@
   <title>csv-to-html-table - CSV 转 HTML table 代码Generate器</title>
   <meta name="description" content="CSV 转 HTML `&lt;table&gt;` 代码Generate器。粘贴CSV数据，直接输出带有基础CSS样式的HTML表格代码。">
   <meta name="keywords" content="CSV转HTML表格,CSV to HTML table,HTML table代码Generate器,在线CSV转换工具,CSVGenerateHTML,带CSS样式HTML表格,CSV表格转换">
-  <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="../assets/logo.png">
-  <link rel="apple-touch-icon" href="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/en/csv-to-html-table.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/csv-to-html-table.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/csv-to-html-table.html">
@@ -49,6 +54,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -615,5 +622,14 @@
       updateStats([], 0);
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

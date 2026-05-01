@@ -7,10 +7,16 @@
   <meta name="keywords" content="JSON转CSV, CSV转JSON, JSON格式化, JSON校验工具, CSV格式化转换, 在线数据转换工具, JSON CSV互转">
   <title>JSON 与 CSV 双向格式化转换与校验工具</title>
   <link rel="icon" type="image/png" href="./assets/logo.png">
-  <link rel="apple-touch-icon" href="./assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/json-to-csv.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/json-to-csv.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/json-to-csv.html">
@@ -48,6 +54,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -433,5 +441,14 @@
 
     updateStats();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

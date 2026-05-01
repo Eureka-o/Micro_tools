@@ -5,10 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="CSS 边距可视化工具。四个滑块控制上下左右的 Margin 和 Padding，中心盒子实时改变大小并输出代码。">
   <meta name="keywords" content="margin-padding-generator,CSS边距可视化工具,margin生成器,padding生成器,CSS盒模型工具,CSS margin padding代码生成器,前端布局工具">
-  <meta name="theme-color" content="#0f172a" />
   <title>margin-padding-generator - CSS 边距可视化工具</title>
   <link rel="icon" type="image/png" href="./assets/logo.png">
-  <link rel="apple-touch-icon" href="./assets/logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -22,6 +20,13 @@
     };
   </script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/margin-padding-generator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/margin-padding-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/margin-padding-generator.html">
@@ -59,6 +64,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -459,5 +466,14 @@
       render();
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

@@ -7,7 +7,6 @@
   <meta name="keywords" content="color-converter,颜色转换器,HEX转RGB,RGB转HSL,HSL转CMYK,CMYK颜色转换,在线颜色选择器,颜色预览工具,前端颜色工具">
   <title>color-converter｜HEX、RGB、HSL、CMYK 颜色互转工具</title>
   <link rel="icon" type="image/png" href="./assets/logo.png">
-  <link rel="apple-touch-icon" href="./assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -49,6 +48,13 @@
     }
   </style>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/color-converter.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/color-converter.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/color-converter.html">
@@ -86,6 +92,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -603,5 +611,14 @@
       render(currentRgb, true);
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

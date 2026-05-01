@@ -6,12 +6,17 @@
   <title>markdown-table-generator - 可视化 Markdown 表格生成器</title>
   <meta name="description" content="可视化 Markdown 表格生成器。支持通过按钮增加行列，并在单元格填入内容后实时生成标准的Markdown表格代码。">
   <meta name="keywords" content="Markdown表格生成器, markdown-table-generator, 可视化Markdown表格, Markdown table generator, README表格工具, Markdown在线工具, Markdown表格代码生成">
-  <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="./assets/logo.png">
-  <link rel="apple-touch-icon" href="./assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/markdown-table-generator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/markdown-table-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/markdown-table-generator.html">
@@ -49,6 +54,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -500,5 +507,14 @@
       renderTable();
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

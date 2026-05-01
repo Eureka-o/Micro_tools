@@ -7,7 +7,6 @@
   <meta name="keywords" content="LaTeX矩阵编辑器, LaTeX公式可视化, MathJax在线编辑器, LaTeX实时渲染, 矩阵公式生成器, 在线数学公式编辑器">
   <title>LaTeX 矩阵与复杂公式在线可视化编辑器</title>
   <link rel="icon" type="image/png" href="./assets/logo.png">
-  <link rel="apple-touch-icon" href="./assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -31,6 +30,13 @@
   </script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/latex-formula-editor.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/latex-formula-editor.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/latex-formula-editor.html">
@@ -68,6 +74,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -353,5 +361,14 @@ c & d
     latexInput.addEventListener('input', debounceRender);
     renderFormula();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

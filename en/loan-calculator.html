@@ -7,7 +7,6 @@
   <meta name="description" content="房贷/贷款等额本息计算器。输入总金额、年化利率和贷款期数，Generate每月的还款计划明细表。">
   <meta name="keywords" content="loan-calculator, 房贷计算器, 贷款计算器, 等额本息计算器, 每月还款计划, 房贷还款明细, 贷款利息计算, 月供计算器">
   <link rel="icon" type="image/png" href="../assets/logo.png">
-  <link rel="apple-touch-icon" href="../assets/logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -25,6 +24,13 @@
     }
   </script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/en/loan-calculator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/loan-calculator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/loan-calculator.html">
@@ -62,6 +68,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -445,5 +453,14 @@
       });
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

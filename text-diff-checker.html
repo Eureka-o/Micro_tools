@@ -7,10 +7,16 @@
   <meta name="description" content="文本对比检查工具。提供左右两个文本域，高亮显示两段文本之间的差异（增加、删除或修改的字符）。">
   <meta name="keywords" content="text-diff-checker, 文本对比工具, 文本差异检查, 在线文本比较, 字符差异高亮, 文案校对工具, 版本对比工具, 文本修改对比">
   <link rel="icon" type="image/png" href="./assets/logo.png">
-  <link rel="apple-touch-icon" href="./assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/text-diff-checker.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/text-diff-checker.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/text-diff-checker.html">
@@ -48,6 +54,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -438,5 +446,14 @@
 
     updateCounts();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

@@ -7,7 +7,6 @@
   <meta name="description" content="CSS 渐变色代码Generate器。可视化调整两个或多个颜色的渐变方向和比例，实时预览并输出对应的CSS代码。">
   <meta name="keywords" content="CSS渐变色代码Generate器, css-gradient-generator, CSS linear-gradient, 渐变背景Generate器, 在线CSS渐变工具, 多颜色渐变Generate, CSS代码Copy">
   <link rel="icon" type="image/png" href="../assets/logo.png">
-  <link rel="apple-touch-icon" href="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -23,6 +22,13 @@
     }
   </style>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/en/css-gradient-generator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/css-gradient-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/css-gradient-generator.html">
@@ -60,6 +66,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -588,5 +596,14 @@
       update();
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

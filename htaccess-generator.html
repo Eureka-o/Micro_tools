@@ -7,10 +7,16 @@
   <meta name="description" content=".htaccess 重定向代码生成器。通过简单的表单生成 Apache 服务器常用的 301 重定向、强制 HTTPS 等配置代码。">
   <meta name="keywords" content=".htaccess生成器, htaccess-generator, Apache重定向代码生成器, 301重定向生成器, 强制HTTPS配置, RewriteRule生成器, 网站SEO重定向工具">
   <link rel="icon" type="image/png" href="./assets/logo.png">
-  <link rel="apple-touch-icon" href="./assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/htaccess-generator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/htaccess-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/htaccess-generator.html">
@@ -48,6 +54,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -533,5 +541,14 @@
       addRedirectRow('/old-page.html', 'https://example.com/new-page.html');
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

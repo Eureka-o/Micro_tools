@@ -7,10 +7,16 @@
   <meta name="description" content="IP 子网掩码计算器。输入IP地址和CIDR前缀，计算网络地址、广播地址和可用IP范围（适合网络工程师）。">
   <meta name="keywords" content="subnets-calculator,IP子网掩码计算器,CIDR计算器,网络地址计算,广播地址计算,可用IP范围,IPv4子网计算,在线子网计算工具,网络工程师工具">
   <link rel="icon" type="image/png" href="../assets/logo.png">
-  <link rel="apple-touch-icon" href="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/en/subnets-calculator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/subnets-calculator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/subnets-calculator.html">
@@ -48,6 +54,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -459,5 +467,14 @@
       renderResult(calculateSubnet(ipInput.value, cidrInput.value));
     } catch (error) {}
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

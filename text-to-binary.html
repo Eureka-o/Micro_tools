@@ -6,12 +6,17 @@
   <title>text-to-binary｜文本转二进制字符串工具</title>
   <meta name="description" content="文本转二进制字符串工具。将用户输入的普通文本编码为由0和1组成的二进制流，并支持反向解码。">
   <meta name="keywords" content="text-to-binary,文本转二进制,二进制转文本,字符串转二进制,在线二进制转换工具,UTF-8二进制编码,0和1转换器">
-  <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="./assets/logo.png">
-  <link rel="apple-touch-icon" href="./assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/text-to-binary.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/text-to-binary.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/text-to-binary.html">
@@ -49,6 +54,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -474,5 +481,14 @@
       updateStats();
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

@@ -6,12 +6,17 @@
   <title>ip-address-lookup - 我的IP地址查看器</title>
   <meta name="description" content="我的IP地址查看器。纯前端调用免费的IP API（如ipify），显示用户当前的公网IP地址及大致地理位置。">
   <meta name="keywords" content="IP地址查询,公网IP查看器,我的IP地址,IP地理位置查询,ip-address-lookup,在线IP查询,IPv4查询,IPv6查询">
-  <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="../assets/logo.png">
-  <link rel="apple-touch-icon" href="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/en/ip-address-lookup.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/ip-address-lookup.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/ip-address-lookup.html">
@@ -49,6 +54,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -534,5 +541,14 @@
       });
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

@@ -7,10 +7,16 @@
   <meta name="description" content="营销 URL UTM 参数构建器。填入目标网址、来源、媒介和活动名称，自动拼接成包含 UTM 追踪参数的完整链接。">
   <meta name="keywords" content="utm-builder, UTM参数构建器, 营销URLGenerate器, UTM链接Generate, utm_source, utm_medium, utm_campaign, 广告追踪链接, 营销数据分析工具">
   <link rel="icon" type="image/png" href="../assets/logo.png">
-  <link rel="apple-touch-icon" href="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/en/utm-builder.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/utm-builder.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/utm-builder.html">
@@ -48,6 +54,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -383,5 +391,14 @@
       });
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

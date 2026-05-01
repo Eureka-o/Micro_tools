@@ -7,7 +7,6 @@
   <meta name="keywords" content="morse-code-translator, 摩斯密码翻译器, 摩斯电码转换, 英文转摩斯密码, 摩斯密码转英文, 在线摩斯密码工具, Morse Code Translator, Web Audio 摩斯音频">
   <title>morse-code-translator｜摩斯密码双向翻译器</title>
   <link rel="icon" type="image/png" href="../assets/logo.png">
-  <link rel="apple-touch-icon" href="../assets/logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -27,6 +26,13 @@
     };
   </script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/en/morse-code-translator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/morse-code-translator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/morse-code-translator.html">
@@ -64,6 +70,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -563,5 +571,14 @@
       updateCounts();
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

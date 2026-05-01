@@ -7,7 +7,6 @@
   <meta name="keywords" content="HTML实体转义工具, HTML Entity Encoder, HTML转义, XSS防护工具, 特殊字符转义, HTML编码, 前端安全工具">
   <title>html-entity-encoder - HTML 实体转义工具</title>
   <link rel="icon" type="image/png" href="./assets/logo.png">
-  <link rel="apple-touch-icon" href="./assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -20,6 +19,13 @@
     }
   </style>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/html-entity-encoder.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/html-entity-encoder.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/html-entity-encoder.html">
@@ -57,6 +63,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -375,5 +383,14 @@
       updateCounts();
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

@@ -6,12 +6,17 @@
   <title>lorem-ipsum-generator｜乱数假文Generate器</title>
   <meta name="description" content="乱数假文 (Lorem Ipsum) Generate器。可设置Generate的段落数、单词数，支持Generate英文和Chinese占位文本。">
   <meta name="keywords" content="lorem ipsum generator, 乱数假文Generate器, Chinese占位文本Generate器, 英文假文Generate器, Lorem Ipsum 在线Generate, 段落Generate器, 前端排版测试工具">
-  <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="../assets/logo.png">
-  <link rel="apple-touch-icon" href="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/en/lorem-ipsum-generator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/lorem-ipsum-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/lorem-ipsum-generator.html">
@@ -49,6 +54,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -415,5 +422,14 @@
       runGenerate();
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

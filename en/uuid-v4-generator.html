@@ -6,12 +6,17 @@
   <title>uuid-v4-generator｜UUID v4 批量Generate器</title>
   <meta name="description" content="UUID v4 批量Generate器。支持一次性Generate1到100个标准UUID，并提供Copy所有结果的按钮。">
   <meta name="keywords" content="uuid-v4-generator, UUID v4 批量Generate器, 在线 UUID Generate器, 批量Generate UUID, UUID v4, 随机 UUID, 开发工具, 一键Copy UUID">
-  <meta name="theme-color" content="#0f172a" />
   <link rel="icon" type="image/png" href="../assets/logo.png">
-  <link rel="apple-touch-icon" href="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/en/uuid-v4-generator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/uuid-v4-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/uuid-v4-generator.html">
@@ -49,6 +54,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -388,5 +395,14 @@
       });
     })();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>

@@ -7,10 +7,16 @@
   <meta name="description" content="XML 美化与压缩工具。修复错乱的XML标签缩进，或者将其压缩为单行。">
   <meta name="keywords" content="xml-formatter, XML格式化, XML美化工具, XML压缩工具, XML缩进修复, 在线XML格式化, XML单行压缩, XML校验工具">
   <link rel="icon" type="image/png" href="../assets/logo.png">
-  <link rel="apple-touch-icon" href="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="./theme-init.js"></script>
+  <!-- pwa-head:start -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#030712">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/assets/logo-web.png">
+  <!-- pwa-head:end -->
   <link rel="canonical" href="https://mymicrotools.xyz/en/xml-formatter.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/xml-formatter.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/xml-formatter.html">
@@ -48,6 +54,8 @@
   </nav>
   <div class="h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
 
 
 
@@ -491,5 +499,14 @@
 
     updateCounts();
   </script>
+  <!-- pwa-register:start -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+  <!-- pwa-register:end -->
 </body>
 </html>
