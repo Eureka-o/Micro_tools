@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>url-encoder｜URL 编码/解码工具</title>
+  <meta name="description" content="url-encoder 是一款免费的在线 URL 编码/解码工具，支持多行批量处理 URL、查询参数与特殊字符转义，适合开发、测试、SEO 与数据处理场景。">
+  <meta name="keywords" content="url-encoder,URL编码,URL解码,在线URL编码工具,批量URL解码,encodeURIComponent,decodeURIComponent,特殊字符转义,百分号编码">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#0f172a">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+  <div class="pointer-events-none fixed inset-0 overflow-hidden">
+    <div class="absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl"></div>
+  </div>
+
+  <header class="relative border-b border-white/10 bg-slate-950/80 backdrop-blur">
+    <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">在线开发者工具</p>
+          <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">url-encoder</h1>
+          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">URL 编码/解码工具，支持批量处理多行 URL、查询参数以及中文、空格、符号等特殊字符转义。</p>
+        </div>
+        <div class="grid grid-cols-3 gap-3 rounded-2xl border border-white/10 bg-white/5 p-3 text-center shadow-2xl shadow-cyan-950/20">
+          <div class="rounded-xl bg-slate-900/80 px-4 py-3">
+            <div class="text-lg font-bold text-cyan-300" id="lineCount">0</div>
+            <div class="text-xs text-slate-400">行数</div>
+          </div>
+          <div class="rounded-xl bg-slate-900/80 px-4 py-3">
+            <div class="text-lg font-bold text-indigo-300" id="charCount">0</div>
+            <div class="text-xs text-slate-400">字符</div>
+          </div>
+          <div class="rounded-xl bg-slate-900/80 px-4 py-3">
+            <div class="text-lg font-bold text-emerald-300" id="resultCount">0</div>
+            <div class="text-xs text-slate-400">结果</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-2" aria-label="URL 编码解码操作区">
+      <div class="rounded-3xl border border-white/10 bg-slate-900/90 p-5 shadow-2xl shadow-black/30">
+        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 class="text-xl font-bold text-white">输入区</h2>
+            <p class="mt-1 text-sm text-slate-400">每行一个 URL 或文本片段，可批量处理。</p>
+          </div>
+          <button id="sampleBtn" type="button" class="rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">填入示例</button>
+        </div>
+
+        <label for="inputText" class="sr-only">请输入需要编码或解码的 URL</label>
+        <textarea id="inputText" spellcheck="false" class="min-h-[320px] w-full resize-y rounded-2xl border border-slate-700 bg-slate-950/90 p-4 font-mono text-sm leading-6 text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="例如：https://example.com/search?q=中文 空格&tag=a+b%20c"></textarea>
+
+        <div class="mt-5 grid gap-4">
+          <fieldset class="rounded-2xl border border-white/10 bg-slate-950/60 p-4">
+            <legend class="px-2 text-sm font-semibold text-slate-200">处理模式</legend>
+            <div class="grid gap-3 sm:grid-cols-3">
+              <label class="flex cursor-pointer items-center gap-2 rounded-xl border border-white/10 bg-white/5 p-3 text-sm transition hover:bg-white/10">
+                <input class="h-4 w-4 accent-cyan-400" type="radio" name="mode" value="encodeURI" checked>
+                <span>编码完整 URL</span>
+              </label>
+              <label class="flex cursor-pointer items-center gap-2 rounded-xl border border-white/10 bg-white/5 p-3 text-sm transition hover:bg-white/10">
+                <input class="h-4 w-4 accent-cyan-400" type="radio" name="mode" value="encodeURIComponent">
+                <span>编码参数片段</span>
+              </label>
+              <label class="flex cursor-pointer items-center gap-2 rounded-xl border border-white/10 bg-white/5 p-3 text-sm transition hover:bg-white/10">
+                <input class="h-4 w-4 accent-cyan-400" type="radio" name="mode" value="decode">
+                <span>解码 URL</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="grid gap-3 sm:grid-cols-2">
+            <label class="flex cursor-pointer items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm text-slate-200">
+              <input id="trimLines" type="checkbox" class="h-4 w-4 accent-cyan-400">
+              <span>处理前去除每行首尾空白</span>
+            </label>
+            <label class="flex cursor-pointer items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/60 p-4 text-sm text-slate-200">
+              <input id="plusAsSpace" type="checkbox" class="h-4 w-4 accent-cyan-400">
+              <span>解码时将 “+” 识别为空格</span>
+            </label>
+          </div>
+
+          <div id="errorBox" class="hidden rounded-2xl border border-red-400/30 bg-red-500/10 p-4 text-sm leading-6 text-red-100" role="alert"></div>
+
+          <div class="grid gap-3 sm:grid-cols-4">
+            <button id="processBtn" type="button" class="rounded-2xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-95">开始处理</button>
+            <button id="swapBtn" type="button" class="rounded-2xl border border-indigo-400/30 bg-indigo-400/10 px-5 py-3 font-bold text-indigo-100 transition hover:bg-indigo-400/20 active:scale-95">交换</button>
+            <button id="clearBtn" type="button" class="rounded-2xl border border-slate-600 bg-slate-800 px-5 py-3 font-bold text-slate-100 transition hover:bg-slate-700 active:scale-95">清空</button>
+            <button id="copyBtn" type="button" class="rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-5 py-3 font-bold text-emerald-100 transition hover:bg-emerald-400/20 active:scale-95">复制结果</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/20 p-5 shadow-2xl shadow-cyan-950/20">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-bold text-white">输出区</h2>
+            <p class="mt-1 text-sm text-cyan-100/70">结果会保持输入的多行结构，便于直接复制使用。</p>
+          </div>
+          <span id="statusBadge" class="rounded-full border border-slate-600 bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-300">等待处理</span>
+        </div>
+        <label for="outputText" class="sr-only">编码或解码后的输出结果</label>
+        <textarea id="outputText" readonly spellcheck="false" class="min-h-[560px] w-full resize-y rounded-2xl border border-cyan-400/20 bg-slate-950/80 p-4 font-mono text-sm leading-6 text-cyan-50 outline-none placeholder:text-slate-600 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-400/10" placeholder="处理结果将显示在这里"></textarea>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-white/10 bg-white/[0.04] p-6 leading-8 text-slate-300 shadow-2xl shadow-black/20">
+      <h2 class="mb-4 text-2xl font-bold text-white">关于 URL 编码/解码工具</h2>
+      <p>
+        url-encoder 是一款面向前端开发、后端调试、SEO 运营和数据清洗场景的在线 URL 编码解码工具。浏览器地址、接口参数、广告落地页链接中经常包含中文、空格、井号、百分号、等号和 &amp; 等特殊字符，如果没有正确进行百分号编码，就可能导致链接截断、参数解析错误或搜索引擎抓取异常。本工具支持多行批量 URL 编码、批量 URL 解码，并提供完整 URL 编码与参数片段编码两种模式：前者适合处理整条链接，后者适合处理 query 参数值、表单字段或需要 encodeURIComponent 的内容。使用时只需将 URL 按行粘贴到输入区，选择编码或解码模式，点击开始处理即可获得可复制结果。对于非法百分号转义、异常字符等情况，工具会给出清晰的红色错误提示，帮助你快速定位问题，提升链接处理效率。
+      </p>
+    </article>
+  </main>
+
+  <div id="toast" class="pointer-events-none fixed left-1/2 top-5 z-50 hidden -translate-x-1/2 rounded-2xl border px-5 py-3 text-sm font-semibold shadow-2xl"></div>
+
+  <footer class="relative border-t border-white/10 py-6 text-center text-sm text-slate-500">
+    <p>url-encoder · 在线 URL 编码/解码工具</p>
+  </footer>
+
+  <script>
+    (() => {
+      const inputText = document.getElementById('inputText');
+      const outputText = document.getElementById('outputText');
+      const processBtn = document.getElementById('processBtn');
+      const copyBtn = document.getElementById('copyBtn');
+      const clearBtn = document.getElementById('clearBtn');
+      const swapBtn = document.getElementById('swapBtn');
+      const sampleBtn = document.getElementById('sampleBtn');
+      const errorBox = document.getElementById('errorBox');
+      const toast = document.getElementById('toast');
+      const statusBadge = document.getElementById('statusBadge');
+      const lineCount = document.getElementById('lineCount');
+      const charCount = document.getElementById('charCount');
+      const resultCount = document.getElementById('resultCount');
+      const trimLines = document.getElementById('trimLines');
+      const plusAsSpace = document.getElementById('plusAsSpace');
+
+      const sample = [
+        'https://example.com/search?q=中文 空格&tag=a+b&from=测试',
+        'https://www.example.com/path/产品详情.html#规格 参数',
+        'name=张三&city=上海&redirect=https://example.com/a?x=1&y=2',
+        'https%3A%2F%2Fexample.com%2Fsearch%3Fq%3DURL%2520%E7%BC%96%E7%A0%81'
+      ].join('\n');
+
+      function getMode() {
+        const checked = document.querySelector('input[name="mode"]:checked');
+        return checked ? checked.value : 'encodeURI';
+      }
+
+      function setStatus(text, type) {
+        statusBadge.textContent = text;
+        statusBadge.className = 'rounded-full border px-3 py-1 text-xs font-semibold ';
+        if (type === 'success') {
+          statusBadge.className += 'border-emerald-400/30 bg-emerald-400/10 text-emerald-100';
+        } else if (type === 'error') {
+          statusBadge.className += 'border-red-400/30 bg-red-500/10 text-red-100';
+        } else {
+          statusBadge.className += 'border-slate-600 bg-slate-900 text-slate-300';
+        }
+      }
+
+      function showError(messages) {
+        const list = Array.isArray(messages) ? messages : [String(messages)];
+        errorBox.innerHTML = '';
+        const title = document.createElement('div');
+        title.className = 'mb-2 font-bold';
+        title.textContent = '处理失败或存在需要注意的问题：';
+        errorBox.appendChild(title);
+        const ul = document.createElement('ul');
+        ul.className = 'list-disc space-y-1 pl-5';
+        list.slice(0, 8).forEach(msg => {
+          const li = document.createElement('li');
+          li.textContent = msg;
+          ul.appendChild(li);
+        });
+        if (list.length > 8) {
+          const li = document.createElement('li');
+          li.textContent = `还有 ${list.length - 8} 条错误未显示，请检查输入内容。`;
+          ul.appendChild(li);
+        }
+        errorBox.appendChild(ul);
+        errorBox.classList.remove('hidden');
+      }
+
+      function clearError() {
+        errorBox.classList.add('hidden');
+        errorBox.textContent = '';
+      }
+
+      function showToast(message, type = 'success') {
+        toast.textContent = message;
+        toast.className = 'pointer-events-none fixed left-1/2 top-5 z-50 -translate-x-1/2 rounded-2xl border px-5 py-3 text-sm font-semibold shadow-2xl';
+        if (type === 'error') {
+          toast.className += ' border-red-400/30 bg-red-950/95 text-red-100 shadow-red-950/30';
+        } else {
+          toast.className += ' border-emerald-400/30 bg-emerald-950/95 text-emerald-100 shadow-emerald-950/30';
+        }
+        toast.classList.remove('hidden');
+        window.clearTimeout(showToast.timer);
+        showToast.timer = window.setTimeout(() => toast.classList.add('hidden'), 2200);
+      }
+
+      function updateStats() {
+        const input = inputText.value;
+        const output = outputText.value;
+        const lines = input.length ? input.split(/\r\n|\r|\n/).length : 0;
+        const resultLines = output.length ? output.split(/\r\n|\r|\n/).length : 0;
+        lineCount.textContent = String(lines);
+        charCount.textContent = String(input.length);
+        resultCount.textContent = String(resultLines);
+      }
+
+      function toWellFormedSafe(str) {
+        if (typeof str.toWellFormed === 'function') return str.toWellFormed();
+        return str.replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:^|[^\uD800-\uDBFF])[\uDC00-\uDFFF]/g, match => {
+          return match.length === 1 ? '\uFFFD' : match.charAt(0) + '\uFFFD';
+        });
+      }
+
+      function processLine(line, mode, lineNumber) {
+        const original = trimLines.checked ? line.trim() : line;
+        const safe = toWellFormedSafe(original);
+        try {
+          if (mode === 'encodeURI') return encodeURI(safe);
+          if (mode === 'encodeURIComponent') return encodeURIComponent(safe);
+          const prepared = plusAsSpace.checked ? safe.replace(/\+/g, ' ') : safe;
+          try {
+            return decodeURIComponent(prepared);
+          } catch (componentError) {
+            return decodeURI(prepared);
+          }
+        } catch (error) {
+          throw new Error(`第 ${lineNumber} 行格式非法，无法${mode === 'decode' ? '解码' : '编码'}：${error && error.message ? error.message : '未知错误'}`);
+        }
+      }
+
+      function processAll() {
+        clearError();
+        const raw = inputText.value;
+        if (!raw.trim()) {
+          outputText.value = '';
+          updateStats();
+          setStatus('输入为空', 'error');
+          showError('请输入至少一行需要处理的 URL 或文本。');
+          showToast('请输入内容后再处理', 'error');
+          return;
+        }
+
+        const mode = getMode();
+        const lines = raw.split(/\r\n|\r|\n/);
+        const results = [];
+        const errors = [];
+
+        lines.forEach((line, index) => {
+          try {
+            results.push(processLine(line, mode, index + 1));
+          } catch (err) {
+            errors.push(err.message);
+            results.push(line);
+          }
+        });
+
+        outputText.value = results.join('\n');
+        updateStats();
+
+        if (errors.length) {
+          showError(errors);
+          setStatus('部分失败', 'error');
+          showToast('部分行处理失败，请查看提示', 'error');
+        } else {
+          setStatus('处理完成', 'success');
+          showToast('处理完成');
+        }
+      }
+
+      async function copyResult() {
+        clearError();
+        const value = outputText.value;
+        if (!value) {
+          showError('当前没有可复制的输出结果。');
+          showToast('没有可复制的结果', 'error');
+          setStatus('无结果', 'error');
+          return;
+        }
+
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(value);
+          } else {
+            outputText.focus();
+            outputText.select();
+            const ok = document.execCommand('copy');
+            window.getSelection().removeAllRanges();
+            if (!ok) throw new Error('浏览器拒绝复制操作');
+          }
+          showToast('结果已复制到剪贴板');
+          setStatus('已复制', 'success');
+        } catch (err) {
+          showError(`复制失败：${err && err.message ? err.message : '请手动选择输出内容复制。'}`);
+          showToast('复制失败，请手动复制', 'error');
+          setStatus('复制失败', 'error');
+        }
+      }
+
+      function clearAll() {
+        inputText.value = '';
+        outputText.value = '';
+        clearError();
+        updateStats();
+        setStatus('等待处理', 'idle');
+        showToast('已清空');
+        inputText.focus();
+      }
+
+      function swapText() {
+        clearError();
+        if (!outputText.value) {
+          showError('输出区为空，无法交换。');
+          showToast('输出区为空', 'error');
+          setStatus('无法交换', 'error');
+          return;
+        }
+        const temp = inputText.value;
+        inputText.value = outputText.value;
+        outputText.value = temp;
+        updateStats();
+        setStatus('已交换', 'success');
+        showToast('输入与输出已交换');
+      }
+
+      function fillSample() {
+        inputText.value = sample;
+        outputText.value = '';
+        clearError();
+        updateStats();
+        setStatus('示例已填入', 'success');
+        showToast('示例已填入');
+        inputText.focus();
+      }
+
+      processBtn.addEventListener('click', processAll);
+      copyBtn.addEventListener('click', copyResult);
+      clearBtn.addEventListener('click', clearAll);
+      swapBtn.addEventListener('click', swapText);
+      sampleBtn.addEventListener('click', fillSample);
+
+      inputText.addEventListener('input', () => {
+        clearError();
+        updateStats();
+        setStatus('等待处理', 'idle');
+      });
+
+      document.addEventListener('keydown', event => {
+        if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+          event.preventDefault();
+          processAll();
+        }
+      });
+
+      updateStats();
+      setStatus('等待处理', 'idle');
+    })();
+  </script>
+</body>
+</html>

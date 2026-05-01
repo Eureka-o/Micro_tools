@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>latex-matrix-editor - LaTeX矩阵与复杂公式在线可视化编辑器</title>
+  <meta name="description" content="latex-matrix-editor 是一款支持 MathJax 实时渲染的 LaTeX 矩阵与复杂公式在线可视化编辑器，可快速编写、预览、复制矩阵公式和数学表达式。" />
+  <meta name="keywords" content="latex-matrix-editor, LaTeX矩阵编辑器, LaTeX公式在线编辑器, MathJax实时渲染, 在线数学公式预览, LaTeX矩阵生成器, 复杂公式可视化编辑" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        packages: {'[+]': ['ams', 'noerrors', 'noundefined']}
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      startup: {
+        typeset: false
+      },
+      options: {
+        renderActions: {
+          addMenu: []
+        }
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(59, 130, 246, 0.22), transparent 32rem),
+        radial-gradient(circle at top right, rgba(168, 85, 247, 0.18), transparent 30rem),
+        linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    .preview-scroll svg {
+      max-width: 100%;
+      height: auto;
+    }
+    textarea {
+      tab-size: 2;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-slate-900">
+  <header class="relative overflow-hidden border-b border-white/60">
+    <div class="absolute inset-0 bg-slate-950"></div>
+    <div class="absolute inset-0 opacity-40" style="background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px); background-size: 36px 36px;"></div>
+    <div class="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-1 text-sm font-medium text-cyan-100">
+            MathJax 实时渲染 · 矩阵生成 · 复杂公式预览
+          </p>
+          <h1 class="text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">latex-matrix-editor</h1>
+          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg">
+            LaTeX矩阵与复杂公式在线可视化编辑器，输入代码即可实时生成高清数学公式预览。
+          </p>
+        </div>
+        <a href="#editor" class="inline-flex w-fit items-center justify-center rounded-2xl bg-cyan-400 px-5 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-cyan-500/25 transition hover:-translate-y-0.5 hover:bg-cyan-300 active:translate-y-0">
+          立即开始编辑
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <section id="editor" class="grid gap-6 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <div class="glass rounded-3xl border border-white/70 p-5 shadow-xl shadow-slate-200/70">
+          <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 class="text-xl font-extrabold text-slate-950">LaTeX 输入区</h2>
+              <p class="mt-1 text-sm text-slate-500">支持矩阵、分式、积分、求和、AMS 环境与复杂表达式。</p>
+            </div>
+            <span id="statusBadge" class="inline-flex w-fit items-center rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 ring-1 ring-emerald-200">就绪</span>
+          </div>
+
+          <label for="latexInput" class="mb-2 block text-sm font-semibold text-slate-700">输入 LaTeX 代码</label>
+          <textarea id="latexInput" spellcheck="false" class="min-h-[330px] w-full resize-y rounded-2xl border border-slate-200 bg-slate-950 p-4 font-mono text-sm leading-6 text-cyan-50 outline-none ring-0 transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-100" placeholder="例如：\begin{bmatrix} a & b \\ c & d \end{bmatrix}"></textarea>
+
+          <div id="errorBox" class="mt-4 hidden rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700"></div>
+
+          <div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <button id="renderBtn" type="button" class="rounded-2xl bg-slate-950 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-slate-300 transition hover:-translate-y-0.5 hover:bg-slate-800 active:translate-y-0">立即渲染</button>
+            <button id="copyBtn" type="button" class="rounded-2xl bg-cyan-500 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-cyan-200 transition hover:-translate-y-0.5 hover:bg-cyan-600 active:translate-y-0">复制代码</button>
+            <button id="exampleBtn" type="button" class="rounded-2xl bg-indigo-500 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-indigo-200 transition hover:-translate-y-0.5 hover:bg-indigo-600 active:translate-y-0">示例公式</button>
+            <button id="clearBtn" type="button" class="rounded-2xl bg-white px-4 py-3 text-sm font-bold text-slate-700 ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:bg-slate-50 active:translate-y-0">清空</button>
+          </div>
+
+          <div class="mt-5 rounded-2xl border border-slate-200 bg-white/80 p-4">
+            <div class="flex items-center justify-between gap-3">
+              <h3 class="text-sm font-extrabold text-slate-900">矩阵快速生成器</h3>
+              <label class="flex items-center gap-2 text-xs font-semibold text-slate-600">
+                <input id="autoWrap" type="checkbox" checked class="h-4 w-4 rounded border-slate-300 text-cyan-500 focus:ring-cyan-400" />
+                自动包裹显示公式
+              </label>
+            </div>
+
+            <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+              <div>
+                <label for="rowsInput" class="mb-1 block text-xs font-bold text-slate-600">行数</label>
+                <input id="rowsInput" type="number" min="1" max="12" value="3" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-100" />
+              </div>
+              <div>
+                <label for="colsInput" class="mb-1 block text-xs font-bold text-slate-600">列数</label>
+                <input id="colsInput" type="number" min="1" max="12" value="3" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-100" />
+              </div>
+              <div class="sm:col-span-2">
+                <label for="matrixType" class="mb-1 block text-xs font-bold text-slate-600">矩阵环境</label>
+                <select id="matrixType" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-100">
+                  <option value="bmatrix">bmatrix 方括号</option>
+                  <option value="pmatrix">pmatrix 圆括号</option>
+                  <option value="vmatrix">vmatrix 行列式</option>
+                  <option value="Vmatrix">Vmatrix 双竖线</option>
+                  <option value="matrix">matrix 无括号</option>
+                  <option value="smallmatrix">smallmatrix 小矩阵</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <button id="insertMatrixBtn" type="button" class="rounded-2xl bg-emerald-500 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-200 transition hover:-translate-y-0.5 hover:bg-emerald-600 active:translate-y-0">插入矩阵</button>
+              <button data-snippet="\\frac{a}{b}" type="button" class="snippetBtn rounded-2xl bg-white px-4 py-3 text-sm font-bold text-slate-700 ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:bg-slate-50 active:translate-y-0">插入分式</button>
+              <button data-snippet="\\sum_{i=1}^{n} i^2" type="button" class="snippetBtn rounded-2xl bg-white px-4 py-3 text-sm font-bold text-slate-700 ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:bg-slate-50 active:translate-y-0">插入求和</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7">
+        <div class="rounded-3xl border border-cyan-100 bg-white p-5 shadow-xl shadow-cyan-100/70">
+          <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h2 class="text-xl font-extrabold text-slate-950">实时渲染输出区</h2>
+              <p class="mt-1 text-sm text-slate-500">预览结果由 MathJax SVG 引擎生成，适合论文、课件与技术文档校对。</p>
+            </div>
+            <button id="copySvgBtn" type="button" class="inline-flex w-fit items-center justify-center rounded-2xl bg-white px-4 py-2.5 text-sm font-bold text-slate-700 ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:bg-slate-50 active:translate-y-0">复制 SVG</button>
+          </div>
+
+          <div class="preview-scroll flex min-h-[480px] items-center justify-center overflow-auto rounded-3xl border border-slate-200 bg-gradient-to-br from-slate-50 to-cyan-50 p-6">
+            <div id="preview" class="w-full text-center text-xl text-slate-900"></div>
+          </div>
+
+          <div class="mt-4 grid gap-3 sm:grid-cols-3">
+            <div class="rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-200">
+              <p class="text-xs font-bold uppercase tracking-wide text-slate-500">字符数</p>
+              <p id="charCount" class="mt-1 text-2xl font-black text-slate-950">0</p>
+            </div>
+            <div class="rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-200">
+              <p class="text-xs font-bold uppercase tracking-wide text-slate-500">渲染模式</p>
+              <p class="mt-1 text-2xl font-black text-slate-950">SVG</p>
+            </div>
+            <div class="rounded-2xl bg-slate-50 p-4 ring-1 ring-slate-200">
+              <p class="text-xs font-bold uppercase tracking-wide text-slate-500">更新方式</p>
+              <p class="mt-1 text-2xl font-black text-slate-950">实时</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-white/70 bg-white/85 p-6 shadow-xl shadow-slate-200/70 sm:p-8">
+      <h2 class="text-2xl font-black text-slate-950">LaTeX 矩阵与复杂公式在线可视化编辑器介绍</h2>
+      <p class="mt-4 leading-8 text-slate-700">
+        latex-matrix-editor 是一款面向学生、教师、科研人员和技术写作者的 LaTeX 公式在线编辑器，专注解决矩阵公式难写、复杂表达式难预览、论文排版反复调试的问题。用户只需在输入区粘贴或编写 LaTeX 代码，工具便会通过 MathJax 实时渲染为清晰的数学公式预览，适合快速检查分式、积分、极限、求和、行列式、方程组以及 bmatrix、pmatrix 等矩阵环境。内置的 LaTeX 矩阵生成器可以根据行数、列数和矩阵类型自动生成规范代码，降低手写换行符与对齐符号出错的概率。使用时，先输入公式或点击插入矩阵，再查看右侧输出区的可视化结果；确认无误后，可一键复制 LaTeX 源码或 SVG 结果，用于 Markdown、论文、博客、课件和技术文档。对于需要“在线数学公式预览”“MathJax 实时渲染工具”“LaTeX 矩阵编辑器”的用户，本工具提供了简洁、响应式且无需安装的软件体验。
+      </p>
+    </article>
+  </main>
+
+  <div id="toast" class="fixed bottom-5 left-1/2 z-50 hidden -translate-x-1/2 rounded-2xl bg-slate-950 px-5 py-3 text-sm font-bold text-white shadow-2xl"></div>
+
+  <script>
+    (() => {
+      const latexInput = document.getElementById('latexInput');
+      const preview = document.getElementById('preview');
+      const errorBox = document.getElementById('errorBox');
+      const statusBadge = document.getElementById('statusBadge');
+      const charCount = document.getElementById('charCount');
+      const autoWrap = document.getElementById('autoWrap');
+      const rowsInput = document.getElementById('rowsInput');
+      const colsInput = document.getElementById('colsInput');
+      const matrixType = document.getElementById('matrixType');
+      const toast = document.getElementById('toast');
+
+      const defaultLatex = String.raw`\begin{bmatrix}
+a_{11} & a_{12} & a_{13} \\
+a_{21} & a_{22} & a_{23} \\
+a_{31} & a_{32} & a_{33}
+\end{bmatrix}
+\cdot
+\begin{pmatrix}
+x_1 \\ x_2 \\ x_3
+\end{pmatrix}
+=
+\begin{pmatrix}
+b_1 \\ b_2 \\ b_3
+\end{pmatrix}`;
+
+      let debounceTimer = null;
+      let renderSerial = 0;
+
+      const setStatus = (text, type) => {
+        statusBadge.textContent = text;
+        statusBadge.className = 'inline-flex w-fit items-center rounded-full px-3 py-1 text-xs font-bold ring-1 ';
+        if (type === 'error') {
+          statusBadge.className += 'bg-red-50 text-red-700 ring-red-200';
+        } else if (type === 'rendering') {
+          statusBadge.className += 'bg-amber-50 text-amber-700 ring-amber-200';
+        } else {
+          statusBadge.className += 'bg-emerald-50 text-emerald-700 ring-emerald-200';
+        }
+      };
+
+      const showError = (message) => {
+        errorBox.textContent = message;
+        errorBox.classList.remove('hidden');
+        setStatus('输入有误', 'error');
+      };
+
+      const hideError = () => {
+        errorBox.textContent = '';
+        errorBox.classList.add('hidden');
+      };
+
+      const showToast = (message) => {
+        toast.textContent = message;
+        toast.classList.remove('hidden');
+        clearTimeout(showToast.timer);
+        showToast.timer = setTimeout(() => toast.classList.add('hidden'), 1800);
+      };
+
+      const hasMathDelimiter = (text) => {
+        return /(^|[^\\])\$\$|(^|[^\\])\$|\\\(|\\\)|\\\[|\\\]/.test(text);
+      };
+
+      const wrapLatex = (text) => {
+        const trimmed = text.trim();
+        if (!trimmed) return '';
+        if (!autoWrap.checked || hasMathDelimiter(trimmed)) return trimmed;
+        return `\\[\n${trimmed}\n\\]`;
+      };
+
+      const validateLatex = (raw) => {
+        const text = String(raw || '');
+        if (text.length > 20000) return '输入内容过长，请控制在 20000 个字符以内。';
+        if (!text.trim()) return '请输入 LaTeX 代码后再进行渲染。';
+
+        let depth = 0;
+        for (let i = 0; i < text.length; i++) {
+          const ch = text[i];
+          const prev = text[i - 1];
+          if (ch === '{' && prev !== '\\') depth++;
+          if (ch === '}' && prev !== '\\') {
+            depth--;
+            if (depth < 0) return '检测到多余的右花括号 }，请检查 LaTeX 分组是否匹配。';
+          }
+        }
+        if (depth !== 0) return '检测到花括号数量不匹配，请检查 { 与 } 是否成对出现。';
+
+        const envStack = [];
+        const envRegex = /\\(begin|end)\s*\{([a-zA-Z*]+)\}/g;
+        let match;
+        while ((match = envRegex.exec(text)) !== null) {
+          const action = match[1];
+          const env = match[2];
+          if (action === 'begin') {
+            envStack.push(env);
+          } else {
+            const last = envStack.pop();
+            if (!last) return `检测到 \\end{${env}} 缺少对应的 \\begin{${env}}。`;
+            if (last !== env) return `环境不匹配：\\begin{${last}} 对应到了 \\end{${env}}。`;
+          }
+        }
+        if (envStack.length) return `检测到 \\begin{${envStack[envStack.length - 1]}} 缺少对应的 \\end{${envStack[envStack.length - 1]}}。`;
+
+        const displayOpen = (text.match(/\\\[/g) || []).length;
+        const displayClose = (text.match(/\\\]/g) || []).length;
+        if (displayOpen !== displayClose) return '检测到显示公式定界符 \\[ 与 \\] 数量不匹配。';
+
+        const inlineOpen = (text.match(/\\\(/g) || []).length;
+        const inlineClose = (text.match(/\\\)/g) || []).length;
+        if (inlineOpen !== inlineClose) return '检测到行内公式定界符 \\( 与 \\) 数量不匹配。';
+
+        return '';
+      };
+
+      const render = async () => {
+        const serial = ++renderSerial;
+        const raw = latexInput.value || '';
+        charCount.textContent = String(raw.length);
+        const validationMessage = validateLatex(raw);
+        if (validationMessage) {
+          showError(validationMessage);
+          preview.textContent = '修正输入后将在此处显示公式预览。';
+          return;
+        }
+
+        hideError();
+        setStatus('渲染中', 'rendering');
+        const content = wrapLatex(raw);
+
+        try {
+          preview.textContent = content;
+          if (!window.MathJax || !window.MathJax.typesetPromise) {
+            throw new Error('MathJax 正在加载，请稍后重试。');
+          }
+          await window.MathJax.typesetClear([preview]);
+          await window.MathJax.typesetPromise([preview]);
+          if (serial === renderSerial) setStatus('渲染完成', 'ready');
+        } catch (err) {
+          if (serial === renderSerial) {
+            showError(err && err.message ? err.message : '渲染失败，请检查 LaTeX 语法。');
+            preview.textContent = '无法渲染当前公式，请检查语法后重试。';
+          }
+        }
+      };
+
+      const scheduleRender = () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(render, 280);
+      };
+
+      const copyText = async (text, successMessage) => {
+        try {
+          if (!text || !String(text).trim()) {
+            showError('没有可复制的内容。');
+            return;
+          }
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+          } else {
+            const temp = document.createElement('textarea');
+            temp.value = text;
+            temp.setAttribute('readonly', '');
+            temp.style.position = 'fixed';
+            temp.style.left = '-9999px';
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand('copy');
+            document.body.removeChild(temp);
+          }
+          showToast(successMessage);
+        } catch (err) {
+          showError('复制失败，请手动选择内容复制。');
+        }
+      };
+
+      const clampNumber = (value, min, max, fallback) => {
+        const n = Number.parseInt(value, 10);
+        if (!Number.isFinite(n)) return fallback;
+        return Math.min(max, Math.max(min, n));
+      };
+
+      const insertAtCursor = (snippet) => {
+        const start = latexInput.selectionStart || 0;
+        const end = latexInput.selectionEnd || 0;
+        const before = latexInput.value.slice(0, start);
+        const after = latexInput.value.slice(end);
+        latexInput.value = before + snippet + after;
+        const pos = start + snippet.length;
+        latexInput.focus();
+        latexInput.setSelectionRange(pos, pos);
+        scheduleRender();
+      };
+
+      const generateMatrix = () => {
+        const rows = clampNumber(rowsInput.value, 1, 12, 3);
+        const cols = clampNumber(colsInput.value, 1, 12, 3);
+        rowsInput.value = rows;
+        colsInput.value = cols;
+        const env = matrixType.value || 'bmatrix';
+        const lines = [];
+        for (let r = 1; r <= rows; r++) {
+          const cells = [];
+          for (let c = 1; c <= cols; c++) cells.push(`a_{${r}${c}}`);
+          lines.push(cells.join(' & '));
+        }
+        return `\\begin{${env}}\n${lines.join(' \\\\\n')}\n\\end{${env}}`;
+      };
+
+      document.getElementById('renderBtn').addEventListener('click', () => {
+        render();
+        showToast('已触发渲染');
+      });
+
+      document.getElementById('copyBtn').addEventListener('click', () => {
+        copyText(latexInput.value, 'LaTeX 代码已复制');
+      });
+
+      document.getElementById('copySvgBtn').addEventListener('click', () => {
+        const svg = preview.querySelector('svg');
+        if (!svg) {
+          showError('当前没有可复制的 SVG 结果，请先成功渲染公式。');
+          return;
+        }
+        copyText(svg.outerHTML, 'SVG 已复制');
+      });
+
+      document.getElementById('exampleBtn').addEventListener('click', () => {
+        latexInput.value = String.raw`\left\{
+\begin{aligned}
+\nabla \cdot \mathbf{E} &= \frac{\rho}{\varepsilon_0} \\
+\nabla \cdot \mathbf{B} &= 0 \\
+\nabla \times \mathbf{E} &= -\frac{\partial \mathbf{B}}{\partial t} \\
+\nabla \times \mathbf{B} &= \mu_0 \mathbf{J} + \mu_0\varepsilon_0\frac{\partial \mathbf{E}}{\partial t}
+\end{aligned}
+\right.`;
+        scheduleRender();
+        showToast('已载入示例公式');
+      });
+
+      document.getElementById('clearBtn').addEventListener('click', () => {
+        latexInput.value = '';
+        charCount.textContent = '0';
+        hideError();
+        preview.textContent = '请输入 LaTeX 代码，预览将实时显示在这里。';
+        setStatus('就绪', 'ready');
+        latexInput.focus();
+        showToast('已清空');
+      });
+
+      document.getElementById('insertMatrixBtn').addEventListener('click', () => {
+        try {
+          insertAtCursor(generateMatrix());
+          showToast('矩阵已插入');
+        } catch (err) {
+          showError('矩阵生成失败，请检查行数、列数与矩阵类型。');
+        }
+      });
+
+      document.querySelectorAll('.snippetBtn').forEach((button) => {
+        button.addEventListener('click', () => {
+          insertAtCursor(button.getAttribute('data-snippet') || '');
+          showToast('片段已插入');
+        });
+      });
+
+      latexInput.addEventListener('input', scheduleRender);
+      autoWrap.addEventListener('change', scheduleRender);
+
+      latexInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Tab') {
+          event.preventDefault();
+          insertAtCursor('  ');
+        }
+        if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+          event.preventDefault();
+          render();
+        }
+      });
+
+      const boot = () => {
+        latexInput.value = defaultLatex;
+        preview.textContent = 'MathJax 加载中...';
+        const waitForMathJax = setInterval(() => {
+          if (window.MathJax && window.MathJax.typesetPromise) {
+            clearInterval(waitForMathJax);
+            render();
+          }
+        }, 80);
+        setTimeout(() => {
+          if (!(window.MathJax && window.MathJax.typesetPromise)) {
+            clearInterval(waitForMathJax);
+            showError('MathJax 加载较慢或网络不可用，请检查网络后刷新页面。');
+            preview.textContent = 'MathJax 未能及时加载。';
+          }
+        }, 10000);
+      };
+
+      boot();
+    })();
+  </script>
+</body>
+</html>

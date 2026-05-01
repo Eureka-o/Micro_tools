@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="LaTeX 矩阵与复杂公式在线可视化编辑器，支持 MathJax 实时渲染、矩阵模板、积分公式、求和公式、语法错误提示和 LaTeX 代码复制。">
+  <meta name="keywords" content="LaTeX矩阵编辑器, LaTeX公式可视化, MathJax在线编辑器, LaTeX实时渲染, 矩阵公式生成器, 在线数学公式编辑器">
+  <title>LaTeX 矩阵与复杂公式在线可视化编辑器</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+        processEscapes: true,
+        packages: {'[+]': ['ams']}
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      chtml: {
+        matchFontHeight: false
+      },
+      startup: {
+        typeset: false
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body class="min-h-screen bg-[#f7f7fb] text-slate-950">
+  <header class="bg-white">
+    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-end">
+        <div>
+          <p class="mb-3 text-sm font-semibold uppercase tracking-widest text-violet-600">MathJax Formula Workspace</p>
+          <h1 class="max-w-5xl text-3xl font-bold tracking-tight text-slate-950 sm:text-5xl">LaTeX 矩阵与复杂公式在线可视化编辑器</h1>
+          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-600">一边输入 LaTeX 代码，一边实时查看公式排版效果，适合论文、课件、Markdown 和技术文档写作。</p>
+        </div>
+        <div class="rounded-lg border border-violet-100 bg-violet-50 p-4">
+          <p class="text-sm font-semibold text-violet-800">实时预览</p>
+          <p class="mt-2 text-sm leading-6 text-violet-700">输入停止 300ms 后自动更新，语法异常会在预览区直接提示，不影响页面使用。</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+    <section class="rounded-lg border border-slate-200 bg-white p-3 shadow-sm" aria-label="公式模板">
+      <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <div>
+          <h2 class="text-lg font-semibold text-slate-950">常用模板</h2>
+          <p class="mt-1 text-sm text-slate-500">点击插入基础代码，再按你的公式需求修改。</p>
+        </div>
+        <div class="grid gap-2 sm:grid-cols-3 lg:min-w-[34rem]">
+          <button data-template="matrix" type="button" class="rounded-md bg-violet-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-300">插入2x2矩阵</button>
+          <button data-template="integral" type="button" class="rounded-md bg-sky-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-300">插入积分公式</button>
+          <button data-template="summation" type="button" class="rounded-md bg-emerald-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300">插入求和公式</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]" aria-label="LaTeX 公式编辑工作区">
+      <div class="rounded-lg border border-slate-200 bg-white shadow-sm">
+        <div class="flex flex-col gap-3 border-b border-slate-200 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="rounded-md bg-violet-50 px-2 py-1 text-xs font-semibold text-violet-700">编辑</span>
+              <h2 class="text-lg font-semibold text-slate-950">LaTeX 代码</h2>
+            </div>
+            <p id="sourceStats" class="mt-1 text-sm text-slate-500">0 个字符</p>
+          </div>
+          <div class="flex gap-2">
+            <button id="copySourceBtn" type="button" class="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-violet-400 hover:text-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-300">复制代码</button>
+            <button id="clearBtn" type="button" class="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 transition hover:border-red-400 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-300">清空</button>
+          </div>
+        </div>
+        <div class="p-4">
+          <textarea id="latexInput" spellcheck="false" class="h-80 w-full resize-y rounded-md border border-slate-300 bg-slate-50 p-4 font-mono text-sm leading-6 text-slate-950 outline-none transition placeholder:text-slate-400 focus:border-violet-500 focus:bg-white focus:ring-2 focus:ring-violet-200 lg:h-[30rem]" placeholder="例如：\begin{bmatrix} a & b \\ c & d \end{bmatrix}">\begin{bmatrix}
+a & b \\
+c & d
+\end{bmatrix}</textarea>
+          <div id="messageBox" class="mt-3 hidden rounded-md border px-4 py-3 text-sm leading-6" role="status" aria-live="polite"></div>
+        </div>
+      </div>
+
+      <div class="rounded-lg border border-slate-200 bg-white shadow-sm">
+        <div class="flex flex-col gap-3 border-b border-slate-200 px-4 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="rounded-md bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-700">预览</span>
+              <h2 class="text-lg font-semibold text-slate-950">可视化输出</h2>
+            </div>
+            <p class="mt-1 text-sm text-slate-500">由 MathJax 渲染，可横向滚动查看长公式。</p>
+          </div>
+          <span id="renderStatus" class="rounded-full border border-slate-300 px-3 py-1 text-xs font-medium text-slate-600">准备渲染</span>
+        </div>
+
+        <div class="p-4">
+          <div id="previewWrap" class="flex min-h-80 items-center justify-center overflow-auto rounded-md border border-slate-200 bg-[#fbfcff] p-6 text-slate-950 lg:min-h-[30rem]">
+            <div id="formulaPreview" class="max-w-full text-center text-xl"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-10 border-t border-slate-200 pt-8 leading-8 text-slate-700">
+      <h2 class="mb-4 text-2xl font-bold text-slate-950">在线 LaTeX 公式可视化编辑器说明</h2>
+      <p>
+        LaTeX 矩阵与复杂公式在线可视化编辑器是一款面向学生、教师、科研作者、算法工程师和技术文档编写者的数学公式预览工具。用户可以在输入区编写 LaTeX 语法，例如 bmatrix 矩阵、积分表达式、求和公式、分式和上下标，页面会通过 MathJax 在线渲染为清晰的数学排版结果。相比反复在论文编辑器或 Markdown 平台中试错，这个 LaTeX 公式实时渲染工具可以更快发现括号不闭合、矩阵换行错误、环境缺失等问题，并在解析异常时给出“语法解析错误”的友好提示。通过内置的插入2x2矩阵、插入积分公式和插入求和公式模板，新手也能快速生成基础代码，再根据实际论文、课件、博客或技术说明进行修改。它适合作为在线数学公式编辑器、LaTeX矩阵编辑器和 MathJax 公式预览工具使用。
+      </p>
+    </article>
+  </main>
+
+  <script>
+    const latexInput = document.getElementById('latexInput');
+    const formulaPreview = document.getElementById('formulaPreview');
+    const messageBox = document.getElementById('messageBox');
+    const renderStatus = document.getElementById('renderStatus');
+    const mathJaxScript = document.getElementById('MathJax-script');
+    const sourceStats = document.getElementById('sourceStats');
+
+    const templates = {
+      matrix: '\\begin{bmatrix}\na & b \\\\\nc & d\n\\end{bmatrix}',
+      integral: '\\int_{0}^{\\infty} e^{-x^2} \\, dx = \\frac{\\sqrt{\\pi}}{2}',
+      summation: '\\sum_{n=1}^{\\infty} \\frac{1}{n^2} = \\frac{\\pi^2}{6}'
+    };
+
+    let renderTimer = null;
+    let renderToken = 0;
+
+    const mathJaxReady = new Promise((resolve, reject) => {
+      if (window.MathJax && window.MathJax.startup && window.MathJax.startup.promise) {
+        resolve(window.MathJax.startup.promise);
+        return;
+      }
+
+      mathJaxScript.addEventListener('load', () => {
+        if (window.MathJax && window.MathJax.startup && window.MathJax.startup.promise) {
+          resolve(window.MathJax.startup.promise);
+        } else {
+          reject(new Error('MathJax 初始化失败，请刷新页面后重试。'));
+        }
+      });
+
+      mathJaxScript.addEventListener('error', () => {
+        reject(new Error('MathJax 加载失败，请检查网络连接或 CDN 是否可访问。'));
+      });
+    });
+
+    function updateStats() {
+      sourceStats.textContent = `${latexInput.value.length} 个字符`;
+    }
+
+    function setStatus(text, mode) {
+      renderStatus.textContent = text;
+      renderStatus.className = 'rounded-full border px-3 py-1 text-xs font-medium';
+
+      if (mode === 'success') {
+        renderStatus.classList.add('border-emerald-300', 'bg-emerald-50', 'text-emerald-700');
+      } else if (mode === 'error') {
+        renderStatus.classList.add('border-red-300', 'bg-red-50', 'text-red-700');
+      } else {
+        renderStatus.classList.add('border-slate-300', 'text-slate-600');
+      }
+    }
+
+    function showMessage(text, mode) {
+      messageBox.textContent = text;
+      messageBox.className = 'mt-3 rounded-md border px-4 py-3 text-sm leading-6';
+
+      if (mode === 'error') {
+        messageBox.classList.add('border-red-200', 'bg-red-50', 'text-red-700');
+      } else {
+        messageBox.classList.add('border-emerald-200', 'bg-emerald-50', 'text-emerald-700');
+      }
+    }
+
+    function hideMessage() {
+      messageBox.classList.add('hidden');
+      messageBox.textContent = '';
+    }
+
+    function showPreviewError(detail) {
+      formulaPreview.innerHTML = '';
+
+      const box = document.createElement('div');
+      box.className = 'mx-auto max-w-md rounded-md border border-red-200 bg-red-50 px-4 py-4 text-left text-red-700';
+
+      const title = document.createElement('p');
+      title.className = 'font-semibold';
+      title.textContent = '语法解析错误';
+
+      const description = document.createElement('p');
+      description.className = 'mt-2 text-sm leading-6';
+      description.textContent = detail || '请检查 LaTeX 环境名称、花括号、矩阵换行符和命令拼写是否完整。';
+
+      box.appendChild(title);
+      box.appendChild(description);
+      formulaPreview.appendChild(box);
+    }
+
+    function debounceRender() {
+      updateStats();
+      clearTimeout(renderTimer);
+      renderTimer = setTimeout(renderFormula, 300);
+    }
+
+    async function renderFormula() {
+      const source = latexInput.value.trim();
+      const token = ++renderToken;
+
+      hideMessage();
+      updateStats();
+
+      if (!source) {
+        formulaPreview.innerHTML = '<p class="text-sm text-slate-500">请输入 LaTeX 公式代码。</p>';
+        setStatus('等待输入', 'idle');
+        return;
+      }
+
+      setStatus('渲染中', 'idle');
+
+      try {
+        await mathJaxReady;
+        await window.MathJax.startup.promise;
+
+        if (token !== renderToken) return;
+
+        if (typeof window.MathJax.typesetClear === 'function') {
+          window.MathJax.typesetClear([formulaPreview]);
+        }
+
+        formulaPreview.textContent = '\\[' + source + '\\]';
+        await window.MathJax.typesetPromise([formulaPreview]);
+
+        if (token !== renderToken) return;
+
+        const mathError = formulaPreview.querySelector('mjx-merror, .mjx-merror');
+        if (mathError) {
+          throw new Error('请检查 LaTeX 语法，当前公式无法被 MathJax 正确解析。');
+        }
+
+        setStatus('渲染成功', 'success');
+      } catch (err) {
+        if (token !== renderToken) return;
+        setStatus('渲染失败', 'error');
+        showPreviewError(err.message);
+        showMessage('语法解析错误：请检查 LaTeX 代码后再试。', 'error');
+      }
+    }
+
+    function insertTemplate(templateKey) {
+      const template = templates[templateKey];
+      if (!template) return;
+
+      const start = latexInput.selectionStart;
+      const end = latexInput.selectionEnd;
+      const before = latexInput.value.slice(0, start);
+      const after = latexInput.value.slice(end);
+      const separatorBefore = before && !before.endsWith('\n') ? '\n\n' : '';
+      const separatorAfter = after && !after.startsWith('\n') ? '\n\n' : '';
+
+      latexInput.value = before + separatorBefore + template + separatorAfter + after;
+      const cursor = (before + separatorBefore + template).length;
+      latexInput.focus();
+      latexInput.setSelectionRange(cursor, cursor);
+      debounceRender();
+    }
+
+    async function copyText(text, successText) {
+      if (!text.trim()) {
+        showMessage('当前没有可复制的 LaTeX 代码。', 'error');
+        return;
+      }
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          latexInput.focus();
+          latexInput.select();
+          document.execCommand('copy');
+          window.getSelection().removeAllRanges();
+        }
+
+        showMessage(successText, 'success');
+      } catch (err) {
+        showMessage('复制失败，请手动选择代码后复制。', 'error');
+      }
+    }
+
+    document.querySelectorAll('[data-template]').forEach(button => {
+      button.addEventListener('click', () => insertTemplate(button.dataset.template));
+    });
+
+    document.getElementById('copySourceBtn').addEventListener('click', () => {
+      copyText(latexInput.value, 'LaTeX 代码已复制到剪贴板。');
+    });
+
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      latexInput.value = '';
+      hideMessage();
+      renderFormula();
+      latexInput.focus();
+    });
+
+    latexInput.addEventListener('input', debounceRender);
+    renderFormula();
+  </script>
+</body>
+</html>
