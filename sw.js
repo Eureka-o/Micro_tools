@@ -1,4 +1,4 @@
-const CACHE_NAME = "micro-tools-cache-v20260502-50";
+const CACHE_NAME = "micro-tools-cache-v20260502-ui2-50";
 const CACHE_ASSETS = [
   "/",
   "/index.html",
