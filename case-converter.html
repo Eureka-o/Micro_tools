@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>case-converter｜在线字母大小写转换工具</title>
+  <meta name="description" content="case-converter 是一款免费在线字母大小写转换工具，支持全大写、全小写、首字母大写、camelCase 驼峰命名法、snake_case 蛇形命名法一键转换，适合程序员、编辑和内容运营使用。" />
+  <meta name="keywords" content="case-converter,大小写转换,字母大小写转换工具,在线大小写转换,camelCase转换,snake_case转换,驼峰命名法,蛇形命名法,首字母大写转换" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <div class="pointer-events-none fixed inset-0 overflow-hidden">
+    <div class="absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-violet-500/20 blur-3xl"></div>
+  </div>
+
+  <header class="relative border-b border-white/10 bg-slate-950/70 backdrop-blur">
+    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+            Free Online Text Utility
+          </p>
+          <h1 class="text-4xl font-black tracking-tight text-white sm:text-5xl">case-converter</h1>
+          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-300">
+            在线字母大小写转换工具，支持全大写、全小写、首字母大写、camelCase 与 snake_case 一键转换。
+          </p>
+        </div>
+        <div class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 shadow-2xl">
+          <p class="text-sm text-slate-400">当前字符数</p>
+          <p id="charCount" class="mt-1 text-3xl font-bold text-cyan-300">0</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-2" aria-label="大小写转换工具">
+      <div class="rounded-3xl border border-white/10 bg-slate-900/85 p-5 shadow-2xl">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-xl font-bold text-white">输入文本</h2>
+          <button id="clearBtn" type="button" class="rounded-xl border border-rose-400/30 bg-rose-500/10 px-4 py-2 text-sm font-semibold text-rose-200 transition hover:bg-rose-500/20 active:scale-95">
+            清空
+          </button>
+        </div>
+        <textarea
+          id="inputText"
+          class="min-h-72 w-full resize-y rounded-2xl border border-slate-700 bg-slate-950/80 p-4 text-base leading-7 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
+          placeholder="请输入需要转换的英文、中文、数字或混合文本，例如：hello world case converter"
+          spellcheck="false"
+          autocomplete="off"
+        ></textarea>
+        <p class="mt-3 text-sm text-slate-400">提示：支持空格、下划线、连字符、标点符号分隔的文本。</p>
+      </div>
+
+      <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/25 p-5 shadow-2xl">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-xl font-bold text-white">输出结果</h2>
+          <button id="copyBtn" type="button" class="rounded-xl border border-cyan-300/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">
+            复制结果
+          </button>
+        </div>
+        <textarea
+          id="outputText"
+          class="min-h-72 w-full resize-y rounded-2xl border border-cyan-400/20 bg-slate-950/70 p-4 text-base leading-7 text-cyan-50 outline-none placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-400/10"
+          placeholder="转换后的文本将显示在这里"
+          readonly
+          spellcheck="false"
+        ></textarea>
+        <p id="statusMsg" class="mt-3 hidden rounded-xl px-4 py-3 text-sm font-medium" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="mt-6 rounded-3xl border border-white/10 bg-white/[0.04] p-5 shadow-2xl" aria-label="转换操作">
+      <h2 class="mb-4 text-xl font-bold text-white">选择转换方式</h2>
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <button data-type="upper" type="button" class="convert-btn rounded-2xl border border-white/10 bg-slate-800 px-4 py-3 font-semibold text-slate-100 transition hover:border-cyan-300/50 hover:bg-cyan-500/15 active:scale-95">
+          全大写
+        </button>
+        <button data-type="lower" type="button" class="convert-btn rounded-2xl border border-white/10 bg-slate-800 px-4 py-3 font-semibold text-slate-100 transition hover:border-cyan-300/50 hover:bg-cyan-500/15 active:scale-95">
+          全小写
+        </button>
+        <button data-type="capitalize" type="button" class="convert-btn rounded-2xl border border-white/10 bg-slate-800 px-4 py-3 font-semibold text-slate-100 transition hover:border-cyan-300/50 hover:bg-cyan-500/15 active:scale-95">
+          首字母大写
+        </button>
+        <button data-type="camel" type="button" class="convert-btn rounded-2xl border border-white/10 bg-slate-800 px-4 py-3 font-semibold text-slate-100 transition hover:border-cyan-300/50 hover:bg-cyan-500/15 active:scale-95">
+          camelCase
+        </button>
+        <button data-type="snake" type="button" class="convert-btn rounded-2xl border border-white/10 bg-slate-800 px-4 py-3 font-semibold text-slate-100 transition hover:border-cyan-300/50 hover:bg-cyan-500/15 active:scale-95">
+          snake_case
+        </button>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-white/10 bg-slate-900/75 p-6 leading-8 text-slate-300 shadow-2xl">
+      <h2 class="mb-4 text-2xl font-bold text-white">关于 case-converter 在线大小写转换工具</h2>
+      <p>
+        case-converter 是一款面向开发者、文案编辑、内容运营和数据整理人员的在线字母大小写转换工具。日常工作中，我们经常需要把标题、变量名、字段名或批量文本转换为统一格式，例如将普通短语改成 camelCase 驼峰命名法，或将接口字段整理为 snake_case 蛇形命名法。手动修改不仅耗时，还容易出现漏改、大小写不一致等问题。本工具无需安装软件，打开网页即可使用，输入文本后点击对应按钮，就能快速完成全大写转换、全小写转换、首字母大写转换、驼峰命名法转换和蛇形命名法转换。它支持英文、数字、空格、下划线、连字符及常见符号混合输入，适合处理代码变量、SEO 标题、表格字段、文件命名和批量文本规范化。对于正在寻找“在线大小写转换器”“camelCase 转换工具”“snake_case 生成器”的用户来说，case-converter 提供了简洁、高效、响应式的使用体验，电脑和手机浏览器都能顺畅操作。
+      </p>
+    </article>
+  </main>
+
+  <footer class="relative mx-auto max-w-6xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
+    <p>© <span id="year"></span> case-converter. Built for fast text conversion.</p>
+  </footer>
+
+  <script>
+    (function () {
+      'use strict';
+
+      const inputText = document.getElementById('inputText');
+      const outputText = document.getElementById('outputText');
+      const charCount = document.getElementById('charCount');
+      const statusMsg = document.getElementById('statusMsg');
+      const clearBtn = document.getElementById('clearBtn');
+      const copyBtn = document.getElementById('copyBtn');
+      const convertBtns = Array.from(document.querySelectorAll('.convert-btn'));
+      const year = document.getElementById('year');
+
+      year.textContent = String(new Date().getFullYear());
+
+      let lastType = 'upper';
+      let statusTimer = null;
+
+      function showStatus(message, type) {
+        window.clearTimeout(statusTimer);
+        statusMsg.textContent = message;
+        statusMsg.classList.remove('hidden', 'bg-rose-500/15', 'text-rose-100', 'border', 'border-rose-400/25', 'bg-emerald-500/15', 'text-emerald-100', 'border-emerald-400/25', 'bg-cyan-500/15', 'text-cyan-100', 'border-cyan-400/25');
+
+        if (type === 'error') {
+          statusMsg.classList.add('bg-rose-500/15', 'text-rose-100', 'border', 'border-rose-400/25');
+        } else if (type === 'success') {
+          statusMsg.classList.add('bg-emerald-500/15', 'text-emerald-100', 'border', 'border-emerald-400/25');
+        } else {
+          statusMsg.classList.add('bg-cyan-500/15', 'text-cyan-100', 'border', 'border-cyan-400/25');
+        }
+
+        statusTimer = window.setTimeout(function () {
+          statusMsg.classList.add('hidden');
+        }, 3200);
+      }
+
+      function setActiveButton(type) {
+        convertBtns.forEach(function (btn) {
+          const isActive = btn.dataset.type === type;
+          btn.classList.toggle('border-cyan-300/70', isActive);
+          btn.classList.toggle('bg-cyan-500/25', isActive);
+          btn.classList.toggle('text-cyan-50', isActive);
+          btn.classList.toggle('shadow-lg', isActive);
+          btn.classList.toggle('shadow-cyan-500/10', isActive);
+        });
+      }
+
+      function normalizeInput(value) {
+        if (typeof value !== 'string') return '';
+        return value.replace(/\u0000/g, '');
+      }
+
+      function hasVisibleContent(value) {
+        return /\S/u.test(value);
+      }
+
+      function getWords(value) {
+        const safe = normalizeInput(value);
+        const matches = safe.match(/[\p{L}\p{N}]+/gu);
+        return Array.isArray(matches) ? matches : [];
+      }
+
+      function capitalizeFirstLetter(value) {
+        const safe = normalizeInput(value).toLocaleLowerCase();
+        return safe.replace(/(^|[^\p{L}\p{N}])([\p{L}])/gu, function (match, prefix, letter) {
+          return prefix + letter.toLocaleUpperCase();
+        });
+      }
+
+      function toCamelCase(value) {
+        const words = getWords(value);
+        if (words.length === 0) return '';
+        return words.map(function (word, index) {
+          const lower = word.toLocaleLowerCase();
+          if (index === 0) return lower;
+          return lower.charAt(0).toLocaleUpperCase() + lower.slice(1);
+        }).join('');
+      }
+
+      function toSnakeCase(value) {
+        const words = getWords(value);
+        return words.map(function (word) {
+          return word.toLocaleLowerCase();
+        }).join('_');
+      }
+
+      function convert(value, type) {
+        const safe = normalizeInput(value);
+        switch (type) {
+          case 'upper':
+            return safe.toLocaleUpperCase();
+          case 'lower':
+            return safe.toLocaleLowerCase();
+          case 'capitalize':
+            return capitalizeFirstLetter(safe);
+          case 'camel':
+            return toCamelCase(safe);
+          case 'snake':
+            return toSnakeCase(safe);
+          default:
+            return safe;
+        }
+      }
+
+      function updateCount() {
+        const value = normalizeInput(inputText.value);
+        charCount.textContent = String(Array.from(value).length);
+      }
+
+      function runConversion(type, manual) {
+        try {
+          const value = normalizeInput(inputText.value);
+          updateCount();
+          lastType = type;
+          setActiveButton(type);
+
+          if (!hasVisibleContent(value)) {
+            outputText.value = '';
+            if (manual) showStatus('请输入需要转换的文本后再操作。', 'error');
+            return;
+          }
+
+          if (Array.from(value).length > 200000) {
+            outputText.value = '';
+            showStatus('输入内容过长，请控制在 200000 个字符以内。', 'error');
+            return;
+          }
+
+          const result = convert(value, type);
+          outputText.value = result;
+          if (manual) showStatus('转换完成。', 'success');
+        } catch (error) {
+          outputText.value = '';
+          showStatus('转换失败，请检查输入内容后重试。', 'error');
+        }
+      }
+
+      convertBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          runConversion(btn.dataset.type, true);
+        });
+      });
+
+      inputText.addEventListener('input', function () {
+        updateCount();
+        if (hasVisibleContent(inputText.value)) {
+          runConversion(lastType, false);
+        } else {
+          outputText.value = '';
+        }
+      });
+
+      clearBtn.addEventListener('click', function () {
+        inputText.value = '';
+        outputText.value = '';
+        updateCount();
+        inputText.focus();
+        showStatus('内容已清空。', 'info');
+      });
+
+      copyBtn.addEventListener('click', async function () {
+        try {
+          const value = normalizeInput(outputText.value);
+          if (!hasVisibleContent(value)) {
+            showStatus('没有可复制的转换结果。', 'error');
+            return;
+          }
+
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(value);
+          } else {
+            outputText.removeAttribute('readonly');
+            outputText.select();
+            const copied = document.execCommand('copy');
+            outputText.setAttribute('readonly', 'readonly');
+            window.getSelection().removeAllRanges();
+            if (!copied) throw new Error('copy failed');
+          }
+
+          copyBtn.classList.add('bg-emerald-500/20', 'border-emerald-300/40');
+          window.setTimeout(function () {
+            copyBtn.classList.remove('bg-emerald-500/20', 'border-emerald-300/40');
+          }, 700);
+          showStatus('已复制到剪贴板。', 'success');
+        } catch (error) {
+          showStatus('复制失败，请手动选择结果文本复制。', 'error');
+        }
+      });
+
+      updateCount();
+      setActiveButton(lastType);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>markdown-table-generator - 可视化 Markdown 表格生成器</title>
+  <meta name="description" content="markdown-table-generator 是一款可视化 Markdown 表格生成器，支持增加行列、编辑单元格、实时生成标准 Markdown 表格代码，适合写 README、技术文档和博客。" />
+  <meta name="keywords" content="Markdown表格生成器, markdown-table-generator, 可视化Markdown表格, Markdown table generator, README表格工具, Markdown在线工具, Markdown表格代码生成" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+  <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
+    <div class="absolute inset-0 opacity-30">
+      <div class="absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-cyan-500 blur-3xl"></div>
+      <div class="absolute -bottom-24 right-1/4 h-72 w-72 rounded-full bg-blue-600 blur-3xl"></div>
+    </div>
+    <div class="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <div class="max-w-3xl">
+        <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-1 text-sm font-medium text-cyan-200">
+          Visual Markdown Table Builder
+        </p>
+        <h1 class="text-4xl font-black tracking-tight text-white sm:text-5xl lg:text-6xl">markdown-table-generator</h1>
+        <p class="mt-5 text-base leading-7 text-slate-300 sm:text-lg">
+          通过可视化表格编辑内容，实时生成标准 Markdown 表格代码。适合 README、技术文档、博客文章与项目说明。
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="grid gap-6 lg:grid-cols-2" aria-label="Markdown 表格生成工具">
+      <div class="rounded-3xl border border-slate-700 bg-slate-900/90 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
+        <div class="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <h2 class="text-2xl font-bold text-white">可视化编辑区</h2>
+            <p class="mt-1 text-sm text-slate-400">第一行为表头，下面为表格内容。输入后会自动生成 Markdown。</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button id="addRowBtn" type="button" class="rounded-xl bg-cyan-500 px-4 py-2 text-sm font-bold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400 active:scale-95 focus:outline-none focus:ring-2 focus:ring-cyan-300">增加行</button>
+            <button id="addColBtn" type="button" class="rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-white shadow-lg shadow-blue-500/20 transition hover:bg-blue-400 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-300">增加列</button>
+            <button id="removeRowBtn" type="button" class="rounded-xl border border-rose-400/40 bg-rose-500/10 px-4 py-2 text-sm font-bold text-rose-200 transition hover:bg-rose-500/20 active:scale-95 focus:outline-none focus:ring-2 focus:ring-rose-300">删除行</button>
+            <button id="removeColBtn" type="button" class="rounded-xl border border-amber-400/40 bg-amber-500/10 px-4 py-2 text-sm font-bold text-amber-200 transition hover:bg-amber-500/20 active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-300">删除列</button>
+          </div>
+        </div>
+
+        <div id="errorBox" class="mb-4 hidden rounded-2xl border border-red-400/50 bg-red-500/15 px-4 py-3 text-sm font-medium text-red-100" role="alert"></div>
+
+        <div class="mb-4 grid gap-3 sm:grid-cols-3">
+          <div class="rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
+            <p class="text-xs uppercase tracking-widest text-slate-500">当前行数</p>
+            <p id="rowCount" class="mt-1 text-2xl font-black text-cyan-300">0</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
+            <p class="text-xs uppercase tracking-widest text-slate-500">当前列数</p>
+            <p id="colCount" class="mt-1 text-2xl font-black text-blue-300">0</p>
+          </div>
+          <div class="rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
+            <p class="text-xs uppercase tracking-widest text-slate-500">实时状态</p>
+            <p id="statusText" class="mt-2 text-sm font-semibold text-emerald-300">已就绪</p>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-slate-700 bg-slate-950">
+          <table class="min-w-full border-collapse" aria-label="可编辑 Markdown 表格">
+            <thead id="tableHead"></thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+
+        <div class="mt-4 flex flex-wrap gap-2">
+          <button id="resetBtn" type="button" class="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2 text-sm font-bold text-slate-200 transition hover:bg-slate-700 active:scale-95 focus:outline-none focus:ring-2 focus:ring-slate-400">重置示例</button>
+          <button id="clearBtn" type="button" class="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2 text-sm font-bold text-slate-200 transition hover:bg-slate-700 active:scale-95 focus:outline-none focus:ring-2 focus:ring-slate-400">清空内容</button>
+        </div>
+      </div>
+
+      <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/30 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
+        <div class="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <h2 class="text-2xl font-bold text-white">Markdown 输出区</h2>
+            <p class="mt-1 text-sm text-cyan-100/70">复制下方代码即可粘贴到 Markdown 文档中使用。</p>
+          </div>
+          <button id="copyBtn" type="button" class="rounded-xl bg-emerald-400 px-4 py-2 text-sm font-black text-slate-950 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-300 active:scale-95 focus:outline-none focus:ring-2 focus:ring-emerald-200">复制代码</button>
+        </div>
+
+        <textarea id="markdownOutput" readonly spellcheck="false" class="h-[420px] w-full resize-y rounded-2xl border border-cyan-300/20 bg-slate-950 p-4 font-mono text-sm leading-6 text-cyan-100 shadow-inner outline-none focus:ring-2 focus:ring-cyan-400" aria-label="生成的 Markdown 表格代码"></textarea>
+
+        <div class="mt-4 rounded-2xl border border-cyan-300/20 bg-slate-950/60 p-4">
+          <h3 class="font-bold text-cyan-100">提示</h3>
+          <ul class="mt-2 list-disc space-y-1 pl-5 text-sm leading-6 text-slate-300">
+            <li>单元格中的竖线 <code class="rounded bg-slate-800 px-1 text-cyan-200">|</code> 会自动转义，避免破坏 Markdown 表格结构。</li>
+            <li>换行会被转换为 <code class="rounded bg-slate-800 px-1 text-cyan-200">&lt;br&gt;</code>，便于在表格内保留多行内容。</li>
+            <li>每一列都可以单独设置左对齐、居中或右对齐。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-slate-700 bg-slate-900/80 p-6 leading-8 text-slate-300 shadow-xl shadow-slate-950/30 sm:p-8">
+      <h2 class="mb-4 text-2xl font-bold text-white">关于可视化 Markdown 表格生成器</h2>
+      <p>
+        markdown-table-generator 是一个面向开发者、产品经理、技术写作者和内容创作者的在线 Markdown 表格生成器。很多人在编写 README 文档、项目说明、接口文档或博客教程时，都遇到过手写 Markdown 表格容易错位、分隔符难以维护、列数增加后排版混乱的问题。本工具通过可视化表格编辑方式解决这些痛点：你只需要点击按钮增加行列，在单元格中填写内容，系统就会实时生成标准 Markdown table 代码。它支持表头、普通单元格、列对齐方式、特殊字符自动转义和一键复制，非常适合快速制作 GitHub README 表格、Markdown 技术文档表格、产品参数对比表和教程示例表。使用方法也很简单：先在编辑区调整需要的行数与列数，再输入表格内容，最后复制输出区代码并粘贴到支持 Markdown 的编辑器中即可。对于需要高效生成 Markdown 表格代码的用户来说，这个可视化 Markdown 表格生成工具可以显著减少格式错误，提高文档编写效率。
+      </p>
+    </article>
+  </main>
+
+  <footer class="border-t border-slate-800 py-6 text-center text-sm text-slate-500">
+    <p>markdown-table-generator · Zero Dependency Single Page Tool</p>
+  </footer>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const MAX_ROWS = 50;
+      const MAX_COLS = 20;
+      const MIN_ROWS = 2;
+      const MIN_COLS = 1;
+
+      const elements = {
+        tableHead: document.getElementById('tableHead'),
+        tableBody: document.getElementById('tableBody'),
+        output: document.getElementById('markdownOutput'),
+        errorBox: document.getElementById('errorBox'),
+        rowCount: document.getElementById('rowCount'),
+        colCount: document.getElementById('colCount'),
+        statusText: document.getElementById('statusText'),
+        addRowBtn: document.getElementById('addRowBtn'),
+        addColBtn: document.getElementById('addColBtn'),
+        removeRowBtn: document.getElementById('removeRowBtn'),
+        removeColBtn: document.getElementById('removeColBtn'),
+        resetBtn: document.getElementById('resetBtn'),
+        clearBtn: document.getElementById('clearBtn'),
+        copyBtn: document.getElementById('copyBtn')
+      };
+
+      let data = [
+        ['名称', '说明', '示例'],
+        ['项目', 'Markdown 表格生成器', 'README 文档'],
+        ['特点', '实时生成、可视化编辑', '一键复制']
+      ];
+      let aligns = ['left', 'center', 'right'];
+      let errorTimer = null;
+
+      const safeText = (value) => String(value ?? '');
+
+      const showError = (message) => {
+        const text = safeText(message).trim() || '发生未知错误，请检查输入后重试。';
+        elements.errorBox.textContent = text;
+        elements.errorBox.classList.remove('hidden');
+        elements.statusText.textContent = '需要处理';
+        elements.statusText.className = 'mt-2 text-sm font-semibold text-red-300';
+        clearTimeout(errorTimer);
+        errorTimer = setTimeout(() => {
+          elements.errorBox.classList.add('hidden');
+          elements.statusText.textContent = '已就绪';
+          elements.statusText.className = 'mt-2 text-sm font-semibold text-emerald-300';
+        }, 3500);
+      };
+
+      const setStatus = (message, colorClass = 'text-emerald-300') => {
+        elements.statusText.textContent = message;
+        elements.statusText.className = `mt-2 text-sm font-semibold ${colorClass}`;
+      };
+
+      const escapeMarkdownCell = (value) => {
+        return safeText(value)
+          .replace(/\\/g, '\\\\')
+          .replace(/\|/g, '\\|')
+          .replace(/\r\n|\r|\n/g, '<br>')
+          .trim() || ' ';
+      };
+
+      const separatorFor = (align) => {
+        if (align === 'center') return ':---:';
+        if (align === 'right') return '---:';
+        return ':---';
+      };
+
+      const normalizeState = () => {
+        if (!Array.isArray(data) || data.length < MIN_ROWS) {
+          data = [['列 1'], ['']];
+        }
+
+        const colLength = Math.max(
+          MIN_COLS,
+          Math.min(MAX_COLS, ...data.map(row => Array.isArray(row) ? row.length : 0))
+        );
+
+        data = data.slice(0, MAX_ROWS).map(row => {
+          const safeRow = Array.isArray(row) ? row.slice(0, colLength) : [];
+          while (safeRow.length < colLength) safeRow.push('');
+          return safeRow.map(safeText);
+        });
+
+        while (data.length < MIN_ROWS) {
+          data.push(Array(colLength).fill(''));
+        }
+
+        aligns = Array.isArray(aligns) ? aligns.slice(0, colLength) : [];
+        while (aligns.length < colLength) aligns.push('left');
+        aligns = aligns.map(item => ['left', 'center', 'right'].includes(item) ? item : 'left');
+      };
+
+      const generateMarkdown = () => {
+        normalizeState();
+        const header = data[0].map(escapeMarkdownCell);
+        const separator = aligns.map(separatorFor);
+        const body = data.slice(1).map(row => row.map(escapeMarkdownCell));
+
+        const lines = [
+          `| ${header.join(' | ')} |`,
+          `| ${separator.join(' | ')} |`,
+          ...body.map(row => `| ${row.join(' | ')} |`)
+        ];
+
+        elements.output.value = lines.join('\n');
+        elements.rowCount.textContent = String(data.length);
+        elements.colCount.textContent = String(data[0].length);
+      };
+
+      const createCellInput = (rowIndex, colIndex, value) => {
+        const input = document.createElement('textarea');
+        input.value = safeText(value);
+        input.rows = 2;
+        input.dataset.row = String(rowIndex);
+        input.dataset.col = String(colIndex);
+        input.maxLength = 5000;
+        input.className = 'min-h-[54px] w-44 resize-y rounded-xl border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-300 focus:ring-2 focus:ring-cyan-400/40 sm:w-52';
+        input.placeholder = rowIndex === 0 ? `表头 ${colIndex + 1}` : `内容 ${rowIndex}-${colIndex + 1}`;
+        input.setAttribute('aria-label', rowIndex === 0 ? `第 ${colIndex + 1} 列表头` : `第 ${rowIndex} 行第 ${colIndex + 1} 列内容`);
+        return input;
+      };
+
+      const renderTable = () => {
+        normalizeState();
+
+        elements.tableHead.innerHTML = '';
+        elements.tableBody.innerHTML = '';
+
+        const controlRow = document.createElement('tr');
+        controlRow.className = 'border-b border-slate-700 bg-slate-900';
+
+        data[0].forEach((_, colIndex) => {
+          const th = document.createElement('th');
+          th.className = 'min-w-44 border-r border-slate-800 p-3 text-left align-top last:border-r-0 sm:min-w-52';
+
+          const label = document.createElement('div');
+          label.className = 'mb-2 flex items-center justify-between gap-2';
+          label.innerHTML = `<span class="rounded-full bg-cyan-400/10 px-2 py-1 text-xs font-bold text-cyan-200">第 ${colIndex + 1} 列</span>`;
+
+          const select = document.createElement('select');
+          select.dataset.alignCol = String(colIndex);
+          select.className = 'w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-sm font-medium text-slate-200 outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-400/40';
+          [
+            ['left', '左对齐'],
+            ['center', '居中'],
+            ['right', '右对齐']
+          ].forEach(([value, text]) => {
+            const option = document.createElement('option');
+            option.value = value;
+            option.textContent = text;
+            option.selected = aligns[colIndex] === value;
+            select.appendChild(option);
+          });
+
+          th.appendChild(label);
+          th.appendChild(select);
+          controlRow.appendChild(th);
+        });
+
+        elements.tableHead.appendChild(controlRow);
+
+        data.forEach((row, rowIndex) => {
+          const tr = document.createElement('tr');
+          tr.className = rowIndex === 0 ? 'border-b border-cyan-400/20 bg-cyan-950/20' : 'border-b border-slate-800 last:border-b-0';
+
+          row.forEach((cell, colIndex) => {
+            const td = document.createElement(rowIndex === 0 ? 'th' : 'td');
+            td.className = 'border-r border-slate-800 p-3 align-top last:border-r-0';
+
+            if (rowIndex === 0) {
+              const badge = document.createElement('div');
+              badge.className = 'mb-2 text-xs font-black uppercase tracking-widest text-cyan-300';
+              badge.textContent = 'Header';
+              td.appendChild(badge);
+            }
+
+            td.appendChild(createCellInput(rowIndex, colIndex, cell));
+            tr.appendChild(td);
+          });
+
+          elements.tableBody.appendChild(tr);
+        });
+
+        generateMarkdown();
+      };
+
+      const addRow = () => {
+        normalizeState();
+        if (data.length >= MAX_ROWS) {
+          showError(`最多支持 ${MAX_ROWS} 行，当前已达到上限。`);
+          return;
+        }
+        data.push(Array(data[0].length).fill(''));
+        renderTable();
+        setStatus('已增加一行');
+      };
+
+      const addCol = () => {
+        normalizeState();
+        if (data[0].length >= MAX_COLS) {
+          showError(`最多支持 ${MAX_COLS} 列，当前已达到上限。`);
+          return;
+        }
+        const newIndex = data[0].length + 1;
+        data.forEach((row, index) => row.push(index === 0 ? `列 ${newIndex}` : ''));
+        aligns.push('left');
+        renderTable();
+        setStatus('已增加一列');
+      };
+
+      const removeRow = () => {
+        normalizeState();
+        if (data.length <= MIN_ROWS) {
+          showError('至少需要保留表头和一行内容，不能继续删除行。');
+          return;
+        }
+        data.pop();
+        renderTable();
+        setStatus('已删除最后一行');
+      };
+
+      const removeCol = () => {
+        normalizeState();
+        if (data[0].length <= MIN_COLS) {
+          showError('至少需要保留一列，不能继续删除列。');
+          return;
+        }
+        data.forEach(row => row.pop());
+        aligns.pop();
+        renderTable();
+        setStatus('已删除最后一列');
+      };
+
+      const clearContent = () => {
+        normalizeState();
+        data = data.map(row => row.map(() => ''));
+        renderTable();
+        setStatus('内容已清空');
+      };
+
+      const resetExample = () => {
+        data = [
+          ['名称', '说明', '示例'],
+          ['项目', 'Markdown 表格生成器', 'README 文档'],
+          ['特点', '实时生成、可视化编辑', '一键复制']
+        ];
+        aligns = ['left', 'center', 'right'];
+        renderTable();
+        setStatus('示例已重置');
+      };
+
+      const copyOutput = async () => {
+        try {
+          const text = elements.output.value;
+          if (!text.trim()) {
+            showError('当前没有可复制的 Markdown 内容。');
+            return;
+          }
+
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+          } else {
+            elements.output.focus();
+            elements.output.select();
+            const successful = document.execCommand('copy');
+            if (!successful) throw new Error('复制命令未成功执行');
+            window.getSelection()?.removeAllRanges();
+          }
+
+          const original = elements.copyBtn.textContent;
+          elements.copyBtn.textContent = '已复制';
+          elements.copyBtn.classList.remove('bg-emerald-400');
+          elements.copyBtn.classList.add('bg-cyan-300');
+          setStatus('Markdown 已复制到剪贴板');
+          setTimeout(() => {
+            elements.copyBtn.textContent = original;
+            elements.copyBtn.classList.add('bg-emerald-400');
+            elements.copyBtn.classList.remove('bg-cyan-300');
+          }, 1200);
+        } catch (err) {
+          showError('复制失败，请手动选择输出区内容后复制。');
+        }
+      };
+
+      elements.tableBody.addEventListener('input', (event) => {
+        try {
+          const target = event.target;
+          if (!(target instanceof HTMLTextAreaElement)) return;
+
+          const row = Number.parseInt(target.dataset.row, 10);
+          const col = Number.parseInt(target.dataset.col, 10);
+
+          if (!Number.isInteger(row) || !Number.isInteger(col) || row < 0 || col < 0 || !data[row] || col >= data[row].length) {
+            showError('单元格位置异常，已自动刷新表格。');
+            renderTable();
+            return;
+          }
+
+          data[row][col] = safeText(target.value);
+          generateMarkdown();
+          setStatus('已实时更新');
+        } catch (err) {
+          showError('输入处理失败，请刷新页面或重试。');
+        }
+      });
+
+      elements.tableHead.addEventListener('change', (event) => {
+        try {
+          const target = event.target;
+          if (!(target instanceof HTMLSelectElement)) return;
+
+          const col = Number.parseInt(target.dataset.alignCol, 10);
+          if (!Number.isInteger(col) || col < 0 || col >= aligns.length) {
+            showError('列对齐设置异常，已恢复默认值。');
+            renderTable();
+            return;
+          }
+
+          aligns[col] = ['left', 'center', 'right'].includes(target.value) ? target.value : 'left';
+          generateMarkdown();
+          setStatus('列对齐已更新');
+        } catch (err) {
+          showError('对齐设置失败，请重试。');
+        }
+      });
+
+      elements.addRowBtn.addEventListener('click', addRow);
+      elements.addColBtn.addEventListener('click', addCol);
+      elements.removeRowBtn.addEventListener('click', removeRow);
+      elements.removeColBtn.addEventListener('click', removeCol);
+      elements.clearBtn.addEventListener('click', clearContent);
+      elements.resetBtn.addEventListener('click', resetExample);
+      elements.copyBtn.addEventListener('click', copyOutput);
+
+      window.addEventListener('error', () => {
+        showError('页面遇到异常，但工具已尽力保持可用。');
+      });
+
+      window.addEventListener('unhandledrejection', () => {
+        showError('异步操作失败，请稍后重试。');
+      });
+
+      renderTable();
+    })();
+  </script>
+</body>
+</html>

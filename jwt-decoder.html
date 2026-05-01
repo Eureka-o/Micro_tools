@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jwt-decoder - JWT 本地解码器</title>
+  <meta name="description" content="jwt-decoder 是一个纯前端 JWT 本地解码器，可安全解析 JSON Web Token 的 Header 和 Payload，不上传任何数据，适合开发调试、接口联调和令牌内容查看。" />
+  <meta name="keywords" content="jwt-decoder,JWT解码器,JSON Web Token解析,JWT本地解码,JWT Header Payload,在线JWT解析工具,前端JWT调试" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0f172a" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 antialiased">
+  <div class="pointer-events-none fixed inset-0 overflow-hidden">
+    <div class="absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
+    <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-indigo-500/10 blur-3xl"></div>
+  </div>
+
+  <main class="relative mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 py-6 sm:px-6 lg:px-8">
+    <header class="mb-8 overflow-hidden rounded-3xl border border-white/10 bg-white/[0.06] p-6 shadow-2xl shadow-cyan-950/30 backdrop-blur md:p-10">
+      <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+        <div>
+          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
+            纯前端 · 本地解析 · 不上传 Token
+          </p>
+          <h1 class="text-4xl font-black tracking-tight text-white sm:text-5xl">jwt-decoder</h1>
+          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-300">
+            JWT (JSON Web Token) 本地解码器。直接在浏览器中解析 Header 和 Payload，帮助你快速查看令牌声明、过期时间与签发信息。
+          </p>
+        </div>
+        <div class="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-5 py-4 text-sm text-emerald-100">
+          <div class="font-semibold">隐私安全提示</div>
+          <div class="mt-1 text-emerald-100/80">解码逻辑仅在当前页面执行，不会向服务器发送任何 JWT 内容。</div>
+        </div>
+      </div>
+    </header>
+
+    <section class="grid gap-6 lg:grid-cols-2">
+      <div class="rounded-3xl border border-white/10 bg-slate-900/80 p-5 shadow-xl shadow-black/20 backdrop-blur sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-bold text-white">输入 JWT</h2>
+            <p class="mt-1 text-sm text-slate-400">粘贴完整的 JSON Web Token，通常由三个以点号分隔的部分组成。</p>
+          </div>
+          <span id="charCount" class="shrink-0 rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-300">0 字符</span>
+        </div>
+
+        <label for="jwtInput" class="sr-only">JWT 输入框</label>
+        <textarea id="jwtInput" spellcheck="false" autocomplete="off" class="min-h-[260px] w-full resize-y rounded-2xl border border-slate-700 bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="在此粘贴 JWT，例如：eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."></textarea>
+
+        <div id="errorBox" class="mt-4 hidden rounded-2xl border border-red-400/40 bg-red-500/10 p-4 text-sm text-red-100" role="alert"></div>
+        <div id="successBox" class="mt-4 hidden rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-4 text-sm text-emerald-100" role="status"></div>
+
+        <div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <button id="decodeBtn" type="button" class="rounded-2xl bg-cyan-400 px-4 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-cyan-500/20 transition active:scale-95 hover:bg-cyan-300 focus:outline-none focus:ring-4 focus:ring-cyan-400/30">
+            解码
+          </button>
+          <button id="sampleBtn" type="button" class="rounded-2xl border border-slate-700 bg-slate-800 px-4 py-3 text-sm font-semibold text-slate-100 transition active:scale-95 hover:bg-slate-700 focus:outline-none focus:ring-4 focus:ring-slate-500/30">
+            示例
+          </button>
+          <button id="clearBtn" type="button" class="rounded-2xl border border-slate-700 bg-slate-800 px-4 py-3 text-sm font-semibold text-slate-100 transition active:scale-95 hover:bg-slate-700 focus:outline-none focus:ring-4 focus:ring-slate-500/30">
+            清空
+          </button>
+          <button id="copyAllBtn" type="button" class="rounded-2xl border border-cyan-400/40 bg-cyan-400/10 px-4 py-3 text-sm font-semibold text-cyan-100 transition active:scale-95 hover:bg-cyan-400/20 focus:outline-none focus:ring-4 focus:ring-cyan-400/20">
+            复制结果
+          </button>
+        </div>
+      </div>
+
+      <div class="rounded-3xl border border-white/10 bg-white/[0.06] p-5 shadow-xl shadow-black/20 backdrop-blur sm:p-6">
+        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 class="text-xl font-bold text-white">解码结果</h2>
+            <p class="mt-1 text-sm text-slate-400">仅解码内容，不验证签名有效性。</p>
+          </div>
+          <div id="statusBadge" class="w-fit rounded-full border border-slate-600 bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300">等待输入</div>
+        </div>
+
+        <div class="grid gap-4">
+          <section class="rounded-2xl border border-slate-700/80 bg-slate-950/60">
+            <div class="flex items-center justify-between border-b border-slate-700/80 px-4 py-3">
+              <h3 class="font-semibold text-cyan-100">Header</h3>
+              <button data-copy="headerOutput" class="copyBtn rounded-xl bg-slate-800 px-3 py-1.5 text-xs font-semibold text-slate-200 transition active:scale-95 hover:bg-slate-700">复制</button>
+            </div>
+            <pre id="headerOutput" class="max-h-72 overflow-auto p-4 text-sm leading-6 text-slate-200"><code>{}</code></pre>
+          </section>
+
+          <section class="rounded-2xl border border-slate-700/80 bg-slate-950/60">
+            <div class="flex items-center justify-between border-b border-slate-700/80 px-4 py-3">
+              <h3 class="font-semibold text-indigo-100">Payload</h3>
+              <button data-copy="payloadOutput" class="copyBtn rounded-xl bg-slate-800 px-3 py-1.5 text-xs font-semibold text-slate-200 transition active:scale-95 hover:bg-slate-700">复制</button>
+            </div>
+            <pre id="payloadOutput" class="max-h-72 overflow-auto p-4 text-sm leading-6 text-slate-200"><code>{}</code></pre>
+          </section>
+
+          <section class="rounded-2xl border border-slate-700/80 bg-slate-950/60 p-4">
+            <h3 class="mb-3 font-semibold text-emerald-100">常用声明解析</h3>
+            <dl id="claimsOutput" class="grid gap-3 text-sm sm:grid-cols-2">
+              <div class="rounded-xl bg-slate-900 p-3"><dt class="text-slate-400">签发者 iss</dt><dd class="mt-1 break-all text-slate-200">-</dd></div>
+              <div class="rounded-xl bg-slate-900 p-3"><dt class="text-slate-400">主题 sub</dt><dd class="mt-1 break-all text-slate-200">-</dd></div>
+              <div class="rounded-xl bg-slate-900 p-3"><dt class="text-slate-400">受众 aud</dt><dd class="mt-1 break-all text-slate-200">-</dd></div>
+              <div class="rounded-xl bg-slate-900 p-3"><dt class="text-slate-400">过期时间 exp</dt><dd class="mt-1 break-all text-slate-200">-</dd></div>
+            </dl>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-white/10 bg-slate-900/70 p-6 leading-8 text-slate-300 shadow-xl shadow-black/20 backdrop-blur md:p-8">
+      <h2 class="mb-4 text-2xl font-bold text-white">关于 jwt-decoder 本地 JWT 解码工具</h2>
+      <p>
+        jwt-decoder 是一款面向前端开发者、后端工程师与接口测试人员的在线 JWT 本地解码器，用于快速解析 JSON Web Token 的 Header 与 Payload。很多调试场景需要查看 alg、typ、iss、sub、aud、exp 等声明，但又担心把敏感 Token 上传到第三方服务。本工具的核心优势是纯前端运行，所有 JWT 解析都在浏览器内完成，不向服务器发送任何数据，适合登录鉴权排查、API 联调、OAuth 调试和过期时间检查。使用时只需将完整 JWT 粘贴到输入框，点击“解码”即可获得格式化 JSON 与常用声明说明。需要注意的是，JWT 解码不等同于签名验证，本工具帮助你安全查看令牌内容，但不能证明 Token 未被篡改。
+      </p>
+    </article>
+
+    <footer class="py-8 text-center text-sm text-slate-500">
+      jwt-decoder · Local JSON Web Token Decoder
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      const jwtInput = document.getElementById('jwtInput');
+      const decodeBtn = document.getElementById('decodeBtn');
+      const clearBtn = document.getElementById('clearBtn');
+      const sampleBtn = document.getElementById('sampleBtn');
+      const copyAllBtn = document.getElementById('copyAllBtn');
+      const errorBox = document.getElementById('errorBox');
+      const successBox = document.getElementById('successBox');
+      const headerOutput = document.getElementById('headerOutput');
+      const payloadOutput = document.getElementById('payloadOutput');
+      const claimsOutput = document.getElementById('claimsOutput');
+      const statusBadge = document.getElementById('statusBadge');
+      const charCount = document.getElementById('charCount');
+
+      let lastDecoded = null;
+
+      const sampleToken = [
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
+        'eyJpc3MiOiJqd3QtZGVjb2RlciIsInN1YiI6InVzZXItMTIzNDUiLCJhdWQiOiJkZW1vLWFwaSIsIm5hbWUiOiLlvKDkuIkiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzU2ODk2MDAsIm5iZiI6MTczNTY4OTYwMCwiZXhwIjoxNzY3MjI1NjAwfQ',
+        'demo-signature-not-verified'
+      ].join('.');
+
+      function setText(el, text) {
+        el.textContent = text;
+      }
+
+      function showError(message) {
+        errorBox.textContent = message;
+        errorBox.classList.remove('hidden');
+        successBox.classList.add('hidden');
+        statusBadge.textContent = '解码失败';
+        statusBadge.className = 'w-fit rounded-full border border-red-400/40 bg-red-500/10 px-3 py-1 text-xs font-medium text-red-100';
+      }
+
+      function showSuccess(message) {
+        successBox.textContent = message;
+        successBox.classList.remove('hidden');
+        errorBox.classList.add('hidden');
+        statusBadge.textContent = '解码成功';
+        statusBadge.className = 'w-fit rounded-full border border-emerald-400/40 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-100';
+      }
+
+      function resetMessages() {
+        errorBox.classList.add('hidden');
+        successBox.classList.add('hidden');
+      }
+
+      function safeJsonStringify(value) {
+        try {
+          return JSON.stringify(value, null, 2);
+        } catch {
+          return String(value);
+        }
+      }
+
+      function base64UrlDecode(input) {
+        if (typeof input !== 'string' || input.length === 0) {
+          throw new Error('JWT 分段为空，无法解码。');
+        }
+        if (!/^[A-Za-z0-9_-]+$/.test(input)) {
+          throw new Error('JWT 分段包含非法字符。Base64URL 仅允许字母、数字、下划线和短横线。');
+        }
+
+        let base64 = input.replace(/-/g, '+').replace(/_/g, '/');
+        const pad = base64.length % 4;
+        if (pad === 1) {
+          throw new Error('Base64URL 长度不合法，可能不是有效的 JWT。');
+        }
+        if (pad) {
+          base64 += '='.repeat(4 - pad);
+        }
+
+        try {
+          const binary = atob(base64);
+          const bytes = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) {
+            bytes[i] = binary.charCodeAt(i);
+          }
+          return new TextDecoder('utf-8', { fatal: false }).decode(bytes);
+        } catch {
+          throw new Error('Base64URL 解码失败，请确认输入的是有效 JWT。');
+        }
+      }
+
+      function parseJsonSegment(segment, name) {
+        const decoded = base64UrlDecode(segment);
+        try {
+          return JSON.parse(decoded);
+        } catch {
+          throw new Error(name + ' 不是有效 JSON。解码后的内容为：' + decoded.slice(0, 120));
+        }
+      }
+
+      function formatDateFromUnix(value) {
+        if (value === undefined || value === null || value === '') return '-';
+        const num = Number(value);
+        if (!Number.isFinite(num)) return String(value);
+        const date = new Date(num * 1000);
+        if (Number.isNaN(date.getTime())) return String(value);
+        const now = Date.now();
+        const diff = date.getTime() - now;
+        const status = diff < 0 ? '已过期' : '未过期';
+        return date.toLocaleString('zh-CN', { hour12: false }) + '（' + status + '）';
+      }
+
+      function valueToDisplay(value) {
+        if (value === undefined || value === null || value === '') return '-';
+        if (Array.isArray(value)) return value.join(', ');
+        if (typeof value === 'object') return safeJsonStringify(value);
+        return String(value);
+      }
+
+      function renderClaims(payload) {
+        const items = [
+          ['签发者 iss', valueToDisplay(payload.iss)],
+          ['主题 sub', valueToDisplay(payload.sub)],
+          ['受众 aud', valueToDisplay(payload.aud)],
+          ['过期时间 exp', formatDateFromUnix(payload.exp)],
+          ['签发时间 iat', formatDateFromUnix(payload.iat)],
+          ['生效时间 nbf', formatDateFromUnix(payload.nbf)]
+        ];
+
+        claimsOutput.innerHTML = '';
+        for (const [label, value] of items) {
+          const wrapper = document.createElement('div');
+          wrapper.className = 'rounded-xl bg-slate-900 p-3';
+          const dt = document.createElement('dt');
+          dt.className = 'text-slate-400';
+          dt.textContent = label;
+          const dd = document.createElement('dd');
+          dd.className = 'mt-1 break-all text-slate-200';
+          dd.textContent = value;
+          wrapper.appendChild(dt);
+          wrapper.appendChild(dd);
+          claimsOutput.appendChild(wrapper);
+        }
+      }
+
+      function decodeJwt() {
+        resetMessages();
+        const raw = jwtInput.value.trim();
+
+        if (!raw) {
+          lastDecoded = null;
+          setText(headerOutput, '{}');
+          setText(payloadOutput, '{}');
+          renderClaims({});
+          showError('请输入 JWT 后再进行解码。');
+          return;
+        }
+
+        const compact = raw.replace(/\s+/g, '');
+        const parts = compact.split('.');
+
+        if (parts.length !== 3) {
+          showError('JWT 格式不正确：应包含 Header、Payload、Signature 三段，并使用两个点号分隔。');
+          return;
+        }
+
+        if (parts.some(part => part.length === 0)) {
+          showError('JWT 格式不正确：Header、Payload 或 Signature 存在空分段。');
+          return;
+        }
+
+        try {
+          const header = parseJsonSegment(parts[0], 'Header');
+          const payload = parseJsonSegment(parts[1], 'Payload');
+
+          lastDecoded = {
+            header,
+            payload,
+            signature: parts[2]
+          };
+
+          setText(headerOutput, safeJsonStringify(header));
+          setText(payloadOutput, safeJsonStringify(payload));
+          renderClaims(payload);
+
+          let message = '已成功解码 Header 和 Payload。注意：此工具不验证签名。';
+          if (payload && typeof payload === 'object' && payload.exp !== undefined) {
+            const exp = Number(payload.exp);
+            if (Number.isFinite(exp) && exp * 1000 < Date.now()) {
+              message = '已成功解码，但该 JWT 的 exp 显示已过期。此工具不验证签名。';
+            }
+          }
+          showSuccess(message);
+        } catch (err) {
+          const message = err && err.message ? err.message : '解码失败，请检查 JWT 格式。';
+          showError(message);
+        }
+      }
+
+      async function copyText(text, button) {
+        const content = String(text || '').trim();
+        if (!content || content === '{}') {
+          showError('当前没有可复制的解码结果。');
+          return;
+        }
+
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(content);
+          } else {
+            const temp = document.createElement('textarea');
+            temp.value = content;
+            temp.setAttribute('readonly', '');
+            temp.style.position = 'fixed';
+            temp.style.opacity = '0';
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand('copy');
+            document.body.removeChild(temp);
+          }
+
+          const oldText = button ? button.textContent : '';
+          if (button) {
+            button.textContent = '已复制';
+            button.classList.add('bg-emerald-500', 'text-white');
+            setTimeout(() => {
+              button.textContent = oldText;
+              button.classList.remove('bg-emerald-500', 'text-white');
+            }, 1200);
+          }
+          showSuccess('复制成功。');
+        } catch {
+          showError('复制失败，请手动选择文本复制。');
+        }
+      }
+
+      jwtInput.addEventListener('input', () => {
+        charCount.textContent = jwtInput.value.length + ' 字符';
+        resetMessages();
+      });
+
+      decodeBtn.addEventListener('click', () => {
+        decodeBtn.classList.add('scale-95');
+        setTimeout(() => decodeBtn.classList.remove('scale-95'), 120);
+        decodeJwt();
+      });
+
+      jwtInput.addEventListener('keydown', (event) => {
+        if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+          event.preventDefault();
+          decodeJwt();
+        }
+      });
+
+      clearBtn.addEventListener('click', () => {
+        jwtInput.value = '';
+        charCount.textContent = '0 字符';
+        lastDecoded = null;
+        setText(headerOutput, '{}');
+        setText(payloadOutput, '{}');
+        renderClaims({});
+        resetMessages();
+        statusBadge.textContent = '等待输入';
+        statusBadge.className = 'w-fit rounded-full border border-slate-600 bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300';
+        jwtInput.focus();
+      });
+
+      sampleBtn.addEventListener('click', () => {
+        jwtInput.value = sampleToken;
+        charCount.textContent = jwtInput.value.length + ' 字符';
+        decodeJwt();
+      });
+
+      copyAllBtn.addEventListener('click', () => {
+        if (!lastDecoded) {
+          showError('请先成功解码 JWT，再复制完整结果。');
+          return;
+        }
+        copyText('Header:\n' + safeJsonStringify(lastDecoded.header) + '\n\nPayload:\n' + safeJsonStringify(lastDecoded.payload), copyAllBtn);
+      });
+
+      document.querySelectorAll('.copyBtn').forEach(button => {
+        button.addEventListener('click', () => {
+          const target = document.getElementById(button.getAttribute('data-copy'));
+          copyText(target ? target.textContent : '', button);
+        });
+      });
+
+      renderClaims({});
+    })();
+  </script>
+</body>
+</html>
