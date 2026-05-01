@@ -10,12 +10,12 @@
 </head>
 <body class="min-h-screen bg-slate-50 text-slate-950 antialiased" style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', 'PingFang SC', 'Hiragino Sans GB', 'Noto Sans CJK SC', Arial, sans-serif;">
   <header class="bg-slate-950 text-white">
-    <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-      <p class="mb-3 text-sm font-semibold uppercase tracking-[0.25em] text-cyan-300">Micro Tools Matrix</p>
+    <div class="mx-auto max-w-7xl px-4 pb-10 pt-24 sm:px-6 md:py-14 lg:px-8">
+      <p class="mb-3 w-full text-sm font-semibold uppercase tracking-[0.25em] text-cyan-300 md:w-auto">Micro Tools Matrix</p>
       <div class="grid gap-8 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end">
         <div>
-          <h1 class="max-w-4xl text-4xl font-bold tracking-tight sm:text-6xl">开发者与生产力工具箱</h1>
-          <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-300">集合常用格式转换、编码解码、文本处理、前端样式生成、效率计算与可视化工具，打开即用，无需安装。</p>
+          <h1 class="max-w-4xl text-3xl font-bold tracking-tight sm:text-4xl lg:text-6xl">开发者与生产力工具箱</h1>
+          <p class="mt-5 max-w-3xl text-base leading-7 text-slate-300 md:text-lg md:leading-8">集合常用格式转换、编码解码、文本处理、前端样式生成、效率计算与可视化工具，打开即用，无需安装。</p>
         </div>
         <div class="rounded-lg border border-white/10 bg-white/5 p-5">
           <div class="grid grid-cols-3 gap-3 text-center">
@@ -40,15 +40,15 @@
   <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
     <section class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm" aria-label="工具搜索">
       <label for="searchInput" class="sr-only">搜索工具</label>
-      <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <input id="searchInput" type="search" class="h-12 flex-1 rounded-md border border-slate-300 bg-slate-50 px-4 text-base outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-cyan-200" placeholder="搜索工具名称或描述，例如 JSON、Base64、颜色、时间戳...">
-        <div class="rounded-md bg-slate-100 px-4 py-3 text-sm font-medium text-slate-700">
+      <div class="flex w-full flex-col gap-3 md:flex-row md:items-center">
+        <input id="searchInput" type="search" class="h-12 w-full rounded-md border border-slate-300 bg-slate-50 px-4 text-base outline-none transition placeholder:text-slate-400 focus:border-cyan-500 focus:bg-white focus:ring-2 focus:ring-cyan-200 md:flex-1" placeholder="搜索工具名称或描述，例如 JSON、Base64、颜色、时间戳...">
+        <div class="w-full rounded-md bg-slate-100 px-4 py-3 text-center text-sm font-medium text-slate-700 md:w-auto md:text-left">
           当前显示 <span id="visibleCount" class="text-slate-950">0</span> / <span id="totalCount">0</span>
         </div>
       </div>
     </section>
 
-    <section id="toolGrid" class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" aria-label="工具列表"></section>
+    <section id="toolGrid" class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" aria-label="工具列表"></section>
 
     <div id="emptyState" class="mt-10 hidden rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center text-slate-600">没有找到匹配的工具，请尝试更短的关键词。</div>
 
@@ -83,11 +83,11 @@
     function createCard(tool) {
       const link = document.createElement('a');
       link.href = './' + tool.name + '.html';
-      link.className = 'card group flex h-full min-h-56 flex-col rounded-lg border border-slate-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-cyan-300';
+      link.className = 'card group flex h-full min-h-56 flex-col rounded-lg border border-slate-200 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-cyan-300 md:p-6';
       link.dataset.search = normalizeText(tool.name + ' ' + tool.description);
 
       const title = document.createElement('h3');
-      title.className = 'text-lg font-semibold text-slate-950 group-hover:text-cyan-700';
+      title.className = 'text-base font-semibold leading-6 text-slate-950 group-hover:text-cyan-700 md:text-lg';
       title.textContent = tool.name;
 
       const description = document.createElement('p');
@@ -95,7 +95,7 @@
       description.textContent = tool.description;
 
       const action = document.createElement('span');
-      action.className = 'mt-auto inline-flex w-fit items-center rounded-md bg-slate-950 px-3 py-2 text-sm font-semibold text-white transition group-hover:bg-cyan-600';
+      action.className = 'mt-auto inline-flex min-h-11 w-fit items-center rounded-md bg-slate-950 px-4 py-2.5 text-sm font-semibold text-white transition group-hover:bg-cyan-600';
       action.textContent = '立即使用';
 
       link.appendChild(title);
@@ -294,8 +294,8 @@
       toggle = document.createElement('div');
       toggle.id = 'microToolsLanguageToggle';
       toggle.setAttribute('data-i18n-ignore', 'true');
-      toggle.className = 'fixed right-4 top-4 z-50 flex items-center gap-1 rounded-full border border-white/20 bg-slate-950/90 p-1 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur';
-      toggle.innerHTML = '<span data-language-label class="px-2 text-xs text-slate-300">语言</span><button type="button" data-lang-option="zh" class="rounded-full px-3 py-1.5 transition">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-1.5 transition">EN</button>';
+      toggle.className = 'fixed inset-x-4 top-4 z-50 flex w-auto flex-col gap-2 rounded-lg border border-white/20 bg-slate-950/90 p-2 text-sm font-semibold text-white shadow-lg shadow-black/20 backdrop-blur md:left-auto md:right-4 md:w-auto md:flex-row md:items-center md:gap-1 md:rounded-full md:p-1';
+      toggle.innerHTML = '<span data-language-label class="px-2 text-center text-xs text-slate-300 md:text-left">语言</span><div class="grid grid-cols-2 gap-1 md:flex md:items-center"><button type="button" data-lang-option="zh" class="rounded-full px-3 py-2 transition md:py-1.5">中文</button><button type="button" data-lang-option="en" class="rounded-full px-3 py-2 transition md:py-1.5">EN</button></div>';
       document.body.appendChild(toggle);
       toggle.addEventListener('click', (event) => {
         const button = event.target.closest('[data-lang-option]');
@@ -308,8 +308,8 @@
     toggle.querySelectorAll('[data-lang-option]').forEach((button) => {
       const active = button.getAttribute('data-lang-option') === lang;
       button.className = active
-        ? 'rounded-full bg-cyan-400 px-3 py-1.5 text-slate-950 transition'
-        : 'rounded-full px-3 py-1.5 text-slate-200 transition hover:bg-white/10';
+        ? 'rounded-full bg-cyan-400 px-3 py-2 text-slate-950 transition md:py-1.5'
+        : 'rounded-full px-3 py-2 text-slate-200 transition hover:bg-white/10 md:py-1.5';
     });
   }
 
