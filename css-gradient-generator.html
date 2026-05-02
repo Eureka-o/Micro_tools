@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" href="./assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
   <style>
     input[type="range"] { accent-color: #06b6d4; }
     .checker {
@@ -22,6 +21,7 @@
       background-position: 0 0, 0 12px, 12px -12px, -12px 0px;
     }
   </style>
+  <script src="./theme-init.js"></script>
   <!-- pwa-head:start -->
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#030712">
@@ -47,28 +47,31 @@
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
   <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
       <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
     </a>
-    <div class="flex shrink-0 items-center gap-1">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-100 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Theme: System" title="Theme: System">
+    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
+      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="切换主题" title="切换主题">
         <span class="relative inline-flex h-5 w-9 items-center justify-between">
           <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
           <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
         <span data-theme-label class="hidden sm:inline">System</span>
       </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span><span class="sm:hidden">☕</span></a>
-      <div class="flex items-center gap-1">
-        <a href="./css-gradient-generator.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
-        <a href="./en/css-gradient-generator.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
-</div>
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span></a>
+      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
+        <a href="./css-gradient-generator.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
+        <a href="./en/css-gradient-generator.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
+      </div>
     </div>
   </nav>
-  <div class="h-20" aria-hidden="true"></div>
+  <div class="h-28 md:h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
+
 
 
 
@@ -112,7 +115,7 @@
           <div class="space-y-5">
             <div>
               <label for="gradientType" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">渐变类型</label>
-              <select id="gradientType" class="w-full rounded-2xl border border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
+              <select id="gradientType" class="w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
                 <option value="linear">线性渐变 linear-gradient</option>
                 <option value="radial">径向渐变 radial-gradient</option>
                 <option value="conic">锥形渐变 conic-gradient</option>
@@ -125,12 +128,12 @@
                 <span id="angleLabel" class="rounded-lg bg-slate-50 dark:bg-slate-800 px-2 py-1 text-sm text-cyan-200">90deg</span>
               </div>
               <input id="angleRange" type="range" min="0" max="360" step="1" value="90" class="w-full" />
-              <input id="angleNumber" type="number" min="0" max="360" step="1" value="90" class="mt-3 w-full rounded-2xl border border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
+              <input id="angleNumber" type="number" min="0" max="360" step="1" value="90" class="mt-3 w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
             </div>
 
             <div id="radialPanel" class="hidden">
               <label for="radialPosition" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">径向渐变位置</label>
-              <select id="radialPosition" class="w-full rounded-2xl border border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
+              <select id="radialPosition" class="w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
                 <option value="circle at center">circle at center</option>
                 <option value="circle at top">circle at top</option>
                 <option value="circle at bottom">circle at bottom</option>
@@ -154,10 +157,10 @@
             </div>
 
             <div class="grid grid-cols-2 gap-3">
-              <button id="reverseBtn" type="button" class="rounded-2xl border border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:border-cyan-400 hover:bg-slate-700 active:scale-95">
+              <button id="reverseBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:border-cyan-400 hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95">
                 反转颜色
               </button>
-              <button id="resetBtn" type="button" class="rounded-2xl border border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:border-cyan-400 hover:bg-slate-700 active:scale-95">
+              <button id="resetBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:border-cyan-400 hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95">
                 重置
               </button>
             </div>
@@ -166,7 +169,7 @@
       </div>
 
       <div class="lg:col-span-7">
-        <div class="rounded-3xl border border-cyan-400/20 bg-slate-800/70 p-5 shadow-2xl shadow-cyan-950/20 sm:p-6">
+        <div class="rounded-3xl border border-cyan-400/20 bg-slate-50 dark:bg-slate-800/70 p-5 shadow-2xl shadow-cyan-950/20 sm:p-6">
           <div class="mb-5">
             <h2 class="text-xl font-bold text-gray-900 dark:text-white">实时预览与输出</h2>
             <p class="mt-1 text-sm text-slate-400">下方预览会随设置即时更新。</p>
@@ -174,14 +177,14 @@
 
           <div class="overflow-hidden rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950 p-3">
             <div id="preview" class="flex min-h-[320px] items-center justify-center rounded-2xl text-center shadow-inner transition-all duration-300 sm:min-h-[420px]">
-              <div class="rounded-3xl border border-white/20 bg-slate-950/35 px-6 py-5 backdrop-blur-md">
+              <div class="rounded-3xl border border-white/20 bg-white dark:bg-slate-950/35 px-6 py-5 backdrop-blur-md">
                 <p class="text-2xl font-black text-gray-900 dark:text-white drop-shadow-lg">Gradient Preview</p>
                 <p class="mt-2 text-sm text-white/80">实时 CSS 渐变背景预览</p>
               </div>
             </div>
           </div>
 
-          <div class="mt-6 rounded-3xl border border-slate-700 bg-white dark:bg-slate-950 p-4">
+          <div class="mt-6 rounded-3xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 p-4">
             <div class="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <h3 class="font-bold text-gray-900 dark:text-white">生成的 CSS 代码</h3>
               <button id="copyBtn" type="button" class="rounded-xl bg-emerald-400 px-4 py-2 text-sm font-black text-slate-950 dark:text-slate-100 transition hover:bg-emerald-300 active:scale-95">

@@ -33,30 +33,33 @@
   <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
   <script src="./theme-toggle.js" defer></script>
 </head>
-<body class="min-h-screen overflow-x-hidden bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100">
+<body class="min-h-screen overflow-x-hidden bg-white text-slate-900 dark:text-slate-100 antialiased dark:bg-slate-950">
   <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
       <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
     </a>
-    <div class="flex shrink-0 items-center gap-1">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-100 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Theme: System" title="Theme: System">
+    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
+      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
         <span class="relative inline-flex h-5 w-9 items-center justify-between">
           <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
           <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
         <span data-theme-label class="hidden sm:inline">System</span>
       </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
-      <div class="flex items-center gap-1">
-        <a href="../json-to-csv.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./json-to-csv.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
-</div>
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
+      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
+        <a href="../json-to-csv.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./json-to-csv.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+      </div>
     </div>
   </nav>
-  <div class="h-20" aria-hidden="true"></div>
+  <div class="h-28 md:h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
+
 
 <div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
     <div class="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
@@ -68,22 +71,22 @@
     <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
       <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div class="max-w-4xl">
-          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-700 dark:text-cyan-200">Online Tool · Local Parsing · No Upload</p>
-          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">JSON to CSV Converter & Validator</h1>
-          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300">Convert, format, and validate JSON and CSV locally in the browser for API debugging, spreadsheet cleanup, and import preparation.</p>
+          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-700 dark:text-cyan-200">在线工具 · 本地解析 · 无需上传</p>
+          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">JSON 与 CSV 双向格式化转换与校验工具</h1>
+          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300">在浏览器本地完成 JSON、CSV 转换、格式化与校验，适合接口调试、表格整理和批量导入前的数据清洗。</p>
         </div>
         <div class="grid grid-cols-3 gap-3 text-center">
           <div class="rounded-2xl border border-gray-200 bg-white px-4 py-3 text-center dark:border-white/10 dark:bg-white/5">
             <div class="text-xl font-bold text-cyan-300">JSON</div>
-            <div class="text-xs text-slate-500 dark:text-slate-400">Validate</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400">结构校验</div>
           </div>
           <div class="rounded-2xl border border-gray-200 bg-white px-4 py-3 text-center dark:border-white/10 dark:bg-white/5">
             <div class="text-xl font-bold text-cyan-300">CSV</div>
-            <div class="text-xs text-slate-500 dark:text-slate-400">Convert</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400">双向互转</div>
           </div>
           <div class="rounded-2xl border border-gray-200 bg-white px-4 py-3 text-center dark:border-white/10 dark:bg-white/5">
             <div class="text-xl font-bold text-cyan-300">Local</div>
-            <div class="text-xs text-slate-500 dark:text-slate-400">Browser Side</div>
+            <div class="text-xs text-slate-500 dark:text-slate-400">浏览器本地</div>
           </div>
         </div>
       </div>
@@ -91,11 +94,11 @@
   </header>
 
   <main class="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-3 shadow-2xl shadow-black/10 backdrop-blur dark:border-white/10 dark:bg-white/5 dark:shadow-black/20" aria-label="Conversion Actions">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-3 shadow-2xl shadow-black/10 backdrop-blur dark:border-white/10 dark:bg-white/5 dark:shadow-black/20" aria-label="转换操作">
       <div class="grid gap-3 md:grid-cols-3">
-          <button id="jsonToCsvBtn" type="button" class="rounded-2xl px-4 py-3 font-bold transition active:scale-[0.98] focus:outline-none focus:ring-4 bg-cyan-500 text-slate-950 shadow-cyan-500/20 hover:bg-cyan-400 focus:ring-cyan-400/20 shadow-lg">JSON to CSV</button>
-          <button id="csvToJsonBtn" type="button" class="rounded-2xl px-4 py-3 font-bold transition active:scale-[0.98] focus:outline-none focus:ring-4 bg-emerald-500 text-slate-950 shadow-emerald-500/20 hover:bg-emerald-400 focus:ring-emerald-400/20 shadow-lg">CSV to JSON</button>
-          <button id="formatJsonBtn" type="button" class="rounded-2xl px-4 py-3 font-bold transition active:scale-[0.98] focus:outline-none focus:ring-4 border border-gray-200 bg-white text-slate-800 hover:border-cyan-400/60 hover:bg-slate-50 focus:ring-slate-300 dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:bg-white/10 shadow-lg">Format / Validate JSON</button>
+          <button id="jsonToCsvBtn" type="button" class="rounded-2xl px-4 py-3 font-bold transition active:scale-[0.98] focus:outline-none focus:ring-4 bg-cyan-500 text-slate-950 dark:text-slate-100 shadow-cyan-500/20 hover:bg-cyan-400 focus:ring-cyan-400/20 shadow-lg">JSON 转 CSV</button>
+          <button id="csvToJsonBtn" type="button" class="rounded-2xl px-4 py-3 font-bold transition active:scale-[0.98] focus:outline-none focus:ring-4 bg-emerald-500 text-slate-950 dark:text-slate-100 shadow-emerald-500/20 hover:bg-emerald-400 focus:ring-emerald-400/20 shadow-lg">CSV 转 JSON</button>
+          <button id="formatJsonBtn" type="button" class="rounded-2xl px-4 py-3 font-bold transition active:scale-[0.98] focus:outline-none focus:ring-4 border border-gray-200 bg-white text-slate-800 dark:text-slate-200 hover:border-cyan-400/60 hover:bg-slate-50 focus:ring-slate-300 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10 shadow-lg">格式化 / 校验 JSON</button>
       </div>
     </section>
 
@@ -103,36 +106,36 @@
       <div class="rounded-3xl border border-cyan-400/20 bg-slate-50 dark:bg-slate-900/90 p-5 shadow-2xl shadow-cyan-950/20 backdrop-blur dark:border-white/10 dark:bg-slate-900/80 dark:shadow-black/30">
         <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <div class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-700 dark:text-cyan-200">Input</div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Paste JSON or CSV</h2>
+            <div class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-700 dark:text-cyan-200">输入区</div>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">粘贴 JSON 或 CSV</h2>
             <p id="inputStats" class="mt-1 text-sm text-slate-400">0 characters</p>
-            <p class="mt-1 text-sm text-slate-400">Supports object arrays, regular CSV tables, and JSON formatting checks.</p>
+            <p class="mt-1 text-sm text-slate-400">支持对象数组、普通 CSV 表格和 JSON 格式化校验。</p>
           </div>
-          <button id="clearBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white px-4 py-3 text-sm font-bold text-slate-800 transition hover:border-cyan-400/60 hover:text-cyan-700 active:scale-[0.98] dark:bg-white/5 dark:text-slate-200 dark:hover:bg-white/10">Clear Input</button>
+          <button id="clearBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white px-4 py-3 text-sm font-bold text-slate-800 dark:text-slate-200 transition hover:border-cyan-400/60 hover:text-cyan-700 active:scale-[0.98] dark:bg-white/5 dark:hover:bg-white/10">Clear输入</button>
         </div>
-        <textarea id="inputText" spellcheck="false" class="h-80 w-full resize-y rounded-2xl border border-gray-200 bg-white p-4 font-mono text-sm leading-6 text-slate-900 outline-none ring-cyan-400/30 transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 dark:border-white/10 dark:bg-slate-950/80 dark:text-slate-100 dark:placeholder:text-slate-600 lg:h-[28rem]" placeholder='[{"name":"Alice","age":28},{"name":"Bob","age":31}]'></textarea>
+        <textarea id="inputText" spellcheck="false" class="h-80 w-full resize-y rounded-2xl border border-gray-200 bg-white p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none ring-cyan-400/30 transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 dark:border-white/10 dark:bg-slate-950/80 dark:placeholder:text-slate-600 lg:h-[28rem]" placeholder='[{"name":"Alice","age":28},{"name":"Bob","age":31}]'></textarea>
         <div id="errorBox" class="mt-3 hidden rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm leading-6 text-red-700 dark:border-red-400/30 dark:bg-red-500/10 dark:text-red-200" role="alert" aria-live="polite"></div>
       </div>
 
       <div class="rounded-3xl border border-cyan-400/20 bg-slate-50 dark:bg-slate-900/90 p-5 shadow-2xl shadow-cyan-950/20 backdrop-blur dark:border-white/10 dark:bg-slate-900/80 dark:shadow-black/30">
         <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <div class="mb-2 inline-flex rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-200">Output</div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">Conversion Result</h2>
+            <div class="mb-2 inline-flex rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-200">输出区</div>
+            <h2 class="text-xl font-bold text-gray-900 dark:text-white">转换结果</h2>
             <p id="outputStats" class="mt-1 text-sm text-slate-400">0 characters</p>
-            <p class="mt-1 text-sm text-slate-400">Copy the result into spreadsheets, APIs, docs, or import tools.</p>
+            <p class="mt-1 text-sm text-slate-400">结果可Copy到剪贴板，继续粘贴到表格、接口或文档中。</p>
           </div>
-          <button id="copyBtn" type="button" class="rounded-2xl bg-emerald-500 px-4 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-400 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 dark:text-slate-100">Copy Result</button>
+          <button id="copyBtn" type="button" class="rounded-2xl bg-emerald-500 px-4 py-3 text-sm font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-400 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500">一键Copy</button>
         </div>
-        <textarea id="outputText" spellcheck="false" readonly class="h-80 w-full resize-y rounded-2xl border border-gray-200 bg-white p-4 font-mono text-sm leading-6 text-slate-900 outline-none ring-indigo-400/30 transition placeholder:text-slate-500 focus:border-indigo-400 focus:ring-4 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600 lg:h-[28rem]"></textarea>
+        <textarea id="outputText" spellcheck="false" readonly class="h-80 w-full resize-y rounded-2xl border border-gray-200 bg-white p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none ring-indigo-400/30 transition placeholder:text-slate-500 focus:border-indigo-400 focus:ring-4 dark:border-white/10 dark:bg-slate-950/70 dark:placeholder:text-slate-600 lg:h-[28rem]"></textarea>
         <p id="successBox" class="mt-3 hidden rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm leading-6 text-emerald-700 dark:border-emerald-400/30 dark:bg-emerald-500/10 dark:text-emerald-200" aria-live="polite"></p>
       </div>
     </section>
 
-    <article class="mt-10 rounded-3xl border border-gray-200 bg-white p-6 leading-8 text-slate-700 shadow-xl backdrop-blur dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-300 md:p-8">
-      <h2 class="mb-4 text-2xl font-black text-gray-900 dark:text-white">About This JSON and CSV Converter</h2>
-      <p>This JSON and CSV converter helps developers, analysts, operators, and content teams clean up structured data from APIs, spreadsheets, logs, and import templates.</p>
-      <p class="mt-3">It supports JSON to CSV, CSV to JSON, JSON formatting, validation, and one-click copy. Parsing runs locally in the browser, so routine data cleanup can stay fast and lightweight.</p>
+    <article class="mt-10 rounded-3xl border border-gray-200 bg-white p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl backdrop-blur dark:border-white/10 dark:bg-white/[0.06] md:p-8">
+      <h2 class="mb-4 text-2xl font-black text-gray-900 dark:text-white">关于 JSON 与 CSV 转换工具</h2>
+      <p>这款 JSON 与 CSV 转换工具面向开发者、数据分析师、运营和内容管理人员，可快速处理接口返回、表格导出、日志记录和批量数据迁移中的结构化数据。</p>
+      <p class="mt-3">工具支持 JSON 转 CSV、CSV 转 JSON、JSON 格式化校验和一键Copy。解析逻辑在浏览器本地完成，适合需要快速整理数据但又不希望上传内容的日常工作流。</p>
     </article>
   </main>
 

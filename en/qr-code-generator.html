@@ -9,8 +9,8 @@
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+  <script src="./theme-init.js"></script>
   <!-- pwa-head:start -->
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#030712">
@@ -36,28 +36,31 @@
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
   <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
       <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
     </a>
-    <div class="flex shrink-0 items-center gap-1">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-100 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Theme: System" title="Theme: System">
+    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
+      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
         <span class="relative inline-flex h-5 w-9 items-center justify-between">
           <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
           <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
         <span data-theme-label class="hidden sm:inline">System</span>
       </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
-      <div class="flex items-center gap-1">
-        <a href="../qr-code-generator.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./qr-code-generator.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
-</div>
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
+      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
+        <a href="../qr-code-generator.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./qr-code-generator.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+      </div>
     </div>
   </nav>
-  <div class="h-20" aria-hidden="true"></div>
+  <div class="h-28 md:h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
+
 
 
 
@@ -94,7 +97,7 @@
         </div>
 
         <label for="qrText" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">URL 或文本内容</label>
-        <textarea id="qrText" rows="7" class="w-full resize-y rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/80 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="例如：https://example.com 或需要Generate二维码的文本">https://example.com</textarea>
+        <textarea id="qrText" rows="7" class="w-full resize-y rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/80 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="例如：https://example.com 或需要Generate二维码的文本">https://example.com</textarea>
         <div class="mt-2 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
           <span id="byteInfo">0 bytes</span>
           <span>建议输入简短 URL 或文本，过长内容会降低识别效率</span>
@@ -103,7 +106,7 @@
         <div class="mt-6 grid gap-5 sm:grid-cols-2">
           <div>
             <label for="qrSize" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">图片尺寸</label>
-            <div class="rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
+            <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/70 p-4">
               <input id="qrSize" type="range" min="128" max="1024" step="16" value="384" class="w-full accent-cyan-400" />
               <div class="mt-3 flex items-center justify-between text-sm">
                 <span class="text-slate-400">128px</span>
@@ -115,9 +118,9 @@
 
           <div>
             <label for="qrColor" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">前景色</label>
-            <div class="flex items-center gap-3 rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
+            <div class="flex items-center gap-3 rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/70 p-4">
               <input id="qrColor" type="color" value="#0f172a" class="h-12 w-16 cursor-pointer rounded-xl border border-slate-600 bg-transparent p-1" />
-              <input id="colorText" type="text" value="#0f172a" class="min-w-0 flex-1 rounded-xl border border-slate-700 bg-slate-100 dark:bg-slate-900 px-3 py-3 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
+              <input id="colorText" type="text" value="#0f172a" class="min-w-0 flex-1 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-900 px-3 py-3 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
             </div>
           </div>
         </div>
@@ -128,7 +131,7 @@
           <button id="generateBtn" class="inline-flex flex-1 items-center justify-center rounded-2xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98]">
             Generate二维码
           </button>
-          <button id="clearBtn" class="inline-flex items-center justify-center rounded-2xl border border-slate-700 bg-slate-50 dark:bg-slate-800 px-5 py-3 font-bold text-slate-800 dark:text-slate-200 transition hover:bg-slate-700 active:scale-[0.98]">
+          <button id="clearBtn" class="inline-flex items-center justify-center rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-5 py-3 font-bold text-slate-800 dark:text-slate-200 transition hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-[0.98]">
             Clear
           </button>
         </div>
@@ -148,7 +151,7 @@
         </div>
 
         <div class="mt-5 grid gap-3 sm:grid-cols-2">
-          <button id="downloadBtn" class="inline-flex items-center justify-center rounded-2xl bg-white dark:bg-slate-950 px-5 py-3 font-bold text-gray-900 dark:text-white shadow-lg shadow-slate-950/20 transition hover:bg-slate-800 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50">
+          <button id="downloadBtn" class="inline-flex items-center justify-center rounded-2xl bg-white dark:bg-slate-950 px-5 py-3 font-bold text-gray-900 dark:text-white shadow-lg shadow-slate-950/20 transition hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50">
             Download PNG
           </button>
           <button id="copyBtn" class="inline-flex items-center justify-center rounded-2xl border border-slate-300 bg-white px-5 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-100 active:scale-[0.98]">
@@ -159,7 +162,7 @@
       </div>
     </section>
 
-    <article class="mt-10 rounded-3xl border border-slate-200 dark:border-white/10 dark:border-slate-700/70 bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl shadow-black/20 sm:p-8">
+    <article class="mt-10 rounded-3xl border border-slate-200 dark:border-white/10 dark:border-slate-700/70 bg-white dark:bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl shadow-black/20 sm:p-8">
       <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">在线二维码Generate器，让链接与文本分享更高效</h2>
       <p>
         qr-code-generator 是一款无需安装软件的在线二维码Generate器，适合将网站链接、活动页面、联系方式、产品说明或普通文本快速转换为可扫描的二维码。所有Generate过程均在浏览器本地完成，输入内容不会上传到服务器，更适合重视隐私与效率的用户。使用时，只需在输入框中粘贴 URL 或文本，按需调整二维码尺寸与前景色，点击“Generate二维码”即可实时预览结果，并支持一键Download PNG 图片。对于需要制作宣传海报、名片、门店物料、社交媒体图片的运营人员和设计师，这个自定义颜色二维码Generate工具可以显著减少沟通成本。通过“URL Generate二维码”“文本Generate二维码”“二维码 PNG Download”等功能，你可以快速获得清晰、易识别、便于传播的二维码素材。

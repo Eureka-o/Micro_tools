@@ -35,28 +35,31 @@
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
   <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
       <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
     </a>
-    <div class="flex shrink-0 items-center gap-1">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-100 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Theme: System" title="Theme: System">
+    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
+      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="切换主题" title="切换主题">
         <span class="relative inline-flex h-5 w-9 items-center justify-between">
           <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
           <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
         <span data-theme-label class="hidden sm:inline">System</span>
       </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span><span class="sm:hidden">☕</span></a>
-      <div class="flex items-center gap-1">
-        <a href="./jwt-decoder.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
-        <a href="./en/jwt-decoder.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
-</div>
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span></a>
+      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
+        <a href="./jwt-decoder.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
+        <a href="./en/jwt-decoder.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
+      </div>
     </div>
   </nav>
-  <div class="h-20" aria-hidden="true"></div>
+  <div class="h-28 md:h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
+
 
 
 
@@ -100,7 +103,7 @@
         </div>
 
         <label for="jwtInput" class="sr-only">JWT 输入框</label>
-        <textarea id="jwtInput" spellcheck="false" autocomplete="off" class="min-h-[260px] w-full resize-y rounded-2xl border border-slate-700 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="在此粘贴 JWT，例如：eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."></textarea>
+        <textarea id="jwtInput" spellcheck="false" autocomplete="off" class="min-h-[260px] w-full resize-y rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="在此粘贴 JWT，例如：eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."></textarea>
 
         <div id="errorBox" class="mt-4 hidden rounded-2xl border border-red-400/40 bg-red-500/10 p-4 text-sm text-red-100" role="alert"></div>
         <div id="successBox" class="mt-4 hidden rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-4 text-sm text-emerald-100" role="status"></div>
@@ -109,10 +112,10 @@
           <button id="decodeBtn" type="button" class="rounded-2xl bg-cyan-400 px-4 py-3 text-sm font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition active:scale-95 hover:bg-cyan-300 focus:outline-none focus:ring-4 focus:ring-cyan-400/30">
             解码
           </button>
-          <button id="sampleBtn" type="button" class="rounded-2xl border border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 text-sm font-semibold text-slate-900 dark:text-slate-100 transition active:scale-95 hover:bg-slate-700 focus:outline-none focus:ring-4 focus:ring-slate-500/30">
+          <button id="sampleBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 text-sm font-semibold text-slate-900 dark:text-slate-100 transition active:scale-95 hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none focus:ring-4 focus:ring-slate-500/30">
             示例
           </button>
-          <button id="clearBtn" type="button" class="rounded-2xl border border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 text-sm font-semibold text-slate-900 dark:text-slate-100 transition active:scale-95 hover:bg-slate-700 focus:outline-none focus:ring-4 focus:ring-slate-500/30">
+          <button id="clearBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 text-sm font-semibold text-slate-900 dark:text-slate-100 transition active:scale-95 hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none focus:ring-4 focus:ring-slate-500/30">
             清空
           </button>
           <button id="copyAllBtn" type="button" class="rounded-2xl border border-cyan-400/40 bg-cyan-400/10 px-4 py-3 text-sm font-semibold text-cyan-100 transition active:scale-95 hover:bg-cyan-400/20 focus:outline-none focus:ring-4 focus:ring-cyan-400/20">
@@ -134,7 +137,7 @@
           <section class="rounded-2xl border border-slate-700/80 bg-white dark:bg-slate-950/60">
             <div class="flex items-center justify-between border-b border-slate-700/80 px-4 py-3">
               <h3 class="font-semibold text-cyan-100">Header</h3>
-              <button data-copy="headerOutput" class="copyBtn rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-1.5 text-xs font-semibold text-slate-800 dark:text-slate-200 transition active:scale-95 hover:bg-slate-700">复制</button>
+              <button data-copy="headerOutput" class="copyBtn rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-1.5 text-xs font-semibold text-slate-800 dark:text-slate-200 transition active:scale-95 hover:bg-slate-100 dark:hover:bg-slate-700">复制</button>
             </div>
             <pre id="headerOutput" class="max-h-72 overflow-auto p-4 text-sm leading-6 text-slate-800 dark:text-slate-200"><code>{}</code></pre>
           </section>
@@ -142,7 +145,7 @@
           <section class="rounded-2xl border border-slate-700/80 bg-white dark:bg-slate-950/60">
             <div class="flex items-center justify-between border-b border-slate-700/80 px-4 py-3">
               <h3 class="font-semibold text-indigo-100">Payload</h3>
-              <button data-copy="payloadOutput" class="copyBtn rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-1.5 text-xs font-semibold text-slate-800 dark:text-slate-200 transition active:scale-95 hover:bg-slate-700">复制</button>
+              <button data-copy="payloadOutput" class="copyBtn rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-1.5 text-xs font-semibold text-slate-800 dark:text-slate-200 transition active:scale-95 hover:bg-slate-100 dark:hover:bg-slate-700">复制</button>
             </div>
             <pre id="payloadOutput" class="max-h-72 overflow-auto p-4 text-sm leading-6 text-slate-800 dark:text-slate-200"><code>{}</code></pre>
           </section>
@@ -160,7 +163,7 @@
       </div>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl shadow-black/20 backdrop-blur md:p-8">
+    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl shadow-black/20 backdrop-blur md:p-8">
       <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 jwt-decoder 本地 JWT 解码工具</h2>
       <p>
         jwt-decoder 是一款面向前端开发者、后端工程师与接口测试人员的在线 JWT 本地解码器，用于快速解析 JSON Web Token 的 Header 与 Payload。很多调试场景需要查看 alg、typ、iss、sub、aud、exp 等声明，但又担心把敏感 Token 上传到第三方服务。本工具的核心优势是纯前端运行，所有 JWT 解析都在浏览器内完成，不向服务器发送任何数据，适合登录鉴权排查、API 联调、OAuth 调试和过期时间检查。使用时只需将完整 JWT 粘贴到输入框，点击“解码”即可获得格式化 JSON 与常用声明说明。需要注意的是，JWT 解码不等同于签名验证，本工具帮助你安全查看令牌内容，但不能证明 Token 未被篡改。

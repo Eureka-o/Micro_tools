@@ -62,6 +62,7 @@
   document.addEventListener("click", (event) => {
     const button = event.target.closest("[data-theme-toggle]");
     if (!button) return;
+    event.preventDefault();
     const current = readPreference();
     const next = STATES[(STATES.indexOf(current) + 1) % STATES.length];
     applyTheme(next);

@@ -35,28 +35,31 @@
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
   <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
       <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
     </a>
-    <div class="flex shrink-0 items-center gap-1">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-100 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Theme: System" title="Theme: System">
+    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
+      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
         <span class="relative inline-flex h-5 w-9 items-center justify-between">
           <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
           <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
         <span data-theme-label class="hidden sm:inline">System</span>
       </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
-      <div class="flex items-center gap-1">
-        <a href="../json-minify.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./json-minify.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
-</div>
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
+      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
+        <a href="../json-minify.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./json-minify.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+      </div>
     </div>
   </nav>
-  <div class="h-20" aria-hidden="true"></div>
+  <div class="h-28 md:h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
+
 
 
 
@@ -70,7 +73,7 @@
     <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl"></div>
   </div>
 
-  <header class="border-b border-gray-200 dark:border-white/10 bg-slate-950/70 backdrop-blur">
+  <header class="border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 backdrop-blur">
     <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <div>
@@ -101,7 +104,7 @@
             填入示例
           </button>
         </div>
-        <textarea id="inputJson" spellcheck="false" class="h-96 w-full resize-y rounded-2xl border border-slate-700 bg-slate-950/90 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder='Please enter JSON，例如：
+        <textarea id="inputJson" spellcheck="false" class="h-96 w-full resize-y rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/90 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder='Please enter JSON，例如：
 {
   "name": "json-minify",
   "features": ["compress", "remove whitespace"]
@@ -132,21 +135,21 @@
 
     <section class="mt-6 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-4 shadow-2xl">
       <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        <div id="message" class="min-h-10 flex-1 rounded-2xl border border-slate-700 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-sm text-slate-700 dark:text-slate-300">
+        <div id="message" class="min-h-10 flex-1 rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-sm text-slate-700 dark:text-slate-300">
           准备就绪：Please enter JSON 后点击“压缩 JSON”。
         </div>
         <div class="flex flex-col gap-3 sm:flex-row">
           <button id="minifyBtn" type="button" class="rounded-2xl bg-cyan-400 px-6 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-95">
             压缩 JSON
           </button>
-          <button id="clearBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-50 dark:bg-slate-800 px-6 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-700 active:scale-95">
+          <button id="clearBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-50 dark:bg-slate-800 px-6 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95">
             Clear
           </button>
         </div>
       </div>
     </section>
 
-    <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl sm:p-8">
+    <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl sm:p-8">
       <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 json-minify JSON 压缩/去空格工具</h2>
       <p>
         json-minify 是一款面向前端开发者、后端工程师、测试人员和接口调试场景的在线 JSON 压缩工具。日常开发中，格式化后的 JSON 虽然便于阅读，但会包含大量缩进、空格和换行符，在配置发布、接口传输、日志存储或嵌入脚本时可能造成不必要的体积浪费。本工具可以将 JSON 代码压缩为一行，自动去除多余空白字符，同时通过标准 JSON 解析确保输出内容合法可靠。

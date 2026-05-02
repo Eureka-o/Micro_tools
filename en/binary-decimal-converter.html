@@ -9,7 +9,6 @@
   <link rel="icon" type="image/png" href="../assets/logo.png">
   <script>tailwind.config = { darkMode: "class" };</script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
   <style>
     html { scroll-behavior: smooth; }
     .glass {
@@ -28,6 +27,7 @@
       100% { transform: scale(1); }
     }
   </style>
+  <script src="./theme-init.js"></script>
   <!-- pwa-head:start -->
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#030712">
@@ -53,28 +53,31 @@
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
   <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-4 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 items-center justify-between gap-3 rounded-full border border-gray-200 bg-white/85 p-1.5 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/75" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 items-center gap-2 pl-1" aria-label="Micro Tools Matrix">
+  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
+    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
       <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="truncate text-xs tracking-wide text-slate-800 dark:text-slate-200 sm:text-sm">Micro Tools</span>
+      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
     </a>
-    <div class="flex shrink-0 items-center gap-1">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-100 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Theme: System" title="Theme: System">
+    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
+      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
         <span class="relative inline-flex h-5 w-9 items-center justify-between">
           <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
           <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
         <span data-theme-label class="hidden sm:inline">System</span>
       </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span><span class="sm:hidden">☕</span></a>
-      <div class="flex items-center gap-1">
-        <a href="../binary-decimal-converter.html" hreflang="zh-CN" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./binary-decimal-converter.html" hreflang="en" class="min-h-11 rounded-full px-3 py-2 transition active:scale-95 md:min-h-0 md:py-1.5 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
-</div>
+      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
+      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
+        <a href="../binary-decimal-converter.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
+        <a href="./binary-decimal-converter.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+      </div>
     </div>
   </nav>
-  <div class="h-20" aria-hidden="true"></div>
+  <div class="h-28 md:h-20" aria-hidden="true"></div>
   <!-- static-controls:end -->
+
+
+
 
 
 
@@ -143,7 +146,7 @@
               <span class="rounded-full bg-cyan-400/10 px-2.5 py-1 text-xs text-cyan-200">Base 2</span>
             </div>
             <div class="flex flex-col gap-3 sm:flex-row">
-              <input id="binaryInput" data-base="2" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：101010 或 0b101010" class="input-focus-ring w-full rounded-xl border border-gray-200 dark:border-white/10 bg-slate-950/70 px-4 py-3 font-mono text-base text-gray-900 dark:text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400" />
+              <input id="binaryInput" data-base="2" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：101010 或 0b101010" class="input-focus-ring w-full rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 px-4 py-3 font-mono text-base text-gray-900 dark:text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400" />
               <button type="button" data-copy="binaryInput" class="copyBtn rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-4 focus:ring-cyan-500/20">Copy</button>
             </div>
           </div>
@@ -154,7 +157,7 @@
               <span class="rounded-full bg-emerald-400/10 px-2.5 py-1 text-xs text-emerald-200">Base 10</span>
             </div>
             <div class="flex flex-col gap-3 sm:flex-row">
-              <input id="decimalInput" data-base="10" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：42 或 -255" class="input-focus-ring w-full rounded-xl border border-gray-200 dark:border-white/10 bg-slate-950/70 px-4 py-3 font-mono text-base text-gray-900 dark:text-white outline-none transition placeholder:text-slate-600 focus:border-emerald-400" />
+              <input id="decimalInput" data-base="10" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：42 或 -255" class="input-focus-ring w-full rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 px-4 py-3 font-mono text-base text-gray-900 dark:text-white outline-none transition placeholder:text-slate-600 focus:border-emerald-400" />
               <button type="button" data-copy="decimalInput" class="copyBtn rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-500/20">Copy</button>
             </div>
           </div>
@@ -165,7 +168,7 @@
               <span class="rounded-full bg-indigo-400/10 px-2.5 py-1 text-xs text-indigo-200">Base 16</span>
             </div>
             <div class="flex flex-col gap-3 sm:flex-row">
-              <input id="hexInput" data-base="16" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：2A 或 0xFF" class="input-focus-ring w-full rounded-xl border border-gray-200 dark:border-white/10 bg-slate-950/70 px-4 py-3 font-mono text-base uppercase text-gray-900 dark:text-white outline-none transition placeholder:normal-case placeholder:text-slate-600 focus:border-indigo-400" />
+              <input id="hexInput" data-base="16" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：2A 或 0xFF" class="input-focus-ring w-full rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 px-4 py-3 font-mono text-base uppercase text-gray-900 dark:text-white outline-none transition placeholder:normal-case placeholder:text-slate-600 focus:border-indigo-400" />
               <button type="button" data-copy="hexInput" class="copyBtn rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-4 focus:ring-indigo-500/20">Copy</button>
             </div>
           </div>
@@ -176,7 +179,7 @@
               <span class="rounded-full bg-amber-400/10 px-2.5 py-1 text-xs text-amber-200">Base 8</span>
             </div>
             <div class="flex flex-col gap-3 sm:flex-row">
-              <input id="octalInput" data-base="8" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：52 或 0o77" class="input-focus-ring w-full rounded-xl border border-gray-200 dark:border-white/10 bg-slate-950/70 px-4 py-3 font-mono text-base text-gray-900 dark:text-white outline-none transition placeholder:text-slate-600 focus:border-amber-400" />
+              <input id="octalInput" data-base="8" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：52 或 0o77" class="input-focus-ring w-full rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 px-4 py-3 font-mono text-base text-gray-900 dark:text-white outline-none transition placeholder:text-slate-600 focus:border-amber-400" />
               <button type="button" data-copy="octalInput" class="copyBtn rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-4 focus:ring-amber-500/20">Copy</button>
             </div>
           </div>
@@ -187,7 +190,7 @@
         <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输出概览</h2>
         <p class="mt-2 text-sm text-slate-400">当前有效数值会在此以不同进制集中展示，方便核对与Copy。</p>
 
-        <div class="mt-6 rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-950/70 p-5">
+        <div class="mt-6 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 p-5">
           <p class="text-xs uppercase tracking-[0.24em] text-slate-500">Current Decimal Value</p>
           <div id="summaryDecimal" class="mt-3 break-all font-mono text-2xl font-bold text-emerald-300">—</div>
         </div>
@@ -213,7 +216,7 @@
       </aside>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-900/70 p-6 shadow-xl shadow-slate-950/30 sm:p-8">
+    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/70 p-6 shadow-xl shadow-slate-950/30 sm:p-8">
       <h2 class="text-2xl font-bold text-gray-900 dark:text-white">关于 binary-decimal-converter 在线进制转换计算器</h2>
       <div class="mt-4 space-y-4 text-base leading-8 text-slate-700 dark:text-slate-300">
         <p>
