@@ -1,4 +1,4 @@
-const CACHE_NAME = "micro-tools-cache-v20260503-ultimate-pack-61";
+const CACHE_NAME = "micro-tools-cache-v20260503-linux-theme-62";
 const CACHE_ASSETS = [
   "/",
   "/index.html",
