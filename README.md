@@ -4,6 +4,42 @@ Micro Tools Matrix is a collection of small, fast, browser-based utilities for e
 
 Use it here: [https://mymicrotools.xyz](https://mymicrotools.xyz)
 
+## Update Notices
+
+### 2026-05-03 - Ultimate Tool Expansion
+
+Added seven new browser-based tools:
+
+- Crypto Security Suite for AES, RC4, and RSA key workflows.
+- JSON Path Extractor for JSON path lookup, formatting, and validation.
+- HTTP Message Parser for structured request and response inspection.
+- File Base64 Converter for file-to-Base64 and Base64-to-file workflows.
+- Binary Text Converter for text and binary code conversion.
+- ASCII Tree Generator for README-style directory trees.
+- Linux Command Cheatsheet with searchable command examples.
+
+### 2026-05-03 - IP Tools Upgrade
+
+Replaced the older IP lookup page with two focused tools:
+
+- IP Subnet Calculator for CIDR, network, broadcast, mask, host count, and usable range calculations.
+- IP Geolocation Lookup for public IP detection and browser-direct geolocation lookup with a clear privacy notice.
+
+### 2026-05-03 - LaTeX Formula Editor Upgrade
+
+Improved the LaTeX formula editor with standard KaTeX rendering and added high-resolution image export. Formulas can now be saved as transparent PNG images for documents, slides, and papers.
+
+### 2026-05-03 - Sharing Upgrade
+
+Tool pages now include a share menu with two choices:
+
+- Share Tool Only.
+- Share with Data, which can include the current tool state in the shared link when the data size is reasonable.
+
+### 2026-05-03 - Browser Experience Updates
+
+Added site icons for browser tabs and mobile home screens, and improved bilingual page metadata so Chinese and English pages are easier for search engines and shared previews to understand.
+
 ## What You Can Do
 
 - Convert, format, encode, decode, and inspect common text or data formats.
