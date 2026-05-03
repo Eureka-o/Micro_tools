@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <link rel="canonical" href="https://mymicrotools.xyz/json-path-extractor.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/json-path-extractor.html" />
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/json-path-extractor.html" />
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/json-path-extractor.html" />
+  <meta property="og:locale" content="zh_CN" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON 字段提取器 - Micro Tools Matrix 浏览器本地工具</title>
+  <meta name="description" content="JSON 字段提取与格式化解码器，支持 JSONPath / 点号路径、格式化、压缩和本地错误定位。">
+  <meta name="keywords" content="JSONPath,JSON字段提取,JSON格式化,JSON压缩,JSON解析,Micro Tools Matrix">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "JSON 字段提取器",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Windows, macOS, Android, iOS",
+  "description": "JSON 字段提取与格式化解码器，支持 JSONPath / 点号路径、格式化、压缩和本地错误定位。",
+  "url": "https://mymicrotools.xyz/json-path-extractor.html",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+    "category": "Free"
+  }
+}</script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">JSON 字段提取器</span>
+        </span>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeToggleAria" aria-label="切换主题">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="语言" data-i18n-aria-label="languageGroupAria" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="langZhAria" aria-label="切换到中文">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="langEnAria" aria-label="切换到英文">EN</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">JSON 字段提取与解码</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">JSON 字段提取器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">粘贴 JSON，输入 data.users[0].id 这样的路径，即可实时提取目标字段；格式化、压缩和合法性检查全部在本地完成。</p>
+        </div>
+        <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
+          <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+            <span data-i18n="localBadge">本地运行</span>
+          </div>
+          <div id="shareToolMenuRoot" class="relative shrink-0">
+            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
+              <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <path d="M8.6 10.7 15.4 6.3"></path>
+                <path d="M8.6 13.3 15.4 17.7"></path>
+              </svg>
+              <span data-i18n="share">分享</span>
+              <svg aria-hidden="true" class="h-3.5 w-3.5 transition" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z" clip-rule="evenodd"></path>
+              </svg>
+            </button>
+            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="分享选项">
+              <button type="button" role="menuitem" onclick="shareToolOnly()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
+                <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200">
+                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg>
+                </span>
+                <span class="min-w-0">
+                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">仅分享工具</span>
+                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span>
+                </span>
+              </button>
+              <button type="button" role="menuitem" onclick="shareWithData()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
+                <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-400/10 dark:text-cyan-300">
+                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
+                </span>
+                <span class="min-w-0">
+                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">分享工具及当前结果</span>
+                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">将当前输入或结果写入链接参数</span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">INPUT</span>
+        </div>
+
+        <div class="space-y-4">
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="pathLabel">JSONPath / 点号路径</span>
+            <input id="pathInput" type="text" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600 font-mono" data-i18n-placeholder="pathPlaceholder" placeholder="data.users[0].id">
+          </label>
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="jsonLabel">原始 JSON</span>
+            <textarea id="jsonInput" class="min-h-64 w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600 min-h-[24rem]" data-i18n-placeholder="jsonPlaceholder" placeholder="粘贴 JSON 数据"></textarea>
+          </label>
+        </div>
+        <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="formatBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="formatAction">美化/格式化</button>
+          <button id="minifyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="minifyAction">压缩/解析</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">示例</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="clearAction">清空</button>
+        </div>
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="readyStatus">准备就绪。</p>
+        <p id="errorLine" class="mt-2 hidden rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm leading-6 text-rose-700 dark:border-rose-400/20 dark:bg-rose-400/10 dark:text-rose-300"></p>
+      </section>
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">OUTPUT</span>
+        </div>
+
+        <pre id="jsonOutput" class="min-h-[24rem] overflow-auto rounded-2xl border border-gray-200 bg-slate-950 p-4 font-mono text-sm leading-6 text-emerald-100 dark:border-white/10"></pre>
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">这款 JSON 字段提取器适合在接口调试、日志排查和数据清洗时快速定位深层字段。工具支持点号路径和数组下标，例如 data.users[0].id，也可以直接格式化或压缩 JSON。解析、路径评估和错误提示都由浏览器本地 JavaScript 完成；当 JSON 不合法时，页面会尽量根据错误位置显示行列信息，方便回到原文修正。</article>
+  </main>
+
+  <script>
+    const I18N = {
+      zh: {
+        localBadge: "纯本地运算",
+        share: "分享",
+        shareAria: "打开分享菜单",
+        shareMenuAria: "分享选项",
+        shareToolOnly: "仅分享工具",
+        shareToolOnlyHint: "分享不带参数的工具页面链接",
+        shareWithData: "分享工具及当前结果",
+        shareWithDataHint: "将当前输入或结果写入链接参数",
+        shareCopied: "分享链接已复制到剪贴板！",
+        shareCopyPrompt: "复制此分享链接：",
+        shareCopyFailed: "复制失败，请手动复制地址栏链接。",
+        shareDataTooLarge: "当前数据过大，无法生成分享链接，请直接复制文本结果。",
+        sponsor: "赞赏",
+        themeToggleAria: "切换主题",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        languageGroupAria: "语言",
+        langZhAria: "切换到中文",
+        langEnAria: "切换到英文",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。",
+        inputTitle: "输入",
+        outputTitle: "结果",
+        inputBadge: "INPUT",
+        outputBadge: "OUTPUT",
+        primaryAction: "运行",
+        sampleAction: "示例",
+        clearAction: "清空",
+        copyAction: "复制结果",
+        downloadAction: "下载",
+        readyStatus: "准备就绪。",
+        copiedStatus: "结果已复制到剪贴板。",
+        copyFailedStatus: "复制失败，请手动选择结果。",
+        clearedStatus: "内容已清空。",
+        sampleStatus: "已填入示例。",
+        pathLabel: "JSONPath / 点号路径",
+        pathPlaceholder: "data.users[0].id",
+        jsonLabel: "原始 JSON",
+        jsonPlaceholder: "粘贴 JSON 数据",
+        formatAction: "美化/格式化",
+        minifyAction: "压缩/解析",
+        extractedStatus: "字段已提取。",
+        validStatus: "JSON 合法。",
+        invalidJsonStatus: "JSON 不合法。",
+        pathErrorStatus: "路径不存在或语法不正确。",
+        emptyPathStatus: "未填写路径，已显示完整 JSON。",
+        parseLinePrefix: "错误位置",
+        toolName: "JSON 字段提取器",
+        h1: "JSON 字段提取器",
+        eyebrow: "JSON 字段提取与解码",
+        intro: "粘贴 JSON，输入 data.users[0].id 这样的路径，即可实时提取目标字段；格式化、压缩和合法性检查全部在本地完成。",
+        documentTitle: "JSON 字段提取器 - Micro Tools Matrix 浏览器本地工具",
+        metaDescription: "JSON 字段提取与格式化解码器，支持 JSONPath / 点号路径、格式化、压缩和本地错误定位。",
+        metaKeywords: "JSONPath,JSON字段提取,JSON格式化,JSON压缩,JSON解析,Micro Tools Matrix",
+        seoArticle: "这款 JSON 字段提取器适合在接口调试、日志排查和数据清洗时快速定位深层字段。工具支持点号路径和数组下标，例如 data.users[0].id，也可以直接格式化或压缩 JSON。解析、路径评估和错误提示都由浏览器本地 JavaScript 完成；当 JSON 不合法时，页面会尽量根据错误位置显示行列信息，方便回到原文修正。"
+      },
+      en: {
+        localBadge: "Local",
+        share: "Share",
+        shareAria: "Open share menu",
+        shareMenuAria: "Share options",
+        shareToolOnly: "Share Tool Only",
+        shareToolOnlyHint: "Share the clean tool page link",
+        shareWithData: "Share with Data",
+        shareWithDataHint: "Include current input or result in the link",
+        shareCopied: "Share link copied to clipboard!",
+        shareCopyPrompt: "Copy this share link:",
+        shareCopyFailed: "Copy failed. Please copy the address bar link manually.",
+        shareDataTooLarge: "The current data is too large to create a share link. Please copy the text result directly.",
+        sponsor: "Sponsor",
+        themeToggleAria: "Theme",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        languageGroupAria: "Language",
+        langZhAria: "Switch to Chinese",
+        langEnAria: "Switch to English",
+        footer: "Micro Tools Matrix - browser-local processing, no upload required.",
+        inputTitle: "Input",
+        outputTitle: "Result",
+        inputBadge: "INPUT",
+        outputBadge: "OUTPUT",
+        primaryAction: "Run",
+        sampleAction: "Sample",
+        clearAction: "Clear",
+        copyAction: "Copy result",
+        downloadAction: "Download",
+        readyStatus: "Ready.",
+        copiedStatus: "Result copied to clipboard.",
+        copyFailedStatus: "Copy failed. Please select the result manually.",
+        clearedStatus: "Content cleared.",
+        sampleStatus: "Sample loaded.",
+        pathLabel: "JSONPath / dot path",
+        pathPlaceholder: "data.users[0].id",
+        jsonLabel: "Raw JSON",
+        jsonPlaceholder: "Paste JSON data",
+        formatAction: "Format",
+        minifyAction: "Minify / parse",
+        extractedStatus: "Field extracted.",
+        validStatus: "JSON is valid.",
+        invalidJsonStatus: "Invalid JSON.",
+        pathErrorStatus: "Path does not exist or has invalid syntax.",
+        emptyPathStatus: "No path entered, showing full JSON.",
+        parseLinePrefix: "Error location",
+        toolName: "JSON Path Extractor",
+        h1: "JSON Path Extractor",
+        eyebrow: "JSON field extraction",
+        intro: "Paste JSON, enter a path such as data.users[0].id, and extract the target field locally with format, minify, and validation helpers.",
+        documentTitle: "JSON Path Extractor - Micro Tools Matrix Browser-Local Tool",
+        metaDescription: "Browser-local JSON field extractor with JSONPath-style lookup, formatting, minifying, and error location hints.",
+        metaKeywords: "JSONPath,JSON field extractor,JSON formatter,JSON minifier,JSON parser,Micro Tools Matrix",
+        seoArticle: "This JSON Path Extractor helps API debugging, log inspection, and data cleanup by locating nested values quickly. It accepts dot paths and array indexes such as data.users[0].id, and it also formats or minifies JSON locally. Parsing, path evaluation, and validation happen in the browser; when JSON is invalid, the page reports a best-effort line and column hint for faster repair."
+      }
+    };
+
+    let currentLanguage = "zh";
+
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      try {
+        const saved = localStorage.getItem("microToolsLanguage");
+        return saved === "en" ? "en" : "zh";
+      } catch (error) {
+        return "zh";
+      }
+    }
+
+    function updateLanguageButtons(lang) {
+      const active = "bg-cyan-400 text-slate-950 shadow-sm";
+      const idle = "text-slate-600 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-white/10";
+      const zh = document.getElementById("langZhBtn");
+      const en = document.getElementById("langEnBtn");
+      if (zh) {
+        zh.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (lang === "zh" ? active : idle);
+      }
+      if (en) {
+        en.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (lang === "en" ? active : idle);
+      }
+    }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage] || I18N.zh;
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.title = dict.documentTitle || document.title;
+      const description = document.querySelector('meta[name="description"]');
+      if (description && dict.metaDescription) description.setAttribute("content", dict.metaDescription);
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (keywords && dict.metaKeywords) keywords.setAttribute("content", dict.metaKeywords);
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const value = dict[node.dataset.i18n];
+        if (value !== undefined) node.textContent = value;
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const value = dict[node.dataset.i18nPlaceholder];
+        if (value !== undefined) node.setAttribute("placeholder", value);
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const value = dict[node.dataset.i18nAriaLabel];
+        if (value !== undefined) node.setAttribute("aria-label", value);
+      });
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const value = dict[node.dataset.i18nTitle];
+        if (value !== undefined) node.setAttribute("title", value);
+      });
+      updateLanguageButtons(currentLanguage);
+      if (typeof refreshToolLanguage === "function") refreshToolLanguage();
+      if (window.microToolsTheme && typeof window.microToolsTheme.refresh === "function") {
+        window.microToolsTheme.refresh();
+      }
+    }
+
+    function setLanguage(lang) {
+      try {
+        localStorage.setItem("microToolsLanguage", lang === "en" ? "en" : "zh");
+      } catch (error) {
+        // localStorage can be blocked in strict private modes.
+      }
+      applyLanguage(lang);
+    }
+
+    function getText(key) {
+      const dict = I18N[currentLanguage] || I18N.zh;
+      return dict[key] || I18N.zh[key] || key;
+    }
+
+    function setStatus(key, tone = "neutral", overrideText = "") {
+      const node = document.getElementById("statusText");
+      if (!node) return;
+      node.dataset.statusKey = key || "";
+      node.textContent = overrideText || getText(key);
+      node.classList.remove("text-slate-500", "text-emerald-600", "text-rose-600", "dark:text-slate-400", "dark:text-emerald-300", "dark:text-rose-300");
+      if (tone === "success") {
+        node.classList.add("text-emerald-600", "dark:text-emerald-300");
+      } else if (tone === "error") {
+        node.classList.add("text-rose-600", "dark:text-rose-300");
+      } else {
+        node.classList.add("text-slate-500", "dark:text-slate-400");
+      }
+    }
+
+    async function copyPlainText(text, successKey = "copiedStatus") {
+      if (!text) return;
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const area = document.createElement("textarea");
+          area.value = text;
+          area.setAttribute("readonly", "");
+          area.style.position = "fixed";
+          area.style.opacity = "0";
+          document.body.appendChild(area);
+          area.select();
+          document.execCommand("copy");
+          area.remove();
+        }
+        setStatus(successKey, "success");
+      } catch (error) {
+        setStatus("copyFailedStatus", "error");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      if (typeof initializeTool === "function") initializeTool();
+      applyLanguage(getInitialLanguage());
+    });
+
+
+    function jsonErrorLocation(message, text) {
+      const match = String(message || "").match(/position\s+(\d+)/i);
+      if (!match) return "";
+      const pos = Number(match[1]);
+      const before = text.slice(0, pos);
+      const line = before.split("\n").length;
+      const col = before.length - before.lastIndexOf("\n");
+      return getText("parseLinePrefix") + ": " + line + ":" + col;
+    }
+
+    function parsePath(pathText) {
+      let path = String(pathText || "").trim().replace(/^\$\.?/, "");
+      if (!path) return [];
+      const tokens = [];
+      let index = 0;
+      const re = /([^.[\]]+)|\[(?:(\d+)|"([^"]*)"|'([^']*)')\]/g;
+      let match;
+      while ((match = re.exec(path))) {
+        const gap = path.slice(index, match.index);
+        if (gap && gap !== ".") throw new Error("badPath");
+        tokens.push(match[1] !== undefined ? match[1] : match[2] !== undefined ? Number(match[2]) : match[3] ?? match[4]);
+        index = match.index + match[0].length;
+      }
+      if (index !== path.length) throw new Error("badPath");
+      return tokens;
+    }
+
+    function extractPath(data, tokens) {
+      return tokens.reduce((value, token) => {
+        if (value === null || value === undefined || !(token in Object(value))) throw new Error("missingPath");
+        return value[token];
+      }, data);
+    }
+
+    function renderJson(value) {
+      document.getElementById("jsonOutput").textContent = typeof value === "string" ? value : JSON.stringify(value, null, 2);
+    }
+
+    function evaluateJson(silent = false) {
+      const text = document.getElementById("jsonInput").value;
+      const pathText = document.getElementById("pathInput").value;
+      const errorLine = document.getElementById("errorLine");
+      errorLine.classList.add("hidden");
+      if (!text.trim()) {
+        renderJson("");
+        if (!silent) setStatus("readyStatus");
+        return;
+      }
+      try {
+        const data = JSON.parse(text);
+        const tokens = parsePath(pathText);
+        if (!tokens.length) {
+          renderJson(data);
+          setStatus("emptyPathStatus");
+          return;
+        }
+        renderJson(extractPath(data, tokens));
+        setStatus("extractedStatus", "success");
+      } catch (error) {
+        renderJson("");
+        const isJsonError = error instanceof SyntaxError;
+        setStatus(isJsonError ? "invalidJsonStatus" : "pathErrorStatus", "error");
+        const location = isJsonError ? jsonErrorLocation(error.message, text) : "";
+        errorLine.textContent = location || error.message;
+        errorLine.classList.remove("hidden");
+      }
+    }
+
+    function formatJson() {
+      try {
+        const input = document.getElementById("jsonInput");
+        input.value = JSON.stringify(JSON.parse(input.value), null, 2);
+        evaluateJson();
+        setStatus("validStatus", "success");
+      } catch (error) {
+        evaluateJson();
+      }
+    }
+
+    function minifyJson() {
+      try {
+        const input = document.getElementById("jsonInput");
+        input.value = JSON.stringify(JSON.parse(input.value));
+        evaluateJson();
+        setStatus("validStatus", "success");
+      } catch (error) {
+        evaluateJson();
+      }
+    }
+
+    function initializeTool() {
+      const input = document.getElementById("jsonInput");
+      const pathInput = document.getElementById("pathInput");
+      input.addEventListener("input", () => evaluateJson(true));
+      pathInput.addEventListener("input", () => evaluateJson(true));
+      document.getElementById("formatBtn").addEventListener("click", formatJson);
+      document.getElementById("minifyBtn").addEventListener("click", minifyJson);
+      document.getElementById("copyBtn").addEventListener("click", () => copyPlainText(document.getElementById("jsonOutput").textContent));
+      document.getElementById("sampleBtn").addEventListener("click", () => {
+        input.value = JSON.stringify({ data: { users: [{ id: 101, name: "Ada" }, { id: 102, name: "Lin" }] } }, null, 2);
+        pathInput.value = "data.users[0].id";
+        evaluateJson();
+        setStatus("sampleStatus", "success");
+      });
+      document.getElementById("clearBtn").addEventListener("click", () => {
+        input.value = "";
+        pathInput.value = "";
+        document.getElementById("jsonOutput").textContent = "";
+        document.getElementById("errorLine").classList.add("hidden");
+        setStatus("clearedStatus");
+      });
+      setStatus("readyStatus");
+    }
+  </script>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+  <script>
+    function getShareMessage(key) {
+      const lang = typeof currentLanguage === "string" ? currentLanguage : (document.documentElement.lang === "en" ? "en" : "zh");
+      const fallback = {
+        zh: {
+          shareCopied: "分享链接已复制到剪贴板！",
+          shareCopyPrompt: "复制此分享链接：",
+          shareCopyFailed: "复制失败，请手动复制地址栏链接。",
+          shareDataTooLarge: "当前数据过大，无法生成分享链接，请直接复制文本结果。"
+        },
+        en: {
+          shareCopied: "Share link copied to clipboard!",
+          shareCopyPrompt: "Copy this share link:",
+          shareCopyFailed: "Copy failed. Please copy the address bar link manually.",
+          shareDataTooLarge: "The current data is too large to create a share link. Please copy the text result directly."
+        }
+      };
+      const dict = typeof I18N === "object" && I18N[lang] ? I18N[lang] : fallback.zh;
+      return dict[key] || fallback[lang]?.[key] || fallback.zh[key] || "";
+    }
+
+    function closeShareMenu() {
+      const menu = document.getElementById("shareToolMenu");
+      const trigger = document.getElementById("shareToolBtn");
+      if (!menu || !trigger) return;
+      menu.classList.add("hidden");
+      trigger.setAttribute("aria-expanded", "false");
+    }
+
+    function openShareMenu() {
+      const menu = document.getElementById("shareToolMenu");
+      const trigger = document.getElementById("shareToolBtn");
+      if (!menu || !trigger) return;
+      menu.classList.remove("hidden");
+      trigger.setAttribute("aria-expanded", "true");
+    }
+
+    function toggleShareMenu(event) {
+      if (event) event.stopPropagation();
+      const menu = document.getElementById("shareToolMenu");
+      if (!menu) return;
+      if (menu.classList.contains("hidden")) {
+        openShareMenu();
+      } else {
+        closeShareMenu();
+      }
+    }
+
+    function closeShareMenuOnOutsideClick(event) {
+      const root = document.getElementById("shareToolMenuRoot");
+      if (root && !root.contains(event.target)) closeShareMenu();
+    }
+
+    function getCleanShareUrl() {
+      return window.location.href.split("?")[0];
+    }
+
+    function encodeShareText(data) {
+      return encodeURIComponent(btoa(unescape(encodeURIComponent(data))));
+    }
+
+    function decodeShareText(encodedData) {
+      return decodeURIComponent(escape(atob(decodeURIComponent(encodedData))));
+    }
+
+    function getShareableControls() {
+      return Array.from(document.querySelectorAll("main textarea[id], main input[id], main select[id], main [contenteditable='true'][id]")).filter((control) => {
+        const type = (control.getAttribute("type") || control.tagName).toLowerCase();
+        return !control.disabled && !["button", "submit", "reset", "file", "hidden", "image", "password"].includes(type);
+      });
+    }
+
+    function serializeShareControl(control) {
+      const tag = control.tagName.toLowerCase();
+      const type = (control.getAttribute("type") || tag).toLowerCase();
+      const field = { id: control.id, type };
+      if (type === "checkbox" || type === "radio") {
+        field.checked = Boolean(control.checked);
+      } else if (control.isContentEditable) {
+        field.value = control.textContent || "";
+      } else {
+        field.value = control.value || "";
+      }
+      return field;
+    }
+
+    function collectShareState() {
+      const fields = getShareableControls().map(serializeShareControl).filter((field) => {
+        if (field.type === "checkbox" || field.type === "radio") return field.checked;
+        return String(field.value || "").length > 0;
+      });
+      return { version: 1, fields };
+    }
+
+    function shareUrl(url) {
+      const shareData = {
+        title: document.title,
+        url
+      };
+      if (navigator.share) {
+        navigator.share(shareData)
+          .then(() => console.log("分享成功"))
+          .catch((error) => console.log("分享失败", error));
+        return;
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url)
+          .then(() => {
+            alert(getShareMessage("shareCopied"));
+          })
+          .catch((err) => {
+            console.error("复制失败: ", err);
+            window.prompt(getShareMessage("shareCopyPrompt"), url);
+          });
+        return;
+      }
+      window.prompt(getShareMessage("shareCopyPrompt"), url);
+    }
+
+    function shareToolOnly() {
+      closeShareMenu();
+      const cleanUrl = window.location.href.split("?")[0];
+      shareUrl(cleanUrl);
+    }
+
+    function shareWithData() {
+      closeShareMenu();
+      const state = collectShareState();
+      if (!state.fields.length) {
+        shareUrl(getCleanShareUrl());
+        return;
+      }
+      const rawData = JSON.stringify(state);
+      if (rawData.length > 2000) {
+        alert(getShareMessage("shareDataTooLarge"));
+        return;
+      }
+      const encodedData = encodeShareText(rawData);
+      const stateUrl = window.location.href.split("?")[0] + "?d=" + encodedData;
+      shareUrl(stateUrl);
+    }
+
+    function applySharedField(field) {
+      if (!field || !field.id) return;
+      const control = document.getElementById(field.id);
+      if (!control) return;
+      const type = (control.getAttribute("type") || control.tagName).toLowerCase();
+      if (type === "checkbox" || type === "radio") {
+        control.checked = Boolean(field.checked);
+      } else if (control.isContentEditable) {
+        control.textContent = field.value || "";
+      } else if (Object.prototype.hasOwnProperty.call(field, "value")) {
+        control.value = field.value || "";
+      }
+      control.dispatchEvent(new Event("input", { bubbles: true }));
+      control.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+
+    function restoreShareStateFromUrl() {
+      const encodedData = new URLSearchParams(window.location.search).get("d");
+      if (!encodedData) return;
+      try {
+        const state = JSON.parse(decodeShareText(encodedData));
+        if (!state || !Array.isArray(state.fields)) return;
+        state.fields.forEach(applySharedField);
+      } catch (error) {
+        console.warn("Failed to restore shared state", error);
+      }
+    }
+
+    function initializeShareMenu() {
+      document.addEventListener("click", closeShareMenuOnOutsideClick);
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeShareMenu();
+      });
+      restoreShareStateFromUrl();
+    }
+
+    function shareTool() {
+      toggleShareMenu();
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initializeShareMenu);
+    } else {
+      initializeShareMenu();
+    }
+  </script>
+  <script src="./sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
+</body>
+</html>
+
