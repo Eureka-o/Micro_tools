@@ -16,6 +16,7 @@
   <meta name="keywords" content="二维码生成器,在线二维码,QR Code,PNG下载,浏览器本地处理,无需上传,Micro Tools Matrix">
   <link rel="stylesheet" href="./style.css">
   <script src="./theme-init.js"></script>
+  <script src="./assets/qrcode-generator-2.0.4.js"></script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -657,36 +658,27 @@
 
     function createQrMatrix(text) {
       const bytes = Array.from(new TextEncoder().encode(text));
-      let version = 0;
-      for (let v = 1; v <= 5; v++) {
-        if (bytes.length <= QR_TABLE[v].capacity) {
-          version = v;
-          break;
-        }
-      }
-      if (!version) throw new Error("too-long");
+      if (typeof qrcode !== "function") throw new Error("library-missing");
 
-      const size = 17 + version * 4;
-      const base = makeMatrix(size);
-      drawPatterns(base);
-      placeData(base, encodeData(bytes, version));
-
-      let best = null;
-      let bestMask = 0;
-      let bestScore = Infinity;
-      for (let mask = 0; mask < 8; mask++) {
-        const candidate = cloneQr(base);
-        applyMask(candidate, mask);
-        drawFormat(candidate, mask);
-        const score = penaltyScore(candidate);
-        if (score < bestScore) {
-          best = candidate;
-          bestMask = mask;
-          bestScore = score;
+      try {
+        const qr = qrcode(0, "M");
+        qr.addData(text, "Byte");
+        qr.make();
+        const moduleCount = qr.getModuleCount();
+        const matrix = Array.from({ length: moduleCount }, (_, row) =>
+          Array.from({ length: moduleCount }, (_, col) => qr.isDark(row, col))
+        );
+        return {
+          matrix,
+          version: Math.max(1, Math.round((moduleCount - 17) / 4)),
+          bytes: bytes.length
+        };
+      } catch (error) {
+        if (/code length overflow/i.test(String(error && error.message ? error.message : error))) {
+          throw new Error("too-long");
         }
+        throw error;
       }
-      drawFormat(best, bestMask);
-      return { matrix: best.modules, version, bytes: bytes.length };
     }
 
     function renderQr(result, color, pixelSize) {
@@ -728,6 +720,7 @@
 
       if (!text) {
         updateStatus("errorEmpty", "error");
+        alert(I18N[currentLanguage].errorEmpty);
         return;
       }
       if (!color) {
@@ -774,6 +767,28 @@
       updateStatus("statusDownloaded", "normal");
     }
 
+    function openSponsorModal(event) {
+      if (event?.preventDefault) event.preventDefault();
+      try {
+        if (window.MicroToolsSponsor && typeof window.MicroToolsSponsor.openModal === "function") {
+          window.MicroToolsSponsor.openModal(event);
+        }
+      } catch (error) {
+        console.warn("Sponsor modal failed to open", error);
+      }
+    }
+
+    function closeSponsorModal(event) {
+      if (event?.preventDefault) event.preventDefault();
+      try {
+        if (window.MicroToolsSponsor && typeof window.MicroToolsSponsor.closeModal === "function") {
+          window.MicroToolsSponsor.closeModal(event);
+        }
+      } catch (error) {
+        console.warn("Sponsor modal failed to close", error);
+      }
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
       document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
@@ -816,15 +831,9 @@
       const lang = typeof currentLanguage === "string" ? currentLanguage : (document.documentElement.lang === "en" ? "en" : "zh");
       const fallback = {
         zh: {
-          shareCopied: "分享链接已复制到剪贴板！",
-          shareCopyPrompt: "复制此分享链接：",
-          shareCopyFailed: "复制失败，请手动复制地址栏链接。",
           shareDataTooLarge: "当前数据过大，无法生成分享链接，请直接复制文本结果。"
         },
         en: {
-          shareCopied: "Share link copied to clipboard!",
-          shareCopyPrompt: "Copy this share link:",
-          shareCopyFailed: "Copy failed. Please copy the address bar link manually.",
           shareDataTooLarge: "The current data is too large to create a share link. Please copy the text result directly."
         }
       };
@@ -982,6 +991,12 @@
     }
 
     function initializeShareMenu() {
+      const shareButton = document.getElementById("shareToolBtn");
+      const shareOnlyButton = document.getElementById("shareToolOnlyBtn");
+      const shareWithDataButton = document.getElementById("shareWithDataBtn");
+      shareButton?.addEventListener("click", toggleShareMenu);
+      shareOnlyButton?.addEventListener("click", shareToolOnly);
+      shareWithDataButton?.addEventListener("click", shareWithData);
       document.addEventListener("click", closeShareMenuOnOutsideClick);
       document.addEventListener("keydown", (event) => {
         if (event.key === "Escape") closeShareMenu();
@@ -993,11 +1008,7 @@
       toggleShareMenu();
     }
 
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", initializeShareMenu);
-    } else {
-      initializeShareMenu();
-    }
+    document.addEventListener("DOMContentLoaded", initializeShareMenu, { once: true });
   </script>
   <script src="./sponsor.js" defer></script>
   <script src="./theme-toggle.js" defer></script>

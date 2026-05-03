@@ -6,6 +6,21 @@ Use it here: [https://mymicrotools.xyz](https://mymicrotools.xyz)
 
 ## Update Notices
 
+### 2026-05-04 - YAML/JSON And LLM/NPU Tools
+
+Added two new browser-based tools:
+
+- YAML / JSON Converter for bidirectional YAML and JSON conversion, formatting, minifying, and line-aware validation.
+- LLM / NPU Memory Calculator for estimating weight memory, KV Cache, total memory, and approximate prefill compute across FP32, FP16, INT8, and INT4 precision.
+
+### 2026-05-03 - Hardware Developer Tools
+
+Added three browser-based hardware debugging tools:
+
+- FP Quantization Visualizer for FP32, FP16, BFloat16, and INT8 bit inspection.
+- Register Bitfield Debugger for 32/64-bit register masks with BigInt-safe state handling.
+- Hardware Timing Diagram for WaveDrom-based timing waveform rendering and SVG/PNG export.
+
 ### 2026-05-03 - Ultimate Tool Expansion
 
 Added seven new browser-based tools:

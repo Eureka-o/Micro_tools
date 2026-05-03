@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <link rel="canonical" href="https://mymicrotools.xyz/llm-npu-memory-calculator.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/llm-npu-memory-calculator.html" />
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/llm-npu-memory-calculator.html" />
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/llm-npu-memory-calculator.html" />
+  <meta property="og:locale" content="zh_CN" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LLM / NPU 显存估算器 - Micro Tools Matrix 浏览器本地工具</title>
+  <meta name="description" content="大模型与 NPU 推理显存估算器，按参数量、批大小、序列长度、层数、隐藏维度和量化精度实时估算权重、KV Cache 与计算量。">
+  <meta name="keywords" content="LLM显存估算,NPU显存计算,KV Cache计算,模型参数量,量化显存,INT4,FP16,Micro Tools Matrix">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "LLM / NPU 显存估算器", "applicationCategory": "DeveloperApplication", "operatingSystem": "Windows, macOS, Android, iOS", "description": "大模型与 NPU 推理显存估算器，按参数量、批大小、序列长度、层数、隐藏维度和量化精度实时估算权重、KV Cache 与计算量。", "url": "https://mymicrotools.xyz/llm-npu-memory-calculator.html", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "category": "Free"}}</script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName"></span>
+        </span>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeToggleAria">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline"></span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor"></span>
+        </button>
+        <div role="group" data-i18n-aria-label="languageGroupAria" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="langZhAria">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="langEnAria">EN</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow"></p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1"></h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro"></p>
+        </div>
+        <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
+          <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+            <span data-i18n="localBadge">本地运行</span>
+          </div>
+          <div id="shareToolMenuRoot" class="relative shrink-0">
+            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
+              <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <path d="M8.6 10.7 15.4 6.3"></path>
+                <path d="M8.6 13.3 15.4 17.7"></path>
+              </svg>
+              <span data-i18n="share">分享</span>
+              <svg aria-hidden="true" class="h-3.5 w-3.5 transition" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z" clip-rule="evenodd"></path>
+              </svg>
+            </button>
+            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="分享选项">
+              <button type="button" role="menuitem" onclick="shareToolOnly()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
+                <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200">
+                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg>
+                </span>
+                <span class="min-w-0">
+                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">仅分享工具</span>
+                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span>
+                </span>
+              </button>
+              <button type="button" role="menuitem" onclick="shareWithData()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
+                <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-400/10 dark:text-cyan-300">
+                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
+                </span>
+                <span class="min-w-0">
+                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">分享工具及当前结果</span>
+                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">将当前输入或结果写入链接参数</span>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle"></h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge"></span>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="block"><span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="paramLabel"></span><input id="paramB" type="number" min="0" step="0.1" value="7" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100"></label>
+          <label class="block"><span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="precisionLabel"></span><select id="precision" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100"><option value="4">FP32</option><option value="2" selected>FP16</option><option value="1">INT8</option><option value="0.5">INT4</option></select></label>
+          <label class="block"><span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="batchLabel"></span><input id="batchSize" type="number" min="1" step="1" value="1" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100"></label>
+          <label class="block"><span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="seqLabel"></span><input id="seqLength" type="number" min="1" step="1" value="4096" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100"></label>
+          <label class="block"><span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="layersLabel"></span><input id="layers" type="number" min="1" step="1" value="32" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100"></label>
+          <label class="block"><span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="hiddenLabel"></span><input id="hiddenSize" type="number" min="1" step="1" value="4096" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100"></label>
+        </div>
+        <div class="mt-5 rounded-2xl border border-cyan-200 bg-cyan-50 p-4 text-sm leading-6 text-cyan-900 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-100">
+          <strong class="block text-slate-950 dark:text-white" data-i18n="assumptionTitle"></strong>
+          <span data-i18n="assumptionText"></span>
+        </div>
+        <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="resetAction"></button>
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="copyAction"></button>
+        </div>
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="readyStatus"></p>
+      </section>
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle"></h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge"></span>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70"><p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500" data-i18n="weightsTitle"></p><strong id="weightsOut" class="mt-3 block text-2xl font-black text-slate-950 dark:text-white"></strong></div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70"><p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500" data-i18n="kvTitle"></p><strong id="kvOut" class="mt-3 block text-2xl font-black text-slate-950 dark:text-white"></strong></div>
+          <div class="rounded-2xl border border-cyan-200 bg-cyan-50 p-4 dark:border-cyan-400/20 dark:bg-cyan-400/10"><p class="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-700 dark:text-cyan-300" data-i18n="totalTitle"></p><strong id="totalOut" class="mt-3 block text-2xl font-black text-slate-950 dark:text-white"></strong></div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70"><p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500" data-i18n="flopsTitle"></p><strong id="flopsOut" class="mt-3 block text-2xl font-black text-slate-950 dark:text-white"></strong></div>
+        </div>
+        <div class="mt-4 grid gap-4 sm:grid-cols-2">
+          <div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-white/10 dark:bg-white/[0.04]"><span class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500" data-i18n="tokensTitle"></span><p id="tokensOut" class="mt-2 font-mono text-sm text-slate-900 dark:text-slate-100"></p></div>
+          <div class="rounded-2xl border border-gray-200 bg-white p-4 dark:border-white/10 dark:bg-white/[0.04]"><span class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500" data-i18n="bytesTitle"></span><p id="bytesOut" class="mt-2 font-mono text-sm text-slate-900 dark:text-slate-100"></p></div>
+        </div>
+        <div class="mt-4 rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+          <h3 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="formulaTitle"></h3>
+          <pre id="formulaOut" class="mt-3 whitespace-pre-wrap break-words font-mono text-xs leading-6 text-slate-600 dark:text-slate-300"></pre>
+        </div>
+        <textarea id="resultOutput" readonly class="sr-only"></textarea>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle"></article>
+  </main>
+
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8">
+    <p data-i18n="footer"></p>
+  </footer>
+
+  <script>
+    const I18N = {
+      "zh": {
+            "localBadge": "纯本地运行",
+            "share": "分享",
+            "shareAria": "打开分享菜单",
+            "shareMenuAria": "分享选项",
+            "shareToolOnly": "仅分享工具",
+            "shareToolOnlyHint": "分享不带参数的工具页面链接",
+            "shareWithData": "分享工具及当前结果",
+            "shareWithDataHint": "将当前输入或结果写入链接参数",
+            "shareCopied": "分享链接已复制到剪贴板！",
+            "shareCopyPrompt": "复制此分享链接：",
+            "shareCopyFailed": "复制失败，请手动复制地址栏链接。",
+            "shareDataTooLarge": "当前数据过大，无法生成分享链接，请直接复制文本结果。",
+            "sponsor": "赞赏",
+            "themeToggleAria": "切换主题",
+            "themeLight": "亮色",
+            "themeDark": "深色",
+            "themeSystem": "系统",
+            "languageGroupAria": "语言",
+            "langZhAria": "切换到中文",
+            "langEnAria": "切换到英文",
+            "footer": "Micro Tools Matrix - 浏览器本地处理，无需上传。",
+            "inputTitle": "输入",
+            "outputTitle": "结果",
+            "inputBadge": "INPUT",
+            "outputBadge": "OUTPUT",
+            "sampleAction": "示例",
+            "clearAction": "清空",
+            "copyAction": "复制结果",
+            "readyStatus": "准备就绪。",
+            "copiedStatus": "结果已复制到剪贴板。",
+            "copyFailedStatus": "复制失败，请手动选择结果。",
+            "clearedStatus": "内容已清空。",
+            "sampleStatus": "已填入示例。",
+            "toolName": "LLM / NPU 显存估算器",
+            "h1": "LLM / NPU 显存估算器",
+            "eyebrow": "模型部署估算",
+            "intro": "按参数量、Batch、序列长度、层数、隐藏维度和量化精度估算权重显存、KV Cache 与近似计算量，全部在浏览器本地完成。",
+            "documentTitle": "LLM / NPU 显存估算器 - Micro Tools Matrix 浏览器本地工具",
+            "metaDescription": "大模型与 NPU 推理显存估算器，按参数量、批大小、序列长度、层数、隐藏维度和量化精度实时估算权重、KV Cache 与计算量。",
+            "metaKeywords": "LLM显存估算,NPU显存计算,KV Cache计算,模型参数量,量化显存,INT4,FP16,Micro Tools Matrix",
+            "paramLabel": "模型参数量（B）",
+            "batchLabel": "Batch Size",
+            "seqLabel": "Seq Length",
+            "layersLabel": "层数",
+            "hiddenLabel": "Hidden Size",
+            "precisionLabel": "量化精度",
+            "assumptionTitle": "估算假设",
+            "assumptionText": "权重显存 = 参数量 × 精度字节数；KV Cache = Batch × Seq × 层数 × Hidden × 2(K/V) × 精度字节数；Prefill FLOPs 近似 = 2 × 参数量 × Batch × Seq。",
+            "weightsTitle": "权重显存",
+            "kvTitle": "KV Cache",
+            "totalTitle": "合计显存",
+            "flopsTitle": "Prefill 计算量",
+            "tokensTitle": "总 Token",
+            "bytesTitle": "每参数字节",
+            "formulaTitle": "公式展开",
+            "resetAction": "重置示例",
+            "estimatedStatus": "估算已更新。",
+            "seoArticle": "LLM / NPU 显存估算器用于快速判断大模型在本地 GPU、NPU 或边缘推理设备上的大致资源需求。工具将权重占用和 KV Cache 分开展示，并给出 MB/GB 与近似 FLOPs，便于比较 FP32、FP16、INT8、INT4 等量化精度。所有计算都使用浏览器原生 JavaScript 完成，不会上传模型配置。"
+      },
+      "en": {
+            "localBadge": "Local",
+            "share": "Share",
+            "shareAria": "Open share menu",
+            "shareMenuAria": "Share options",
+            "shareToolOnly": "Share Tool Only",
+            "shareToolOnlyHint": "Share the clean tool page link",
+            "shareWithData": "Share with Data",
+            "shareWithDataHint": "Include current input or result in the link",
+            "shareCopied": "Share link copied to clipboard!",
+            "shareCopyPrompt": "Copy this share link:",
+            "shareCopyFailed": "Copy failed. Please copy the address bar link manually.",
+            "shareDataTooLarge": "The current data is too large to create a share link. Please copy the text result directly.",
+            "sponsor": "Sponsor",
+            "themeToggleAria": "Toggle theme",
+            "themeLight": "Light",
+            "themeDark": "Dark",
+            "themeSystem": "System",
+            "languageGroupAria": "Language",
+            "langZhAria": "Switch to Chinese",
+            "langEnAria": "Switch to English",
+            "footer": "Micro Tools Matrix - Browser-local processing, no upload required.",
+            "inputTitle": "Input",
+            "outputTitle": "Result",
+            "inputBadge": "INPUT",
+            "outputBadge": "OUTPUT",
+            "sampleAction": "Sample",
+            "clearAction": "Clear",
+            "copyAction": "Copy Result",
+            "readyStatus": "Ready.",
+            "copiedStatus": "Result copied to clipboard.",
+            "copyFailedStatus": "Copy failed. Select the result manually.",
+            "clearedStatus": "Cleared.",
+            "sampleStatus": "Sample loaded.",
+            "toolName": "LLM / NPU Memory Calculator",
+            "h1": "LLM / NPU Memory Calculator",
+            "eyebrow": "Model deployment estimate",
+            "intro": "Estimate model weight memory, KV Cache, and approximate prefill compute from parameters, batch, sequence length, layers, hidden size, and precision.",
+            "documentTitle": "LLM / NPU Memory Calculator - Micro Tools Matrix Browser-Local Tool",
+            "metaDescription": "Estimate LLM and NPU inference memory from parameter count, batch size, sequence length, layers, hidden size, and quantization precision.",
+            "metaKeywords": "LLM memory calculator,NPU memory estimate,KV Cache calculator,model parameters,quantization memory,INT4,FP16,Micro Tools Matrix",
+            "paramLabel": "Model Parameters (B)",
+            "batchLabel": "Batch Size",
+            "seqLabel": "Seq Length",
+            "layersLabel": "Layers",
+            "hiddenLabel": "Hidden Size",
+            "precisionLabel": "Precision",
+            "assumptionTitle": "Assumptions",
+            "assumptionText": "Weight memory = parameters × bytes per parameter; KV Cache = batch × seq × layers × hidden × 2(K/V) × bytes; prefill FLOPs ≈ 2 × parameters × batch × seq.",
+            "weightsTitle": "Weight Memory",
+            "kvTitle": "KV Cache",
+            "totalTitle": "Total Memory",
+            "flopsTitle": "Prefill Compute",
+            "tokensTitle": "Total Tokens",
+            "bytesTitle": "Bytes / Param",
+            "formulaTitle": "Formula Detail",
+            "resetAction": "Reset Sample",
+            "estimatedStatus": "Estimate updated.",
+            "seoArticle": "The LLM / NPU Memory Calculator helps estimate whether a large model can fit on a local GPU, NPU, or edge inference device. It separates model weights from KV Cache and reports MB/GB plus approximate prefill FLOPs so FP32, FP16, INT8, and INT4 deployments can be compared quickly. All calculations run locally in JavaScript."
+      }
+};
+    let currentLanguage = document.documentElement.lang.toLowerCase().startsWith("en") ? "en" : "zh";
+    function t(key) { return (I18N[currentLanguage] && I18N[currentLanguage][key]) || I18N.en[key] || I18N.zh[key] || ""; }
+    function setText(selector, value) { const el = document.querySelector(selector); if (el) el.textContent = value; }
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.querySelectorAll("[data-i18n]").forEach((el) => { el.textContent = t(el.dataset.i18n); });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => { el.setAttribute("placeholder", t(el.dataset.i18nPlaceholder)); });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((el) => { el.setAttribute("aria-label", t(el.dataset.i18nAriaLabel)); });
+      document.querySelectorAll("[data-i18n-title]").forEach((el) => { el.setAttribute("title", t(el.dataset.i18nTitle)); });
+      document.title = t("documentTitle");
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) metaDescription.setAttribute("content", t("metaDescription"));
+      const metaKeywords = document.querySelector('meta[name="keywords"]');
+      if (metaKeywords) metaKeywords.setAttribute("content", t("metaKeywords"));
+      document.getElementById("langZhBtn")?.classList.toggle("bg-cyan-400", currentLanguage === "zh");
+      document.getElementById("langZhBtn")?.classList.toggle("text-slate-950", currentLanguage === "zh");
+      document.getElementById("langEnBtn")?.classList.toggle("bg-cyan-400", currentLanguage === "en");
+      document.getElementById("langEnBtn")?.classList.toggle("text-slate-950", currentLanguage === "en");
+      if (window.microToolsTheme && typeof window.microToolsTheme.refresh === "function") window.microToolsTheme.refresh();
+      if (typeof updateTool === "function") updateTool();
+    }
+    function setStatus(keyOrText, isError = false) {
+      const status = document.getElementById("statusText");
+      if (!status) return;
+      const value = I18N[currentLanguage]?.[keyOrText] ? t(keyOrText) : keyOrText;
+      status.textContent = value;
+      status.className = "mt-4 min-h-6 text-sm leading-6 " + (isError ? "text-rose-600 dark:text-rose-300" : "text-slate-500 dark:text-slate-400");
+    }
+    async function copyText(value) {
+      try {
+        await navigator.clipboard.writeText(value || "");
+        setStatus("copiedStatus");
+      } catch (error) {
+        setStatus("copyFailedStatus", true);
+      }
+    }
+    document.getElementById("langZhBtn")?.addEventListener("click", () => applyLanguage("zh"));
+    document.getElementById("langEnBtn")?.addEventListener("click", () => applyLanguage("en"));
+
+    const fields = ["paramB", "batchSize", "seqLength", "layers", "hiddenSize", "precision"].map((id) => document.getElementById(id));
+    const resultOutput = document.getElementById("resultOutput");
+    function numberValue(id, fallback) {
+      const value = Number(document.getElementById(id).value);
+      return Number.isFinite(value) && value > 0 ? value : fallback;
+    }
+    function bytesToHuman(bytes) {
+      const gb = bytes / (1024 ** 3);
+      const mb = bytes / (1024 ** 2);
+      if (gb >= 1) return `${gb.toFixed(2)} GB`;
+      return `${mb.toFixed(2)} MB`;
+    }
+    function flopsHuman(flops) {
+      if (flops >= 1e15) return `${(flops / 1e15).toFixed(2)} PFLOPs`;
+      if (flops >= 1e12) return `${(flops / 1e12).toFixed(2)} TFLOPs`;
+      if (flops >= 1e9) return `${(flops / 1e9).toFixed(2)} GFLOPs`;
+      return `${flops.toFixed(0)} FLOPs`;
+    }
+    function updateTool() {
+      const paramsB = numberValue("paramB", 7);
+      const params = paramsB * 1e9;
+      const batch = numberValue("batchSize", 1);
+      const seq = numberValue("seqLength", 4096);
+      const layers = numberValue("layers", 32);
+      const hidden = numberValue("hiddenSize", 4096);
+      const bytes = Number(document.getElementById("precision").value);
+      const tokens = batch * seq;
+      const weightBytes = params * bytes;
+      const kvBytes = batch * seq * layers * hidden * 2 * bytes;
+      const totalBytes = weightBytes + kvBytes;
+      const flops = 2 * params * tokens;
+      document.getElementById("weightsOut").textContent = bytesToHuman(weightBytes);
+      document.getElementById("kvOut").textContent = bytesToHuman(kvBytes);
+      document.getElementById("totalOut").textContent = bytesToHuman(totalBytes);
+      document.getElementById("flopsOut").textContent = flopsHuman(flops);
+      document.getElementById("tokensOut").textContent = `${tokens.toLocaleString()} tokens`;
+      document.getElementById("bytesOut").textContent = `${bytes} B`;
+      const formula = [
+        `Parameters: ${paramsB}B = ${params.toLocaleString()} params`,
+        `Weight memory: ${params.toLocaleString()} × ${bytes} B = ${bytesToHuman(weightBytes)}`,
+        `KV Cache: ${batch} × ${seq} × ${layers} × ${hidden} × 2 × ${bytes} B = ${bytesToHuman(kvBytes)}`,
+        `Total: ${bytesToHuman(weightBytes)} + ${bytesToHuman(kvBytes)} = ${bytesToHuman(totalBytes)}`,
+        `Prefill compute: 2 × ${params.toLocaleString()} × ${tokens.toLocaleString()} = ${flopsHuman(flops)}`
+      ].join("\n");
+      document.getElementById("formulaOut").textContent = formula;
+      resultOutput.value = formula;
+      setStatus("estimatedStatus");
+    }
+    fields.forEach((field) => field.addEventListener("input", updateTool));
+    fields.forEach((field) => field.addEventListener("change", updateTool));
+    document.getElementById("sampleBtn").addEventListener("click", () => {
+      document.getElementById("paramB").value = "7";
+      document.getElementById("batchSize").value = "1";
+      document.getElementById("seqLength").value = "4096";
+      document.getElementById("layers").value = "32";
+      document.getElementById("hiddenSize").value = "4096";
+      document.getElementById("precision").value = "2";
+      updateTool();
+      setStatus("sampleStatus");
+    });
+    document.getElementById("copyBtn").addEventListener("click", () => copyText(resultOutput.value));
+    updateTool();
+
+    document.addEventListener("DOMContentLoaded", () => applyLanguage(currentLanguage));
+  </script>
+  <script>
+    function getShareMessage(key) {
+      const lang = typeof currentLanguage === "string" ? currentLanguage : (document.documentElement.lang === "en" ? "en" : "zh");
+      const fallback = {
+        zh: {
+          shareCopied: "分享链接已复制到剪贴板！",
+          shareCopyPrompt: "复制此分享链接：",
+          shareCopyFailed: "复制失败，请手动复制地址栏链接。",
+          shareDataTooLarge: "当前数据过大，无法生成分享链接，请直接复制文本结果。"
+        },
+        en: {
+          shareCopied: "Share link copied to clipboard!",
+          shareCopyPrompt: "Copy this share link:",
+          shareCopyFailed: "Copy failed. Please copy the address bar link manually.",
+          shareDataTooLarge: "The current data is too large to create a share link. Please copy the text result directly."
+        }
+      };
+      const dict = typeof I18N === "object" && I18N[lang] ? I18N[lang] : fallback.zh;
+      return dict[key] || fallback[lang]?.[key] || fallback.zh[key] || "";
+    }
+
+    function closeShareMenu() {
+      const menu = document.getElementById("shareToolMenu");
+      const trigger = document.getElementById("shareToolBtn");
+      if (!menu || !trigger) return;
+      menu.classList.add("hidden");
+      trigger.setAttribute("aria-expanded", "false");
+    }
+
+    function openShareMenu() {
+      const menu = document.getElementById("shareToolMenu");
+      const trigger = document.getElementById("shareToolBtn");
+      if (!menu || !trigger) return;
+      menu.classList.remove("hidden");
+      trigger.setAttribute("aria-expanded", "true");
+    }
+
+    function toggleShareMenu(event) {
+      if (event) event.stopPropagation();
+      const menu = document.getElementById("shareToolMenu");
+      if (!menu) return;
+      if (menu.classList.contains("hidden")) {
+        openShareMenu();
+      } else {
+        closeShareMenu();
+      }
+    }
+
+    function closeShareMenuOnOutsideClick(event) {
+      const root = document.getElementById("shareToolMenuRoot");
+      if (root && !root.contains(event.target)) closeShareMenu();
+    }
+
+    function getCleanShareUrl() {
+      return window.location.href.split("?")[0];
+    }
+
+    function encodeShareText(data) {
+      return encodeURIComponent(btoa(unescape(encodeURIComponent(data))));
+    }
+
+    function decodeShareText(encodedData) {
+      return decodeURIComponent(escape(atob(decodeURIComponent(encodedData))));
+    }
+
+    function getShareableControls() {
+      return Array.from(document.querySelectorAll("main textarea[id], main input[id], main select[id], main [contenteditable='true'][id]")).filter((control) => {
+        const type = (control.getAttribute("type") || control.tagName).toLowerCase();
+        return !control.disabled && !["button", "submit", "reset", "file", "hidden", "image", "password"].includes(type);
+      });
+    }
+
+    function serializeShareControl(control) {
+      const tag = control.tagName.toLowerCase();
+      const type = (control.getAttribute("type") || tag).toLowerCase();
+      const field = { id: control.id, type };
+      if (type === "checkbox" || type === "radio") {
+        field.checked = Boolean(control.checked);
+      } else if (control.isContentEditable) {
+        field.value = control.textContent || "";
+      } else {
+        field.value = control.value || "";
+      }
+      return field;
+    }
+
+    function collectShareState() {
+      const fields = getShareableControls().map(serializeShareControl).filter((field) => {
+        if (field.type === "checkbox" || field.type === "radio") return field.checked;
+        return String(field.value || "").length > 0;
+      });
+      return { version: 1, fields };
+    }
+
+    function shareUrl(url) {
+      const shareData = {
+        title: document.title,
+        url
+      };
+      if (navigator.share) {
+        navigator.share(shareData)
+          .then(() => console.log("分享成功"))
+          .catch((error) => console.log("分享失败", error));
+        return;
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url)
+          .then(() => {
+            alert(getShareMessage("shareCopied"));
+          })
+          .catch((err) => {
+            console.error("复制失败: ", err);
+            window.prompt(getShareMessage("shareCopyPrompt"), url);
+          });
+        return;
+      }
+      window.prompt(getShareMessage("shareCopyPrompt"), url);
+    }
+
+    function shareToolOnly() {
+      closeShareMenu();
+      const cleanUrl = window.location.href.split("?")[0];
+      shareUrl(cleanUrl);
+    }
+
+    function shareWithData() {
+      closeShareMenu();
+      const state = collectShareState();
+      if (!state.fields.length) {
+        shareUrl(getCleanShareUrl());
+        return;
+      }
+      const rawData = JSON.stringify(state);
+      if (rawData.length > 2000) {
+        alert(getShareMessage("shareDataTooLarge"));
+        return;
+      }
+      const encodedData = encodeShareText(rawData);
+      const stateUrl = window.location.href.split("?")[0] + "?d=" + encodedData;
+      shareUrl(stateUrl);
+    }
+
+    function applySharedField(field) {
+      if (!field || !field.id) return;
+      const control = document.getElementById(field.id);
+      if (!control) return;
+      const type = (control.getAttribute("type") || control.tagName).toLowerCase();
+      if (type === "checkbox" || type === "radio") {
+        control.checked = Boolean(field.checked);
+      } else if (control.isContentEditable) {
+        control.textContent = field.value || "";
+      } else if (Object.prototype.hasOwnProperty.call(field, "value")) {
+        control.value = field.value || "";
+      }
+      control.dispatchEvent(new Event("input", { bubbles: true }));
+      control.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+
+    function restoreShareStateFromUrl() {
+      const encodedData = new URLSearchParams(window.location.search).get("d");
+      if (!encodedData) return;
+      try {
+        const state = JSON.parse(decodeShareText(encodedData));
+        if (!state || !Array.isArray(state.fields)) return;
+        state.fields.forEach(applySharedField);
+      } catch (error) {
+        console.warn("Failed to restore shared state", error);
+      }
+    }
+
+    function initializeShareMenu() {
+      document.addEventListener("click", closeShareMenuOnOutsideClick);
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeShareMenu();
+      });
+      restoreShareStateFromUrl();
+    }
+
+    function shareTool() {
+      toggleShareMenu();
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initializeShareMenu);
+    } else {
+      initializeShareMenu();
+    }
+  </script>
+  <script src="./sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <link rel="canonical" href="https://mymicrotools.xyz/register-bitfield-debugger.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/register-bitfield-debugger.html" />
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/register-bitfield-debugger.html" />
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/register-bitfield-debugger.html" />
+  <meta property="og:locale" content="zh_CN" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>寄存器位段调试器 - Micro Tools Matrix 浏览器本地工具</title>
+  <meta name="description" content="32/64 位寄存器位段调试与掩码生成器，使用 BigInt 保持高 32 位准确，支持拖拽选段并生成 C/Verilog 代码。">
+  <meta name="keywords" content="寄存器位段调试器,硬件开发工具,寄存器位段,FP32,WaveDrom,Micro Tools Matrix">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"寄存器位段调试器","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS","description":"32/64 位寄存器位段调试与掩码生成器，使用 BigInt 保持高 32 位准确，支持拖拽选段并生成 C/Verilog 代码。","url":"https://mymicrotools.xyz/register-bitfield-debugger.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock","category":"Free"}}</script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+    .bit-grid { grid-template-columns: repeat(var(--bit-count), minmax(2.35rem, 1fr)); }
+    .chip-bit { box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -2px 0 rgba(15,23,42,0.18); }
+    .wave-preview svg { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">寄存器位段调试器</span>
+        </span>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeToggleAria" aria-label="切换主题">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline" data-i18n="themeSystem">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="语言" data-i18n-aria-label="languageGroupAria" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="langZhAria" aria-label="切换到中文">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="langEnAria" aria-label="切换到英文">EN</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地硬件实验台</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">寄存器位段调试器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">32/64 位寄存器位段调试与掩码生成器，使用 BigInt 保持高 32 位准确，支持拖拽选段并生成 C/Verilog 代码。</p>
+        </div>
+        
+          <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
+            <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+              <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+              <span data-i18n="localBadge">本地运行</span>
+            </div>
+            <div id="shareToolMenuRoot" class="relative shrink-0">
+              <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
+                <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="18" cy="5" r="3"></circle>
+                  <circle cx="6" cy="12" r="3"></circle>
+                  <circle cx="18" cy="19" r="3"></circle>
+                  <path d="M8.6 10.7 15.4 6.3"></path>
+                  <path d="M8.6 13.3 15.4 17.7"></path>
+                </svg>
+                <span data-i18n="share">分享</span>
+                <svg aria-hidden="true" class="h-3.5 w-3.5 transition" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z" clip-rule="evenodd"></path>
+                </svg>
+              </button>
+              <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="分享选项">
+                <button type="button" role="menuitem" onclick="shareToolOnly()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
+                  <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg>
+                  </span>
+                  <span class="min-w-0">
+                    <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">仅分享工具</span>
+                    <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span>
+                  </span>
+                </button>
+                <button type="button" role="menuitem" onclick="shareWithData()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
+                  <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-400/10 dark:text-cyan-300">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
+                  </span>
+                  <span class="min-w-0">
+                    <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">分享工具及当前结果</span>
+                    <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">将当前输入或结果写入链接参数</span>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+      </div>
+    </section>
+
+    <section class="grid min-w-0 gap-5 xl:grid-cols-[1fr_22rem]">
+      <section class="min-w-0 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="bitTitle">64 位寄存器</h2>
+          <div class="inline-flex w-fit rounded-full border border-gray-200 bg-slate-50 p-1 text-sm dark:border-white/10 dark:bg-white/[0.04]">
+            <button id="width64Btn" type="button" class="rounded-full px-3 py-1.5 font-semibold">64</button>
+            <button id="width32Btn" type="button" class="rounded-full px-3 py-1.5 font-semibold">32</button>
+          </div>
+        </div>
+        <div class="max-w-full overflow-x-auto rounded-2xl border border-slate-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-slate-950/60">
+          <div id="registerGrid" class="grid min-w-[72rem] grid-cols-8 gap-2"></div>
+        </div>
+        <div class="mt-5 grid gap-4 lg:grid-cols-2">
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="hexLabel">Hex</span>
+            <input id="hexValue" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100">
+          </label>
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="decLabel">Unsigned Dec</span>
+            <input id="decValue" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100">
+          </label>
+        </div>
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n="clearAction">清零</button>
+          <button id="fillBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="fillAction">全置 1</button>
+          <p id="statusText" class="flex min-h-11 items-center text-sm text-slate-500 dark:text-slate-400" data-i18n="statusReady">拖拽 bit 或 Shift 点击可选择连续位段。</p>
+        </div>
+      </section>
+
+      <aside class="min-w-0 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+        <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="fieldTitle">选中字段</h2>
+        <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-slate-950/60"><div class="text-xs text-slate-500 dark:text-slate-400">MSB</div><div id="fieldMsb" class="font-mono text-lg font-bold">-</div></div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-slate-950/60"><div class="text-xs text-slate-500 dark:text-slate-400">LSB</div><div id="fieldLsb" class="font-mono text-lg font-bold">-</div></div>
+        </div>
+        <label class="mt-4 block">
+          <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="cMacroLabel">C 宏定义</span>
+          <textarea id="cMacroOutput" readonly class="min-h-40 w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-xs leading-5 text-slate-900 outline-none dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100"></textarea>
+        </label>
+        <label class="mt-4 block">
+          <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="verilogLabel">Verilog 提取</span>
+          <textarea id="verilogOutput" readonly class="min-h-28 w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-xs leading-5 text-slate-900 outline-none dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100"></textarea>
+        </label>
+        <button id="copyCodeBtn" type="button" class="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制代码</button>
+      </aside>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">寄存器位段调试器用于查看 32/64 位寄存器的每一位状态，并生成字段掩码、Shift 值和 Verilog 切片代码。所有 64 位状态都由 BigInt 处理，避免 JavaScript 32 位按位操作截断高位。</article>
+  </main>
+
+    <script>
+    let regValue = 0n;
+    let regWidth = 64;
+    let selectedStart = 7;
+    let selectedEnd = 0;
+    let dragActive = false;
+    let dragAnchor = null;
+
+    function pow2(bit) {
+      return 2n ** BigInt(bit);
+    }
+
+    function widthMask(width) {
+      return pow2(width) - 1n;
+    }
+
+    function hasBit(value, bit) {
+      return (value / pow2(bit)) % 2n === 1n;
+    }
+
+    function setBit(value, bit, enabled) {
+      const unit = pow2(bit);
+      const currentlySet = hasBit(value, bit);
+      if (enabled && !currentlySet) return value + unit;
+      if (!enabled && currentlySet) return value - unit;
+      return value;
+    }
+
+    function toggleBit(bit) {
+      regValue = setBit(regValue, bit, !hasBit(regValue, bit)) % (widthMask(regWidth) + 1n);
+    }
+
+    function normalizeRegValue() {
+      const max = widthMask(regWidth);
+      if (regValue < 0n) regValue = 0n;
+      if (regValue > max) regValue = max;
+    }
+
+    function hexWidth() {
+      return regWidth === 64 ? 16 : 8;
+    }
+
+    function formatHex(value) {
+      return "0x" + value.toString(16).toUpperCase().padStart(hexWidth(), "0");
+    }
+
+    function parseHex(text) {
+      const clean = String(text).trim().replace(/^0x/i, "");
+      if (!/^[0-9a-f]+$/i.test(clean || "0")) throw new Error("invalid");
+      return BigInt("0x" + (clean || "0"));
+    }
+
+    function parseDec(text) {
+      const clean = String(text).trim();
+      if (!/^\d+$/.test(clean || "0")) throw new Error("invalid");
+      return BigInt(clean || "0");
+    }
+
+    function inSelection(bit) {
+      return bit <= Math.max(selectedStart, selectedEnd) && bit >= Math.min(selectedStart, selectedEnd);
+    }
+
+    function selectRange(a, b) {
+      selectedStart = Math.max(0, Math.min(regWidth - 1, a));
+      selectedEnd = Math.max(0, Math.min(regWidth - 1, b));
+      renderRegister();
+    }
+
+    function bitButtonClass(bit) {
+      const on = hasBit(regValue, bit);
+      const selected = inSelection(bit);
+      const base = "chip-bit flex h-14 min-w-12 flex-col items-center justify-center rounded-xl border text-xs font-bold transition hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-cyan-400/60 select-none ";
+      if (selected) return base + "border-yellow-300 bg-yellow-100 text-yellow-900 ring-2 ring-yellow-300/40 dark:border-yellow-300/60 dark:bg-yellow-300/20 dark:text-yellow-100";
+      return base + (on ? "border-cyan-300 bg-cyan-50 text-cyan-800 dark:border-cyan-400/40 dark:bg-cyan-400/15 dark:text-cyan-100" : "border-slate-200 bg-white text-slate-500 dark:border-white/10 dark:bg-slate-950/80 dark:text-slate-500");
+    }
+
+    function macroMask() {
+      const hi = Math.max(selectedStart, selectedEnd);
+      const lo = Math.min(selectedStart, selectedEnd);
+      return (pow2(hi - lo + 1) - 1n) * pow2(lo);
+    }
+
+    function renderCode() {
+      const hi = Math.max(selectedStart, selectedEnd);
+      const lo = Math.min(selectedStart, selectedEnd);
+      const mask = macroMask();
+      document.getElementById("fieldMsb").textContent = String(hi);
+      document.getElementById("fieldLsb").textContent = String(lo);
+      document.getElementById("cMacroOutput").value = "#define REG_FIELD_SHIFT " + lo + "u\n#define REG_FIELD_MASK  " + formatHex(mask) + (regWidth === 64 ? "ull" : "u") + "\n#define REG_FIELD_GET(x) (((x) & REG_FIELD_MASK) / " + formatHex(pow2(lo)) + (regWidth === 64 ? "ull" : "u") + ")";
+      document.getElementById("verilogOutput").value = "wire [" + (hi - lo) + ":0] field_value = reg_value[" + hi + ":" + lo + "];\nassign field_mask = " + regWidth + "'h" + mask.toString(16).toUpperCase().padStart(hexWidth(), "0") + ";";
+    }
+
+    function renderRegister() {
+      normalizeRegValue();
+      const grid = document.getElementById("registerGrid");
+      grid.innerHTML = "";
+      const start = regWidth - 1;
+      for (let bit = start; bit >= 0; bit -= 1) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = bitButtonClass(bit);
+        button.dataset.bit = String(bit);
+        button.innerHTML = '<span class="text-[10px] opacity-70">' + bit + '</span><span class="font-mono text-sm">' + (hasBit(regValue, bit) ? "1" : "0") + '</span>';
+        button.addEventListener("click", (event) => {
+          if (event.shiftKey) selectRange(selectedEnd, bit);
+          else {
+            toggleBit(bit);
+            selectedStart = bit;
+            selectedEnd = bit;
+            renderRegister();
+          }
+        });
+        button.addEventListener("pointerdown", (event) => {
+          dragActive = true;
+          dragAnchor = bit;
+          button.setPointerCapture(event.pointerId);
+          selectRange(bit, bit);
+        });
+        button.addEventListener("pointerenter", () => {
+          if (dragActive && dragAnchor !== null) selectRange(dragAnchor, bit);
+        });
+        button.addEventListener("pointerup", () => {
+          dragActive = false;
+          dragAnchor = null;
+        });
+        grid.appendChild(button);
+      }
+      document.getElementById("hexValue").value = formatHex(regValue);
+      document.getElementById("decValue").value = regValue.toString(10);
+      document.getElementById("width64Btn").className = regWidth === 64 ? activeLangClass : idleLangClass;
+      document.getElementById("width32Btn").className = regWidth === 32 ? activeLangClass : idleLangClass;
+      renderCode();
+    }
+
+    function setRegStatus(key) {
+      const dict = I18N[currentLanguage] || I18N.zh;
+      document.getElementById("statusText").textContent = dict[key] || key;
+    }
+
+    function initializeTool() {
+      document.addEventListener("pointerup", () => {
+        dragActive = false;
+        dragAnchor = null;
+      });
+      document.getElementById("width64Btn").addEventListener("click", () => { regWidth = 64; renderRegister(); });
+      document.getElementById("width32Btn").addEventListener("click", () => { regWidth = 32; normalizeRegValue(); if (selectedStart > 31) selectedStart = 31; if (selectedEnd > 31) selectedEnd = 0; renderRegister(); });
+      document.getElementById("hexValue").addEventListener("change", () => {
+        try {
+          const next = parseHex(document.getElementById("hexValue").value);
+          if (next > widthMask(regWidth)) throw new Error("range");
+          regValue = next;
+          renderRegister();
+        } catch (error) {
+          setRegStatus("statusInvalid");
+          renderRegister();
+        }
+      });
+      document.getElementById("decValue").addEventListener("change", () => {
+        try {
+          const next = parseDec(document.getElementById("decValue").value);
+          if (next > widthMask(regWidth)) throw new Error("range");
+          regValue = next;
+          renderRegister();
+        } catch (error) {
+          setRegStatus("statusInvalid");
+          renderRegister();
+        }
+      });
+      document.getElementById("clearBtn").addEventListener("click", () => { regValue = 0n; renderRegister(); });
+      document.getElementById("fillBtn").addEventListener("click", () => { regValue = widthMask(regWidth); renderRegister(); });
+      document.getElementById("copyCodeBtn").addEventListener("click", () => {
+        navigator.clipboard?.writeText(document.getElementById("cMacroOutput").value + "\n\n" + document.getElementById("verilogOutput").value);
+        setRegStatus("statusCopied");
+      });
+      regValue = 0x80000000000000FFn;
+      renderRegister();
+    }
+  </script>
+  
+  <script>
+    const I18N = {"zh":{"htmlLang":"zh-CN","canonical":"https://mymicrotools.xyz/register-bitfield-debugger.html","locale":"zh_CN","title":"寄存器位段调试器 - Micro Tools Matrix 浏览器本地工具","metaDescription":"32/64 位寄存器位段调试与掩码生成器，使用 BigInt 保持高 32 位准确，支持拖拽选段并生成 C/Verilog 代码。","keywords":"寄存器位段调试器,硬件开发工具,寄存器位段,FP32,WaveDrom,Micro Tools Matrix","toolName":"寄存器位段调试器","eyebrow":"BigInt 64 位寄存器沙盒","introDefault":"32/64 位寄存器位段调试与掩码生成器，使用 BigInt 保持高 32 位准确，支持拖拽选段并生成 C/Verilog 代码。","localBadge":"本地运行","sponsor":"赞赏","themeToggleAria":"切换主题","themeSystem":"系统","languageGroupAria":"语言","langZhAria":"切换到中文","langEnAria":"切换到英文","share":"分享","shareAria":"打开分享菜单","shareMenuAria":"分享选项","shareToolOnly":"仅分享工具","shareToolOnlyHint":"分享不带参数的工具页面链接","shareWithData":"分享工具及当前结果","shareWithDataHint":"将当前输入或结果写入链接参数","shareCopied":"分享链接已复制到剪贴板！","shareCopyPrompt":"复制此分享链接：","shareCopyFailed":"复制失败，请手动复制地址栏链接。","shareDataTooLarge":"当前数据过大，无法生成分享链接，请直接复制文本结果。","footer":"Micro Tools Matrix - 浏览器本地处理，无需上传。","h1":"寄存器位段调试器","intro":"使用 BigInt 保存完整 64 位寄存器状态，点击、拖拽或 Shift 连选 bit，实时同步 Hex/Dec 并生成 C 宏和 Verilog 提取代码。","bitTitle":"64 位寄存器","valueTitle":"数值输入","widthLabel":"寄存器宽度","hexLabel":"Hex","decLabel":"Unsigned Dec","fieldTitle":"选中字段","cMacroLabel":"C 宏定义","verilogLabel":"Verilog 提取","clearAction":"清零","fillAction":"全置 1","copyAction":"复制代码","statusReady":"拖拽 bit 或 Shift 点击可选择连续位段。","statusCopied":"代码已复制。","statusInvalid":"数值超出当前宽度或格式不合法。","seoArticle":"寄存器位段调试器用于查看 32/64 位寄存器的每一位状态，并生成字段掩码、Shift 值和 Verilog 切片代码。所有 64 位状态都由 BigInt 处理，避免 JavaScript 32 位按位操作截断高位。"},"en":{"htmlLang":"en","canonical":"https://mymicrotools.xyz/en/register-bitfield-debugger.html","locale":"en_US","title":"Register Bitfield Debugger - Micro Tools Matrix Browser-Local Tool","metaDescription":"Debug 32/64-bit register bitfields with BigInt-safe state, drag range selection, and generated C/Verilog snippets.","keywords":"Register Bitfield Debugger,hardware developer tool,bitfield,FP32,WaveDrom,Micro Tools Matrix","toolName":"Register Bitfield Debugger","eyebrow":"BigInt 64-bit register sandbox","introDefault":"Debug 32/64-bit register bitfields with BigInt-safe state, drag range selection, and generated C/Verilog snippets.","localBadge":"Local","sponsor":"Sponsor","themeToggleAria":"Theme","themeSystem":"System","languageGroupAria":"Language","langZhAria":"Switch to Chinese","langEnAria":"Switch to English","share":"Share","shareAria":"Open share menu","shareMenuAria":"Share options","shareToolOnly":"Share Tool Only","shareToolOnlyHint":"Share the clean tool page link","shareWithData":"Share with Data","shareWithDataHint":"Include current input or result in the link","shareCopied":"Share link copied to clipboard!","shareCopyPrompt":"Copy this share link:","shareCopyFailed":"Copy failed. Please copy the address bar link manually.","shareDataTooLarge":"The current data is too large to create a share link. Please copy the text result directly.","footer":"Micro Tools Matrix - browser-local tools, no upload required.","h1":"Register Bitfield Debugger","intro":"Keep the full 64-bit register state in BigInt, click, drag, or Shift-select bits, sync Hex/Dec live, and generate C macros plus Verilog extraction code.","bitTitle":"64-Bit Register","valueTitle":"Value Input","widthLabel":"Register width","hexLabel":"Hex","decLabel":"Unsigned Dec","fieldTitle":"Selected Field","cMacroLabel":"C Macros","verilogLabel":"Verilog Extract","clearAction":"Clear","fillAction":"Set All","copyAction":"Copy Code","statusReady":"Drag bits or Shift-click to select a continuous bitfield.","statusCopied":"Code copied.","statusInvalid":"Value is invalid or outside the current width.","seoArticle":"The Register Bitfield Debugger inspects every bit in a 32/64-bit register and generates field masks, shift values, and Verilog slices. All 64-bit state is handled with BigInt to avoid JavaScript 32-bit bitwise truncation."}};
+    let currentLanguage = document.documentElement.lang === "en" ? "en" : "zh";
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (dict[key] !== undefined) node.textContent = dict[key];
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (dict[key] !== undefined) node.setAttribute("placeholder", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (dict[key] !== undefined) node.setAttribute("aria-label", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (dict[key] !== undefined) node.setAttribute("title", dict[key]);
+      });
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = currentLanguage === "zh" ? activeLangClass : idleLangClass;
+        enBtn.className = currentLanguage === "en" ? activeLangClass : idleLangClass;
+      }
+      if (typeof onLanguageApplied === "function") onLanguageApplied();
+    }
+
+    const activeLangClass = "min-h-9 rounded-full bg-cyan-400 px-3 text-sm font-semibold text-slate-950 shadow-sm transition active:scale-95";
+    const idleLangClass = "min-h-9 rounded-full px-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 active:scale-95 dark:text-slate-300 dark:hover:bg-white/10";
+
+    function getShareMessage(key) {
+      const dict = I18N[currentLanguage] || I18N.zh;
+      return dict[key] || "";
+    }
+
+    function closeShareMenu() {
+      const menu = document.getElementById("shareToolMenu");
+      const trigger = document.getElementById("shareToolBtn");
+      if (!menu || !trigger) return;
+      menu.classList.add("hidden");
+      trigger.setAttribute("aria-expanded", "false");
+    }
+
+    function toggleShareMenu(event) {
+      if (event) event.stopPropagation();
+      const menu = document.getElementById("shareToolMenu");
+      const trigger = document.getElementById("shareToolBtn");
+      if (!menu || !trigger) return;
+      const open = menu.classList.toggle("hidden") === false;
+      trigger.setAttribute("aria-expanded", String(open));
+    }
+
+    function getCleanShareUrl() {
+      return window.location.href.split("?")[0];
+    }
+
+    function encodeShareText(data) {
+      return encodeURIComponent(btoa(unescape(encodeURIComponent(data))));
+    }
+
+    function decodeShareText(encodedData) {
+      return decodeURIComponent(escape(atob(decodeURIComponent(encodedData))));
+    }
+
+    function getShareableControls() {
+      return Array.from(document.querySelectorAll("main textarea[id], main input[id], main select[id], main [contenteditable='true'][id]")).filter((control) => {
+        const type = (control.getAttribute("type") || control.tagName).toLowerCase();
+        return !control.disabled && !["button", "submit", "reset", "file", "hidden", "image", "password"].includes(type);
+      });
+    }
+
+    function collectShareState() {
+      const fields = getShareableControls().map((control) => {
+        const type = (control.getAttribute("type") || control.tagName).toLowerCase();
+        const field = { id: control.id, type };
+        if (type === "checkbox" || type === "radio") field.checked = Boolean(control.checked);
+        else if (control.isContentEditable) field.value = control.textContent || "";
+        else field.value = control.value || "";
+        return field;
+      }).filter((field) => field.type === "checkbox" || field.type === "radio" ? field.checked : String(field.value || "").length > 0);
+      return { version: 1, fields };
+    }
+
+    function shareUrl(url) {
+      const shareData = { title: document.title, url };
+      if (navigator.share) {
+        navigator.share(shareData).catch((error) => console.log("share failed", error));
+        return;
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => alert(getShareMessage("shareCopied"))).catch(() => window.prompt(getShareMessage("shareCopyPrompt"), url));
+        return;
+      }
+      window.prompt(getShareMessage("shareCopyPrompt"), url);
+    }
+
+    function shareToolOnly() {
+      closeShareMenu();
+      shareUrl(getCleanShareUrl());
+    }
+
+    function shareWithData() {
+      closeShareMenu();
+      const rawData = JSON.stringify(collectShareState());
+      if (rawData.length > 2000) {
+        alert(getShareMessage("shareDataTooLarge"));
+        return;
+      }
+      const encodedData = encodeShareText(rawData);
+      shareUrl(getCleanShareUrl() + "?d=" + encodedData);
+    }
+
+    function restoreShareStateFromUrl() {
+      const encodedData = new URLSearchParams(window.location.search).get("d");
+      if (!encodedData) return;
+      try {
+        const state = JSON.parse(decodeShareText(encodedData));
+        if (!state || !Array.isArray(state.fields)) return;
+        state.fields.forEach((field) => {
+          const control = document.getElementById(field.id);
+          if (!control) return;
+          const type = (control.getAttribute("type") || control.tagName).toLowerCase();
+          if (type === "checkbox" || type === "radio") control.checked = Boolean(field.checked);
+          else if (control.isContentEditable) control.textContent = field.value || "";
+          else if (Object.prototype.hasOwnProperty.call(field, "value")) control.value = field.value || "";
+          control.dispatchEvent(new Event("input", { bubbles: true }));
+          control.dispatchEvent(new Event("change", { bubbles: true }));
+        });
+      } catch (error) {
+        console.warn("Failed to restore shared state", error);
+      }
+    }
+
+    function shareTool() {
+      toggleShareMenu();
+    }
+
+    function initializeCommonShell() {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => applyLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => applyLanguage("en"));
+      document.addEventListener("click", (event) => {
+        const root = document.getElementById("shareToolMenuRoot");
+        if (root && !root.contains(event.target)) closeShareMenu();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeShareMenu();
+      });
+      applyLanguage(currentLanguage);
+      restoreShareStateFromUrl();
+      if (typeof initializeTool === "function") initializeTool();
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initializeCommonShell);
+    } else {
+      initializeCommonShell();
+    }
+  </script>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+  <script src="./sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
+</body>
+</html>

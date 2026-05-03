@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <link rel="canonical" href="https://mymicrotools.xyz/fp-quantization-visualizer.html">
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/fp-quantization-visualizer.html" />
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/fp-quantization-visualizer.html" />
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/fp-quantization-visualizer.html" />
+  <meta property="og:locale" content="zh_CN" />
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FP/量化可视化器 - Micro Tools Matrix 浏览器本地工具</title>
+  <meta name="description" content="多精度浮点数与量化可视化器，支持 FP32、FP16、BFloat16 和 INT8 的位图翻转、Hex 与十进制同步重算。">
+  <meta name="keywords" content="FP/量化可视化器,硬件开发工具,寄存器位段,FP32,WaveDrom,Micro Tools Matrix">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"FP/量化可视化器","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS","description":"多精度浮点数与量化可视化器，支持 FP32、FP16、BFloat16 和 INT8 的位图翻转、Hex 与十进制同步重算。","url":"https://mymicrotools.xyz/fp-quantization-visualizer.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock","category":"Free"}}</script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+    .bit-grid { grid-template-columns: repeat(var(--bit-count), minmax(2.35rem, 1fr)); }
+    .chip-bit { box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -2px 0 rgba(15,23,42,0.18); }
+    .wave-preview svg { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">FP/量化可视化器</span>
+        </span>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeToggleAria" aria-label="切换主题">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline" data-i18n="themeSystem">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="语言" data-i18n-aria-label="languageGroupAria" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="langZhAria" aria-label="切换到中文">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="langEnAria" aria-label="切换到英文">EN</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地硬件实验台</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">FP/量化可视化器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">多精度浮点数与量化可视化器，支持 FP32、FP16、BFloat16 和 INT8 的位图翻转、Hex 与十进制同步重算。</p>
+        </div>
+        
+          <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
+            <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+              <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+              <span data-i18n="localBadge">本地运行</span>
+            </div>
+            <div id="shareToolMenuRoot" class="relative shrink-0">
+              <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
+                <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="18" cy="5" r="3"></circle>
+                  <circle cx="6" cy="12" r="3"></circle>
+                  <circle cx="18" cy="19" r="3"></circle>
+                  <path d="M8.6 10.7 15.4 6.3"></path>
+                  <path d="M8.6 13.3 15.4 17.7"></path>
+                </svg>
+                <span data-i18n="share">分享</span>
+                <svg aria-hidden="true" class="h-3.5 w-3.5 transition" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z" clip-rule="evenodd"></path>
+                </svg>
+              </button>
+              <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="分享选项">
+                <button type="button" role="menuitem" onclick="shareToolOnly()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
+                  <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg>
+                  </span>
+                  <span class="min-w-0">
+                    <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">仅分享工具</span>
+                    <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span>
+                  </span>
+                </button>
+                <button type="button" role="menuitem" onclick="shareWithData()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
+                  <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-400/10 dark:text-cyan-300">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
+                  </span>
+                  <span class="min-w-0">
+                    <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">分享工具及当前结果</span>
+                    <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">将当前输入或结果写入链接参数</span>
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+      </div>
+    </section>
+
+    <section class="grid min-w-0 gap-5 lg:grid-cols-[0.9fr_1.1fr]">
+      <section class="min-w-0 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">格式与数值</h2>
+          <span class="rounded-full border border-cyan-200 bg-cyan-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-cyan-700 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-300">FP</span>
+        </div>
+        <div class="space-y-4">
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="formatLabel">数值格式</span>
+            <select id="formatSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100">
+              <option value="fp32">FP32</option>
+              <option value="fp16">FP16</option>
+              <option value="bf16">BFloat16</option>
+              <option value="int8">INT8</option>
+            </select>
+          </label>
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="decimalLabel">十进制输入</span>
+            <input id="decimalInput" inputmode="decimal" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100" value="1.5">
+          </label>
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="hexLabel">十六进制输入</span>
+            <input id="hexInput" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100" value="0x3FC00000">
+          </label>
+          <div class="grid gap-3 sm:grid-cols-3">
+            <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n="sampleAction">示例</button>
+            <button id="copyHexBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-4 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制 Hex</button>
+            <button id="resetBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n="resetAction">重置</button>
+          </div>
+          <p id="statusText" class="min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="statusReady">点击 bit 方块可立即翻转并重算。</p>
+        </div>
+      </section>
+
+      <section class="min-w-0 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="bitMapTitle">交互式 Bit Map</h2>
+          <span id="bitCountBadge" class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400">32 bits</span>
+        </div>
+        <div class="max-w-full overflow-x-auto rounded-2xl border border-slate-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-slate-950/60">
+          <div id="bitGrid" class="bit-grid grid min-w-max gap-1" style="--bit-count:32"></div>
+        </div>
+        <div class="mt-5 grid gap-3 sm:grid-cols-2">
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/60">
+            <div class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400" data-i18n="binaryLabel">二进制</div>
+            <div id="binaryOutput" class="mt-2 break-all font-mono text-sm text-slate-900 dark:text-slate-100"></div>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/60">
+            <h2 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">字段解析</h2>
+            <dl class="mt-3 space-y-2 text-sm">
+              <div class="flex justify-between gap-3"><dt class="text-slate-500 dark:text-slate-400" data-i18n="signLabel">符号位</dt><dd id="signOutput" class="font-mono text-slate-900 dark:text-slate-100"></dd></div>
+              <div class="flex justify-between gap-3"><dt class="text-slate-500 dark:text-slate-400" data-i18n="exponentLabel">指数位</dt><dd id="exponentOutput" class="font-mono text-slate-900 dark:text-slate-100"></dd></div>
+              <div class="flex justify-between gap-3"><dt class="text-slate-500 dark:text-slate-400" data-i18n="mantissaLabel">尾数位</dt><dd id="mantissaOutput" class="max-w-40 truncate font-mono text-slate-900 dark:text-slate-100"></dd></div>
+              <div class="flex justify-between gap-3"><dt class="text-slate-500 dark:text-slate-400">Decimal</dt><dd id="decimalOutput" class="font-mono text-slate-900 dark:text-slate-100"></dd></div>
+            </dl>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">FP/量化可视化器用于快速检查 IEEE 754 浮点数和 INT8 量化值的底层位模式。页面完全在浏览器内运行，适合芯片验证、模型量化、驱动调试和二进制协议排查。</article>
+  </main>
+
+    <script>
+    let fpBits = 0;
+    let fpSyncing = false;
+
+    function fpFormat() {
+      return document.getElementById("formatSelect").value;
+    }
+
+    function bitLength(format) {
+      return format === "fp32" ? 32 : format === "int8" ? 8 : 16;
+    }
+
+    function maskFor(format) {
+      return 2 ** bitLength(format) - 1;
+    }
+
+    function bitModulus(format) {
+      return 2 ** bitLength(format);
+    }
+
+    function normalizeBits(value, format) {
+      const modulus = bitModulus(format);
+      const numeric = Number(value);
+      if (!Number.isFinite(numeric)) return 0;
+      return ((Math.trunc(numeric) % modulus) + modulus) % modulus;
+    }
+
+    function hasBit(value, bit) {
+      const unit = 2 ** bit;
+      return Math.floor(value / unit) % 2 === 1;
+    }
+
+    function toggleBit(value, bit, format) {
+      const normalized = normalizeBits(value, format);
+      const unit = 2 ** bit;
+      return normalizeBits(hasBit(normalized, bit) ? normalized - unit : normalized + unit, format);
+    }
+
+    function parseHexBits(input, format) {
+      const cleaned = input.trim().replace(/^0x/i, "");
+      if (!/^[0-9a-f]+$/i.test(cleaned)) return NaN;
+      return normalizeBits(Number.parseInt(cleaned, 16), format);
+    }
+
+    function fp32BitsFromNumber(value) {
+      const buffer = new ArrayBuffer(4);
+      const view = new DataView(buffer);
+      view.setFloat32(0, Number(value), false);
+      return view.getUint32(0, false);
+    }
+
+    function fp32NumberFromBits(bits) {
+      const buffer = new ArrayBuffer(4);
+      const view = new DataView(buffer);
+      view.setUint32(0, normalizeBits(bits, "fp32"), false);
+      return view.getFloat32(0, false);
+    }
+
+    function fp16BitsFromNumber(value) {
+      const floatView = new Float32Array(1);
+      const intView = new Uint32Array(floatView.buffer);
+      floatView[0] = Number(value);
+      const x = intView[0];
+      const sign = (x >>> 16) & 0x8000;
+      let mantissa = x & 0x7fffff;
+      let exp = (x >>> 23) & 0xff;
+      if (exp === 0xff) return sign | (mantissa ? 0x7e00 : 0x7c00);
+      exp = exp - 127 + 15;
+      if (exp >= 0x1f) return sign | 0x7c00;
+      if (exp <= 0) {
+        if (exp < -10) return sign;
+        mantissa = (mantissa | 0x800000) >>> (1 - exp);
+        return sign | ((mantissa + 0x1000) >>> 13);
+      }
+      return sign | (exp << 10) | ((mantissa + 0x1000) >>> 13);
+    }
+
+    function fp16NumberFromBits(bits) {
+      bits = normalizeBits(bits, "fp16");
+      const sign = (bits & 0x8000) ? -1 : 1;
+      const exp = (bits >>> 10) & 0x1f;
+      const frac = bits & 0x03ff;
+      if (exp === 0) return sign * (frac ? (frac / 1024) * 2 ** -14 : 0);
+      if (exp === 31) return frac ? NaN : sign * Infinity;
+      return sign * (1 + frac / 1024) * 2 ** (exp - 15);
+    }
+
+    function bf16BitsFromNumber(value) {
+      return Math.floor(fp32BitsFromNumber(value) / 2 ** 16);
+    }
+
+    function bf16NumberFromBits(bits) {
+      return fp32NumberFromBits(normalizeBits(bits, "bf16") * 2 ** 16);
+    }
+
+    function int8BitsFromNumber(value) {
+      const n = Math.max(-128, Math.min(127, Math.trunc(Number(value) || 0)));
+      return n < 0 ? 256 + n : n;
+    }
+
+    function int8NumberFromBits(bits) {
+      bits = normalizeBits(bits, "int8");
+      return bits >= 128 ? bits - 256 : bits;
+    }
+
+    function bitsFromDecimal(format, value) {
+      if (format === "fp32") return fp32BitsFromNumber(value);
+      if (format === "fp16") return fp16BitsFromNumber(value);
+      if (format === "bf16") return bf16BitsFromNumber(value);
+      return int8BitsFromNumber(value);
+    }
+
+    function decimalFromBits(format, bits) {
+      if (format === "fp32") return fp32NumberFromBits(bits);
+      if (format === "fp16") return fp16NumberFromBits(bits);
+      if (format === "bf16") return bf16NumberFromBits(bits);
+      return int8NumberFromBits(bits);
+    }
+
+    function normalizeHex(value, width) {
+      const modulus = 2 ** width;
+      const normalized = ((Math.trunc(Number(value) || 0) % modulus) + modulus) % modulus;
+      return "0x" + normalized.toString(16).toUpperCase().padStart(width / 4, "0");
+    }
+
+    function fieldClass(field) {
+      if (field === "sign") return "border-rose-300 bg-rose-50 text-rose-700 dark:border-rose-400/40 dark:bg-rose-400/15 dark:text-rose-200";
+      if (field === "exp") return "border-cyan-300 bg-cyan-50 text-cyan-700 dark:border-cyan-400/40 dark:bg-cyan-400/15 dark:text-cyan-200";
+      return "border-violet-300 bg-violet-50 text-violet-700 dark:border-violet-400/40 dark:bg-violet-400/15 dark:text-violet-200";
+    }
+
+    function fieldForBit(format, indexFromMsb) {
+      if (format === "fp32") return indexFromMsb === 0 ? "sign" : indexFromMsb < 9 ? "exp" : "mant";
+      if (format === "int8") return indexFromMsb === 0 ? "sign" : "mant";
+      return indexFromMsb === 0 ? "sign" : indexFromMsb < 6 ? "exp" : "mant";
+    }
+
+    function renderFp() {
+      const format = fpFormat();
+      const bits = bitLength(format);
+      fpBits = normalizeBits(fpBits, format);
+      const grid = document.getElementById("bitGrid");
+      grid.style.setProperty("--bit-count", String(bits));
+      grid.innerHTML = "";
+      for (let bit = bits - 1; bit >= 0; bit -= 1) {
+        const indexFromMsb = bits - 1 - bit;
+        const field = fieldForBit(format, indexFromMsb);
+        const value = hasBit(fpBits, bit) ? 1 : 0;
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "chip-bit flex h-12 min-w-9 flex-col items-center justify-center rounded-xl border text-xs font-bold transition hover:scale-[1.03] focus:outline-none focus:ring-2 focus:ring-cyan-400/60 " + fieldClass(field);
+        button.innerHTML = '<span class="text-[10px] opacity-70">' + bit + '</span><span class="font-mono text-sm">' + value + '</span>';
+        button.addEventListener("click", () => {
+          fpBits = toggleBit(fpBits, bit, format);
+          syncFpFromBits();
+        });
+        grid.appendChild(button);
+      }
+      document.getElementById("bitCountBadge").textContent = bits + " bits";
+      document.getElementById("binaryOutput").textContent = fpBits.toString(2).padStart(bits, "0").replace(/(.{4})/g, "$1 ").trim();
+      document.getElementById("hexInput").value = normalizeHex(fpBits, bits);
+      document.getElementById("decimalInput").value = String(decimalFromBits(format, fpBits));
+      document.getElementById("decimalOutput").textContent = String(decimalFromBits(format, fpBits));
+      const binary = fpBits.toString(2).padStart(bits, "0");
+      if (format === "int8") {
+        document.getElementById("signOutput").textContent = binary[0];
+        document.getElementById("exponentOutput").textContent = "-";
+        document.getElementById("mantissaOutput").textContent = binary.slice(1);
+      } else {
+        const expEnd = format === "fp32" ? 9 : 6;
+        document.getElementById("signOutput").textContent = binary[0];
+        document.getElementById("exponentOutput").textContent = binary.slice(1, expEnd);
+        document.getElementById("mantissaOutput").textContent = binary.slice(expEnd);
+      }
+    }
+
+    function syncFpFromBits() {
+      fpSyncing = true;
+      renderFp();
+      fpSyncing = false;
+    }
+
+    function setFpStatus(key) {
+      const node = document.getElementById("statusText");
+      node.textContent = (I18N[currentLanguage] || I18N.zh)[key] || key;
+    }
+
+    function initializeTool() {
+      document.getElementById("formatSelect").addEventListener("change", () => {
+        fpBits = bitsFromDecimal(fpFormat(), document.getElementById("decimalInput").value);
+        syncFpFromBits();
+      });
+      document.getElementById("decimalInput").addEventListener("input", () => {
+        if (fpSyncing) return;
+        const value = Number(document.getElementById("decimalInput").value);
+        if (!Number.isFinite(value)) return setFpStatus("statusInvalid");
+        fpBits = bitsFromDecimal(fpFormat(), value);
+        syncFpFromBits();
+      });
+      document.getElementById("hexInput").addEventListener("input", () => {
+        if (fpSyncing) return;
+        const format = fpFormat();
+        const parsed = parseHexBits(document.getElementById("hexInput").value, format);
+        if (!Number.isFinite(parsed)) return setFpStatus("statusInvalid");
+        fpBits = parsed;
+        syncFpFromBits();
+      });
+      document.getElementById("copyHexBtn").addEventListener("click", () => {
+        navigator.clipboard?.writeText(document.getElementById("hexInput").value);
+        setFpStatus("statusCopied");
+      });
+      document.getElementById("sampleBtn").addEventListener("click", () => {
+        document.getElementById("formatSelect").value = "fp32";
+        fpBits = fp32BitsFromNumber(-13.625);
+        syncFpFromBits();
+      });
+      document.getElementById("resetBtn").addEventListener("click", () => {
+        document.getElementById("formatSelect").value = "fp32";
+        fpBits = fp32BitsFromNumber(1.5);
+        syncFpFromBits();
+        setFpStatus("statusReady");
+      });
+      fpBits = fp32BitsFromNumber(1.5);
+      syncFpFromBits();
+    }
+  </script>
+  
+  <script>
+    const I18N = {"zh":{"htmlLang":"zh-CN","canonical":"https://mymicrotools.xyz/fp-quantization-visualizer.html","locale":"zh_CN","title":"FP/量化可视化器 - Micro Tools Matrix 浏览器本地工具","metaDescription":"多精度浮点数与量化可视化器，支持 FP32、FP16、BFloat16 和 INT8 的位图翻转、Hex 与十进制同步重算。","keywords":"FP/量化可视化器,硬件开发工具,寄存器位段,FP32,WaveDrom,Micro Tools Matrix","toolName":"FP/量化可视化器","eyebrow":"浏览器本地硬件实验台","introDefault":"多精度浮点数与量化可视化器，支持 FP32、FP16、BFloat16 和 INT8 的位图翻转、Hex 与十进制同步重算。","localBadge":"本地运行","sponsor":"赞赏","themeToggleAria":"切换主题","themeSystem":"系统","languageGroupAria":"语言","langZhAria":"切换到中文","langEnAria":"切换到英文","share":"分享","shareAria":"打开分享菜单","shareMenuAria":"分享选项","shareToolOnly":"仅分享工具","shareToolOnlyHint":"分享不带参数的工具页面链接","shareWithData":"分享工具及当前结果","shareWithDataHint":"将当前输入或结果写入链接参数","shareCopied":"分享链接已复制到剪贴板！","shareCopyPrompt":"复制此分享链接：","shareCopyFailed":"复制失败，请手动复制地址栏链接。","shareDataTooLarge":"当前数据过大，无法生成分享链接，请直接复制文本结果。","footer":"Micro Tools Matrix - 浏览器本地处理，无需上传。","h1":"FP/量化可视化器","intro":"面向硬件验证和量化调试的位级可视化器。切换 FP32、FP16、BFloat16 或 INT8，点击任意 bit 即可重算 Hex、二进制字段和真实数值。","inputTitle":"格式与数值","formatLabel":"数值格式","decimalLabel":"十进制输入","hexLabel":"十六进制输入","bitMapTitle":"交互式 Bit Map","outputTitle":"字段解析","signLabel":"符号位","exponentLabel":"指数位","mantissaLabel":"尾数位","int8Label":"INT8 有符号值","binaryLabel":"二进制","copyAction":"复制 Hex","sampleAction":"示例","resetAction":"重置","statusReady":"点击 bit 方块可立即翻转并重算。","statusCopied":"Hex 已复制。","statusInvalid":"输入格式不合法。","seoArticle":"FP/量化可视化器用于快速检查 IEEE 754 浮点数和 INT8 量化值的底层位模式。页面完全在浏览器内运行，适合芯片验证、模型量化、驱动调试和二进制协议排查。"},"en":{"htmlLang":"en","canonical":"https://mymicrotools.xyz/en/fp-quantization-visualizer.html","locale":"en_US","title":"FP Quantization Visualizer - Micro Tools Matrix Browser-Local Tool","metaDescription":"Visualize FP32, FP16, BFloat16, and INT8 bit maps with live bit flipping, hex output, and decimal recomputation.","keywords":"FP Quantization Visualizer,hardware developer tool,bitfield,FP32,WaveDrom,Micro Tools Matrix","toolName":"FP Quantization Visualizer","eyebrow":"Browser-local hardware lab","introDefault":"Visualize FP32, FP16, BFloat16, and INT8 bit maps with live bit flipping, hex output, and decimal recomputation.","localBadge":"Local","sponsor":"Sponsor","themeToggleAria":"Theme","themeSystem":"System","languageGroupAria":"Language","langZhAria":"Switch to Chinese","langEnAria":"Switch to English","share":"Share","shareAria":"Open share menu","shareMenuAria":"Share options","shareToolOnly":"Share Tool Only","shareToolOnlyHint":"Share the clean tool page link","shareWithData":"Share with Data","shareWithDataHint":"Include current input or result in the link","shareCopied":"Share link copied to clipboard!","shareCopyPrompt":"Copy this share link:","shareCopyFailed":"Copy failed. Please copy the address bar link manually.","shareDataTooLarge":"The current data is too large to create a share link. Please copy the text result directly.","footer":"Micro Tools Matrix - browser-local tools, no upload required.","h1":"FP Quantization Visualizer","intro":"A bit-level visualizer for hardware validation and quantization debugging. Switch FP32, FP16, BFloat16, or INT8, then flip any bit to recompute hex, fields, and real value.","inputTitle":"Format And Value","formatLabel":"Number format","decimalLabel":"Decimal input","hexLabel":"Hex input","bitMapTitle":"Interactive Bit Map","outputTitle":"Field Decode","signLabel":"Sign","exponentLabel":"Exponent","mantissaLabel":"Mantissa","int8Label":"INT8 signed value","binaryLabel":"Binary","copyAction":"Copy Hex","sampleAction":"Sample","resetAction":"Reset","statusReady":"Click any bit cell to flip and recompute instantly.","statusCopied":"Hex copied.","statusInvalid":"Invalid input format.","seoArticle":"The FP Quantization Visualizer helps inspect IEEE 754 floating-point and INT8 quantization bit patterns. It runs entirely in the browser for chip validation, model quantization, driver debugging, and binary protocol checks."}};
+    let currentLanguage = document.documentElement.lang === "en" ? "en" : "zh";
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (dict[key] !== undefined) node.textContent = dict[key];
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (dict[key] !== undefined) node.setAttribute("placeholder", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (dict[key] !== undefined) node.setAttribute("aria-label", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (dict[key] !== undefined) node.setAttribute("title", dict[key]);
+      });
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = currentLanguage === "zh" ? activeLangClass : idleLangClass;
+        enBtn.className = currentLanguage === "en" ? activeLangClass : idleLangClass;
+      }
+      if (typeof onLanguageApplied === "function") onLanguageApplied();
+    }
+
+    const activeLangClass = "min-h-9 rounded-full bg-cyan-400 px-3 text-sm font-semibold text-slate-950 shadow-sm transition active:scale-95";
+    const idleLangClass = "min-h-9 rounded-full px-3 text-sm font-semibold text-slate-600 transition hover:bg-slate-100 active:scale-95 dark:text-slate-300 dark:hover:bg-white/10";
+
+    function getShareMessage(key) {
+      const dict = I18N[currentLanguage] || I18N.zh;
+      return dict[key] || "";
+    }
+
+    function closeShareMenu() {
+      const menu = document.getElementById("shareToolMenu");
+      const trigger = document.getElementById("shareToolBtn");
+      if (!menu || !trigger) return;
+      menu.classList.add("hidden");
+      trigger.setAttribute("aria-expanded", "false");
+    }
+
+    function toggleShareMenu(event) {
+      if (event) event.stopPropagation();
+      const menu = document.getElementById("shareToolMenu");
+      const trigger = document.getElementById("shareToolBtn");
+      if (!menu || !trigger) return;
+      const open = menu.classList.toggle("hidden") === false;
+      trigger.setAttribute("aria-expanded", String(open));
+    }
+
+    function getCleanShareUrl() {
+      return window.location.href.split("?")[0];
+    }
+
+    function encodeShareText(data) {
+      return encodeURIComponent(btoa(unescape(encodeURIComponent(data))));
+    }
+
+    function decodeShareText(encodedData) {
+      return decodeURIComponent(escape(atob(decodeURIComponent(encodedData))));
+    }
+
+    function getShareableControls() {
+      return Array.from(document.querySelectorAll("main textarea[id], main input[id], main select[id], main [contenteditable='true'][id]")).filter((control) => {
+        const type = (control.getAttribute("type") || control.tagName).toLowerCase();
+        return !control.disabled && !["button", "submit", "reset", "file", "hidden", "image", "password"].includes(type);
+      });
+    }
+
+    function collectShareState() {
+      const fields = getShareableControls().map((control) => {
+        const type = (control.getAttribute("type") || control.tagName).toLowerCase();
+        const field = { id: control.id, type };
+        if (type === "checkbox" || type === "radio") field.checked = Boolean(control.checked);
+        else if (control.isContentEditable) field.value = control.textContent || "";
+        else field.value = control.value || "";
+        return field;
+      }).filter((field) => field.type === "checkbox" || field.type === "radio" ? field.checked : String(field.value || "").length > 0);
+      return { version: 1, fields };
+    }
+
+    function shareUrl(url) {
+      const shareData = { title: document.title, url };
+      if (navigator.share) {
+        navigator.share(shareData).catch((error) => console.log("share failed", error));
+        return;
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => alert(getShareMessage("shareCopied"))).catch(() => window.prompt(getShareMessage("shareCopyPrompt"), url));
+        return;
+      }
+      window.prompt(getShareMessage("shareCopyPrompt"), url);
+    }
+
+    function shareToolOnly() {
+      closeShareMenu();
+      shareUrl(getCleanShareUrl());
+    }
+
+    function shareWithData() {
+      closeShareMenu();
+      const rawData = JSON.stringify(collectShareState());
+      if (rawData.length > 2000) {
+        alert(getShareMessage("shareDataTooLarge"));
+        return;
+      }
+      const encodedData = encodeShareText(rawData);
+      shareUrl(getCleanShareUrl() + "?d=" + encodedData);
+    }
+
+    function restoreShareStateFromUrl() {
+      const encodedData = new URLSearchParams(window.location.search).get("d");
+      if (!encodedData) return;
+      try {
+        const state = JSON.parse(decodeShareText(encodedData));
+        if (!state || !Array.isArray(state.fields)) return;
+        state.fields.forEach((field) => {
+          const control = document.getElementById(field.id);
+          if (!control) return;
+          const type = (control.getAttribute("type") || control.tagName).toLowerCase();
+          if (type === "checkbox" || type === "radio") control.checked = Boolean(field.checked);
+          else if (control.isContentEditable) control.textContent = field.value || "";
+          else if (Object.prototype.hasOwnProperty.call(field, "value")) control.value = field.value || "";
+          control.dispatchEvent(new Event("input", { bubbles: true }));
+          control.dispatchEvent(new Event("change", { bubbles: true }));
+        });
+      } catch (error) {
+        console.warn("Failed to restore shared state", error);
+      }
+    }
+
+    function shareTool() {
+      toggleShareMenu();
+    }
+
+    function initializeCommonShell() {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => applyLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => applyLanguage("en"));
+      document.addEventListener("click", (event) => {
+        const root = document.getElementById("shareToolMenuRoot");
+        if (root && !root.contains(event.target)) closeShareMenu();
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeShareMenu();
+      });
+      applyLanguage(currentLanguage);
+      restoreShareStateFromUrl();
+      if (typeof initializeTool === "function") initializeTool();
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initializeCommonShell);
+    } else {
+      initializeCommonShell();
+    }
+  </script>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+  <script src="./sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
+</body>
+</html>
