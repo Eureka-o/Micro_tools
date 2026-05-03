@@ -1,4 +1,4 @@
-const CACHE_NAME = "micro-tools-cache-v20260503-katex-58";
+const CACHE_NAME = "micro-tools-cache-v20260503-latex-image-59";
 const CACHE_ASSETS = [
   "/",
   "/index.html",

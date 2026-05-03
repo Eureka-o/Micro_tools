@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script src="./theme-init.js"></script>
   <script type="application/ld+json">
     {
@@ -156,11 +157,12 @@
           <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
         </div>
 
-        <div id="previewBox" class="formula-preview min-h-[18rem] w-full overflow-x-auto rounded-2xl border border-gray-200 bg-slate-50 p-5 text-center text-2xl leading-relaxed text-slate-950 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100" aria-live="polite"></div>
+        <div id="formula-preview" class="formula-preview min-h-[18rem] w-full overflow-x-auto rounded-2xl border border-gray-200 bg-slate-50 p-5 text-center text-2xl leading-relaxed text-slate-950 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100" aria-live="polite"></div>
         <p id="outputStatus" class="mt-3 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400"></p>
 
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制代码</button>
+          <button id="saveImageBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 disabled:cursor-wait disabled:opacity-60 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="saveImageAction">保存为图片</button>
           <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">填入示例</button>
         </div>
       </section>
@@ -215,6 +217,12 @@
         primaryAction: "立即预览",
         secondaryAction: "清空",
         copyAction: "复制代码",
+        saveImageAction: "保存为图片",
+        saveGenerating: "正在生成...",
+        saveImageDone: "图片已保存。",
+        saveImageEmpty: "请先渲染公式后再保存图片。",
+        saveImageFailed: "图片导出失败，请稍后重试。",
+        saveImageUnavailable: "图片导出组件加载失败，请刷新页面后重试。",
         sampleAction: "填入示例",
         readyStatus: "输入后将自动延迟 300 毫秒更新预览。",
         emptyStatus: "请输入 LaTeX 代码。",
@@ -267,6 +275,12 @@
         primaryAction: "Preview now",
         secondaryAction: "Clear",
         copyAction: "Copy code",
+        saveImageAction: "Save as image",
+        saveGenerating: "Generating...",
+        saveImageDone: "Image saved.",
+        saveImageEmpty: "Render a formula before saving an image.",
+        saveImageFailed: "Image export failed. Please try again.",
+        saveImageUnavailable: "The image export component failed to load. Please refresh and try again.",
         sampleAction: "Load sample",
         readyStatus: "The preview updates automatically 300 ms after you stop typing.",
         emptyStatus: "Enter LaTeX code to preview.",
@@ -342,10 +356,14 @@
       if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
     }
 
+    function getFormulaPreviewElement() {
+      return document.getElementById("formula-preview") || document.getElementById("previewBox");
+    }
+
     function renderFormula() {
       const dict = I18N[currentLanguage];
       const input = document.getElementById("latexInput");
-      const preview = document.getElementById("previewBox");
+      const preview = getFormulaPreviewElement();
       const outputStatus = document.getElementById("outputStatus");
       if (!input || !preview || !outputStatus) return;
       const source = input.value.trim();
@@ -368,6 +386,68 @@
       } catch (error) {
         preview.textContent = dict.errorStatus;
         outputStatus.textContent = dict.errorStatus;
+      }
+    }
+
+    function createFormulaExportNode(preview) {
+      const exportNode = document.createElement("div");
+      exportNode.className = "formula-preview";
+      exportNode.style.position = "fixed";
+      exportNode.style.left = "-10000px";
+      exportNode.style.top = "0";
+      exportNode.style.display = "inline-block";
+      exportNode.style.width = "max-content";
+      exportNode.style.maxWidth = "none";
+      exportNode.style.minHeight = "0";
+      exportNode.style.padding = "32px";
+      exportNode.style.border = "0";
+      exportNode.style.borderRadius = "0";
+      exportNode.style.background = "transparent";
+      exportNode.style.color = "#020617";
+      exportNode.style.fontSize = getComputedStyle(preview).fontSize;
+      exportNode.style.lineHeight = getComputedStyle(preview).lineHeight;
+      exportNode.innerHTML = preview.innerHTML;
+      document.body.appendChild(exportNode);
+      return exportNode;
+    }
+
+    async function saveAsImage() {
+      const dict = I18N[currentLanguage];
+      const preview = getFormulaPreviewElement();
+      const button = document.getElementById("saveImageBtn");
+      const status = document.getElementById("outputStatus");
+      if (!preview || !button) return;
+      if (!preview.querySelector(".katex")) {
+        if (status) status.textContent = dict.saveImageEmpty;
+        return;
+      }
+      if (!window.html2canvas) {
+        if (status) status.textContent = dict.saveImageUnavailable;
+        return;
+      }
+      const previousText = button.textContent;
+      let exportNode = null;
+      button.disabled = true;
+      button.textContent = dict.saveGenerating;
+      try {
+        exportNode = createFormulaExportNode(preview);
+        await document.fonts?.ready;
+        const canvas = await window.html2canvas(exportNode, {
+          scale: 4,
+          backgroundColor: null,
+          logging: false
+        });
+        const link = document.createElement("a");
+        link.download = "formula-" + new Date().toISOString().slice(0, 10).replace(/-/g, "") + ".png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+        if (status) status.textContent = dict.saveImageDone;
+      } catch (error) {
+        if (status) status.textContent = dict.saveImageFailed;
+      } finally {
+        if (exportNode) exportNode.remove();
+        button.disabled = false;
+        button.textContent = previousText || dict.saveImageAction;
       }
     }
 
@@ -443,6 +523,7 @@
           if (status) status.textContent = I18N[currentLanguage].copyFailedStatus;
         }
       });
+      document.getElementById("saveImageBtn")?.addEventListener("click", saveAsImage);
 
       applyLanguage(getInitialLanguage());
     });
