@@ -75,21 +75,46 @@
           <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">二维码生成器</h1>
           <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中将 URL 或文本转换为二维码，生成过程完全在浏览器内完成，无需上传内容。</p>
         </div>
-        <div class="flex w-full flex-wrap items-center gap-2 lg:w-auto lg:justify-end">
-          <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+        <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
+          <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
             <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
             <span data-i18n="localBadge">本地运行</span>
           </div>
-          <button id="shareToolBtn" type="button" onclick="shareTool()" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="分享当前工具" title="分享当前工具">
-            <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="18" cy="5" r="3"></circle>
-              <circle cx="6" cy="12" r="3"></circle>
-              <circle cx="18" cy="19" r="3"></circle>
-              <path d="M8.6 10.7 15.4 6.3"></path>
-              <path d="M8.6 13.3 15.4 17.7"></path>
-            </svg>
-            <span data-i18n="share">分享</span>
-          </button>
+          <div id="shareToolMenuRoot" class="relative shrink-0">
+            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
+              <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <path d="M8.6 10.7 15.4 6.3"></path>
+                <path d="M8.6 13.3 15.4 17.7"></path>
+              </svg>
+              <span data-i18n="share">分享</span>
+              <svg aria-hidden="true" class="h-3.5 w-3.5 transition" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z" clip-rule="evenodd"></path>
+              </svg>
+            </button>
+            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="分享选项">
+              <button type="button" role="menuitem" onclick="shareToolOnly()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
+                <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200">
+                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg>
+                </span>
+                <span class="min-w-0">
+                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">仅分享工具</span>
+                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span>
+                </span>
+              </button>
+              <button type="button" role="menuitem" onclick="shareWithData()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
+                <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-400/10 dark:text-cyan-300">
+                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
+                </span>
+                <span class="min-w-0">
+                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">分享工具及当前结果</span>
+                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">将当前输入或结果写入链接参数</span>
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -185,10 +210,16 @@
         intro: "在 Micro Tools Matrix 中将 URL 或文本转换为二维码，生成过程完全在浏览器内完成，无需上传内容。",
         localBadge: "本地运行",
         share: "分享",
-        shareAria: "分享当前工具",
-        shareCopied: "页面链接已复制到剪贴板！",
-        shareCopyPrompt: "复制此页面链接：",
+        shareAria: "打开分享菜单",
+        shareMenuAria: "分享选项",
+        shareToolOnly: "仅分享工具",
+        shareToolOnlyHint: "分享不带参数的工具页面链接",
+        shareWithData: "分享工具及当前结果",
+        shareWithDataHint: "将当前输入或结果写入链接参数",
+        shareCopied: "分享链接已复制到剪贴板！",
+        shareCopyPrompt: "复制此分享链接：",
         shareCopyFailed: "复制失败，请手动复制地址栏链接。",
+        shareDataTooLarge: "当前数据过大，无法生成分享链接，请直接复制文本结果。",
         inputTitle: "输入",
         inputBadge: "输入",
         outputTitle: "结果",
@@ -239,10 +270,16 @@
         intro: "Create a QR code from a URL or text inside Micro Tools Matrix. Everything runs in your browser, with no upload required.",
         localBadge: "Local",
         share: "Share",
-        shareAria: "Share this tool",
-        shareCopied: "Page link copied to clipboard!",
-        shareCopyPrompt: "Copy this page link:",
+        shareAria: "Open share menu",
+        shareMenuAria: "Share options",
+        shareToolOnly: "Share Tool Only",
+        shareToolOnlyHint: "Share the clean tool page link",
+        shareWithData: "Share with Data",
+        shareWithDataHint: "Include current input or result in the link",
+        shareCopied: "Share link copied to clipboard!",
+        shareCopyPrompt: "Copy this share link:",
         shareCopyFailed: "Copy failed. Please copy the address bar link manually.",
+        shareDataTooLarge: "The current data is too large to create a share link. Please copy the text result directly.",
         inputTitle: "Input",
         inputBadge: "Input",
         outputTitle: "Result",
@@ -779,24 +816,99 @@
       const lang = typeof currentLanguage === "string" ? currentLanguage : (document.documentElement.lang === "en" ? "en" : "zh");
       const fallback = {
         zh: {
-          shareCopied: "页面链接已复制到剪贴板！",
-          shareCopyPrompt: "复制此页面链接：",
-          shareCopyFailed: "复制失败，请手动复制地址栏链接。"
+          shareCopied: "分享链接已复制到剪贴板！",
+          shareCopyPrompt: "复制此分享链接：",
+          shareCopyFailed: "复制失败，请手动复制地址栏链接。",
+          shareDataTooLarge: "当前数据过大，无法生成分享链接，请直接复制文本结果。"
         },
         en: {
-          shareCopied: "Page link copied to clipboard!",
-          shareCopyPrompt: "Copy this page link:",
-          shareCopyFailed: "Copy failed. Please copy the address bar link manually."
+          shareCopied: "Share link copied to clipboard!",
+          shareCopyPrompt: "Copy this share link:",
+          shareCopyFailed: "Copy failed. Please copy the address bar link manually.",
+          shareDataTooLarge: "The current data is too large to create a share link. Please copy the text result directly."
         }
       };
       const dict = typeof I18N === "object" && I18N[lang] ? I18N[lang] : fallback.zh;
       return dict[key] || fallback[lang]?.[key] || fallback.zh[key] || "";
     }
 
-    function shareTool() {
+    function closeShareMenu() {
+      const menu = document.getElementById("shareToolMenu");
+      const trigger = document.getElementById("shareToolBtn");
+      if (!menu || !trigger) return;
+      menu.classList.add("hidden");
+      trigger.setAttribute("aria-expanded", "false");
+    }
+
+    function openShareMenu() {
+      const menu = document.getElementById("shareToolMenu");
+      const trigger = document.getElementById("shareToolBtn");
+      if (!menu || !trigger) return;
+      menu.classList.remove("hidden");
+      trigger.setAttribute("aria-expanded", "true");
+    }
+
+    function toggleShareMenu(event) {
+      if (event) event.stopPropagation();
+      const menu = document.getElementById("shareToolMenu");
+      if (!menu) return;
+      if (menu.classList.contains("hidden")) {
+        openShareMenu();
+      } else {
+        closeShareMenu();
+      }
+    }
+
+    function closeShareMenuOnOutsideClick(event) {
+      const root = document.getElementById("shareToolMenuRoot");
+      if (root && !root.contains(event.target)) closeShareMenu();
+    }
+
+    function getCleanShareUrl() {
+      return window.location.href.split("?")[0];
+    }
+
+    function encodeShareText(data) {
+      return encodeURIComponent(btoa(unescape(encodeURIComponent(data))));
+    }
+
+    function decodeShareText(encodedData) {
+      return decodeURIComponent(escape(atob(decodeURIComponent(encodedData))));
+    }
+
+    function getShareableControls() {
+      return Array.from(document.querySelectorAll("main textarea[id], main input[id], main select[id], main [contenteditable='true'][id]")).filter((control) => {
+        const type = (control.getAttribute("type") || control.tagName).toLowerCase();
+        return !control.disabled && !["button", "submit", "reset", "file", "hidden", "image", "password"].includes(type);
+      });
+    }
+
+    function serializeShareControl(control) {
+      const tag = control.tagName.toLowerCase();
+      const type = (control.getAttribute("type") || tag).toLowerCase();
+      const field = { id: control.id, type };
+      if (type === "checkbox" || type === "radio") {
+        field.checked = Boolean(control.checked);
+      } else if (control.isContentEditable) {
+        field.value = control.textContent || "";
+      } else {
+        field.value = control.value || "";
+      }
+      return field;
+    }
+
+    function collectShareState() {
+      const fields = getShareableControls().map(serializeShareControl).filter((field) => {
+        if (field.type === "checkbox" || field.type === "radio") return field.checked;
+        return String(field.value || "").length > 0;
+      });
+      return { version: 1, fields };
+    }
+
+    function shareUrl(url) {
       const shareData = {
         title: document.title,
-        url: window.location.href
+        url
       };
       if (navigator.share) {
         navigator.share(shareData)
@@ -805,17 +917,86 @@
         return;
       }
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(window.location.href)
+        navigator.clipboard.writeText(url)
           .then(() => {
             alert(getShareMessage("shareCopied"));
           })
           .catch((err) => {
             console.error("复制失败: ", err);
-            window.prompt(getShareMessage("shareCopyPrompt"), window.location.href);
+            window.prompt(getShareMessage("shareCopyPrompt"), url);
           });
         return;
       }
-      window.prompt(getShareMessage("shareCopyPrompt"), window.location.href);
+      window.prompt(getShareMessage("shareCopyPrompt"), url);
+    }
+
+    function shareToolOnly() {
+      closeShareMenu();
+      const cleanUrl = window.location.href.split("?")[0];
+      shareUrl(cleanUrl);
+    }
+
+    function shareWithData() {
+      closeShareMenu();
+      const state = collectShareState();
+      if (!state.fields.length) {
+        shareUrl(getCleanShareUrl());
+        return;
+      }
+      const rawData = JSON.stringify(state);
+      if (rawData.length > 2000) {
+        alert(getShareMessage("shareDataTooLarge"));
+        return;
+      }
+      const encodedData = encodeShareText(rawData);
+      const stateUrl = window.location.href.split("?")[0] + "?d=" + encodedData;
+      shareUrl(stateUrl);
+    }
+
+    function applySharedField(field) {
+      if (!field || !field.id) return;
+      const control = document.getElementById(field.id);
+      if (!control) return;
+      const type = (control.getAttribute("type") || control.tagName).toLowerCase();
+      if (type === "checkbox" || type === "radio") {
+        control.checked = Boolean(field.checked);
+      } else if (control.isContentEditable) {
+        control.textContent = field.value || "";
+      } else if (Object.prototype.hasOwnProperty.call(field, "value")) {
+        control.value = field.value || "";
+      }
+      control.dispatchEvent(new Event("input", { bubbles: true }));
+      control.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+
+    function restoreShareStateFromUrl() {
+      const encodedData = new URLSearchParams(window.location.search).get("d");
+      if (!encodedData) return;
+      try {
+        const state = JSON.parse(decodeShareText(encodedData));
+        if (!state || !Array.isArray(state.fields)) return;
+        state.fields.forEach(applySharedField);
+      } catch (error) {
+        console.warn("Failed to restore shared state", error);
+      }
+    }
+
+    function initializeShareMenu() {
+      document.addEventListener("click", closeShareMenuOnOutsideClick);
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeShareMenu();
+      });
+      restoreShareStateFromUrl();
+    }
+
+    function shareTool() {
+      toggleShareMenu();
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initializeShareMenu);
+    } else {
+      initializeShareMenu();
     }
   </script>
   <script src="../sponsor.js" defer></script>
