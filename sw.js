@@ -1,4 +1,4 @@
-const CACHE_NAME = "micro-tools-cache-v20260503-latex-image-59";
+const CACHE_NAME = "micro-tools-cache-v20260503-router-safe-60";
 const CACHE_ASSETS = [
   "/",
   "/index.html",
@@ -137,6 +137,57 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+function normalizePath(pathname) {
+  if (!pathname || pathname[0] !== '/') return '/';
+  return pathname.replace(/\/{2,}/g, '/');
+}
+
+function cacheCandidatesForUrl(url) {
+  const pathname = normalizePath(url.pathname);
+  const candidates = [];
+  const add = (path) => {
+    if (path && !candidates.includes(path)) candidates.push(path);
+  };
+
+  add(pathname);
+  if (pathname.endsWith('/')) {
+    add(pathname + 'index.html');
+  } else if (!pathname.split('/').pop().includes('.')) {
+    add(pathname + '.html');
+    add(pathname + '/index.html');
+  }
+
+  if (pathname === '/' || pathname === '/index.html') add('/index.html');
+  if (pathname === '/en' || pathname === '/en/' || pathname === '/en/index.html') {
+    add('/en/');
+    add('/en/index.html');
+  }
+
+  return candidates;
+}
+
+async function matchCacheCandidates(url) {
+  for (const candidate of cacheCandidatesForUrl(url)) {
+    const cached = await caches.match(candidate);
+    if (cached) return cached;
+  }
+  return null;
+}
+
+async function putSuccessfulResponse(request, response) {
+  if (!response || response.status !== 200 || response.type !== 'basic') return;
+  const cache = await caches.open(CACHE_NAME);
+  await cache.put(request, response.clone());
+}
+
+function offlineResponse() {
+  return new Response('Offline and no cached response is available.', {
+    status: 504,
+    statusText: 'Gateway Timeout',
+    headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+  });
+}
+
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
@@ -144,23 +195,33 @@ self.addEventListener('fetch', (event) => {
   if (requestUrl.origin !== self.location.origin) return;
 
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      const network = fetch(event.request)
-        .then((response) => {
-          if (response && response.status === 200 && response.type === 'basic') {
-            const copy = response.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-          }
+    (async () => {
+      if (event.request.mode === 'navigate') {
+        try {
+          const response = await fetch(event.request);
+          await putSuccessfulResponse(event.request, response);
           return response;
-        })
-        .catch(() => {
-          if (event.request.mode === 'navigate') {
-            return caches.match('/index.html');
+        } catch (error) {
+          const cached = await matchCacheCandidates(requestUrl);
+          if (cached) return cached;
+          if (requestUrl.pathname.startsWith('/en/')) {
+            const enHome = await caches.match('/en/index.html') || await caches.match('/en/');
+            if (enHome) return enHome;
           }
-          return cached;
-        });
+          return (await caches.match('/index.html')) || offlineResponse();
+        }
+      }
 
-      return cached || network;
-    })
+      const cached = await matchCacheCandidates(requestUrl);
+      if (cached) return cached;
+
+      try {
+        const response = await fetch(event.request);
+        await putSuccessfulResponse(event.request, response);
+        return response;
+      } catch (error) {
+        return offlineResponse();
+      }
+    })()
   );
 });
