@@ -75,9 +75,21 @@
           <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">文字翻转与倒序工具</h1>
           <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">将输入内容按字符完全倒序，或按单词级别倒序排列。所有处理都在浏览器本地完成，无需上传。</p>
         </div>
-        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
-          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
-          <span data-i18n="localBadge">本地运行</span>
+        <div class="flex w-full flex-wrap items-center gap-2 lg:w-auto lg:justify-end">
+          <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+            <span data-i18n="localBadge">本地运行</span>
+          </div>
+          <button id="shareToolBtn" type="button" onclick="shareTool()" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="分享当前工具" title="分享当前工具">
+            <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <path d="M8.6 10.7 15.4 6.3"></path>
+              <path d="M8.6 13.3 15.4 17.7"></path>
+            </svg>
+            <span data-i18n="share">分享</span>
+          </button>
         </div>
         <div class="grid gap-2 rounded-2xl border border-gray-200 bg-slate-50 p-3 text-sm text-slate-600 dark:border-white/10 dark:bg-slate-950/40 dark:text-slate-400 sm:min-w-56">
           <div class="flex items-center justify-between gap-4">
@@ -183,6 +195,11 @@
         sponsorAria: "赞赏",
         sponsor: "赞赏",
         localBadge: "本地运行",
+        share: "分享",
+        shareAria: "分享当前工具",
+        shareCopied: "页面链接已复制到剪贴板！",
+        shareCopyPrompt: "复制此页面链接：",
+        shareCopyFailed: "复制失败，请手动复制地址栏链接。",
         h1: "文字翻转与倒序工具",
         intro: "将输入内容按字符完全倒序，或按单词级别倒序排列。所有处理都在浏览器本地完成，无需上传。",
         statChars: "字符数",
@@ -238,6 +255,11 @@
         sponsorAria: "Sponsor",
         sponsor: "Sponsor",
         localBadge: "Local",
+        share: "Share",
+        shareAria: "Share this tool",
+        shareCopied: "Page link copied to clipboard!",
+        shareCopyPrompt: "Copy this page link:",
+        shareCopyFailed: "Copy failed. Please copy the address bar link manually.",
         h1: "Text Reverser",
         intro: "Reverse input by every character or reorder it by words. All processing happens locally in your browser, with no upload.",
         statChars: "Characters",
@@ -533,6 +555,50 @@
 
       updateCounts();
     });
+  </script>
+  <script>
+    function getShareMessage(key) {
+      const lang = typeof currentLanguage === "string" ? currentLanguage : (document.documentElement.lang === "en" ? "en" : "zh");
+      const fallback = {
+        zh: {
+          shareCopied: "页面链接已复制到剪贴板！",
+          shareCopyPrompt: "复制此页面链接：",
+          shareCopyFailed: "复制失败，请手动复制地址栏链接。"
+        },
+        en: {
+          shareCopied: "Page link copied to clipboard!",
+          shareCopyPrompt: "Copy this page link:",
+          shareCopyFailed: "Copy failed. Please copy the address bar link manually."
+        }
+      };
+      const dict = typeof I18N === "object" && I18N[lang] ? I18N[lang] : fallback.zh;
+      return dict[key] || fallback[lang]?.[key] || fallback.zh[key] || "";
+    }
+
+    function shareTool() {
+      const shareData = {
+        title: document.title,
+        url: window.location.href
+      };
+      if (navigator.share) {
+        navigator.share(shareData)
+          .then(() => console.log("分享成功"))
+          .catch((error) => console.log("分享失败", error));
+        return;
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(window.location.href)
+          .then(() => {
+            alert(getShareMessage("shareCopied"));
+          })
+          .catch((err) => {
+            console.error("复制失败: ", err);
+            window.prompt(getShareMessage("shareCopyPrompt"), window.location.href);
+          });
+        return;
+      }
+      window.prompt(getShareMessage("shareCopyPrompt"), window.location.href);
+    }
   </script>
   <script src="../sponsor.js" defer></script>
   <script src="./theme-toggle.js" defer></script>

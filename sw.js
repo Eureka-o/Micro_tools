@@ -1,4 +1,4 @@
-const CACHE_NAME = "micro-tools-cache-v20260503-favicon-52";
+const CACHE_NAME = "micro-tools-cache-v20260503-share-53";
 const CACHE_ASSETS = [
   "/",
   "/index.html",
