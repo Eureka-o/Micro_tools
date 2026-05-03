@@ -1,9 +1,12 @@
-const CACHE_NAME = "micro-tools-cache-v20260503-home-mobile-51";
+const CACHE_NAME = "micro-tools-cache-v20260503-favicon-52";
 const CACHE_ASSETS = [
   "/",
   "/index.html",
   "/en/",
   "/en/index.html",
+  "/favicon.ico",
+  "/favicon.png",
+  "/apple-touch-icon.png",
   "/manifest.json",
   "/style.css",
   "/sponsor.js",
