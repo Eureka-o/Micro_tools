@@ -1,4 +1,4 @@
-const CACHE_NAME = "micro-tools-cache-v20260503-sponsor-style-50";
+const CACHE_NAME = "micro-tools-cache-v20260503-home-mobile-51";
 const CACHE_ASSETS = [
   "/",
   "/index.html",
