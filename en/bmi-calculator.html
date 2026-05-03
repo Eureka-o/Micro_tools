@@ -1,460 +1,560 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="BMI 身体质量指数计算器。输入身高（厘米）和体重（公斤），计算BMI值并带有动态的健康状态指示条。">
-  <meta name="keywords" content="BMI计算器,身体质量指数计算器,BMI身体质量指数,身高体重BMI计算,在线BMI计算,BMI健康状态,体重指数计算器">
-  <title>BMI Calculator - BMI 身体质量指数计算器</title>
-  <link rel="icon" type="image/png" href="../assets/logo.png">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            tech: {
-              50: '#eef8ff',
-              100: '#d9efff',
-              500: '#1687ff',
-              600: '#006de5',
-              900: '#062344'
-            }
-          },
-          boxShadow: {
-            glow: '0 20px 60px rgba(22, 135, 255, 0.18)'
-          }
-        }
-      }
-    };
-  </script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
-  <link rel="canonical" href="https://mymicrotools.xyz/en/bmi-calculator.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BMI 身体质量指数计算器 - Micro Tools Matrix</title>
+  <meta name="description" content="Micro Tools Matrix 的 BMI 身体质量指数计算器在浏览器本地处理身高和体重，快速计算 BMI 值并显示健康状态指示条，无需上传任何个人数据。">
+  <meta name="keywords" content="BMI计算器, 身体质量指数, 健康状态, 浏览器本地处理, 无需上传, Micro Tools Matrix">
+  <link rel="canonical" href="https://mymicrotools.xyz/bmi-calculator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/bmi-calculator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/bmi-calculator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/bmi-calculator.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/en/bmi-calculator.html">
-  <meta property="og:title" content="BMI Calculator - BMI 身体质量指数计算器">
-  <meta property="og:description" content="BMI 身体质量指数计算器。输入身高（厘米）和体重（公斤），计算BMI值并带有动态的健康状态指示条。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="BMI Calculator - BMI 身体质量指数计算器">
-  <meta name="twitter:description" content="BMI 身体质量指数计算器。输入身高（厘米）和体重（公斤），计算BMI值并带有动态的健康状态指示条。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="../style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "BMI Calculator",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A browser-local BMI calculator from Micro Tools Matrix that computes body mass index from height and weight with a health status indicator.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "category": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">BMI 身体质量指数计算器</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="../bmi-calculator.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./bmi-calculator.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeToggleAria">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" data-i18n-aria-label="languageAria" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
+        </div>
       </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="absolute inset-0 -z-10 overflow-hidden">
-    <div class="absolute left-1/2 top-[-10rem] h-80 w-80 -translate-x-1/2 rounded-full bg-blue-500/25 blur-3xl"></div>
-    <div class="absolute bottom-[-12rem] right-[-8rem] h-96 w-96 rounded-full bg-cyan-400/20 blur-3xl"></div>
-  </div>
-
-  <header class="border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 backdrop-blur-xl">
-    <div class="mx-auto flex max-w-6xl flex-col gap-5 px-5 py-10 sm:px-8 lg:px-10">
-      <div class="inline-flex w-fit items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/10 px-4 py-2 text-sm text-blue-100">
-        <span class="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_18px_rgba(103,232,249,0.9)]"></span>
-        在线健康评估工具
-      </div>
-      <div class="max-w-3xl">
-        <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">BMI 身体质量指数计算器</h1>
-        <p class="mt-4 text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
-          输入身高与体重，实时计算 BMI 身体质量指数，并通过动态健康状态指示条直观了解当前体重范围。
-        </p>
-      </div>
-    </div>
+    </nav>
   </header>
 
-  <main class="mx-auto max-w-6xl px-5 py-8 sm:px-8 lg:px-10">
-    <section class="grid gap-6 lg:grid-cols-5" aria-label="BMI 身体质量指数计算器">
-      <div class="lg:col-span-2 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-6 shadow-glow backdrop-blur-xl sm:p-8">
-        <div class="mb-6">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输入信息</h2>
-          <p class="mt-2 text-sm text-slate-400">请填写真实的身高和体重，单位分别为厘米与公斤。</p>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">BMI 身体质量指数计算器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中输入身高和体重，即可在浏览器本地计算 BMI，并查看清晰的健康状态指示条，无需上传任何个人数据。</p>
         </div>
-
-        <form id="bmiForm" novalidate class="space-y-5">
-          <div>
-            <label for="height" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">身高（厘米）</label>
-            <div class="relative">
-              <input
-                id="height"
-                name="height"
-                type="text"
-                inputmode="decimal"
-                autocomplete="off"
-                placeholder="例如：170"
-                class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-4 pr-14 text-lg text-gray-900 dark:text-white outline-none transition placeholder:text-slate-600 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20"
-                aria-describedby="heightHelp"
-              />
-              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">cm</span>
-            </div>
-            <p id="heightHelp" class="mt-2 text-xs text-slate-500">建议范围：50 - 250 cm</p>
-          </div>
-
-          <div>
-            <label for="weight" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">体重（公斤）</label>
-            <div class="relative">
-              <input
-                id="weight"
-                name="weight"
-                type="text"
-                inputmode="decimal"
-                autocomplete="off"
-                placeholder="例如：65"
-                class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-4 pr-14 text-lg text-gray-900 dark:text-white outline-none transition placeholder:text-slate-600 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20"
-                aria-describedby="weightHelp"
-              />
-              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">kg</span>
-            </div>
-            <p id="weightHelp" class="mt-2 text-xs text-slate-500">建议范围：10 - 500 kg</p>
-          </div>
-
-          <div id="errorBox" class="hidden rounded-2xl border border-red-400/40 bg-red-500/15 px-4 py-3 text-sm font-medium text-red-100" role="alert"></div>
-
-          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-            <button
-              type="submit"
-              id="calculateBtn"
-              class="rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-400 px-5 py-4 font-bold text-gray-900 dark:text-white shadow-lg shadow-blue-500/25 transition active:scale-[0.98] hover:brightness-110 focus:outline-none focus:ring-4 focus:ring-blue-400/30"
-            >
-              计算 BMI
-            </button>
-            <button
-              type="button"
-              id="resetBtn"
-              class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-5 py-4 font-bold text-slate-900 dark:text-slate-100 transition active:scale-[0.98] hover:bg-white/15 focus:outline-none focus:ring-4 focus:ring-white/10"
-            >
-              Reset
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <div class="lg:col-span-3 rounded-3xl border border-blue-300/15 bg-gradient-to-br from-slate-900 via-slate-900 to-blue-950/80 p-6 shadow-glow sm:p-8">
-        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">计算结果</h2>
-            <p class="mt-2 text-sm text-slate-400">结果会根据中国成人 BMI 常用参考范围进行分类。</p>
-          </div>
-          <div id="statusBadge" class="w-fit rounded-full border border-slate-600 bg-slate-50 dark:bg-slate-800 px-4 py-2 text-sm font-bold text-slate-700 dark:text-slate-300">
-            等待输入
-          </div>
-        </div>
-
-        <div class="grid gap-4 sm:grid-cols-3">
-          <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5">
-            <p class="text-sm text-slate-400">BMI 值</p>
-            <p id="bmiValue" class="mt-3 text-5xl font-black tracking-tight text-gray-900 dark:text-white">--</p>
-          </div>
-          <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5">
-            <p class="text-sm text-slate-400">健康状态</p>
-            <p id="bmiCategory" class="mt-3 text-3xl font-black text-slate-800 dark:text-slate-200">--</p>
-          </div>
-          <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5">
-            <p class="text-sm text-slate-400">健康建议</p>
-            <p id="bmiAdvice" class="mt-3 text-sm leading-6 text-slate-700 dark:text-slate-300">Please enter身高和体重后查看建议。</p>
-          </div>
-        </div>
-
-        <div class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/50 p-5 sm:p-6">
-          <div class="mb-4 flex items-center justify-between gap-4">
-            <h3 class="font-bold text-gray-900 dark:text-white">动态健康状态指示条</h3>
-            <span id="pointerText" class="text-sm text-slate-400">--</span>
-          </div>
-
-          <div class="relative pt-7">
-            <div id="pointer" class="absolute left-0 top-0 flex -translate-x-1/2 flex-col items-center transition-all duration-700 ease-out" style="left: 0%;">
-              <div class="rounded-full bg-white px-2 py-1 text-xs font-bold text-slate-900 dark:text-slate-100 shadow-lg">BMI</div>
-              <div class="h-3 w-0.5 bg-white"></div>
-            </div>
-
-            <div class="h-5 overflow-hidden rounded-full bg-slate-50 dark:bg-slate-800 shadow-inner">
-              <div class="flex h-full w-full">
-                <div class="h-full bg-sky-400" style="width: 18.5%"></div>
-                <div class="h-full bg-emerald-400" style="width: 5.5%"></div>
-                <div class="h-full bg-amber-400" style="width: 4%"></div>
-                <div class="h-full bg-orange-500" style="width: 4%"></div>
-                <div class="h-full bg-red-500" style="width: 68%"></div>
-              </div>
-            </div>
-
-            <div class="mt-3 grid grid-cols-5 gap-2 text-center text-[11px] text-slate-400 sm:text-xs">
-              <span>偏瘦<br />&lt;18.5</span>
-              <span>正常<br />18.5-23.9</span>
-              <span>超重<br />24-27.9</span>
-              <span>肥胖<br />≥28</span>
-              <span>高风险<br />≥32</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-6 rounded-3xl border border-cyan-300/20 bg-cyan-400/10 p-5 text-sm leading-6 text-cyan-50">
-          <strong>计算公式：</strong>BMI = 体重（kg） ÷ 身高²（m²）。BMI 是体重管理的常用初筛指标，不能替代专业医学诊断。
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-glow backdrop-blur-xl sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 BMI 身体质量指数计算器</h2>
-      <p>
-        BMI 身体质量指数计算器是一款便捷的在线健康评估工具，适合希望快速了解自身体重状态的人群使用。很多人在减脂、增肌、体检或日常健康管理时，只知道身高和体重，却难以判断当前体重是否处于合理区间。本工具通过标准公式“体重公斤数除以身高米数平方”自动计算 BMI 值，并结合动态健康状态指示条，直观展示偏瘦、正常、超重和肥胖等分类结果。使用方法非常简单：在输入框中填写身高厘米数和体重公斤数，点击“计算 BMI”即可获得身体质量指数、健康状态与参考建议。对于搜索“身高体重 BMI 在线计算”“成人 BMI 身体质量指数计算器”“如何判断体重是否标准”的用户来说，本页面能够提供快速、清晰且易理解的结果。需要注意的是，BMI 适合作为大众体重风险的初步筛查指标，但运动员、孕妇、儿童及特殊疾病人群应结合体脂率、腰围和医生建议进行综合判断。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label for="heightInput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="heightLabel">身高（厘米）</label>
+            <input id="heightInput" type="number" inputmode="decimal" min="1" step="0.1" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" placeholder="例如：170" data-i18n-placeholder="heightPlaceholder" aria-describedby="statusText">
+          </div>
+          <div>
+            <label for="weightInput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="weightLabel">体重（公斤）</label>
+            <input id="weightInput" type="number" inputmode="decimal" min="1" step="0.1" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" placeholder="例如：65" data-i18n-placeholder="weightPlaceholder" aria-describedby="statusText">
+          </div>
+          <p id="inputHint" class="text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="inputHint">可输入小数。计算仅在当前浏览器内完成，不会保存或上传。</p>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="calculateBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">计算 BMI</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">填入示例</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+        </div>
+
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="statusReady">请输入身高和体重后开始计算。</p>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">结果</span>
+        </div>
+
+        <div class="rounded-3xl border border-gray-200 bg-slate-50 p-5 dark:border-white/10 dark:bg-slate-950/70">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="bmiValueLabel">BMI 数值</p>
+          <div class="mt-3 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div id="bmiValue" class="tabular-nums text-5xl font-black tracking-tighter text-slate-950 dark:text-white">--</div>
+            <div id="categoryBadge" class="inline-flex w-fit items-center rounded-full border border-gray-200 bg-white px-3 py-2 text-sm font-bold text-slate-600 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-300" data-i18n="categoryWaiting">等待计算</div>
+          </div>
+          <p id="resultSummary" class="mt-4 min-h-6 text-sm leading-6 text-slate-600 dark:text-slate-400" data-i18n="resultWaiting">结果会显示在这里。</p>
+        </div>
+
+        <div class="mt-5">
+          <div class="mb-2 flex items-center justify-between gap-3 text-xs font-semibold text-slate-500 dark:text-slate-500">
+            <span data-i18n="indicatorTitle">健康状态指示条</span>
+            <span id="indicatorRange" class="tabular-nums">0 - 35+</span>
+          </div>
+          <div class="relative h-4 overflow-hidden rounded-full border border-gray-200 bg-slate-100 dark:border-white/10 dark:bg-slate-950/70" aria-hidden="true">
+            <div class="absolute inset-y-0 left-0 bg-sky-300" style="width:52.85%"></div>
+            <div class="absolute inset-y-0 bg-emerald-400" style="left:52.85%; width:15.71%"></div>
+            <div class="absolute inset-y-0 bg-amber-300" style="left:68.56%; width:11.43%"></div>
+            <div class="absolute inset-y-0 right-0 bg-rose-400" style="width:20%"></div>
+            <div id="indicatorNeedle" class="absolute top-1/2 h-7 w-1 -translate-y-1/2 rounded-full bg-slate-950 shadow-sm transition-[left] duration-200 dark:bg-white" style="left:0%"></div>
+          </div>
+          <div class="mt-2 grid grid-cols-2 gap-2 text-xs text-slate-500 dark:text-slate-500 sm:grid-cols-4">
+            <span data-i18n="legendUnderweight">偏瘦</span>
+            <span data-i18n="legendNormal">正常</span>
+            <span data-i18n="legendOverweight">超重</span>
+            <span data-i18n="legendObese">肥胖</span>
+          </div>
+        </div>
+
+        <div class="mt-5 grid gap-3 sm:grid-cols-2">
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="heightResultLabel">身高</p>
+            <p id="heightResult" class="mt-2 tabular-nums text-lg font-bold text-slate-950 dark:text-white">--</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="weightResultLabel">体重</p>
+            <p id="weightResult" class="mt-2 tabular-nums text-lg font-bold text-slate-950 dark:text-white">--</p>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
+          <button id="resetOutputBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="resetAction">重置结果</button>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">Micro Tools Matrix 的 BMI 身体质量指数计算器适合快速评估身高与体重之间的比例关系。你只需输入厘米和公斤，页面会在浏览器本地处理并给出 BMI 数值、偏瘦、正常、超重或肥胖等状态提示，以及直观的健康状态指示条。整个过程无需上传、无需登录，也不会把个人身体数据发送到服务器。该免费在线开发者工具采用静态页面实现，适合在桌面和手机浏览器中使用，可作为日常健康记录、产品原型或表单校验场景中的轻量参考。BMI 不能替代医学诊断，如需专业建议，请结合年龄、性别、体脂率和医生意见综合判断。</article>
   </main>
 
-  <footer class="mx-auto max-w-6xl px-5 pb-8 text-center text-sm text-slate-500 sm:px-8 lg:px-10">
-    <p>© <span id="year"></span> bmi-calculator. 结果仅供健康管理参考。</p>
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
 
   <script>
-    (function () {
-      const form = document.getElementById('bmiForm');
-      const heightInput = document.getElementById('height');
-      const weightInput = document.getElementById('weight');
-      const errorBox = document.getElementById('errorBox');
-      const bmiValue = document.getElementById('bmiValue');
-      const bmiCategory = document.getElementById('bmiCategory');
-      const bmiAdvice = document.getElementById('bmiAdvice');
-      const statusBadge = document.getElementById('statusBadge');
-      const pointer = document.getElementById('pointer');
-      const pointerText = document.getElementById('pointerText');
-      const resetBtn = document.getElementById('resetBtn');
-      const calculateBtn = document.getElementById('calculateBtn');
-      const year = document.getElementById('year');
-
-      year.textContent = new Date().getFullYear();
-
-      function normalizeNumber(value) {
-        return String(value || '')
-          .trim()
-          .replace(/，/g, '.')
-          .replace(/。/g, '.')
-          .replace(/,/g, '.');
+    const I18N = {
+      zh: {
+        documentTitle: "BMI 身体质量指数计算器 - Micro Tools Matrix",
+        metaDescription: "Micro Tools Matrix 的 BMI 身体质量指数计算器在浏览器本地处理身高和体重，快速计算 BMI 值并显示健康状态指示条，无需上传任何个人数据。",
+        metaKeywords: "BMI计算器, 身体质量指数, 健康状态, 浏览器本地处理, 无需上传, Micro Tools Matrix",
+        toolName: "BMI 身体质量指数计算器",
+        themeToggleAria: "切换主题",
+        languageAria: "语言",
+        sponsor: "赞赏",
+        buyCoffee: "Buy Me a Coffee",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        eyebrow: "浏览器本地处理",
+        h1: "BMI 身体质量指数计算器",
+        intro: "在 Micro Tools Matrix 中输入身高和体重，即可在浏览器本地计算 BMI，并查看清晰的健康状态指示条，无需上传任何个人数据。",
+        localBadge: "本地运行",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        outputTitle: "结果",
+        outputBadge: "结果",
+        heightLabel: "身高（厘米）",
+        heightPlaceholder: "例如：170",
+        weightLabel: "体重（公斤）",
+        weightPlaceholder: "例如：65",
+        inputHint: "可输入小数。计算仅在当前浏览器内完成，不会保存或上传。",
+        primaryAction: "计算 BMI",
+        sampleAction: "填入示例",
+        secondaryAction: "清空",
+        statusReady: "请输入身高和体重后开始计算。",
+        statusCalculated: "计算完成。结果仅保留在当前页面中。",
+        statusSample: "已填入示例数据，可直接计算或修改。",
+        statusCleared: "已清空输入和结果。",
+        statusCopied: "结果已复制到剪贴板。",
+        statusCopyFailed: "无法自动复制，请手动选择结果文本。",
+        errorMissing: "请同时输入身高和体重。",
+        errorHeight: "请输入有效身高，单位为厘米。",
+        errorWeight: "请输入有效体重，单位为公斤。",
+        errorRange: "请输入合理范围内的数值。",
+        bmiValueLabel: "BMI 数值",
+        categoryWaiting: "等待计算",
+        resultWaiting: "结果会显示在这里。",
+        indicatorTitle: "健康状态指示条",
+        legendUnderweight: "偏瘦",
+        legendNormal: "正常",
+        legendOverweight: "超重",
+        legendObese: "肥胖",
+        heightResultLabel: "身高",
+        weightResultLabel: "体重",
+        copyAction: "复制结果",
+        resetAction: "重置结果",
+        resultSummary: "BMI 为 {bmi}，状态为{category}。",
+        resultLine: "BMI：{bmi}\n状态：{category}\n身高：{height} 厘米\n体重：{weight} 公斤",
+        unitHeight: "{value} 厘米",
+        unitWeight: "{value} 公斤",
+        underweight: "偏瘦",
+        normal: "正常",
+        overweight: "超重",
+        obese: "肥胖",
+        seoArticle: "Micro Tools Matrix 的 BMI 身体质量指数计算器适合快速评估身高与体重之间的比例关系。你只需输入厘米和公斤，页面会在浏览器本地处理并给出 BMI 数值、偏瘦、正常、超重或肥胖等状态提示，以及直观的健康状态指示条。整个过程无需上传、无需登录，也不会把个人身体数据发送到服务器。该免费在线开发者工具采用静态页面实现，适合在桌面和手机浏览器中使用，可作为日常健康记录、产品原型或表单校验场景中的轻量参考。BMI 不能替代医学诊断，如需专业建议，请结合年龄、性别、体脂率和医生意见综合判断。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
+      },
+      en: {
+        documentTitle: "BMI Calculator - Micro Tools Matrix",
+        metaDescription: "A browser-local BMI calculator from Micro Tools Matrix. Enter height and weight to calculate BMI with a clear health status indicator. No upload required.",
+        metaKeywords: "BMI calculator, body mass index, health status indicator, browser-local processing, no upload, free online developer tool, Micro Tools Matrix",
+        toolName: "BMI Calculator",
+        themeToggleAria: "Switch theme",
+        languageAria: "Language",
+        sponsor: "Sponsor",
+        buyCoffee: "Buy Me a Coffee",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        eyebrow: "Browser-local processing",
+        h1: "BMI Calculator",
+        intro: "Enter height and weight in Micro Tools Matrix to calculate BMI locally in your browser, with a clear health status indicator and no upload of personal data.",
+        localBadge: "Local",
+        inputTitle: "Input",
+        inputBadge: "Input",
+        outputTitle: "Result",
+        outputBadge: "Output",
+        heightLabel: "Height (cm)",
+        heightPlaceholder: "Example: 170",
+        weightLabel: "Weight (kg)",
+        weightPlaceholder: "Example: 65",
+        inputHint: "Decimals are supported. Calculation runs only in the current browser and is not saved or uploaded.",
+        primaryAction: "Calculate BMI",
+        sampleAction: "Use sample",
+        secondaryAction: "Clear",
+        statusReady: "Enter height and weight to start calculating.",
+        statusCalculated: "Calculation complete. The result stays only on this page.",
+        statusSample: "Sample values have been filled. You can calculate or edit them.",
+        statusCleared: "Input and result have been cleared.",
+        statusCopied: "Result copied to clipboard.",
+        statusCopyFailed: "Automatic copy is unavailable. Please select the result text manually.",
+        errorMissing: "Please enter both height and weight.",
+        errorHeight: "Please enter a valid height in centimeters.",
+        errorWeight: "Please enter a valid weight in kilograms.",
+        errorRange: "Please enter values within a reasonable range.",
+        bmiValueLabel: "BMI value",
+        categoryWaiting: "Waiting",
+        resultWaiting: "The result will appear here.",
+        indicatorTitle: "Health status indicator",
+        legendUnderweight: "Underweight",
+        legendNormal: "Normal",
+        legendOverweight: "Overweight",
+        legendObese: "Obese",
+        heightResultLabel: "Height",
+        weightResultLabel: "Weight",
+        copyAction: "Copy result",
+        resetAction: "Reset result",
+        resultSummary: "BMI is {bmi}. Status: {category}.",
+        resultLine: "BMI: {bmi}\nStatus: {category}\nHeight: {height} cm\nWeight: {weight} kg",
+        unitHeight: "{value} cm",
+        unitWeight: "{value} kg",
+        underweight: "Underweight",
+        normal: "Normal",
+        overweight: "Overweight",
+        obese: "Obese",
+        seoArticle: "The BMI Calculator in Micro Tools Matrix is a free online developer tool for quickly evaluating the relationship between height and weight. Enter centimeters and kilograms, and the page performs browser-local processing to calculate a body mass index value, classify it as underweight, normal, overweight, or obese, and place the result on a visual health status indicator. No upload is required, no account is needed, and the values you type are not sent to a server. This static tool is useful for quick personal checks, health form prototypes, calculator testing, or interface validation on desktop and mobile browsers. Because BMI is a simple ratio, it should be treated as a lightweight reference rather than medical advice. Age, sex, body composition, activity level, and professional guidance can all change how a result should be interpreted. Micro Tools Matrix keeps the workflow fast, private, and predictable while preserving a clean interface.",
+        footer: "Micro Tools Matrix - Browser-local processing with no upload."
       }
+    };
 
-      function parsePositiveNumber(value) {
-        const normalized = normalizeNumber(value);
-        if (!normalized) return NaN;
-        if (!/^\d+(\.\d+)?$/.test(normalized)) return NaN;
-        return Number(normalized);
+    let currentLanguage = "zh";
+    let lastResult = null;
+    let statusKey = "statusReady";
+    let statusParams = {};
+
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      try {
+        return localStorage.getItem("microToolsLanguage") || "zh";
+      } catch (error) {
+        return "zh";
       }
+    }
 
-      function showError(message) {
-        errorBox.textContent = message;
-        errorBox.classList.remove('hidden');
-      }
-
-      function clearError() {
-        errorBox.textContent = '';
-        errorBox.classList.add('hidden');
-      }
-
-      function setInputState(input, isInvalid) {
-        if (isInvalid) {
-          input.classList.add('border-red-400', 'focus:border-red-400', 'focus:ring-red-500/20');
-          input.classList.remove('border-white/10', 'focus:border-blue-400', 'focus:ring-blue-500/20');
-        } else {
-          input.classList.remove('border-red-400', 'focus:border-red-400', 'focus:ring-red-500/20');
-          input.classList.add('border-white/10', 'focus:border-blue-400', 'focus:ring-blue-500/20');
-        }
-      }
-
-      function getCategory(bmi) {
-        if (bmi < 18.5) {
-          return {
-            label: '偏瘦',
-            color: 'sky',
-            badge: 'border-sky-300/40 bg-sky-400/15 text-sky-100',
-            text: '建议保持规律饮食，关注蛋白质与总能量摄入，必要时咨询营养师。'
-          };
-        }
-        if (bmi < 24) {
-          return {
-            label: '正常',
-            color: 'emerald',
-            badge: 'border-emerald-300/40 bg-emerald-400/15 text-emerald-100',
-            text: '当前 BMI 处于常见健康范围，建议继续保持均衡饮食与规律运动。'
-          };
-        }
-        if (bmi < 28) {
-          return {
-            label: '超重',
-            color: 'amber',
-            badge: 'border-amber-300/40 bg-amber-400/15 text-amber-100',
-            text: '建议控制高热量饮食，增加有氧运动和力量训练，逐步改善体重。'
-          };
-        }
-        return {
-          label: '肥胖',
-          color: 'red',
-          badge: 'border-red-300/40 bg-red-400/15 text-red-100',
-          text: '建议重视体重管理，结合腰围、血压、血糖等指标，并考虑寻求专业医生建议。'
-        };
-      }
-
-      function updateResult(bmi) {
-        const fixed = bmi.toFixed(1);
-        const category = getCategory(bmi);
-        const maxBmi = 40;
-        const percent = Math.max(0, Math.min(100, (bmi / maxBmi) * 100));
-
-        bmiValue.textContent = fixed;
-        bmiCategory.textContent = category.label;
-        bmiAdvice.textContent = category.text;
-        pointer.style.left = percent + '%';
-        pointerText.textContent = '当前位置：BMI ' + fixed;
-
-        statusBadge.className = 'w-fit rounded-full border px-4 py-2 text-sm font-bold ' + category.badge;
-        statusBadge.textContent = category.label;
-
-        const categoryColorMap = {
-          sky: 'text-sky-300',
-          emerald: 'text-emerald-300',
-          amber: 'text-amber-300',
-          red: 'text-red-300'
-        };
-
-        bmiCategory.className = 'mt-3 text-3xl font-black ' + categoryColorMap[category.color];
-
-        calculateBtn.classList.add('scale-[0.98]');
-        setTimeout(() => calculateBtn.classList.remove('scale-[0.98]'), 120);
-      }
-
-      function resetResult() {
-        clearError();
-        heightInput.value = '';
-        weightInput.value = '';
-        setInputState(heightInput, false);
-        setInputState(weightInput, false);
-        bmiValue.textContent = '--';
-        bmiCategory.textContent = '--';
-        bmiCategory.className = 'mt-3 text-3xl font-black text-slate-200';
-        bmiAdvice.textContent = 'Please enter身高和体重后查看建议。';
-        statusBadge.className = 'w-fit rounded-full border border-slate-600 bg-slate-800 px-4 py-2 text-sm font-bold text-slate-300';
-        statusBadge.textContent = '等待输入';
-        pointer.style.left = '0%';
-        pointerText.textContent = '--';
-        heightInput.focus();
-      }
-
-      function calculate() {
-        clearError();
-
-        const height = parsePositiveNumber(heightInput.value);
-        const weight = parsePositiveNumber(weightInput.value);
-
-        let invalidHeight = false;
-        let invalidWeight = false;
-        const messages = [];
-
-        if (!Number.isFinite(height)) {
-          invalidHeight = true;
-          messages.push('Please enter有效的身高数字。');
-        } else if (height < 50 || height > 250) {
-          invalidHeight = true;
-          messages.push('身高应在 50 到 250 厘米之间。');
-        }
-
-        if (!Number.isFinite(weight)) {
-          invalidWeight = true;
-          messages.push('Please enter有效的体重数字。');
-        } else if (weight < 10 || weight > 500) {
-          invalidWeight = true;
-          messages.push('体重应在 10 到 500 公斤之间。');
-        }
-
-        setInputState(heightInput, invalidHeight);
-        setInputState(weightInput, invalidWeight);
-
-        if (messages.length > 0) {
-          showError(messages.join(' '));
-          return;
-        }
-
-        const heightMeters = height / 100;
-        const bmi = weight / (heightMeters * heightMeters);
-
-        if (!Number.isFinite(bmi) || bmi <= 0) {
-          showError('计算失败，请检查输入内容后重试。');
-          return;
-        }
-
-        updateResult(bmi);
-      }
-
-      form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        calculate();
-      });
-
-      resetBtn.addEventListener('click', resetResult);
-
-      [heightInput, weightInput].forEach(function (input) {
-        input.addEventListener('input', function () {
-          clearError();
-          setInputState(input, false);
-        });
-
-        input.addEventListener('keydown', function (event) {
-          if (event.key === 'Enter') {
-            event.preventDefault();
-            calculate();
-          }
-        });
-      });
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
+    function formatMessage(template, params = {}) {
+      return String(template).replace(/\{(\w+)\}/g, (match, key) => {
+        return Object.prototype.hasOwnProperty.call(params, key) ? String(params[key]) : match;
       });
     }
+
+    function getText(key, params = {}) {
+      const dictionary = I18N[currentLanguage] || I18N.zh;
+      const template = dictionary[key] || I18N.zh[key] || "";
+      return formatMessage(template, params);
+    }
+
+    function setStatus(key, params = {}) {
+      statusKey = key;
+      statusParams = params;
+      const statusText = document.getElementById("statusText");
+      if (statusText) statusText.textContent = getText(key, params);
+    }
+
+    function setLanguage(lang) {
+      const safeLang = lang === "en" ? "en" : "zh";
+      try {
+        localStorage.setItem("microToolsLanguage", safeLang);
+      } catch (error) {}
+      applyLanguage(safeLang);
+    }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dictionary = I18N[currentLanguage];
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.title = dictionary.documentTitle;
+
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute("content", dictionary.metaDescription);
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (keywords) keywords.setAttribute("content", dictionary.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((element) => {
+        const key = element.getAttribute("data-i18n");
+        if (key && dictionary[key]) element.textContent = dictionary[key];
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
+        const key = element.getAttribute("data-i18n-placeholder");
+        if (key && dictionary[key]) element.setAttribute("placeholder", dictionary[key]);
+      });
+      document.querySelectorAll("[data-i18n-title]").forEach((element) => {
+        const key = element.getAttribute("data-i18n-title");
+        if (key && dictionary[key]) element.setAttribute("title", dictionary[key]);
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => {
+        const key = element.getAttribute("data-i18n-aria-label");
+        if (key && dictionary[key]) element.setAttribute("aria-label", dictionary[key]);
+      });
+
+      const zhButton = document.getElementById("langZhBtn");
+      const enButton = document.getElementById("langEnBtn");
+      if (zhButton && enButton) {
+        const selected = "bg-cyan-400 text-slate-950";
+        const inactive = "text-slate-600 dark:text-slate-400";
+        zhButton.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "zh" ? selected : inactive);
+        enButton.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "en" ? selected : inactive);
+        zhButton.setAttribute("aria-pressed", currentLanguage === "zh" ? "true" : "false");
+        enButton.setAttribute("aria-pressed", currentLanguage === "en" ? "true" : "false");
+      }
+
+      const sponsorLabel = document.querySelector("#openSponsorBtn [data-i18n='sponsor']");
+      if (sponsorLabel) sponsorLabel.textContent = dictionary.sponsor;
+
+      setStatus(statusKey, statusParams);
+      renderResult(lastResult);
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function parsePositiveNumber(value) {
+      if (value === null || String(value).trim() === "") return NaN;
+      return Number(value);
+    }
+
+    function getCategory(bmi) {
+      if (bmi < 18.5) return "underweight";
+      if (bmi < 24) return "normal";
+      if (bmi < 28) return "overweight";
+      return "obese";
+    }
+
+    function getCategoryClasses(category) {
+      const base = "inline-flex w-fit items-center rounded-full border px-3 py-2 text-sm font-bold";
+      if (category === "underweight") return base + " border-sky-200 bg-sky-50 text-sky-700 dark:border-sky-400/20 dark:bg-sky-400/10 dark:text-sky-300";
+      if (category === "normal") return base + " border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300";
+      if (category === "overweight") return base + " border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-400/20 dark:bg-amber-400/10 dark:text-amber-300";
+      if (category === "obese") return base + " border-rose-200 bg-rose-50 text-rose-700 dark:border-rose-400/20 dark:bg-rose-400/10 dark:text-rose-300";
+      return base + " border-gray-200 bg-white text-slate-600 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-300";
+    }
+
+    function calculateBmi() {
+      const heightInput = document.getElementById("heightInput");
+      const weightInput = document.getElementById("weightInput");
+      const height = parsePositiveNumber(heightInput?.value);
+      const weight = parsePositiveNumber(weightInput?.value);
+
+      if (!heightInput?.value || !weightInput?.value) {
+        lastResult = null;
+        renderResult(null);
+        setStatus("errorMissing");
+        return;
+      }
+      if (!Number.isFinite(height) || height <= 0) {
+        lastResult = null;
+        renderResult(null);
+        setStatus("errorHeight");
+        return;
+      }
+      if (!Number.isFinite(weight) || weight <= 0) {
+        lastResult = null;
+        renderResult(null);
+        setStatus("errorWeight");
+        return;
+      }
+      if (height < 50 || height > 260 || weight < 10 || weight > 500) {
+        lastResult = null;
+        renderResult(null);
+        setStatus("errorRange");
+        return;
+      }
+
+      const meters = height / 100;
+      const bmi = weight / (meters * meters);
+      const rounded = Math.round(bmi * 10) / 10;
+      lastResult = {
+        height: Math.round(height * 10) / 10,
+        weight: Math.round(weight * 10) / 10,
+        bmi: rounded,
+        category: getCategory(rounded)
+      };
+      renderResult(lastResult);
+      setStatus("statusCalculated");
+    }
+
+    function renderResult(result) {
+      const bmiValue = document.getElementById("bmiValue");
+      const categoryBadge = document.getElementById("categoryBadge");
+      const resultSummary = document.getElementById("resultSummary");
+      const heightResult = document.getElementById("heightResult");
+      const weightResult = document.getElementById("weightResult");
+      const needle = document.getElementById("indicatorNeedle");
+
+      if (!result) {
+        if (bmiValue) bmiValue.textContent = "--";
+        if (categoryBadge) {
+          categoryBadge.className = getCategoryClasses("");
+          categoryBadge.textContent = getText("categoryWaiting");
+        }
+        if (resultSummary) resultSummary.textContent = getText("resultWaiting");
+        if (heightResult) heightResult.textContent = "--";
+        if (weightResult) weightResult.textContent = "--";
+        if (needle) needle.style.left = "0%";
+        return;
+      }
+
+      const categoryText = getText(result.category);
+      if (bmiValue) bmiValue.textContent = result.bmi.toFixed(1);
+      if (categoryBadge) {
+        categoryBadge.className = getCategoryClasses(result.category);
+        categoryBadge.textContent = categoryText;
+      }
+      if (resultSummary) {
+        resultSummary.textContent = getText("resultSummary", {
+          bmi: result.bmi.toFixed(1),
+          category: categoryText
+        });
+      }
+      if (heightResult) heightResult.textContent = getText("unitHeight", { value: result.height.toFixed(1).replace(/\.0$/, "") });
+      if (weightResult) weightResult.textContent = getText("unitWeight", { value: result.weight.toFixed(1).replace(/\.0$/, "") });
+      if (needle) {
+        const clamped = Math.max(0, Math.min(35, result.bmi));
+        needle.style.left = ((clamped / 35) * 100).toFixed(2) + "%";
+      }
+    }
+
+    async function copyResult() {
+      if (!lastResult) {
+        setStatus("statusReady");
+        return;
+      }
+      const text = getText("resultLine", {
+        bmi: lastResult.bmi.toFixed(1),
+        category: getText(lastResult.category),
+        height: lastResult.height.toFixed(1).replace(/\.0$/, ""),
+        weight: lastResult.weight.toFixed(1).replace(/\.0$/, "")
+      });
+      try {
+        await navigator.clipboard.writeText(text);
+        setStatus("statusCopied");
+      } catch (error) {
+        setStatus("statusCopyFailed");
+      }
+    }
+
+    function clearAll() {
+      const heightInput = document.getElementById("heightInput");
+      const weightInput = document.getElementById("weightInput");
+      if (heightInput) heightInput.value = "";
+      if (weightInput) weightInput.value = "";
+      lastResult = null;
+      renderResult(null);
+      setStatus("statusCleared");
+    }
+
+    function fillSample() {
+      const heightInput = document.getElementById("heightInput");
+      const weightInput = document.getElementById("weightInput");
+      if (heightInput) heightInput.value = "170";
+      if (weightInput) weightInput.value = "65";
+      setStatus("statusSample");
+      calculateBmi();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", () => {
+        if (typeof openSponsorModal === "function") openSponsorModal();
+      });
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", () => {
+        if (typeof closeSponsorModal === "function") closeSponsorModal();
+      });
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal" && typeof closeSponsorModal === "function") closeSponsorModal();
+      });
+
+      document.getElementById("calculateBtn")?.addEventListener("click", calculateBmi);
+      document.getElementById("sampleBtn")?.addEventListener("click", fillSample);
+      document.getElementById("clearBtn")?.addEventListener("click", clearAll);
+      document.getElementById("copyBtn")?.addEventListener("click", copyResult);
+      document.getElementById("resetOutputBtn")?.addEventListener("click", () => {
+        lastResult = null;
+        renderResult(null);
+        setStatus("statusReady");
+      });
+      document.getElementById("heightInput")?.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") calculateBmi();
+      });
+      document.getElementById("weightInput")?.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") calculateBmi();
+      });
+
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="../sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

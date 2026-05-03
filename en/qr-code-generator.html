@@ -1,627 +1,754 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>qr-code-generator 在线二维码Generate器</title>
-  <meta name="description" content="在线二维码Generate器。利用纯前端库将输入的URL或文本Generate二维码，支持调整尺寸和前景色，并可Download为PNG。">
-  <meta name="keywords" content="在线二维码Generate器,二维码Generate工具,URLGenerate二维码,文本Generate二维码,二维码PNGDownload,自定义颜色二维码,qr-code-generator">
-  <link rel="icon" type="image/png" href="../assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
-  <link rel="canonical" href="https://mymicrotools.xyz/en/qr-code-generator.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>二维码生成器 - Micro Tools Matrix</title>
+  <meta name="description" content="Micro Tools Matrix 在线二维码生成器，支持在浏览器本地将 URL 或文本生成二维码，可调整尺寸和前景色并下载 PNG，无需上传。">
+  <meta name="keywords" content="二维码生成器,在线二维码,QR Code,PNG下载,浏览器本地处理,无需上传,Micro Tools Matrix">
+  <link rel="canonical" href="https://mymicrotools.xyz/qr-code-generator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/qr-code-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/qr-code-generator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/qr-code-generator.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/en/qr-code-generator.html">
-  <meta property="og:title" content="qr-code-generator 在线二维码Generate器">
-  <meta property="og:description" content="在线二维码Generate器。利用纯前端库将输入的URL或文本Generate二维码，支持调整尺寸和前景色，并可Download为PNG。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="qr-code-generator 在线二维码Generate器">
-  <meta name="twitter:description" content="在线二维码Generate器。利用纯前端库将输入的URL或文本Generate二维码，支持调整尺寸和前景色，并可Download为PNG。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="../style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "QR Code Generator",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A browser-local QR code generator for creating PNG QR codes from URLs or text.",
+      "url": "https://mymicrotools.xyz/qr-code-generator.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "category": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">二维码生成器</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="../qr-code-generator.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./qr-code-generator.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline"></span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" data-i18n-aria-label="languageGroup" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
+        </div>
       </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
-    <div class="absolute inset-0 opacity-30">
-      <div class="absolute left-1/4 top-10 h-48 w-48 rounded-full bg-cyan-500 blur-3xl"></div>
-      <div class="absolute right-1/4 bottom-0 h-56 w-56 rounded-full bg-blue-600 blur-3xl"></div>
-    </div>
-    <div class="relative mx-auto max-w-6xl px-5 py-12 sm:py-16">
-      <div class="inline-flex items-center rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-1 text-sm text-cyan-100 shadow-lg shadow-cyan-950/40">
-        纯前端 · 隐私安全 · PNG Download
-      </div>
-      <h1 class="mt-5 text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl">在线二维码Generate器</h1>
-      <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
-        在线二维码Generate器：输入 URL 或任意文本，即可快速Generate可Download的高清二维码。
-      </p>
-    </div>
+    </nav>
   </header>
 
-  <main class="mx-auto max-w-6xl px-5 py-8 sm:py-12">
-    <section class="grid gap-6 lg:grid-cols-2">
-      <div class="rounded-3xl border border-slate-200 dark:border-white/10 dark:border-slate-700/70 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-black/30 backdrop-blur sm:p-7">
-        <div class="mb-6 flex items-center justify-between gap-4">
-          <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入设置</h2>
-            <p class="mt-1 text-sm text-slate-400">填写内容并调整二维码外观参数</p>
-          </div>
-          <span class="rounded-full bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-200 ring-1 ring-cyan-300/20">INPUT</span>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">二维码生成器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中将 URL 或文本转换为二维码，生成过程完全在浏览器内完成，无需上传内容。</p>
         </div>
-
-        <label for="qrText" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">URL 或文本内容</label>
-        <textarea id="qrText" rows="7" class="w-full resize-y rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/80 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="例如：https://example.com 或需要Generate二维码的文本">https://example.com</textarea>
-        <div class="mt-2 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
-          <span id="byteInfo">0 bytes</span>
-          <span>建议输入简短 URL 或文本，过长内容会降低识别效率</span>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
-
-        <div class="mt-6 grid gap-5 sm:grid-cols-2">
-          <div>
-            <label for="qrSize" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">图片尺寸</label>
-            <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/70 p-4">
-              <input id="qrSize" type="range" min="128" max="1024" step="16" value="384" class="w-full accent-cyan-400" />
-              <div class="mt-3 flex items-center justify-between text-sm">
-                <span class="text-slate-400">128px</span>
-                <strong id="sizeLabel" class="text-cyan-200">384px</strong>
-                <span class="text-slate-400">1024px</span>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <label for="qrColor" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">前景色</label>
-            <div class="flex items-center gap-3 rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/70 p-4">
-              <input id="qrColor" type="color" value="#0f172a" class="h-12 w-16 cursor-pointer rounded-xl border border-slate-600 bg-transparent p-1" />
-              <input id="colorText" type="text" value="#0f172a" class="min-w-0 flex-1 rounded-xl border border-gray-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-900 px-3 py-3 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
-            </div>
-          </div>
-        </div>
-
-        <div id="errorBox" class="mt-5 hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200"></div>
-
-        <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-          <button id="generateBtn" class="inline-flex flex-1 items-center justify-center rounded-2xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98]">
-            Generate二维码
-          </button>
-          <button id="clearBtn" class="inline-flex items-center justify-center rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-5 py-3 font-bold text-slate-800 dark:text-slate-200 transition hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-[0.98]">
-            Clear
-          </button>
-        </div>
-      </div>
-
-      <div class="rounded-3xl border border-cyan-300/20 bg-cyan-50 p-5 text-slate-950 dark:text-slate-100 shadow-2xl shadow-cyan-950/20 sm:p-7">
-        <div class="mb-6 flex items-center justify-between gap-4">
-          <div>
-            <h2 class="text-xl font-bold text-slate-950 dark:text-slate-100">输出预览</h2>
-            <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">Generate结果会显示在下方，可直接Download PNG</p>
-          </div>
-          <span class="rounded-full bg-white dark:bg-slate-950 px-3 py-1 text-xs font-semibold text-cyan-100">OUTPUT</span>
-        </div>
-
-        <div class="flex min-h-[360px] items-center justify-center rounded-3xl border border-slate-200 dark:border-white/10 bg-white p-5 shadow-inner">
-          <canvas id="qrCanvas" class="max-w-full rounded-2xl"></canvas>
-        </div>
-
-        <div class="mt-5 grid gap-3 sm:grid-cols-2">
-          <button id="downloadBtn" class="inline-flex items-center justify-center rounded-2xl bg-white dark:bg-slate-950 px-5 py-3 font-bold text-gray-900 dark:text-white shadow-lg shadow-slate-950/20 transition hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50">
-            Download PNG
-          </button>
-          <button id="copyBtn" class="inline-flex items-center justify-center rounded-2xl border border-slate-300 bg-white px-5 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-100 active:scale-[0.98]">
-            Copy图片
-          </button>
-        </div>
-        <p id="statusText" class="mt-4 text-center text-sm font-medium text-slate-600 dark:text-slate-400">二维码已就绪</p>
       </div>
     </section>
 
-    <article class="mt-10 rounded-3xl border border-slate-200 dark:border-white/10 dark:border-slate-700/70 bg-white dark:bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl shadow-black/20 sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">在线二维码Generate器，让链接与文本分享更高效</h2>
-      <p>
-        qr-code-generator 是一款无需安装软件的在线二维码Generate器，适合将网站链接、活动页面、联系方式、产品说明或普通文本快速转换为可扫描的二维码。所有Generate过程均在浏览器本地完成，输入内容不会上传到服务器，更适合重视隐私与效率的用户。使用时，只需在输入框中粘贴 URL 或文本，按需调整二维码尺寸与前景色，点击“Generate二维码”即可实时预览结果，并支持一键Download PNG 图片。对于需要制作宣传海报、名片、门店物料、社交媒体图片的运营人员和设计师，这个自定义颜色二维码Generate工具可以显著减少沟通成本。通过“URL Generate二维码”“文本Generate二维码”“二维码 PNG Download”等功能，你可以快速获得清晰、易识别、便于传播的二维码素材。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <label for="qrText" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="textLabel">URL 或文本</label>
+        <textarea id="qrText" rows="8" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="textPlaceholder" placeholder="输入要编码为二维码的链接、说明或任意文本"></textarea>
+
+        <div class="mt-4 grid gap-4 sm:grid-cols-2">
+          <div>
+            <label for="qrSize" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="sizeLabel">图片尺寸</label>
+            <select id="qrSize" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+              <option value="256">256 px</option>
+              <option value="384" selected>384 px</option>
+              <option value="512">512 px</option>
+              <option value="768">768 px</option>
+              <option value="1024">1024 px</option>
+            </select>
+          </div>
+          <div>
+            <label for="qrColor" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="colorLabel">前景色</label>
+            <div class="flex min-h-11 items-center gap-3 rounded-2xl border border-gray-200 bg-slate-50 px-3 py-2 dark:border-white/10 dark:bg-slate-950/70">
+              <input id="qrColor" type="color" value="#0f172a" class="h-8 w-12 shrink-0 cursor-pointer rounded-lg border border-gray-200 bg-transparent p-0 dark:border-white/10" data-i18n-aria-label="colorAria" aria-label="选择前景色">
+              <input id="qrColorText" type="text" value="#0f172a" class="min-w-0 flex-1 bg-transparent text-sm font-semibold text-slate-900 outline-none dark:text-slate-100" data-i18n-aria-label="colorTextAria" aria-label="前景色十六进制值">
+            </div>
+          </div>
+        </div>
+
+        <p class="mt-3 text-xs leading-6 text-slate-500 dark:text-slate-400" data-i18n="limitHint">支持常见 URL 与短文本；过长内容会提示精简。</p>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="generateBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">生成二维码</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">填入示例</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+        </div>
+
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+        </div>
+
+        <div class="flex min-h-[320px] items-center justify-center rounded-3xl border border-dashed border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+          <div id="emptyState" class="max-w-xs text-center text-sm leading-7 text-slate-500 dark:text-slate-400" data-i18n="emptyState">输入内容后生成二维码，预览会显示在这里。</div>
+          <canvas id="qrCanvas" class="hidden max-h-full max-w-full rounded-2xl bg-white p-3 shadow-sm ring-1 ring-gray-200 dark:ring-white/10" width="384" height="384" data-i18n-aria-label="canvasAria" aria-label="生成的二维码"></canvas>
+        </div>
+
+        <div class="mt-4 grid gap-3 rounded-2xl border border-gray-200 bg-slate-50 p-4 text-sm text-slate-600 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-400">
+          <div class="flex items-center justify-between gap-3">
+            <span data-i18n="encodedBytesLabel">编码字节</span>
+            <span id="byteCount" class="tabular-nums font-semibold text-slate-900 dark:text-slate-100">0</span>
+          </div>
+          <div class="flex items-center justify-between gap-3">
+            <span data-i18n="qrVersionLabel">二维码版本</span>
+            <span id="versionText" class="tabular-nums font-semibold text-slate-900 dark:text-slate-100">-</span>
+          </div>
+          <div class="flex items-center justify-between gap-3">
+            <span data-i18n="imageSizeLabel">导出尺寸</span>
+            <span id="imageSizeText" class="tabular-nums font-semibold text-slate-900 dark:text-slate-100">384 px</span>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="downloadBtn" type="button" disabled class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50" data-i18n="downloadAction">下载 PNG</button>
+          <button id="regenerateBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="refreshAction">刷新预览</button>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">Micro Tools Matrix 二维码生成器是一款免费的在线开发者工具，适合把网站链接、活动说明、联系方式或短文本快速转换为可下载的 PNG 二维码。所有编码、绘制与导出都在浏览器本地处理，无需上传输入内容，也不会把 URL 或文本发送到服务器。你可以选择常用图片尺寸，设置二维码前景色，并在同一页面即时预览结果。对于运营、设计、开发和测试场景，这个轻量工具能帮助你快速制作可分享、可打印、可嵌入文档的二维码，同时保持简洁、安全和跨设备可用。</article>
   </main>
 
-  <footer class="border-t border-slate-800 px-5 py-8 text-center text-sm text-slate-500">
-    <p>© <span id="year"></span> qr-code-generator. Built with native HTML, JavaScript and Tailwind CSS.</p>
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
 
   <script>
-    (() => {
-      const textEl = document.getElementById('qrText');
-      const sizeEl = document.getElementById('qrSize');
-      const sizeLabel = document.getElementById('sizeLabel');
-      const colorEl = document.getElementById('qrColor');
-      const colorTextEl = document.getElementById('colorText');
-      const canvas = document.getElementById('qrCanvas');
-      const ctx = canvas.getContext('2d');
-      const errorBox = document.getElementById('errorBox');
-      const generateBtn = document.getElementById('generateBtn');
-      const downloadBtn = document.getElementById('downloadBtn');
-      const clearBtn = document.getElementById('clearBtn');
-      const copyBtn = document.getElementById('copyBtn');
-      const statusText = document.getElementById('statusText');
-      const byteInfo = document.getElementById('byteInfo');
-      document.getElementById('year').textContent = new Date().getFullYear();
-
-      const VERSION_INFO = {
-        1: { data: 19, ecc: 7, align: [] },
-        2: { data: 34, ecc: 10, align: [6, 18] },
-        3: { data: 55, ecc: 15, align: [6, 22] },
-        4: { data: 80, ecc: 20, align: [6, 26] },
-        5: { data: 108, ecc: 26, align: [6, 30] }
-      };
-
-      const encoder = new TextEncoder();
-      let currentValid = false;
-
-      function showError(message) {
-        errorBox.textContent = message;
-        errorBox.classList.remove('hidden');
-        statusText.textContent = 'Generate失败，请检查输入';
-        statusText.className = 'mt-4 text-center text-sm font-medium text-red-600';
-        currentValid = false;
-        downloadBtn.disabled = true;
+    const I18N = {
+      zh: {
+        toolName: "二维码生成器",
+        sponsor: "赞赏",
+        buyCoffee: "Buy Me a Coffee",
+        languageGroup: "语言",
+        eyebrow: "浏览器本地处理",
+        h1: "二维码生成器",
+        intro: "在 Micro Tools Matrix 中将 URL 或文本转换为二维码，生成过程完全在浏览器内完成，无需上传内容。",
+        localBadge: "本地运行",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        outputTitle: "结果",
+        outputBadge: "输出",
+        textLabel: "URL 或文本",
+        textPlaceholder: "输入要编码为二维码的链接、说明或任意文本",
+        sizeLabel: "图片尺寸",
+        colorLabel: "前景色",
+        colorAria: "选择前景色",
+        colorTextAria: "前景色十六进制值",
+        limitHint: "支持常见 URL 与短文本；过长内容会提示精简。",
+        primaryAction: "生成二维码",
+        sampleAction: "填入示例",
+        secondaryAction: "清空",
+        emptyState: "输入内容后生成二维码，预览会显示在这里。",
+        canvasAria: "生成的二维码",
+        encodedBytesLabel: "编码字节",
+        qrVersionLabel: "二维码版本",
+        imageSizeLabel: "导出尺寸",
+        downloadAction: "下载 PNG",
+        refreshAction: "刷新预览",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。",
+        seoArticle: "Micro Tools Matrix 二维码生成器是一款免费的在线开发者工具，适合把网站链接、活动说明、联系方式或短文本快速转换为可下载的 PNG 二维码。所有编码、绘制与导出都在浏览器本地处理，无需上传输入内容，也不会把 URL 或文本发送到服务器。你可以选择常用图片尺寸，设置二维码前景色，并在同一页面即时预览结果。对于运营、设计、开发和测试场景，这个轻量工具能帮助你快速制作可分享、可打印、可嵌入文档的二维码，同时保持简洁、安全和跨设备可用。",
+        title: "二维码生成器 - Micro Tools Matrix",
+        metaDescription: "Micro Tools Matrix 在线二维码生成器，支持在浏览器本地将 URL 或文本生成二维码，可调整尺寸和前景色并下载 PNG，无需上传。",
+        metaKeywords: "二维码生成器,在线二维码,QR Code,PNG下载,浏览器本地处理,无需上传,Micro Tools Matrix",
+        statusReady: "请输入内容并生成二维码。",
+        statusGenerated: "二维码已生成，可下载 PNG。",
+        statusCleared: "内容已清空。",
+        statusSample: "示例已填入，可以生成二维码。",
+        statusDownloaded: "PNG 已开始下载。",
+        errorEmpty: "请输入 URL 或文本后再生成二维码。",
+        errorTooLong: "内容过长，请精简到约 100 个英文字符或 35 个中文字符以内。",
+        errorColor: "请输入有效的十六进制颜色，例如 #0f172a。",
+        versionPrefix: "版本 ",
+        sampleText: "https://mymicrotools.xyz/",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统"
+      },
+      en: {
+        toolName: "QR Code Generator",
+        sponsor: "Sponsor",
+        buyCoffee: "Buy Me a Coffee",
+        languageGroup: "Language",
+        eyebrow: "Browser-local processing",
+        h1: "QR Code Generator",
+        intro: "Create a QR code from a URL or text inside Micro Tools Matrix. Everything runs in your browser, with no upload required.",
+        localBadge: "Local",
+        inputTitle: "Input",
+        inputBadge: "Input",
+        outputTitle: "Result",
+        outputBadge: "Output",
+        textLabel: "URL or text",
+        textPlaceholder: "Enter a link, note, or any text to encode as a QR code",
+        sizeLabel: "Image size",
+        colorLabel: "Foreground color",
+        colorAria: "Choose foreground color",
+        colorTextAria: "Foreground color hex value",
+        limitHint: "Works best for common URLs and short text. Longer content will ask you to shorten it.",
+        primaryAction: "Generate QR Code",
+        sampleAction: "Use Sample",
+        secondaryAction: "Clear",
+        emptyState: "Generate a QR code after entering content. The preview will appear here.",
+        canvasAria: "Generated QR code",
+        encodedBytesLabel: "Encoded bytes",
+        qrVersionLabel: "QR version",
+        imageSizeLabel: "Export size",
+        downloadAction: "Download PNG",
+        refreshAction: "Refresh Preview",
+        footer: "Micro Tools Matrix - Browser-local processing with no upload.",
+        seoArticle: "The Micro Tools Matrix QR Code Generator is a free online developer tool for turning URLs, campaign notes, contact details, or short text into downloadable PNG QR codes. It is designed for browser-local processing: the text you enter is encoded, rendered, and exported directly in your current page, with no upload and no server-side conversion. You can choose practical image sizes, adjust the foreground color, and preview the QR code before saving it. This makes the tool useful for developers, designers, marketers, educators, and support teams who need quick QR assets for documents, posters, websites, prototypes, and testing workflows. Because the page is static and lightweight, it works across desktop and mobile browsers while keeping the interface consistent with the rest of Micro Tools Matrix.",
+        title: "QR Code Generator - Micro Tools Matrix",
+        metaDescription: "A free Micro Tools Matrix QR code generator that creates PNG QR codes from URLs or text with browser-local processing, adjustable size, and foreground color.",
+        metaKeywords: "QR code generator,online QR code,PNG download,browser-local processing,free online developer tool,Micro Tools Matrix",
+        statusReady: "Enter content and generate a QR code.",
+        statusGenerated: "QR code generated. You can download the PNG.",
+        statusCleared: "Content cleared.",
+        statusSample: "Sample inserted. You can generate a QR code.",
+        statusDownloaded: "PNG download has started.",
+        errorEmpty: "Enter a URL or text before generating a QR code.",
+        errorTooLong: "The content is too long. Please shorten it to about 100 English characters or 35 Chinese characters.",
+        errorColor: "Enter a valid hex color, for example #0f172a.",
+        versionPrefix: "Version ",
+        sampleText: "https://mymicrotools.xyz/",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System"
       }
+    };
 
-      function hideError() {
-        errorBox.classList.add('hidden');
-        errorBox.textContent = '';
-      }
+    let currentLanguage = "zh";
+    let currentStatusKey = "statusReady";
+    let currentStatusType = "normal";
+    let lastGenerated = false;
 
-      function setStatus(message, ok = true) {
-        statusText.textContent = message;
-        statusText.className = ok
-          ? 'mt-4 text-center text-sm font-medium text-slate-600'
-          : 'mt-4 text-center text-sm font-medium text-red-600';
-      }
-
-      function isHexColor(value) {
-        return /^#[0-9a-fA-F]{6}$/.test(String(value).trim());
-      }
-
-      function updateByteInfo() {
-        try {
-          const bytes = encoder.encode(textEl.value || '');
-          byteInfo.textContent = `${bytes.length} bytes`;
-        } catch {
-          byteInfo.textContent = '0 bytes';
-        }
-      }
-
-      function gfTables() {
-        const exp = new Array(512);
-        const log = new Array(256);
-        let x = 1;
-        for (let i = 0; i < 255; i++) {
-          exp[i] = x;
-          log[x] = i;
-          x <<= 1;
-          if (x & 0x100) x ^= 0x11d;
-        }
-        for (let i = 255; i < 512; i++) exp[i] = exp[i - 255];
-        return { exp, log };
-      }
-
-      const GF = gfTables();
-
-      function gfMul(a, b) {
-        if (a === 0 || b === 0) return 0;
-        return GF.exp[GF.log[a] + GF.log[b]];
-      }
-
-      function rsGenerator(degree) {
-        let poly = [1];
-        for (let i = 0; i < degree; i++) {
-          const next = new Array(poly.length + 1).fill(0);
-          for (let j = 0; j < poly.length; j++) {
-            next[j] ^= gfMul(poly[j], GF.exp[i]);
-            next[j + 1] ^= poly[j];
-          }
-          poly = next;
-        }
-        return poly;
-      }
-
-      function rsRemainder(data, degree) {
-        const gen = rsGenerator(degree);
-        const rem = new Array(degree).fill(0);
-        for (const b of data) {
-          const factor = b ^ rem.shift();
-          rem.push(0);
-          for (let i = 0; i < degree; i++) {
-            rem[i] ^= gfMul(gen[i], factor);
-          }
-        }
-        return rem;
-      }
-
-      function appendBits(arr, value, length) {
-        for (let i = length - 1; i >= 0; i--) arr.push((value >>> i) & 1);
-      }
-
-      function chooseVersion(byteLength) {
-        for (let v = 1; v <= 5; v++) {
-          const capacityBits = VERSION_INFO[v].data * 8;
-          const required = 4 + 8 + byteLength * 8;
-          if (required <= capacityBits) return v;
-        }
-        return null;
-      }
-
-      function createMatrix(size) {
-        return {
-          modules: Array.from({ length: size }, () => Array(size).fill(false)),
-          func: Array.from({ length: size }, () => Array(size).fill(false))
-        };
-      }
-
-      function setFunction(qr, r, c, dark) {
-        const size = qr.modules.length;
-        if (r < 0 || c < 0 || r >= size || c >= size) return;
-        qr.modules[r][c] = !!dark;
-        qr.func[r][c] = true;
-      }
-
-      function drawFinder(qr, r, c) {
-        for (let dy = -1; dy <= 7; dy++) {
-          for (let dx = -1; dx <= 7; dx++) {
-            const rr = r + dy, cc = c + dx;
-            const inCore = dx >= 0 && dx <= 6 && dy >= 0 && dy <= 6;
-            const dark = inCore && (dx === 0 || dx === 6 || dy === 0 || dy === 6 || (dx >= 2 && dx <= 4 && dy >= 2 && dy <= 4));
-            setFunction(qr, rr, cc, dark);
-          }
-        }
-      }
-
-      function drawAlignment(qr, centerR, centerC) {
-        for (let dy = -2; dy <= 2; dy++) {
-          for (let dx = -2; dx <= 2; dx++) {
-            const dist = Math.max(Math.abs(dx), Math.abs(dy));
-            setFunction(qr, centerR + dy, centerC + dx, dist === 2 || dist === 0);
-          }
-        }
-      }
-
-      function drawFunctionPatterns(qr, version) {
-        const size = qr.modules.length;
-        drawFinder(qr, 0, 0);
-        drawFinder(qr, 0, size - 7);
-        drawFinder(qr, size - 7, 0);
-
-        for (let i = 8; i < size - 8; i++) {
-          setFunction(qr, 6, i, i % 2 === 0);
-          setFunction(qr, i, 6, i % 2 === 0);
-        }
-
-        const positions = VERSION_INFO[version].align;
-        for (const r of positions) {
-          for (const c of positions) {
-            if ((r <= 8 && c <= 8) || (r <= 8 && c >= size - 9) || (r >= size - 9 && c <= 8)) continue;
-            drawAlignment(qr, r, c);
-          }
-        }
-
-        for (let i = 0; i < 9; i++) {
-          if (i !== 6) {
-            setFunction(qr, 8, i, false);
-            setFunction(qr, i, 8, false);
-          }
-        }
-        for (let i = 0; i < 8; i++) {
-          setFunction(qr, 8, size - 1 - i, false);
-          setFunction(qr, size - 1 - i, 8, false);
-        }
-        setFunction(qr, 4 * version + 9, 8, true);
-      }
-
-      function getFormatBits(mask) {
-        const eccLevelBits = 1;
-        let data = (eccLevelBits << 3) | mask;
-        let rem = data << 10;
-        const generator = 0x537;
-        for (let i = 14; i >= 10; i--) {
-          if ((rem >>> i) & 1) rem ^= generator << (i - 10);
-        }
-        return ((data << 10) | rem) ^ 0x5412;
-      }
-
-      function drawFormatBits(qr, mask) {
-        const size = qr.modules.length;
-        const bits = getFormatBits(mask);
-        const bit = i => ((bits >>> i) & 1) === 1;
-
-        for (let i = 0; i <= 5; i++) setFunction(qr, 8, i, bit(i));
-        setFunction(qr, 8, 7, bit(6));
-        setFunction(qr, 8, 8, bit(7));
-        setFunction(qr, 7, 8, bit(8));
-        for (let i = 9; i < 15; i++) setFunction(qr, 14 - i, 8, bit(i));
-
-        for (let i = 0; i < 8; i++) setFunction(qr, size - 1 - i, 8, bit(i));
-        for (let i = 8; i < 15; i++) setFunction(qr, 8, size - 15 + i, bit(i));
-        setFunction(qr, 4 * ((size - 17) / 4) + 9, 8, true);
-      }
-
-      function buildDataCodewords(bytes, version) {
-        const info = VERSION_INFO[version];
-        const bits = [];
-        appendBits(bits, 0b0100, 4);
-        appendBits(bits, bytes.length, 8);
-        for (const b of bytes) appendBits(bits, b, 8);
-
-        const capacityBits = info.data * 8;
-        const terminator = Math.min(4, capacityBits - bits.length);
-        appendBits(bits, 0, terminator);
-
-        while (bits.length % 8 !== 0) bits.push(0);
-
-        const data = [];
-        for (let i = 0; i < bits.length; i += 8) {
-          let val = 0;
-          for (let j = 0; j < 8; j++) val = (val << 1) | bits[i + j];
-          data.push(val);
-        }
-
-        const pads = [0xec, 0x11];
-        let p = 0;
-        while (data.length < info.data) data.push(pads[p++ % 2]);
-        return data;
-      }
-
-      function placeData(qr, codewords) {
-        const size = qr.modules.length;
-        const bits = [];
-        for (const cw of codewords) appendBits(bits, cw, 8);
-        let i = 0;
-        let upward = true;
-
-        for (let right = size - 1; right >= 1; right -= 2) {
-          if (right === 6) right--;
-          for (let vert = 0; vert < size; vert++) {
-            const r = upward ? size - 1 - vert : vert;
-            for (let j = 0; j < 2; j++) {
-              const c = right - j;
-              if (!qr.func[r][c]) {
-                let dark = i < bits.length ? bits[i++] === 1 : false;
-                if ((r + c) % 2 === 0) dark = !dark;
-                qr.modules[r][c] = dark;
-              }
-            }
-          }
-          upward = !upward;
-        }
-      }
-
-      function generateQRCode(text) {
-        const bytes = Array.from(encoder.encode(text));
-        if (bytes.length === 0) throw new Error('Please enter需要Generate二维码的 URL 或文本内容。');
-        if (bytes.length > 108) throw new Error('当前纯前端版本支持最多约 108 bytes 内容，请缩短文本或使用短链接后再Generate。');
-
-        const version = chooseVersion(bytes.length);
-        if (!version) throw new Error('输入内容过长，请缩短文本或使用短链接后再试。');
-
-        const size = 21 + 4 * (version - 1);
-        const qr = createMatrix(size);
-        drawFunctionPatterns(qr, version);
-
-        const data = buildDataCodewords(bytes, version);
-        const ecc = rsRemainder(data, VERSION_INFO[version].ecc);
-        placeData(qr, data.concat(ecc));
-        drawFormatBits(qr, 0);
-
-        return qr.modules;
-      }
-
-      function renderQR(modules, pixelSize, fgColor) {
-        const count = modules.length;
-        const quiet = 4;
-        const total = count + quiet * 2;
-        const scale = Math.max(1, Math.floor(pixelSize / total));
-        const actualSize = total * scale;
-
-        canvas.width = actualSize;
-        canvas.height = actualSize;
-        canvas.style.width = Math.min(actualSize, 520) + 'px';
-        canvas.style.height = Math.min(actualSize, 520) + 'px';
-
-        ctx.clearRect(0, 0, actualSize, actualSize);
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, actualSize, actualSize);
-        ctx.fillStyle = fgColor;
-
-        for (let r = 0; r < count; r++) {
-          for (let c = 0; c < count; c++) {
-            if (modules[r][c]) {
-              ctx.fillRect((c + quiet) * scale, (r + quiet) * scale, scale, scale);
-            }
-          }
-        }
-      }
-
-      function generate() {
-        try {
-          hideError();
-          updateByteInfo();
-
-          const text = String(textEl.value || '').trim();
-          const pixelSize = Number(sizeEl.value);
-          const color = String(colorTextEl.value || '').trim();
-
-          if (!text) throw new Error('Please enter URL 或文本内容，不能为空。');
-          if (!Number.isFinite(pixelSize) || pixelSize < 128 || pixelSize > 1024) throw new Error('图片尺寸必须在 128px 到 1024px 之间。');
-          if (!isHexColor(color)) throw new Error('前景色格式不正确，请使用类似 #0f172a 的 6 位十六进制颜色。');
-
-          colorEl.value = color.toLowerCase();
-          colorTextEl.value = color.toLowerCase();
-
-          if (typeof window.QRious !== 'function') {
-            throw new Error('二维码Generate库加载失败，请刷新页面后重试。');
-          }
-
-          new window.QRious({
-            element: canvas,
-            value: text,
-            size: pixelSize,
-            padding: Math.max(16, Math.round(pixelSize * 0.08)),
-            level: 'Q',
-            foreground: color.toLowerCase(),
-            background: '#ffffff'
-          });
-          canvas.style.width = Math.min(pixelSize, 520) + 'px';
-          canvas.style.height = Math.min(pixelSize, 520) + 'px';
-
-          currentValid = true;
-          downloadBtn.disabled = false;
-          setStatus('二维码已Generate，可Download PNG', true);
-
-          generateBtn.classList.add('ring-4', 'ring-cyan-300/30');
-          setTimeout(() => generateBtn.classList.remove('ring-4', 'ring-cyan-300/30'), 250);
-        } catch (err) {
-          showError(err && err.message ? err.message : 'Generate二维码时发生Unknown错误，请检查输入后重试。');
-        }
-      }
-
-      sizeEl.addEventListener('input', () => {
-        sizeLabel.textContent = `${sizeEl.value}px`;
-        if (currentValid) generate();
-      });
-
-      colorEl.addEventListener('input', () => {
-        colorTextEl.value = colorEl.value;
-        if (currentValid) generate();
-      });
-
-      colorTextEl.addEventListener('input', () => {
-        const value = colorTextEl.value.trim();
-        if (isHexColor(value)) {
-          colorEl.value = value;
-          if (currentValid) generate();
-        }
-      });
-
-      textEl.addEventListener('input', () => {
-        updateByteInfo();
-        if (!errorBox.classList.contains('hidden')) hideError();
-      });
-
-      generateBtn.addEventListener('click', generate);
-
-      clearBtn.addEventListener('click', () => {
-        textEl.value = '';
-        updateByteInfo();
-        hideError();
-        currentValid = false;
-        downloadBtn.disabled = true;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        canvas.width = 320;
-        canvas.height = 320;
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        setStatus('内容已Clear，Please enter文本后Generate', true);
-      });
-
-      downloadBtn.addEventListener('click', () => {
-        if (!currentValid) {
-          showError('请先成功Generate二维码后再Download。');
-          return;
-        }
-        try {
-          const link = document.createElement('a');
-          link.download = `qr-code-${Date.now()}.png`;
-          link.href = canvas.toDataURL('image/png');
-          document.body.appendChild(link);
-          link.click();
-          link.remove();
-          setStatus('PNG 图片已开始Download', true);
-        } catch {
-          showError('Download失败，请确认浏览器允许保存图片。');
-        }
-      });
-
-      copyBtn.addEventListener('click', async () => {
-        if (!currentValid) {
-          showError('请先成功Generate二维码后再Copy图片。');
-          return;
-        }
-        try {
-          if (!navigator.clipboard || !window.ClipboardItem) {
-            throw new Error('当前浏览器不支持直接Copy图片，请使用Download PNG 功能。');
-          }
-          canvas.toBlob(async blob => {
-            try {
-              if (!blob) throw new Error('图片数据Generate失败，请重试。');
-              await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-              setStatus('二维码图片Copied到剪贴板', true);
-            } catch (e) {
-              showError(e && e.message ? e.message : 'Copy failed，请使用Download PNG 功能。');
-            }
-          }, 'image/png');
-        } catch (err) {
-          showError(err && err.message ? err.message : 'Copy failed，请使用Download PNG 功能。');
-        }
-      });
-
-      updateByteInfo();
-      downloadBtn.disabled = true;
-      generate();
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      const stored = localStorage.getItem("microToolsLanguage");
+      return stored === "en" || stored === "zh" ? stored : "zh";
     }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (dict[key]) node.textContent = dict[key];
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (dict[key]) node.setAttribute("placeholder", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (dict[key]) node.setAttribute("title", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (dict[key]) node.setAttribute("aria-label", dict[key]);
+      });
+
+      document.title = dict.title;
+      const metaDescription = document.querySelector('meta[name="description"]');
+      const metaKeywords = document.querySelector('meta[name="keywords"]');
+      if (metaDescription) metaDescription.setAttribute("content", dict.metaDescription);
+      if (metaKeywords) metaKeywords.setAttribute("content", dict.metaKeywords);
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "zh" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "en" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+      }
+
+      updateStatus(currentStatusKey, currentStatusType);
+      updateMetricsLabels();
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function setLanguage(lang) {
+      localStorage.setItem("microToolsLanguage", lang === "en" ? "en" : "zh");
+      applyLanguage(lang);
+    }
+
+    function updateStatus(key, type) {
+      currentStatusKey = key;
+      currentStatusType = type || "normal";
+      const status = document.getElementById("statusText");
+      if (!status) return;
+      status.textContent = I18N[currentLanguage][key] || "";
+      status.className = "mt-4 min-h-6 text-sm leading-6 " + (currentStatusType === "error" ? "text-rose-600 dark:text-rose-400" : "text-slate-500 dark:text-slate-400");
+    }
+
+    function updateMetricsLabels() {
+      const size = document.getElementById("qrSize")?.value || "384";
+      const imageSizeText = document.getElementById("imageSizeText");
+      if (imageSizeText) imageSizeText.textContent = size + " px";
+    }
+
+    function normalizeHexColor(value) {
+      const input = String(value || "").trim();
+      const expanded = input.replace(/^#?([0-9a-fA-F])([0-9a-fA-F])([0-9a-fA-F])$/, "#$1$1$2$2$3$3");
+      const withHash = expanded.startsWith("#") ? expanded : "#" + expanded;
+      return /^#[0-9a-fA-F]{6}$/.test(withHash) ? withHash.toLowerCase() : null;
+    }
+
+    function createGfTables() {
+      const exp = new Array(512);
+      const log = new Array(256);
+      let x = 1;
+      for (let i = 0; i < 255; i++) {
+        exp[i] = x;
+        log[x] = i;
+        x <<= 1;
+        if (x & 0x100) x ^= 0x11d;
+      }
+      for (let i = 255; i < 512; i++) exp[i] = exp[i - 255];
+      return { exp, log };
+    }
+
+    const GF = createGfTables();
+
+    function gfMul(a, b) {
+      if (a === 0 || b === 0) return 0;
+      return GF.exp[GF.log[a] + GF.log[b]];
+    }
+
+    function reedSolomonGenerator(degree) {
+      let poly = [1];
+      for (let i = 0; i < degree; i++) {
+        const next = new Array(poly.length + 1).fill(0);
+        for (let j = 0; j < poly.length; j++) {
+          next[j] ^= gfMul(poly[j], GF.exp[i]);
+          next[j + 1] ^= poly[j];
+        }
+        poly = next;
+      }
+      return poly;
+    }
+
+    function reedSolomonCompute(data, degree) {
+      const gen = reedSolomonGenerator(degree);
+      const result = new Array(degree).fill(0);
+      for (const value of data) {
+        const factor = value ^ result[0];
+        result.shift();
+        result.push(0);
+        for (let i = 0; i < degree; i++) result[i] ^= gfMul(gen[i], factor);
+      }
+      return result;
+    }
+
+    const QR_TABLE = [
+      null,
+      { data: 19, ecc: 7, capacity: 17 },
+      { data: 34, ecc: 10, capacity: 32 },
+      { data: 55, ecc: 15, capacity: 53 },
+      { data: 80, ecc: 20, capacity: 78 },
+      { data: 108, ecc: 26, capacity: 106 }
+    ];
+
+    function appendBits(bits, value, length) {
+      for (let i = length - 1; i >= 0; i--) bits.push((value >>> i) & 1);
+    }
+
+    function encodeData(bytes, version) {
+      const info = QR_TABLE[version];
+      const bits = [];
+      appendBits(bits, 0x4, 4);
+      appendBits(bits, bytes.length, 8);
+      bytes.forEach((byte) => appendBits(bits, byte, 8));
+      const maxBits = info.data * 8;
+      appendBits(bits, 0, Math.min(4, maxBits - bits.length));
+      while (bits.length % 8) bits.push(0);
+      const data = [];
+      for (let i = 0; i < bits.length; i += 8) {
+        let value = 0;
+        for (let j = 0; j < 8; j++) value = (value << 1) | bits[i + j];
+        data.push(value);
+      }
+      let pad = true;
+      while (data.length < info.data) {
+        data.push(pad ? 0xec : 0x11);
+        pad = !pad;
+      }
+      return data.concat(reedSolomonCompute(data, info.ecc));
+    }
+
+    function makeMatrix(size) {
+      return {
+        size,
+        modules: Array.from({ length: size }, () => Array(size).fill(false)),
+        reserved: Array.from({ length: size }, () => Array(size).fill(false))
+      };
+    }
+
+    function setModule(qr, row, col, value, reserve) {
+      if (row < 0 || col < 0 || row >= qr.size || col >= qr.size) return;
+      qr.modules[row][col] = !!value;
+      if (reserve) qr.reserved[row][col] = true;
+    }
+
+    function drawFinder(qr, row, col) {
+      for (let r = -1; r <= 7; r++) {
+        for (let c = -1; c <= 7; c++) {
+          const rr = row + r;
+          const cc = col + c;
+          if (rr < 0 || cc < 0 || rr >= qr.size || cc >= qr.size) continue;
+          const dark = r >= 0 && r <= 6 && c >= 0 && c <= 6 && (r === 0 || r === 6 || c === 0 || c === 6 || (r >= 2 && r <= 4 && c >= 2 && c <= 4));
+          setModule(qr, rr, cc, dark, true);
+        }
+      }
+    }
+
+    function drawPatterns(qr) {
+      const size = qr.size;
+      drawFinder(qr, 0, 0);
+      drawFinder(qr, 0, size - 7);
+      drawFinder(qr, size - 7, 0);
+
+      for (let i = 8; i < size - 8; i++) {
+        setModule(qr, 6, i, i % 2 === 0, true);
+        setModule(qr, i, 6, i % 2 === 0, true);
+      }
+
+      setModule(qr, size - 8, 8, true, true);
+
+      for (let i = 0; i < 9; i++) {
+        if (i !== 6) {
+          qr.reserved[8][i] = true;
+          qr.reserved[i][8] = true;
+        }
+      }
+      for (let i = 0; i < 8; i++) {
+        qr.reserved[8][size - 1 - i] = true;
+        qr.reserved[size - 1 - i][8] = true;
+      }
+    }
+
+    function placeData(qr, codewords) {
+      const bits = [];
+      codewords.forEach((byte) => appendBits(bits, byte, 8));
+      let index = 0;
+      let upward = true;
+      for (let col = qr.size - 1; col > 0; col -= 2) {
+        if (col === 6) col--;
+        for (let step = 0; step < qr.size; step++) {
+          const row = upward ? qr.size - 1 - step : step;
+          for (let offset = 0; offset < 2; offset++) {
+            const cc = col - offset;
+            if (!qr.reserved[row][cc]) {
+              qr.modules[row][cc] = index < bits.length ? bits[index++] === 1 : false;
+            }
+          }
+        }
+        upward = !upward;
+      }
+    }
+
+    function maskBit(mask, row, col) {
+      switch (mask) {
+        case 0: return (row + col) % 2 === 0;
+        case 1: return row % 2 === 0;
+        case 2: return col % 3 === 0;
+        case 3: return (row + col) % 3 === 0;
+        case 4: return (Math.floor(row / 2) + Math.floor(col / 3)) % 2 === 0;
+        case 5: return ((row * col) % 2 + (row * col) % 3) === 0;
+        case 6: return (((row * col) % 2 + (row * col) % 3) % 2) === 0;
+        default: return (((row + col) % 2 + (row * col) % 3) % 2) === 0;
+      }
+    }
+
+    function cloneQr(qr) {
+      return {
+        size: qr.size,
+        modules: qr.modules.map((row) => row.slice()),
+        reserved: qr.reserved.map((row) => row.slice())
+      };
+    }
+
+    function applyMask(qr, mask) {
+      for (let r = 0; r < qr.size; r++) {
+        for (let c = 0; c < qr.size; c++) {
+          if (!qr.reserved[r][c] && maskBit(mask, r, c)) qr.modules[r][c] = !qr.modules[r][c];
+        }
+      }
+    }
+
+    function penaltyScore(qr) {
+      const size = qr.size;
+      let penalty = 0;
+
+      for (let r = 0; r < size; r++) {
+        let runColor = qr.modules[r][0];
+        let run = 1;
+        for (let c = 1; c < size; c++) {
+          if (qr.modules[r][c] === runColor) run++;
+          else {
+            if (run >= 5) penalty += 3 + run - 5;
+            runColor = qr.modules[r][c];
+            run = 1;
+          }
+        }
+        if (run >= 5) penalty += 3 + run - 5;
+      }
+
+      for (let c = 0; c < size; c++) {
+        let runColor = qr.modules[0][c];
+        let run = 1;
+        for (let r = 1; r < size; r++) {
+          if (qr.modules[r][c] === runColor) run++;
+          else {
+            if (run >= 5) penalty += 3 + run - 5;
+            runColor = qr.modules[r][c];
+            run = 1;
+          }
+        }
+        if (run >= 5) penalty += 3 + run - 5;
+      }
+
+      for (let r = 0; r < size - 1; r++) {
+        for (let c = 0; c < size - 1; c++) {
+          const color = qr.modules[r][c];
+          if (qr.modules[r][c + 1] === color && qr.modules[r + 1][c] === color && qr.modules[r + 1][c + 1] === color) penalty += 3;
+        }
+      }
+
+      let dark = 0;
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) if (qr.modules[r][c]) dark++;
+      }
+      const percent = (dark * 100) / (size * size);
+      penalty += Math.floor(Math.abs(percent - 50) / 5) * 10;
+      return penalty;
+    }
+
+    function formatBits(mask) {
+      let data = (1 << 3) | mask;
+      let value = data << 10;
+      const generator = 0x537;
+      for (let i = 14; i >= 10; i--) {
+        if ((value >>> i) & 1) value ^= generator << (i - 10);
+      }
+      return ((data << 10) | value) ^ 0x5412;
+    }
+
+    function drawFormat(qr, mask) {
+      const bits = formatBits(mask);
+      const size = qr.size;
+      for (let i = 0; i <= 5; i++) setModule(qr, 8, i, ((bits >>> i) & 1) !== 0, true);
+      setModule(qr, 8, 7, ((bits >>> 6) & 1) !== 0, true);
+      setModule(qr, 8, 8, ((bits >>> 7) & 1) !== 0, true);
+      setModule(qr, 7, 8, ((bits >>> 8) & 1) !== 0, true);
+      for (let i = 9; i < 15; i++) setModule(qr, 14 - i, 8, ((bits >>> i) & 1) !== 0, true);
+
+      for (let i = 0; i < 8; i++) setModule(qr, size - 1 - i, 8, ((bits >>> i) & 1) !== 0, true);
+      for (let i = 8; i < 15; i++) setModule(qr, 8, size - 15 + i, ((bits >>> i) & 1) !== 0, true);
+      setModule(qr, size - 8, 8, true, true);
+    }
+
+    function createQrMatrix(text) {
+      const bytes = Array.from(new TextEncoder().encode(text));
+      let version = 0;
+      for (let v = 1; v <= 5; v++) {
+        if (bytes.length <= QR_TABLE[v].capacity) {
+          version = v;
+          break;
+        }
+      }
+      if (!version) throw new Error("too-long");
+
+      const size = 17 + version * 4;
+      const base = makeMatrix(size);
+      drawPatterns(base);
+      placeData(base, encodeData(bytes, version));
+
+      let best = null;
+      let bestMask = 0;
+      let bestScore = Infinity;
+      for (let mask = 0; mask < 8; mask++) {
+        const candidate = cloneQr(base);
+        applyMask(candidate, mask);
+        drawFormat(candidate, mask);
+        const score = penaltyScore(candidate);
+        if (score < bestScore) {
+          best = candidate;
+          bestMask = mask;
+          bestScore = score;
+        }
+      }
+      drawFormat(best, bestMask);
+      return { matrix: best.modules, version, bytes: bytes.length };
+    }
+
+    function renderQr(result, color, pixelSize) {
+      const canvas = document.getElementById("qrCanvas");
+      const ctx = canvas.getContext("2d");
+      const modules = result.matrix;
+      const moduleCount = modules.length;
+      const quiet = 4;
+      const total = moduleCount + quiet * 2;
+      const scale = Math.floor(pixelSize / total);
+      const actualSize = Math.max(total * scale, total);
+
+      canvas.width = actualSize;
+      canvas.height = actualSize;
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, actualSize, actualSize);
+      ctx.fillStyle = color;
+      for (let r = 0; r < moduleCount; r++) {
+        for (let c = 0; c < moduleCount; c++) {
+          if (modules[r][c]) ctx.fillRect((c + quiet) * scale, (r + quiet) * scale, scale, scale);
+        }
+      }
+
+      document.getElementById("emptyState").classList.add("hidden");
+      canvas.classList.remove("hidden");
+      document.getElementById("byteCount").textContent = String(result.bytes);
+      document.getElementById("versionText").textContent = I18N[currentLanguage].versionPrefix + result.version;
+      document.getElementById("imageSizeText").textContent = actualSize + " px";
+      document.getElementById("downloadBtn").disabled = false;
+      lastGenerated = true;
+      updateStatus("statusGenerated", "normal");
+    }
+
+    function generateQr() {
+      const text = document.getElementById("qrText").value.trim();
+      const colorInput = document.getElementById("qrColorText").value;
+      const color = normalizeHexColor(colorInput);
+      const size = Number(document.getElementById("qrSize").value) || 384;
+
+      if (!text) {
+        updateStatus("errorEmpty", "error");
+        return;
+      }
+      if (!color) {
+        updateStatus("errorColor", "error");
+        return;
+      }
+
+      document.getElementById("qrColor").value = color;
+      document.getElementById("qrColorText").value = color;
+
+      try {
+        const result = createQrMatrix(text);
+        renderQr(result, color, size);
+      } catch (error) {
+        if (error.message === "too-long") updateStatus("errorTooLong", "error");
+        else updateStatus("errorEmpty", "error");
+      }
+    }
+
+    function clearTool() {
+      document.getElementById("qrText").value = "";
+      document.getElementById("qrColor").value = "#0f172a";
+      document.getElementById("qrColorText").value = "#0f172a";
+      document.getElementById("qrSize").value = "384";
+      document.getElementById("byteCount").textContent = "0";
+      document.getElementById("versionText").textContent = "-";
+      document.getElementById("imageSizeText").textContent = "384 px";
+      document.getElementById("downloadBtn").disabled = true;
+      document.getElementById("qrCanvas").classList.add("hidden");
+      document.getElementById("emptyState").classList.remove("hidden");
+      lastGenerated = false;
+      updateStatus("statusCleared", "normal");
+    }
+
+    function downloadPng() {
+      if (!lastGenerated) return;
+      const canvas = document.getElementById("qrCanvas");
+      const link = document.createElement("a");
+      link.href = canvas.toDataURL("image/png");
+      link.download = "micro-tools-matrix-qr-code.png";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      updateStatus("statusDownloaded", "normal");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+
+      document.getElementById("generateBtn")?.addEventListener("click", generateQr);
+      document.getElementById("regenerateBtn")?.addEventListener("click", generateQr);
+      document.getElementById("clearBtn")?.addEventListener("click", clearTool);
+      document.getElementById("downloadBtn")?.addEventListener("click", downloadPng);
+      document.getElementById("sampleBtn")?.addEventListener("click", () => {
+        document.getElementById("qrText").value = I18N[currentLanguage].sampleText;
+        updateStatus("statusSample", "normal");
+      });
+
+      document.getElementById("qrSize")?.addEventListener("change", () => {
+        updateMetricsLabels();
+        if (lastGenerated) generateQr();
+      });
+
+      document.getElementById("qrColor")?.addEventListener("input", (event) => {
+        document.getElementById("qrColorText").value = event.target.value;
+        if (lastGenerated) generateQr();
+      });
+
+      document.getElementById("qrColorText")?.addEventListener("input", (event) => {
+        const color = normalizeHexColor(event.target.value);
+        if (color) document.getElementById("qrColor").value = color;
+      });
+
+      applyLanguage(getInitialLanguage());
+      updateStatus("statusReady", "normal");
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="../sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

@@ -1,216 +1,394 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>md5-hash-generator｜MD5、SHA-1、SHA-256 哈希值在线生成器</title>
-  <meta name="description" content="MD5、SHA-1、SHA-256 哈希值在线生成器。纯前端计算，支持实时输入实时输出。">
-  <meta name="keywords" content="md5 hash generator, MD5在线生成器, SHA-1在线生成, SHA-256哈希生成器, 哈希值在线生成, 前端哈希计算, 字符串MD5加密, 在线摘要算法工具">
-  <link rel="icon" type="image/png" href="./assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MD5 哈希生成器 - Micro Tools Matrix</title>
+  <meta name="description" content="Micro Tools Matrix 提供纯前端 MD5、SHA-1、SHA-256 哈希值在线生成器，文本无需上传，浏览器本地处理，实时输入实时输出。">
+  <meta name="keywords" content="MD5 哈希生成器,SHA-1,SHA-256,哈希值在线生成器,无需上传,浏览器本地处理,Micro Tools Matrix">
   <link rel="canonical" href="https://mymicrotools.xyz/md5-hash-generator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/md5-hash-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/md5-hash-generator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/md5-hash-generator.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/md5-hash-generator.html">
-  <meta property="og:title" content="md5-hash-generator｜MD5、SHA-1、SHA-256 哈希值在线生成器">
-  <meta property="og:description" content="MD5、SHA-1、SHA-256 哈希值在线生成器。纯前端计算，支持实时输入实时输出。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="md5-hash-generator｜MD5、SHA-1、SHA-256 哈希值在线生成器">
-  <meta name="twitter:description" content="MD5、SHA-1、SHA-256 哈希值在线生成器。纯前端计算，支持实时输入实时输出。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "MD5 Hash Generator",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A browser-local MD5, SHA-1 and SHA-256 hash generator by Micro Tools Matrix.",
+      "url": "https://mymicrotools.xyz/md5-hash-generator.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "description": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="切换主题" title="切换主题">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">MD5 哈希生成器</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="./md5-hash-generator.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
-        <a href="./en/md5-hash-generator.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="pointer-events-none fixed inset-0 overflow-hidden">
-    <div class="absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl"></div>
-  </div>
-
-  <main class="relative mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-    <header class="mb-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-6 py-8 shadow-2xl shadow-cyan-950/30 backdrop-blur md:px-10 md:py-12">
-      <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-        <span class="h-2 w-2 rounded-full bg-cyan-300 shadow-lg shadow-cyan-300/70"></span>
-        纯前端 · 实时计算 · 零上传
-      </div>
-      <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl md:text-5xl">MD5、SHA-1、SHA-256 哈希值在线生成器</h1>
-      <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300 md:text-lg">
-        MD5、SHA-1、SHA-256 哈希值在线生成器。输入任意文本后自动生成摘要结果，所有计算均在浏览器本地完成。
-      </p>
-    </header>
-
-    <section class="grid gap-6 lg:grid-cols-5">
-      <div class="lg:col-span-2">
-        <div class="h-full rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-xl backdrop-blur">
-          <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h2 class="text-xl font-semibold text-gray-900 dark:text-white">输入内容</h2>
-              <p class="mt-1 text-sm text-slate-400">支持中文、英文、数字、符号与多行文本</p>
-            </div>
-            <div class="flex gap-2">
-              <button id="sampleBtn" type="button" class="rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-3 py-2 text-sm font-medium text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">
-                示例
-              </button>
-              <button id="clearBtn" type="button" class="rounded-xl border border-rose-400/30 bg-rose-400/10 px-3 py-2 text-sm font-medium text-rose-100 transition hover:bg-rose-400/20 active:scale-95">
-                清空
-              </button>
-            </div>
-          </div>
-
-          <textarea id="inputText" spellcheck="false" class="min-h-72 w-full resize-y rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="请输入需要生成哈希值的文本，例如：Hello World"></textarea>
-
-          <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
-            <div class="rounded-2xl bg-slate-100 dark:bg-slate-800/80 p-3">
-              <div class="text-slate-400">字符数</div>
-              <div id="charCount" class="mt-1 font-semibold text-gray-900 dark:text-white">0</div>
-            </div>
-            <div class="rounded-2xl bg-slate-100 dark:bg-slate-800/80 p-3">
-              <div class="text-slate-400">UTF-8 字节数</div>
-              <div id="byteCount" class="mt-1 font-semibold text-gray-900 dark:text-white">0</div>
-            </div>
-          </div>
-
-          <div id="errorBox" class="mt-4 hidden rounded-2xl border border-rose-400/40 bg-rose-500/10 p-4 text-sm leading-6 text-rose-100"></div>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeToggle">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]" data-i18n-aria-label="languageGroup">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langZh">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langEn">EN</button>
         </div>
       </div>
+    </nav>
+  </header>
 
-      <div class="lg:col-span-3">
-        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 p-5 shadow-xl backdrop-blur">
-          <div class="mb-4">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-white">输出哈希值</h2>
-            <p class="mt-1 text-sm text-slate-400">实时生成小写十六进制摘要，可一键复制</p>
-          </div>
-
-          <div class="space-y-4">
-            <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/30 p-4">
-              <div class="mb-3 flex items-center justify-between gap-3">
-                <h3 class="font-semibold text-cyan-100">MD5</h3>
-                <button data-copy="md5Output" type="button" class="copy-btn rounded-xl bg-cyan-400 px-3 py-2 text-sm font-semibold text-slate-950 dark:text-slate-100 transition hover:bg-cyan-300 active:scale-95">复制</button>
-              </div>
-              <input id="md5Output" readonly class="w-full rounded-2xl border border-cyan-400/20 bg-white dark:bg-slate-950/70 px-4 py-3 font-mono text-sm text-cyan-100 outline-none" />
-            </div>
-
-            <div class="rounded-3xl border border-indigo-400/20 bg-indigo-950/30 p-4">
-              <div class="mb-3 flex items-center justify-between gap-3">
-                <h3 class="font-semibold text-indigo-100">SHA-1</h3>
-                <button data-copy="sha1Output" type="button" class="copy-btn rounded-xl bg-indigo-400 px-3 py-2 text-sm font-semibold text-slate-950 dark:text-slate-100 transition hover:bg-indigo-300 active:scale-95">复制</button>
-              </div>
-              <input id="sha1Output" readonly class="w-full rounded-2xl border border-indigo-400/20 bg-white dark:bg-slate-950/70 px-4 py-3 font-mono text-sm text-indigo-100 outline-none" />
-            </div>
-
-            <div class="rounded-3xl border border-violet-400/20 bg-violet-950/30 p-4">
-              <div class="mb-3 flex items-center justify-between gap-3">
-                <h3 class="font-semibold text-violet-100">SHA-256</h3>
-                <button data-copy="sha256Output" type="button" class="copy-btn rounded-xl bg-violet-400 px-3 py-2 text-sm font-semibold text-slate-950 dark:text-slate-100 transition hover:bg-violet-300 active:scale-95">复制</button>
-              </div>
-              <input id="sha256Output" readonly class="w-full rounded-2xl border border-violet-400/20 bg-white dark:bg-slate-950/70 px-4 py-3 font-mono text-sm text-violet-100 outline-none" />
-            </div>
-          </div>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">MD5 哈希生成器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中输入文本，即可在浏览器内实时生成 MD5、SHA-1 与 SHA-256 哈希值，无需上传任何内容。</p>
+        </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl backdrop-blur md:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 MD5、SHA-1、SHA-256 哈希值在线生成器</h2>
-      <p>
-        md5-hash-generator 是一款面向开发者、测试工程师和安全学习者的哈希值在线生成工具，可快速将任意字符串转换为 MD5、SHA-1、SHA-256 摘要。很多接口签名调试、数据一致性校验、缓存 Key 生成、日志脱敏和字符串指纹比对场景，都需要稳定、便捷的在线哈希计算能力。本工具采用纯前端计算方式，输入内容不会上传到服务器，更适合处理临时文本、配置片段与接口参数。使用方法非常简单：在输入框粘贴或键入需要计算的内容，页面会实时输出三种常用算法的小写十六进制结果，并支持一键复制。对于正在寻找“MD5在线生成器”“SHA-256哈希生成器”“字符串哈希值在线计算”等长尾关键词工具的用户，本页面提供快速、干净、响应式的使用体验。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <label for="sourceText" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="textLabel">待计算文本</label>
+        <textarea id="sourceText" rows="12" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="textPlaceholder" data-i18n-aria-label="textAria" placeholder="输入任意文本，哈希值会自动生成"></textarea>
+
+        <div class="mt-3 grid gap-3 rounded-2xl border border-gray-200 bg-slate-50 p-4 text-sm text-slate-600 dark:border-white/10 dark:bg-slate-950/40 dark:text-slate-400 sm:grid-cols-2">
+          <div>
+            <span class="block text-xs font-semibold uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500" data-i18n="charsLabel">字符数</span>
+            <span id="charCount" class="mt-1 block font-semibold tabular-nums text-slate-900 dark:text-slate-100">0</span>
+          </div>
+          <div>
+            <span class="block text-xs font-semibold uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500" data-i18n="bytesLabel">UTF-8 字节</span>
+            <span id="byteCount" class="mt-1 block font-semibold tabular-nums text-slate-900 dark:text-slate-100">0</span>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">填入示例</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+        </div>
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite">请输入文本以生成哈希值。</p>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <div class="mb-2 flex items-center justify-between gap-3">
+              <label for="md5Output" class="text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="md5Label">MD5</label>
+              <button id="copyMd5Btn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-copy-target="md5Output" data-copy-name="MD5" data-i18n="copyAction">复制</button>
+            </div>
+            <textarea id="md5Output" rows="2" readonly class="w-full resize-none rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-aria-label="md5Aria"></textarea>
+          </div>
+
+          <div>
+            <div class="mb-2 flex items-center justify-between gap-3">
+              <label for="sha1Output" class="text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="sha1Label">SHA-1</label>
+              <button id="copySha1Btn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-copy-target="sha1Output" data-copy-name="SHA-1" data-i18n="copyAction">复制</button>
+            </div>
+            <textarea id="sha1Output" rows="2" readonly class="w-full resize-none rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-aria-label="sha1Aria"></textarea>
+          </div>
+
+          <div>
+            <div class="mb-2 flex items-center justify-between gap-3">
+              <label for="sha256Output" class="text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="sha256Label">SHA-256</label>
+              <button id="copySha256Btn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-copy-target="sha256Output" data-copy-name="SHA-256" data-i18n="copyAction">复制</button>
+            </div>
+            <textarea id="sha256Output" rows="3" readonly class="w-full resize-none rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-aria-label="sha256Aria"></textarea>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyAllBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAllAction">复制全部</button>
+          <button id="downloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadAction">下载结果</button>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">Micro Tools Matrix 的 MD5 哈希生成器适合开发调试、接口联调、文件清单校验文本准备、签名对比与安全学习场景。你可以把任意文本粘贴到页面中，工具会实时计算 MD5、SHA-1 与 SHA-256 三种常见摘要，方便快速复制或下载结果。所有计算都在浏览器本地处理，文本无需上传到服务器，也不会经过远程接口，适合处理配置片段、测试字符串、示例载荷等敏感度较高的内容。这个免费在线开发者工具不依赖外部脚本库，保持轻量、快速、无广告，并延续 Micro Tools Matrix 一贯的本地优先体验。</article>
   </main>
 
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，免费的开发者微工具集合。</footer>
+
+  <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md">
+    <div class="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
+      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor">×</button>
+      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">赞赏支持</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">保持工具免费、快速且无广告。</p>
+      <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="buyCoffee">Buy Me a Coffee</a>
+    </div>
+  </div>
+
   <script>
-    const inputText = document.getElementById('inputText');
-    const md5Output = document.getElementById('md5Output');
-    const sha1Output = document.getElementById('sha1Output');
-    const sha256Output = document.getElementById('sha256Output');
-    const charCount = document.getElementById('charCount');
-    const byteCount = document.getElementById('byteCount');
-    const errorBox = document.getElementById('errorBox');
-    const clearBtn = document.getElementById('clearBtn');
-    const sampleBtn = document.getElementById('sampleBtn');
+    const I18N = {
+      zh: {
+        documentTitle: "MD5 哈希生成器 - Micro Tools Matrix",
+        metaDescription: "Micro Tools Matrix 提供纯前端 MD5、SHA-1、SHA-256 哈希值在线生成器，文本无需上传，浏览器本地处理，实时输入实时输出。",
+        metaKeywords: "MD5 哈希生成器,SHA-1,SHA-256,哈希值在线生成器,无需上传,浏览器本地处理,Micro Tools Matrix",
+        toolName: "MD5 哈希生成器",
+        h1: "MD5 哈希生成器",
+        eyebrow: "浏览器本地处理",
+        intro: "在 Micro Tools Matrix 中输入文本，即可在浏览器内实时生成 MD5、SHA-1 与 SHA-256 哈希值，无需上传任何内容。",
+        localBadge: "本地运行",
+        sponsor: "赞赏",
+        themeToggle: "切换主题",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        languageGroup: "语言",
+        langZh: "中",
+        langEn: "EN",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        outputTitle: "结果",
+        outputBadge: "输出",
+        textLabel: "待计算文本",
+        textPlaceholder: "输入任意文本，哈希值会自动生成",
+        textAria: "待计算文本",
+        charsLabel: "字符数",
+        bytesLabel: "UTF-8 字节",
+        primaryAction: "填入示例",
+        secondaryAction: "清空",
+        md5Label: "MD5",
+        sha1Label: "SHA-1",
+        sha256Label: "SHA-256",
+        md5Aria: "MD5 哈希结果",
+        sha1Aria: "SHA-1 哈希结果",
+        sha256Aria: "SHA-256 哈希结果",
+        copyAction: "复制",
+        copyAllAction: "复制全部",
+        downloadAction: "下载结果",
+        emptyStatus: "请输入文本以生成哈希值。",
+        readyStatus: "已实时生成哈希值。",
+        clearedStatus: "已清空输入和结果。",
+        sampleStatus: "已填入示例文本并生成哈希值。",
+        copiedStatus: "已复制 {name}。",
+        copiedAllStatus: "已复制全部哈希结果。",
+        noResultStatus: "当前没有可复制的结果。",
+        downloadStatus: "已生成本地下载文件。",
+        errorStatus: "计算哈希值时出现问题，请检查浏览器支持情况后重试。",
+        sampleText: "Micro Tools Matrix 本地哈希测试",
+        downloadFileName: "hash-results.txt",
+        sponsorTitle: "赞赏支持",
+        sponsorSubtitle: "保持工具免费、快速且无广告。",
+        buyCoffee: "Buy Me a Coffee",
+        closeSponsor: "关闭赞赏弹窗",
+        seoArticle: "Micro Tools Matrix 的 MD5 哈希生成器适合开发调试、接口联调、文件清单校验文本准备、签名对比与安全学习场景。你可以把任意文本粘贴到页面中，工具会实时计算 MD5、SHA-1 与 SHA-256 三种常见摘要，方便快速复制或下载结果。所有计算都在浏览器本地处理，文本无需上传到服务器，也不会经过远程接口，适合处理配置片段、测试字符串、示例载荷等敏感度较高的内容。这个免费在线开发者工具不依赖外部脚本库，保持轻量、快速、无广告，并延续 Micro Tools Matrix 一贯的本地优先体验。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，免费的开发者微工具集合。"
+      },
+      en: {
+        documentTitle: "MD5 Hash Generator - Micro Tools Matrix",
+        metaDescription: "A free browser-local MD5, SHA-1 and SHA-256 hash generator by Micro Tools Matrix. Generate hashes in real time without uploading your text.",
+        metaKeywords: "MD5 hash generator,SHA-1,SHA-256,online hash generator,no upload,browser-local processing,free online developer tool,Micro Tools Matrix",
+        toolName: "MD5 Hash Generator",
+        h1: "MD5 Hash Generator",
+        eyebrow: "Browser-local processing",
+        intro: "Type text in Micro Tools Matrix and generate MD5, SHA-1 and SHA-256 hashes instantly in your browser, without uploading anything.",
+        localBadge: "Local",
+        sponsor: "Sponsor",
+        themeToggle: "Toggle theme",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        languageGroup: "Language",
+        langZh: "ZH",
+        langEn: "EN",
+        inputTitle: "Input",
+        inputBadge: "Input",
+        outputTitle: "Result",
+        outputBadge: "Output",
+        textLabel: "Text to hash",
+        textPlaceholder: "Enter any text and the hashes will update automatically",
+        textAria: "Text to hash",
+        charsLabel: "Characters",
+        bytesLabel: "UTF-8 bytes",
+        primaryAction: "Load sample",
+        secondaryAction: "Clear",
+        md5Label: "MD5",
+        sha1Label: "SHA-1",
+        sha256Label: "SHA-256",
+        md5Aria: "MD5 hash result",
+        sha1Aria: "SHA-1 hash result",
+        sha256Aria: "SHA-256 hash result",
+        copyAction: "Copy",
+        copyAllAction: "Copy all",
+        downloadAction: "Download result",
+        emptyStatus: "Enter text to generate hashes.",
+        readyStatus: "Hashes generated in real time.",
+        clearedStatus: "Input and results cleared.",
+        sampleStatus: "Sample text loaded and hashes generated.",
+        copiedStatus: "{name} copied.",
+        copiedAllStatus: "All hash results copied.",
+        noResultStatus: "There is no result to copy yet.",
+        downloadStatus: "Local download file created.",
+        errorStatus: "Something went wrong while calculating hashes. Please check browser support and try again.",
+        sampleText: "Micro Tools Matrix local hash test",
+        downloadFileName: "hash-results.txt",
+        sponsorTitle: "Sponsor support",
+        sponsorSubtitle: "Keep these tools free, fast and ad-free.",
+        buyCoffee: "Buy Me a Coffee",
+        closeSponsor: "Close sponsor dialog",
+        seoArticle: "The Micro Tools Matrix MD5 Hash Generator is a free online developer tool for everyday debugging, API integration checks, signature comparison, learning and quick text verification. Paste or type any text and the page calculates MD5, SHA-1 and SHA-256 digests in real time, so you can copy a single value, copy all results, or download a small local report. The workflow uses browser-local processing: your input is handled in memory on the current page and is not uploaded to a server. That makes it useful for configuration snippets, test payloads, sample tokens and other development strings that should stay private. MD5 and SHA-1 are still common for legacy checksums and comparison tasks, while SHA-256 is widely used for stronger modern digest workflows. This lightweight Micro Tools Matrix page avoids external runtime libraries, keeps the interface calm on desktop and mobile, and provides a practical local-first hashing utility whenever you need fast results without installing software.",
+        footer: "Micro Tools Matrix - Browser-local processing for free developer micro tools."
+      }
+    };
 
-    let computeToken = 0;
-    const encoder = new TextEncoder();
+    let currentLanguage = "zh";
+    let currentStatusKey = "emptyStatus";
+    let currentStatusValues = {};
+    let hashSequence = 0;
 
-    function showError(message) {
-      errorBox.textContent = message;
-      errorBox.classList.remove('hidden');
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      const saved = localStorage.getItem("microToolsLanguage");
+      return saved === "en" || saved === "zh" ? saved : "zh";
     }
 
-    function hideError() {
-      errorBox.textContent = '';
-      errorBox.classList.add('hidden');
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.title = dict.documentTitle;
+
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute("content", dict.metaDescription);
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (keywords) keywords.setAttribute("content", dict.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.textContent = dict[key];
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("placeholder", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("title", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("aria-label", dict[key]);
+      });
+
+      const langZhBtn = document.getElementById("langZhBtn");
+      const langEnBtn = document.getElementById("langEnBtn");
+      if (langZhBtn && langEnBtn) {
+        const active = "bg-cyan-400 text-slate-950";
+        const inactive = "text-slate-600 dark:text-slate-400";
+        langZhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "zh" ? active : inactive);
+        langEnBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "en" ? active : inactive);
+      }
+
+      updateThemeLabelText();
+      setStatus(currentStatusKey, currentStatusValues);
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
     }
 
-    function toHex(buffer) {
-      return Array.from(new Uint8Array(buffer), byte => byte.toString(16).padStart(2, '0')).join('');
+    function setLanguage(lang) {
+      const next = lang === "en" ? "en" : "zh";
+      localStorage.setItem("microToolsLanguage", next);
+      applyLanguage(next);
     }
 
-    function leftRotate(x, c) {
-      return ((x << c) | (x >>> (32 - c))) >>> 0;
+    function t(key, values = {}) {
+      const dict = I18N[currentLanguage] || I18N.zh;
+      let value = dict[key] || I18N.zh[key] || "";
+      Object.keys(values).forEach((name) => {
+        value = value.replaceAll("{" + name + "}", values[name]);
+      });
+      return value;
     }
 
-    function md5Bytes(bytes) {
-      const originalLength = bytes.length;
-      const bitLengthLow = (originalLength * 8) >>> 0;
-      const bitLengthHigh = Math.floor(originalLength * 8 / 0x100000000) >>> 0;
+    function setStatus(key, values = {}) {
+      currentStatusKey = key;
+      currentStatusValues = values;
+      const status = document.getElementById("statusText");
+      if (status) status.textContent = t(key, values);
+    }
 
-      let paddedLength = originalLength + 1;
-      while (paddedLength % 64 !== 56) paddedLength++;
+    function updateThemeLabelText() {
+      const label = document.querySelector("[data-theme-label]");
+      if (!label) return;
+      const stored = localStorage.getItem("microToolsTheme") || localStorage.getItem("theme") || "system";
+      const key = stored === "light" ? "themeLight" : stored === "dark" ? "themeDark" : "themeSystem";
+      label.textContent = t(key);
+    }
 
-      const buffer = new Uint8Array(paddedLength + 8);
-      buffer.set(bytes);
-      buffer[originalLength] = 0x80;
+    function openSponsorModal(event) {
+      if (event && typeof event.preventDefault === "function") event.preventDefault();
+      const modal = document.getElementById("sponsorModal");
+      if (!modal) return;
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
 
-      const view = new DataView(buffer.buffer);
-      view.setUint32(paddedLength, bitLengthLow, true);
-      view.setUint32(paddedLength + 4, bitLengthHigh, true);
+    function closeSponsorModal() {
+      const modal = document.getElementById("sponsorModal");
+      if (!modal) return;
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    function bytesToHex(buffer) {
+      return Array.from(new Uint8Array(buffer)).map((byte) => byte.toString(16).padStart(2, "0")).join("");
+    }
+
+    function toUtf8Bytes(text) {
+      return new TextEncoder().encode(text);
+    }
+
+    function leftRotate(value, amount) {
+      return (value << amount) | (value >>> (32 - amount));
+    }
+
+    function md5(text) {
+      const input = Array.from(toUtf8Bytes(text));
+      const originalBitLength = input.length * 8;
+      input.push(0x80);
+      while (input.length % 64 !== 56) input.push(0);
+      for (let i = 0; i < 8; i++) input.push((originalBitLength >>> (8 * i)) & 0xff);
 
       let a0 = 0x67452301;
       let b0 = 0xefcdab89;
@@ -223,186 +401,210 @@
         4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
         6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21
       ];
+      const k = Array.from({ length: 64 }, (_, i) => Math.floor(Math.abs(Math.sin(i + 1)) * 4294967296) >>> 0);
 
-      const K = new Uint32Array(64);
-      for (let i = 0; i < 64; i++) {
-        K[i] = Math.floor(Math.abs(Math.sin(i + 1)) * 0x100000000) >>> 0;
-      }
-
-      for (let offset = 0; offset < buffer.length; offset += 64) {
-        const M = new Uint32Array(16);
+      for (let chunk = 0; chunk < input.length; chunk += 64) {
+        const m = new Array(16);
         for (let i = 0; i < 16; i++) {
-          M[i] = view.getUint32(offset + i * 4, true);
+          const j = chunk + i * 4;
+          m[i] = (input[j] | (input[j + 1] << 8) | (input[j + 2] << 16) | (input[j + 3] << 24)) >>> 0;
         }
 
-        let A = a0;
-        let B = b0;
-        let C = c0;
-        let D = d0;
+        let a = a0, b = b0, c = c0, d = d0;
 
         for (let i = 0; i < 64; i++) {
-          let F, g;
-
+          let f, g;
           if (i < 16) {
-            F = ((B & C) | (~B & D)) >>> 0;
+            f = (b & c) | ((~b) & d);
             g = i;
           } else if (i < 32) {
-            F = ((D & B) | (~D & C)) >>> 0;
+            f = (d & b) | ((~d) & c);
             g = (5 * i + 1) % 16;
           } else if (i < 48) {
-            F = (B ^ C ^ D) >>> 0;
+            f = b ^ c ^ d;
             g = (3 * i + 5) % 16;
           } else {
-            F = (C ^ (B | ~D)) >>> 0;
+            f = c ^ (b | (~d));
             g = (7 * i) % 16;
           }
-
-          const temp = D;
-          D = C;
-          C = B;
-          const sum = (A + F + K[i] + M[g]) >>> 0;
-          B = (B + leftRotate(sum, s[i])) >>> 0;
-          A = temp;
+          const temp = d;
+          d = c;
+          c = b;
+          b = (b + leftRotate((a + f + k[i] + m[g]) >>> 0, s[i])) >>> 0;
+          a = temp;
         }
 
-        a0 = (a0 + A) >>> 0;
-        b0 = (b0 + B) >>> 0;
-        c0 = (c0 + C) >>> 0;
-        d0 = (d0 + D) >>> 0;
+        a0 = (a0 + a) >>> 0;
+        b0 = (b0 + b) >>> 0;
+        c0 = (c0 + c) >>> 0;
+        d0 = (d0 + d) >>> 0;
       }
 
-      const out = new Uint8Array(16);
-      const outView = new DataView(out.buffer);
-      outView.setUint32(0, a0, true);
-      outView.setUint32(4, b0, true);
-      outView.setUint32(8, c0, true);
-      outView.setUint32(12, d0, true);
-      return Array.from(out, byte => byte.toString(16).padStart(2, '0')).join('');
+      const words = [a0, b0, c0, d0];
+      return words.map((word) => {
+        return [0, 8, 16, 24].map((shift) => ((word >>> shift) & 0xff).toString(16).padStart(2, "0")).join("");
+      }).join("");
     }
 
-    async function digestHex(algorithm, bytes) {
-      if (!window.crypto || !window.crypto.subtle) {
-        throw new Error('当前浏览器不支持 Web Crypto API，无法生成 SHA 哈希。请使用最新版 Chrome、Edge、Firefox 或 Safari。');
-      }
-      const digest = await crypto.subtle.digest(algorithm, bytes);
-      return toHex(digest);
+    async function shaDigest(algorithm, text) {
+      if (!window.crypto || !window.crypto.subtle) throw new Error("crypto unavailable");
+      const data = toUtf8Bytes(text);
+      const digest = await crypto.subtle.digest(algorithm, data);
+      return bytesToHex(digest);
     }
 
-    async function computeHashes() {
-      const token = ++computeToken;
-      hideError();
+    async function updateHashes(statusKey) {
+      const sequence = ++hashSequence;
+      const source = document.getElementById("sourceText");
+      const md5Output = document.getElementById("md5Output");
+      const sha1Output = document.getElementById("sha1Output");
+      const sha256Output = document.getElementById("sha256Output");
+      const charCount = document.getElementById("charCount");
+      const byteCount = document.getElementById("byteCount");
+      if (!source || !md5Output || !sha1Output || !sha256Output || !charCount || !byteCount) return;
 
-      try {
-        const text = String(inputText.value || '');
-        const bytes = encoder.encode(text);
+      const text = source.value;
+      charCount.textContent = String(Array.from(text).length);
+      byteCount.textContent = String(toUtf8Bytes(text).length);
 
-        charCount.textContent = text.length.toLocaleString('zh-CN');
-        byteCount.textContent = bytes.length.toLocaleString('zh-CN');
-
-        if (bytes.length > 10 * 1024 * 1024) {
-          showError('输入内容较大，浏览器计算可能变慢。建议分段处理超过 10MB 的文本。');
-        }
-
-        md5Output.value = md5Bytes(bytes);
-        sha1Output.value = '计算中...';
-        sha256Output.value = '计算中...';
-
-        const [sha1, sha256] = await Promise.all([
-          digestHex('SHA-1', bytes),
-          digestHex('SHA-256', bytes)
-        ]);
-
-        if (token !== computeToken) return;
-
-        sha1Output.value = sha1;
-        sha256Output.value = sha256;
-      } catch (error) {
-        if (token !== computeToken) return;
-        md5Output.value = '';
-        sha1Output.value = '';
-        sha256Output.value = '';
-        showError(error && error.message ? error.message : '哈希计算失败，请检查输入内容或更换现代浏览器后重试。');
-      }
-    }
-
-    function debounce(fn, delay) {
-      let timer = null;
-      return function () {
-        clearTimeout(timer);
-        timer = setTimeout(fn, delay);
-      };
-    }
-
-    async function copyText(targetId, button) {
-      const target = document.getElementById(targetId);
-      const value = target ? target.value : '';
-
-      if (!value || value === '计算中...') {
-        showError('当前没有可复制的哈希值，请等待计算完成。');
+      if (!text) {
+        md5Output.value = "";
+        sha1Output.value = "";
+        sha256Output.value = "";
+        setStatus(statusKey || "emptyStatus");
         return;
       }
 
-      const originalText = button.textContent;
-
       try {
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(value);
-        } else {
-          const temp = document.createElement('textarea');
-          temp.value = value;
-          temp.setAttribute('readonly', '');
-          temp.style.position = 'fixed';
-          temp.style.left = '-9999px';
-          document.body.appendChild(temp);
-          temp.select();
-          const ok = document.execCommand('copy');
-          document.body.removeChild(temp);
-          if (!ok) throw new Error('复制失败');
-        }
-
-        button.textContent = '已复制';
-        button.classList.add('ring-4', 'ring-white/20');
-        setTimeout(() => {
-          button.textContent = originalText;
-          button.classList.remove('ring-4', 'ring-white/20');
-        }, 1200);
+        const md5Value = md5(text);
+        const sha1Value = await shaDigest("SHA-1", text);
+        const sha256Value = await shaDigest("SHA-256", text);
+        if (sequence !== hashSequence) return;
+        md5Output.value = md5Value;
+        sha1Output.value = sha1Value;
+        sha256Output.value = sha256Value;
+        setStatus(statusKey || "readyStatus");
       } catch (error) {
-        showError('复制失败，请手动选中哈希值后复制。');
+        if (sequence !== hashSequence) return;
+        md5Output.value = "";
+        sha1Output.value = "";
+        sha256Output.value = "";
+        setStatus("errorStatus");
       }
     }
 
-    inputText.addEventListener('input', debounce(computeHashes, 120));
-
-    clearBtn.addEventListener('click', () => {
-      inputText.value = '';
-      clearBtn.classList.add('scale-95');
-      setTimeout(() => clearBtn.classList.remove('scale-95'), 120);
-      computeHashes();
-      inputText.focus();
-    });
-
-    sampleBtn.addEventListener('click', () => {
-      inputText.value = 'Hello World';
-      sampleBtn.classList.add('scale-95');
-      setTimeout(() => sampleBtn.classList.remove('scale-95'), 120);
-      computeHashes();
-      inputText.focus();
-    });
-
-    document.querySelectorAll('.copy-btn').forEach(button => {
-      button.addEventListener('click', () => copyText(button.dataset.copy, button));
-    });
-
-    computeHashes();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
+    async function copyText(text, statusKey, values = {}) {
+      if (!text) {
+        setStatus("noResultStatus");
+        return;
+      }
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const temp = document.createElement("textarea");
+          temp.value = text;
+          temp.setAttribute("readonly", "");
+          temp.style.position = "fixed";
+          temp.style.left = "-9999px";
+          document.body.appendChild(temp);
+          temp.select();
+          document.execCommand("copy");
+          document.body.removeChild(temp);
+        }
+        setStatus(statusKey, values);
+      } catch (error) {
+        setStatus("errorStatus");
+      }
     }
+
+    function getAllResultsText() {
+      const source = document.getElementById("sourceText")?.value || "";
+      const md5Value = document.getElementById("md5Output")?.value || "";
+      const sha1Value = document.getElementById("sha1Output")?.value || "";
+      const sha256Value = document.getElementById("sha256Output")?.value || "";
+      if (!md5Value && !sha1Value && !sha256Value) return "";
+      return [
+        "Input:",
+        source,
+        "",
+        "MD5:",
+        md5Value,
+        "",
+        "SHA-1:",
+        sha1Value,
+        "",
+        "SHA-256:",
+        sha256Value
+      ].join("\n");
+    }
+
+    function downloadResults() {
+      const text = getAllResultsText();
+      if (!text) {
+        setStatus("noResultStatus");
+        return;
+      }
+      const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = t("downloadFileName");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      setStatus("downloadStatus");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+
+      const source = document.getElementById("sourceText");
+      source?.addEventListener("input", () => updateHashes("readyStatus"));
+
+      document.getElementById("sampleBtn")?.addEventListener("click", () => {
+        if (!source) return;
+        source.value = t("sampleText");
+        updateHashes("sampleStatus");
+      });
+
+      document.getElementById("clearBtn")?.addEventListener("click", () => {
+        if (source) source.value = "";
+        updateHashes("clearedStatus");
+      });
+
+      document.querySelectorAll("[data-copy-target]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const targetId = button.getAttribute("data-copy-target");
+          const target = targetId ? document.getElementById(targetId) : null;
+          const name = button.getAttribute("data-copy-name") || "";
+          copyText(target?.value || "", "copiedStatus", { name });
+        });
+      });
+
+      document.getElementById("copyAllBtn")?.addEventListener("click", () => {
+        copyText(getAllResultsText(), "copiedAllStatus");
+      });
+
+      document.getElementById("downloadBtn")?.addEventListener("click", downloadResults);
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeSponsorModal();
+      });
+
+      applyLanguage(getInitialLanguage());
+      updateHashes("emptyStatus");
+      setInterval(updateThemeLabelText, 800);
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="./sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

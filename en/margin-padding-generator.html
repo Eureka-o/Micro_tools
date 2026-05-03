@@ -1,485 +1,542 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="CSS 边距可视化工具。四个滑块控制上下左右的 Margin 和 Padding，中心盒子实时改变大小并输出代码。">
-  <meta name="keywords" content="margin-padding-generator,CSS边距可视化工具,marginGenerate器,paddingGenerate器,CSS盒模型工具,CSS margin padding代码Generate器,前端布局工具">
-  <title>margin-padding-generator - CSS 边距可视化工具</title>
-  <link rel="icon" type="image/png" href="../assets/logo.png">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          boxShadow: {
-            glow: "0 0 40px rgba(56, 189, 248, 0.22)"
-          }
-        }
-      }
-    };
-  </script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
-  <link rel="canonical" href="https://mymicrotools.xyz/en/margin-padding-generator.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 边距可视化工具 - Micro Tools Matrix</title>
+  <meta name="description" content="使用 Micro Tools Matrix 的 CSS 边距可视化工具，在浏览器本地调整 margin 与 padding，实时预览盒模型并生成 CSS 代码，无需上传。">
+  <meta name="keywords" content="CSS 边距可视化工具, margin padding generator, CSS 盒模型, 浏览器本地处理, Micro Tools Matrix">
+  <link rel="canonical" href="https://mymicrotools.xyz/margin-padding-generator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/margin-padding-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/margin-padding-generator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/margin-padding-generator.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/en/margin-padding-generator.html">
-  <meta property="og:title" content="margin-padding-generator - CSS 边距可视化工具">
-  <meta property="og:description" content="CSS 边距可视化工具。四个滑块控制上下左右的 Margin 和 Padding，中心盒子实时改变大小并输出代码。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="margin-padding-generator - CSS 边距可视化工具">
-  <meta name="twitter:description" content="CSS 边距可视化工具。四个滑块控制上下左右的 Margin 和 Padding，中心盒子实时改变大小并输出代码。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="../style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Margin Padding Generator",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A browser-local CSS margin and padding visualizer that previews the box model and generates CSS code.",
+      "url": "https://mymicrotools.xyz/margin-padding-generator.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "category": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+    input[type="range"] { accent-color: #22d3ee; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">CSS 边距可视化工具</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="../margin-padding-generator.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./margin-padding-generator.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="pointer-events-none fixed inset-0 overflow-hidden">
-    <div class="absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-violet-600/20 blur-3xl"></div>
-  </div>
-
-  <header class="relative border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 backdrop-blur">
-    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-            CSS Box Model Visual Generator
-          </p>
-          <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">CSS 边距可视化工具</h1>
-          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            使用滑块实时调整上下左右 Margin 与 Padding，可视化理解 CSS 盒模型，并立即Generate可Copy的生产级 CSS 代码。
-          </p>
-        </div>
-        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 shadow-glow">
-          <p class="text-sm text-slate-400">当前单位</p>
-          <p class="text-2xl font-semibold text-cyan-200">px</p>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" data-i18n-aria-label="languageControl" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
         </div>
       </div>
-    </div>
+    </nav>
   </header>
 
-  <main class="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-12">
-      <div class="lg:col-span-4">
-        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl backdrop-blur">
-          <div class="mb-5 flex items-center justify-between gap-3">
-            <div>
-              <h2 class="text-xl font-semibold text-gray-900 dark:text-white">输入控制区</h2>
-              <p class="mt-1 text-sm text-slate-400">拖动滑块或输入数值，范围 0 - 120 px。</p>
-            </div>
-            <button id="resetBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-2 text-sm font-medium text-slate-800 dark:text-slate-200 transition hover:border-cyan-300/50 hover:bg-cyan-400/10 active:scale-95">
-              Reset
-            </button>
-          </div>
-
-          <div id="errorBox" class="mb-4 hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm text-red-200" role="alert"></div>
-
-          <div class="space-y-6">
-            <div class="rounded-2xl bg-white dark:bg-slate-950/70 p-4 ring-1 ring-white/10">
-              <h3 class="mb-4 flex items-center gap-2 font-semibold text-cyan-200">
-                <span class="h-2 w-2 rounded-full bg-cyan-300"></span>
-                Margin 外边距
-              </h3>
-              <div class="space-y-4" id="marginControls"></div>
-            </div>
-
-            <div class="rounded-2xl bg-white dark:bg-slate-950/70 p-4 ring-1 ring-white/10">
-              <h3 class="mb-4 flex items-center gap-2 font-semibold text-violet-200">
-                <span class="h-2 w-2 rounded-full bg-violet-300"></span>
-                Padding 内边距
-              </h3>
-              <div class="space-y-4" id="paddingControls"></div>
-            </div>
-          </div>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">CSS 边距可视化工具</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中本地调整 CSS margin 与 padding，实时查看盒模型变化并生成可复制代码，无需上传任何内容。</p>
         </div>
-      </div>
-
-      <div class="lg:col-span-5">
-        <div class="h-full rounded-3xl border border-gray-200 dark:border-white/10 bg-gradient-to-br from-slate-900 to-slate-950 p-5 shadow-2xl">
-          <div class="mb-5">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-white">实时可视化预览</h2>
-            <p class="mt-1 text-sm text-slate-400">青色区域代表 Margin，紫色区域代表 Padding，中间为内容盒子。</p>
-          </div>
-
-          <div class="overflow-auto rounded-3xl border border-gray-200 dark:border-white/10 bg-[radial-gradient(circle_at_1px_1px,rgba(148,163,184,0.24)_1px,transparent_0)] [background-size:18px_18px] p-4 sm:p-8">
-            <div class="mx-auto flex min-h-[420px] min-w-[320px] items-center justify-center">
-              <div id="marginBox" class="relative rounded-2xl bg-cyan-400/20 outline outline-1 outline-dashed outline-cyan-300/70 transition-all duration-150">
-                <span class="absolute left-3 top-3 rounded-lg bg-cyan-300/20 px-2 py-1 text-xs font-semibold text-cyan-100 ring-1 ring-cyan-200/30">margin</span>
-                <div id="paddingBox" class="relative rounded-xl bg-violet-400/25 outline outline-1 outline-dashed outline-violet-200/80 transition-all duration-150">
-                  <span class="absolute left-3 top-3 rounded-lg bg-violet-300/20 px-2 py-1 text-xs font-semibold text-violet-100 ring-1 ring-violet-200/30">padding</span>
-                  <div id="contentBox" class="flex h-32 w-40 items-center justify-center rounded-lg border border-white/20 bg-slate-100 text-center text-sm font-bold text-slate-900 dark:text-slate-100 shadow-xl sm:h-36 sm:w-48">
-                    Content Box
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <div class="rounded-2xl border border-cyan-300/20 bg-cyan-400/10 p-3">
-              <p class="text-xs text-cyan-100/80">Margin Top</p>
-              <p id="statMarginTop" class="mt-1 text-lg font-semibold text-cyan-100">0px</p>
-            </div>
-            <div class="rounded-2xl border border-cyan-300/20 bg-cyan-400/10 p-3">
-              <p class="text-xs text-cyan-100/80">Margin Right</p>
-              <p id="statMarginRight" class="mt-1 text-lg font-semibold text-cyan-100">0px</p>
-            </div>
-            <div class="rounded-2xl border border-violet-300/20 bg-violet-400/10 p-3">
-              <p class="text-xs text-violet-100/80">Padding Bottom</p>
-              <p id="statPaddingBottom" class="mt-1 text-lg font-semibold text-violet-100">0px</p>
-            </div>
-            <div class="rounded-2xl border border-violet-300/20 bg-violet-400/10 p-3">
-              <p class="text-xs text-violet-100/80">Padding Left</p>
-              <p id="statPaddingLeft" class="mt-1 text-lg font-semibold text-violet-100">0px</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="lg:col-span-3">
-        <div class="sticky top-6 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5 shadow-2xl backdrop-blur">
-          <div class="mb-4 flex items-center justify-between gap-3">
-            <div>
-              <h2 class="text-xl font-semibold text-gray-900 dark:text-white">输出代码区</h2>
-              <p class="mt-1 text-sm text-slate-400">自动Generate CSS。</p>
-            </div>
-            <button id="copyBtn" type="button" class="rounded-xl bg-cyan-400 px-4 py-2 text-sm font-bold text-slate-950 dark:text-slate-100 transition hover:bg-cyan-300 active:scale-95">
-              Copy
-            </button>
-          </div>
-
-          <pre class="max-h-[480px] overflow-auto rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950 p-4 text-sm leading-6 text-slate-900 dark:text-slate-100"><code id="cssOutput"></code></pre>
-
-          <div id="copyStatus" class="mt-4 hidden rounded-2xl border border-emerald-400/40 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200" role="status"></div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl backdrop-blur sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 CSS 边距可视化工具</h2>
-      <p>
-        margin-padding-generator 是一款面向前端开发者、网页设计师和学习者的 CSS 边距可视化工具。许多布局问题都来自对 CSS 盒模型理解不清，例如元素之间为什么出现空隙、内容区域为什么被挤压、组件在响应式页面中为什么对不齐。本工具通过上下左右 Margin 与 Padding 滑块，把抽象的外边距和内边距转换成直观的实时预览，让你快速观察内容盒子、内边距区域和外边距区域的变化关系。使用时，只需拖动滑块或输入具体像素值，页面会立即更新中心盒子的视觉效果，并同步Generate可Copy的 CSS margin padding 代码。它适合用于快速制作按钮、卡片、表单、文章容器等常见组件的间距方案，也适合作为 CSS 盒模型在线练习工具。对于需要提升开发效率的人来说，这个 CSS margin padding 代码Generate器能够减少反复调试浏览器样式的时间，帮助你更准确地完成网页布局、组件间距设计和前端样式交付。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <div class="grid gap-5">
+          <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/40">
+            <div class="mb-4 flex items-center justify-between gap-3">
+              <h2 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="marginTitle">外边距</h2>
+              <span class="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-slate-500 ring-1 ring-gray-200 dark:bg-white/[0.04] dark:ring-white/10">margin</span>
+            </div>
+            <div class="grid gap-4">
+              <label class="block">
+                <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
+                  <span data-i18n="top">上</span>
+                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="marginTopValue">24</span> <span data-i18n="unitPx">像素</span></span>
+                </span>
+                <input id="marginTop" type="range" min="0" max="80" value="24" class="w-full" data-i18n-aria-label="marginTopLabel" aria-label="上外边距">
+              </label>
+              <label class="block">
+                <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
+                  <span data-i18n="right">右</span>
+                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="marginRightValue">24</span> <span data-i18n="unitPx">像素</span></span>
+                </span>
+                <input id="marginRight" type="range" min="0" max="80" value="24" class="w-full" data-i18n-aria-label="marginRightLabel" aria-label="右外边距">
+              </label>
+              <label class="block">
+                <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
+                  <span data-i18n="bottom">下</span>
+                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="marginBottomValue">24</span> <span data-i18n="unitPx">像素</span></span>
+                </span>
+                <input id="marginBottom" type="range" min="0" max="80" value="24" class="w-full" data-i18n-aria-label="marginBottomLabel" aria-label="下外边距">
+              </label>
+              <label class="block">
+                <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
+                  <span data-i18n="left">左</span>
+                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="marginLeftValue">24</span> <span data-i18n="unitPx">像素</span></span>
+                </span>
+                <input id="marginLeft" type="range" min="0" max="80" value="24" class="w-full" data-i18n-aria-label="marginLeftLabel" aria-label="左外边距">
+              </label>
+            </div>
+          </div>
+
+          <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/40">
+            <div class="mb-4 flex items-center justify-between gap-3">
+              <h2 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="paddingTitle">内边距</h2>
+              <span class="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-slate-500 ring-1 ring-gray-200 dark:bg-white/[0.04] dark:ring-white/10">padding</span>
+            </div>
+            <div class="grid gap-4">
+              <label class="block">
+                <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
+                  <span data-i18n="top">上</span>
+                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="paddingTopValue">20</span> <span data-i18n="unitPx">像素</span></span>
+                </span>
+                <input id="paddingTop" type="range" min="0" max="80" value="20" class="w-full" data-i18n-aria-label="paddingTopLabel" aria-label="上内边距">
+              </label>
+              <label class="block">
+                <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
+                  <span data-i18n="right">右</span>
+                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="paddingRightValue">28</span> <span data-i18n="unitPx">像素</span></span>
+                </span>
+                <input id="paddingRight" type="range" min="0" max="80" value="28" class="w-full" data-i18n-aria-label="paddingRightLabel" aria-label="右内边距">
+              </label>
+              <label class="block">
+                <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
+                  <span data-i18n="bottom">下</span>
+                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="paddingBottomValue">20</span> <span data-i18n="unitPx">像素</span></span>
+                </span>
+                <input id="paddingBottom" type="range" min="0" max="80" value="20" class="w-full" data-i18n-aria-label="paddingBottomLabel" aria-label="下内边距">
+              </label>
+              <label class="block">
+                <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
+                  <span data-i18n="left">左</span>
+                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="paddingLeftValue">28</span> <span data-i18n="unitPx">像素</span></span>
+                </span>
+                <input id="paddingLeft" type="range" min="0" max="80" value="28" class="w-full" data-i18n-aria-label="paddingLeftLabel" aria-label="左内边距">
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">应用示例</button>
+          <button id="resetBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">重置</button>
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+        </div>
+
+        <div class="overflow-hidden rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/40">
+          <div class="mb-3 flex items-center justify-between gap-3">
+            <h2 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="previewTitle">实时预览</h2>
+            <span class="rounded-full border border-cyan-200 bg-cyan-50 px-2.5 py-1 text-xs font-semibold text-cyan-700 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-300" data-i18n="boxModel">盒模型</span>
+          </div>
+          <div class="max-w-full overflow-auto rounded-2xl border border-dashed border-slate-300 bg-white p-4 dark:border-white/10 dark:bg-[#020617]">
+            <div id="marginLayer" class="mx-auto w-fit max-w-full rounded-2xl border border-dashed border-amber-400/80 bg-amber-100/50 transition-all dark:bg-amber-300/10" style="padding: 24px 24px 24px 24px;">
+              <div id="paddingLayer" class="rounded-2xl border border-cyan-400/80 bg-cyan-100/70 transition-all dark:bg-cyan-400/15" style="padding: 20px 28px 20px 28px;">
+                <div class="flex h-24 w-36 items-center justify-center rounded-xl border border-slate-300 bg-white text-center text-xs font-bold text-slate-700 shadow-sm dark:border-white/10 dark:bg-slate-900 dark:text-slate-200 sm:h-28 sm:w-44">
+                  <span data-i18n="contentBox">内容区域</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mt-3 grid gap-2 text-xs text-slate-500 dark:text-slate-400 sm:grid-cols-3">
+            <div class="rounded-2xl border border-gray-200 bg-white px-3 py-2 dark:border-white/10 dark:bg-white/[0.04]"><span data-i18n="legendMargin">橙色代表外边距</span></div>
+            <div class="rounded-2xl border border-gray-200 bg-white px-3 py-2 dark:border-white/10 dark:bg-white/[0.04]"><span data-i18n="legendPadding">青色代表内边距</span></div>
+            <div class="rounded-2xl border border-gray-200 bg-white px-3 py-2 dark:border-white/10 dark:bg-white/[0.04]"><span data-i18n="legendContent">白色代表内容</span></div>
+          </div>
+        </div>
+
+        <div class="mt-5">
+          <label for="cssOutput" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="codeTitle">生成代码</label>
+          <textarea id="cssOutput" readonly rows="8" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-aria-label="codeAria" aria-label="生成的 CSS 代码"></textarea>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制代码</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="clearAction">清零</button>
+        </div>
+        <p id="statusText" class="mt-3 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="statusReady">拖动滑块即可实时生成 CSS。</p>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">CSS 边距可视化工具帮助前端开发者、设计师和学习者直观看懂盒模型。你可以分别调整上下左右的 margin 与 padding，中心盒子会在浏览器本地实时变化，并同步生成可复制的 CSS 代码。整个过程无需上传、无需登录，也不会把样式数据发送到服务器。作为 Micro Tools Matrix 的免费在线开发者工具，它适合快速验证间距方案、编写组件样式、制作教学示例，或在移动端检查小尺寸布局。通过浏览器本地处理，你可以安全地尝试不同数值，减少反复切换设计稿和编辑器的时间。</article>
   </main>
 
-  <footer class="relative border-t border-gray-200 dark:border-white/10 px-4 py-8 text-center text-sm text-slate-500">
-    <p>margin-padding-generator · CSS Box Model Visual Tool</p>
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
 
   <script>
-    (() => {
-      "use strict";
-
-      const MAX_VALUE = 120;
-      const MIN_VALUE = 0;
-      const sides = [
-        { key: "top", label: "上 Top" },
-        { key: "right", label: "右 Right" },
-        { key: "bottom", label: "下 Bottom" },
-        { key: "left", label: "左 Left" }
-      ];
-
-      const state = {
-        margin: { top: 24, right: 24, bottom: 24, left: 24 },
-        padding: { top: 32, right: 32, bottom: 32, left: 32 }
-      };
-
-      const defaultState = JSON.parse(JSON.stringify(state));
-
-      const els = {
-        marginControls: document.getElementById("marginControls"),
-        paddingControls: document.getElementById("paddingControls"),
-        marginBox: document.getElementById("marginBox"),
-        paddingBox: document.getElementById("paddingBox"),
-        contentBox: document.getElementById("contentBox"),
-        cssOutput: document.getElementById("cssOutput"),
-        errorBox: document.getElementById("errorBox"),
-        copyBtn: document.getElementById("copyBtn"),
-        resetBtn: document.getElementById("resetBtn"),
-        copyStatus: document.getElementById("copyStatus"),
-        statMarginTop: document.getElementById("statMarginTop"),
-        statMarginRight: document.getElementById("statMarginRight"),
-        statPaddingBottom: document.getElementById("statPaddingBottom"),
-        statPaddingLeft: document.getElementById("statPaddingLeft")
-      };
-
-      const inputRefs = new Map();
-      let errorTimer = null;
-      let statusTimer = null;
-
-      function clamp(num) {
-        if (!Number.isFinite(num)) return null;
-        return Math.max(MIN_VALUE, Math.min(MAX_VALUE, Math.round(num)));
+    const I18N = {
+      zh: {
+        toolName: "CSS 边距可视化工具",
+        sponsor: "赞赏",
+        languageControl: "语言",
+        eyebrow: "浏览器本地处理",
+        h1: "CSS 边距可视化工具",
+        intro: "在 Micro Tools Matrix 中本地调整 CSS margin 与 padding，实时查看盒模型变化并生成可复制代码，无需上传任何内容。",
+        localBadge: "本地运行",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        outputTitle: "结果",
+        outputBadge: "输出",
+        marginTitle: "外边距",
+        paddingTitle: "内边距",
+        top: "上",
+        right: "右",
+        bottom: "下",
+        left: "左",
+        unitPx: "像素",
+        marginTopLabel: "上外边距",
+        marginRightLabel: "右外边距",
+        marginBottomLabel: "下外边距",
+        marginLeftLabel: "左外边距",
+        paddingTopLabel: "上内边距",
+        paddingRightLabel: "右内边距",
+        paddingBottomLabel: "下内边距",
+        paddingLeftLabel: "左内边距",
+        primaryAction: "应用示例",
+        secondaryAction: "重置",
+        previewTitle: "实时预览",
+        boxModel: "盒模型",
+        contentBox: "内容区域",
+        legendMargin: "橙色代表外边距",
+        legendPadding: "青色代表内边距",
+        legendContent: "白色代表内容",
+        codeTitle: "生成代码",
+        codeAria: "生成的 CSS 代码",
+        copyAction: "复制代码",
+        clearAction: "清零",
+        statusReady: "拖动滑块即可实时生成 CSS。",
+        statusUpdated: "已更新预览和 CSS 代码。",
+        statusCopied: "代码已复制到剪贴板。",
+        statusCopyFailed: "无法自动复制，请手动选择代码复制。",
+        statusReset: "已恢复默认间距。",
+        statusSample: "已应用示例间距。",
+        statusCleared: "所有边距已清零。",
+        title: "CSS 边距可视化工具 - Micro Tools Matrix",
+        metaDescription: "使用 Micro Tools Matrix 的 CSS 边距可视化工具，在浏览器本地调整 margin 与 padding，实时预览盒模型并生成 CSS 代码，无需上传。",
+        metaKeywords: "CSS 边距可视化工具, margin padding generator, CSS 盒模型, 浏览器本地处理, Micro Tools Matrix",
+        seoArticle: "CSS 边距可视化工具帮助前端开发者、设计师和学习者直观看懂盒模型。你可以分别调整上下左右的 margin 与 padding，中心盒子会在浏览器本地实时变化，并同步生成可复制的 CSS 代码。整个过程无需上传、无需登录，也不会把样式数据发送到服务器。作为 Micro Tools Matrix 的免费在线开发者工具，它适合快速验证间距方案、编写组件样式、制作教学示例，或在移动端检查小尺寸布局。通过浏览器本地处理，你可以安全地尝试不同数值，减少反复切换设计稿和编辑器的时间。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        buyCoffee: "Buy Me a Coffee"
+      },
+      en: {
+        toolName: "CSS Spacing Visualizer",
+        sponsor: "Sponsor",
+        languageControl: "Language",
+        eyebrow: "Browser-local processing",
+        h1: "CSS Spacing Visualizer",
+        intro: "Adjust CSS margin and padding locally in Micro Tools Matrix, preview the box model in real time, and generate copy-ready code without uploading anything.",
+        localBadge: "Local",
+        inputTitle: "Input",
+        inputBadge: "Input",
+        outputTitle: "Result",
+        outputBadge: "Output",
+        marginTitle: "Margin",
+        paddingTitle: "Padding",
+        top: "Top",
+        right: "Right",
+        bottom: "Bottom",
+        left: "Left",
+        unitPx: "px",
+        marginTopLabel: "Top margin",
+        marginRightLabel: "Right margin",
+        marginBottomLabel: "Bottom margin",
+        marginLeftLabel: "Left margin",
+        paddingTopLabel: "Top padding",
+        paddingRightLabel: "Right padding",
+        paddingBottomLabel: "Bottom padding",
+        paddingLeftLabel: "Left padding",
+        primaryAction: "Apply sample",
+        secondaryAction: "Reset",
+        previewTitle: "Live preview",
+        boxModel: "Box model",
+        contentBox: "Content box",
+        legendMargin: "Orange shows margin",
+        legendPadding: "Cyan shows padding",
+        legendContent: "White shows content",
+        codeTitle: "Generated code",
+        codeAria: "Generated CSS code",
+        copyAction: "Copy code",
+        clearAction: "Set to zero",
+        statusReady: "Drag the sliders to generate CSS in real time.",
+        statusUpdated: "Preview and CSS code updated.",
+        statusCopied: "Code copied to the clipboard.",
+        statusCopyFailed: "Automatic copy failed. Please select and copy the code manually.",
+        statusReset: "Default spacing restored.",
+        statusSample: "Sample spacing applied.",
+        statusCleared: "All spacing values are now zero.",
+        title: "CSS Spacing Visualizer - Micro Tools Matrix",
+        metaDescription: "Use the Micro Tools Matrix CSS spacing visualizer to adjust margin and padding with browser-local processing, preview the box model, and generate CSS code without uploads.",
+        metaKeywords: "CSS spacing visualizer, margin padding generator, CSS box model, browser-local processing, free online developer tool, Micro Tools Matrix",
+        seoArticle: "The CSS Spacing Visualizer is a free online developer tool for understanding and tuning the CSS box model without leaving the browser. It lets you control the top, right, bottom, and left values for both margin and padding, then shows the result immediately in a clear visual preview. The generated CSS stays synchronized with every slider movement, so you can copy a reliable snippet into a component, documentation page, design system prototype, or teaching example. All processing is browser-local: Micro Tools Matrix does not upload your values, does not require an account, and does not call a remote API. This makes the tool useful for quick layout experiments, privacy-conscious workflows, and mobile checks where opening a full editor would be slow. Whether you are learning how spacing works or refining production UI details, the page offers a focused way to compare spacing decisions and keep CSS output consistent.",
+        footer: "Micro Tools Matrix - browser-local processing, no uploads.",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        buyCoffee: "Buy Me a Coffee"
       }
+    };
 
-      function escapeHtml(str) {
-        return String(str)
-          .replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;")
-          .replaceAll("'", "&#039;");
+    const sliderIds = [
+      "marginTop", "marginRight", "marginBottom", "marginLeft",
+      "paddingTop", "paddingRight", "paddingBottom", "paddingLeft"
+    ];
+
+    const defaultValues = {
+      marginTop: 24,
+      marginRight: 24,
+      marginBottom: 24,
+      marginLeft: 24,
+      paddingTop: 20,
+      paddingRight: 28,
+      paddingBottom: 20,
+      paddingLeft: 28
+    };
+
+    const sampleValues = {
+      marginTop: 36,
+      marginRight: 18,
+      marginBottom: 42,
+      marginLeft: 18,
+      paddingTop: 28,
+      paddingRight: 44,
+      paddingBottom: 28,
+      paddingLeft: 44
+    };
+
+    let currentLanguage = "zh";
+    let currentStatusKey = "statusReady";
+
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      try {
+        return localStorage.getItem("microToolsLanguage") === "en" ? "en" : "zh";
+      } catch (error) {
+        return "zh";
       }
-
-      function showError(message) {
-        clearTimeout(errorTimer);
-        els.errorBox.textContent = message;
-        els.errorBox.classList.remove("hidden");
-        errorTimer = setTimeout(() => {
-          els.errorBox.classList.add("hidden");
-        }, 4200);
-      }
-
-      function showStatus(message, isSuccess = true) {
-        clearTimeout(statusTimer);
-        els.copyStatus.textContent = message;
-        els.copyStatus.classList.remove("hidden", "border-red-400/40", "bg-red-500/10", "text-red-200", "border-emerald-400/40", "bg-emerald-500/10", "text-emerald-200");
-        if (isSuccess) {
-          els.copyStatus.classList.add("border-emerald-400/40", "bg-emerald-500/10", "text-emerald-200");
-        } else {
-          els.copyStatus.classList.add("border-red-400/40", "bg-red-500/10", "text-red-200");
-        }
-        statusTimer = setTimeout(() => {
-          els.copyStatus.classList.add("hidden");
-        }, 2600);
-      }
-
-      function shorthand(values) {
-        const top = values.top;
-        const right = values.right;
-        const bottom = values.bottom;
-        const left = values.left;
-
-        if (top === right && right === bottom && bottom === left) return `${top}px`;
-        if (top === bottom && right === left) return `${top}px ${right}px`;
-        if (right === left) return `${top}px ${right}px ${bottom}px`;
-        return `${top}px ${right}px ${bottom}px ${left}px`;
-      }
-
-      function generateControl(group, side) {
-        const id = `${group}-${side.key}`;
-        const colorClass = group === "margin" ? "accent-cyan-300" : "accent-violet-300";
-        const labelColor = group === "margin" ? "text-cyan-100" : "text-violet-100";
-
-        const wrapper = document.createElement("div");
-        wrapper.innerHTML = `
-          <label for="${id}-range" class="mb-2 flex items-center justify-between gap-3 text-sm">
-            <span class="font-medium ${labelColor}">${escapeHtml(side.label)}</span>
-            <span class="text-slate-400"><span id="${id}-value">${state[group][side.key]}</span>px</span>
-          </label>
-          <div class="grid grid-cols-[1fr_76px] items-center gap-3">
-            <input id="${id}-range" type="range" min="${MIN_VALUE}" max="${MAX_VALUE}" step="1" value="${state[group][side.key]}" class="h-2 w-full cursor-pointer ${colorClass}">
-            <input id="${id}-number" type="number" inputmode="numeric" min="${MIN_VALUE}" max="${MAX_VALUE}" step="1" value="${state[group][side.key]}" aria-label="${group} ${side.label}" class="w-full rounded-xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-3 py-2 text-right text-sm text-gray-900 dark:text-white outline-none transition focus:border-cyan-300/70 focus:ring-2 focus:ring-cyan-300/20">
-          </div>
-        `;
-
-        const range = wrapper.querySelector(`#${id}-range`);
-        const number = wrapper.querySelector(`#${id}-number`);
-        const value = wrapper.querySelector(`#${id}-value`);
-        inputRefs.set(id, { range, number, value });
-
-        range.addEventListener("input", () => {
-          const next = clamp(Number(range.value));
-          if (next === null) {
-            showError("滑块数值异常，已自动恢复为 0。");
-            updateValue(group, side.key, 0);
-            return;
-          }
-          updateValue(group, side.key, next);
-        });
-
-        number.addEventListener("input", () => {
-          const raw = number.value.trim();
-          if (raw === "") {
-            number.classList.add("border-red-400", "focus:border-red-300", "focus:ring-red-300/20");
-            showError("Please enter 0 到 120 之间的数字。");
-            return;
-          }
-
-          const parsed = Number(raw);
-          const next = clamp(parsed);
-          if (next === null || parsed < MIN_VALUE || parsed > MAX_VALUE) {
-            number.classList.add("border-red-400", "focus:border-red-300", "focus:ring-red-300/20");
-            showError("输入无效：数值必须是 0 到 120 之间的数字。");
-            return;
-          }
-
-          number.classList.remove("border-red-400", "focus:border-red-300", "focus:ring-red-300/20");
-          updateValue(group, side.key, next);
-        });
-
-        number.addEventListener("blur", () => {
-          const parsed = clamp(Number(number.value));
-          if (parsed === null) {
-            updateValue(group, side.key, state[group][side.key]);
-          } else {
-            updateValue(group, side.key, parsed);
-          }
-          number.classList.remove("border-red-400", "focus:border-red-300", "focus:ring-red-300/20");
-        });
-
-        return wrapper;
-      }
-
-      function updateValue(group, key, value) {
-        state[group][key] = value;
-        const ref = inputRefs.get(`${group}-${key}`);
-        if (ref) {
-          ref.range.value = value;
-          ref.number.value = value;
-          ref.value.textContent = value;
-        }
-        render();
-      }
-
-      function renderControls() {
-        els.marginControls.innerHTML = "";
-        els.paddingControls.innerHTML = "";
-        sides.forEach(side => {
-          els.marginControls.appendChild(generateControl("margin", side));
-          els.paddingControls.appendChild(generateControl("padding", side));
-        });
-      }
-
-      function render() {
-        const m = state.margin;
-        const p = state.padding;
-
-        els.marginBox.style.padding = `${m.top}px ${m.right}px ${m.bottom}px ${m.left}px`;
-        els.paddingBox.style.padding = `${p.top}px ${p.right}px ${p.bottom}px ${p.left}px`;
-
-        const css = `.box {
-  margin: ${shorthand(m)};
-  padding: ${shorthand(p)};
-}
-
-/* Expanded properties */
-.box {
-  margin-top: ${m.top}px;
-  margin-right: ${m.right}px;
-  margin-bottom: ${m.bottom}px;
-  margin-left: ${m.left}px;
-
-  padding-top: ${p.top}px;
-  padding-right: ${p.right}px;
-  padding-bottom: ${p.bottom}px;
-  padding-left: ${p.left}px;
-}`;
-
-        els.cssOutput.textContent = css;
-        els.statMarginTop.textContent = `${m.top}px`;
-        els.statMarginRight.textContent = `${m.right}px`;
-        els.statPaddingBottom.textContent = `${p.bottom}px`;
-        els.statPaddingLeft.textContent = `${p.left}px`;
-      }
-
-      async function copyCode() {
-        const code = els.cssOutput.textContent || "";
-        if (!code.trim()) {
-          showStatus("当前没有可Copy的 CSS 代码。", false);
-          return;
-        }
-
-        els.copyBtn.classList.add("scale-95", "bg-emerald-300");
-        setTimeout(() => els.copyBtn.classList.remove("scale-95", "bg-emerald-300"), 180);
-
-        try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(code);
-          } else {
-            const textarea = document.createElement("textarea");
-            textarea.value = code;
-            textarea.setAttribute("readonly", "readonly");
-            textarea.style.position = "fixed";
-            textarea.style.left = "-9999px";
-            document.body.appendChild(textarea);
-            textarea.select();
-            const ok = document.execCommand("copy");
-            document.body.removeChild(textarea);
-            if (!ok) throw new Error("Copy command failed");
-          }
-          showStatus("CSS 代码Copied到剪贴板。", true);
-        } catch (err) {
-          showStatus("Copy failed，请手动选中代码Copy。", false);
-        }
-      }
-
-      function resetAll() {
-        Object.keys(defaultState.margin).forEach(key => {
-          updateValue("margin", key, defaultState.margin[key]);
-        });
-        Object.keys(defaultState.padding).forEach(key => {
-          updateValue("padding", key, defaultState.padding[key]);
-        });
-        els.resetBtn.classList.add("scale-95", "border-cyan-300/70", "bg-cyan-400/10");
-        setTimeout(() => els.resetBtn.classList.remove("scale-95", "border-cyan-300/70", "bg-cyan-400/10"), 180);
-      }
-
-      els.copyBtn.addEventListener("click", copyCode);
-      els.resetBtn.addEventListener("click", resetAll);
-
-      window.addEventListener("error", () => {
-        showError("页面遇到异常但已安全处理，请继续使用或点击Reset。");
-      });
-
-      renderControls();
-      render();
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
     }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.title = dict.title;
+
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute("content", dict.metaDescription);
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (keywords) keywords.setAttribute("content", dict.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.textContent = dict[key];
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("placeholder", dict[key]);
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("title", dict[key]);
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("aria-label", dict[key]);
+        }
+      });
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "zh" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "en" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+      }
+
+      const status = document.getElementById("statusText");
+      if (status && dict[currentStatusKey]) status.textContent = dict[currentStatusKey];
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function setLanguage(lang) {
+      const nextLanguage = lang === "en" ? "en" : "zh";
+      try {
+        localStorage.setItem("microToolsLanguage", nextLanguage);
+      } catch (error) {}
+      applyLanguage(nextLanguage);
+    }
+
+    function valueOf(id) {
+      const input = document.getElementById(id);
+      const value = Number(input?.value);
+      if (!Number.isFinite(value)) return 0;
+      return Math.max(0, Math.min(80, Math.round(value)));
+    }
+
+    function setStatus(key) {
+      currentStatusKey = key;
+      const status = document.getElementById("statusText");
+      if (status) status.textContent = I18N[currentLanguage][key] || "";
+    }
+
+    function buildCss(values) {
+      return `.box {
+  margin: ${values.marginTop}px ${values.marginRight}px ${values.marginBottom}px ${values.marginLeft}px;
+  padding: ${values.paddingTop}px ${values.paddingRight}px ${values.paddingBottom}px ${values.paddingLeft}px;
+}`;
+    }
+
+    function updateTool(statusKey) {
+      const values = {};
+      sliderIds.forEach((id) => {
+        values[id] = valueOf(id);
+        const valueNode = document.getElementById(id + "Value");
+        if (valueNode) valueNode.textContent = String(values[id]);
+      });
+
+      const marginLayer = document.getElementById("marginLayer");
+      const paddingLayer = document.getElementById("paddingLayer");
+      const output = document.getElementById("cssOutput");
+
+      if (marginLayer) {
+        marginLayer.style.padding = `${values.marginTop}px ${values.marginRight}px ${values.marginBottom}px ${values.marginLeft}px`;
+      }
+      if (paddingLayer) {
+        paddingLayer.style.padding = `${values.paddingTop}px ${values.paddingRight}px ${values.paddingBottom}px ${values.paddingLeft}px`;
+      }
+      if (output) {
+        output.value = buildCss(values);
+      }
+      if (statusKey) setStatus(statusKey);
+    }
+
+    function setValues(values, statusKey) {
+      sliderIds.forEach((id) => {
+        const input = document.getElementById(id);
+        if (input) input.value = String(values[id] ?? 0);
+      });
+      updateTool(statusKey);
+    }
+
+    async function copyCode() {
+      const output = document.getElementById("cssOutput");
+      const text = output?.value || "";
+      if (!text) {
+        setStatus("statusCopyFailed");
+        return;
+      }
+      try {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          output.focus();
+          output.select();
+          const ok = document.execCommand("copy");
+          if (!ok) throw new Error("copy failed");
+        }
+        setStatus("statusCopied");
+      } catch (error) {
+        if (output) {
+          output.focus();
+          output.select();
+        }
+        setStatus("statusCopyFailed");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", () => {
+        if (typeof openSponsorModal === "function") openSponsorModal();
+      });
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", () => {
+        if (typeof closeSponsorModal === "function") closeSponsorModal();
+      });
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal" && typeof closeSponsorModal === "function") closeSponsorModal();
+      });
+
+      sliderIds.forEach((id) => {
+        document.getElementById(id)?.addEventListener("input", () => updateTool("statusUpdated"));
+      });
+
+      document.getElementById("sampleBtn")?.addEventListener("click", () => setValues(sampleValues, "statusSample"));
+      document.getElementById("resetBtn")?.addEventListener("click", () => setValues(defaultValues, "statusReset"));
+      document.getElementById("clearBtn")?.addEventListener("click", () => {
+        const zeroValues = {};
+        sliderIds.forEach((id) => { zeroValues[id] = 0; });
+        setValues(zeroValues, "statusCleared");
+      });
+      document.getElementById("copyBtn")?.addEventListener("click", copyCode);
+
+      updateTool("statusReady");
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="../sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

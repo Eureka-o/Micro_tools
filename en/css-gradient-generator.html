@@ -1,615 +1,607 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>css-gradient-generator - CSS 渐变色代码Generate器</title>
-  <meta name="description" content="CSS 渐变色代码Generate器。可视化调整两个或多个颜色的渐变方向和比例，实时预览并输出对应的CSS代码。">
-  <meta name="keywords" content="CSS渐变色代码Generate器, css-gradient-generator, CSS linear-gradient, 渐变背景Generate器, 在线CSS渐变工具, 多颜色渐变Generate, CSS代码Copy">
-  <link rel="icon" type="image/png" href="../assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    input[type="range"] { accent-color: #06b6d4; }
-    .checker {
-      background-image:
-        linear-gradient(45deg, rgba(255,255,255,.12) 25%, transparent 25%),
-        linear-gradient(-45deg, rgba(255,255,255,.12) 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, rgba(255,255,255,.12) 75%),
-        linear-gradient(-45deg, transparent 75%, rgba(255,255,255,.12) 75%);
-      background-size: 24px 24px;
-      background-position: 0 0, 0 12px, 12px -12px, -12px 0px;
-    }
-  </style>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
-  <link rel="canonical" href="https://mymicrotools.xyz/en/css-gradient-generator.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 渐变色代码生成器 - Micro Tools Matrix</title>
+  <meta name="description" content="Micro Tools Matrix 的 CSS 渐变色代码生成器支持浏览器本地处理，可视化调整颜色、方向和比例，实时输出 CSS 代码，无需上传。">
+  <meta name="keywords" content="CSS 渐变色代码生成器, CSS gradient generator, 浏览器本地处理, 无需上传, Micro Tools Matrix">
+  <link rel="canonical" href="https://mymicrotools.xyz/css-gradient-generator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/css-gradient-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/css-gradient-generator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/css-gradient-generator.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/en/css-gradient-generator.html">
-  <meta property="og:title" content="css-gradient-generator - CSS 渐变色代码Generate器">
-  <meta property="og:description" content="CSS 渐变色代码Generate器。可视化调整两个或多个颜色的渐变方向和比例，实时预览并输出对应的CSS代码。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="css-gradient-generator - CSS 渐变色代码Generate器">
-  <meta name="twitter:description" content="CSS 渐变色代码Generate器。可视化调整两个或多个颜色的渐变方向和比例，实时预览并输出对应的CSS代码。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="../style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "CSS Gradient Generator",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A browser-local CSS gradient generator for previewing and exporting linear or radial gradient code.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "description": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">CSS 渐变色代码生成器</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="../css-gradient-generator.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./css-gradient-generator.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
-    <div class="absolute inset-0 opacity-30 checker"></div>
-    <div class="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <div class="max-w-3xl">
-        <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-1 text-sm font-medium text-cyan-200">
-          在线可视化 CSS 工具
-        </p>
-        <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">CSS 渐变色代码Generate器</h1>
-        <p class="mt-5 text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
-          可视化调整两个或多个颜色的渐变方向和比例，实时预览效果，并Generate可直接粘贴到项目中的 CSS 渐变色代码。
-        </p>
-      </div>
-    </div>
-  </header>
-
-  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-12">
-      <div class="lg:col-span-5">
-        <div class="rounded-3xl border border-slate-200 dark:border-white/10 dark:border-slate-700/70 bg-slate-50 dark:bg-slate-900/90 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
-          <div class="mb-5 flex items-center justify-between gap-3">
-            <div>
-              <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入设置</h2>
-              <p class="mt-1 text-sm text-slate-400">选择渐变类型、方向、颜色与比例。</p>
-            </div>
-            <button id="randomBtn" type="button" class="rounded-xl bg-cyan-500 px-4 py-2 text-sm font-bold text-slate-950 dark:text-slate-100 transition hover:bg-cyan-300 active:scale-95">
-              随机配色
-            </button>
-          </div>
-
-          <div id="errorBox" class="mb-4 hidden rounded-2xl border border-red-400/40 bg-red-500/15 px-4 py-3 text-sm font-medium text-red-200" role="alert"></div>
-          <div id="successBox" class="mb-4 hidden rounded-2xl border border-emerald-400/40 bg-emerald-500/15 px-4 py-3 text-sm font-medium text-emerald-200" role="status"></div>
-
-          <div class="space-y-5">
-            <div>
-              <label for="gradientType" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">渐变类型</label>
-              <select id="gradientType" class="w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
-                <option value="linear">线性渐变 linear-gradient</option>
-                <option value="radial">径向渐变 radial-gradient</option>
-                <option value="conic">锥形渐变 conic-gradient</option>
-              </select>
-            </div>
-
-            <div id="anglePanel">
-              <div class="mb-2 flex items-center justify-between">
-                <label for="angleRange" class="text-sm font-semibold text-slate-800 dark:text-slate-200">方向角度</label>
-                <span id="angleLabel" class="rounded-lg bg-slate-50 dark:bg-slate-800 px-2 py-1 text-sm text-cyan-200">90deg</span>
-              </div>
-              <input id="angleRange" type="range" min="0" max="360" step="1" value="90" class="w-full" />
-              <input id="angleNumber" type="number" min="0" max="360" step="1" value="90" class="mt-3 w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
-            </div>
-
-            <div id="radialPanel" class="hidden">
-              <label for="radialPosition" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">径向渐变位置</label>
-              <select id="radialPosition" class="w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
-                <option value="circle at center">circle at center</option>
-                <option value="circle at top">circle at top</option>
-                <option value="circle at bottom">circle at bottom</option>
-                <option value="circle at left">circle at left</option>
-                <option value="circle at right">circle at right</option>
-                <option value="ellipse at center">ellipse at center</option>
-              </select>
-            </div>
-
-            <div>
-              <div class="mb-3 flex items-center justify-between gap-3">
-                <div>
-                  <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200">颜色节点</h3>
-                  <p class="mt-1 text-xs text-slate-500">支持 2 到 10 个颜色节点，位置范围为 0% - 100%。</p>
-                </div>
-                <button id="addStopBtn" type="button" class="rounded-xl border border-cyan-400/40 bg-cyan-400/10 px-4 py-2 text-sm font-bold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">
-                  添加颜色
-                </button>
-              </div>
-              <div id="stopsContainer" class="space-y-3"></div>
-            </div>
-
-            <div class="grid grid-cols-2 gap-3">
-              <button id="reverseBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:border-cyan-400 hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95">
-                反转颜色
-              </button>
-              <button id="resetBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:border-cyan-400 hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95">
-                Reset
-              </button>
-            </div>
-          </div>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeToggle">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]" data-i18n-aria-label="language">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
         </div>
       </div>
+    </nav>
+  </header>
 
-      <div class="lg:col-span-7">
-        <div class="rounded-3xl border border-cyan-400/20 bg-slate-50 dark:bg-slate-800/70 p-5 shadow-2xl shadow-cyan-950/20 sm:p-6">
-          <div class="mb-5">
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">实时预览与输出</h2>
-            <p class="mt-1 text-sm text-slate-400">下方预览会随设置即时更新。</p>
-          </div>
-
-          <div class="overflow-hidden rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950 p-3">
-            <div id="preview" class="flex min-h-[320px] items-center justify-center rounded-2xl text-center shadow-inner transition-all duration-300 sm:min-h-[420px]">
-              <div class="rounded-3xl border border-white/20 bg-white dark:bg-slate-950/35 px-6 py-5 backdrop-blur-md">
-                <p class="text-2xl font-black text-gray-900 dark:text-white drop-shadow-lg">Gradient Preview</p>
-                <p class="mt-2 text-sm text-white/80">实时 CSS 渐变背景预览</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="mt-6 rounded-3xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 p-4">
-            <div class="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <h3 class="font-bold text-gray-900 dark:text-white">Generate的 CSS 代码</h3>
-              <button id="copyBtn" type="button" class="rounded-xl bg-emerald-400 px-4 py-2 text-sm font-black text-slate-950 dark:text-slate-100 transition hover:bg-emerald-300 active:scale-95">
-                Copy代码
-              </button>
-            </div>
-            <textarea id="cssOutput" readonly rows="6" class="w-full resize-none rounded-2xl border border-slate-800 bg-slate-100 dark:bg-slate-900 p-4 font-mono text-sm leading-6 text-cyan-100 outline-none focus:border-cyan-400"></textarea>
-          </div>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">CSS 渐变色代码生成器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中可视化生成 CSS 渐变色，实时调整颜色、方向与比例，所有处理都在浏览器本地完成，无需上传。</p>
+        </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-10 rounded-3xl border border-slate-200 dark:border-white/10 dark:border-slate-700/70 bg-white dark:bg-slate-900/80 p-6 text-slate-700 dark:text-slate-300 shadow-xl sm:p-8">
-      <h2 class="text-2xl font-black text-gray-900 dark:text-white">关于 CSS 渐变色代码Generate器</h2>
-      <p class="mt-4 leading-8">
-        css-gradient-generator 是一款面向前端开发者、设计师和独立站运营者的在线 CSS 渐变色代码Generate器。传统编写 linear-gradient、radial-gradient 或 conic-gradient 时，常常需要反复调整角度、颜色节点和百分比位置，既耗时又难以精准预览。本工具通过可视化界面解决这一痛点：你可以直接选择渐变类型，拖动方向角度，添加两个或多个颜色节点，并精确设置每个颜色在渐变中的比例位置，页面会实时展示最终背景效果。
-      </p>
-      <p class="mt-4 leading-8">
-        使用方法非常简单：先选择线性、径向或锥形渐变，再通过颜色选择器或十六进制颜色值输入品牌色，最后调整 0% 到 100% 的色标位置即可。Generate结果会同步输出为标准 CSS background 代码，点击Copy后即可用于网站 Banner、按钮、卡片背景、落地页首屏和移动端界面。对于搜索“在线 CSS 渐变背景Generate器”“多颜色 CSS 渐变代码Copy工具”“linear-gradient 可视化编辑器”的用户来说，它能显著提升设计验证与前端开发效率。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">渐变设置</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label for="gradientType" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="typeLabel">渐变类型</label>
+            <select id="gradientType" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+              <option value="linear" data-i18n="linearOption">线性渐变</option>
+              <option value="radial" data-i18n="radialOption">径向渐变</option>
+            </select>
+          </div>
+
+          <div id="angleWrap">
+            <div class="mb-2 flex items-center justify-between gap-3">
+              <label for="angleInput" class="text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="angleLabel">方向角度</label>
+              <span class="rounded-full border border-gray-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-600 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400"><span id="angleValue" class="tabular-nums">90</span>°</span>
+            </div>
+            <input id="angleInput" type="range" min="0" max="360" value="90" class="w-full accent-cyan-400" data-i18n-aria-label="angleLabel">
+          </div>
+
+          <div>
+            <div class="mb-2 flex items-center justify-between gap-3">
+              <h2 class="text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="stopsTitle">颜色节点</h2>
+              <span id="stopCount" class="rounded-full border border-gray-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-600 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400">3</span>
+            </div>
+            <div id="stopsList" class="space-y-3"></div>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="addStopBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">添加颜色</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">示例</button>
+          <button id="resetBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">重置</button>
+        </div>
+
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" data-i18n="statusReady">已实时生成 CSS 渐变代码。</p>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">预览与代码</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <div class="mb-2 flex items-center justify-between gap-3">
+              <label class="text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="previewLabel">实时预览</label>
+              <span class="rounded-full border border-gray-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-600 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400" data-i18n="liveBadge">实时</span>
+            </div>
+            <div id="gradientPreview" class="min-h-64 w-full rounded-3xl border border-gray-200 bg-slate-50 shadow-inner dark:border-white/10 dark:bg-slate-950/70"></div>
+          </div>
+
+          <div>
+            <label for="cssOutput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="cssLabel">CSS 代码</label>
+            <textarea id="cssOutput" readonly rows="8" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-aria-label="cssLabel"></textarea>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制代码</button>
+          <button id="downloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadAction">下载 CSS</button>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">这款 CSS 渐变色代码生成器适合前端开发者、设计师和内容创作者快速制作背景、按钮、卡片或海报所需的渐变样式。你可以在 Micro Tools Matrix 中直接调整线性或径向渐变，增减多个颜色节点，拖动比例并即时查看预览，同时获得可复制的 CSS background 代码。所有计算都在浏览器本地处理，无需上传颜色方案、设计稿或项目内容，适合处理未发布的产品界面与品牌视觉。作为免费在线开发者工具，它兼顾轻量、隐私与效率，可在 Windows、macOS、Android 和 iOS 浏览器中使用，帮助你更快完成 CSS 渐变色方案验证。</article>
   </main>
 
-  <footer class="mx-auto max-w-7xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-    <p>css-gradient-generator · 原生 HTML / JavaScript 构建</p>
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+
+  <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md">
+    <div class="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
+      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor">×</button>
+      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">赞赏支持</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">保持工具免费、快速且无广告。</p>
+      <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="buyCoffee">Buy Me a Coffee</a>
+    </div>
+  </div>
 
   <script>
-    (() => {
-      "use strict";
-
-      const $ = (id) => document.getElementById(id);
-      const gradientType = $("gradientType");
-      const anglePanel = $("anglePanel");
-      const radialPanel = $("radialPanel");
-      const radialPosition = $("radialPosition");
-      const angleRange = $("angleRange");
-      const angleNumber = $("angleNumber");
-      const angleLabel = $("angleLabel");
-      const stopsContainer = $("stopsContainer");
-      const preview = $("preview");
-      const cssOutput = $("cssOutput");
-      const errorBox = $("errorBox");
-      const successBox = $("successBox");
-      const addStopBtn = $("addStopBtn");
-      const reverseBtn = $("reverseBtn");
-      const resetBtn = $("resetBtn");
-      const randomBtn = $("randomBtn");
-      const copyBtn = $("copyBtn");
-
-      const defaultStops = [
-        { color: "#22d3ee", position: 0 },
-        { color: "#6366f1", position: 55 },
-        { color: "#f43f5e", position: 100 }
-      ];
-
-      let stops = JSON.parse(JSON.stringify(defaultStops));
-      let errorTimer = null;
-      let successTimer = null;
-
-      function showError(message) {
-        clearTimeout(errorTimer);
-        errorBox.textContent = message;
-        errorBox.classList.remove("hidden");
-        errorTimer = setTimeout(() => errorBox.classList.add("hidden"), 4200);
+    const I18N = {
+      zh: {
+        documentTitle: "CSS 渐变色代码生成器 - Micro Tools Matrix",
+        metaDescription: "Micro Tools Matrix 的 CSS 渐变色代码生成器支持浏览器本地处理，可视化调整颜色、方向和比例，实时输出 CSS 代码，无需上传。",
+        metaKeywords: "CSS 渐变色代码生成器, CSS gradient generator, 浏览器本地处理, 无需上传, Micro Tools Matrix",
+        toolName: "CSS 渐变色代码生成器",
+        h1: "CSS 渐变色代码生成器",
+        eyebrow: "浏览器本地处理",
+        intro: "在 Micro Tools Matrix 中可视化生成 CSS 渐变色，实时调整颜色、方向与比例，所有处理都在浏览器本地完成，无需上传。",
+        localBadge: "本地运行",
+        sponsor: "赞赏",
+        themeToggle: "切换主题",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        language: "语言",
+        inputTitle: "渐变设置",
+        inputBadge: "输入",
+        outputTitle: "预览与代码",
+        outputBadge: "输出",
+        typeLabel: "渐变类型",
+        linearOption: "线性渐变",
+        radialOption: "径向渐变",
+        angleLabel: "方向角度",
+        stopsTitle: "颜色节点",
+        colorLabel: "颜色",
+        hexLabel: "色值",
+        positionLabel: "位置",
+        removeStop: "删除",
+        primaryAction: "添加颜色",
+        sampleAction: "示例",
+        secondaryAction: "重置",
+        previewLabel: "实时预览",
+        liveBadge: "实时",
+        cssLabel: "CSS 代码",
+        copyAction: "复制代码",
+        downloadAction: "下载 CSS",
+        statusReady: "已实时生成 CSS 渐变代码。",
+        statusCopied: "CSS 代码已复制到剪贴板。",
+        statusCopyFailed: "无法自动复制，请手动选择并复制代码。",
+        statusSample: "已填入示例渐变。",
+        statusReset: "已恢复默认渐变。",
+        statusAdded: "已添加新的颜色节点。",
+        statusRemoved: "已删除颜色节点。",
+        statusMinStops: "至少需要保留两个颜色节点。",
+        statusMaxStops: "最多可添加八个颜色节点。",
+        statusInvalidHex: "请输入有效的十六进制颜色，例如 #06b6d4。",
+        statusDownloaded: "CSS 文件已生成并开始下载。",
+        sponsorTitle: "赞赏支持",
+        sponsorSubtitle: "保持工具免费、快速且无广告。",
+        closeSponsor: "关闭赞赏窗口",
+        buyCoffee: "Buy Me a Coffee",
+        seoArticle: "这款 CSS 渐变色代码生成器适合前端开发者、设计师和内容创作者快速制作背景、按钮、卡片或海报所需的渐变样式。你可以在 Micro Tools Matrix 中直接调整线性或径向渐变，增减多个颜色节点，拖动比例并即时查看预览，同时获得可复制的 CSS background 代码。所有计算都在浏览器本地处理，无需上传颜色方案、设计稿或项目内容，适合处理未发布的产品界面与品牌视觉。作为免费在线开发者工具，它兼顾轻量、隐私与效率，可在 Windows、macOS、Android 和 iOS 浏览器中使用，帮助你更快完成 CSS 渐变色方案验证。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
+      },
+      en: {
+        documentTitle: "CSS Gradient Generator - Micro Tools Matrix",
+        metaDescription: "A browser-local CSS gradient generator by Micro Tools Matrix. Adjust colors, direction, and stop positions visually, then export clean CSS code without uploading anything.",
+        metaKeywords: "CSS gradient generator, free online developer tool, browser-local processing, no upload, Micro Tools Matrix",
+        toolName: "CSS Gradient Generator",
+        h1: "CSS Gradient Generator",
+        eyebrow: "Browser-local processing",
+        intro: "Create CSS gradients visually in Micro Tools Matrix, adjust colors, direction, and stop positions in real time, and keep every value inside your browser with no upload.",
+        localBadge: "Local",
+        sponsor: "Sponsor",
+        themeToggle: "Toggle theme",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        language: "Language",
+        inputTitle: "Gradient Settings",
+        inputBadge: "Input",
+        outputTitle: "Preview and Code",
+        outputBadge: "Output",
+        typeLabel: "Gradient Type",
+        linearOption: "Linear Gradient",
+        radialOption: "Radial Gradient",
+        angleLabel: "Direction Angle",
+        stopsTitle: "Color Stops",
+        colorLabel: "Color",
+        hexLabel: "Hex",
+        positionLabel: "Position",
+        removeStop: "Remove",
+        primaryAction: "Add Color",
+        sampleAction: "Sample",
+        secondaryAction: "Reset",
+        previewLabel: "Live Preview",
+        liveBadge: "Live",
+        cssLabel: "CSS Code",
+        copyAction: "Copy Code",
+        downloadAction: "Download CSS",
+        statusReady: "CSS gradient code is generated in real time.",
+        statusCopied: "CSS code copied to the clipboard.",
+        statusCopyFailed: "Automatic copy is unavailable. Please select and copy the code manually.",
+        statusSample: "Sample gradient has been applied.",
+        statusReset: "Default gradient has been restored.",
+        statusAdded: "A new color stop has been added.",
+        statusRemoved: "Color stop removed.",
+        statusMinStops: "Keep at least two color stops.",
+        statusMaxStops: "You can add up to eight color stops.",
+        statusInvalidHex: "Enter a valid hexadecimal color, such as #06b6d4.",
+        statusDownloaded: "The CSS file has been created and the download has started.",
+        sponsorTitle: "Sponsor Support",
+        sponsorSubtitle: "Keep the tools free, fast, and ad-free.",
+        closeSponsor: "Close sponsor dialog",
+        buyCoffee: "Buy Me a Coffee",
+        seoArticle: "This CSS Gradient Generator is a practical free online developer tool for front-end developers, interface designers, and content creators who need polished gradients for backgrounds, buttons, cards, landing pages, or social visuals. Micro Tools Matrix lets you build linear or radial gradients directly in the browser, add multiple color stops, tune their positions, preview the result instantly, and copy clean CSS background code for production use. The workflow uses browser-local processing, so your color palette, unfinished product interface, or brand exploration never needs to be uploaded to a server. It works on modern browsers across Windows, macOS, Android, and iOS, making it useful for quick design checks, responsive UI experiments, and handoff snippets. By keeping the tool lightweight and private, Micro Tools Matrix helps you validate CSS gradient ideas faster while maintaining a consistent, distraction-free workspace.",
+        footer: "Micro Tools Matrix - Browser-local processing with no upload."
       }
+    };
 
-      function showSuccess(message) {
-        clearTimeout(successTimer);
-        successBox.textContent = message;
-        successBox.classList.remove("hidden");
-        successTimer = setTimeout(() => successBox.classList.add("hidden"), 2200);
+    let currentLanguage = "zh";
+    let currentStatusKey = "statusReady";
+    let stops = [
+      { color: "#06b6d4", position: 0 },
+      { color: "#8b5cf6", position: 52 },
+      { color: "#ec4899", position: 100 }
+    ];
+
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      try {
+        return localStorage.getItem("microToolsLanguage") || "zh";
+      } catch (error) {
+        return "zh";
       }
+    }
 
-      function normalizeHex(value) {
-        const raw = String(value || "").trim();
-        if (/^#[0-9a-fA-F]{6}$/.test(raw)) return raw.toUpperCase();
-        if (/^[0-9a-fA-F]{6}$/.test(raw)) return ("#" + raw).toUpperCase();
-        if (/^#[0-9a-fA-F]{3}$/.test(raw)) {
-          return ("#" + raw.slice(1).split("").map(ch => ch + ch).join("")).toUpperCase();
-        }
-        if (/^[0-9a-fA-F]{3}$/.test(raw)) {
-          return ("#" + raw.split("").map(ch => ch + ch).join("")).toUpperCase();
-        }
-        return null;
-      }
+    function applyLanguage(lang) {
+      currentLanguage = I18N[lang] ? lang : "zh";
+      const dict = I18N[currentLanguage];
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.title = dict.documentTitle;
 
-      function clampNumber(value, min, max, fallback) {
-        const n = Number(value);
-        if (!Number.isFinite(n)) return fallback;
-        return Math.min(max, Math.max(min, n));
-      }
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute("content", dict.metaDescription);
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (keywords) keywords.setAttribute("content", dict.metaKeywords);
 
-      function getSortedStops() {
-        return stops
-          .map(stop => ({
-            color: normalizeHex(stop.color) || "#000000",
-            position: clampNumber(stop.position, 0, 100, 0)
-          }))
-          .sort((a, b) => a.position - b.position);
-      }
-
-      function buildGradient() {
-        const type = gradientType.value;
-        const safeAngle = clampNumber(angleNumber.value, 0, 360, 90);
-        const stopText = getSortedStops().map(stop => `${stop.color} ${stop.position}%`).join(", ");
-
-        if (type === "radial") {
-          const allowed = new Set([
-            "circle at center", "circle at top", "circle at bottom", "circle at left", "circle at right", "ellipse at center"
-          ]);
-          const pos = allowed.has(radialPosition.value) ? radialPosition.value : "circle at center";
-          return `radial-gradient(${pos}, ${stopText})`;
-        }
-
-        if (type === "conic") {
-          return `conic-gradient(from ${safeAngle}deg, ${stopText})`;
-        }
-
-        return `linear-gradient(${safeAngle}deg, ${stopText})`;
-      }
-
-      function renderStops() {
-        stopsContainer.innerHTML = "";
-
-        stops.forEach((stop, index) => {
-          const row = document.createElement("div");
-          row.className = "rounded-2xl border border-slate-700 bg-slate-950 p-3";
-
-          const top = document.createElement("div");
-          top.className = "flex items-center gap-3";
-
-          const colorInput = document.createElement("input");
-          colorInput.type = "color";
-          colorInput.value = normalizeHex(stop.color) || "#000000";
-          colorInput.className = "h-11 w-14 cursor-pointer rounded-xl border border-slate-700 bg-transparent";
-          colorInput.setAttribute("aria-label", `颜色节点 ${index + 1}`);
-
-          const hexInput = document.createElement("input");
-          hexInput.type = "text";
-          hexInput.value = normalizeHex(stop.color) || "#000000";
-          hexInput.inputMode = "text";
-          hexInput.className = "min-w-0 flex-1 rounded-xl border border-slate-700 bg-slate-900 px-3 py-2 font-mono text-sm text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10";
-          hexInput.setAttribute("aria-label", `十六进制颜色 ${index + 1}`);
-
-          const removeBtn = document.createElement("button");
-          removeBtn.type = "button";
-          removeBtn.textContent = "删除";
-          removeBtn.className = "rounded-xl border border-red-400/30 bg-red-400/10 px-3 py-2 text-sm font-bold text-red-200 transition hover:bg-red-400/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-40";
-          removeBtn.disabled = stops.length <= 2;
-
-          top.appendChild(colorInput);
-          top.appendChild(hexInput);
-          top.appendChild(removeBtn);
-
-          const bottom = document.createElement("div");
-          bottom.className = "mt-3 grid grid-cols-12 items-center gap-3";
-
-          const range = document.createElement("input");
-          range.type = "range";
-          range.min = "0";
-          range.max = "100";
-          range.step = "1";
-          range.value = String(clampNumber(stop.position, 0, 100, 0));
-          range.className = "col-span-8 sm:col-span-9";
-          range.setAttribute("aria-label", `颜色位置滑块 ${index + 1}`);
-
-          const number = document.createElement("input");
-          number.type = "number";
-          number.min = "0";
-          number.max = "100";
-          number.step = "1";
-          number.value = String(clampNumber(stop.position, 0, 100, 0));
-          number.className = "col-span-4 sm:col-span-3 rounded-xl border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10";
-          number.setAttribute("aria-label", `颜色位置百分比 ${index + 1}`);
-
-          bottom.appendChild(range);
-          bottom.appendChild(number);
-
-          row.appendChild(top);
-          row.appendChild(bottom);
-          stopsContainer.appendChild(row);
-
-          colorInput.addEventListener("input", () => {
-            stops[index].color = colorInput.value.toUpperCase();
-            hexInput.value = stops[index].color;
-            update();
-          });
-
-          hexInput.addEventListener("input", () => {
-            const normalized = normalizeHex(hexInput.value);
-            if (normalized) {
-              stops[index].color = normalized;
-              colorInput.value = normalized;
-              hexInput.classList.remove("border-red-400");
-              update();
-            } else {
-              hexInput.classList.add("border-red-400");
-            }
-          });
-
-          hexInput.addEventListener("blur", () => {
-            const normalized = normalizeHex(hexInput.value);
-            if (!normalized) {
-              hexInput.value = normalizeHex(stops[index].color) || "#000000";
-              hexInput.classList.remove("border-red-400");
-              showError("颜色格式无效，Please enter #RRGGBB 或 #RGB 格式，例如 #22D3EE。");
-            }
-          });
-
-          range.addEventListener("input", () => {
-            const value = clampNumber(range.value, 0, 100, stops[index].position);
-            stops[index].position = value;
-            number.value = String(value);
-            update();
-          });
-
-          number.addEventListener("input", () => {
-            if (number.value === "") return;
-            const raw = Number(number.value);
-            if (!Number.isFinite(raw) || raw < 0 || raw > 100) {
-              number.classList.add("border-red-400");
-              return;
-            }
-            number.classList.remove("border-red-400");
-            const value = Math.round(raw);
-            stops[index].position = value;
-            range.value = String(value);
-            update();
-          });
-
-          number.addEventListener("blur", () => {
-            const value = clampNumber(number.value, 0, 100, stops[index].position);
-            if (String(number.value).trim() === "" || Number(number.value) !== value) {
-              showError("颜色位置必须是 0 到 100 之间的数字，已自动修正。");
-            }
-            stops[index].position = Math.round(value);
-            range.value = String(stops[index].position);
-            number.value = String(stops[index].position);
-            number.classList.remove("border-red-400");
-            update();
-          });
-
-          removeBtn.addEventListener("click", () => {
-            if (stops.length <= 2) {
-              showError("至少需要保留两个颜色节点才能Generate渐变。");
-              return;
-            }
-            stops.splice(index, 1);
-            renderStops();
-            update();
-          });
-        });
-
-        addStopBtn.disabled = stops.length >= 10;
-        addStopBtn.classList.toggle("opacity-50", stops.length >= 10);
-        addStopBtn.classList.toggle("cursor-not-allowed", stops.length >= 10);
-      }
-
-      function updateAngle(value) {
-        const safe = Math.round(clampNumber(value, 0, 360, 90));
-        angleRange.value = String(safe);
-        angleNumber.value = String(safe);
-        angleLabel.textContent = `${safe}deg`;
-        update();
-      }
-
-      function updatePanels() {
-        const type = gradientType.value;
-        if (type === "radial") {
-          radialPanel.classList.remove("hidden");
-          anglePanel.classList.add("hidden");
-        } else {
-          radialPanel.classList.add("hidden");
-          anglePanel.classList.remove("hidden");
-        }
-      }
-
-      function update() {
-        try {
-          if (stops.length < 2) {
-            showError("至少需要两个颜色节点。");
-            return;
-          }
-
-          stops = stops.map(stop => ({
-            color: normalizeHex(stop.color) || "#000000",
-            position: clampNumber(stop.position, 0, 100, 0)
-          }));
-
-          const gradient = buildGradient();
-          preview.style.background = gradient;
-          cssOutput.value = `background: ${gradient};\nbackground-repeat: no-repeat;\nbackground-size: cover;`;
-        } catch (err) {
-          showError("Generate渐变时遇到异常，请检查输入内容后重试。");
-        }
-      }
-
-      function randomHex() {
-        const n = Math.floor(Math.random() * 16777215);
-        return "#" + n.toString(16).padStart(6, "0").toUpperCase();
-      }
-
-      addStopBtn.addEventListener("click", () => {
-        if (stops.length >= 10) {
-          showError("最多只能添加 10 个颜色节点。");
-          return;
-        }
-        const position = stops.length === 0 ? 0 : Math.round(100 / Math.min(9, stops.length + 1) * stops.length);
-        stops.push({ color: randomHex(), position });
-        renderStops();
-        update();
-        showSuccess("已添加新的颜色节点。");
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (dict[key]) node.textContent = dict[key];
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (dict[key]) node.setAttribute("placeholder", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (dict[key]) node.setAttribute("title", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (dict[key]) node.setAttribute("aria-label", dict[key]);
       });
 
-      reverseBtn.addEventListener("click", () => {
-        const reversedColors = stops.map(s => s.color).reverse();
-        stops = stops.map((s, i) => ({ color: reversedColors[i], position: s.position }));
-        renderStops();
-        update();
-        showSuccess("颜色顺序已反转。");
-      });
+      const themeLabel = document.querySelector("[data-theme-label]");
+      if (themeLabel && !themeLabel.textContent.trim()) themeLabel.textContent = dict.themeSystem;
 
-      resetBtn.addEventListener("click", () => {
-        gradientType.value = "linear";
-        radialPosition.value = "circle at center";
-        updateAngle(90);
-        stops = JSON.parse(JSON.stringify(defaultStops));
-        updatePanels();
-        renderStops();
-        update();
-        showSuccess("已恢复默认渐变。");
-      });
-
-      randomBtn.addEventListener("click", () => {
-        const count = Math.floor(Math.random() * 3) + 3;
-        stops = Array.from({ length: count }, (_, i) => ({
-          color: randomHex(),
-          position: Math.round((100 / (count - 1)) * i)
-        }));
-        renderStops();
-        update();
-        showSuccess("已Generate随机渐变配色。");
-      });
-
-      copyBtn.addEventListener("click", async () => {
-        try {
-          const text = cssOutput.value || "";
-          if (!text.trim()) {
-            showError("当前没有可Copy的 CSS 代码。");
-            return;
-          }
-
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(text);
-          } else {
-            cssOutput.focus();
-            cssOutput.select();
-            const ok = document.execCommand("copy");
-            window.getSelection().removeAllRanges();
-            if (!ok) throw new Error("copy failed");
-          }
-
-          copyBtn.textContent = "Copied";
-          copyBtn.classList.remove("bg-emerald-400");
-          copyBtn.classList.add("bg-cyan-300");
-          showSuccess("CSS 代码Copied到剪贴板。");
-
-          setTimeout(() => {
-            copyBtn.textContent = "Copy代码";
-            copyBtn.classList.add("bg-emerald-400");
-            copyBtn.classList.remove("bg-cyan-300");
-          }, 1400);
-        } catch (err) {
-          showError("Copy failed，请手动选中代码进行Copy。");
-        }
-      });
-
-      gradientType.addEventListener("change", () => {
-        updatePanels();
-        update();
-      });
-
-      radialPosition.addEventListener("change", update);
-
-      angleRange.addEventListener("input", () => updateAngle(angleRange.value));
-
-      angleNumber.addEventListener("input", () => {
-        if (angleNumber.value === "") return;
-        const raw = Number(angleNumber.value);
-        if (!Number.isFinite(raw) || raw < 0 || raw > 360) {
-          angleNumber.classList.add("border-red-400");
-          return;
-        }
-        angleNumber.classList.remove("border-red-400");
-        updateAngle(raw);
-      });
-
-      angleNumber.addEventListener("blur", () => {
-        const before = angleNumber.value;
-        const safe = clampNumber(before, 0, 360, 90);
-        if (String(before).trim() === "" || Number(before) !== safe) {
-          showError("角度必须是 0 到 360 之间的数字，已自动修正。");
-        }
-        angleNumber.classList.remove("border-red-400");
-        updateAngle(safe);
-      });
-
-      window.addEventListener("error", () => {
-        showError("页面运行时捕获到异常，但应用已保持可用。");
-      });
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "zh" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "en" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+        zhBtn.setAttribute("aria-pressed", currentLanguage === "zh" ? "true" : "false");
+        enBtn.setAttribute("aria-pressed", currentLanguage === "en" ? "true" : "false");
+      }
 
       renderStops();
-      updatePanels();
-      update();
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      setStatus(currentStatusKey);
+      updateGradient();
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function setLanguage(lang) {
+      const next = I18N[lang] ? lang : "zh";
+      try {
+        localStorage.setItem("microToolsLanguage", next);
+      } catch (error) {}
+      applyLanguage(next);
+    }
+
+    function setStatus(key) {
+      currentStatusKey = key;
+      const status = document.getElementById("statusText");
+      if (status) status.textContent = I18N[currentLanguage][key] || I18N[currentLanguage].statusReady;
+    }
+
+    function normalizeHex(value) {
+      const raw = String(value || "").trim();
+      if (/^#[0-9a-fA-F]{6}$/.test(raw)) return raw.toLowerCase();
+      if (/^#[0-9a-fA-F]{3}$/.test(raw)) {
+        return "#" + raw.slice(1).split("").map((char) => char + char).join("").toLowerCase();
+      }
+      return null;
+    }
+
+    function getGradientString() {
+      const type = document.getElementById("gradientType")?.value || "linear";
+      const angle = Number(document.getElementById("angleInput")?.value || 90);
+      const sorted = stops.slice().sort((a, b) => a.position - b.position);
+      const parts = sorted.map((stop) => `${stop.color} ${stop.position}%`).join(", ");
+      return type === "radial" ? `radial-gradient(circle, ${parts})` : `linear-gradient(${angle}deg, ${parts})`;
+    }
+
+    function updateGradient() {
+      const preview = document.getElementById("gradientPreview");
+      const output = document.getElementById("cssOutput");
+      const angleValue = document.getElementById("angleValue");
+      const angleInput = document.getElementById("angleInput");
+      const stopCount = document.getElementById("stopCount");
+      const gradient = getGradientString();
+
+      if (preview) preview.style.background = gradient;
+      if (output) output.value = `.gradient {\n  background: ${gradient};\n}`;
+      if (angleValue && angleInput) angleValue.textContent = angleInput.value;
+      if (stopCount) stopCount.textContent = String(stops.length);
+    }
+
+    function renderStops() {
+      const list = document.getElementById("stopsList");
+      if (!list) return;
+      const dict = I18N[currentLanguage];
+      list.innerHTML = "";
+
+      stops.forEach((stop, index) => {
+        const row = document.createElement("div");
+        row.className = "rounded-3xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-slate-950/70";
+
+        const top = document.createElement("div");
+        top.className = "grid gap-3 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:items-end";
+
+        const colorWrap = document.createElement("label");
+        colorWrap.className = "block min-w-0";
+        const colorText = document.createElement("span");
+        colorText.className = "mb-2 block text-xs font-semibold text-slate-600 dark:text-slate-400";
+        colorText.textContent = dict.colorLabel;
+        const colorInput = document.createElement("input");
+        colorInput.type = "color";
+        colorInput.value = stop.color;
+        colorInput.className = "h-11 w-full min-w-16 rounded-2xl border border-gray-200 bg-white p-1 dark:border-white/10 dark:bg-white/[0.04]";
+        colorInput.setAttribute("aria-label", dict.colorLabel);
+        colorInput.addEventListener("input", () => {
+          stops[index].color = colorInput.value.toLowerCase();
+          const hexInput = row.querySelector("input[data-hex-input]");
+          if (hexInput) hexInput.value = stops[index].color;
+          setStatus("statusReady");
+          updateGradient();
+        });
+        colorWrap.append(colorText, colorInput);
+
+        const hexWrap = document.createElement("label");
+        hexWrap.className = "block min-w-0";
+        const hexText = document.createElement("span");
+        hexText.className = "mb-2 block text-xs font-semibold text-slate-600 dark:text-slate-400";
+        hexText.textContent = dict.hexLabel;
+        const hexInput = document.createElement("input");
+        hexInput.type = "text";
+        hexInput.value = stop.color;
+        hexInput.setAttribute("data-hex-input", "true");
+        hexInput.className = "w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:placeholder:text-slate-600";
+        hexInput.setAttribute("aria-label", dict.hexLabel);
+        hexInput.addEventListener("change", () => {
+          const normalized = normalizeHex(hexInput.value);
+          if (!normalized) {
+            hexInput.value = stops[index].color;
+            setStatus("statusInvalidHex");
+            return;
+          }
+          stops[index].color = normalized;
+          colorInput.value = normalized;
+          hexInput.value = normalized;
+          setStatus("statusReady");
+          updateGradient();
+        });
+        hexWrap.append(hexText, hexInput);
+
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.className = "inline-flex min-h-11 w-full items-center justify-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08] sm:w-auto";
+        removeBtn.textContent = dict.removeStop;
+        removeBtn.setAttribute("aria-label", dict.removeStop);
+        removeBtn.addEventListener("click", () => {
+          if (stops.length <= 2) {
+            setStatus("statusMinStops");
+            return;
+          }
+          stops.splice(index, 1);
+          setStatus("statusRemoved");
+          renderStops();
+          updateGradient();
+        });
+
+        top.append(colorWrap, hexWrap, removeBtn);
+
+        const rangeWrap = document.createElement("label");
+        rangeWrap.className = "mt-3 block";
+        const rangeTop = document.createElement("span");
+        rangeTop.className = "mb-2 flex items-center justify-between gap-3 text-xs font-semibold text-slate-600 dark:text-slate-400";
+        const positionLabel = document.createElement("span");
+        positionLabel.textContent = dict.positionLabel;
+        const positionValue = document.createElement("span");
+        positionValue.className = "tabular-nums";
+        positionValue.textContent = `${stop.position}%`;
+        rangeTop.append(positionLabel, positionValue);
+
+        const rangeInput = document.createElement("input");
+        rangeInput.type = "range";
+        rangeInput.min = "0";
+        rangeInput.max = "100";
+        rangeInput.value = String(stop.position);
+        rangeInput.className = "w-full accent-cyan-400";
+        rangeInput.setAttribute("aria-label", dict.positionLabel);
+        rangeInput.addEventListener("input", () => {
+          stops[index].position = Number(rangeInput.value);
+          positionValue.textContent = `${stops[index].position}%`;
+          setStatus("statusReady");
+          updateGradient();
+        });
+
+        rangeWrap.append(rangeTop, rangeInput);
+        row.append(top, rangeWrap);
+        list.appendChild(row);
       });
     }
+
+    function addStop() {
+      if (stops.length >= 8) {
+        setStatus("statusMaxStops");
+        return;
+      }
+      const palette = ["#22c55e", "#f59e0b", "#ef4444", "#14b8a6", "#6366f1", "#f97316"];
+      const position = Math.round(100 / (stops.length + 1) * stops.length);
+      stops.push({ color: palette[stops.length % palette.length], position });
+      stops.sort((a, b) => a.position - b.position);
+      setStatus("statusAdded");
+      renderStops();
+      updateGradient();
+    }
+
+    function applySample() {
+      const type = document.getElementById("gradientType");
+      const angle = document.getElementById("angleInput");
+      if (type) type.value = "linear";
+      if (angle) angle.value = "135";
+      stops = [
+        { color: "#0f172a", position: 0 },
+        { color: "#06b6d4", position: 45 },
+        { color: "#a78bfa", position: 72 },
+        { color: "#f472b6", position: 100 }
+      ];
+      setStatus("statusSample");
+      renderStops();
+      updateGradient();
+    }
+
+    function resetTool() {
+      const type = document.getElementById("gradientType");
+      const angle = document.getElementById("angleInput");
+      if (type) type.value = "linear";
+      if (angle) angle.value = "90";
+      stops = [
+        { color: "#06b6d4", position: 0 },
+        { color: "#8b5cf6", position: 52 },
+        { color: "#ec4899", position: 100 }
+      ];
+      setStatus("statusReset");
+      renderStops();
+      updateGradient();
+    }
+
+    async function copyCode() {
+      const output = document.getElementById("cssOutput");
+      if (!output) return;
+      try {
+        await navigator.clipboard.writeText(output.value);
+        setStatus("statusCopied");
+      } catch (error) {
+        output.focus();
+        output.select();
+        setStatus("statusCopyFailed");
+      }
+    }
+
+    function downloadCss() {
+      const output = document.getElementById("cssOutput");
+      if (!output) return;
+      const blob = new Blob([output.value + "\n"], { type: "text/css;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "gradient.css";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      setStatus("statusDownloaded");
+    }
+
+    function openSponsorModal(event) {
+      if (event?.preventDefault) event.preventDefault();
+      const modal = document.getElementById("sponsorModal");
+      if (!modal) return;
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeSponsorModal() {
+      const modal = document.getElementById("sponsorModal");
+      if (!modal) return;
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+      document.getElementById("gradientType")?.addEventListener("change", () => {
+        setStatus("statusReady");
+        updateGradient();
+      });
+      document.getElementById("angleInput")?.addEventListener("input", () => {
+        setStatus("statusReady");
+        updateGradient();
+      });
+      document.getElementById("addStopBtn")?.addEventListener("click", addStop);
+      document.getElementById("sampleBtn")?.addEventListener("click", applySample);
+      document.getElementById("resetBtn")?.addEventListener("click", resetTool);
+      document.getElementById("copyBtn")?.addEventListener("click", copyCode);
+      document.getElementById("downloadBtn")?.addEventListener("click", downloadCss);
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="../sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

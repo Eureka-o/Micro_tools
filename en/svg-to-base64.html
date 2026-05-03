@@ -1,382 +1,527 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>svg-to-base64｜SVG 代码转 Base64 背景图工具</title>
-  <meta name="description" content="SVG 代码转 Base64 背景图工具。专为前端开发设计，将SVG代码转换为可在CSS `background-image` 中直接使用的代码。">
-  <meta name="keywords" content="svg-to-base64, SVG转Base64, SVG背景图, CSS background-image, Data URI, SVG代码转换, 前端开发工具, Base64编码">
-  <link rel="icon" type="image/png" href="../assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
-  <link rel="canonical" href="https://mymicrotools.xyz/en/svg-to-base64.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SVG 转 Base64 背景图 - Micro Tools Matrix</title>
+  <meta name="description" content="Micro Tools Matrix 提供浏览器本地处理的 SVG 代码转 Base64 背景图工具，将 SVG 转为可直接用于 CSS background-image 的 data URI，无需上传。">
+  <meta name="keywords" content="SVG转Base64,SVG背景图,CSS background-image,data URI,浏览器本地处理,无需上传,Micro Tools Matrix">
+  <link rel="canonical" href="https://mymicrotools.xyz/svg-to-base64.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/svg-to-base64.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/svg-to-base64.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/svg-to-base64.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/en/svg-to-base64.html">
-  <meta property="og:title" content="svg-to-base64｜SVG 代码转 Base64 背景图工具">
-  <meta property="og:description" content="SVG 代码转 Base64 背景图工具。专为前端开发设计，将SVG代码转换为可在CSS `background-image` 中直接使用的代码。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="svg-to-base64｜SVG 代码转 Base64 背景图工具">
-  <meta name="twitter:description" content="SVG 代码转 Base64 背景图工具。专为前端开发设计，将SVG代码转换为可在CSS `background-image` 中直接使用的代码。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="../style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "SVG to Base64 Background Image",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "description": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">SVG 转 Base64 背景图</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="../svg-to-base64.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./svg-to-base64.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="pointer-events-none fixed inset-0 overflow-hidden">
-    <div class="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl"></div>
-  </div>
-
-  <header class="relative border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 backdrop-blur-xl">
-    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-        <div>
-          <div class="mb-3 inline-flex items-center rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm text-cyan-200">
-            Front-end SVG Utility
-          </div>
-          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">SVG 代码转 Base64 背景图工具</h1>
-          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            将 SVG 代码转换为可直接用于 CSS <code class="rounded bg-white dark:bg-white/10 px-1 py-0.5 text-cyan-200">background-image</code> 的 Base64 Data URI。
-          </p>
-        </div>
-        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 shadow-2xl">
-          <p class="text-sm text-slate-400">输出格式</p>
-          <p class="mt-1 font-mono text-sm text-cyan-200">url("data:image/svg+xml;base64,...")</p>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" data-i18n-aria-label="languageGroup" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
         </div>
       </div>
-    </div>
+    </nav>
   </header>
 
-  <main class="relative mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-2" aria-label="SVG 转换工具">
-      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/90 p-5 shadow-2xl">
-        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入 SVG 代码</h2>
-            <p class="mt-1 text-sm text-slate-400">粘贴完整的 SVG 源码，系统会自动校验格式。</p>
-          </div>
-          <button id="sampleBtn" type="button" class="rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">
-            插入示例
-          </button>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">SVG 转 Base64 背景图</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">将 SVG 代码转换为可直接粘贴到 CSS background-image 的 Base64 data URI。Micro Tools Matrix 在浏览器本地处理内容，无需上传文件或文本。</p>
         </div>
-
-        <label for="svgInput" class="sr-only">SVG 代码输入框</label>
-        <textarea id="svgInput" spellcheck="false" class="h-80 w-full resize-y rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder='例如：<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">...</svg>'></textarea>
-
-        <div id="message" class="mt-4 hidden rounded-2xl border px-4 py-3 text-sm" role="alert"></div>
-
-        <div class="mt-5 flex flex-col gap-3 sm:flex-row">
-          <button id="convertBtn" type="button" class="inline-flex flex-1 items-center justify-center rounded-2xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-[0.98]">
-            转换为 Base64 背景图
-          </button>
-          <button id="clearBtn" type="button" class="inline-flex items-center justify-center rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-[0.98]">
-            Clear
-          </button>
-        </div>
-      </div>
-
-      <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/20 p-5 shadow-2xl">
-        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输出 CSS 代码</h2>
-            <p class="mt-1 text-sm text-slate-400">Copy后可直接粘贴到 CSS、Tailwind arbitrary value 或内联样式中。</p>
-          </div>
-          <button id="copyBtn" type="button" disabled class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-2 text-sm font-semibold text-slate-400 transition enabled:border-emerald-400/30 enabled:bg-emerald-400/10 enabled:text-emerald-100 enabled:hover:bg-emerald-400/20 enabled:active:scale-95 disabled:cursor-not-allowed">
-            Copy result
-          </button>
-        </div>
-
-        <label for="outputCss" class="sr-only">CSS 输出框</label>
-        <textarea id="outputCss" readonly spellcheck="false" class="h-52 w-full resize-y rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/90 p-4 font-mono text-sm leading-6 text-cyan-100 outline-none placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder='background-image: url("data:image/svg+xml;base64,...");'></textarea>
-
-        <div class="mt-5 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-4">
-          <div class="mb-3 flex items-center justify-between">
-            <h3 class="font-semibold text-gray-900 dark:text-white">背景图预览</h3>
-            <span id="sizeInfo" class="text-xs text-slate-400">等待转换</span>
-          </div>
-          <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950">
-            <div id="preview" class="flex h-48 items-center justify-center bg-[linear-gradient(45deg,rgba(255,255,255,.06)_25%,transparent_25%),linear-gradient(-45deg,rgba(255,255,255,.06)_25%,transparent_25%),linear-gradient(45deg,transparent_75%,rgba(255,255,255,.06)_75%),linear-gradient(-45deg,transparent_75%,rgba(255,255,255,.06)_75%)] bg-[length:24px_24px] bg-[position:0_0,0_12px,12px_-12px,-12px_0px] text-sm text-slate-500">
-              转换成功后将在此显示
-            </div>
-          </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 SVG 代码转 Base64 背景图工具</h2>
-      <p>
-        svg-to-base64 是一款专为前端开发者设计的 SVG 代码转 Base64 背景图工具，适用于需要把矢量图标、装饰图形或品牌元素快速嵌入 CSS 的场景。传统做法通常需要保存独立 SVG 文件并维护资源路径，在组件化开发、邮件模板、落地页制作或静态页面交付时容易出现路径错误、跨域限制和资源丢失等问题。本工具可将 SVG 源码转换为标准的 Data URI，并Generate可直接用于 CSS background-image 的代码，减少额外网络请求，让样式文件更易迁移和复用。使用方法非常简单：将完整 SVG 代码粘贴到输入框，点击转换按钮，即可得到 Base64 编码后的背景图 CSS。工具会自动校验 SVG 格式，遇到非法标签或空内容会给出清晰提示。对于搜索“SVG转Base64背景图”“CSS内联SVG Data URI”“background-image 使用 SVG 代码”的开发者来说，这是一个轻量、快速且无需安装依赖的在线转换方案。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <label for="svgInput" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="svgLabel">SVG 代码</label>
+        <textarea id="svgInput" rows="14" spellcheck="false" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="svgPlaceholder" placeholder="粘贴完整的 SVG 代码，例如 &lt;svg ...&gt;&lt;/svg&gt;"></textarea>
+
+        <div class="mt-4 grid gap-3 sm:grid-cols-2">
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="quoteLabel">CSS 引号</span>
+            <select id="quoteSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+              <option value="double" data-i18n="quoteDouble">双引号</option>
+              <option value="single" data-i18n="quoteSingle">单引号</option>
+              <option value="none" data-i18n="quoteNone">无引号</option>
+            </select>
+          </label>
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="outputModeLabel">输出格式</span>
+            <select id="outputMode" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+              <option value="css" data-i18n="modeCss">CSS 声明</option>
+              <option value="url" data-i18n="modeUrl">仅 data URI</option>
+            </select>
+          </label>
+        </div>
+
+        <p id="inputStats" class="mt-3 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400">0 个字符</p>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="convertBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">转换</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">示例</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+        </div>
+
+        <label for="resultOutput" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="resultLabel">CSS 背景图代码</label>
+        <textarea id="resultOutput" rows="10" readonly spellcheck="false" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="resultPlaceholder" placeholder="转换结果会显示在这里"></textarea>
+
+        <div class="mt-4 rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+          <div class="mb-3 flex items-center justify-between gap-3">
+            <h2 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="previewTitle">预览</h2>
+            <span id="outputStats" class="tabular-nums text-xs text-slate-500 dark:text-slate-400">0 B</span>
+          </div>
+          <div id="previewBox" class="min-h-36 rounded-2xl border border-dashed border-gray-300 bg-white bg-center bg-no-repeat p-4 dark:border-white/10 dark:bg-slate-900">
+            <div id="previewEmpty" class="flex min-h-28 items-center justify-center text-center text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="previewEmpty">转换后将在这里预览 SVG 背景图</div>
+          </div>
+        </div>
+
+        <p id="statusText" class="mt-3 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400">等待输入 SVG 代码。</p>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
+          <button id="downloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadAction">下载 CSS</button>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">SVG 转 Base64 背景图工具面向前端开发、设计系统维护者和页面性能优化场景。你可以把 SVG 图标、纹理或小型装饰图形转换为 data URI，并直接用于 CSS background-image、伪元素背景或组件样式中，减少额外资源文件管理。整个过程由 Micro Tools Matrix 在浏览器本地处理，无需上传 SVG 代码，也不会调用远程接口，适合处理未发布的产品素材和内部项目片段。工具会校验 SVG 基本结构，生成 Base64 编码结果，并提供复制、示例、清空和下载 CSS 操作，是一个免费的在线开发者工具。</article>
   </main>
 
-  <footer class="relative mx-auto max-w-6xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-    <p>svg-to-base64 · 原生 HTML / JavaScript 单页工具</p>
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
 
   <script>
-    (() => {
-      "use strict";
+    const I18N = {
+      zh: {
+        documentTitle: "SVG 转 Base64 背景图 - Micro Tools Matrix",
+        metaDescription: "Micro Tools Matrix 提供浏览器本地处理的 SVG 代码转 Base64 背景图工具，将 SVG 转为可直接用于 CSS background-image 的 data URI，无需上传。",
+        metaKeywords: "SVG转Base64,SVG背景图,CSS background-image,data URI,浏览器本地处理,无需上传,Micro Tools Matrix",
+        toolName: "SVG 转 Base64 背景图",
+        sponsor: "赞赏",
+        languageGroup: "语言",
+        eyebrow: "浏览器本地处理",
+        h1: "SVG 转 Base64 背景图",
+        intro: "将 SVG 代码转换为可直接粘贴到 CSS background-image 的 Base64 data URI。Micro Tools Matrix 在浏览器本地处理内容，无需上传文件或文本。",
+        localBadge: "本地运行",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        outputTitle: "结果",
+        outputBadge: "输出",
+        svgLabel: "SVG 代码",
+        svgPlaceholder: "粘贴完整的 SVG 代码，例如 <svg ...></svg>",
+        quoteLabel: "CSS 引号",
+        quoteDouble: "双引号",
+        quoteSingle: "单引号",
+        quoteNone: "无引号",
+        outputModeLabel: "输出格式",
+        modeCss: "CSS 声明",
+        modeUrl: "仅 data URI",
+        primaryAction: "转换",
+        sampleAction: "示例",
+        secondaryAction: "清空",
+        resultLabel: "CSS 背景图代码",
+        resultPlaceholder: "转换结果会显示在这里",
+        previewTitle: "预览",
+        previewEmpty: "转换后将在这里预览 SVG 背景图",
+        copyAction: "复制结果",
+        downloadAction: "下载 CSS",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。",
+        seoArticle: "SVG 转 Base64 背景图工具面向前端开发、设计系统维护者和页面性能优化场景。你可以把 SVG 图标、纹理或小型装饰图形转换为 data URI，并直接用于 CSS background-image、伪元素背景或组件样式中，减少额外资源文件管理。整个过程由 Micro Tools Matrix 在浏览器本地处理，无需上传 SVG 代码，也不会调用远程接口，适合处理未发布的产品素材和内部项目片段。工具会校验 SVG 基本结构，生成 Base64 编码结果，并提供复制、示例、清空和下载 CSS 操作，是一个免费的在线开发者工具。",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        buyCoffee: "Buy Me a Coffee",
+        statusReady: "等待输入 SVG 代码。",
+        statusEmpty: "请先粘贴 SVG 代码。",
+        statusInvalid: "未检测到有效的 SVG 根元素，请检查代码是否完整。",
+        statusParseError: "SVG 解析失败，请检查标签是否闭合、属性引号是否正确。",
+        statusConverted: "转换完成，可复制到 CSS 中使用。",
+        statusCopied: "结果已复制到剪贴板。",
+        statusCopyFailed: "复制失败，请手动选择结果并复制。",
+        statusCleared: "已清空输入和结果。",
+        statusSample: "已填入示例 SVG，可继续调整或直接转换。",
+        statusDownloaded: "CSS 文件已生成。",
+        statusNoResult: "请先完成转换再执行此操作。",
+        inputStats: "{count} 个字符",
+        outputStats: "{bytes} B",
+        outputStatsKb: "{kb} KB"
+      },
+      en: {
+        documentTitle: "SVG to Base64 Background Image - Micro Tools Matrix",
+        metaDescription: "A browser-local SVG to Base64 background-image tool by Micro Tools Matrix. Convert SVG code into a data URI for CSS background-image without uploading anything.",
+        metaKeywords: "SVG to Base64,SVG background image,CSS background-image,data URI,browser-local processing,no upload,free online developer tool,Micro Tools Matrix",
+        toolName: "SVG to Base64 Background",
+        sponsor: "Sponsor",
+        languageGroup: "Language",
+        eyebrow: "Browser-local processing",
+        h1: "SVG to Base64 Background",
+        intro: "Convert SVG code into a Base64 data URI that can be pasted directly into CSS background-image. Micro Tools Matrix processes everything in your browser with no file or text upload.",
+        localBadge: "Local",
+        inputTitle: "Input",
+        inputBadge: "Input",
+        outputTitle: "Result",
+        outputBadge: "Output",
+        svgLabel: "SVG code",
+        svgPlaceholder: "Paste complete SVG code, for example <svg ...></svg>",
+        quoteLabel: "CSS quotes",
+        quoteDouble: "Double quotes",
+        quoteSingle: "Single quotes",
+        quoteNone: "No quotes",
+        outputModeLabel: "Output format",
+        modeCss: "CSS declaration",
+        modeUrl: "Data URI only",
+        primaryAction: "Convert",
+        sampleAction: "Sample",
+        secondaryAction: "Clear",
+        resultLabel: "CSS background image code",
+        resultPlaceholder: "The converted result will appear here",
+        previewTitle: "Preview",
+        previewEmpty: "The SVG background preview will appear here after conversion",
+        copyAction: "Copy result",
+        downloadAction: "Download CSS",
+        footer: "Micro Tools Matrix - Browser-local processing with no upload.",
+        seoArticle: "This SVG to Base64 background image tool is designed for frontend developers, design system maintainers, and performance-minded UI engineers. Paste an SVG icon, pattern, or small decorative asset, then convert it into a Base64 data URI that can be used in CSS background-image, pseudo-elements, utility classes, or component styles. The workflow is fully browser-local processing: Micro Tools Matrix does not upload your SVG, does not call a remote API, and keeps your input in page memory only. That makes it suitable for unpublished product assets, internal UI snippets, and quick prototyping work. The tool validates the SVG structure, generates either a complete CSS declaration or the raw data URI, provides a live preview, and includes practical actions for copying, clearing, loading a sample, and downloading a CSS file. It is a free online developer tool for turning compact SVG code into ready-to-use CSS background images.",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        buyCoffee: "Buy Me a Coffee",
+        statusReady: "Waiting for SVG code.",
+        statusEmpty: "Paste SVG code first.",
+        statusInvalid: "No valid SVG root element was detected. Please check whether the code is complete.",
+        statusParseError: "SVG parsing failed. Please check closed tags and quoted attributes.",
+        statusConverted: "Conversion complete. You can use the result in CSS.",
+        statusCopied: "Result copied to clipboard.",
+        statusCopyFailed: "Copy failed. Please select the result and copy it manually.",
+        statusCleared: "Input and result cleared.",
+        statusSample: "Sample SVG inserted. You can edit it or convert it directly.",
+        statusDownloaded: "CSS file generated.",
+        statusNoResult: "Convert first before using this action.",
+        inputStats: "{count} characters",
+        outputStats: "{bytes} B",
+        outputStatsKb: "{kb} KB"
+      }
+    };
 
-      const svgInput = document.getElementById("svgInput");
-      const outputCss = document.getElementById("outputCss");
-      const convertBtn = document.getElementById("convertBtn");
-      const clearBtn = document.getElementById("clearBtn");
-      const sampleBtn = document.getElementById("sampleBtn");
-      const copyBtn = document.getElementById("copyBtn");
-      const message = document.getElementById("message");
-      const preview = document.getElementById("preview");
-      const sizeInfo = document.getElementById("sizeInfo");
-
-      const sampleSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#22d3ee"/>
-      <stop offset="100%" stop-color="#6366f1"/>
-    </linearGradient>
-  </defs>
-  <rect width="160" height="160" rx="36" fill="url(#g)"/>
-  <circle cx="80" cy="72" r="34" fill="white" opacity="0.92"/>
-  <path d="M55 96c14 18 36 18 50 0" fill="none" stroke="#0f172a" stroke-width="10" stroke-linecap="round"/>
+    const SAMPLE_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
+  <rect width="160" height="160" rx="32" fill="#ecfeff"/>
+  <circle cx="80" cy="80" r="46" fill="#22d3ee"/>
+  <path d="M58 82l16 16 32-40" fill="none" stroke="#0f172a" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>`;
 
-      function showMessage(type, text) {
-        message.className = "mt-4 rounded-2xl border px-4 py-3 text-sm";
-        if (type === "error") {
-          message.classList.add("border-red-400/30", "bg-red-500/10", "text-red-200");
-        } else {
-          message.classList.add("border-emerald-400/30", "bg-emerald-500/10", "text-emerald-200");
-        }
-        message.textContent = text;
-        message.classList.remove("hidden");
-      }
+    let currentLanguage = "zh";
+    let statusKey = "statusReady";
+    let lastDataUri = "";
 
-      function hideMessage() {
-        message.classList.add("hidden");
-        message.textContent = "";
-      }
-
-      function resetOutput() {
-        outputCss.value = "";
-        copyBtn.disabled = true;
-        preview.removeAttribute("style");
-        preview.className = "flex h-48 items-center justify-center bg-[linear-gradient(45deg,rgba(255,255,255,.06)_25%,transparent_25%),linear-gradient(-45deg,rgba(255,255,255,.06)_25%,transparent_25%),linear-gradient(45deg,transparent_75%,rgba(255,255,255,.06)_75%),linear-gradient(-45deg,transparent_75%,rgba(255,255,255,.06)_75%)] bg-[length:24px_24px] bg-[position:0_0,0_12px,12px_-12px,-12px_0px] text-sm text-slate-500";
-        preview.textContent = "转换成功后将在此显示";
-        sizeInfo.textContent = "等待转换";
-      }
-
-      function validateSvg(input) {
-        const raw = String(input || "").trim();
-
-        if (!raw) {
-          return { ok: false, error: "Please enter SVG 代码，内容不能为空。" };
-        }
-
-        if (raw.length > 1024 * 1024) {
-          return { ok: false, error: "SVG 内容过大，请控制在 1MB 以内后再转换。" };
-        }
-
-        if (!/^<svg[\s>]/i.test(raw)) {
-          return { ok: false, error: "格式不正确：SVG 代码必须以 <svg> 标签开头。" };
-        }
-
-        if (!/<\/svg>\s*$/i.test(raw)) {
-          return { ok: false, error: "格式不正确：缺少结束标签 </svg>。" };
-        }
-
-        let doc;
-        try {
-          doc = new DOMParser().parseFromString(raw, "image/svg+xml");
-        } catch (err) {
-          return { ok: false, error: "SVG 解析失败，请检查标签嵌套和特殊字符。" };
-        }
-
-        const parserError = doc.querySelector("parsererror");
-        if (parserError) {
-          const detail = parserError.textContent ? parserError.textContent.replace(/\s+/g, " ").slice(0, 160) : "";
-          return { ok: false, error: "SVG XML 语法错误。" + (detail ? " 详情：" + detail : "") };
-        }
-
-        const root = doc.documentElement;
-        if (!root || root.nodeName.toLowerCase() !== "svg") {
-          return { ok: false, error: "解析结果不是有效的 SVG 根元素。" };
-        }
-
-        const scripts = root.querySelectorAll("script");
-        if (scripts.length > 0) {
-          return { ok: false, error: "为安全起见，请移除 SVG 中的 <script> 标签后再转换。" };
-        }
-
-        let normalized = raw;
-        if (!/\sxmlns\s*=\s*["']http:\/\/www\.w3\.org\/2000\/svg["']/i.test(normalized)) {
-          normalized = normalized.replace(/^<svg\b/i, '<svg xmlns="http://www.w3.org/2000/svg"');
-        }
-
-        return { ok: true, svg: normalized };
-      }
-
-      function utf8ToBase64(str) {
-        const bytes = new TextEncoder().encode(str);
-        let binary = "";
-        const chunkSize = 0x8000;
-        for (let i = 0; i < bytes.length; i += chunkSize) {
-          const chunk = bytes.subarray(i, i + chunkSize);
-          binary += String.fromCharCode.apply(null, chunk);
-        }
-        return btoa(binary);
-      }
-
-      function convert() {
-        hideMessage();
-        resetOutput();
-
-        try {
-          const result = validateSvg(svgInput.value);
-          if (!result.ok) {
-            showMessage("error", result.error);
-            return;
-          }
-
-          const base64 = utf8ToBase64(result.svg);
-          const dataUri = `data:image/svg+xml;base64,${base64}`;
-          const css = `background-image: url("${dataUri}");`;
-
-          outputCss.value = css;
-          copyBtn.disabled = false;
-
-          preview.textContent = "";
-          preview.className = "h-48 rounded-xl bg-center bg-no-repeat";
-          preview.style.backgroundImage = `linear-gradient(45deg, rgba(255,255,255,.06) 25%, transparent 25%), linear-gradient(-45deg, rgba(255,255,255,.06) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, rgba(255,255,255,.06) 75%), linear-gradient(-45deg, transparent 75%, rgba(255,255,255,.06) 75%), url("${dataUri}")`;
-          preview.style.backgroundSize = "24px 24px, 24px 24px, 24px 24px, 24px 24px, contain";
-          preview.style.backgroundPosition = "0 0, 0 12px, 12px -12px, -12px 0, center";
-          preview.style.backgroundRepeat = "repeat, repeat, repeat, repeat, no-repeat";
-
-          const originalBytes = new TextEncoder().encode(result.svg).length;
-          const base64Bytes = base64.length;
-          sizeInfo.textContent = `SVG ${formatBytes(originalBytes)} / Base64 ${formatBytes(base64Bytes)}`;
-          showMessage("success", "转换成功！CSS background-image 代码已Generate。");
-        } catch (err) {
-          showMessage("error", "转换过程中发生异常，请检查输入内容后重试。");
-        }
-      }
-
-      function formatBytes(bytes) {
-        if (!Number.isFinite(bytes) || bytes < 0) return "0 B";
-        if (bytes < 1024) return `${bytes} B`;
-        if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-        return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
-      }
-
-      async function copyOutput() {
-        const value = outputCss.value;
-        if (!value) {
-          showMessage("error", "当前没有可Copy的转换结果。");
-          return;
-        }
-
-        try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(value);
-          } else {
-            outputCss.focus();
-            outputCss.select();
-            const success = document.execCommand("copy");
-            if (!success) throw new Error("copy failed");
-            window.getSelection().removeAllRanges();
-          }
-
-          const oldText = copyBtn.textContent;
-          copyBtn.textContent = "Copied";
-          showMessage("success", "Copied到剪贴板。");
-          setTimeout(() => {
-            copyBtn.textContent = oldText;
-          }, 1200);
-        } catch (err) {
-          showMessage("error", "Copy failed，请手动选中输出框内容后Copy。");
-        }
-      }
-
-      convertBtn.addEventListener("click", convert);
-
-      clearBtn.addEventListener("click", () => {
-        svgInput.value = "";
-        hideMessage();
-        resetOutput();
-        svgInput.focus();
-      });
-
-      sampleBtn.addEventListener("click", () => {
-        svgInput.value = sampleSvg;
-        hideMessage();
-        resetOutput();
-        svgInput.focus();
-      });
-
-      copyBtn.addEventListener("click", copyOutput);
-
-      svgInput.addEventListener("input", () => {
-        hideMessage();
-        if (!svgInput.value.trim()) {
-          resetOutput();
-        }
-      });
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      return localStorage.getItem("microToolsLanguage") || "zh";
     }
+
+    function setLanguage(lang) {
+      const nextLang = lang === "en" ? "en" : "zh";
+      localStorage.setItem("microToolsLanguage", nextLang);
+      applyLanguage(nextLang);
+    }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.title = dict.documentTitle;
+
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute("content", dict.metaDescription);
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (keywords) keywords.setAttribute("content", dict.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.textContent = dict[key];
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("placeholder", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("title", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("aria-label", dict[key]);
+      });
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "zh" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "en" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+      }
+
+      updateStats();
+      updateOutputStats();
+      setStatus(statusKey);
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function t(key, params = {}) {
+      const dict = I18N[currentLanguage] || I18N.zh;
+      let value = dict[key] || I18N.zh[key] || "";
+      Object.keys(params).forEach((name) => {
+        value = value.replaceAll(`{${name}}`, String(params[name]));
+      });
+      return value;
+    }
+
+    function setStatus(key) {
+      statusKey = key;
+      const status = document.getElementById("statusText");
+      if (status) status.textContent = t(key);
+    }
+
+    function updateStats() {
+      const input = document.getElementById("svgInput");
+      const stats = document.getElementById("inputStats");
+      if (!input || !stats) return;
+      stats.textContent = t("inputStats", { count: input.value.length });
+    }
+
+    function updateOutputStats() {
+      const output = document.getElementById("resultOutput");
+      const stats = document.getElementById("outputStats");
+      if (!output || !stats) return;
+      const bytes = new Blob([output.value]).size;
+      if (bytes >= 1024) {
+        stats.textContent = t("outputStatsKb", { kb: (bytes / 1024).toFixed(1) });
+      } else {
+        stats.textContent = t("outputStats", { bytes });
+      }
+    }
+
+    function svgToBase64(svgText) {
+      const bytes = new TextEncoder().encode(svgText);
+      let binary = "";
+      const chunkSize = 8192;
+      for (let i = 0; i < bytes.length; i += chunkSize) {
+        const chunk = bytes.subarray(i, i + chunkSize);
+        binary += String.fromCharCode.apply(null, chunk);
+      }
+      return btoa(binary);
+    }
+
+    function validateSvg(svgText) {
+      const trimmed = svgText.trim();
+      if (!trimmed) return { ok: false, key: "statusEmpty" };
+      if (!/<svg[\s>]/i.test(trimmed) || !/<\/svg\s*>/i.test(trimmed)) {
+        return { ok: false, key: "statusInvalid" };
+      }
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(trimmed, "image/svg+xml");
+      if (doc.querySelector("parsererror")) {
+        return { ok: false, key: "statusParseError" };
+      }
+      const root = doc.documentElement;
+      if (!root || root.nodeName.toLowerCase() !== "svg") {
+        return { ok: false, key: "statusInvalid" };
+      }
+      return { ok: true };
+    }
+
+    function buildCss(dataUri) {
+      const quoteSelect = document.getElementById("quoteSelect");
+      const outputMode = document.getElementById("outputMode");
+      const quoteMode = quoteSelect ? quoteSelect.value : "double";
+      const mode = outputMode ? outputMode.value : "css";
+      let wrapped = dataUri;
+      if (quoteMode === "double") wrapped = `"${dataUri}"`;
+      if (quoteMode === "single") wrapped = `'${dataUri}'`;
+      if (mode === "url") return dataUri;
+      return `background-image: url(${wrapped});`;
+    }
+
+    function convertSvg() {
+      const input = document.getElementById("svgInput");
+      const output = document.getElementById("resultOutput");
+      const preview = document.getElementById("previewBox");
+      const previewEmpty = document.getElementById("previewEmpty");
+      if (!input || !output || !preview || !previewEmpty) return;
+
+      const svgText = input.value.trim();
+      const validation = validateSvg(svgText);
+      if (!validation.ok) {
+        output.value = "";
+        lastDataUri = "";
+        preview.style.backgroundImage = "";
+        previewEmpty.classList.remove("hidden");
+        setStatus(validation.key);
+        updateOutputStats();
+        return;
+      }
+
+      const base64 = svgToBase64(svgText);
+      lastDataUri = `data:image/svg+xml;base64,${base64}`;
+      output.value = buildCss(lastDataUri);
+      preview.style.backgroundImage = `url("${lastDataUri}")`;
+      preview.style.backgroundSize = "contain";
+      previewEmpty.classList.add("hidden");
+      setStatus("statusConverted");
+      updateOutputStats();
+    }
+
+    async function copyResult() {
+      const output = document.getElementById("resultOutput");
+      if (!output || !output.value) {
+        setStatus("statusNoResult");
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(output.value);
+        setStatus("statusCopied");
+      } catch (error) {
+        output.focus();
+        output.select();
+        setStatus("statusCopyFailed");
+      }
+    }
+
+    function clearAll() {
+      const input = document.getElementById("svgInput");
+      const output = document.getElementById("resultOutput");
+      const preview = document.getElementById("previewBox");
+      const previewEmpty = document.getElementById("previewEmpty");
+      if (input) input.value = "";
+      if (output) output.value = "";
+      lastDataUri = "";
+      if (preview) preview.style.backgroundImage = "";
+      if (previewEmpty) previewEmpty.classList.remove("hidden");
+      updateStats();
+      updateOutputStats();
+      setStatus("statusCleared");
+    }
+
+    function loadSample() {
+      const input = document.getElementById("svgInput");
+      if (!input) return;
+      input.value = SAMPLE_SVG;
+      updateStats();
+      convertSvg();
+      setStatus("statusSample");
+    }
+
+    function downloadCss() {
+      const output = document.getElementById("resultOutput");
+      if (!output || !output.value) {
+        setStatus("statusNoResult");
+        return;
+      }
+      const cssText = output.value.startsWith("background-image")
+        ? `.svg-background {\n  ${output.value}\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: contain;\n}\n`
+        : output.value;
+      const blob = new Blob([cssText], { type: "text/css;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "svg-background.css";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      setStatus("statusDownloaded");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+
+      document.getElementById("svgInput")?.addEventListener("input", updateStats);
+      document.getElementById("convertBtn")?.addEventListener("click", convertSvg);
+      document.getElementById("sampleBtn")?.addEventListener("click", loadSample);
+      document.getElementById("clearBtn")?.addEventListener("click", clearAll);
+      document.getElementById("copyBtn")?.addEventListener("click", copyResult);
+      document.getElementById("downloadBtn")?.addEventListener("click", downloadCss);
+      document.getElementById("quoteSelect")?.addEventListener("change", () => {
+        if (lastDataUri) {
+          const output = document.getElementById("resultOutput");
+          if (output) output.value = buildCss(lastDataUri);
+          updateOutputStats();
+          setStatus("statusConverted");
+        }
+      });
+      document.getElementById("outputMode")?.addEventListener("change", () => {
+        if (lastDataUri) {
+          const output = document.getElementById("resultOutput");
+          if (output) output.value = buildCss(lastDataUri);
+          updateOutputStats();
+          setStatus("statusConverted");
+        }
+      });
+
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="../sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

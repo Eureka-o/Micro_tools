@@ -1,569 +1,832 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>cron-generator - CRON 表达式Generate与解析器</title>
-  <meta name="description" content="CRON 表达式Generate与解析器。提供UI组件（下拉框/单选按钮）来Generate复杂的CRON语法，并用Chinese解释下5次执行时间。">
-  <meta name="keywords" content="cron-generator, CRON表达式Generate器, CRON解析器, 在线Cron工具, 定时任务表达式, Linux Cron, 未来执行时间, ChineseCron解释">
-  <link rel="icon" type="image/png" href="../assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
-  <link rel="canonical" href="https://mymicrotools.xyz/en/cron-generator.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRON 表达式生成器 - Micro Tools Matrix</title>
+  <meta name="description" content="在 Micro Tools Matrix 使用免费的 CRON 表达式生成与解析器，通过浏览器本地处理生成复杂 CRON 语法，并解释未来 5 次执行时间，无需上传。">
+  <meta name="keywords" content="CRON 表达式生成器, CRON 解析器, 定时任务, 浏览器本地处理, 无需上传, Micro Tools Matrix">
+  <link rel="canonical" href="https://mymicrotools.xyz/cron-generator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/cron-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/cron-generator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/cron-generator.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/en/cron-generator.html">
-  <meta property="og:title" content="cron-generator - CRON 表达式Generate与解析器">
-  <meta property="og:description" content="CRON 表达式Generate与解析器。提供UI组件（下拉框/单选按钮）来Generate复杂的CRON语法，并用Chinese解释下5次执行时间。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="cron-generator - CRON 表达式Generate与解析器">
-  <meta name="twitter:description" content="CRON 表达式Generate与解析器。提供UI组件（下拉框/单选按钮）来Generate复杂的CRON语法，并用Chinese解释下5次执行时间。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="../style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "CRON Expression Generator",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "description": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">CRON 表达式生成器</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="../cron-generator.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./cron-generator.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline"></span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
+        </div>
       </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
-    <div class="absolute inset-0 opacity-30">
-      <div class="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-cyan-500 blur-3xl"></div>
-      <div class="absolute left-10 top-24 h-40 w-40 rounded-full bg-blue-600 blur-3xl"></div>
-    </div>
-    <div class="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-      <div class="max-w-3xl">
-        <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-1 text-sm text-cyan-200">零依赖 · Chinese解析 · 未来执行时间预测</p>
-        <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-6xl">CRON 表达式Generate与解析器</h1>
-        <p class="mt-5 text-lg leading-8 text-slate-700 dark:text-slate-300">CRON 表达式Generate与解析器。通过可视化控件快速Generate定时任务语法，或直接粘贴表达式进行Chinese解释，并计算未来 5 次执行时间。</p>
-      </div>
-    </div>
+    </nav>
   </header>
 
-  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-2">
-      <div class="rounded-3xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
-        <div class="mb-5 flex items-center justify-between gap-3">
-          <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输入区</h2>
-            <p class="mt-1 text-sm text-slate-400">选择模板或使用高级字段Generate 5 位 Unix CRON 表达式：分钟 小时 日期 月份 星期</p>
-          </div>
-          <span class="rounded-xl bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-200">UTC? 否，本地时间</span>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">CRON 表达式生成器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中生成、解析并预览 CRON 表达式。所有计算都在浏览器本地完成，无需上传任务规则。</p>
         </div>
-
-        <div id="errorBox" class="mb-4 hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm text-red-200"></div>
-
-        <div class="mb-5 rounded-2xl bg-slate-100 dark:bg-slate-800/80 p-4">
-          <label for="modeSelect" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Generate模式</label>
-          <select id="modeSelect" class="w-full rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20">
-            <option value="preset">常用模板</option>
-            <option value="advanced">高级字段构建</option>
-            <option value="manual">手动输入 / 解析</option>
-          </select>
-        </div>
-
-        <div id="presetPanel" class="space-y-4">
-          <div>
-            <label for="presetType" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">选择定时类型</label>
-            <select id="presetType" class="w-full rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20">
-              <option value="everyMinute">每分钟执行</option>
-              <option value="everyNMinutes">每 N 分钟执行</option>
-              <option value="hourly">每小时指定分钟执行</option>
-              <option value="daily">每天指定时间执行</option>
-              <option value="weekly">每周指定星期和时间执行</option>
-              <option value="monthly">每月指定日期和时间执行</option>
-              <option value="workday">工作日指定时间执行</option>
-            </select>
-          </div>
-
-          <div id="presetOptions" class="grid gap-4 sm:grid-cols-2"></div>
-        </div>
-
-        <div id="advancedPanel" class="hidden space-y-4">
-          <div class="grid gap-4">
-            <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/70 p-4">
-              <h3 class="mb-3 font-bold text-cyan-100">分钟字段</h3>
-              <div class="grid gap-3 sm:grid-cols-3">
-                <select data-field="minute" data-role="mode" class="field-mode rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2">
-                  <option value="*">每分钟</option><option value="specific">指定</option><option value="step">间隔</option><option value="range">范围</option>
-                </select>
-                <select data-field="minute" data-role="a" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
-                <select data-field="minute" data-role="b" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
-              </div>
-            </div>
-
-            <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/70 p-4">
-              <h3 class="mb-3 font-bold text-cyan-100">小时字段</h3>
-              <div class="grid gap-3 sm:grid-cols-3">
-                <select data-field="hour" data-role="mode" class="field-mode rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2">
-                  <option value="*">每小时</option><option value="specific">指定</option><option value="step">间隔</option><option value="range">范围</option>
-                </select>
-                <select data-field="hour" data-role="a" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
-                <select data-field="hour" data-role="b" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
-              </div>
-            </div>
-
-            <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/70 p-4">
-              <h3 class="mb-3 font-bold text-cyan-100">日期字段</h3>
-              <div class="grid gap-3 sm:grid-cols-3">
-                <select data-field="dom" data-role="mode" class="field-mode rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2">
-                  <option value="*">每天</option><option value="specific">指定日期</option><option value="step">间隔</option><option value="range">范围</option>
-                </select>
-                <select data-field="dom" data-role="a" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
-                <select data-field="dom" data-role="b" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
-              </div>
-            </div>
-
-            <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/70 p-4">
-              <h3 class="mb-3 font-bold text-cyan-100">月份字段</h3>
-              <div class="grid gap-3 sm:grid-cols-3">
-                <select data-field="month" data-role="mode" class="field-mode rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2">
-                  <option value="*">每月</option><option value="specific">指定月份</option><option value="step">间隔</option><option value="range">范围</option>
-                </select>
-                <select data-field="month" data-role="a" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
-                <select data-field="month" data-role="b" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
-              </div>
-            </div>
-
-            <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/70 p-4">
-              <h3 class="mb-3 font-bold text-cyan-100">星期字段</h3>
-              <div class="grid gap-3 sm:grid-cols-3">
-                <select data-field="dow" data-role="mode" class="field-mode rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2">
-                  <option value="*">每周任意日</option><option value="specific">指定星期</option><option value="step">间隔</option><option value="range">范围</option>
-                </select>
-                <select data-field="dow" data-role="a" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
-                <select data-field="dow" data-role="b" class="rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-3 py-2"></select>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="manualPanel" class="hidden">
-          <label for="manualCron" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">CRON 表达式</label>
-          <input id="manualCron" type="text" value="*/5 * * * *" class="w-full rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-4 py-3 font-mono text-cyan-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20" placeholder="例如：*/5 * * * *" />
-          <p class="mt-2 text-xs text-slate-400">支持 *、?、逗号列表、范围、步长，例如：0 9-18/2 * * 1-5</p>
-        </div>
-
-        <div class="mt-5 rounded-2xl border border-cyan-400/20 bg-cyan-400/5 p-4">
-          <label for="cronOutput" class="mb-2 block text-sm font-semibold text-cyan-100">当前表达式</label>
-          <div class="flex flex-col gap-3 sm:flex-row">
-            <input id="cronOutput" type="text" class="flex-1 rounded-xl border border-cyan-400/30 bg-white dark:bg-slate-950 px-4 py-3 font-mono text-lg font-bold text-cyan-200 outline-none focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300/20" />
-            <button id="copyBtn" class="rounded-xl bg-slate-700 px-5 py-3 font-bold text-gray-900 dark:text-white transition hover:bg-slate-600 active:scale-95">Copy</button>
-            <button id="analyzeBtn" class="rounded-xl bg-cyan-400 px-5 py-3 font-black text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-95">解析</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/30 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
-        <div class="mb-5">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输出区</h2>
-          <p class="mt-1 text-sm text-cyan-100/70">Chinese解释与未来 5 次本地执行时间</p>
-        </div>
-
-        <div class="space-y-4">
-          <div class="rounded-2xl border border-cyan-300/20 bg-white dark:bg-slate-950/70 p-5">
-            <h3 class="mb-2 text-sm font-bold uppercase tracking-widest text-cyan-300">Chinese解释</h3>
-            <p id="explainText" class="text-lg leading-8 text-slate-900 dark:text-slate-100">等待解析...</p>
-          </div>
-
-          <div class="rounded-2xl border border-cyan-300/20 bg-white dark:bg-slate-950/70 p-5">
-            <h3 class="mb-4 text-sm font-bold uppercase tracking-widest text-cyan-300">未来 5 次执行时间</h3>
-            <ol id="nextList" class="space-y-3"></ol>
-          </div>
-
-          <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900/70 p-5">
-            <h3 class="mb-3 text-sm font-bold uppercase tracking-widest text-slate-700 dark:text-slate-300">字段说明</h3>
-            <div class="grid gap-2 text-sm text-slate-700 dark:text-slate-300 sm:grid-cols-2">
-              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-2"><b class="text-gray-900 dark:text-white">分钟</b>：0-59</div>
-              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-2"><b class="text-gray-900 dark:text-white">小时</b>：0-23</div>
-              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-2"><b class="text-gray-900 dark:text-white">日期</b>：1-31</div>
-              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-2"><b class="text-gray-900 dark:text-white">月份</b>：1-12</div>
-              <div class="rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-2 sm:col-span-2"><b class="text-gray-900 dark:text-white">星期</b>：0-7，0 和 7 均代表星期日</div>
-            </div>
-          </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 CRON 表达式Generate与解析器</h2>
-      <p>
-        cron-generator 是一款面向开发者、运维工程师和自动化任务配置人员的在线 CRON 表达式Generate器。传统定时任务语法虽然强大，但分钟、小时、日期、月份、星期之间的组合规则容易出错，尤其在配置“每 5 分钟执行一次”“每个工作日上午 9 点运行”“每月 1 号凌晨执行”等场景时，手写表达式常常需要反复查表。本工具通过Chinese可视化控件Generate复杂 CRON 语法，同时提供 CRON 表达式解析器能力，可将输入内容转换为自然语言说明，并预测未来 5 次执行时间，帮助你在上线前快速校验任务计划。使用时只需选择常用模板、高级字段构建或手动输入表达式，点击解析即可得到清晰结果。无论是 Linux Cron 定时任务、后台调度系统还是自动化脚本配置，这个Chinese在线 Cron 工具都能显著降低配置错误率。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">生成规则</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label for="presetSelect" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="presetLabel">常用场景</label>
+            <select id="presetSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-aria-label="presetLabel">
+              <option value="custom" data-i18n="presetCustom">自定义</option>
+              <option value="every5" data-i18n="presetEvery5">每 5 分钟</option>
+              <option value="hourly" data-i18n="presetHourly">每小时整点</option>
+              <option value="workday9" data-i18n="presetWorkday9">工作日上午 9 点</option>
+              <option value="monthlyFirst" data-i18n="presetMonthlyFirst">每月 1 日 00:00</option>
+              <option value="weekendNoon" data-i18n="presetWeekendNoon">周末中午 12 点</option>
+            </select>
+          </div>
+
+          <div class="grid gap-3 sm:grid-cols-2">
+            <div>
+              <label for="minuteMode" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="minuteModeLabel">分钟</label>
+              <select id="minuteMode" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+                <option value="any" data-i18n="modeAny">每一个</option>
+                <option value="every" data-i18n="modeEvery">每隔</option>
+                <option value="specific" data-i18n="modeSpecific">指定值</option>
+              </select>
+            </div>
+            <div>
+              <label for="minuteValue" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="minuteValueLabel">分钟值</label>
+              <input id="minuteValue" type="text" inputmode="numeric" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" placeholder="例如 0,15,30 或 10" data-i18n-placeholder="minutePlaceholder">
+            </div>
+          </div>
+
+          <div class="grid gap-3 sm:grid-cols-2">
+            <div>
+              <label for="hourMode" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="hourModeLabel">小时</label>
+              <select id="hourMode" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+                <option value="any" data-i18n="modeAny">每一个</option>
+                <option value="every" data-i18n="modeEvery">每隔</option>
+                <option value="specific" data-i18n="modeSpecific">指定值</option>
+              </select>
+            </div>
+            <div>
+              <label for="hourValue" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="hourValueLabel">小时值</label>
+              <input id="hourValue" type="text" inputmode="numeric" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" placeholder="例如 9,18 或 2" data-i18n-placeholder="hourPlaceholder">
+            </div>
+          </div>
+
+          <div class="grid gap-3 sm:grid-cols-2">
+            <div>
+              <label for="domMode" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="domModeLabel">日期</label>
+              <select id="domMode" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+                <option value="any" data-i18n="modeAny">每一个</option>
+                <option value="every" data-i18n="modeEvery">每隔</option>
+                <option value="specific" data-i18n="modeSpecific">指定值</option>
+              </select>
+            </div>
+            <div>
+              <label for="domValue" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="domValueLabel">日期值</label>
+              <input id="domValue" type="text" inputmode="numeric" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" placeholder="例如 1,15 或 7" data-i18n-placeholder="domPlaceholder">
+            </div>
+          </div>
+
+          <div class="grid gap-3 sm:grid-cols-2">
+            <div>
+              <label for="monthMode" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="monthModeLabel">月份</label>
+              <select id="monthMode" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+                <option value="any" data-i18n="modeAny">每一个</option>
+                <option value="every" data-i18n="modeEvery">每隔</option>
+                <option value="specific" data-i18n="modeSpecific">指定值</option>
+              </select>
+            </div>
+            <div>
+              <label for="monthValue" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="monthValueLabel">月份值</label>
+              <input id="monthValue" type="text" inputmode="numeric" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" placeholder="例如 1,6,12 或 3" data-i18n-placeholder="monthPlaceholder">
+            </div>
+          </div>
+
+          <div class="grid gap-3 sm:grid-cols-2">
+            <div>
+              <label for="dowMode" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="dowModeLabel">星期</label>
+              <select id="dowMode" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+                <option value="any" data-i18n="modeAny">每一个</option>
+                <option value="every" data-i18n="modeEvery">每隔</option>
+                <option value="specific" data-i18n="modeSpecific">指定值</option>
+              </select>
+            </div>
+            <div>
+              <label for="dowValue" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="dowValueLabel">星期值</label>
+              <input id="dowValue" type="text" inputmode="numeric" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" placeholder="0=周日，1=周一，6=周六" data-i18n-placeholder="dowPlaceholder">
+            </div>
+          </div>
+
+          <div>
+            <label for="cronInput" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="cronInputLabel">手动输入或编辑 CRON 表达式</label>
+            <input id="cronInput" type="text" spellcheck="false" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" placeholder="*/5 * * * *" data-i18n-placeholder="cronPlaceholder">
+            <p class="mt-2 text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="cronHint">支持标准 5 段格式：分钟 小时 日期 月份 星期。</p>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="generateBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">生成并解析</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">填入示例</button>
+          <button id="resetBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">重置</button>
+        </div>
+
+        <p id="inputStatus" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">解析结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+        </div>
+
+        <div class="space-y-4">
+          <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <div class="mb-2 flex items-center justify-between gap-3">
+              <h2 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="expressionTitle">表达式</h2>
+              <span class="rounded-full border border-gray-200 bg-white px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500">CRON</span>
+            </div>
+            <code id="cronOutput" class="block min-h-11 break-all rounded-2xl border border-gray-200 bg-white px-4 py-3 font-mono text-sm text-slate-900 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">*/5 * * * *</code>
+          </div>
+
+          <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <h2 class="mb-3 text-sm font-bold text-slate-950 dark:text-white" data-i18n="humanTitle">规则说明</h2>
+            <p id="humanDescription" class="min-h-6 text-sm leading-7 text-slate-600 dark:text-slate-400">每 5 分钟执行一次。</p>
+          </div>
+
+          <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <h2 class="mb-3 text-sm font-bold text-slate-950 dark:text-white" data-i18n="nextTitle">未来 5 次执行时间</h2>
+            <ol id="nextRuns" class="space-y-2 text-sm leading-6 text-slate-700 dark:text-slate-300">
+              <li class="rounded-2xl border border-gray-200 bg-white px-4 py-3 dark:border-white/10 dark:bg-white/[0.04]">等待解析。</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制表达式</button>
+          <button id="copyTimesBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="copyTimesAction">复制执行时间</button>
+        </div>
+
+        <p id="outputStatus" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite"></p>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">CRON 表达式生成器是 Micro Tools Matrix 为开发者、运维工程师和自动化工作流准备的免费在线开发者工具。你可以通过下拉框和输入框快速组合分钟、小时、日期、月份与星期规则，也可以直接粘贴现有表达式进行解析。本页面会在浏览器本地处理规则，给出清晰的中文说明，并计算未来 5 次执行时间，整个过程无需上传、无需登录，也不会把任务计划发送到服务器。它适合检查 Linux crontab、CI 定时任务、数据同步、监控巡检和后台脚本调度等场景，帮助你在发布前降低时间规则配置错误。</article>
   </main>
 
-  <footer class="mx-auto max-w-7xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-    <p>cron-generator · 本地浏览器计算，不上传任何表达式</p>
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理。</footer>
+
+  <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md">
+    <div class="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
+      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor">×</button>
+      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">赞赏支持</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">保持工具免费、快速且无广告。</p>
+      <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="buyCoffee">Buy Me a Coffee</a>
+    </div>
+  </div>
 
   <script>
-    (() => {
-      const $ = (id) => document.getElementById(id);
-      const modeSelect = $("modeSelect");
-      const presetType = $("presetType");
-      const presetOptions = $("presetOptions");
-      const presetPanel = $("presetPanel");
-      const advancedPanel = $("advancedPanel");
-      const manualPanel = $("manualPanel");
-      const manualCron = $("manualCron");
-      const cronOutput = $("cronOutput");
-      const errorBox = $("errorBox");
-      const explainText = $("explainText");
-      const nextList = $("nextList");
-      const analyzeBtn = $("analyzeBtn");
-      const copyBtn = $("copyBtn");
-
-      const zhWeek = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
-      const fieldRanges = {
-        minute: [0, 59],
-        hour: [0, 23],
-        dom: [1, 31],
-        month: [1, 12],
-        dow: [0, 7]
-      };
-
-      const aliases = {
-        JAN: 1, FEB: 2, MAR: 3, APR: 4, MAY: 5, JUN: 6, JUL: 7, AUG: 8, SEP: 9, OCT: 10, NOV: 11, DEC: 12,
-        SUN: 0, MON: 1, TUE: 2, WED: 3, THU: 4, FRI: 5, SAT: 6
-      };
-
-      function showError(message) {
-        errorBox.textContent = message;
-        errorBox.classList.remove("hidden");
+    const I18N = {
+      zh: {
+        documentTitle: "CRON 表达式生成器 - Micro Tools Matrix",
+        metaDescription: "在 Micro Tools Matrix 使用免费的 CRON 表达式生成与解析器，通过浏览器本地处理生成复杂 CRON 语法，并解释未来 5 次执行时间，无需上传。",
+        metaKeywords: "CRON 表达式生成器, CRON 解析器, 定时任务, 浏览器本地处理, 无需上传, Micro Tools Matrix",
+        toolName: "CRON 表达式生成器",
+        sponsor: "赞赏",
+        closeSponsor: "关闭赞赏窗口",
+        sponsorTitle: "赞赏支持",
+        sponsorSubtitle: "保持工具免费、快速且无广告。",
+        buyCoffee: "Buy Me a Coffee",
+        eyebrow: "浏览器本地处理",
+        h1: "CRON 表达式生成器",
+        intro: "在 Micro Tools Matrix 中生成、解析并预览 CRON 表达式。所有计算都在浏览器本地完成，无需上传任务规则。",
+        localBadge: "本地运行",
+        inputTitle: "生成规则",
+        inputBadge: "输入",
+        outputTitle: "解析结果",
+        outputBadge: "输出",
+        presetLabel: "常用场景",
+        presetCustom: "自定义",
+        presetEvery5: "每 5 分钟",
+        presetHourly: "每小时整点",
+        presetWorkday9: "工作日上午 9 点",
+        presetMonthlyFirst: "每月 1 日 00:00",
+        presetWeekendNoon: "周末中午 12 点",
+        minuteModeLabel: "分钟",
+        minuteValueLabel: "分钟值",
+        hourModeLabel: "小时",
+        hourValueLabel: "小时值",
+        domModeLabel: "日期",
+        domValueLabel: "日期值",
+        monthModeLabel: "月份",
+        monthValueLabel: "月份值",
+        dowModeLabel: "星期",
+        dowValueLabel: "星期值",
+        modeAny: "每一个",
+        modeEvery: "每隔",
+        modeSpecific: "指定值",
+        minutePlaceholder: "例如 0,15,30 或 10",
+        hourPlaceholder: "例如 9,18 或 2",
+        domPlaceholder: "例如 1,15 或 7",
+        monthPlaceholder: "例如 1,6,12 或 3",
+        dowPlaceholder: "0=周日，1=周一，6=周六",
+        cronInputLabel: "手动输入或编辑 CRON 表达式",
+        cronPlaceholder: "*/5 * * * *",
+        cronHint: "支持标准 5 段格式：分钟 小时 日期 月份 星期。",
+        primaryAction: "生成并解析",
+        sampleAction: "填入示例",
+        secondaryAction: "重置",
+        expressionTitle: "表达式",
+        humanTitle: "规则说明",
+        nextTitle: "未来 5 次执行时间",
+        copyAction: "复制表达式",
+        copyTimesAction: "复制执行时间",
+        waiting: "等待解析。",
+        generated: "已生成并解析表达式。",
+        parsedManual: "已解析手动输入的表达式。",
+        resetDone: "已重置为每 5 分钟执行。",
+        sampleDone: "已填入工作日早上 9:30 的示例。",
+        copied: "已复制到剪贴板。",
+        copyFailed: "复制失败，请手动选择内容。",
+        invalidParts: "请输入 5 段 CRON 表达式，格式为：分钟 小时 日期 月份 星期。",
+        invalidField: "字段“{field}”包含无效值：{value}。",
+        noFutureRuns: "在可检查范围内没有找到未来执行时间，请检查表达式是否过于受限。",
+        minuteField: "分钟",
+        hourField: "小时",
+        domField: "日期",
+        monthField: "月份",
+        dowField: "星期",
+        everyUnit: "每 {step} {unit}",
+        anyUnit: "每{unit}",
+        specificUnit: "{unit}为 {values}",
+        minuteUnit: "分钟",
+        hourUnit: "小时",
+        dayUnit: "天",
+        monthUnit: "个月",
+        weekUnit: "天",
+        humanPrefix: "当 ",
+        humanJoin: "，",
+        humanSuffix: " 时执行。",
+        humanEveryMinute: "每分钟执行一次。",
+        domDowNote: "日期与星期同时受限时，按常见 CRON 语义满足任一条件即可执行。",
+        dayNames: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
+        timeZoneLabel: "本地时区",
+        seoArticle: "CRON 表达式生成器是 Micro Tools Matrix 为开发者、运维工程师和自动化工作流准备的免费在线开发者工具。你可以通过下拉框和输入框快速组合分钟、小时、日期、月份与星期规则，也可以直接粘贴现有表达式进行解析。本页面会在浏览器本地处理规则，给出清晰的中文说明，并计算未来 5 次执行时间，整个过程无需上传、无需登录，也不会把任务计划发送到服务器。它适合检查 Linux crontab、CI 定时任务、数据同步、监控巡检和后台脚本调度等场景，帮助你在发布前降低时间规则配置错误。",
+        footer: "Micro Tools Matrix - 浏览器本地处理。",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统"
+      },
+      en: {
+        documentTitle: "CRON Expression Generator - Micro Tools Matrix",
+        metaDescription: "Use the free CRON expression generator and parser from Micro Tools Matrix with browser-local processing, advanced CRON syntax, and the next 5 run times without uploads.",
+        metaKeywords: "CRON expression generator, CRON parser, scheduled tasks, browser-local processing, free online developer tool, Micro Tools Matrix",
+        toolName: "CRON Expression Generator",
+        sponsor: "Sponsor",
+        closeSponsor: "Close sponsor dialog",
+        sponsorTitle: "Sponsor Support",
+        sponsorSubtitle: "Keep tools free, fast, and ad-free.",
+        buyCoffee: "Buy Me a Coffee",
+        eyebrow: "Browser-local processing",
+        h1: "CRON Expression Generator",
+        intro: "Generate, parse, and preview CRON expressions in Micro Tools Matrix. All calculations run locally in your browser, with no upload of schedule rules.",
+        localBadge: "Local",
+        inputTitle: "Schedule Rules",
+        inputBadge: "INPUT",
+        outputTitle: "Parsed Result",
+        outputBadge: "OUTPUT",
+        presetLabel: "Common presets",
+        presetCustom: "Custom",
+        presetEvery5: "Every 5 minutes",
+        presetHourly: "At the top of every hour",
+        presetWorkday9: "Weekdays at 9 AM",
+        presetMonthlyFirst: "Monthly on day 1 at 00:00",
+        presetWeekendNoon: "Weekends at noon",
+        minuteModeLabel: "Minute",
+        minuteValueLabel: "Minute value",
+        hourModeLabel: "Hour",
+        hourValueLabel: "Hour value",
+        domModeLabel: "Day of month",
+        domValueLabel: "Day value",
+        monthModeLabel: "Month",
+        monthValueLabel: "Month value",
+        dowModeLabel: "Day of week",
+        dowValueLabel: "Weekday value",
+        modeAny: "Every",
+        modeEvery: "Every interval",
+        modeSpecific: "Specific value",
+        minutePlaceholder: "For example 0,15,30 or 10",
+        hourPlaceholder: "For example 9,18 or 2",
+        domPlaceholder: "For example 1,15 or 7",
+        monthPlaceholder: "For example 1,6,12 or 3",
+        dowPlaceholder: "0=Sunday, 1=Monday, 6=Saturday",
+        cronInputLabel: "Enter or edit a CRON expression",
+        cronPlaceholder: "*/5 * * * *",
+        cronHint: "Supports the standard 5-part format: minute hour day-of-month month day-of-week.",
+        primaryAction: "Generate and Parse",
+        sampleAction: "Use Sample",
+        secondaryAction: "Reset",
+        expressionTitle: "Expression",
+        humanTitle: "Rule explanation",
+        nextTitle: "Next 5 run times",
+        copyAction: "Copy Expression",
+        copyTimesAction: "Copy Run Times",
+        waiting: "Waiting for parsing.",
+        generated: "Expression generated and parsed.",
+        parsedManual: "Manual expression parsed.",
+        resetDone: "Reset to every 5 minutes.",
+        sampleDone: "Sample set to weekdays at 9:30 AM.",
+        copied: "Copied to clipboard.",
+        copyFailed: "Copy failed. Please select the content manually.",
+        invalidParts: "Enter a 5-part CRON expression: minute hour day-of-month month day-of-week.",
+        invalidField: "The field “{field}” contains an invalid value: {value}.",
+        noFutureRuns: "No future run time was found in the search range. Check whether the expression is too restrictive.",
+        minuteField: "minute",
+        hourField: "hour",
+        domField: "day of month",
+        monthField: "month",
+        dowField: "day of week",
+        everyUnit: "every {step} {unit}",
+        anyUnit: "every {unit}",
+        specificUnit: "{unit} is {values}",
+        minuteUnit: "minute",
+        hourUnit: "hour",
+        dayUnit: "day",
+        monthUnit: "month",
+        weekUnit: "weekday",
+        humanPrefix: "Runs when ",
+        humanJoin: ", ",
+        humanSuffix: ".",
+        humanEveryMinute: "Runs every minute.",
+        domDowNote: "When both day-of-month and day-of-week are restricted, common CRON semantics run when either condition matches.",
+        dayNames: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        timeZoneLabel: "Local time zone",
+        seoArticle: "The CRON Expression Generator in Micro Tools Matrix is a free online developer tool for engineers who need reliable scheduled task rules. It combines a simple UI for minutes, hours, day of month, month, and day of week with a direct parser for existing expressions, so you can build advanced CRON syntax without memorizing every field. The tool uses browser-local processing: your schedule, automation notes, and pasted expressions stay in memory on the page and are not uploaded. It also explains the rule in plain language and calculates the next five run times using your local time zone, making it useful for checking Linux crontab entries, CI jobs, data synchronization, monitoring scripts, and background maintenance tasks. Because Micro Tools Matrix is designed as a fast privacy-minded toolkit, the page needs no account, no backend call, and no external runtime library. Use it before deploying a schedule to reduce mistakes around weekdays, monthly triggers, and interval-based execution.",
+        footer: "Micro Tools Matrix - browser-local processing.",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System"
       }
+    };
 
-      function clearError() {
-        errorBox.textContent = "";
-        errorBox.classList.add("hidden");
-      }
+    let currentLanguage = "zh";
+    let lastRuns = [];
 
-      function pad(n) {
-        return String(n).padStart(2, "0");
-      }
+    const fieldConfig = {
+      minute: { min: 0, max: 59, unitKey: "minuteUnit", fieldKey: "minuteField" },
+      hour: { min: 0, max: 23, unitKey: "hourUnit", fieldKey: "hourField" },
+      dom: { min: 1, max: 31, unitKey: "dayUnit", fieldKey: "domField" },
+      month: { min: 1, max: 12, unitKey: "monthUnit", fieldKey: "monthField" },
+      dow: { min: 0, max: 7, unitKey: "weekUnit", fieldKey: "dowField" }
+    };
 
-      function formatDate(d) {
-        return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}（${zhWeek[d.getDay()]}）`;
-      }
+    const presets = {
+      custom: null,
+      every5: "*/5 * * * *",
+      hourly: "0 * * * *",
+      workday9: "0 9 * * 1-5",
+      monthlyFirst: "0 0 1 * *",
+      weekendNoon: "0 12 * * 0,6"
+    };
 
-      function makeSelectHtml(id, label, min, max, value, suffix = "") {
-        let html = `<label class="block"><span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">${label}</span><select id="${id}" class="w-full rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20">`;
-        for (let i = min; i <= max; i++) {
-          html += `<option value="${i}" ${i === value ? "selected" : ""}>${i}${suffix}</option>`;
-        }
-        html += `</select></label>`;
-        return html;
-      }
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      return localStorage.getItem("microToolsLanguage") || "zh";
+    }
 
-      function makeWeekSelect(id, value) {
-        let html = `<label class="block"><span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">星期</span><select id="${id}" class="w-full rounded-xl border border-slate-600 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20">`;
-        for (let i = 0; i <= 6; i++) html += `<option value="${i}" ${i === value ? "selected" : ""}>${zhWeek[i]}</option>`;
-        html += `</select></label>`;
-        return html;
-      }
-
-      function renderPresetOptions() {
-        const t = presetType.value;
-        let html = "";
-        if (t === "everyNMinutes") html = makeSelectHtml("optN", "间隔分钟数", 1, 59, 5, " 分钟");
-        if (t === "hourly") html = makeSelectHtml("optMinute", "在每小时的第几分钟", 0, 59, 0, " 分");
-        if (t === "daily") html = makeSelectHtml("optHour", "小时", 0, 23, 9, " 点") + makeSelectHtml("optMinute", "分钟", 0, 59, 0, " 分");
-        if (t === "weekly") html = makeWeekSelect("optDow", 1) + makeSelectHtml("optHour", "小时", 0, 23, 9, " 点") + makeSelectHtml("optMinute", "分钟", 0, 59, 0, " 分");
-        if (t === "monthly") html = makeSelectHtml("optDom", "每月日期", 1, 31, 1, " 号") + makeSelectHtml("optHour", "小时", 0, 23, 0, " 点") + makeSelectHtml("optMinute", "分钟", 0, 59, 0, " 分");
-        if (t === "workday") html = makeSelectHtml("optHour", "小时", 0, 23, 9, " 点") + makeSelectHtml("optMinute", "分钟", 0, 59, 0, " 分");
-        presetOptions.innerHTML = html;
-        presetOptions.querySelectorAll("select").forEach(el => el.addEventListener("change", updateFromUI));
-      }
-
-      function getPresetCron() {
-        const t = presetType.value;
-        if (t === "everyMinute") return "* * * * *";
-        if (t === "everyNMinutes") return `*/${$("optN").value} * * * *`;
-        if (t === "hourly") return `${$("optMinute").value} * * * *`;
-        if (t === "daily") return `${$("optMinute").value} ${$("optHour").value} * * *`;
-        if (t === "weekly") return `${$("optMinute").value} ${$("optHour").value} * * ${$("optDow").value}`;
-        if (t === "monthly") return `${$("optMinute").value} ${$("optHour").value} ${$("optDom").value} * *`;
-        if (t === "workday") return `${$("optMinute").value} ${$("optHour").value} * * 1-5`;
-        return "* * * * *";
-      }
-
-      function initAdvancedSelects() {
-        document.querySelectorAll("[data-field][data-role='a'], [data-field][data-role='b']").forEach(sel => {
-          const field = sel.dataset.field;
-          const [min, max] = fieldRanges[field];
-          sel.innerHTML = "";
-          for (let i = min; i <= max; i++) {
-            const label = field === "dow" ? `${i} ${i === 7 ? "星期日" : zhWeek[i]}` : i;
-            sel.add(new Option(label, i));
-          }
-          if (sel.dataset.role === "b") {
-            sel.value = field === "minute" ? 5 : field === "hour" ? 2 : field === "dom" ? 7 : field === "month" ? 3 : 5;
-          }
-        });
-        document.querySelectorAll("[data-field]").forEach(el => el.addEventListener("change", updateFromUI));
-      }
-
-      function getAdvancedCron() {
-        const order = ["minute", "hour", "dom", "month", "dow"];
-        return order.map(field => {
-          const mode = document.querySelector(`[data-field="${field}"][data-role="mode"]`).value;
-          const a = document.querySelector(`[data-field="${field}"][data-role="a"]`).value;
-          const b = document.querySelector(`[data-field="${field}"][data-role="b"]`).value;
-          if (mode === "*") return "*";
-          if (mode === "specific") return a;
-          if (mode === "step") return `*/${Math.max(1, Number(b))}`;
-          if (mode === "range") return `${Math.min(Number(a), Number(b))}-${Math.max(Number(a), Number(b))}`;
-          return "*";
-        }).join(" ");
-      }
-
-      function updatePanels() {
-        const mode = modeSelect.value;
-        presetPanel.classList.toggle("hidden", mode !== "preset");
-        advancedPanel.classList.toggle("hidden", mode !== "advanced");
-        manualPanel.classList.toggle("hidden", mode !== "manual");
-      }
-
-      function updateFromUI() {
-        clearError();
-        updatePanels();
-        if (modeSelect.value === "preset") cronOutput.value = getPresetCron();
-        if (modeSelect.value === "advanced") cronOutput.value = getAdvancedCron();
-        if (modeSelect.value === "manual") cronOutput.value = manualCron.value.trim();
-        analyzeCurrent(false);
-      }
-
-      function tokenToNumber(token, min, max) {
-        const up = String(token).trim().toUpperCase();
-        const val = aliases.hasOwnProperty(up) ? aliases[up] : Number(up);
-        if (!Number.isInteger(val)) throw new Error(`字段值“${token}”不是有效数字或别名`);
-        if (val < min || val > max) throw new Error(`字段值“${token}”超出允许范围 ${min}-${max}`);
-        return val;
-      }
-
-      function parseField(text, min, max, name, normalizeDow = false) {
-        const raw = String(text || "").trim().toUpperCase();
-        if (!raw) throw new Error(`${name}字段不能为空`);
-        if (!/^[A-Z0-9,*\/?\-]+$/.test(raw)) throw new Error(`${name}字段包含非法字符`);
-        const set = new Set();
-        const parts = raw.split(",");
-        for (const part of parts) {
-          if (!part) throw new Error(`${name}字段列表中存在空项`);
-          const stepPieces = part.split("/");
-          if (stepPieces.length > 2) throw new Error(`${name}字段步长格式错误`);
-          const base = stepPieces[0];
-          const step = stepPieces[1] === undefined ? 1 : Number(stepPieces[1]);
-          if (!Number.isInteger(step) || step <= 0) throw new Error(`${name}字段步长必须是正整数`);
-
-          let start, end;
-          if (base === "*" || base === "?") {
-            start = min; end = max;
-          } else if (base.includes("-")) {
-            const pair = base.split("-");
-            if (pair.length !== 2 || !pair[0] || !pair[1]) throw new Error(`${name}字段范围格式错误`);
-            start = tokenToNumber(pair[0], min, max);
-            end = tokenToNumber(pair[1], min, max);
-            if (start > end) throw new Error(`${name}字段范围起点不能大于终点`);
-          } else {
-            start = tokenToNumber(base, min, max);
-            end = stepPieces[1] === undefined ? start : max;
-          }
-
-          for (let i = start; i <= end; i += step) {
-            const v = normalizeDow && i === 7 ? 0 : i;
-            if (normalizeDow && v > 6) continue;
-            set.add(v);
-          }
-        }
-        if (set.size === 0) throw new Error(`${name}字段没有匹配到任何有效值`);
-        return { raw, set, any: raw === "*" || raw === "?" };
-      }
-
-      function parseCron(expr) {
-        const parts = String(expr || "").trim().replace(/\s+/g, " ").split(" ").filter(Boolean);
-        if (parts.length !== 5) throw new Error("Please enter 5 位 Unix CRON 表达式，格式为：分钟 小时 日期 月份 星期");
-        return {
-          minute: parseField(parts[0], 0, 59, "分钟"),
-          hour: parseField(parts[1], 0, 23, "小时"),
-          dom: parseField(parts[2], 1, 31, "日期"),
-          month: parseField(parts[3], 1, 12, "月份"),
-          dow: parseField(parts[4], 0, 7, "星期", true),
-          parts
-        };
-      }
-
-      function summarizeSet(parsed, label, formatter) {
-        if (parsed.any) return `${label}不限`;
-        const arr = Array.from(parsed.set).sort((a, b) => a - b);
-        if (arr.length <= 10) return `${label}为 ${arr.map(formatter).join("、")}`;
-        return `${label}匹配 ${arr.length} 个取值（${formatter(arr[0])} 至 ${formatter(arr[arr.length - 1])} 等）`;
-      }
-
-      function explainCron(parsed) {
-        const p = parsed.parts;
-        const fragments = [
-          summarizeSet(parsed.minute, "分钟", v => `${v}分`),
-          summarizeSet(parsed.hour, "小时", v => `${v}点`),
-          summarizeSet(parsed.dom, "日期", v => `${v}号`),
-          summarizeSet(parsed.month, "月份", v => `${v}月`),
-          summarizeSet(parsed.dow, "星期", v => zhWeek[v])
-        ];
-
-        let hint = "";
-        if (!parsed.dom.any && !parsed.dow.any) {
-          hint = " 注意：日期和星期同时受限时，本工具按常见 Unix Cron 习惯处理为“日期或星期满足其一即可”。";
-        }
-
-        if (p.join(" ") === "* * * * *") return "每分钟执行一次。";
-        return `该表达式表示：${fragments.join("，")} 时执行。${hint}`;
-      }
-
-      function dayMatches(d, parsed) {
-        const domMatch = parsed.dom.set.has(d.getDate());
-        const dowMatch = parsed.dow.set.has(d.getDay());
-        if (parsed.dom.any && parsed.dow.any) return true;
-        if (parsed.dom.any) return dowMatch;
-        if (parsed.dow.any) return domMatch;
-        return domMatch || dowMatch;
-      }
-
-      function matches(d, parsed) {
-        return parsed.minute.set.has(d.getMinutes()) &&
-          parsed.hour.set.has(d.getHours()) &&
-          parsed.month.set.has(d.getMonth() + 1) &&
-          dayMatches(d, parsed);
-      }
-
-      function nextRuns(parsed, count = 5) {
-        const result = [];
-        const d = new Date();
-        d.setSeconds(0, 0);
-        d.setMinutes(d.getMinutes() + 1);
-
-        const maxIterations = 60 * 24 * 366 * 5;
-        for (let i = 0; i < maxIterations && result.length < count; i++) {
-          if (matches(d, parsed)) result.push(new Date(d));
-          d.setMinutes(d.getMinutes() + 1);
-        }
-        if (result.length < count) throw new Error("未来 5 年内未找到足够的执行时间，请检查日期、月份和星期组合是否可达，例如 2 月 31 日通常无法执行");
-        return result;
-      }
-
-      function analyzeCurrent(showSuccess = true) {
-        try {
-          clearError();
-          const expr = cronOutput.value.trim();
-          if (modeSelect.value === "manual") manualCron.value = expr;
-          const parsed = parseCron(expr);
-          const explain = explainCron(parsed);
-          const runs = nextRuns(parsed, 5);
-          explainText.textContent = explain;
-          nextList.innerHTML = runs.map((d, idx) => `
-            <li class="flex items-center gap-3 rounded-2xl border border-cyan-300/10 bg-cyan-300/5 px-4 py-3">
-              <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-400 font-black text-slate-950 dark:text-slate-100">${idx + 1}</span>
-              <time class="font-mono text-cyan-100">${formatDate(d)}</time>
-            </li>
-          `).join("");
-          if (showSuccess) {
-            analyzeBtn.textContent = "已解析";
-            setTimeout(() => analyzeBtn.textContent = "解析", 700);
-          }
-        } catch (err) {
-          showError(err && err.message ? err.message : "解析失败，请检查表达式格式");
-          explainText.textContent = "无法解析当前表达式。";
-          nextList.innerHTML = `<li class="rounded-2xl border border-red-400/20 bg-red-500/10 px-4 py-3 text-red-200">请修正输入后重新解析。</li>`;
-        }
-      }
-
-      async function copyCron() {
-        try {
-          await navigator.clipboard.writeText(cronOutput.value);
-          copyBtn.textContent = "Copied";
-          copyBtn.classList.remove("bg-slate-700");
-          copyBtn.classList.add("bg-emerald-500", "text-slate-950");
-          setTimeout(() => {
-            copyBtn.textContent = "Copy";
-            copyBtn.classList.add("bg-slate-700");
-            copyBtn.classList.remove("bg-emerald-500", "text-slate-950");
-          }, 900);
-        } catch {
-          cronOutput.select();
-          document.execCommand("copy");
-          copyBtn.textContent = "Copied";
-          setTimeout(() => copyBtn.textContent = "Copy", 900);
-        }
-      }
-
-      modeSelect.addEventListener("change", updateFromUI);
-      presetType.addEventListener("change", () => {
-        renderPresetOptions();
-        updateFromUI();
+    function applyLanguage(lang) {
+      currentLanguage = I18N[lang] ? lang : "zh";
+      const dict = I18N[currentLanguage];
+      document.documentElement.lang = currentLanguage === "zh" ? "zh-CN" : "en";
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (Object.prototype.hasOwnProperty.call(dict, key)) node.textContent = dict[key];
       });
-      manualCron.addEventListener("input", updateFromUI);
-      cronOutput.addEventListener("input", () => {
-        if (modeSelect.value !== "manual") modeSelect.value = "manual";
-        manualCron.value = cronOutput.value;
-        updatePanels();
-        analyzeCurrent(false);
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("placeholder", dict[key]);
       });
-      analyzeBtn.addEventListener("click", () => analyzeCurrent(true));
-      copyBtn.addEventListener("click", copyCron);
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("title", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("aria-label", dict[key]);
+      });
 
-      renderPresetOptions();
-      initAdvancedSelects();
-      updateFromUI();
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      document.title = dict.documentTitle;
+      const description = document.querySelector('meta[name="description"]');
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (description) description.setAttribute("content", dict.metaDescription);
+      if (keywords) keywords.setAttribute("content", dict.metaKeywords);
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        if (currentLanguage === "zh") {
+          zhBtn.classList.add("bg-cyan-400", "text-slate-950");
+          enBtn.classList.add("text-slate-600", "dark:text-slate-400");
+        } else {
+          enBtn.classList.add("bg-cyan-400", "text-slate-950");
+          zhBtn.classList.add("text-slate-600", "dark:text-slate-400");
+        }
+      }
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+      parseAndRender(false);
+    }
+
+    function setLanguage(lang) {
+      localStorage.setItem("microToolsLanguage", lang);
+      applyLanguage(lang);
+    }
+
+    function t(key, values = {}) {
+      let text = I18N[currentLanguage][key] || I18N.zh[key] || "";
+      Object.keys(values).forEach((name) => {
+        text = text.replaceAll("{" + name + "}", values[name]);
+      });
+      return text;
+    }
+
+    function openSponsorModal(event) {
+      if (event?.preventDefault) event.preventDefault();
+      const modal = document.getElementById("sponsorModal");
+      if (!modal) return;
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeSponsorModal() {
+      const modal = document.getElementById("sponsorModal");
+      if (!modal) return;
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    function valueFromMode(modeId, valueId, fieldName) {
+      const mode = document.getElementById(modeId).value;
+      const raw = document.getElementById(valueId).value.trim();
+      if (mode === "any") return "*";
+      if (mode === "every") {
+        const step = parseInt(raw, 10);
+        if (!Number.isInteger(step) || step <= 0) return "*/1";
+        return "*/" + step;
+      }
+      return raw || "*";
+    }
+
+    function setModeFromField(modeId, valueId, text) {
+      const mode = document.getElementById(modeId);
+      const value = document.getElementById(valueId);
+      if (!mode || !value) return;
+      if (text === "*") {
+        mode.value = "any";
+        value.value = "";
+      } else if (text.startsWith("*/")) {
+        mode.value = "every";
+        value.value = text.slice(2);
+      } else {
+        mode.value = "specific";
+        value.value = text;
+      }
+    }
+
+    function syncUiFromCron(expr) {
+      const parts = expr.trim().split(/\s+/);
+      if (parts.length !== 5) return;
+      setModeFromField("minuteMode", "minuteValue", parts[0]);
+      setModeFromField("hourMode", "hourValue", parts[1]);
+      setModeFromField("domMode", "domValue", parts[2]);
+      setModeFromField("monthMode", "monthValue", parts[3]);
+      setModeFromField("dowMode", "dowValue", parts[4]);
+    }
+
+    function buildCronFromUi() {
+      return [
+        valueFromMode("minuteMode", "minuteValue", "minute"),
+        valueFromMode("hourMode", "hourValue", "hour"),
+        valueFromMode("domMode", "domValue", "dom"),
+        valueFromMode("monthMode", "monthValue", "month"),
+        valueFromMode("dowMode", "dowValue", "dow")
+      ].join(" ");
+    }
+
+    function rangeSet(min, max) {
+      const values = new Set();
+      for (let i = min; i <= max; i++) values.add(i);
+      return values;
+    }
+
+    function parseField(raw, config, normalizeDow) {
+      const text = raw.trim().toUpperCase();
+      if (!text) throw new Error(t("invalidField", { field: t(config.fieldKey), value: raw }));
+      const values = new Set();
+      const unrestricted = text === "*" || text === "?";
+
+      if (unrestricted) {
+        return { values: rangeSet(config.min, config.max === 7 && normalizeDow ? 6 : config.max), unrestricted: true, raw: text };
+      }
+
+      const pieces = text.split(",");
+      for (const piece of pieces) {
+        if (!piece) throw new Error(t("invalidField", { field: t(config.fieldKey), value: raw }));
+        const stepParts = piece.split("/");
+        if (stepParts.length > 2) throw new Error(t("invalidField", { field: t(config.fieldKey), value: raw }));
+        const base = stepParts[0];
+        const step = stepParts[1] ? parseInt(stepParts[1], 10) : 1;
+        if (!Number.isInteger(step) || step <= 0) throw new Error(t("invalidField", { field: t(config.fieldKey), value: raw }));
+
+        let start;
+        let end;
+        if (base === "*" || base === "?") {
+          start = config.min;
+          end = config.max;
+        } else if (base.includes("-")) {
+          const bounds = base.split("-");
+          if (bounds.length !== 2) throw new Error(t("invalidField", { field: t(config.fieldKey), value: raw }));
+          start = parseInt(bounds[0], 10);
+          end = parseInt(bounds[1], 10);
+        } else {
+          start = parseInt(base, 10);
+          end = parseInt(base, 10);
+        }
+
+        if (!Number.isInteger(start) || !Number.isInteger(end) || start > end || start < config.min || end > config.max) {
+          throw new Error(t("invalidField", { field: t(config.fieldKey), value: raw }));
+        }
+
+        for (let i = start; i <= end; i += step) {
+          values.add(normalizeDow && i === 7 ? 0 : i);
+        }
+      }
+
+      return { values, unrestricted: false, raw: text };
+    }
+
+    function parseCron(expr) {
+      const parts = expr.trim().split(/\s+/);
+      if (parts.length !== 5) throw new Error(t("invalidParts"));
+      return {
+        parts,
+        minute: parseField(parts[0], fieldConfig.minute, false),
+        hour: parseField(parts[1], fieldConfig.hour, false),
+        dom: parseField(parts[2], fieldConfig.dom, false),
+        month: parseField(parts[3], fieldConfig.month, false),
+        dow: parseField(parts[4], fieldConfig.dow, true)
+      };
+    }
+
+    function fieldDescription(parsedField, config, formatValue) {
+      const raw = parsedField.raw;
+      const unit = t(config.unitKey);
+      if (raw === "*" || raw === "?") return t("anyUnit", { unit });
+      if (raw.startsWith("*/")) return t("everyUnit", { step: raw.slice(2), unit });
+      const values = Array.from(parsedField.values).sort((a, b) => a - b).map(formatValue || String).join(currentLanguage === "zh" ? "、" : ", ");
+      return t("specificUnit", { unit: t(config.fieldKey), values });
+    }
+
+    function humanize(parsed) {
+      if (parsed.parts.join(" ") === "* * * * *") return t("humanEveryMinute");
+      const segments = [
+        fieldDescription(parsed.minute, fieldConfig.minute),
+        fieldDescription(parsed.hour, fieldConfig.hour),
+        fieldDescription(parsed.dom, fieldConfig.dom),
+        fieldDescription(parsed.month, fieldConfig.month),
+        fieldDescription(parsed.dow, fieldConfig.dow, (n) => I18N[currentLanguage].dayNames[n])
+      ];
+      let text = t("humanPrefix") + segments.join(t("humanJoin")) + t("humanSuffix");
+      if (!parsed.dom.unrestricted && !parsed.dow.unrestricted) text += " " + t("domDowNote");
+      return text;
+    }
+
+    function dateMatches(date, parsed) {
+      const minute = date.getMinutes();
+      const hour = date.getHours();
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const dow = date.getDay();
+
+      if (!parsed.minute.values.has(minute)) return false;
+      if (!parsed.hour.values.has(hour)) return false;
+      if (!parsed.month.values.has(month)) return false;
+
+      const domMatch = parsed.dom.values.has(day);
+      const dowMatch = parsed.dow.values.has(dow);
+      if (!parsed.dom.unrestricted && !parsed.dow.unrestricted) return domMatch || dowMatch;
+      return domMatch && dowMatch;
+    }
+
+    function nextRunTimes(parsed) {
+      const results = [];
+      const cursor = new Date();
+      cursor.setSeconds(0, 0);
+      cursor.setMinutes(cursor.getMinutes() + 1);
+      const maxChecks = 60 * 24 * 366 * 5;
+      for (let i = 0; i < maxChecks && results.length < 5; i++) {
+        if (dateMatches(cursor, parsed)) results.push(new Date(cursor));
+        cursor.setMinutes(cursor.getMinutes() + 1);
+      }
+      return results;
+    }
+
+    function formatDateTime(date) {
+      const pad = (n) => String(n).padStart(2, "0");
+      const dayName = I18N[currentLanguage].dayNames[date.getDay()];
+      if (currentLanguage === "zh") {
+        return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}（${dayName}，${t("timeZoneLabel")}）`;
+      }
+      return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())} (${dayName}, ${t("timeZoneLabel")})`;
+    }
+
+    function renderRuns(runs) {
+      const list = document.getElementById("nextRuns");
+      list.innerHTML = "";
+      if (!runs.length) {
+        const li = document.createElement("li");
+        li.className = "rounded-2xl border border-gray-200 bg-white px-4 py-3 dark:border-white/10 dark:bg-white/[0.04]";
+        li.textContent = t("noFutureRuns");
+        list.appendChild(li);
+        return;
+      }
+      runs.forEach((date, index) => {
+        const li = document.createElement("li");
+        li.className = "rounded-2xl border border-gray-200 bg-white px-4 py-3 tabular-nums dark:border-white/10 dark:bg-white/[0.04]";
+        li.textContent = `${index + 1}. ${formatDateTime(date)}`;
+        list.appendChild(li);
       });
     }
+
+    function setStatus(id, message) {
+      const node = document.getElementById(id);
+      if (node) node.textContent = message;
+    }
+
+    function parseAndRender(showStatus, customStatus) {
+      const expr = document.getElementById("cronInput").value.trim() || "*/5 * * * *";
+      const cronOutput = document.getElementById("cronOutput");
+      const humanDescription = document.getElementById("humanDescription");
+
+      try {
+        const parsed = parseCron(expr);
+        const runs = nextRunTimes(parsed);
+        lastRuns = runs;
+        cronOutput.textContent = expr;
+        humanDescription.textContent = humanize(parsed);
+        renderRuns(runs);
+        setStatus("outputStatus", runs.length ? "" : t("noFutureRuns"));
+        if (showStatus) setStatus("inputStatus", customStatus || t("parsedManual"));
+      } catch (error) {
+        lastRuns = [];
+        cronOutput.textContent = expr;
+        humanDescription.textContent = error.message;
+        renderRuns([]);
+        setStatus("inputStatus", error.message);
+        setStatus("outputStatus", error.message);
+      }
+    }
+
+    function generateAndParse() {
+      const expr = buildCronFromUi();
+      document.getElementById("cronInput").value = expr;
+      document.getElementById("presetSelect").value = "custom";
+      parseAndRender(true, t("generated"));
+    }
+
+    function resetTool() {
+      document.getElementById("cronInput").value = "*/5 * * * *";
+      document.getElementById("presetSelect").value = "every5";
+      syncUiFromCron("*/5 * * * *");
+      parseAndRender(true, t("resetDone"));
+    }
+
+    function sampleTool() {
+      const expr = "30 9 * * 1-5";
+      document.getElementById("cronInput").value = expr;
+      document.getElementById("presetSelect").value = "custom";
+      syncUiFromCron(expr);
+      parseAndRender(true, t("sampleDone"));
+    }
+
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        setStatus("outputStatus", t("copied"));
+      } catch (error) {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.setAttribute("readonly", "readonly");
+        textarea.style.position = "fixed";
+        textarea.style.left = "-9999px";
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand("copy");
+          setStatus("outputStatus", t("copied"));
+        } catch (fallbackError) {
+          setStatus("outputStatus", t("copyFailed"));
+        }
+        document.body.removeChild(textarea);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+
+      document.getElementById("generateBtn")?.addEventListener("click", generateAndParse);
+      document.getElementById("sampleBtn")?.addEventListener("click", sampleTool);
+      document.getElementById("resetBtn")?.addEventListener("click", resetTool);
+      document.getElementById("cronInput")?.addEventListener("input", () => {
+        document.getElementById("presetSelect").value = "custom";
+        parseAndRender(true, t("parsedManual"));
+      });
+      document.getElementById("presetSelect")?.addEventListener("change", (event) => {
+        const expr = presets[event.target.value];
+        if (expr) {
+          document.getElementById("cronInput").value = expr;
+          syncUiFromCron(expr);
+          parseAndRender(true, t("generated"));
+        }
+      });
+      document.getElementById("copyBtn")?.addEventListener("click", () => {
+        copyText(document.getElementById("cronOutput").textContent || "");
+      });
+      document.getElementById("copyTimesBtn")?.addEventListener("click", () => {
+        const text = lastRuns.map((date, index) => `${index + 1}. ${formatDateTime(date)}`).join("\n");
+        copyText(text || t("noFutureRuns"));
+      });
+
+      ["minuteMode", "hourMode", "domMode", "monthMode", "dowMode", "minuteValue", "hourValue", "domValue", "monthValue", "dowValue"].forEach((id) => {
+        document.getElementById(id)?.addEventListener("change", generateAndParse);
+      });
+
+      syncUiFromCron("*/5 * * * *");
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="../sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

@@ -1,466 +1,539 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>word-counter｜高级字数统计工具</title>
-  <meta name="description" content="高级字数统计工具。实时统计输入的字符数、单词数、句子数、段落数，以及预估的阅读时间。">
-  <meta name="keywords" content="word-counter, 字数统计工具, 在线字数统计, characters数统计, 单词数统计, 句子统计, 段落统计, 阅读时间估算, SEO写作工具, Chinese字数统计">
-  <link rel="icon" type="image/png" href="../assets/logo.png">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          boxShadow: {
-            glow: '0 20px 80px rgba(14, 165, 233, 0.18)'
-          }
-        }
-      }
-    }
-  </script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
-  <link rel="canonical" href="https://mymicrotools.xyz/en/word-counter.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>高级字数统计工具 - Micro Tools Matrix</title>
+  <meta name="description" content="Micro Tools Matrix 高级字数统计工具在浏览器本地处理文本，实时统计字符数、单词数、句子数、段落数和预估阅读时间，无需上传。">
+  <meta name="keywords" content="高级字数统计工具, 字符统计, 单词统计, 阅读时间估算, 浏览器本地处理, 无需上传, Micro Tools Matrix">
+  <link rel="canonical" href="https://mymicrotools.xyz/word-counter.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/word-counter.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/word-counter.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/word-counter.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/en/word-counter.html">
-  <meta property="og:title" content="word-counter｜高级字数统计工具">
-  <meta property="og:description" content="高级字数统计工具。实时统计输入的字符数、单词数、句子数、段落数，以及预估的阅读时间。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="word-counter｜高级字数统计工具">
-  <meta name="twitter:description" content="高级字数统计工具。实时统计输入的字符数、单词数、句子数、段落数，以及预估的阅读时间。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
-</head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="../word-counter.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./word-counter.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="pointer-events-none fixed inset-0 overflow-hidden">
-    <div class="absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
-  </div>
-
-  <header class="relative border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 backdrop-blur-xl">
-    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-            实时 · 精准 · 零依赖
-          </p>
-          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">高级字数统计工具</h1>
-          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            高级字数统计工具：实时统计字符数、单词数、句子数、段落数，并自动预估阅读时间。
-          </p>
-        </div>
-        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 text-sm text-slate-700 dark:text-slate-300 shadow-glow">
-          <span class="block text-slate-400">推荐场景</span>
-          <strong class="text-cyan-200">写作 / SEO / 论文 / 内容编辑</strong>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main class="relative mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-[1.25fr_0.75fr]" aria-label="字数统计工具主界面">
-      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-glow backdrop-blur-xl sm:p-6">
-        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入文本</h2>
-            <p class="mt-1 text-sm text-slate-400">粘贴或输入任意Chinese、英文、符号与换行内容，统计结果会自动更新。</p>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <button id="sampleBtn" type="button" class="rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95 focus:outline-none focus:ring-2 focus:ring-cyan-300">
-              示例文本
-            </button>
-            <button id="clearBtn" type="button" class="rounded-xl border border-rose-400/30 bg-rose-400/10 px-4 py-2 text-sm font-semibold text-rose-100 transition hover:bg-rose-400/20 active:scale-95 focus:outline-none focus:ring-2 focus:ring-rose-300">
-              Clear
-            </button>
-          </div>
-        </div>
-
-        <label for="textInput" class="sr-only">Please enter需要统计的文本</label>
-        <textarea id="textInput" class="h-80 w-full resize-y rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 p-4 text-base leading-7 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" placeholder="在这里输入或粘贴文本，例如文章、论文、产品描述、SEO 文案……" spellcheck="true" maxlength="500000"></textarea>
-
-        <div id="errorBox" class="mt-4 hidden rounded-2xl border border-rose-400/40 bg-rose-500/10 px-4 py-3 text-sm font-medium text-rose-100" role="alert"></div>
-
-        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p id="statusText" class="text-sm text-slate-400">等待输入文本。</p>
-          <div class="flex flex-wrap gap-2">
-            <button id="copyBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-4 py-2 text-sm font-semibold text-gray-900 dark:text-white transition hover:bg-white/15 active:scale-95 focus:outline-none focus:ring-2 focus:ring-slate-300">
-              Copy统计结果
-            </button>
-            <button id="downloadBtn" type="button" class="rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-400/20 active:scale-95 focus:outline-none focus:ring-2 focus:ring-emerald-300">
-              Download文本
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <aside class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5 shadow-glow backdrop-blur-xl sm:p-6" aria-label="统计结果">
-        <div class="mb-5">
-          <h2 class="text-xl font-bold text-gray-900 dark:text-white">统计结果</h2>
-          <p class="mt-1 text-sm text-slate-400">根据当前输入实时计算。</p>
-        </div>
-
-        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-          <div class="rounded-2xl border border-cyan-400/20 bg-cyan-400/10 p-4">
-            <p class="text-sm text-cyan-100/80">字符数（含空格）</p>
-            <p id="charsWithSpaces" class="mt-2 text-3xl font-black text-gray-900 dark:text-white">0</p>
-          </div>
-          <div class="rounded-2xl border border-sky-400/20 bg-sky-400/10 p-4">
-            <p class="text-sm text-sky-100/80">字符数（不含空格）</p>
-            <p id="charsNoSpaces" class="mt-2 text-3xl font-black text-gray-900 dark:text-white">0</p>
-          </div>
-          <div class="rounded-2xl border border-indigo-400/20 bg-indigo-400/10 p-4">
-            <p class="text-sm text-indigo-100/80">单词数</p>
-            <p id="wordCount" class="mt-2 text-3xl font-black text-gray-900 dark:text-white">0</p>
-          </div>
-          <div class="rounded-2xl border border-violet-400/20 bg-violet-400/10 p-4">
-            <p class="text-sm text-violet-100/80">句子数</p>
-            <p id="sentenceCount" class="mt-2 text-3xl font-black text-gray-900 dark:text-white">0</p>
-          </div>
-          <div class="rounded-2xl border border-fuchsia-400/20 bg-fuchsia-400/10 p-4">
-            <p class="text-sm text-fuchsia-100/80">段落数</p>
-            <p id="paragraphCount" class="mt-2 text-3xl font-black text-gray-900 dark:text-white">0</p>
-          </div>
-          <div class="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 p-4">
-            <p class="text-sm text-emerald-100/80">预估阅读时间</p>
-            <p id="readingTime" class="mt-2 text-3xl font-black text-gray-900 dark:text-white">0 秒</p>
-          </div>
-        </div>
-      </aside>
-    </section>
-
-    <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-glow backdrop-blur-xl sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 word-counter 高级字数统计工具</h2>
-      <p>
-        word-counter 是一款面向写作者、学生、编辑、运营和 SEO 从业者的在线字数统计工具。无论你需要检查Chinese文章字数、统计英文单词数量，还是评估网页文案长度，本工具都能在输入时实时返回字符数、单词数、句子数、段落数和预估阅读时间。传统Copy到文档软件再查看统计结果的方式效率较低，且不便于快速优化标题、摘要、论文段落或搜索引擎内容。使用本高级字数统计工具，只需将文本粘贴到输入框，系统会自动完成Chinese字符统计、英文单词统计、段落识别和阅读时长估算。它特别适合用于 SEO 文章字数检测、公众号推文编辑、产品描述优化、学术论文初稿整理以及多语言内容校对，帮助你更直观地控制内容长度，提升写作效率与发布质量。
-      </p>
-    </article>
-  </main>
-
-  <footer class="relative mx-auto max-w-6xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-    <p>© <span id="year"></span> word-counter. Built with native HTML, JavaScript and Tailwind CSS.</p>
-  </footer>
-
-  <script>
-    (function () {
-      'use strict';
-
-      const MAX_LENGTH = 500000;
-      const WORDS_PER_MINUTE_EN = 225;
-      const CHARS_PER_MINUTE_CJK = 450;
-
-      const elements = {
-        input: document.getElementById('textInput'),
-        errorBox: document.getElementById('errorBox'),
-        statusText: document.getElementById('statusText'),
-        charsWithSpaces: document.getElementById('charsWithSpaces'),
-        charsNoSpaces: document.getElementById('charsNoSpaces'),
-        wordCount: document.getElementById('wordCount'),
-        sentenceCount: document.getElementById('sentenceCount'),
-        paragraphCount: document.getElementById('paragraphCount'),
-        readingTime: document.getElementById('readingTime'),
-        sampleBtn: document.getElementById('sampleBtn'),
-        clearBtn: document.getElementById('clearBtn'),
-        copyBtn: document.getElementById('copyBtn'),
-        downloadBtn: document.getElementById('downloadBtn'),
-        year: document.getElementById('year')
-      };
-
-      elements.year.textContent = String(new Date().getFullYear());
-
-      const sampleText = 'word-counter 是一个高级字数统计工具。\n\n它可以实时统计字符数、单词数、句子数、段落数，并预估阅读时间。For SEO writers, editors, students and content marketers, this tool helps improve writing efficiency.\n\n请在这里粘贴你的文章、论文、产品描述或营销文案，统计结果会自动更新。';
-
-      function safeText(value) {
-        if (typeof value !== 'string') return '';
-        return value.replace(/\u0000/g, '');
+  <link rel="stylesheet" href="../style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Word Counter",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "description": "Free"
       }
-
-      function formatNumber(num) {
-        const n = Number.isFinite(num) && num >= 0 ? Math.floor(num) : 0;
-        return n.toLocaleString('zh-CN');
-      }
-
-      function showError(message) {
-        elements.errorBox.textContent = message;
-        elements.errorBox.classList.remove('hidden');
-      }
-
-      function hideError() {
-        elements.errorBox.textContent = '';
-        elements.errorBox.classList.add('hidden');
-      }
-
-      function setButtonFeedback(button, text, isSuccess) {
-        if (!button) return;
-        const original = button.dataset.originalText || button.textContent;
-        button.dataset.originalText = original;
-        button.textContent = text;
-        button.classList.add(isSuccess ? 'ring-2' : 'ring-2', isSuccess ? 'ring-emerald-300' : 'ring-rose-300');
-        window.setTimeout(function () {
-          button.textContent = original;
-          button.classList.remove('ring-2', 'ring-emerald-300', 'ring-rose-300');
-        }, 1200);
-      }
-
-      function countWords(text) {
-        const normalized = safeText(text).trim();
-        if (!normalized) return 0;
-
-        const latinMatches = normalized.match(/[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*/g) || [];
-        const cjkMatches = normalized.match(/[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/g) || [];
-        const otherWordMatches = normalized.match(/[\p{L}\p{N}]+/gu) || [];
-
-        let nonLatinOther = 0;
-        for (const token of otherWordMatches) {
-          if (!/[A-Za-z0-9]/.test(token) && !/[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/.test(token)) {
-            nonLatinOther += 1;
-          }
-        }
-
-        return latinMatches.length + cjkMatches.length + nonLatinOther;
-      }
-
-      function countSentences(text) {
-        const trimmed = safeText(text).trim();
-        if (!trimmed) return 0;
-
-        const matches = trimmed.match(/[^。！？!?\.]+[。！？!?\.]+(?:["'”’）\]\}】》]*)|[^。！？!?\.]+$/g);
-        if (!matches) return 0;
-
-        return matches
-          .map(function (s) { return s.trim(); })
-          .filter(function (s) { return s.length > 0 && /[\p{L}\p{N}\u3400-\u9FFF]/u.test(s); })
-          .length;
-      }
-
-      function countParagraphs(text) {
-        const trimmed = safeText(text).trim();
-        if (!trimmed) return 0;
-        return trimmed.split(/\n\s*\n+/).map(function (p) {
-          return p.trim();
-        }).filter(function (p) {
-          return p.length > 0;
-        }).length;
-      }
-
-      function calculateReadingTime(text, words, charsNoSpaces) {
-        if (!text.trim()) return '0 秒';
-
-        const cjkChars = (text.match(/[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/g) || []).length;
-        const latinWords = (text.match(/[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*/g) || []).length;
-        const cjkMinutes = cjkChars / CHARS_PER_MINUTE_CJK;
-        const enMinutes = latinWords / WORDS_PER_MINUTE_EN;
-        const fallbackMinutes = charsNoSpaces > 0 && cjkChars === 0 && latinWords === 0 ? charsNoSpaces / CHARS_PER_MINUTE_CJK : 0;
-        const totalSeconds = Math.max(1, Math.ceil((cjkMinutes + enMinutes + fallbackMinutes) * 60));
-
-        if (totalSeconds < 60) return totalSeconds + ' 秒';
-        const minutes = Math.floor(totalSeconds / 60);
-        const seconds = totalSeconds % 60;
-        if (minutes < 60) return seconds ? minutes + ' 分 ' + seconds + ' 秒' : minutes + ' 分钟';
-        const hours = Math.floor(minutes / 60);
-        const restMinutes = minutes % 60;
-        return restMinutes ? hours + ' 小时 ' + restMinutes + ' 分钟' : hours + ' 小时';
-      }
-
-      function getStats(text) {
-        const value = safeText(text);
-        const charsWithSpaces = Array.from(value).length;
-        const charsNoSpaces = Array.from(value.replace(/\s/g, '')).length;
-        const words = countWords(value);
-        const sentences = countSentences(value);
-        const paragraphs = countParagraphs(value);
-        const readingTime = calculateReadingTime(value, words, charsNoSpaces);
-
-        return {
-          charsWithSpaces,
-          charsNoSpaces,
-          words,
-          sentences,
-          paragraphs,
-          readingTime
-        };
-      }
-
-      function render() {
-        try {
-          let value = safeText(elements.input.value);
-
-          if (value.length > MAX_LENGTH) {
-            value = value.slice(0, MAX_LENGTH);
-            elements.input.value = value;
-            showError('输入内容过长，已自动截取到 500,000 个字符以内，以确保浏览器稳定运行。');
-          } else {
-            hideError();
-          }
-
-          const stats = getStats(value);
-
-          elements.charsWithSpaces.textContent = formatNumber(stats.charsWithSpaces);
-          elements.charsNoSpaces.textContent = formatNumber(stats.charsNoSpaces);
-          elements.wordCount.textContent = formatNumber(stats.words);
-          elements.sentenceCount.textContent = formatNumber(stats.sentences);
-          elements.paragraphCount.textContent = formatNumber(stats.paragraphs);
-          elements.readingTime.textContent = stats.readingTime;
-
-          if (stats.charsWithSpaces === 0) {
-            elements.statusText.textContent = '等待输入文本。';
-          } else {
-            elements.statusText.textContent = '已统计 ' + formatNumber(stats.charsWithSpaces) + ' 个字符，结果实时更新。';
-          }
-        } catch (error) {
-          showError('统计时遇到异常字符，请尝试删除特殊控制字符后重试。应用已保持稳定运行。');
-        }
-      }
-
-      function copyStats() {
-        try {
-          const text = safeText(elements.input.value);
-          const stats = getStats(text);
-          const result = [
-            'word-counter 统计结果',
-            '字符数（含空格）：' + stats.charsWithSpaces,
-            '字符数（不含空格）：' + stats.charsNoSpaces,
-            '单词数：' + stats.words,
-            '句子数：' + stats.sentences,
-            '段落数：' + stats.paragraphs,
-            '预估阅读时间：' + stats.readingTime
-          ].join('\n');
-
-          if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(result).then(function () {
-              setButtonFeedback(elements.copyBtn, 'Copied', true);
-            }).catch(function () {
-              fallbackCopy(result);
-            });
-          } else {
-            fallbackCopy(result);
-          }
-        } catch (error) {
-          showError('Copy failed，请检查浏览器权限或手动选择统计结果。');
-          setButtonFeedback(elements.copyBtn, 'Copy failed', false);
-        }
-      }
-
-      function fallbackCopy(text) {
-        const temp = document.createElement('textarea');
-        temp.value = text;
-        temp.setAttribute('readonly', 'readonly');
-        temp.style.position = 'fixed';
-        temp.style.left = '-9999px';
-        document.body.appendChild(temp);
-        temp.select();
-
-        try {
-          const ok = document.execCommand('copy');
-          setButtonFeedback(elements.copyBtn, ok ? 'Copied' : 'Copy failed', ok);
-          if (!ok) showError('Copy failed，请手动Copy统计结果。');
-        } catch (error) {
-          showError('Copy failed，请手动Copy统计结果。');
-          setButtonFeedback(elements.copyBtn, 'Copy failed', false);
-        } finally {
-          document.body.removeChild(temp);
-        }
-      }
-
-      function downloadText() {
-        try {
-          const text = safeText(elements.input.value);
-          if (!text.trim()) {
-            showError('当前没有可Download的文本，请先输入内容。');
-            setButtonFeedback(elements.downloadBtn, '无内容', false);
-            return;
-          }
-
-          const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-          a.href = url;
-          a.download = 'word-counter-' + timestamp + '.txt';
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-          setButtonFeedback(elements.downloadBtn, '已Download', true);
-          hideError();
-        } catch (error) {
-          showError('Download失败，请检查浏览器是否允许Download文件。');
-          setButtonFeedback(elements.downloadBtn, 'Download失败', false);
-        }
-      }
-
-      elements.input.addEventListener('input', render);
-      elements.sampleBtn.addEventListener('click', function () {
-        elements.input.value = sampleText;
-        render();
-        setButtonFeedback(elements.sampleBtn, '已填入', true);
-        elements.input.focus();
-      });
-      elements.clearBtn.addEventListener('click', function () {
-        elements.input.value = '';
-        render();
-        setButtonFeedback(elements.clearBtn, '已Clear', true);
-        elements.input.focus();
-      });
-      elements.copyBtn.addEventListener('click', copyStats);
-      elements.downloadBtn.addEventListener('click', downloadText);
-
-      render();
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
     }
   </script>
-  <!-- pwa-register:end -->
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">高级字数统计工具</span>
+        </span>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeToggle">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="语言" data-i18n-aria-label="language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">高级字数统计工具</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中实时分析文本长度、结构和阅读时间。所有内容只在浏览器本地处理，无需上传文本。</p>
+        </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <label for="textInput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="textLabel">待统计文本</label>
+        <textarea id="textInput" rows="16" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm leading-7 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="textPlaceholder" data-i18n-aria-label="textLabel" placeholder="粘贴或输入需要统计的文章、说明、邮件、笔记或任意文本。"></textarea>
+
+        <p id="statusText" class="mt-3 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="statusReady">输入内容后会自动更新统计结果。</p>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyStatsBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">复制结果</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">填入示例</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">结果</span>
+        </div>
+
+        <div class="grid gap-3 sm:grid-cols-2">
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-400" data-i18n="charactersLabel">字符数</p>
+            <p id="charactersValue" class="mt-2 text-3xl font-black tracking-tight text-slate-950 dark:text-white tabular-nums">0</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-400" data-i18n="charactersNoSpacesLabel">不含空白字符</p>
+            <p id="charactersNoSpacesValue" class="mt-2 text-3xl font-black tracking-tight text-slate-950 dark:text-white tabular-nums">0</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-400" data-i18n="wordsLabel">单词数</p>
+            <p id="wordsValue" class="mt-2 text-3xl font-black tracking-tight text-slate-950 dark:text-white tabular-nums">0</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-400" data-i18n="sentencesLabel">句子数</p>
+            <p id="sentencesValue" class="mt-2 text-3xl font-black tracking-tight text-slate-950 dark:text-white tabular-nums">0</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-400" data-i18n="paragraphsLabel">段落数</p>
+            <p id="paragraphsValue" class="mt-2 text-3xl font-black tracking-tight text-slate-950 dark:text-white tabular-nums">0</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-cyan-50 p-4 dark:border-cyan-400/20 dark:bg-cyan-400/10">
+            <p class="text-xs font-semibold text-cyan-700 dark:text-cyan-300" data-i18n="readingTimeLabel">预估阅读时间</p>
+            <p id="readingTimeValue" class="mt-2 break-words text-3xl font-black tracking-tight text-slate-950 dark:text-white tabular-nums">0 分钟</p>
+          </div>
+        </div>
+
+        <div class="mt-5 rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+          <h2 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="detailsTitle">统计说明</h2>
+          <ul class="mt-3 space-y-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
+            <li data-i18n="detailWords">中文按连续汉字估算，英文按空格与标点分隔的词统计。</li>
+            <li data-i18n="detailReading">阅读时间会结合中文字符和英文单词估算，适合快速评估长文长度。</li>
+            <li data-i18n="detailPrivacy">输入内容只在当前浏览器内计算，刷新或清空后不会保留。</li>
+          </ul>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">Micro Tools Matrix 的高级字数统计工具面向写作者、产品经理、开发者和内容编辑，支持在浏览器本地处理文本，实时计算字符数、单词数、句子数、段落数与预估阅读时间。你可以用它检查博客文章、产品说明、提示词、邮件、社交媒体文案或技术文档的长度，无需上传到服务器，也不需要登录。工具会兼顾中文与英文文本的常见统计方式，帮助你快速判断内容是否符合发布平台、SEO 摘要、需求说明或阅读体验的限制。作为一个免费在线开发者工具，它保持轻量、快速、无广告，并延续 Micro Tools Matrix 对隐私友好与本地运行的设计原则。</article>
+  </main>
+
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+
+  <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md">
+    <div class="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
+      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor">×</button>
+      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">赞赏支持</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">保持工具免费、快速且无广告。</p>
+      <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="buyCoffee">Buy Me a Coffee</a>
+    </div>
+  </div>
+
+  <script>
+    const I18N = {
+      zh: {
+        documentTitle: "高级字数统计工具 - Micro Tools Matrix",
+        metaDescription: "Micro Tools Matrix 高级字数统计工具在浏览器本地处理文本，实时统计字符数、单词数、句子数、段落数和预估阅读时间，无需上传。",
+        metaKeywords: "高级字数统计工具, 字符统计, 单词统计, 阅读时间估算, 浏览器本地处理, 无需上传, Micro Tools Matrix",
+        toolName: "高级字数统计工具",
+        h1: "高级字数统计工具",
+        eyebrow: "浏览器本地处理",
+        intro: "在 Micro Tools Matrix 中实时分析文本长度、结构和阅读时间。所有内容只在浏览器本地处理，无需上传文本。",
+        localBadge: "本地运行",
+        sponsor: "赞赏",
+        language: "语言",
+        themeToggle: "切换主题",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        outputTitle: "结果",
+        outputBadge: "结果",
+        textLabel: "待统计文本",
+        textPlaceholder: "粘贴或输入需要统计的文章、说明、邮件、笔记或任意文本。",
+        statusReady: "输入内容后会自动更新统计结果。",
+        statusUpdated: "统计结果已更新。",
+        statusEmpty: "请输入文本或使用示例内容。",
+        statusCleared: "内容已清空。",
+        statusSampleLoaded: "示例文本已填入。",
+        statusCopied: "统计结果已复制到剪贴板。",
+        statusCopyFailed: "复制失败，请手动选择结果。",
+        primaryAction: "复制结果",
+        sampleAction: "填入示例",
+        secondaryAction: "清空",
+        charactersLabel: "字符数",
+        charactersNoSpacesLabel: "不含空白字符",
+        wordsLabel: "单词数",
+        sentencesLabel: "句子数",
+        paragraphsLabel: "段落数",
+        readingTimeLabel: "预估阅读时间",
+        detailsTitle: "统计说明",
+        detailWords: "中文按连续汉字估算，英文按空格与标点分隔的词统计。",
+        detailReading: "阅读时间会结合中文字符和英文单词估算，适合快速评估长文长度。",
+        detailPrivacy: "输入内容只在当前浏览器内计算，刷新或清空后不会保留。",
+        lessThanMinute: "少于 1 分钟",
+        minuteUnit: "分钟",
+        copyTextTitle: "字数统计结果",
+        copyCharacters: "字符数",
+        copyCharactersNoSpaces: "不含空白字符",
+        copyWords: "单词数",
+        copySentences: "句子数",
+        copyParagraphs: "段落数",
+        copyReadingTime: "预估阅读时间",
+        sampleText: "Micro Tools Matrix 是一个注重隐私的本地工具集合。\n\n你可以在浏览器中处理文本、格式化数据、生成常用片段，并保持内容无需上传。这个字数统计工具会实时计算字符数、单词数、句子数、段落数，以及预估阅读时间。\n\nFor mixed Chinese and English content, it helps writers, developers, and editors quickly understand length and readability before publishing.",
+        seoArticle: "Micro Tools Matrix 的高级字数统计工具面向写作者、产品经理、开发者和内容编辑，支持在浏览器本地处理文本，实时计算字符数、单词数、句子数、段落数与预估阅读时间。你可以用它检查博客文章、产品说明、提示词、邮件、社交媒体文案或技术文档的长度，无需上传到服务器，也不需要登录。工具会兼顾中文与英文文本的常见统计方式，帮助你快速判断内容是否符合发布平台、SEO 摘要、需求说明或阅读体验的限制。作为一个免费在线开发者工具，它保持轻量、快速、无广告，并延续 Micro Tools Matrix 对隐私友好与本地运行的设计原则。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。",
+        sponsorTitle: "赞赏支持",
+        sponsorSubtitle: "保持工具免费、快速且无广告。",
+        buyCoffee: "Buy Me a Coffee",
+        closeSponsor: "关闭赞赏窗口"
+      },
+      en: {
+        documentTitle: "Word Counter - Micro Tools Matrix",
+        metaDescription: "A browser-local word counter by Micro Tools Matrix. Count characters, words, sentences, paragraphs, and estimated reading time without uploading text.",
+        metaKeywords: "word counter, character counter, sentence counter, reading time estimator, browser-local processing, free online developer tool, Micro Tools Matrix",
+        toolName: "Word Counter",
+        h1: "Word Counter",
+        eyebrow: "Browser-local processing",
+        intro: "Analyze text length, structure, and reading time in Micro Tools Matrix. Everything runs locally in your browser, so your text is never uploaded.",
+        localBadge: "Local",
+        sponsor: "Sponsor",
+        language: "Language",
+        themeToggle: "Switch theme",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        inputTitle: "Input",
+        inputBadge: "INPUT",
+        outputTitle: "Results",
+        outputBadge: "OUTPUT",
+        textLabel: "Text to count",
+        textPlaceholder: "Paste or type an article, note, email, brief, or any text you want to measure.",
+        statusReady: "Results update automatically as you type.",
+        statusUpdated: "Statistics updated.",
+        statusEmpty: "Enter text or load the sample content.",
+        statusCleared: "Content cleared.",
+        statusSampleLoaded: "Sample text loaded.",
+        statusCopied: "Statistics copied to the clipboard.",
+        statusCopyFailed: "Copy failed. Please select the results manually.",
+        primaryAction: "Copy results",
+        sampleAction: "Load sample",
+        secondaryAction: "Clear",
+        charactersLabel: "Characters",
+        charactersNoSpacesLabel: "Without whitespace",
+        wordsLabel: "Words",
+        sentencesLabel: "Sentences",
+        paragraphsLabel: "Paragraphs",
+        readingTimeLabel: "Estimated reading time",
+        detailsTitle: "How it counts",
+        detailWords: "Chinese text is estimated by continuous CJK characters, while English words are split by spaces and punctuation.",
+        detailReading: "Reading time combines Chinese characters and English words for a quick estimate of long-form content.",
+        detailPrivacy: "Your text is calculated only in the current browser session and is not stored after refresh or clear.",
+        lessThanMinute: "Less than 1 minute",
+        minuteUnit: "min",
+        copyTextTitle: "Word counter results",
+        copyCharacters: "Characters",
+        copyCharactersNoSpaces: "Without whitespace",
+        copyWords: "Words",
+        copySentences: "Sentences",
+        copyParagraphs: "Paragraphs",
+        copyReadingTime: "Estimated reading time",
+        sampleText: "Micro Tools Matrix is a privacy-focused collection of local utilities.\n\nYou can process text, format data, generate common snippets, and keep your content from being uploaded. This word counter updates characters, words, sentences, paragraphs, and estimated reading time in real time.\n\nFor mixed Chinese and English content, it helps writers, developers, and editors quickly understand length and readability before publishing.",
+        seoArticle: "The Micro Tools Matrix Word Counter is a free online developer tool for writers, product teams, editors, and engineers who need fast text measurement without a server round trip. It uses browser-local processing to count characters, words, sentences, paragraphs, and estimated reading time directly on your device, so drafts, prompts, release notes, product copy, emails, and technical documentation do not need to be uploaded. The tool is useful when checking platform limits, SEO descriptions, newsletter length, documentation readability, or the size of AI prompts before sharing them. It supports mixed Chinese and English content with practical counting rules and a clean interface that updates as you type. Like the rest of Micro Tools Matrix, it is lightweight, privacy-friendly, free to use, and designed for everyday workflows where speed and trust matter more than accounts, ads, or unnecessary data collection.",
+        footer: "Micro Tools Matrix - Browser-local processing with no upload.",
+        sponsorTitle: "Sponsor support",
+        sponsorSubtitle: "Keep the tools free, fast, and ad-free.",
+        buyCoffee: "Buy Me a Coffee",
+        closeSponsor: "Close sponsor dialog"
+      }
+    };
+
+    let currentLanguage = "zh";
+    let currentStats = {
+      characters: 0,
+      charactersNoSpaces: 0,
+      words: 0,
+      sentences: 0,
+      paragraphs: 0,
+      readingMinutes: 0,
+      readingText: ""
+    };
+
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      const stored = localStorage.getItem("microToolsLanguage");
+      return stored === "en" || stored === "zh" ? stored : "zh";
+    }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const t = I18N[currentLanguage];
+
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.title = t.documentTitle;
+
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute("content", t.metaDescription);
+
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (keywords) keywords.setAttribute("content", t.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && Object.prototype.hasOwnProperty.call(t, key)) {
+          node.textContent = t[key];
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && Object.prototype.hasOwnProperty.call(t, key)) {
+          node.setAttribute("placeholder", t[key]);
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && Object.prototype.hasOwnProperty.call(t, key)) {
+          node.setAttribute("title", t[key]);
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && Object.prototype.hasOwnProperty.call(t, key)) {
+          node.setAttribute("aria-label", t[key]);
+        }
+      });
+
+      const themeLabel = document.querySelector("[data-theme-label]");
+      if (themeLabel && !themeLabel.textContent.trim()) {
+        themeLabel.textContent = t.themeSystem;
+      }
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        if (currentLanguage === "zh") {
+          zhBtn.classList.add("bg-cyan-400", "text-slate-950");
+          enBtn.classList.add("text-slate-600", "dark:text-slate-400");
+          zhBtn.setAttribute("aria-pressed", "true");
+          enBtn.setAttribute("aria-pressed", "false");
+        } else {
+          enBtn.classList.add("bg-cyan-400", "text-slate-950");
+          zhBtn.classList.add("text-slate-600", "dark:text-slate-400");
+          zhBtn.setAttribute("aria-pressed", "false");
+          enBtn.setAttribute("aria-pressed", "true");
+        }
+      }
+
+      updateStats();
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function setLanguage(lang) {
+      const next = lang === "en" ? "en" : "zh";
+      localStorage.setItem("microToolsLanguage", next);
+      applyLanguage(next);
+    }
+
+    function formatNumber(value) {
+      return new Intl.NumberFormat(currentLanguage === "en" ? "en-US" : "zh-CN").format(value);
+    }
+
+    function countWords(text) {
+      const cjkMatches = text.match(/[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/g) || [];
+      const withoutCjk = text.replace(/[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/g, " ");
+      const wordMatches = withoutCjk.match(/[A-Za-z0-9]+(?:['’-][A-Za-z0-9]+)*/g) || [];
+      return cjkMatches.length + wordMatches.length;
+    }
+
+    function countSentences(text) {
+      const trimmed = text.trim();
+      if (!trimmed) return 0;
+      const matches = trimmed.match(/[^。！？!?\.]+[。！？!?\.]+|[^。！？!?\.]+$/g) || [];
+      return matches.map((item) => item.trim()).filter(Boolean).length;
+    }
+
+    function countParagraphs(text) {
+      return text.split(/\n\s*\n|(?:\r?\n)/).map((item) => item.trim()).filter(Boolean).length;
+    }
+
+    function calculateReading(text, wordCount) {
+      const cjkCount = (text.match(/[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/g) || []).length;
+      const latinWordCount = Math.max(0, wordCount - cjkCount);
+      const minutes = Math.ceil((cjkCount / 500) + (latinWordCount / 200));
+      if (!text.trim()) return { minutes: 0, text: "0 " + I18N[currentLanguage].minuteUnit };
+      if (minutes <= 1) return { minutes: 1, text: I18N[currentLanguage].lessThanMinute };
+      return { minutes, text: formatNumber(minutes) + " " + I18N[currentLanguage].minuteUnit };
+    }
+
+    function updateStats() {
+      const input = document.getElementById("textInput");
+      if (!input) return;
+
+      const text = input.value || "";
+      const words = countWords(text);
+      const reading = calculateReading(text, words);
+
+      currentStats = {
+        characters: text.length,
+        charactersNoSpaces: (text.match(/\S/g) || []).length,
+        words,
+        sentences: countSentences(text),
+        paragraphs: countParagraphs(text),
+        readingMinutes: reading.minutes,
+        readingText: reading.text
+      };
+
+      const values = {
+        charactersValue: formatNumber(currentStats.characters),
+        charactersNoSpacesValue: formatNumber(currentStats.charactersNoSpaces),
+        wordsValue: formatNumber(currentStats.words),
+        sentencesValue: formatNumber(currentStats.sentences),
+        paragraphsValue: formatNumber(currentStats.paragraphs),
+        readingTimeValue: currentStats.readingText
+      };
+
+      Object.entries(values).forEach(([id, value]) => {
+        const node = document.getElementById(id);
+        if (node) node.textContent = value;
+      });
+
+      const status = document.getElementById("statusText");
+      if (status) {
+        status.textContent = text.trim() ? I18N[currentLanguage].statusUpdated : I18N[currentLanguage].statusReady;
+      }
+    }
+
+    function buildCopyText() {
+      const t = I18N[currentLanguage];
+      return [
+        t.copyTextTitle,
+        `${t.copyCharacters}: ${formatNumber(currentStats.characters)}`,
+        `${t.copyCharactersNoSpaces}: ${formatNumber(currentStats.charactersNoSpaces)}`,
+        `${t.copyWords}: ${formatNumber(currentStats.words)}`,
+        `${t.copySentences}: ${formatNumber(currentStats.sentences)}`,
+        `${t.copyParagraphs}: ${formatNumber(currentStats.paragraphs)}`,
+        `${t.copyReadingTime}: ${currentStats.readingText}`
+      ].join("\n");
+    }
+
+    async function copyStats() {
+      const input = document.getElementById("textInput");
+      const status = document.getElementById("statusText");
+      const t = I18N[currentLanguage];
+
+      if (!input || !input.value.trim()) {
+        if (status) status.textContent = t.statusEmpty;
+        return;
+      }
+
+      const text = buildCopyText();
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const helper = document.createElement("textarea");
+          helper.value = text;
+          helper.setAttribute("readonly", "");
+          helper.style.position = "fixed";
+          helper.style.left = "-9999px";
+          document.body.appendChild(helper);
+          helper.select();
+          document.execCommand("copy");
+          document.body.removeChild(helper);
+        }
+        if (status) status.textContent = t.statusCopied;
+      } catch (error) {
+        if (status) status.textContent = t.statusCopyFailed;
+      }
+    }
+
+    function loadSample() {
+      const input = document.getElementById("textInput");
+      const status = document.getElementById("statusText");
+      if (!input) return;
+      input.value = I18N[currentLanguage].sampleText;
+      updateStats();
+      if (status) status.textContent = I18N[currentLanguage].statusSampleLoaded;
+      input.focus();
+    }
+
+    function clearInput() {
+      const input = document.getElementById("textInput");
+      const status = document.getElementById("statusText");
+      if (!input) return;
+      input.value = "";
+      updateStats();
+      if (status) status.textContent = I18N[currentLanguage].statusCleared;
+      input.focus();
+    }
+
+    function openSponsorModal(event) {
+      if (event && typeof event.preventDefault === "function") event.preventDefault();
+      const modal = document.getElementById("sponsorModal");
+      if (!modal) return;
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeSponsorModal() {
+      const modal = document.getElementById("sponsorModal");
+      if (!modal) return;
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+
+      document.getElementById("textInput")?.addEventListener("input", updateStats);
+      document.getElementById("copyStatsBtn")?.addEventListener("click", copyStats);
+      document.getElementById("sampleBtn")?.addEventListener("click", loadSample);
+      document.getElementById("clearBtn")?.addEventListener("click", clearInput);
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeSponsorModal();
+      });
+
+      applyLanguage(getInitialLanguage());
+    });
+  </script>
+  <script src="../sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

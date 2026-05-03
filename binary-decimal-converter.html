@@ -1,492 +1,523 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>binary-decimal-converter｜二进制/十进制/十六进制/八进制互转计算器</title>
-  <meta name="description" content="二进制/十进制/十六进制/八进制 互转计算器。在任意输入框输入数字，其他进制框自动同步转换结果。">
-  <meta name="keywords" content="binary decimal converter, 二进制十进制转换, 十六进制转换器, 八进制转换器, 进制转换计算器, 在线进制互转工具, 二进制转十进制, 十进制转十六进制">
-  <link rel="icon" type="image/png" href="./assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    html { scroll-behavior: smooth; }
-    .glass {
-      background: rgba(15, 23, 42, 0.72);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-    }
-    .input-focus-ring:focus {
-      box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.18);
-    }
-    .copy-pop {
-      animation: pop 0.18s ease-out;
-    }
-    @keyframes pop {
-      0% { transform: scale(0.96); }
-      100% { transform: scale(1); }
-    }
-  </style>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>进制转换器 - Micro Tools Matrix 浏览器本地工具</title>
+  <meta name="description" content="Micro Tools Matrix 进制转换器支持二进制、十进制、十六进制、八进制自动互转，浏览器本地处理，无需上传。">
+  <meta name="keywords" content="进制转换器, 二进制转十进制, 十六进制转换, 八进制转换, 浏览器本地处理, Micro Tools Matrix">
   <link rel="canonical" href="https://mymicrotools.xyz/binary-decimal-converter.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/binary-decimal-converter.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/binary-decimal-converter.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/binary-decimal-converter.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/binary-decimal-converter.html">
-  <meta property="og:title" content="binary-decimal-converter｜二进制/十进制/十六进制/八进制互转计算器">
-  <meta property="og:description" content="二进制/十进制/十六进制/八进制 互转计算器。在任意输入框输入数字，其他进制框自动同步转换结果。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="binary-decimal-converter｜二进制/十进制/十六进制/八进制互转计算器">
-  <meta name="twitter:description" content="二进制/十进制/十六进制/八进制 互转计算器。在任意输入框输入数字，其他进制框自动同步转换结果。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
-</head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="切换主题" title="切换主题">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="./binary-decimal-converter.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
-        <a href="./en/binary-decimal-converter.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="fixed inset-0 -z-10 overflow-hidden">
-    <div class="absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl"></div>
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(148,163,184,.18)_1px,transparent_0)] [background-size:28px_28px]"></div>
-  </div>
-
-  <header class="border-b border-gray-200 dark:border-white/10">
-    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-      <div class="glass rounded-3xl border border-gray-200 dark:border-white/10 p-6 shadow-2xl shadow-cyan-950/20 sm:p-10">
-        <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          <div>
-            <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-              在线进制互转工具
-            </p>
-            <h1 class="text-3xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">二进制/十进制/十六进制/八进制互转计算器</h1>
-            <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-              在二进制、十进制、十六进制、八进制之间实时自动转换。输入任意一个进制数值，其余结果即时同步。
-            </p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-4 text-sm text-slate-700 dark:text-slate-300">
-            <div class="flex items-center gap-2">
-              <span class="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-lg shadow-emerald-400/50"></span>
-              <span>支持超大整数</span>
-            </div>
-            <div class="mt-2 flex items-center gap-2">
-              <span class="h-2.5 w-2.5 rounded-full bg-cyan-400 shadow-lg shadow-cyan-400/50"></span>
-              <span>纯前端本地计算</span>
-            </div>
-            <div class="mt-2 flex items-center gap-2">
-              <span class="h-2.5 w-2.5 rounded-full bg-indigo-400 shadow-lg shadow-indigo-400/50"></span>
-              <span>移动端友好</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-    <section aria-labelledby="converter-title" class="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
-      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-xl shadow-slate-950/40 sm:p-7">
-        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <h2 id="converter-title" class="text-2xl font-bold text-gray-900 dark:text-white">进制输入与自动转换</h2>
-            <p class="mt-2 text-sm text-slate-400">可输入负整数，支持 0b、0o、0x 前缀；结果会自动格式化为大写十六进制。</p>
-          </div>
-          <button id="clearBtn" type="button" class="rounded-xl border border-rose-400/30 bg-rose-500/10 px-4 py-2 text-sm font-semibold text-rose-200 transition hover:bg-rose-500/20 active:scale-95 focus:outline-none focus:ring-4 focus:ring-rose-500/20">
-            清空全部
-          </button>
-        </div>
-
-        <div id="errorBox" class="mb-5 hidden rounded-2xl border border-red-400/40 bg-red-500/15 px-4 py-3 text-sm font-medium text-red-100" role="alert" aria-live="polite"></div>
-
-        <div class="space-y-4">
-          <div class="rounded-2xl border border-cyan-400/20 bg-cyan-950/20 p-4" data-card="2">
-            <div class="mb-2 flex items-center justify-between gap-3">
-              <label for="binaryInput" class="font-semibold text-cyan-100">二进制 Binary</label>
-              <span class="rounded-full bg-cyan-400/10 px-2.5 py-1 text-xs text-cyan-200">Base 2</span>
-            </div>
-            <div class="flex flex-col gap-3 sm:flex-row">
-              <input id="binaryInput" data-base="2" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：101010 或 0b101010" class="input-focus-ring w-full rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 px-4 py-3 font-mono text-base text-gray-900 dark:text-white outline-none transition placeholder:text-slate-600 focus:border-cyan-400" />
-              <button type="button" data-copy="binaryInput" class="copyBtn rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-4 focus:ring-cyan-500/20">复制</button>
-            </div>
-          </div>
-
-          <div class="rounded-2xl border border-emerald-400/20 bg-emerald-950/20 p-4" data-card="10">
-            <div class="mb-2 flex items-center justify-between gap-3">
-              <label for="decimalInput" class="font-semibold text-emerald-100">十进制 Decimal</label>
-              <span class="rounded-full bg-emerald-400/10 px-2.5 py-1 text-xs text-emerald-200">Base 10</span>
-            </div>
-            <div class="flex flex-col gap-3 sm:flex-row">
-              <input id="decimalInput" data-base="10" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：42 或 -255" class="input-focus-ring w-full rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 px-4 py-3 font-mono text-base text-gray-900 dark:text-white outline-none transition placeholder:text-slate-600 focus:border-emerald-400" />
-              <button type="button" data-copy="decimalInput" class="copyBtn rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-4 focus:ring-emerald-500/20">复制</button>
-            </div>
-          </div>
-
-          <div class="rounded-2xl border border-indigo-400/20 bg-indigo-950/20 p-4" data-card="16">
-            <div class="mb-2 flex items-center justify-between gap-3">
-              <label for="hexInput" class="font-semibold text-indigo-100">十六进制 Hexadecimal</label>
-              <span class="rounded-full bg-indigo-400/10 px-2.5 py-1 text-xs text-indigo-200">Base 16</span>
-            </div>
-            <div class="flex flex-col gap-3 sm:flex-row">
-              <input id="hexInput" data-base="16" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：2A 或 0xFF" class="input-focus-ring w-full rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 px-4 py-3 font-mono text-base uppercase text-gray-900 dark:text-white outline-none transition placeholder:normal-case placeholder:text-slate-600 focus:border-indigo-400" />
-              <button type="button" data-copy="hexInput" class="copyBtn rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-4 focus:ring-indigo-500/20">复制</button>
-            </div>
-          </div>
-
-          <div class="rounded-2xl border border-amber-400/20 bg-amber-950/20 p-4" data-card="8">
-            <div class="mb-2 flex items-center justify-between gap-3">
-              <label for="octalInput" class="font-semibold text-amber-100">八进制 Octal</label>
-              <span class="rounded-full bg-amber-400/10 px-2.5 py-1 text-xs text-amber-200">Base 8</span>
-            </div>
-            <div class="flex flex-col gap-3 sm:flex-row">
-              <input id="octalInput" data-base="8" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="例如：52 或 0o77" class="input-focus-ring w-full rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 px-4 py-3 font-mono text-base text-gray-900 dark:text-white outline-none transition placeholder:text-slate-600 focus:border-amber-400" />
-              <button type="button" data-copy="octalInput" class="copyBtn rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-95 focus:outline-none focus:ring-4 focus:ring-amber-500/20">复制</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <aside class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-5 shadow-xl shadow-slate-950/30 sm:p-7">
-        <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输出概览</h2>
-        <p class="mt-2 text-sm text-slate-400">当前有效数值会在此以不同进制集中展示，方便核对与复制。</p>
-
-        <div class="mt-6 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 p-5">
-          <p class="text-xs uppercase tracking-[0.24em] text-slate-500">Current Decimal Value</p>
-          <div id="summaryDecimal" class="mt-3 break-all font-mono text-2xl font-bold text-emerald-300">—</div>
-        </div>
-
-        <div class="mt-4 grid gap-4">
-          <div class="rounded-2xl bg-cyan-400/10 p-4">
-            <p class="text-sm font-semibold text-cyan-200">二进制位数</p>
-            <p id="binaryLength" class="mt-1 font-mono text-xl text-gray-900 dark:text-white">—</p>
-          </div>
-          <div class="rounded-2xl bg-indigo-400/10 p-4">
-            <p class="text-sm font-semibold text-indigo-200">十六进制位数</p>
-            <p id="hexLength" class="mt-1 font-mono text-xl text-gray-900 dark:text-white">—</p>
-          </div>
-          <div class="rounded-2xl bg-amber-400/10 p-4">
-            <p class="text-sm font-semibold text-amber-200">八进制位数</p>
-            <p id="octalLength" class="mt-1 font-mono text-xl text-gray-900 dark:text-white">—</p>
-          </div>
-        </div>
-
-        <div class="mt-6 rounded-2xl border border-sky-400/20 bg-sky-500/10 p-4 text-sm leading-6 text-sky-100">
-          <strong class="text-gray-900 dark:text-white">提示：</strong>本工具使用浏览器内置 BigInt 进行整数计算，可避免普通浮点数在超大整数场景下的精度丢失。
-        </div>
-      </aside>
-    </section>
-
-    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/70 p-6 shadow-xl shadow-slate-950/30 sm:p-8">
-      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">关于 binary-decimal-converter 在线进制转换计算器</h2>
-      <div class="mt-4 space-y-4 text-base leading-8 text-slate-700 dark:text-slate-300">
-        <p>
-          binary-decimal-converter 是一款面向开发者、计算机专业学生、嵌入式工程师和数字电路学习者的在线进制互转工具。它可以在二进制、十进制、十六进制和八进制之间进行实时转换，解决手动换算步骤繁琐、容易出错、超大整数精度不可靠等痛点。无论你需要进行二进制转十进制、十进制转十六进制，还是快速核对八进制权限值，本工具都能在浏览器中即时给出结果。
-        </p>
-        <p>
-          使用方法非常简单：在任意一个输入框中输入合法整数，例如在二进制框输入 101010，其他进制框会自动同步显示对应的十进制、十六进制与八进制结果。工具同时支持 0b、0o、0x 等常见前缀，并对非法字符提供清晰的错误提示，避免错误数据继续传播。对于程序调试、算法学习、网络协议分析、位运算验证和计算机组成原理练习，这个在线二进制十进制十六进制八进制转换器都能提供高效、干净且可靠的计算体验。
-        </p>
-      </div>
-    </article>
-  </main>
-
-  <footer class="mx-auto max-w-6xl px-4 pb-8 pt-2 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-    <p>© <span id="year"></span> binary-decimal-converter · 本地计算，不上传输入内容</p>
-  </footer>
-
-  <script>
-    (() => {
-      'use strict';
-
-      const inputs = {
-        2: document.getElementById('binaryInput'),
-        10: document.getElementById('decimalInput'),
-        16: document.getElementById('hexInput'),
-        8: document.getElementById('octalInput')
-      };
-
-      const errorBox = document.getElementById('errorBox');
-      const clearBtn = document.getElementById('clearBtn');
-      const summaryDecimal = document.getElementById('summaryDecimal');
-      const binaryLength = document.getElementById('binaryLength');
-      const hexLength = document.getElementById('hexLength');
-      const octalLength = document.getElementById('octalLength');
-      const year = document.getElementById('year');
-      const cards = Array.from(document.querySelectorAll('[data-card]'));
-      let isSyncing = false;
-
-      year.textContent = new Date().getFullYear();
-
-      const digitMap = (() => {
-        const map = new Map();
-        '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach((ch, index) => map.set(ch, index));
-        return map;
-      })();
-
-      function normalizeRaw(value) {
-        return String(value || '').trim().replace(/[\s,_]/g, '');
+  <link rel="stylesheet" href="./style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Binary Decimal Converter",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "url": "https://mymicrotools.xyz/binary-decimal-converter.html",
+      "description": "A free browser-local number base converter for binary, decimal, hexadecimal, and octal values.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "category": "Free"
       }
-
-      function stripAllowedPrefix(text, base) {
-        let sign = '';
-        let body = text;
-
-        if (body.startsWith('+') || body.startsWith('-')) {
-          sign = body[0] === '-' ? '-' : '';
-          body = body.slice(1);
-        }
-
-        const lower = body.toLowerCase();
-        if (base === 2 && lower.startsWith('0b')) body = body.slice(2);
-        if (base === 8 && lower.startsWith('0o')) body = body.slice(2);
-        if (base === 16 && lower.startsWith('0x')) body = body.slice(2);
-
-        return { sign, body };
-      }
-
-      function parseByBase(rawValue, base) {
-        const normalized = normalizeRaw(rawValue);
-        if (normalized === '') {
-          return { empty: true, value: 0n };
-        }
-
-        const { sign, body } = stripAllowedPrefix(normalized, base);
-        if (body === '') {
-          throw new Error('请输入完整的数字，不能只输入符号或进制前缀。');
-        }
-
-        let result = 0n;
-        const bigBase = BigInt(base);
-        const upperBody = body.toUpperCase();
-
-        for (const char of upperBody) {
-          const digit = digitMap.get(char);
-          if (digit === undefined || digit >= base) {
-            const baseName = base === 2 ? '二进制' : base === 8 ? '八进制' : base === 10 ? '十进制' : '十六进制';
-            throw new Error(`${baseName}输入包含非法字符“${char}”。该进制允许的字符范围为：${allowedChars(base)}。`);
-          }
-          result = result * bigBase + BigInt(digit);
-        }
-
-        return { empty: false, value: sign === '-' ? -result : result };
-      }
-
-      function allowedChars(base) {
-        if (base === 2) return '0-1';
-        if (base === 8) return '0-7';
-        if (base === 10) return '0-9';
-        return '0-9、A-F';
-      }
-
-      function formatByBase(value, base) {
-        if (base === 16) return value.toString(16).toUpperCase();
-        return value.toString(base);
-      }
-
-      function setError(message, sourceBase) {
-        errorBox.textContent = message;
-        errorBox.classList.remove('hidden');
-
-        Object.values(inputs).forEach(input => {
-          input.classList.remove('border-red-400', 'focus:border-red-400');
-        });
-
-        if (sourceBase && inputs[sourceBase]) {
-          inputs[sourceBase].classList.add('border-red-400', 'focus:border-red-400');
-        }
-      }
-
-      function clearError() {
-        errorBox.textContent = '';
-        errorBox.classList.add('hidden');
-        Object.values(inputs).forEach(input => {
-          input.classList.remove('border-red-400', 'focus:border-red-400');
-        });
-      }
-
-      function clearSummary() {
-        summaryDecimal.textContent = '—';
-        binaryLength.textContent = '—';
-        hexLength.textContent = '—';
-        octalLength.textContent = '—';
-      }
-
-      function updateSummary(value) {
-        const absValue = value < 0n ? -value : value;
-        const bin = absValue.toString(2);
-        const hex = absValue.toString(16).toUpperCase();
-        const oct = absValue.toString(8);
-
-        summaryDecimal.textContent = value.toString(10);
-        binaryLength.textContent = `${bin.length} 位`;
-        hexLength.textContent = `${hex.length} 位`;
-        octalLength.textContent = `${oct.length} 位`;
-      }
-
-      function clearAll() {
-        isSyncing = true;
-        Object.values(inputs).forEach(input => {
-          input.value = '';
-          input.classList.remove('ring-2', 'ring-cyan-400/50');
-        });
-        isSyncing = false;
-        clearError();
-        clearSummary();
-        highlightCard(null);
-      }
-
-      function highlightCard(base) {
-        cards.forEach(card => {
-          const active = String(card.dataset.card) === String(base);
-          card.classList.toggle('ring-2', active);
-          card.classList.toggle('ring-cyan-400/50', active);
-          card.classList.toggle('bg-white/5', active);
-        });
-      }
-
-      function syncFrom(sourceInput) {
-        if (isSyncing) return;
-
-        const base = Number(sourceInput.dataset.base);
-        const raw = sourceInput.value;
-
-        try {
-          const parsed = parseByBase(raw, base);
-
-          if (parsed.empty) {
-            clearAll();
-            return;
-          }
-
-          clearError();
-          highlightCard(base);
-          isSyncing = true;
-
-          Object.entries(inputs).forEach(([targetBase, input]) => {
-            if (input !== sourceInput) {
-              input.value = formatByBase(parsed.value, Number(targetBase));
-            }
-          });
-
-          isSyncing = false;
-          updateSummary(parsed.value);
-        } catch (err) {
-          isSyncing = false;
-          setError(err && err.message ? err.message : '输入格式不正确，请检查后重试。', base);
-        }
-      }
-
-      Object.values(inputs).forEach(input => {
-        input.addEventListener('input', () => syncFrom(input));
-        input.addEventListener('focus', () => highlightCard(input.dataset.base));
-        input.addEventListener('blur', () => {
-          if (!Object.values(inputs).some(el => el === document.activeElement)) {
-            const hasValue = Object.values(inputs).some(el => el.value.trim() !== '');
-            if (!hasValue) highlightCard(null);
-          }
-        });
-      });
-
-      clearBtn.addEventListener('click', () => {
-        clearBtn.classList.add('scale-95');
-        setTimeout(() => clearBtn.classList.remove('scale-95'), 120);
-        clearAll();
-        inputs[10].focus();
-      });
-
-      async function copyText(text) {
-        if (!text) {
-          throw new Error('当前没有可复制的内容。');
-        }
-
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(text);
-          return;
-        }
-
-        const textarea = document.createElement('textarea');
-        textarea.value = text;
-        textarea.setAttribute('readonly', '');
-        textarea.style.position = 'fixed';
-        textarea.style.left = '-9999px';
-        document.body.appendChild(textarea);
-        textarea.select();
-        const ok = document.execCommand('copy');
-        document.body.removeChild(textarea);
-        if (!ok) throw new Error('复制失败，请手动选择文本复制。');
-      }
-
-      document.querySelectorAll('.copyBtn').forEach(button => {
-        button.addEventListener('click', async () => {
-          const target = document.getElementById(button.dataset.copy);
-          const originalText = button.textContent;
-
-          try {
-            await copyText(target.value.trim());
-            button.textContent = '已复制';
-            button.classList.add('bg-emerald-500/20', 'text-emerald-100', 'copy-pop');
-            clearError();
-          } catch (err) {
-            setError(err && err.message ? err.message : '复制失败，请稍后重试。');
-          } finally {
-            setTimeout(() => {
-              button.textContent = originalText;
-              button.classList.remove('bg-emerald-500/20', 'text-emerald-100', 'copy-pop');
-            }, 1100);
-          }
-        });
-      });
-
-      clearSummary();
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
     }
   </script>
-  <!-- pwa-register:end -->
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">进制转换器</span>
+        </span>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="语言" data-i18n-aria-label="languageGroup" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">进制转换器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在任意输入框输入二进制、十进制、十六进制或八进制整数，其他进制会立即在浏览器内同步换算，无需上传。</p>
+        </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <div class="space-y-4">
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="decimalLabel">十进制</span>
+            <input id="decimalInput" inputmode="text" autocomplete="off" spellcheck="false" class="tabular-nums w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="decimalPlaceholder" placeholder="例如：255">
+          </label>
+
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="binaryLabel">二进制</span>
+            <input id="binaryInput" inputmode="text" autocomplete="off" spellcheck="false" class="tabular-nums w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="binaryPlaceholder" placeholder="例如：11111111">
+          </label>
+
+          <p id="formatHint" class="text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="formatHint">支持整数、负号、空格和下划线分隔；十六进制可使用 0x 前缀。</p>
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+        </div>
+
+        <div class="space-y-4">
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="hexLabel">十六进制</span>
+            <input id="hexInput" inputmode="text" autocomplete="off" spellcheck="false" class="tabular-nums w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="hexPlaceholder" placeholder="例如：FF">
+          </label>
+
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="octalLabel">八进制</span>
+            <input id="octalInput" inputmode="text" autocomplete="off" spellcheck="false" class="tabular-nums w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="octalPlaceholder" placeholder="例如：377">
+          </label>
+
+          <p id="statusText" class="min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite" data-i18n="statusReady">输入任意进制数值即可自动转换。</p>
+
+          <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <button id="copyAllBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">复制结果</button>
+            <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">填入示例</button>
+            <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">Micro Tools Matrix 的进制转换器是一款免费的在线开发者工具，适合调试协议字段、位掩码、颜色值、权限值和嵌入式寄存器时快速换算。页面支持二进制、十进制、十六进制、八进制四种常用整数表示法，在任意输入框输入后会自动同步其他结果。所有计算都在浏览器本地处理，无需上传数字、代码片段或业务数据，也不会依赖远程接口。你可以放心在 Windows、macOS、Android 或 iOS 设备上使用它完成日常进制互转、复制结果和示例验证。</article>
+  </main>
+
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+
+  <script>
+    const I18N = {
+      zh: {
+        htmlLang: "zh-CN",
+        toolName: "进制转换器",
+        h1: "进制转换器",
+        title: "进制转换器 - Micro Tools Matrix 浏览器本地工具",
+        metaDescription: "Micro Tools Matrix 进制转换器支持二进制、十进制、十六进制、八进制自动互转，浏览器本地处理，无需上传。",
+        metaKeywords: "进制转换器, 二进制转十进制, 十六进制转换, 八进制转换, 浏览器本地处理, Micro Tools Matrix",
+        sponsor: "赞赏",
+        buyCoffee: "Buy Me a Coffee",
+        languageGroup: "语言",
+        eyebrow: "浏览器本地处理",
+        intro: "在任意输入框输入二进制、十进制、十六进制或八进制整数，其他进制会立即在浏览器内同步换算，无需上传。",
+        localBadge: "本地运行",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        outputTitle: "结果",
+        outputBadge: "输出",
+        decimalLabel: "十进制",
+        binaryLabel: "二进制",
+        hexLabel: "十六进制",
+        octalLabel: "八进制",
+        decimalPlaceholder: "例如：255",
+        binaryPlaceholder: "例如：11111111",
+        hexPlaceholder: "例如：FF",
+        octalPlaceholder: "例如：377",
+        formatHint: "支持整数、负号、空格和下划线分隔；十六进制可使用 0x 前缀。",
+        statusReady: "输入任意进制数值即可自动转换。",
+        statusConverted: "已从{base}转换完成。",
+        statusCleared: "已清空。",
+        statusSample: "已填入示例值。",
+        statusCopied: "结果已复制到剪贴板。",
+        statusCopyFailed: "无法写入剪贴板，请手动复制。",
+        statusNothingToCopy: "没有可复制的结果。",
+        errorInvalid: "{base}输入包含无效字符。",
+        errorEmpty: "输入任意进制数值即可自动转换。",
+        baseDecimal: "十进制",
+        baseBinary: "二进制",
+        baseHex: "十六进制",
+        baseOctal: "八进制",
+        primaryAction: "复制结果",
+        sampleAction: "填入示例",
+        secondaryAction: "清空",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        seoArticle: "Micro Tools Matrix 的进制转换器是一款免费的在线开发者工具，适合调试协议字段、位掩码、颜色值、权限值和嵌入式寄存器时快速换算。页面支持二进制、十进制、十六进制、八进制四种常用整数表示法，在任意输入框输入后会自动同步其他结果。所有计算都在浏览器本地处理，无需上传数字、代码片段或业务数据，也不会依赖远程接口。你可以放心在 Windows、macOS、Android 或 iOS 设备上使用它完成日常进制互转、复制结果和示例验证。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
+      },
+      en: {
+        htmlLang: "en",
+        toolName: "Base Converter",
+        h1: "Base Converter",
+        title: "Base Converter - Micro Tools Matrix Browser-Local Tool",
+        metaDescription: "Convert binary, decimal, hexadecimal, and octal integers instantly with Micro Tools Matrix. Browser-local processing, no upload required.",
+        metaKeywords: "base converter, binary to decimal, hexadecimal converter, octal converter, browser-local processing, free online developer tool, Micro Tools Matrix",
+        sponsor: "Sponsor",
+        buyCoffee: "Buy Me a Coffee",
+        languageGroup: "Language",
+        eyebrow: "Browser-local processing",
+        intro: "Type an integer in any binary, decimal, hexadecimal, or octal field and the other bases update instantly in your browser with no upload.",
+        localBadge: "Local",
+        inputTitle: "Input",
+        inputBadge: "Input",
+        outputTitle: "Results",
+        outputBadge: "Output",
+        decimalLabel: "Decimal",
+        binaryLabel: "Binary",
+        hexLabel: "Hexadecimal",
+        octalLabel: "Octal",
+        decimalPlaceholder: "Example: 255",
+        binaryPlaceholder: "Example: 11111111",
+        hexPlaceholder: "Example: FF",
+        octalPlaceholder: "Example: 377",
+        formatHint: "Supports integers, negative signs, spaces, and underscores; hexadecimal may use the 0x prefix.",
+        statusReady: "Enter a value in any base to convert automatically.",
+        statusConverted: "Converted from {base}.",
+        statusCleared: "Cleared.",
+        statusSample: "Sample value inserted.",
+        statusCopied: "Results copied to the clipboard.",
+        statusCopyFailed: "Clipboard access failed. Please copy manually.",
+        statusNothingToCopy: "There is no result to copy.",
+        errorInvalid: "The {base} input contains invalid characters.",
+        errorEmpty: "Enter a value in any base to convert automatically.",
+        baseDecimal: "decimal",
+        baseBinary: "binary",
+        baseHex: "hexadecimal",
+        baseOctal: "octal",
+        primaryAction: "Copy results",
+        sampleAction: "Use sample",
+        secondaryAction: "Clear",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        seoArticle: "Micro Tools Matrix provides this free online developer tool for quick number base conversion during debugging, protocol analysis, permission review, bit mask work, embedded register inspection, and everyday programming tasks. The page converts between binary, decimal, hexadecimal, and octal integer notation as soon as you type in any field, so you can compare representations without switching tools or sending data away. All logic uses browser-local processing: your values stay in memory on the current page, with no upload and no remote computation. The converter supports negative integers, optional spacing, underscores for readability, and common hexadecimal prefixes. It is designed to work smoothly on Windows, macOS, Android, and iOS, with a compact responsive layout, copy action, clear action, and a sample value for quick verification. Use it whenever you need a fast, private, and consistent base conversion workflow inside the Micro Tools Matrix toolkit.",
+        footer: "Micro Tools Matrix - browser-local processing with no upload."
+      }
+    };
+
+    const BASES = {
+      decimal: { radix: 10, inputId: "decimalInput", labelKey: "baseDecimal", pattern: /^[0-9]+$/ },
+      binary: { radix: 2, inputId: "binaryInput", labelKey: "baseBinary", pattern: /^[01]+$/ },
+      hex: { radix: 16, inputId: "hexInput", labelKey: "baseHex", pattern: /^[0-9a-fA-F]+$/ },
+      octal: { radix: 8, inputId: "octalInput", labelKey: "baseOctal", pattern: /^[0-7]+$/ }
+    };
+
+    let currentLanguage = "zh";
+    let lastStatusKey = "statusReady";
+    let lastStatusParams = {};
+    let updatingFields = false;
+    let lastValue = null;
+
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      return localStorage.getItem("microToolsLanguage") || "zh";
+    }
+
+    function translate(key, params = {}) {
+      const dict = I18N[currentLanguage] || I18N.zh;
+      let text = dict[key] || I18N.zh[key] || "";
+      Object.keys(params).forEach((name) => {
+        text = text.replaceAll("{" + name + "}", params[name]);
+      });
+      return text;
+    }
+
+    function getThemeMode() {
+      const saved = localStorage.getItem("microToolsTheme") || localStorage.getItem("theme") || "system";
+      if (saved === "light" || saved === "dark" || saved === "system") return saved;
+      return "system";
+    }
+
+    function updateThemeLabel() {
+      const label = document.querySelector("[data-theme-label]");
+      if (!label) return;
+      const mode = getThemeMode();
+      const key = mode === "light" ? "themeLight" : mode === "dark" ? "themeDark" : "themeSystem";
+      label.textContent = translate(key);
+    }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+
+      document.documentElement.lang = dict.htmlLang;
+      document.title = dict.title;
+
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute("content", dict.metaDescription);
+
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (keywords) keywords.setAttribute("content", dict.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && dict[key]) node.textContent = dict[key];
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && dict[key]) node.setAttribute("placeholder", dict[key]);
+      });
+
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && dict[key]) node.setAttribute("aria-label", dict[key]);
+      });
+
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && dict[key]) node.setAttribute("title", dict[key]);
+      });
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        if (currentLanguage === "zh") {
+          zhBtn.classList.add("bg-cyan-400", "text-slate-950");
+          enBtn.classList.add("text-slate-600", "dark:text-slate-400");
+        } else {
+          enBtn.classList.add("bg-cyan-400", "text-slate-950");
+          zhBtn.classList.add("text-slate-600", "dark:text-slate-400");
+        }
+      }
+
+      updateStatus(lastStatusKey, lastStatusParams);
+      updateThemeLabel();
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function setLanguage(lang) {
+      localStorage.setItem("microToolsLanguage", lang);
+      applyLanguage(lang);
+    }
+
+    function updateStatus(key, params = {}, isError = false) {
+      lastStatusKey = key;
+      lastStatusParams = params;
+      const status = document.getElementById("statusText");
+      if (!status) return;
+      status.textContent = translate(key, params);
+      status.className = isError
+        ? "min-h-6 text-sm leading-6 text-rose-600 dark:text-rose-400"
+        : "min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400";
+    }
+
+    function normalizeInput(raw, baseName) {
+      let value = String(raw || "").trim().replace(/[\s_]/g, "");
+      if (!value) return { empty: true };
+
+      let sign = "";
+      if (value.startsWith("-") || value.startsWith("+")) {
+        sign = value.slice(0, 1);
+        value = value.slice(1);
+      }
+
+      if (baseName === "hex" && (value.startsWith("0x") || value.startsWith("0X"))) {
+        value = value.slice(2);
+      }
+
+      if (!value) return { invalid: true };
+      const config = BASES[baseName];
+      if (!config.pattern.test(value)) return { invalid: true };
+      return { normalized: sign + value };
+    }
+
+    function parseBigIntByBase(normalized, baseName) {
+      const negative = normalized.startsWith("-");
+      const unsigned = normalized.replace(/^[+-]/, "");
+      const radix = BASES[baseName].radix;
+      let result = 0n;
+      const alphabet = "0123456789abcdef";
+
+      for (const char of unsigned.toLowerCase()) {
+        const digit = BigInt(alphabet.indexOf(char));
+        result = result * BigInt(radix) + digit;
+      }
+
+      return negative ? -result : result;
+    }
+
+    function formatBigInt(value, radix) {
+      if (value < 0n) return "-" + (-value).toString(radix).toUpperCase();
+      return value.toString(radix).toUpperCase();
+    }
+
+    function setFieldValues(value, sourceName) {
+      updatingFields = true;
+      Object.keys(BASES).forEach((name) => {
+        if (name === sourceName) return;
+        const input = document.getElementById(BASES[name].inputId);
+        if (!input) return;
+        input.value = formatBigInt(value, BASES[name].radix);
+      });
+      updatingFields = false;
+    }
+
+    function clearFields(exceptName) {
+      updatingFields = true;
+      Object.keys(BASES).forEach((name) => {
+        if (name === exceptName) return;
+        const input = document.getElementById(BASES[name].inputId);
+        if (input) input.value = "";
+      });
+      updatingFields = false;
+      lastValue = null;
+    }
+
+    function handleInput(baseName) {
+      if (updatingFields) return;
+
+      const input = document.getElementById(BASES[baseName].inputId);
+      if (!input) return;
+
+      const normalized = normalizeInput(input.value, baseName);
+      const baseLabel = translate(BASES[baseName].labelKey);
+
+      if (normalized.empty) {
+        clearFields(baseName);
+        updateStatus("errorEmpty");
+        return;
+      }
+
+      if (normalized.invalid) {
+        clearFields(baseName);
+        updateStatus("errorInvalid", { base: baseLabel }, true);
+        return;
+      }
+
+      try {
+        const value = parseBigIntByBase(normalized.normalized, baseName);
+        lastValue = value;
+        setFieldValues(value, baseName);
+        updateStatus("statusConverted", { base: baseLabel });
+      } catch (error) {
+        clearFields(baseName);
+        updateStatus("errorInvalid", { base: baseLabel }, true);
+      }
+    }
+
+    function clearAll() {
+      updatingFields = true;
+      Object.values(BASES).forEach((config) => {
+        const input = document.getElementById(config.inputId);
+        if (input) input.value = "";
+      });
+      updatingFields = false;
+      lastValue = null;
+      updateStatus("statusCleared");
+    }
+
+    function fillSample() {
+      const decimal = document.getElementById("decimalInput");
+      if (!decimal) return;
+      decimal.value = "255";
+      handleInput("decimal");
+      updateStatus("statusSample");
+    }
+
+    function buildCopyText() {
+      const values = {
+        decimal: document.getElementById("decimalInput")?.value || "",
+        binary: document.getElementById("binaryInput")?.value || "",
+        hex: document.getElementById("hexInput")?.value || "",
+        octal: document.getElementById("octalInput")?.value || ""
+      };
+
+      if (!values.decimal && !values.binary && !values.hex && !values.octal) return "";
+
+      return [
+        translate("decimalLabel") + ": " + values.decimal,
+        translate("binaryLabel") + ": " + values.binary,
+        translate("hexLabel") + ": " + values.hex,
+        translate("octalLabel") + ": " + values.octal
+      ].join("\n");
+    }
+
+    async function copyAllResults() {
+      const text = buildCopyText();
+      if (!text) {
+        updateStatus("statusNothingToCopy", {}, true);
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(text);
+        updateStatus("statusCopied");
+      } catch (error) {
+        updateStatus("statusCopyFailed", {}, true);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+
+      Object.keys(BASES).forEach((baseName) => {
+        document.getElementById(BASES[baseName].inputId)?.addEventListener("input", () => handleInput(baseName));
+      });
+
+      document.getElementById("copyAllBtn")?.addEventListener("click", copyAllResults);
+      document.getElementById("sampleBtn")?.addEventListener("click", fillSample);
+      document.getElementById("clearBtn")?.addEventListener("click", clearAll);
+
+      applyLanguage(getInitialLanguage());
+    });
+
+    window.addEventListener("storage", (event) => {
+      if (event.key === "microToolsTheme" || event.key === "theme") updateThemeLabel();
+    });
+
+    document.addEventListener("click", () => {
+      setTimeout(updateThemeLabel, 0);
+    });
+  </script>
+  <script src="./sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

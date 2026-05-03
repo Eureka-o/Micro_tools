@@ -1,473 +1,534 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jwt-decoder - JWT 本地解码器</title>
-  <meta name="description" content="JWT (JSON Web Token) 本地解码器。纯前端解析Header和Payload，不向服务器发送任何数据以保证安全。">
-  <meta name="keywords" content="jwt-decoder,JWT解码器,JSON Web Token解析,JWT本地解码,JWT Header Payload,在线JWT解析工具,前端JWT调试">
-  <link rel="icon" type="image/png" href="../assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
-  <link rel="canonical" href="https://mymicrotools.xyz/en/jwt-decoder.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JWT 本地解码器 - Micro Tools Matrix</title>
+  <meta name="description" content="Micro Tools Matrix 的 JWT 本地解码器可在浏览器内解析 JSON Web Token 的 Header 和 Payload，无需上传，适合安全检查与开发调试。">
+  <meta name="keywords" content="JWT 本地解码器, JSON Web Token, JWT decoder, 浏览器本地处理, 无需上传, Micro Tools Matrix, 免费开发者工具">
+  <link rel="canonical" href="https://mymicrotools.xyz/jwt-decoder.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/jwt-decoder.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/jwt-decoder.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/jwt-decoder.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/en/jwt-decoder.html">
-  <meta property="og:title" content="jwt-decoder - JWT 本地解码器">
-  <meta property="og:description" content="JWT (JSON Web Token) 本地解码器。纯前端解析Header和Payload，不向服务器发送任何数据以保证安全。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="jwt-decoder - JWT 本地解码器">
-  <meta name="twitter:description" content="JWT (JSON Web Token) 本地解码器。纯前端解析Header和Payload，不向服务器发送任何数据以保证安全。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="../style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "JWT Local Decoder",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A browser-local JWT decoder for inspecting JSON Web Token header and payload without uploading data.",
+      "url": "https://mymicrotools.xyz/jwt-decoder.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "category": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">JWT 本地解码器</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="../jwt-decoder.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./jwt-decoder.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="pointer-events-none fixed inset-0 overflow-hidden">
-    <div class="absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-indigo-500/10 blur-3xl"></div>
-  </div>
-
-  <main class="relative mx-auto flex min-h-screen w-full max-w-7xl flex-col px-4 py-6 sm:px-6 lg:px-8">
-    <header class="mb-8 overflow-hidden rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-6 shadow-2xl shadow-cyan-950/30 backdrop-blur md:p-10">
-      <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-        <div>
-          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-            纯前端 · 本地解析 · 不上传 Token
-          </p>
-          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">JWT 本地解码器</h1>
-          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            JWT (JSON Web Token) 本地解码器。直接在浏览器中解析 Header 和 Payload，帮助你快速查看令牌声明、过期时间与签发信息。
-          </p>
-        </div>
-        <div class="rounded-2xl border border-emerald-400/20 bg-emerald-400/10 px-5 py-4 text-sm text-emerald-100">
-          <div class="font-semibold">隐私安全提示</div>
-          <div class="mt-1 text-emerald-100/80">解码逻辑仅在当前页面执行，不会向服务器发送任何 JWT 内容。</div>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeToggle">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" data-i18n-aria-label="language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langZh">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langEn">EN</button>
         </div>
       </div>
-    </header>
+    </nav>
+  </header>
 
-    <section class="grid gap-6 lg:grid-cols-2">
-      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-xl shadow-black/20 backdrop-blur sm:p-6">
-        <div class="mb-4 flex items-center justify-between gap-3">
-          <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入 JWT</h2>
-            <p class="mt-1 text-sm text-slate-400">粘贴完整的 JSON Web Token，通常由三个以点号分隔的部分组成。</p>
-          </div>
-          <span id="charCount" class="shrink-0 rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">0 characters</span>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">JWT 本地解码器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中直接解析 JSON Web Token 的 Header 和 Payload，内容仅在浏览器内处理，无需上传到服务器。</p>
         </div>
-
-        <label for="jwtInput" class="sr-only">JWT 输入框</label>
-        <textarea id="jwtInput" spellcheck="false" autocomplete="off" class="min-h-[260px] w-full resize-y rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="在此粘贴 JWT，例如：eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."></textarea>
-
-        <div id="errorBox" class="mt-4 hidden rounded-2xl border border-red-400/40 bg-red-500/10 p-4 text-sm text-red-100" role="alert"></div>
-        <div id="successBox" class="mt-4 hidden rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-4 text-sm text-emerald-100" role="status"></div>
-
-        <div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <button id="decodeBtn" type="button" class="rounded-2xl bg-cyan-400 px-4 py-3 text-sm font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition active:scale-95 hover:bg-cyan-300 focus:outline-none focus:ring-4 focus:ring-cyan-400/30">
-            解码
-          </button>
-          <button id="sampleBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 text-sm font-semibold text-slate-900 dark:text-slate-100 transition active:scale-95 hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none focus:ring-4 focus:ring-slate-500/30">
-            示例
-          </button>
-          <button id="clearBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-4 py-3 text-sm font-semibold text-slate-900 dark:text-slate-100 transition active:scale-95 hover:bg-slate-100 dark:hover:bg-slate-700 focus:outline-none focus:ring-4 focus:ring-slate-500/30">
-            Clear
-          </button>
-          <button id="copyAllBtn" type="button" class="rounded-2xl border border-cyan-400/40 bg-cyan-400/10 px-4 py-3 text-sm font-semibold text-cyan-100 transition active:scale-95 hover:bg-cyan-400/20 focus:outline-none focus:ring-4 focus:ring-cyan-400/20">
-            Copy result
-          </button>
-        </div>
-      </div>
-
-      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5 shadow-xl shadow-black/20 backdrop-blur sm:p-6">
-        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">解码结果</h2>
-            <p class="mt-1 text-sm text-slate-400">仅解码内容，不验证签名有效性。</p>
-          </div>
-          <div id="statusBadge" class="w-fit rounded-full border border-slate-600 bg-slate-50 dark:bg-slate-800 px-3 py-1 text-xs font-medium text-slate-700 dark:text-slate-300">等待输入</div>
-        </div>
-
-        <div class="grid gap-4">
-          <section class="rounded-2xl border border-slate-700/80 bg-white dark:bg-slate-950/60">
-            <div class="flex items-center justify-between border-b border-slate-700/80 px-4 py-3">
-              <h3 class="font-semibold text-cyan-100">Header</h3>
-              <button data-copy="headerOutput" class="copyBtn rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-1.5 text-xs font-semibold text-slate-800 dark:text-slate-200 transition active:scale-95 hover:bg-slate-100 dark:hover:bg-slate-700">Copy</button>
-            </div>
-            <pre id="headerOutput" class="max-h-72 overflow-auto p-4 text-sm leading-6 text-slate-800 dark:text-slate-200"><code>{}</code></pre>
-          </section>
-
-          <section class="rounded-2xl border border-slate-700/80 bg-white dark:bg-slate-950/60">
-            <div class="flex items-center justify-between border-b border-slate-700/80 px-4 py-3">
-              <h3 class="font-semibold text-indigo-100">Payload</h3>
-              <button data-copy="payloadOutput" class="copyBtn rounded-xl bg-slate-50 dark:bg-slate-800 px-3 py-1.5 text-xs font-semibold text-slate-800 dark:text-slate-200 transition active:scale-95 hover:bg-slate-100 dark:hover:bg-slate-700">Copy</button>
-            </div>
-            <pre id="payloadOutput" class="max-h-72 overflow-auto p-4 text-sm leading-6 text-slate-800 dark:text-slate-200"><code>{}</code></pre>
-          </section>
-
-          <section class="rounded-2xl border border-slate-700/80 bg-white dark:bg-slate-950/60 p-4">
-            <h3 class="mb-3 font-semibold text-emerald-100">常用声明解析</h3>
-            <dl id="claimsOutput" class="grid gap-3 text-sm sm:grid-cols-2">
-              <div class="rounded-xl bg-slate-100 dark:bg-slate-900 p-3"><dt class="text-slate-400">签发者 iss</dt><dd class="mt-1 break-all text-slate-800 dark:text-slate-200">-</dd></div>
-              <div class="rounded-xl bg-slate-100 dark:bg-slate-900 p-3"><dt class="text-slate-400">主题 sub</dt><dd class="mt-1 break-all text-slate-800 dark:text-slate-200">-</dd></div>
-              <div class="rounded-xl bg-slate-100 dark:bg-slate-900 p-3"><dt class="text-slate-400">受众 aud</dt><dd class="mt-1 break-all text-slate-800 dark:text-slate-200">-</dd></div>
-              <div class="rounded-xl bg-slate-100 dark:bg-slate-900 p-3"><dt class="text-slate-400">过期时间 exp</dt><dd class="mt-1 break-all text-slate-800 dark:text-slate-200">-</dd></div>
-            </dl>
-          </section>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl shadow-black/20 backdrop-blur md:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 jwt-decoder 本地 JWT 解码工具</h2>
-      <p>
-        jwt-decoder 是一款面向前端开发者、后端工程师与接口测试人员的在线 JWT 本地解码器，用于快速解析 JSON Web Token 的 Header 与 Payload。很多调试场景需要查看 alg、typ、iss、sub、aud、exp 等声明，但又担心把敏感 Token 上传到第三方服务。本工具的核心优势是纯前端运行，所有 JWT 解析都在浏览器内完成，不向服务器发送任何数据，适合登录鉴权排查、API 联调、OAuth 调试和过期时间检查。使用时只需将完整 JWT 粘贴到输入框，点击“解码”即可获得格式化 JSON 与常用声明说明。需要注意的是，JWT 解码不等同于签名验证，本工具帮助你安全查看令牌内容，但不能证明 Token 未被篡改。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
 
-    <footer class="py-8 text-center text-sm text-slate-500">
-      jwt-decoder · Local JSON Web Token Decoder
-    </footer>
+        <label for="jwtInput" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="jwtLabel">JWT 文本</label>
+        <textarea id="jwtInput" rows="12" spellcheck="false" autocomplete="off" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="jwtPlaceholder" placeholder="粘贴由三段组成的 JWT，例如 header.payload.signature"></textarea>
+
+        <p id="inputHint" class="mt-3 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="inputHint">此工具只解码内容，不验证签名，也不会发送任何文本。</p>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="decodeBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">解码</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">填入示例</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="clearAction">清空</button>
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+        </div>
+
+        <div class="grid gap-3 sm:grid-cols-3">
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-slate-950/70">
+            <div class="text-xs font-semibold text-slate-500 dark:text-slate-400" data-i18n="partsLabel">段数</div>
+            <div id="partsCount" class="mt-1 text-xl font-black tabular-nums text-slate-950 dark:text-white">0</div>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-slate-950/70">
+            <div class="text-xs font-semibold text-slate-500 dark:text-slate-400" data-i18n="headerBytesLabel">Header 字符</div>
+            <div id="headerLength" class="mt-1 text-xl font-black tabular-nums text-slate-950 dark:text-white">0</div>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-slate-950/70">
+            <div class="text-xs font-semibold text-slate-500 dark:text-slate-400" data-i18n="payloadBytesLabel">Payload 字符</div>
+            <div id="payloadLength" class="mt-1 text-xl font-black tabular-nums text-slate-950 dark:text-white">0</div>
+          </div>
+        </div>
+
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-status-key="statusEmpty" data-i18n="statusEmpty">粘贴 JWT 后点击解码。</p>
+
+        <div class="mt-4 space-y-4">
+          <div>
+            <div class="mb-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <h3 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="headerTitle">Header</h3>
+              <button id="copyHeaderBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="copyHeader">复制 Header</button>
+            </div>
+            <pre id="headerOutput" class="min-h-28 max-w-full overflow-x-auto whitespace-pre-wrap break-words rounded-2xl border border-gray-200 bg-slate-50 p-4 font-mono text-sm leading-6 text-slate-900 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100"></pre>
+          </div>
+
+          <div>
+            <div class="mb-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <h3 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="payloadTitle">Payload</h3>
+              <button id="copyPayloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="copyPayload">复制 Payload</button>
+            </div>
+            <pre id="payloadOutput" class="min-h-28 max-w-full overflow-x-auto whitespace-pre-wrap break-words rounded-2xl border border-gray-200 bg-slate-50 p-4 font-mono text-sm leading-6 text-slate-900 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100"></pre>
+          </div>
+
+          <div>
+            <div class="mb-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <h3 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="signatureTitle">Signature</h3>
+              <button id="copyAllBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="copyAll">复制全部结果</button>
+            </div>
+            <pre id="signatureOutput" class="min-h-16 max-w-full overflow-x-auto whitespace-pre-wrap break-all rounded-2xl border border-gray-200 bg-slate-50 p-4 font-mono text-sm leading-6 text-slate-900 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100"></pre>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">JWT 本地解码器是 Micro Tools Matrix 为开发者准备的免费在线开发者工具，用于快速查看 JSON Web Token 的 Header 与 Payload。你可以把登录态调试、接口联调或权限排查中的 JWT 粘贴到页面中，工具会在浏览器本地处理并格式化 JSON，帮助你确认 alg、typ、iss、sub、aud、exp、iat 等字段。整个过程无需上传、无需注册，也不会把令牌内容发送到服务器，适合处理敏感测试数据。请注意，本工具只负责解码展示，不验证签名真伪，也不判断令牌是否可信；在生产环境排查安全问题时，仍应结合后端密钥、证书与授权策略进行校验。</article>
   </main>
 
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+
+  <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md">
+    <div class="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
+      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor">×</button>
+      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">赞赏支持</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">保持工具免费、快速且无广告。</p>
+      <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="buyCoffee">Buy Me a Coffee</a>
+    </div>
+  </div>
+
   <script>
-    (() => {
-      const jwtInput = document.getElementById('jwtInput');
-      const decodeBtn = document.getElementById('decodeBtn');
-      const clearBtn = document.getElementById('clearBtn');
-      const sampleBtn = document.getElementById('sampleBtn');
-      const copyAllBtn = document.getElementById('copyAllBtn');
-      const errorBox = document.getElementById('errorBox');
-      const successBox = document.getElementById('successBox');
-      const headerOutput = document.getElementById('headerOutput');
-      const payloadOutput = document.getElementById('payloadOutput');
-      const claimsOutput = document.getElementById('claimsOutput');
-      const statusBadge = document.getElementById('statusBadge');
-      const charCount = document.getElementById('charCount');
-
-      let lastDecoded = null;
-
-      const sampleToken = [
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
-        'eyJpc3MiOiJqd3QtZGVjb2RlciIsInN1YiI6InVzZXItMTIzNDUiLCJhdWQiOiJkZW1vLWFwaSIsIm5hbWUiOiLlvKDkuIkiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzU2ODk2MDAsIm5iZiI6MTczNTY4OTYwMCwiZXhwIjoxNzY3MjI1NjAwfQ',
-        'demo-signature-not-verified'
-      ].join('.');
-
-      function setText(el, text) {
-        el.textContent = text;
+    const I18N = {
+      zh: {
+        documentTitle: "JWT 本地解码器 - Micro Tools Matrix",
+        metaDescription: "Micro Tools Matrix 的 JWT 本地解码器可在浏览器内解析 JSON Web Token 的 Header 和 Payload，无需上传，适合安全检查与开发调试。",
+        metaKeywords: "JWT 本地解码器, JSON Web Token, JWT decoder, 浏览器本地处理, 无需上传, Micro Tools Matrix, 免费开发者工具",
+        toolName: "JWT 本地解码器",
+        h1: "JWT 本地解码器",
+        eyebrow: "浏览器本地处理",
+        intro: "在 Micro Tools Matrix 中直接解析 JSON Web Token 的 Header 和 Payload，内容仅在浏览器内处理，无需上传到服务器。",
+        localBadge: "本地运行",
+        sponsor: "赞赏",
+        themeToggle: "切换主题",
+        language: "语言",
+        langZh: "中",
+        langEn: "EN",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        outputTitle: "结果",
+        outputBadge: "输出",
+        jwtLabel: "JWT 文本",
+        jwtPlaceholder: "粘贴由三段组成的 JWT，例如 header.payload.signature",
+        inputHint: "此工具只解码内容，不验证签名，也不会发送任何文本。",
+        primaryAction: "解码",
+        secondaryAction: "填入示例",
+        clearAction: "清空",
+        partsLabel: "段数",
+        headerBytesLabel: "Header 字符",
+        payloadBytesLabel: "Payload 字符",
+        statusEmpty: "粘贴 JWT 后点击解码。",
+        statusReady: "解码完成。请只在可信环境中处理真实令牌。",
+        statusInvalidParts: "JWT 通常应包含 Header、Payload、Signature 三段，请检查分隔符。",
+        statusInvalidBase64: "无法解码其中一段，请确认它是有效的 Base64URL 文本。",
+        statusInvalidJson: "已解码文本，但 Header 或 Payload 不是有效 JSON。",
+        statusCopied: "已复制到剪贴板。",
+        statusCopyEmpty: "没有可复制的内容。",
+        statusCopyFailed: "复制失败，请手动选择内容复制。",
+        headerTitle: "Header",
+        payloadTitle: "Payload",
+        signatureTitle: "Signature",
+        copyHeader: "复制 Header",
+        copyPayload: "复制 Payload",
+        copyAll: "复制全部结果",
+        emptyOutput: "等待解码结果。",
+        noSignature: "未提供 Signature。",
+        sponsorTitle: "赞赏支持",
+        sponsorSubtitle: "保持工具免费、快速且无广告。",
+        closeSponsor: "关闭赞赏窗口",
+        buyCoffee: "Buy Me a Coffee",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。",
+        seoArticle: "JWT 本地解码器是 Micro Tools Matrix 为开发者准备的免费在线开发者工具，用于快速查看 JSON Web Token 的 Header 与 Payload。你可以把登录态调试、接口联调或权限排查中的 JWT 粘贴到页面中，工具会在浏览器本地处理并格式化 JSON，帮助你确认 alg、typ、iss、sub、aud、exp、iat 等字段。整个过程无需上传、无需注册，也不会把令牌内容发送到服务器，适合处理敏感测试数据。请注意，本工具只负责解码展示，不验证签名真伪，也不判断令牌是否可信；在生产环境排查安全问题时，仍应结合后端密钥、证书与授权策略进行校验。"
+      },
+      en: {
+        documentTitle: "JWT Local Decoder - Micro Tools Matrix",
+        metaDescription: "Decode a JSON Web Token header and payload with Micro Tools Matrix. Browser-local processing, no upload, and a free online developer tool for secure debugging.",
+        metaKeywords: "JWT local decoder, JSON Web Token, JWT decoder, browser-local processing, no upload, Micro Tools Matrix, free online developer tool",
+        toolName: "JWT Local Decoder",
+        h1: "JWT Local Decoder",
+        eyebrow: "Browser-local processing",
+        intro: "Inspect a JSON Web Token header and payload directly in Micro Tools Matrix. All content is processed in your browser memory and is never uploaded.",
+        localBadge: "Local",
+        sponsor: "Sponsor",
+        themeToggle: "Toggle theme",
+        language: "Language",
+        langZh: "中",
+        langEn: "EN",
+        inputTitle: "Input",
+        inputBadge: "Input",
+        outputTitle: "Result",
+        outputBadge: "Output",
+        jwtLabel: "JWT text",
+        jwtPlaceholder: "Paste a three-part JWT, such as header.payload.signature",
+        inputHint: "This tool only decodes content. It does not verify signatures and never sends your text anywhere.",
+        primaryAction: "Decode",
+        secondaryAction: "Use sample",
+        clearAction: "Clear",
+        partsLabel: "Parts",
+        headerBytesLabel: "Header chars",
+        payloadBytesLabel: "Payload chars",
+        statusEmpty: "Paste a JWT, then click Decode.",
+        statusReady: "Decoded successfully. Handle real tokens only in a trusted environment.",
+        statusInvalidParts: "A JWT usually contains Header, Payload, and Signature parts. Please check the separators.",
+        statusInvalidBase64: "One part could not be decoded. Please make sure it is valid Base64URL text.",
+        statusInvalidJson: "The text was decoded, but the Header or Payload is not valid JSON.",
+        statusCopied: "Copied to clipboard.",
+        statusCopyEmpty: "There is nothing to copy.",
+        statusCopyFailed: "Copy failed. Please select the content and copy it manually.",
+        headerTitle: "Header",
+        payloadTitle: "Payload",
+        signatureTitle: "Signature",
+        copyHeader: "Copy Header",
+        copyPayload: "Copy Payload",
+        copyAll: "Copy all results",
+        emptyOutput: "Waiting for decoded output.",
+        noSignature: "No Signature provided.",
+        sponsorTitle: "Sponsor support",
+        sponsorSubtitle: "Keep the tools free, fast, and ad-free.",
+        closeSponsor: "Close sponsor dialog",
+        buyCoffee: "Buy Me a Coffee",
+        footer: "Micro Tools Matrix - Browser-local processing with no upload.",
+        seoArticle: "The JWT Local Decoder in Micro Tools Matrix is a free online developer tool for inspecting JSON Web Token data without sending it to a server. Paste a token from an authentication flow, API integration, staging environment, or debugging session, and the page decodes the Header and Payload entirely with browser-local processing. It formats the JSON so you can review common fields such as alg, typ, iss, sub, aud, exp, nbf, and iat with less friction. Because the tool runs in memory on the page, your token is not uploaded, stored, logged, or transmitted by the application. This makes it useful for quick privacy-conscious checks during development and troubleshooting. The decoder does not validate the signature, prove trust, or decide whether a token should be accepted by a production system. For real security decisions, always verify the signature and claims on your backend using the correct keys, certificates, issuer rules, audience rules, and expiration policy."
       }
+    };
 
-      function showError(message) {
-        errorBox.textContent = message;
-        errorBox.classList.remove('hidden');
-        successBox.classList.add('hidden');
-        statusBadge.textContent = '解码失败';
-        statusBadge.className = 'w-fit rounded-full border border-red-400/40 bg-red-500/10 px-3 py-1 text-xs font-medium text-red-100';
-      }
+    const SAMPLE_JWT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ik1pY3JvIFRvb2xzIE1hdHJpeCIsImlhdCI6MTUxNjIzOTAyMiwiZXhwIjoyNTM0MDIzMDA3OTl9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c";
+    let currentLanguage = "zh";
 
-      function showSuccess(message) {
-        successBox.textContent = message;
-        successBox.classList.remove('hidden');
-        errorBox.classList.add('hidden');
-        statusBadge.textContent = '解码成功';
-        statusBadge.className = 'w-fit rounded-full border border-emerald-400/40 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-100';
-      }
-
-      function resetMessages() {
-        errorBox.classList.add('hidden');
-        successBox.classList.add('hidden');
-      }
-
-      function safeJsonStringify(value) {
-        try {
-          return JSON.stringify(value, null, 2);
-        } catch {
-          return String(value);
-        }
-      }
-
-      function base64UrlDecode(input) {
-        if (typeof input !== 'string' || input.length === 0) {
-          throw new Error('JWT 分段为空，无法解码。');
-        }
-        if (!/^[A-Za-z0-9_-]+$/.test(input)) {
-          throw new Error('JWT 分段包含非法字符。Base64URL 仅允许字母、数字、下划线和短横线。');
-        }
-
-        let base64 = input.replace(/-/g, '+').replace(/_/g, '/');
-        const pad = base64.length % 4;
-        if (pad === 1) {
-          throw new Error('Base64URL 长度不合法，可能不是有效的 JWT。');
-        }
-        if (pad) {
-          base64 += '='.repeat(4 - pad);
-        }
-
-        try {
-          const binary = atob(base64);
-          const bytes = new Uint8Array(binary.length);
-          for (let i = 0; i < binary.length; i++) {
-            bytes[i] = binary.charCodeAt(i);
-          }
-          return new TextDecoder('utf-8', { fatal: false }).decode(bytes);
-        } catch {
-          throw new Error('Base64URL 解码失败，请确认输入的是有效 JWT。');
-        }
-      }
-
-      function parseJsonSegment(segment, name) {
-        const decoded = base64UrlDecode(segment);
-        try {
-          return JSON.parse(decoded);
-        } catch {
-          throw new Error(name + ' 不是有效 JSON。解码后的内容为：' + decoded.slice(0, 120));
-        }
-      }
-
-      function formatDateFromUnix(value) {
-        if (value === undefined || value === null || value === '') return '-';
-        const num = Number(value);
-        if (!Number.isFinite(num)) return String(value);
-        const date = new Date(num * 1000);
-        if (Number.isNaN(date.getTime())) return String(value);
-        const now = Date.now();
-        const diff = date.getTime() - now;
-        const status = diff < 0 ? '已过期' : '未过期';
-        return date.toLocaleString('zh-CN', { hour12: false }) + '（' + status + '）';
-      }
-
-      function valueToDisplay(value) {
-        if (value === undefined || value === null || value === '') return '-';
-        if (Array.isArray(value)) return value.join(', ');
-        if (typeof value === 'object') return safeJsonStringify(value);
-        return String(value);
-      }
-
-      function renderClaims(payload) {
-        const items = [
-          ['签发者 iss', valueToDisplay(payload.iss)],
-          ['主题 sub', valueToDisplay(payload.sub)],
-          ['受众 aud', valueToDisplay(payload.aud)],
-          ['过期时间 exp', formatDateFromUnix(payload.exp)],
-          ['签发时间 iat', formatDateFromUnix(payload.iat)],
-          ['生效时间 nbf', formatDateFromUnix(payload.nbf)]
-        ];
-
-        claimsOutput.innerHTML = '';
-        for (const [label, value] of items) {
-          const wrapper = document.createElement('div');
-          wrapper.className = 'rounded-xl bg-slate-900 p-3';
-          const dt = document.createElement('dt');
-          dt.className = 'text-slate-400';
-          dt.textContent = label;
-          const dd = document.createElement('dd');
-          dd.className = 'mt-1 break-all text-slate-200';
-          dd.textContent = value;
-          wrapper.appendChild(dt);
-          wrapper.appendChild(dd);
-          claimsOutput.appendChild(wrapper);
-        }
-      }
-
-      function decodeJwt() {
-        resetMessages();
-        const raw = jwtInput.value.trim();
-
-        if (!raw) {
-          lastDecoded = null;
-          setText(headerOutput, '{}');
-          setText(payloadOutput, '{}');
-          renderClaims({});
-          showError('Please enter JWT 后再进行解码。');
-          return;
-        }
-
-        const compact = raw.replace(/\s+/g, '');
-        const parts = compact.split('.');
-
-        if (parts.length !== 3) {
-          showError('JWT 格式不正确：应包含 Header、Payload、Signature 三段，并使用两个点号分隔。');
-          return;
-        }
-
-        if (parts.some(part => part.length === 0)) {
-          showError('JWT 格式不正确：Header、Payload 或 Signature 存在空分段。');
-          return;
-        }
-
-        try {
-          const header = parseJsonSegment(parts[0], 'Header');
-          const payload = parseJsonSegment(parts[1], 'Payload');
-
-          lastDecoded = {
-            header,
-            payload,
-            signature: parts[2]
-          };
-
-          setText(headerOutput, safeJsonStringify(header));
-          setText(payloadOutput, safeJsonStringify(payload));
-          renderClaims(payload);
-
-          let message = '已成功解码 Header 和 Payload。注意：此工具不验证签名。';
-          if (payload && typeof payload === 'object' && payload.exp !== undefined) {
-            const exp = Number(payload.exp);
-            if (Number.isFinite(exp) && exp * 1000 < Date.now()) {
-              message = '已成功解码，但该 JWT 的 exp 显示已过期。此工具不验证签名。';
-            }
-          }
-          showSuccess(message);
-        } catch (err) {
-          const message = err && err.message ? err.message : '解码失败，请检查 JWT 格式。';
-          showError(message);
-        }
-      }
-
-      async function copyText(text, button) {
-        const content = String(text || '').trim();
-        if (!content || content === '{}') {
-          showError('当前没有可Copy的解码结果。');
-          return;
-        }
-
-        try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(content);
-          } else {
-            const temp = document.createElement('textarea');
-            temp.value = content;
-            temp.setAttribute('readonly', '');
-            temp.style.position = 'fixed';
-            temp.style.opacity = '0';
-            document.body.appendChild(temp);
-            temp.select();
-            document.execCommand('copy');
-            document.body.removeChild(temp);
-          }
-
-          const oldText = button ? button.textContent : '';
-          if (button) {
-            button.textContent = 'Copied';
-            button.classList.add('bg-emerald-500', 'text-white');
-            setTimeout(() => {
-              button.textContent = oldText;
-              button.classList.remove('bg-emerald-500', 'text-white');
-            }, 1200);
-          }
-          showSuccess('Copied。');
-        } catch {
-          showError('Copy failed，请手动选择文本Copy。');
-        }
-      }
-
-      jwtInput.addEventListener('input', () => {
-        charCount.textContent = jwtInput.value.length + ' characters';
-        resetMessages();
-      });
-
-      decodeBtn.addEventListener('click', () => {
-        decodeBtn.classList.add('scale-95');
-        setTimeout(() => decodeBtn.classList.remove('scale-95'), 120);
-        decodeJwt();
-      });
-
-      jwtInput.addEventListener('keydown', (event) => {
-        if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
-          event.preventDefault();
-          decodeJwt();
-        }
-      });
-
-      clearBtn.addEventListener('click', () => {
-        jwtInput.value = '';
-        charCount.textContent = '0 characters';
-        lastDecoded = null;
-        setText(headerOutput, '{}');
-        setText(payloadOutput, '{}');
-        renderClaims({});
-        resetMessages();
-        statusBadge.textContent = '等待输入';
-        statusBadge.className = 'w-fit rounded-full border border-slate-600 bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300';
-        jwtInput.focus();
-      });
-
-      sampleBtn.addEventListener('click', () => {
-        jwtInput.value = sampleToken;
-        charCount.textContent = jwtInput.value.length + ' characters';
-        decodeJwt();
-      });
-
-      copyAllBtn.addEventListener('click', () => {
-        if (!lastDecoded) {
-          showError('请先成功解码 JWT，再Copy完整结果。');
-          return;
-        }
-        copyText('Header:\n' + safeJsonStringify(lastDecoded.header) + '\n\nPayload:\n' + safeJsonStringify(lastDecoded.payload), copyAllBtn);
-      });
-
-      document.querySelectorAll('.copyBtn').forEach(button => {
-        button.addEventListener('click', () => {
-          const target = document.getElementById(button.getAttribute('data-copy'));
-          copyText(target ? target.textContent : '', button);
-        });
-      });
-
-      renderClaims({});
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      return localStorage.getItem("microToolsLanguage") || "zh";
     }
+
+    function setLanguage(lang) {
+      const safeLang = lang === "en" ? "en" : "zh";
+      localStorage.setItem("microToolsLanguage", safeLang);
+      applyLanguage(safeLang);
+    }
+
+    function applyLanguage(lang) {
+      const safeLang = lang === "en" ? "en" : "zh";
+      currentLanguage = safeLang;
+      const dict = I18N[safeLang];
+
+      document.documentElement.lang = safeLang === "en" ? "en" : "zh-CN";
+      document.title = dict.documentTitle;
+
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) metaDescription.setAttribute("content", dict.metaDescription);
+
+      const metaKeywords = document.querySelector('meta[name="keywords"]');
+      if (metaKeywords) metaKeywords.setAttribute("content", dict.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (dict[key]) node.textContent = dict[key];
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (dict[key]) node.setAttribute("placeholder", dict[key]);
+      });
+
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (dict[key]) node.setAttribute("title", dict[key]);
+      });
+
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (dict[key]) node.setAttribute("aria-label", dict[key]);
+      });
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        if (safeLang === "zh") {
+          zhBtn.classList.add("bg-cyan-400", "text-slate-950");
+          enBtn.classList.add("text-slate-600", "dark:text-slate-400");
+          zhBtn.setAttribute("aria-pressed", "true");
+          enBtn.setAttribute("aria-pressed", "false");
+        } else {
+          enBtn.classList.add("bg-cyan-400", "text-slate-950");
+          zhBtn.classList.add("text-slate-600", "dark:text-slate-400");
+          zhBtn.setAttribute("aria-pressed", "false");
+          enBtn.setAttribute("aria-pressed", "true");
+        }
+      }
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+
+      updateThemeLabelFallback();
+      rerenderOutputsForLanguage();
+    }
+
+    function updateThemeLabelFallback() {
+      const label = document.querySelector("[data-theme-label]");
+      if (!label) return;
+      const dict = I18N[currentLanguage];
+      const stored = localStorage.getItem("microToolsTheme") || "system";
+      if (stored === "light") label.textContent = currentLanguage === "en" ? "Light" : "亮色";
+      else if (stored === "dark") label.textContent = currentLanguage === "en" ? "Dark" : "深色";
+      else label.textContent = currentLanguage === "en" ? "System" : "系统";
+      document.getElementById("themeToggleBtn")?.setAttribute("aria-label", dict.themeToggle);
+    }
+
+    function base64UrlDecode(value) {
+      const normalized = value.replace(/-/g, "+").replace(/_/g, "/");
+      const paddingLength = (4 - (normalized.length % 4)) % 4;
+      const padded = normalized + "=".repeat(paddingLength);
+      const binary = atob(padded);
+      const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
+      return new TextDecoder("utf-8", { fatal: false }).decode(bytes);
+    }
+
+    function prettyJsonFromPart(part) {
+      const decoded = base64UrlDecode(part);
+      const parsed = JSON.parse(decoded);
+      return JSON.stringify(parsed, null, 2);
+    }
+
+    function setStatus(key) {
+      const status = document.getElementById("statusText");
+      if (!status) return;
+      status.dataset.statusKey = key;
+      status.textContent = I18N[currentLanguage][key] || I18N[currentLanguage].statusEmpty;
+    }
+
+    function setOutputs(headerText, payloadText, signatureText, partsCount) {
+      const dict = I18N[currentLanguage];
+      const headerOutput = document.getElementById("headerOutput");
+      const payloadOutput = document.getElementById("payloadOutput");
+      const signatureOutput = document.getElementById("signatureOutput");
+      if (headerOutput) headerOutput.textContent = headerText || dict.emptyOutput;
+      if (payloadOutput) payloadOutput.textContent = payloadText || dict.emptyOutput;
+      if (signatureOutput) signatureOutput.textContent = signatureText || dict.noSignature;
+      document.getElementById("partsCount").textContent = String(partsCount || 0);
+      document.getElementById("headerLength").textContent = String(headerText ? headerText.length : 0);
+      document.getElementById("payloadLength").textContent = String(payloadText ? payloadText.length : 0);
+    }
+
+    function decodeJwt(showStatus) {
+      const input = document.getElementById("jwtInput");
+      const raw = input ? input.value.trim() : "";
+      const dict = I18N[currentLanguage];
+
+      if (!raw) {
+        setOutputs(dict.emptyOutput, dict.emptyOutput, dict.noSignature, 0);
+        setStatus("statusEmpty");
+        return false;
+      }
+
+      const token = raw.replace(/\s+/g, "");
+      const parts = token.split(".");
+      if (parts.length < 2 || parts.length > 3 || !parts[0] || !parts[1]) {
+        setOutputs(dict.emptyOutput, dict.emptyOutput, parts[2] || dict.noSignature, parts.length);
+        setStatus("statusInvalidParts");
+        return false;
+      }
+
+      try {
+        let headerText = "";
+        let payloadText = "";
+        try {
+          headerText = prettyJsonFromPart(parts[0]);
+          payloadText = prettyJsonFromPart(parts[1]);
+        } catch (jsonError) {
+          try {
+            headerText = base64UrlDecode(parts[0]);
+            payloadText = base64UrlDecode(parts[1]);
+          } catch (base64Error) {
+            setOutputs(dict.emptyOutput, dict.emptyOutput, parts[2] || dict.noSignature, parts.length);
+            setStatus("statusInvalidBase64");
+            return false;
+          }
+          setOutputs(headerText, payloadText, parts[2] || dict.noSignature, parts.length);
+          setStatus("statusInvalidJson");
+          return false;
+        }
+
+        setOutputs(headerText, payloadText, parts[2] || dict.noSignature, parts.length);
+        if (showStatus !== false) setStatus("statusReady");
+        return true;
+      } catch (error) {
+        setOutputs(dict.emptyOutput, dict.emptyOutput, parts[2] || dict.noSignature, parts.length);
+        setStatus("statusInvalidBase64");
+        return false;
+      }
+    }
+
+    function rerenderOutputsForLanguage() {
+      const input = document.getElementById("jwtInput");
+      if (input && input.value.trim()) {
+        decodeJwt(false);
+      } else {
+        const dict = I18N[currentLanguage];
+        setOutputs(dict.emptyOutput, dict.emptyOutput, dict.noSignature, 0);
+        const status = document.getElementById("statusText");
+        const key = status?.dataset.statusKey || "statusEmpty";
+        setStatus(key);
+      }
+    }
+
+    async function copyText(text) {
+      if (!text || text === I18N[currentLanguage].emptyOutput || text === I18N[currentLanguage].noSignature) {
+        setStatus("statusCopyEmpty");
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(text);
+        setStatus("statusCopied");
+      } catch (error) {
+        setStatus("statusCopyFailed");
+      }
+    }
+
+    function copyAllResults() {
+      const dict = I18N[currentLanguage];
+      const header = document.getElementById("headerOutput")?.textContent || "";
+      const payload = document.getElementById("payloadOutput")?.textContent || "";
+      const signature = document.getElementById("signatureOutput")?.textContent || "";
+      const hasResult = header && payload && header !== dict.emptyOutput && payload !== dict.emptyOutput;
+      if (!hasResult) {
+        setStatus("statusCopyEmpty");
+        return;
+      }
+      const text = [
+        "Header",
+        header,
+        "",
+        "Payload",
+        payload,
+        "",
+        "Signature",
+        signature
+      ].join("\n");
+      copyText(text);
+    }
+
+    function openSponsorModal(event) {
+      if (event?.preventDefault) event.preventDefault();
+      const modal = document.getElementById("sponsorModal");
+      if (!modal) return;
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeSponsorModal() {
+      const modal = document.getElementById("sponsorModal");
+      if (!modal) return;
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+
+      document.getElementById("decodeBtn")?.addEventListener("click", () => decodeJwt(true));
+      document.getElementById("sampleBtn")?.addEventListener("click", () => {
+        const input = document.getElementById("jwtInput");
+        if (input) input.value = SAMPLE_JWT;
+        decodeJwt(true);
+      });
+      document.getElementById("clearBtn")?.addEventListener("click", () => {
+        const input = document.getElementById("jwtInput");
+        if (input) input.value = "";
+        rerenderOutputsForLanguage();
+      });
+      document.getElementById("copyHeaderBtn")?.addEventListener("click", () => copyText(document.getElementById("headerOutput")?.textContent || ""));
+      document.getElementById("copyPayloadBtn")?.addEventListener("click", () => copyText(document.getElementById("payloadOutput")?.textContent || ""));
+      document.getElementById("copyAllBtn")?.addEventListener("click", copyAllResults);
+      document.getElementById("jwtInput")?.addEventListener("input", () => {
+        const input = document.getElementById("jwtInput");
+        if (!input || !input.value.trim()) rerenderOutputsForLanguage();
+      });
+
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="../sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

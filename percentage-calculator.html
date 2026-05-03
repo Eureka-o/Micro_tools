@@ -1,514 +1,533 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>percentage-calculator - 多功能百分比计算器</title>
-  <meta name="description" content="多功能百分比计算器。例如&#x27;X是Y的百分之几&#x27;、&#x27;X增加Y%是多少&#x27;，实时响应输入并给出计算过程。">
-  <meta name="keywords" content="percentage-calculator,百分比计算器,在线百分比计算,X是Y的百分之几,X增加Y%是多少,百分比变化计算器,增长率计算,折扣计算器">
-  <link rel="icon" type="image/png" href="./assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./style.css">
   <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
+  <title>百分比计算器 - Micro Tools Matrix 浏览器本地工具</title>
+  <meta name="description" content="Micro Tools Matrix 百分比计算器支持 X 是 Y 的百分之几、X 增加或减少 Y% 后是多少、Y% 的 X 是多少等常用百分比计算，浏览器本地处理，无需上传。">
+  <meta name="keywords" content="百分比计算器,百分数计算,在线百分比工具,浏览器本地处理,无需上传,Micro Tools Matrix">
   <link rel="canonical" href="https://mymicrotools.xyz/percentage-calculator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/percentage-calculator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/percentage-calculator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/percentage-calculator.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/percentage-calculator.html">
-  <meta property="og:title" content="percentage-calculator - 多功能百分比计算器">
-  <meta property="og:description" content="多功能百分比计算器。例如&#x27;X是Y的百分之几&#x27;、&#x27;X增加Y%是多少&#x27;，实时响应输入并给出计算过程。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="percentage-calculator - 多功能百分比计算器">
-  <meta name="twitter:description" content="多功能百分比计算器。例如&#x27;X是Y的百分之几&#x27;、&#x27;X增加Y%是多少&#x27;，实时响应输入并给出计算过程。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Percentage Calculator",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A free browser-local percentage calculator for common percentage formulas and step-by-step results.",
+      "url": "https://mymicrotools.xyz/percentage-calculator.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "category": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="切换主题" title="切换主题">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">百分比计算器</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="./percentage-calculator.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
-        <a href="./en/percentage-calculator.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="absolute inset-0 -z-10 overflow-hidden">
-    <div class="absolute left-1/2 top-0 h-80 w-80 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute right-0 top-48 h-72 w-72 rounded-full bg-violet-500/20 blur-3xl"></div>
-    <div class="absolute bottom-0 left-0 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl"></div>
-  </div>
-
-  <header class="border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 backdrop-blur">
-    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-            实时计算 · 清晰步骤 · 零依赖工具
-          </p>
-          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">多功能百分比计算器</h1>
-          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            多功能百分比计算器，快速解决“X 是 Y 的百分之几”“X 增加 Y% 是多少”“从 X 到 Y 变化了多少百分比”等常见问题。
-          </p>
-        </div>
-        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 shadow-2xl">
-          <p class="text-sm text-slate-400">当前计算模式</p>
-          <p id="modeBadge" class="mt-1 text-lg font-semibold text-cyan-200">X 是 Y 的百分之几</p>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeToggleAria" aria-label="切换主题">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="sponsorAria" aria-label="赞赏">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="语言" data-i18n-aria-label="languageAria" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
         </div>
       </div>
-    </div>
+    </nav>
   </header>
 
-  <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-5" aria-label="百分比计算器">
-      <div class="lg:col-span-3">
-        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5 shadow-2xl backdrop-blur sm:p-7">
-          <div class="mb-6 flex items-center justify-between gap-4">
-            <div>
-              <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输入区</h2>
-              <p class="mt-1 text-sm text-slate-400">选择计算类型后输入数值，结果会实时更新。</p>
-            </div>
-            <button id="resetBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:border-cyan-300/60 hover:bg-cyan-400/10 active:scale-95">
-              重置
-            </button>
-          </div>
-
-          <label for="calcType" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">计算类型</label>
-          <select id="calcType" class="mb-5 w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10">
-            <option value="partOfTotal">X 是 Y 的百分之几？</option>
-            <option value="percentOf">X 的 Y% 是多少？</option>
-            <option value="increase">X 增加 Y% 是多少？</option>
-            <option value="decrease">X 减少 Y% 是多少？</option>
-            <option value="baseFromPercent">X 是哪个数的 Y%？</option>
-            <option value="change">从 X 到 Y 变化了百分之几？</option>
-          </select>
-
-          <div class="grid gap-4 sm:grid-cols-2">
-            <div>
-              <label id="labelX" for="inputX" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">X 数值</label>
-              <input id="inputX" inputmode="decimal" autocomplete="off" placeholder="例如：50" class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
-            </div>
-            <div>
-              <label id="labelY" for="inputY" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Y 数值</label>
-              <input id="inputY" inputmode="decimal" autocomplete="off" placeholder="例如：200" class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
-            </div>
-          </div>
-
-          <div id="errorBox" class="mt-5 hidden rounded-2xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200" role="alert"></div>
-
-          <div class="mt-6 grid gap-3 sm:grid-cols-2">
-            <button id="calcBtn" type="button" class="rounded-2xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98]">
-              立即计算
-            </button>
-            <button id="copyBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-5 py-3 font-bold text-slate-800 dark:text-slate-200 transition hover:border-emerald-300/60 hover:bg-emerald-400/10 active:scale-[0.98]">
-              复制结果
-            </button>
-          </div>
-
-          <div class="mt-5 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/70 p-4 text-sm leading-6 text-slate-400">
-            <strong class="text-slate-800 dark:text-slate-200">输入提示：</strong>
-            支持负数、小数、千分位逗号和百分号，例如 <span class="text-cyan-200">1,250.5</span>、<span class="text-cyan-200">12.8%</span>。除数或百分率为 0 且无法计算时会给出错误提示。
-          </div>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">百分比计算器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中快速完成常用百分比计算，实时显示结果与计算过程；所有数字只在浏览器本地处理，无需上传。</p>
         </div>
-      </div>
-
-      <div class="lg:col-span-2">
-        <div class="h-full rounded-3xl border border-cyan-300/20 bg-cyan-400/[0.08] p-5 shadow-2xl backdrop-blur sm:p-7">
-          <div class="mb-6">
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输出区</h2>
-            <p class="mt-1 text-sm text-slate-700 dark:text-slate-300">结果与计算过程会在这里显示。</p>
-          </div>
-
-          <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 p-6">
-            <p class="text-sm font-semibold uppercase tracking-widest text-cyan-200">Result</p>
-            <div id="resultValue" class="mt-3 break-words text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">--</div>
-            <p id="resultSubtitle" class="mt-3 text-sm text-slate-400">请输入有效数值开始计算。</p>
-          </div>
-
-          <div class="mt-5 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/60 p-5">
-            <h3 class="mb-3 text-lg font-bold text-gray-900 dark:text-white">计算过程</h3>
-            <div id="steps" class="space-y-2 text-sm leading-6 text-slate-700 dark:text-slate-300">
-              <p>选择计算类型并输入 X、Y 后，将自动展示公式和步骤。</p>
-            </div>
-          </div>
-
-          <div id="copyNotice" class="mt-5 hidden rounded-2xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm font-semibold text-emerald-200">
-            已复制到剪贴板。
-          </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 percentage-calculator 百分比计算器</h2>
-      <p>
-        percentage-calculator 是一个面向学习、办公、财务核算和电商运营场景的在线百分比计算器。很多人在处理折扣、增长率、利润率、考试得分比例或数据报表时，都会遇到“X 是 Y 的百分之几”“X 增加 Y% 是多少”“从 X 到 Y 变化了多少百分比”等问题。手动计算不仅容易混淆公式，还可能因小数、负数或除数为零导致结果错误。本工具将常见百分比问题整合到同一个界面中，输入数值后实时响应，并同步展示完整计算过程，帮助用户快速核对公式与结果。
-      </p>
-      <p class="mt-4">
-        使用时只需选择对应的计算类型，在输入框中填写 X 与 Y，即可得到精确结果。它支持小数、负数、千分位数字以及带百分号的输入，适合用于在线折扣计算、百分比变化计算、增长率计算、占比计算和基础数反推。无论你是在制作数据分析报告、比较销售业绩，还是计算商品涨价或降价后的金额，这款免费多功能百分比计算器都能提供简洁、稳定、可复制的计算结果。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <div class="space-y-4">
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="modeLabel">计算类型</span>
+            <select id="modeSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+              <option value="percentOf" data-i18n="modePercentOf">X 是 Y 的百分之几</option>
+              <option value="increaseBy" data-i18n="modeIncreaseBy">X 增加 Y% 是多少</option>
+              <option value="decreaseBy" data-i18n="modeDecreaseBy">X 减少 Y% 是多少</option>
+              <option value="percentValue" data-i18n="modePercentValue">Y% 的 X 是多少</option>
+              <option value="changeRate" data-i18n="modeChangeRate">X 相对 Y 变化了百分之几</option>
+            </select>
+          </label>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="block min-w-0">
+              <span id="xLabel" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="xLabel">数值 X</span>
+              <input id="xInput" type="number" inputmode="decimal" step="any" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="xPlaceholder" placeholder="例如 50">
+            </label>
+            <label class="block min-w-0">
+              <span id="yLabel" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="yLabel">数值 Y</span>
+              <input id="yInput" type="number" inputmode="decimal" step="any" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="yPlaceholder" placeholder="例如 200">
+            </label>
+          </div>
+
+          <p id="inputHint" class="min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="inputHint">选择计算类型并输入 X 与 Y，结果会实时更新。</p>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">填入示例</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">结果</span>
+        </div>
+
+        <div class="space-y-4">
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="resultLabel">计算结果</p>
+            <p id="resultValue" class="break-words text-3xl font-black tracking-tight text-slate-950 dark:text-white sm:text-4xl tabular-nums">—</p>
+          </div>
+
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="processLabel">计算过程</p>
+            <pre id="processText" class="min-h-24 whitespace-pre-wrap break-words text-sm leading-7 text-slate-700 dark:text-slate-300">等待输入数值。</pre>
+          </div>
+
+          <p id="statusText" class="min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400">等待输入。</p>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
+          <button id="resetModeBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="resetAction">重置类型</button>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">Micro Tools Matrix 百分比计算器是一款免费在线开发者工具，也适合日常办公、内容运营、财务估算和学习场景。你可以快速计算“X 是 Y 的百分之几”、“X 增加 Y% 后是多少”、“X 减少 Y% 后是多少”、“Y% 的 X 是多少”，并查看清晰的公式过程。工具采用浏览器本地处理，输入的数字不会上传到服务器，也不会发送到第三方服务，适合处理临时价格、增长率、折扣、转化率和对比变化等数据。页面支持浅色、深色和系统主题，并提供中英文界面，保持 Micro Tools Matrix 一贯的轻量、隐私友好与即开即用体验。</article>
   </main>
 
-  <footer class="border-t border-gray-200 dark:border-white/10 py-8 text-center text-sm text-slate-500">
-    <p>percentage-calculator · 在线多功能百分比计算工具</p>
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
 
   <script>
-    (() => {
-      const calcType = document.getElementById('calcType');
-      const inputX = document.getElementById('inputX');
-      const inputY = document.getElementById('inputY');
-      const labelX = document.getElementById('labelX');
-      const labelY = document.getElementById('labelY');
-      const errorBox = document.getElementById('errorBox');
-      const resultValue = document.getElementById('resultValue');
-      const resultSubtitle = document.getElementById('resultSubtitle');
-      const steps = document.getElementById('steps');
-      const resetBtn = document.getElementById('resetBtn');
-      const calcBtn = document.getElementById('calcBtn');
-      const copyBtn = document.getElementById('copyBtn');
-      const copyNotice = document.getElementById('copyNotice');
-      const modeBadge = document.getElementById('modeBadge');
+    const I18N = {
+      zh: {
+        documentTitle: "百分比计算器 - Micro Tools Matrix 浏览器本地工具",
+        metaDescription: "Micro Tools Matrix 百分比计算器支持 X 是 Y 的百分之几、X 增加或减少 Y% 后是多少、Y% 的 X 是多少等常用百分比计算，浏览器本地处理，无需上传。",
+        metaKeywords: "百分比计算器,百分数计算,在线百分比工具,浏览器本地处理,无需上传,Micro Tools Matrix",
+        toolName: "百分比计算器",
+        sponsor: "赞赏",
+        sponsorAria: "赞赏",
+        languageAria: "语言",
+        themeToggleAria: "切换主题",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        buyCoffee: "Buy Me a Coffee",
+        eyebrow: "浏览器本地处理",
+        h1: "百分比计算器",
+        intro: "在 Micro Tools Matrix 中快速完成常用百分比计算，实时显示结果与计算过程；所有数字只在浏览器本地处理，无需上传。",
+        localBadge: "本地运行",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        outputTitle: "结果",
+        outputBadge: "结果",
+        modeLabel: "计算类型",
+        modePercentOf: "X 是 Y 的百分之几",
+        modeIncreaseBy: "X 增加 Y% 是多少",
+        modeDecreaseBy: "X 减少 Y% 是多少",
+        modePercentValue: "Y% 的 X 是多少",
+        modeChangeRate: "X 相对 Y 变化了百分之几",
+        xLabel: "数值 X",
+        yLabel: "数值 Y",
+        xPlaceholder: "例如 50",
+        yPlaceholder: "例如 200",
+        inputHint: "选择计算类型并输入 X 与 Y，结果会实时更新。",
+        primaryAction: "填入示例",
+        secondaryAction: "清空",
+        resultLabel: "计算结果",
+        processLabel: "计算过程",
+        copyAction: "复制结果",
+        resetAction: "重置类型",
+        waitingProcess: "等待输入数值。",
+        waitingStatus: "等待输入。",
+        invalidNumber: "请输入有效的数字。",
+        divideByZero: "此计算中 Y 不能为 0。",
+        calculated: "已实时计算。",
+        cleared: "已清空。",
+        sampled: "已填入示例。",
+        copied: "结果已复制。",
+        copyFailed: "复制失败，请手动选择结果。",
+        noResultToCopy: "暂无可复制的结果。",
+        resetDone: "已重置为默认计算类型。",
+        percentUnit: "%",
+        formulaPercentOf: "{x} ÷ {y} × 100% = {result}%",
+        formulaIncreaseBy: "{x} × (1 + {y}%) = {result}",
+        formulaDecreaseBy: "{x} × (1 - {y}%) = {result}",
+        formulaPercentValue: "{x} × {y}% = {result}",
+        formulaChangeRate: "({x} - {y}) ÷ {y} × 100% = {result}%",
+        explanationPercentOf: "{x} 是 {y} 的 {result}%。",
+        explanationIncreaseBy: "{x} 增加 {y}% 后是 {result}。",
+        explanationDecreaseBy: "{x} 减少 {y}% 后是 {result}。",
+        explanationPercentValue: "{x} 的 {y}% 是 {result}。",
+        explanationChangeRate: "{x} 相对 {y} 的变化率是 {result}%。",
+        seoArticle: "Micro Tools Matrix 百分比计算器是一款免费在线开发者工具，也适合日常办公、内容运营、财务估算和学习场景。你可以快速计算“X 是 Y 的百分之几”、“X 增加 Y% 后是多少”、“X 减少 Y% 后是多少”、“Y% 的 X 是多少”，并查看清晰的公式过程。工具采用浏览器本地处理，输入的数字不会上传到服务器，也不会发送到第三方服务，适合处理临时价格、增长率、折扣、转化率和对比变化等数据。页面支持浅色、深色和系统主题，并提供中英文界面，保持 Micro Tools Matrix 一贯的轻量、隐私友好与即开即用体验。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
+      },
+      en: {
+        documentTitle: "Percentage Calculator - Micro Tools Matrix Browser-Local Tool",
+        metaDescription: "A Micro Tools Matrix percentage calculator for common formulas such as X is what percent of Y, X increased or decreased by Y%, and Y% of X, with browser-local processing and no uploads.",
+        metaKeywords: "percentage calculator,percent calculator,online percentage tool,browser-local processing,no upload,free online developer tool,Micro Tools Matrix",
+        toolName: "Percentage Calculator",
+        sponsor: "Sponsor",
+        sponsorAria: "Sponsor",
+        languageAria: "Language",
+        themeToggleAria: "Change theme",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        buyCoffee: "Buy Me a Coffee",
+        eyebrow: "Browser-local processing",
+        h1: "Percentage Calculator",
+        intro: "Calculate common percentage questions in Micro Tools Matrix with live answers and clear steps. All numbers stay in your browser memory with no uploads.",
+        localBadge: "Local",
+        inputTitle: "Input",
+        inputBadge: "INPUT",
+        outputTitle: "Result",
+        outputBadge: "OUTPUT",
+        modeLabel: "Calculation type",
+        modePercentOf: "X is what percent of Y",
+        modeIncreaseBy: "X increased by Y%",
+        modeDecreaseBy: "X decreased by Y%",
+        modePercentValue: "Y% of X",
+        modeChangeRate: "Percent change from Y to X",
+        xLabel: "Value X",
+        yLabel: "Value Y",
+        xPlaceholder: "For example 50",
+        yPlaceholder: "For example 200",
+        inputHint: "Choose a calculation type and enter X and Y. Results update instantly.",
+        primaryAction: "Use sample",
+        secondaryAction: "Clear",
+        resultLabel: "Result",
+        processLabel: "Steps",
+        copyAction: "Copy result",
+        resetAction: "Reset type",
+        waitingProcess: "Waiting for numbers.",
+        waitingStatus: "Waiting for input.",
+        invalidNumber: "Please enter valid numbers.",
+        divideByZero: "Y cannot be 0 for this calculation.",
+        calculated: "Calculated live.",
+        cleared: "Cleared.",
+        sampled: "Sample values inserted.",
+        copied: "Result copied.",
+        copyFailed: "Copy failed. Please select the result manually.",
+        noResultToCopy: "There is no result to copy yet.",
+        resetDone: "Reset to the default calculation type.",
+        percentUnit: "%",
+        formulaPercentOf: "{x} ÷ {y} × 100% = {result}%",
+        formulaIncreaseBy: "{x} × (1 + {y}%) = {result}",
+        formulaDecreaseBy: "{x} × (1 - {y}%) = {result}",
+        formulaPercentValue: "{x} × {y}% = {result}",
+        formulaChangeRate: "({x} - {y}) ÷ {y} × 100% = {result}%",
+        explanationPercentOf: "{x} is {result}% of {y}.",
+        explanationIncreaseBy: "{x} increased by {y}% is {result}.",
+        explanationDecreaseBy: "{x} decreased by {y}% is {result}.",
+        explanationPercentValue: "{y}% of {x} is {result}.",
+        explanationChangeRate: "The percent change from {y} to {x} is {result}%.",
+        seoArticle: "The Micro Tools Matrix Percentage Calculator is a free online developer tool for quick percentage math in everyday product, marketing, finance, learning, and reporting workflows. It answers common questions such as “X is what percent of Y”, “what is X increased by Y%”, “what is X decreased by Y%”, “what is Y% of X”, and “what is the percent change from Y to X”. Each calculation updates in real time and includes a readable formula, so you can verify the result before using it in a document, spreadsheet, dashboard, or message. The tool uses browser-local processing: your numbers are handled in memory on the current page, with no upload, no remote API call, and no analytics beacon. It is designed to match the lightweight Micro Tools Matrix experience with responsive layout, light and dark themes, and a privacy-friendly workflow that works on Windows, macOS, Android, and iOS.",
+        footer: "Micro Tools Matrix - Browser-local processing with no uploads."
+      }
+    };
 
-      const modes = {
-        partOfTotal: {
-          badge: 'X 是 Y 的百分之几',
-          x: 'X：部分数值',
-          y: 'Y：总数值',
-          px: '例如：50',
-          py: '例如：200'
-        },
-        percentOf: {
-          badge: 'X 的 Y% 是多少',
-          x: 'X：基础数值',
-          y: 'Y：百分比',
-          px: '例如：200',
-          py: '例如：15%'
-        },
-        increase: {
-          badge: 'X 增加 Y% 是多少',
-          x: 'X：原始数值',
-          y: 'Y：增加百分比',
-          px: '例如：100',
-          py: '例如：20%'
-        },
-        decrease: {
-          badge: 'X 减少 Y% 是多少',
-          x: 'X：原始数值',
-          y: 'Y：减少百分比',
-          px: '例如：100',
-          py: '例如：20%'
-        },
-        baseFromPercent: {
-          badge: 'X 是哪个数的 Y%',
-          x: 'X：已知部分数值',
-          y: 'Y：百分比',
-          px: '例如：30',
-          py: '例如：15%'
-        },
-        change: {
-          badge: '从 X 到 Y 的百分比变化',
-          x: 'X：原始数值',
-          y: 'Y：新数值',
-          px: '例如：80',
-          py: '例如：100'
-        }
-      };
+    let currentLanguage = "zh";
+    let latestCopyText = "";
+    let lastStatusKey = "waitingStatus";
 
-      const escapeHtml = (value) => String(value)
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
+    const elements = {};
 
-      const parseNumber = (raw, name) => {
-        const original = String(raw ?? '').trim();
-        if (original === '') {
-          return { ok: false, message: `请填写 ${name}。` };
-        }
-
-        let normalized = original.replace(/\s+/g, '').replace(/,/g, '');
-        const percentSigns = (normalized.match(/%/g) || []).length;
-        if (percentSigns > 1 || (percentSigns === 1 && !normalized.endsWith('%'))) {
-          return { ok: false, message: `${name} 的百分号格式不正确，请输入如 12% 或 12.5。` };
-        }
-        normalized = normalized.replace(/%$/, '');
-
-        if (!/^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/.test(normalized)) {
-          return { ok: false, message: `${name} 不是有效数字，请检查是否包含非法字符。` };
-        }
-
-        const value = Number(normalized);
-        if (!Number.isFinite(value)) {
-          return { ok: false, message: `${name} 超出可计算范围，请输入更合理的数字。` };
-        }
-        return { ok: true, value };
-      };
-
-      const formatNumber = (num, suffix = '') => {
-        if (!Number.isFinite(num)) return '无法计算';
-        const abs = Math.abs(num);
-        let formatted;
-        if ((abs !== 0 && abs < 0.000001) || abs >= 1e15) {
-          formatted = num.toExponential(8).replace(/\.?0+e/, 'e');
-        } else {
-          formatted = new Intl.NumberFormat('zh-CN', {
-            maximumFractionDigits: 10,
-            minimumFractionDigits: 0
-          }).format(Number(num.toFixed(10)));
-        }
-        return formatted + suffix;
-      };
-
-      const showError = (message) => {
-        errorBox.textContent = message;
-        errorBox.classList.remove('hidden');
-        resultValue.textContent = '--';
-        resultSubtitle.textContent = '请修正输入后重新计算。';
-        steps.innerHTML = `<p class="text-red-200">${escapeHtml(message)}</p>`;
-      };
-
-      const clearError = () => {
-        errorBox.textContent = '';
-        errorBox.classList.add('hidden');
-      };
-
-      const renderSteps = (items) => {
-        steps.innerHTML = items.map(item => `<p>${item}</p>`).join('');
-      };
-
-      const setResult = (value, subtitle, stepItems) => {
-        clearError();
-        resultValue.textContent = value;
-        resultSubtitle.textContent = subtitle;
-        renderSteps(stepItems);
-      };
-
-      const validateAndCalculate = () => {
-        const xParsed = parseNumber(inputX.value, 'X');
-        if (!xParsed.ok) {
-          if (inputX.value.trim() === '' && inputY.value.trim() === '') {
-            clearError();
-            resultValue.textContent = '--';
-            resultSubtitle.textContent = '请输入有效数值开始计算。';
-            steps.innerHTML = '<p>选择计算类型并输入 X、Y 后，将自动展示公式和步骤。</p>';
-            return null;
-          }
-          showError(xParsed.message);
-          return null;
-        }
-
-        const yParsed = parseNumber(inputY.value, 'Y');
-        if (!yParsed.ok) {
-          showError(yParsed.message);
-          return null;
-        }
-
-        const x = xParsed.value;
-        const y = yParsed.value;
-        const type = calcType.value;
-        let result;
-        let subtitle;
-        let stepItems;
-
-        if (type === 'partOfTotal') {
-          if (y === 0) {
-            showError('Y 不能为 0，因为计算 “X 是 Y 的百分之几” 需要用 X ÷ Y。');
-            return null;
-          }
-          result = (x / y) * 100;
-          subtitle = `${formatNumber(x)} 是 ${formatNumber(y)} 的 ${formatNumber(result, '%')}`;
-          stepItems = [
-            `公式：百分比 = X ÷ Y × 100%`,
-            `代入：${formatNumber(x)} ÷ ${formatNumber(y)} × 100%`,
-            `结果：${formatNumber(result, '%')}`
-          ];
-          setResult(formatNumber(result, '%'), subtitle, stepItems);
-        } else if (type === 'percentOf') {
-          result = x * y / 100;
-          subtitle = `${formatNumber(x)} 的 ${formatNumber(y, '%')} 是 ${formatNumber(result)}`;
-          stepItems = [
-            `公式：结果 = X × Y ÷ 100`,
-            `代入：${formatNumber(x)} × ${formatNumber(y)} ÷ 100`,
-            `结果：${formatNumber(result)}`
-          ];
-          setResult(formatNumber(result), subtitle, stepItems);
-        } else if (type === 'increase') {
-          result = x * (1 + y / 100);
-          const added = result - x;
-          subtitle = `${formatNumber(x)} 增加 ${formatNumber(y, '%')} 后为 ${formatNumber(result)}`;
-          stepItems = [
-            `公式：结果 = X × (1 + Y ÷ 100)`,
-            `代入：${formatNumber(x)} × (1 + ${formatNumber(y)} ÷ 100)`,
-            `增加量：${formatNumber(added)}`,
-            `结果：${formatNumber(result)}`
-          ];
-          setResult(formatNumber(result), subtitle, stepItems);
-        } else if (type === 'decrease') {
-          result = x * (1 - y / 100);
-          const reduced = x - result;
-          subtitle = `${formatNumber(x)} 减少 ${formatNumber(y, '%')} 后为 ${formatNumber(result)}`;
-          stepItems = [
-            `公式：结果 = X × (1 - Y ÷ 100)`,
-            `代入：${formatNumber(x)} × (1 - ${formatNumber(y)} ÷ 100)`,
-            `减少量：${formatNumber(reduced)}`,
-            `结果：${formatNumber(result)}`
-          ];
-          setResult(formatNumber(result), subtitle, stepItems);
-        } else if (type === 'baseFromPercent') {
-          if (y === 0) {
-            showError('Y 不能为 0，因为计算 “X 是哪个数的 Y%” 需要用 X ÷ (Y ÷ 100)。');
-            return null;
-          }
-          result = x / (y / 100);
-          subtitle = `${formatNumber(x)} 是 ${formatNumber(result)} 的 ${formatNumber(y, '%')}`;
-          stepItems = [
-            `公式：基础数 = X ÷ (Y ÷ 100)`,
-            `代入：${formatNumber(x)} ÷ (${formatNumber(y)} ÷ 100)`,
-            `结果：${formatNumber(result)}`
-          ];
-          setResult(formatNumber(result), subtitle, stepItems);
-        } else if (type === 'change') {
-          if (x === 0) {
-            showError('X 不能为 0，因为百分比变化需要用 (Y - X) ÷ X。');
-            return null;
-          }
-          result = ((y - x) / x) * 100;
-          const diff = y - x;
-          const direction = result > 0 ? '增加' : result < 0 ? '减少' : '没有变化';
-          subtitle = `从 ${formatNumber(x)} 到 ${formatNumber(y)}，${direction} ${formatNumber(Math.abs(result), '%')}`;
-          stepItems = [
-            `公式：变化百分比 = (Y - X) ÷ X × 100%`,
-            `差值：${formatNumber(y)} - ${formatNumber(x)} = ${formatNumber(diff)}`,
-            `代入：${formatNumber(diff)} ÷ ${formatNumber(x)} × 100%`,
-            `结果：${formatNumber(result, '%')}（${direction}）`
-          ];
-          setResult(formatNumber(result, '%'), subtitle, stepItems);
-        }
-
-        return {
-          resultText: resultValue.textContent,
-          subtitle: resultSubtitle.textContent,
-          steps: stepItems ? stepItems.map(s => s.replace(/<[^>]*>/g, '')).join('\n') : ''
-        };
-      };
-
-      const updateMode = () => {
-        const mode = modes[calcType.value] || modes.partOfTotal;
-        labelX.textContent = mode.x;
-        labelY.textContent = mode.y;
-        inputX.placeholder = mode.px;
-        inputY.placeholder = mode.py;
-        modeBadge.textContent = mode.badge;
-        validateAndCalculate();
-      };
-
-      const flashButton = (button, text) => {
-        const old = button.textContent;
-        button.textContent = text;
-        button.classList.add('ring-4', 'ring-cyan-300/20');
-        window.setTimeout(() => {
-          button.textContent = old;
-          button.classList.remove('ring-4', 'ring-cyan-300/20');
-        }, 650);
-      };
-
-      const copyResult = async () => {
-        const data = validateAndCalculate();
-        if (!data) return;
-        const text = `percentage-calculator 计算结果：${data.resultText}\n${data.subtitle}\n${data.steps}`;
-        try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(text);
-          } else {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.setAttribute('readonly', '');
-            textarea.style.position = 'fixed';
-            textarea.style.left = '-9999px';
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-          }
-          copyNotice.classList.remove('hidden');
-          window.setTimeout(() => copyNotice.classList.add('hidden'), 1800);
-        } catch (err) {
-          showError('复制失败，请手动选择结果文本进行复制。');
-        }
-      };
-
-      calcType.addEventListener('change', updateMode);
-      inputX.addEventListener('input', validateAndCalculate);
-      inputY.addEventListener('input', validateAndCalculate);
-
-      calcBtn.addEventListener('click', () => {
-        validateAndCalculate();
-        flashButton(calcBtn, '已计算');
-      });
-
-      resetBtn.addEventListener('click', () => {
-        inputX.value = '';
-        inputY.value = '';
-        clearError();
-        resultValue.textContent = '--';
-        resultSubtitle.textContent = '请输入有效数值开始计算。';
-        steps.innerHTML = '<p>选择计算类型并输入 X、Y 后，将自动展示公式和步骤。</p>';
-        copyNotice.classList.add('hidden');
-        flashButton(resetBtn, '已重置');
-        inputX.focus();
-      });
-
-      copyBtn.addEventListener('click', copyResult);
-
-      updateMode();
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      try {
+        return localStorage.getItem("microToolsLanguage") || "zh";
+      } catch (error) {
+        return "zh";
+      }
     }
+
+    function setLanguage(lang) {
+      const safeLang = lang === "en" ? "en" : "zh";
+      try {
+        localStorage.setItem("microToolsLanguage", safeLang);
+      } catch (error) {}
+      applyLanguage(safeLang);
+    }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.title = dict.documentTitle;
+
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute("content", dict.metaDescription);
+
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (keywords) keywords.setAttribute("content", dict.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.textContent = dict[key];
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("placeholder", dict[key]);
+      });
+
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("title", dict[key]);
+      });
+
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("aria-label", dict[key]);
+      });
+
+      const sponsorText = document.querySelector("#openSponsorBtn [data-i18n='sponsor']");
+      if (sponsorText) sponsorText.textContent = dict.sponsor;
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "zh" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "en" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+        zhBtn.setAttribute("aria-pressed", currentLanguage === "zh" ? "true" : "false");
+        enBtn.setAttribute("aria-pressed", currentLanguage === "en" ? "true" : "false");
+      }
+
+      updateThemeLabel();
+      calculate();
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function updateThemeLabel() {
+      const label = document.querySelector("[data-theme-label]");
+      if (!label) return;
+      const dict = I18N[currentLanguage];
+      let theme = "system";
+      try {
+        theme = localStorage.getItem("microToolsTheme") || localStorage.getItem("theme") || "system";
+      } catch (error) {}
+      if (theme === "light") label.textContent = dict.themeLight;
+      else if (theme === "dark") label.textContent = dict.themeDark;
+      else label.textContent = dict.themeSystem;
+    }
+
+    function t(key, values = {}) {
+      const dict = I18N[currentLanguage] || I18N.zh;
+      let text = dict[key] || I18N.zh[key] || "";
+      Object.keys(values).forEach((name) => {
+        text = text.replaceAll("{" + name + "}", values[name]);
+      });
+      return text;
+    }
+
+    function formatNumber(value) {
+      if (!Number.isFinite(value)) return "";
+      const rounded = Math.abs(value) < 1e-12 ? 0 : value;
+      return new Intl.NumberFormat(currentLanguage === "en" ? "en-US" : "zh-CN", {
+        maximumFractionDigits: 10,
+        useGrouping: false
+      }).format(rounded);
+    }
+
+    function parseNumber(input) {
+      const raw = (input.value || "").trim();
+      if (raw === "") return null;
+      const value = Number(raw);
+      return Number.isFinite(value) ? value : NaN;
+    }
+
+    function setStatus(key) {
+      lastStatusKey = key;
+      if (elements.statusText) elements.statusText.textContent = t(key);
+    }
+
+    function setOutput(resultText, processText, statusKey) {
+      if (elements.resultValue) elements.resultValue.textContent = resultText || "—";
+      if (elements.processText) elements.processText.textContent = processText || t("waitingProcess");
+      latestCopyText = resultText && resultText !== "—" ? resultText + "\n" + processText : "";
+      setStatus(statusKey);
+    }
+
+    function calculate() {
+      if (!elements.modeSelect || !elements.xInput || !elements.yInput) return;
+
+      const x = parseNumber(elements.xInput);
+      const y = parseNumber(elements.yInput);
+      if (x === null && y === null) {
+        setOutput("—", t("waitingProcess"), "waitingStatus");
+        return;
+      }
+      if (!Number.isFinite(x) || !Number.isFinite(y)) {
+        setOutput("—", t("invalidNumber"), "invalidNumber");
+        return;
+      }
+
+      const mode = elements.modeSelect.value;
+      if ((mode === "percentOf" || mode === "changeRate") && y === 0) {
+        setOutput("—", t("divideByZero"), "divideByZero");
+        return;
+      }
+
+      let result;
+      let formulaKey;
+      let explanationKey;
+      let displayResult;
+
+      if (mode === "percentOf") {
+        result = (x / y) * 100;
+        formulaKey = "formulaPercentOf";
+        explanationKey = "explanationPercentOf";
+        displayResult = formatNumber(result) + t("percentUnit");
+      } else if (mode === "increaseBy") {
+        result = x * (1 + y / 100);
+        formulaKey = "formulaIncreaseBy";
+        explanationKey = "explanationIncreaseBy";
+        displayResult = formatNumber(result);
+      } else if (mode === "decreaseBy") {
+        result = x * (1 - y / 100);
+        formulaKey = "formulaDecreaseBy";
+        explanationKey = "explanationDecreaseBy";
+        displayResult = formatNumber(result);
+      } else if (mode === "percentValue") {
+        result = x * y / 100;
+        formulaKey = "formulaPercentValue";
+        explanationKey = "explanationPercentValue";
+        displayResult = formatNumber(result);
+      } else {
+        result = ((x - y) / y) * 100;
+        formulaKey = "formulaChangeRate";
+        explanationKey = "explanationChangeRate";
+        displayResult = formatNumber(result) + t("percentUnit");
+      }
+
+      const values = {
+        x: formatNumber(x),
+        y: formatNumber(y),
+        result: formatNumber(result)
+      };
+      const process = t(formulaKey, values) + "\n" + t(explanationKey, values);
+      setOutput(displayResult, process, "calculated");
+    }
+
+    function fillSample() {
+      if (!elements.modeSelect || !elements.xInput || !elements.yInput) return;
+      elements.modeSelect.value = "percentOf";
+      elements.xInput.value = "50";
+      elements.yInput.value = "200";
+      calculate();
+      setStatus("sampled");
+    }
+
+    function clearInputs() {
+      if (!elements.xInput || !elements.yInput) return;
+      elements.xInput.value = "";
+      elements.yInput.value = "";
+      calculate();
+      setStatus("cleared");
+    }
+
+    function resetMode() {
+      if (!elements.modeSelect) return;
+      elements.modeSelect.value = "percentOf";
+      calculate();
+      setStatus("resetDone");
+    }
+
+    async function copyResult() {
+      if (!latestCopyText) {
+        setStatus("noResultToCopy");
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(latestCopyText);
+        setStatus("copied");
+      } catch (error) {
+        setStatus("copyFailed");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      elements.modeSelect = document.getElementById("modeSelect");
+      elements.xInput = document.getElementById("xInput");
+      elements.yInput = document.getElementById("yInput");
+      elements.resultValue = document.getElementById("resultValue");
+      elements.processText = document.getElementById("processText");
+      elements.statusText = document.getElementById("statusText");
+
+      elements.modeSelect?.addEventListener("change", calculate);
+      elements.xInput?.addEventListener("input", calculate);
+      elements.yInput?.addEventListener("input", calculate);
+      document.getElementById("sampleBtn")?.addEventListener("click", fillSample);
+      document.getElementById("clearBtn")?.addEventListener("click", clearInputs);
+      document.getElementById("copyBtn")?.addEventListener("click", copyResult);
+      document.getElementById("resetModeBtn")?.addEventListener("click", resetMode);
+
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="./sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

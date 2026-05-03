@@ -1,476 +1,558 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="网页版秒表与计次器。提供开始、暂停、Reset功能，并包含一个‘计次’按钮，在下方列表记录每一次的中间时间。">
-  <meta name="keywords" content="stopwatch,在线秒表,网页版秒表,秒表计次器,计次秒表,免费秒表工具,运动计时器,学习计时器,工作计时工具">
-  <title>stopwatch - 在线网页版秒表与计次器</title>
-  <link rel="icon" type="image/png" href="../assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
-  <link rel="canonical" href="https://mymicrotools.xyz/en/stopwatch.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>网页秒表与计次器 - Micro Tools Matrix</title>
+  <meta name="description" content="Micro Tools Matrix 提供浏览器本地处理的免费网页秒表与计次器，支持开始、暂停、重置和计次记录，无需上传任何数据。">
+  <meta name="keywords" content="网页秒表, 在线秒表, 计次器, 中间时间, 浏览器本地处理, 无需上传, Micro Tools Matrix">
+  <link rel="canonical" href="https://mymicrotools.xyz/stopwatch.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/stopwatch.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/stopwatch.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/stopwatch.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/en/stopwatch.html">
-  <meta property="og:title" content="stopwatch - 在线网页版秒表与计次器">
-  <meta property="og:description" content="网页版秒表与计次器。提供开始、暂停、Reset功能，并包含一个‘计次’按钮，在下方列表记录每一次的中间时间。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="stopwatch - 在线网页版秒表与计次器">
-  <meta name="twitter:description" content="网页版秒表与计次器。提供开始、暂停、Reset功能，并包含一个‘计次’按钮，在下方列表记录每一次的中间时间。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
-</head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="../stopwatch.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./stopwatch.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="pointer-events-none fixed inset-0 overflow-hidden">
-    <div class="absolute left-1/2 top-[-10rem] h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute bottom-[-12rem] right-[-8rem] h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl"></div>
-  </div>
-
-  <div class="relative mx-auto flex min-h-screen max-w-6xl flex-col px-4 py-6 sm:px-6 lg:px-8">
-    <header class="mb-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 p-6 shadow-2xl shadow-cyan-950/30 backdrop-blur md:p-8">
-      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-            免费在线工具
-          </p>
-          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl">在线网页版秒表与计次器</h1>
-          <p class="mt-3 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            现代化网页版秒表与计次器，精准记录每一次开始、暂停、Reset与中间计次。
-          </p>
-        </div>
-        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/70 px-4 py-3 text-sm text-slate-700 dark:text-slate-300">
-          <span class="mr-2 inline-block h-2 w-2 rounded-full bg-emerald-400"></span>
-          本地运行 · 无需安装
-        </div>
-      </div>
-    </header>
-
-    <main class="grid flex-1 gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-      <section aria-labelledby="timer-title" class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-black/30 backdrop-blur sm:p-7">
-        <div class="mb-6 flex items-center justify-between gap-4">
-          <div>
-            <h2 id="timer-title" class="text-xl font-bold text-gray-900 dark:text-white">秒表控制区</h2>
-            <p class="mt-1 text-sm text-slate-400">点击按钮即可开始计时、暂停、Reset或记录计次。</p>
-          </div>
-          <div id="statusBadge" class="rounded-full border border-slate-600 bg-slate-50 dark:bg-slate-800 px-3 py-1 text-sm font-semibold text-slate-700 dark:text-slate-300">
-            未开始
-          </div>
-        </div>
-
-        <div class="rounded-3xl border border-cyan-400/20 bg-gradient-to-br from-slate-950 to-slate-900 p-5 text-center shadow-inner sm:p-8">
-          <div id="timeDisplay" class="select-none break-words font-mono text-5xl font-black tracking-tight text-cyan-200 drop-shadow sm:text-7xl md:text-8xl" aria-live="polite">
-            00:00:00.000
-          </div>
-          <p class="mt-4 text-sm text-slate-400">格式：小时 : 分钟 : 秒 . 毫秒</p>
-        </div>
-
-        <div id="errorBox" class="mt-5 hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200" role="alert"></div>
-
-        <div class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <button id="startBtn" type="button" class="rounded-2xl bg-cyan-400 px-5 py-4 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-95 focus:outline-none focus:ring-4 focus:ring-cyan-300/30">
-            开始
-          </button>
-          <button id="pauseBtn" type="button" class="rounded-2xl bg-amber-400 px-5 py-4 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-amber-500/20 transition hover:bg-amber-300 active:scale-95 focus:outline-none focus:ring-4 focus:ring-amber-300/30 disabled:cursor-not-allowed disabled:opacity-45" disabled>
-            暂停
-          </button>
-          <button id="lapBtn" type="button" class="rounded-2xl bg-indigo-400 px-5 py-4 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-300 active:scale-95 focus:outline-none focus:ring-4 focus:ring-indigo-300/30 disabled:cursor-not-allowed disabled:opacity-45" disabled>
-            计次
-          </button>
-          <button id="resetBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-50 dark:bg-slate-800 px-5 py-4 font-bold text-slate-900 dark:text-slate-100 shadow-lg shadow-black/20 transition hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95 focus:outline-none focus:ring-4 focus:ring-slate-400/20">
-            Reset
-          </button>
-        </div>
-
-        <div class="mt-6 grid gap-3 sm:grid-cols-3">
-          <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-4">
-            <p class="text-sm text-slate-400">累计计次</p>
-            <p id="lapCount" class="mt-1 text-2xl font-black text-gray-900 dark:text-white">0</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-4">
-            <p class="text-sm text-slate-400">最快单圈</p>
-            <p id="bestLap" class="mt-1 font-mono text-lg font-bold text-emerald-300">--:--:--.---</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-4">
-            <p class="text-sm text-slate-400">最慢单圈</p>
-            <p id="slowestLap" class="mt-1 font-mono text-lg font-bold text-rose-300">--:--:--.---</p>
-          </div>
-        </div>
-      </section>
-
-      <section aria-labelledby="laps-title" class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-50 dark:bg-slate-800/70 p-5 shadow-2xl shadow-black/30 backdrop-blur sm:p-7">
-        <div class="mb-5 flex items-center justify-between gap-4">
-          <div>
-            <h2 id="laps-title" class="text-xl font-bold text-gray-900 dark:text-white">计次记录区</h2>
-            <p class="mt-1 text-sm text-slate-400">每次点击“计次”都会保存当前中间时间。</p>
-          </div>
-          <button id="clearLapsBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-3 py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95 focus:outline-none focus:ring-4 focus:ring-slate-400/20 disabled:cursor-not-allowed disabled:opacity-45" disabled>
-            Clear记录
-          </button>
-        </div>
-
-        <div class="overflow-hidden rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70">
-          <div class="grid grid-cols-[4rem_1fr_1fr] gap-2 border-b border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] px-4 py-3 text-sm font-bold text-slate-700 dark:text-slate-300">
-            <span>序号</span>
-            <span>单圈时间</span>
-            <span>总时间</span>
-          </div>
-          <div id="lapsList" class="max-h-[27rem] overflow-y-auto">
-            <div id="emptyState" class="px-4 py-10 text-center text-slate-400">
-              暂无计次记录。开始计时后点击“计次”即可添加。
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl shadow-black/20 backdrop-blur md:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于这款在线秒表与计次器</h2>
-      <p>
-        stopwatch 是一款专为浏览器设计的免费在线网页版秒表工具，适合需要快速、稳定、清晰计时的用户。无论你正在进行跑步训练、健身间歇、课堂实验、演讲排练，还是使用番茄工作法进行学习与工作效率统计，都可以通过这个秒表计次器完成精准记录。工具提供开始、暂停、Reset和计次功能，界面会实时显示小时、分钟、秒和毫秒，并在下方列表保存每一次中间时间，方便对比单圈表现与整体用时。
-      </p>
-      <p class="mt-4">
-        使用方法非常简单：点击“开始”启动计时，需要临时停止时点击“暂停”，想记录某个阶段的成绩时点击“计次”，系统会自动Generate单圈时间和总时间；如果需要重新开始，点击“Reset”即可Clear当前秒表。作为一款无需安装的在线秒表计时器，它在手机端和桌面端都能良好适配，打开网页即可使用，特别适合搜索“网页版秒表计次器”“免费在线秒表工具”“运动训练计时器”的用户。
-      </p>
-    </article>
-
-    <footer class="py-8 text-center text-sm text-slate-500">
-      stopwatch · 在线网页版秒表与计次器
-    </footer>
-  </div>
-
-  <script>
-    (() => {
-      "use strict";
-
-      const timeDisplay = document.getElementById("timeDisplay");
-      const startBtn = document.getElementById("startBtn");
-      const pauseBtn = document.getElementById("pauseBtn");
-      const resetBtn = document.getElementById("resetBtn");
-      const lapBtn = document.getElementById("lapBtn");
-      const clearLapsBtn = document.getElementById("clearLapsBtn");
-      const lapsList = document.getElementById("lapsList");
-      const emptyState = document.getElementById("emptyState");
-      const errorBox = document.getElementById("errorBox");
-      const statusBadge = document.getElementById("statusBadge");
-      const lapCount = document.getElementById("lapCount");
-      const bestLap = document.getElementById("bestLap");
-      const slowestLap = document.getElementById("slowestLap");
-
-      let isRunning = false;
-      let startTime = 0;
-      let elapsedBeforeStart = 0;
-      let animationId = null;
-      let laps = [];
-      let errorTimer = null;
-
-      const safeNow = () => {
-        try {
-          return performance && typeof performance.now === "function" ? performance.now() : Date.now();
-        } catch (_) {
-          return Date.now();
-        }
-      };
-
-      const clampNumber = (value) => {
-        const numeric = Number(value);
-        if (!Number.isFinite(numeric) || numeric < 0) return 0;
-        return Math.min(numeric, 359999999);
-      };
-
-      const formatTime = (milliseconds) => {
-        const total = Math.floor(clampNumber(milliseconds));
-        const ms = total % 1000;
-        const totalSeconds = Math.floor(total / 1000);
-        const seconds = totalSeconds % 60;
-        const totalMinutes = Math.floor(totalSeconds / 60);
-        const minutes = totalMinutes % 60;
-        const hours = Math.floor(totalMinutes / 60);
-
-        return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}.${String(ms).padStart(3, "0")}`;
-      };
-
-      const getElapsed = () => {
-        if (!isRunning) return clampNumber(elapsedBeforeStart);
-        return clampNumber(elapsedBeforeStart + (safeNow() - startTime));
-      };
-
-      const showError = (message) => {
-        const text = typeof message === "string" && message.trim() ? message.trim() : "操作无法完成，请稍后重试。";
-        errorBox.textContent = text;
-        errorBox.classList.remove("hidden");
-        clearTimeout(errorTimer);
-        errorTimer = setTimeout(() => {
-          errorBox.classList.add("hidden");
-          errorBox.textContent = "";
-        }, 3200);
-      };
-
-      const hideError = () => {
-        clearTimeout(errorTimer);
-        errorBox.classList.add("hidden");
-        errorBox.textContent = "";
-      };
-
-      const updateStatus = () => {
-        statusBadge.className = "rounded-full border px-3 py-1 text-sm font-semibold";
-        if (isRunning) {
-          statusBadge.textContent = "计时中";
-          statusBadge.classList.add("border-emerald-400/40", "bg-emerald-400/10", "text-emerald-200");
-        } else if (elapsedBeforeStart > 0) {
-          statusBadge.textContent = "已暂停";
-          statusBadge.classList.add("border-amber-400/40", "bg-amber-400/10", "text-amber-200");
-        } else {
-          statusBadge.textContent = "未开始";
-          statusBadge.classList.add("border-slate-600", "bg-slate-800", "text-slate-300");
-        }
-      };
-
-      const updateButtons = () => {
-        startBtn.disabled = isRunning;
-        pauseBtn.disabled = !isRunning;
-        lapBtn.disabled = !isRunning;
-        clearLapsBtn.disabled = laps.length === 0;
-
-        startBtn.textContent = elapsedBeforeStart > 0 && !isRunning ? "继续" : "开始";
-        startBtn.classList.toggle("opacity-45", isRunning);
-        startBtn.classList.toggle("cursor-not-allowed", isRunning);
-      };
-
-      const updateDisplay = () => {
-        timeDisplay.textContent = formatTime(getElapsed());
-      };
-
-      const updateStats = () => {
-        lapCount.textContent = String(laps.length);
-        if (laps.length === 0) {
-          bestLap.textContent = "--:--:--.---";
-          slowestLap.textContent = "--:--:--.---";
-          return;
-        }
-        const lapDurations = laps.map(item => clampNumber(item.lapTime));
-        bestLap.textContent = formatTime(Math.min(...lapDurations));
-        slowestLap.textContent = formatTime(Math.max(...lapDurations));
-      };
-
-      const renderLaps = () => {
-        lapsList.innerHTML = "";
-        if (laps.length === 0) {
-          lapsList.appendChild(emptyState);
-          updateStats();
-          updateButtons();
-          return;
-        }
-
-        const fragment = document.createDocumentFragment();
-        laps.slice().reverse().forEach((lap) => {
-          const row = document.createElement("div");
-          row.className = "grid grid-cols-[4rem_1fr_1fr] gap-2 border-b border-white/5 px-4 py-3 font-mono text-sm text-slate-200 last:border-b-0 hover:bg-white/[0.04]";
-
-          const index = document.createElement("span");
-          index.className = "font-bold text-cyan-200";
-          index.textContent = `#${lap.index}`;
-
-          const lapTime = document.createElement("span");
-          lapTime.textContent = formatTime(lap.lapTime);
-
-          const totalTime = document.createElement("span");
-          totalTime.className = "text-slate-300";
-          totalTime.textContent = formatTime(lap.totalTime);
-
-          row.appendChild(index);
-          row.appendChild(lapTime);
-          row.appendChild(totalTime);
-          fragment.appendChild(row);
-        });
-
-        lapsList.appendChild(fragment);
-        updateStats();
-        updateButtons();
-      };
-
-      const tick = () => {
-        updateDisplay();
-        if (isRunning) {
-          animationId = requestAnimationFrame(tick);
-        }
-      };
-
-      const start = () => {
-        try {
-          hideError();
-          if (isRunning) {
-            showError("秒表已经在计时中，无需重复开始。");
-            return;
-          }
-          startTime = safeNow();
-          isRunning = true;
-          updateStatus();
-          updateButtons();
-          cancelAnimationFrame(animationId);
-          tick();
-        } catch (_) {
-          showError("启动秒表时出现异常，请刷新页面后重试。");
-        }
-      };
-
-      const pause = () => {
-        try {
-          if (!isRunning) {
-            showError("秒表尚未开始，无法暂停。");
-            return;
-          }
-          elapsedBeforeStart = getElapsed();
-          isRunning = false;
-          cancelAnimationFrame(animationId);
-          updateDisplay();
-          updateStatus();
-          updateButtons();
-        } catch (_) {
-          showError("暂停秒表时出现异常，请重试。");
-        }
-      };
-
-      const reset = () => {
-        try {
-          isRunning = false;
-          startTime = 0;
-          elapsedBeforeStart = 0;
-          laps = [];
-          cancelAnimationFrame(animationId);
-          hideError();
-          updateDisplay();
-          updateStatus();
-          renderLaps();
-          updateButtons();
-        } catch (_) {
-          showError("Reset失败，请刷新页面后重试。");
-        }
-      };
-
-      const addLap = () => {
-        try {
-          if (!isRunning) {
-            showError("请先点击“开始”，计时中才能添加计次记录。");
-            return;
-          }
-
-          const totalTime = getElapsed();
-          if (totalTime <= 0) {
-            showError("当前计时时间过短，请稍后再记录计次。");
-            return;
-          }
-
-          const previousTotal = laps.length > 0 ? laps[laps.length - 1].totalTime : 0;
-          const lapTime = Math.max(0, totalTime - previousTotal);
-
-          laps.push({
-            index: laps.length + 1,
-            lapTime,
-            totalTime
-          });
-
-          renderLaps();
-        } catch (_) {
-          showError("添加计次记录失败，请重试。");
-        }
-      };
-
-      const clearLaps = () => {
-        try {
-          if (laps.length === 0) {
-            showError("当前没有可Clear的计次记录。");
-            return;
-          }
-          laps = [];
-          renderLaps();
-          hideError();
-        } catch (_) {
-          showError("Clear计次记录失败，请重试。");
-        }
-      };
-
-      startBtn.addEventListener("click", start);
-      pauseBtn.addEventListener("click", pause);
-      resetBtn.addEventListener("click", reset);
-      lapBtn.addEventListener("click", addLap);
-      clearLapsBtn.addEventListener("click", clearLaps);
-
-      document.addEventListener("keydown", (event) => {
-        const key = event.key.toLowerCase();
-        const activeTag = document.activeElement && document.activeElement.tagName ? document.activeElement.tagName.toLowerCase() : "";
-        if (activeTag === "input" || activeTag === "textarea" || activeTag === "select") return;
-
-        if (key === " " || key === "enter") {
-          event.preventDefault();
-          isRunning ? pause() : start();
-        } else if (key === "l") {
-          addLap();
-        } else if (key === "r") {
-          reset();
-        }
-      });
-
-      updateDisplay();
-      updateStatus();
-      renderLaps();
-      updateButtons();
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
+  <link rel="stylesheet" href="../style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Stopwatch and Lap Timer",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A free browser-local stopwatch and lap timer by Micro Tools Matrix.",
+      "url": "https://mymicrotools.xyz/stopwatch.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "category": "Free"
+      }
     }
   </script>
-  <!-- pwa-register:end -->
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">网页秒表与计次器</span>
+        </span>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeToggleAria">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline"></span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="sponsorAria">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]" data-i18n-aria-label="languageAria">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="zhAria">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="enAria">EN</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">网页秒表与计次器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中直接运行秒表、暂停计时并记录每一次中间时间，所有计时数据仅保存在当前浏览器页面内。</p>
+        </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">计时控制</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">控制</span>
+        </div>
+
+        <div class="rounded-3xl border border-gray-200 bg-slate-50 p-5 text-center dark:border-white/10 dark:bg-slate-950/70 sm:p-6">
+          <div id="timeDisplay" class="break-words text-5xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-6xl lg:text-7xl tabular-nums" aria-live="polite">00:00.000</div>
+          <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="statusReady">准备开始计时。</p>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="startPauseBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="startAction" data-i18n-aria-label="startAria">开始</button>
+          <button id="lapBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="lapAction" data-i18n-aria-label="lapAria">计次</button>
+          <button id="resetBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="resetAction" data-i18n-aria-label="resetAria">重置</button>
+        </div>
+
+        <div class="mt-5 rounded-2xl border border-gray-200 bg-slate-50 p-4 text-sm leading-7 text-slate-600 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-400">
+          <p data-i18n="usageTip">提示：运行时点击计次可保存当前中间时间；暂停后可以继续计时，也可以重置清空记录。</p>
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">计次记录</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">记录</span>
+        </div>
+
+        <div class="overflow-hidden rounded-3xl border border-gray-200 bg-slate-50 dark:border-white/10 dark:bg-slate-950/70">
+          <div class="grid grid-cols-[0.8fr_1.1fr_1.1fr] gap-2 border-b border-gray-200 px-4 py-3 text-xs font-bold text-slate-500 dark:border-white/10 dark:text-slate-400">
+            <span data-i18n="lapNumberHeader">序号</span>
+            <span class="text-right" data-i18n="lapTimeHeader">中间时间</span>
+            <span class="text-right" data-i18n="lapSplitHeader">本圈用时</span>
+          </div>
+          <div id="lapsList" class="max-h-[28rem] overflow-y-auto"></div>
+          <div id="emptyLaps" class="px-4 py-10 text-center text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="emptyLaps">暂无计次记录。</div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyLapsBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction" data-i18n-aria-label="copyAria">复制记录</button>
+          <button id="clearLapsBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="clearLapsAction" data-i18n-aria-label="clearLapsAria">清空记录</button>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">这款网页秒表与计次器是 Micro Tools Matrix 的免费在线开发者工具，适合记录调试耗时、接口响应观察、演示排练、番茄钟片段或运动中间时间。工具采用浏览器本地处理，开始、暂停、重置和计次记录都在当前页面内完成，无需上传账号、文件或文本，也不会把计时数据发送到服务器。你可以在桌面或移动浏览器中直接使用它，计次列表会显示每一次的中间时间和本圈用时，便于比较不同阶段的耗时差异。页面保持轻量、克制和响应式，适合需要快速打开、立即计时、保护隐私的日常工作流。</article>
+  </main>
+
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理的免费在线工具。</footer>
+
+  <script>
+    const I18N = {
+      zh: {
+        toolName: "网页秒表与计次器",
+        h1: "网页秒表与计次器",
+        title: "网页秒表与计次器 - Micro Tools Matrix",
+        metaDescription: "Micro Tools Matrix 提供浏览器本地处理的免费网页秒表与计次器，支持开始、暂停、重置和计次记录，无需上传任何数据。",
+        metaKeywords: "网页秒表, 在线秒表, 计次器, 中间时间, 浏览器本地处理, 无需上传, Micro Tools Matrix",
+        eyebrow: "浏览器本地处理",
+        intro: "在 Micro Tools Matrix 中直接运行秒表、暂停计时并记录每一次中间时间，所有计时数据仅保存在当前浏览器页面内。",
+        localBadge: "本地运行",
+        sponsor: "赞赏",
+        buyCoffee: "Buy Me a Coffee",
+        inputTitle: "计时控制",
+        inputBadge: "控制",
+        outputTitle: "计次记录",
+        outputBadge: "记录",
+        startAction: "开始",
+        pauseAction: "暂停",
+        lapAction: "计次",
+        resetAction: "重置",
+        copyAction: "复制记录",
+        clearLapsAction: "清空记录",
+        usageTip: "提示：运行时点击计次可保存当前中间时间；暂停后可以继续计时，也可以重置清空记录。",
+        lapNumberHeader: "序号",
+        lapTimeHeader: "中间时间",
+        lapSplitHeader: "本圈用时",
+        emptyLaps: "暂无计次记录。",
+        statusReady: "准备开始计时。",
+        statusRunning: "正在计时。",
+        statusPaused: "已暂停，可继续计时或重置。",
+        statusReset: "已重置秒表和计次记录。",
+        statusLap: "已记录第 {count} 次计次。",
+        statusLapNeedStart: "请先开始计时，再记录计次。",
+        statusNoLaps: "暂无可复制的计次记录。",
+        statusCopied: "计次记录已复制到剪贴板。",
+        statusCopyFailed: "复制失败，请手动选择记录内容。",
+        statusLapsCleared: "已清空计次记录。",
+        lapPrefix: "第 {count} 次",
+        copyHeader: "序号\t中间时间\t本圈用时",
+        themeToggleAria: "切换主题",
+        sponsorAria: "打开赞赏",
+        languageAria: "语言",
+        zhAria: "切换到中文",
+        enAria: "切换到英文",
+        startAria: "开始计时",
+        pauseAria: "暂停计时",
+        lapAria: "记录中间时间",
+        resetAria: "重置秒表",
+        copyAria: "复制计次记录",
+        clearLapsAria: "清空计次记录",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        seoArticle: "这款网页秒表与计次器是 Micro Tools Matrix 的免费在线开发者工具，适合记录调试耗时、接口响应观察、演示排练、番茄钟片段或运动中间时间。工具采用浏览器本地处理，开始、暂停、重置和计次记录都在当前页面内完成，无需上传账号、文件或文本，也不会把计时数据发送到服务器。你可以在桌面或移动浏览器中直接使用它，计次列表会显示每一次的中间时间和本圈用时，便于比较不同阶段的耗时差异。页面保持轻量、克制和响应式，适合需要快速打开、立即计时、保护隐私的日常工作流。",
+        footer: "Micro Tools Matrix - 浏览器本地处理的免费在线工具。"
+      },
+      en: {
+        toolName: "Stopwatch and Lap Timer",
+        h1: "Stopwatch and Lap Timer",
+        title: "Stopwatch and Lap Timer - Micro Tools Matrix",
+        metaDescription: "A free browser-local stopwatch and lap timer from Micro Tools Matrix. Start, pause, reset, and record lap times without uploading any data.",
+        metaKeywords: "stopwatch, online stopwatch, lap timer, split time, browser-local processing, free online developer tool, Micro Tools Matrix",
+        eyebrow: "Browser-local processing",
+        intro: "Run a stopwatch, pause timing, and record each split directly in Micro Tools Matrix. All timing data stays inside the current browser page.",
+        localBadge: "Local",
+        sponsor: "Sponsor",
+        buyCoffee: "Buy Me a Coffee",
+        inputTitle: "Timer Controls",
+        inputBadge: "Controls",
+        outputTitle: "Lap Records",
+        outputBadge: "Records",
+        startAction: "Start",
+        pauseAction: "Pause",
+        lapAction: "Lap",
+        resetAction: "Reset",
+        copyAction: "Copy Records",
+        clearLapsAction: "Clear Records",
+        usageTip: "Tip: while the stopwatch is running, press Lap to save the current split time. After pausing, you can continue timing or reset everything.",
+        lapNumberHeader: "No.",
+        lapTimeHeader: "Split Time",
+        lapSplitHeader: "Lap Time",
+        emptyLaps: "No lap records yet.",
+        statusReady: "Ready to start timing.",
+        statusRunning: "Stopwatch is running.",
+        statusPaused: "Paused. You can continue timing or reset.",
+        statusReset: "Stopwatch and lap records have been reset.",
+        statusLap: "Recorded lap {count}.",
+        statusLapNeedStart: "Start the stopwatch before recording a lap.",
+        statusNoLaps: "There are no lap records to copy.",
+        statusCopied: "Lap records copied to the clipboard.",
+        statusCopyFailed: "Copy failed. Please select the records manually.",
+        statusLapsCleared: "Lap records cleared.",
+        lapPrefix: "Lap {count}",
+        copyHeader: "No.\tSplit Time\tLap Time",
+        themeToggleAria: "Toggle theme",
+        sponsorAria: "Open sponsor",
+        languageAria: "Language",
+        zhAria: "Switch to Chinese",
+        enAria: "Switch to English",
+        startAria: "Start stopwatch",
+        pauseAria: "Pause stopwatch",
+        lapAria: "Record split time",
+        resetAria: "Reset stopwatch",
+        copyAria: "Copy lap records",
+        clearLapsAria: "Clear lap records",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        seoArticle: "This stopwatch and lap timer is a free online developer tool from Micro Tools Matrix, designed for quick timing tasks without setup. Use it to measure debugging sessions, API response checks, presentation rehearsals, short focus intervals, QA steps, or any workflow where split times matter. The page uses browser-local processing: starting, pausing, resetting, and saving lap records all happen in memory on the current page. Nothing is uploaded, no account is required, and your timing data is not sent to a backend service. The lap list records both the total split time and the duration of each lap, making it easier to compare stages in a test run or repeated task. The interface is responsive, restrained, and fast to open on desktop and mobile browsers, so it fits daily work where privacy, speed, and clarity are more important than heavy project-management features.",
+        footer: "Micro Tools Matrix - Free online tools with browser-local processing."
+      }
+    };
+
+    let currentLanguage = "zh";
+    let startTime = 0;
+    let elapsedBeforeStart = 0;
+    let timerId = 0;
+    let isRunning = false;
+    let laps = [];
+    let lastLapElapsed = 0;
+    let lastStatusKey = "statusReady";
+    let lastStatusParams = {};
+
+    const elements = {};
+
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      try {
+        const saved = localStorage.getItem("microToolsLanguage");
+        return saved === "en" ? "en" : "zh";
+      } catch (error) {
+        return "zh";
+      }
+    }
+
+    function setLanguage(lang) {
+      const nextLang = lang === "en" ? "en" : "zh";
+      try {
+        localStorage.setItem("microToolsLanguage", nextLang);
+      } catch (error) {}
+      applyLanguage(nextLang);
+    }
+
+    function translate(key, params = {}) {
+      const dict = I18N[currentLanguage] || I18N.zh;
+      let value = dict[key] || I18N.zh[key] || "";
+      Object.keys(params).forEach((name) => {
+        value = value.replaceAll("{" + name + "}", String(params[name]));
+      });
+      return value;
+    }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.title = dict.title;
+
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) metaDescription.setAttribute("content", dict.metaDescription);
+
+      const metaKeywords = document.querySelector('meta[name="keywords"]');
+      if (metaKeywords) metaKeywords.setAttribute("content", dict.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.textContent = dict[key];
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("placeholder", dict[key]);
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("title", dict[key]);
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("aria-label", dict[key]);
+        }
+      });
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        const activeClass = ["bg-cyan-400", "text-slate-950"];
+        const inactiveClass = ["text-slate-600", "dark:text-slate-400"];
+        zhBtn.classList.remove(...activeClass, ...inactiveClass);
+        enBtn.classList.remove(...activeClass, ...inactiveClass);
+        if (currentLanguage === "zh") {
+          zhBtn.classList.add(...activeClass);
+          enBtn.classList.add(...inactiveClass);
+        } else {
+          enBtn.classList.add(...activeClass);
+          zhBtn.classList.add(...inactiveClass);
+        }
+      }
+
+      updateStartPauseButton();
+      renderLaps();
+      setStatus(lastStatusKey, lastStatusParams);
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function cacheElements() {
+      elements.timeDisplay = document.getElementById("timeDisplay");
+      elements.statusText = document.getElementById("statusText");
+      elements.startPauseBtn = document.getElementById("startPauseBtn");
+      elements.lapBtn = document.getElementById("lapBtn");
+      elements.resetBtn = document.getElementById("resetBtn");
+      elements.copyLapsBtn = document.getElementById("copyLapsBtn");
+      elements.clearLapsBtn = document.getElementById("clearLapsBtn");
+      elements.lapsList = document.getElementById("lapsList");
+      elements.emptyLaps = document.getElementById("emptyLaps");
+    }
+
+    function formatTime(ms) {
+      const safeMs = Math.max(0, Math.floor(ms));
+      const minutes = Math.floor(safeMs / 60000);
+      const seconds = Math.floor((safeMs % 60000) / 1000);
+      const milliseconds = safeMs % 1000;
+      return String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0") + "." + String(milliseconds).padStart(3, "0");
+    }
+
+    function getElapsed() {
+      if (!isRunning) return elapsedBeforeStart;
+      return elapsedBeforeStart + performance.now() - startTime;
+    }
+
+    function updateDisplay() {
+      if (elements.timeDisplay) {
+        elements.timeDisplay.textContent = formatTime(getElapsed());
+      }
+    }
+
+    function tick() {
+      updateDisplay();
+      if (isRunning) {
+        timerId = requestAnimationFrame(tick);
+      }
+    }
+
+    function setStatus(key, params = {}) {
+      lastStatusKey = key;
+      lastStatusParams = params;
+      if (elements.statusText) {
+        elements.statusText.textContent = translate(key, params);
+      }
+    }
+
+    function updateStartPauseButton() {
+      if (!elements.startPauseBtn) return;
+      if (isRunning) {
+        elements.startPauseBtn.textContent = translate("pauseAction");
+        elements.startPauseBtn.setAttribute("aria-label", translate("pauseAria"));
+      } else {
+        elements.startPauseBtn.textContent = translate("startAction");
+        elements.startPauseBtn.setAttribute("aria-label", translate("startAria"));
+      }
+    }
+
+    function startStopwatch() {
+      if (isRunning) return;
+      isRunning = true;
+      startTime = performance.now();
+      updateStartPauseButton();
+      setStatus("statusRunning");
+      timerId = requestAnimationFrame(tick);
+    }
+
+    function pauseStopwatch() {
+      if (!isRunning) return;
+      elapsedBeforeStart = getElapsed();
+      isRunning = false;
+      cancelAnimationFrame(timerId);
+      updateDisplay();
+      updateStartPauseButton();
+      setStatus("statusPaused");
+    }
+
+    function toggleStartPause() {
+      if (isRunning) {
+        pauseStopwatch();
+      } else {
+        startStopwatch();
+      }
+    }
+
+    function resetStopwatch() {
+      isRunning = false;
+      cancelAnimationFrame(timerId);
+      startTime = 0;
+      elapsedBeforeStart = 0;
+      lastLapElapsed = 0;
+      laps = [];
+      updateDisplay();
+      updateStartPauseButton();
+      renderLaps();
+      setStatus("statusReset");
+    }
+
+    function recordLap() {
+      const elapsed = getElapsed();
+      if (!isRunning && elapsed === 0) {
+        setStatus("statusLapNeedStart");
+        return;
+      }
+      const split = Math.max(0, elapsed - lastLapElapsed);
+      lastLapElapsed = elapsed;
+      laps.unshift({
+        index: laps.length + 1,
+        elapsed,
+        split
+      });
+      renderLaps();
+      setStatus("statusLap", { count: laps.length });
+    }
+
+    function renderLaps() {
+      if (!elements.lapsList || !elements.emptyLaps) return;
+      elements.lapsList.innerHTML = "";
+      elements.emptyLaps.classList.toggle("hidden", laps.length > 0);
+
+      const rowClass = "grid grid-cols-[0.8fr_1.1fr_1.1fr] gap-2 border-b border-gray-200 px-4 py-3 text-sm last:border-b-0 dark:border-white/10";
+      laps.forEach((lap) => {
+        const row = document.createElement("div");
+        row.className = rowClass;
+
+        const number = document.createElement("span");
+        number.className = "min-w-0 truncate font-semibold text-slate-700 dark:text-slate-300";
+        number.textContent = translate("lapPrefix", { count: lap.index });
+
+        const elapsed = document.createElement("span");
+        elapsed.className = "text-right font-semibold text-slate-950 dark:text-white tabular-nums";
+        elapsed.textContent = formatTime(lap.elapsed);
+
+        const split = document.createElement("span");
+        split.className = "text-right text-slate-600 dark:text-slate-400 tabular-nums";
+        split.textContent = formatTime(lap.split);
+
+        row.append(number, elapsed, split);
+        elements.lapsList.appendChild(row);
+      });
+    }
+
+    async function copyLaps() {
+      if (laps.length === 0) {
+        setStatus("statusNoLaps");
+        return;
+      }
+
+      const chronological = [...laps].reverse();
+      const lines = [translate("copyHeader")].concat(
+        chronological.map((lap) => String(lap.index) + "\t" + formatTime(lap.elapsed) + "\t" + formatTime(lap.split))
+      );
+      const text = lines.join("\n");
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const textarea = document.createElement("textarea");
+          textarea.value = text;
+          textarea.setAttribute("readonly", "readonly");
+          textarea.style.position = "fixed";
+          textarea.style.left = "-9999px";
+          document.body.appendChild(textarea);
+          textarea.select();
+          const ok = document.execCommand("copy");
+          textarea.remove();
+          if (!ok) throw new Error("copy failed");
+        }
+        setStatus("statusCopied");
+      } catch (error) {
+        setStatus("statusCopyFailed");
+      }
+    }
+
+    function clearLaps() {
+      laps = [];
+      lastLapElapsed = getElapsed();
+      renderLaps();
+      setStatus("statusLapsCleared");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      cacheElements();
+
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", () => {
+        if (typeof openSponsorModal === "function") openSponsorModal();
+      });
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", () => {
+        if (typeof closeSponsorModal === "function") closeSponsorModal();
+      });
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal" && typeof closeSponsorModal === "function") closeSponsorModal();
+      });
+
+      elements.startPauseBtn?.addEventListener("click", toggleStartPause);
+      elements.lapBtn?.addEventListener("click", recordLap);
+      elements.resetBtn?.addEventListener("click", resetStopwatch);
+      elements.copyLapsBtn?.addEventListener("click", copyLaps);
+      elements.clearLapsBtn?.addEventListener("click", clearLaps);
+
+      updateDisplay();
+      applyLanguage(getInitialLanguage());
+    });
+  </script>
+  <script src="../sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

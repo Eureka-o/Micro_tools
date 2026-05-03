@@ -1,377 +1,429 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aspect Ratio Calculator - 图片/视频宽高比计算器</title>
-  <meta name="description" content="图片/视频宽高比计算器。输入原始宽高，给定一个新的宽度，自动计算出保持原有比例的等比高度。">
-  <meta name="keywords" content="aspect ratio calculator, 宽高比计算器, 图片宽高比计算, 视频比例计算器, 等比缩放计算器, 图片尺寸计算, 视频尺寸换算, 保持比例计算高度">
-  <link rel="icon" type="image/png" href="../assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../style.css">
   <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
-  <link rel="canonical" href="https://mymicrotools.xyz/en/aspect-ratio-calculator.html">
+
+  <title>宽高比计算器 - Micro Tools Matrix</title>
+  <meta id="metaDescription" name="description" content="免费宽高比计算器，在浏览器本地处理图片和视频比例。输入原始宽高和新的宽度，自动计算等比高度，无需上传。">
+  <meta id="metaKeywords" name="keywords" content="宽高比计算器, aspect ratio calculator, 图片比例, 视频比例, 浏览器本地处理, Micro Tools Matrix">
+
+  <link rel="canonical" href="https://mymicrotools.xyz/aspect-ratio-calculator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/aspect-ratio-calculator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/aspect-ratio-calculator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/aspect-ratio-calculator.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/en/aspect-ratio-calculator.html">
-  <meta property="og:title" content="Aspect Ratio Calculator - 图片/视频宽高比计算器">
-  <meta property="og:description" content="图片/视频宽高比计算器。输入原始宽高，给定一个新的宽度，自动计算出保持原有比例的等比高度。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Aspect Ratio Calculator - 图片/视频宽高比计算器">
-  <meta name="twitter:description" content="图片/视频宽高比计算器。输入原始宽高，给定一个新的宽度，自动计算出保持原有比例的等比高度。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"SoftwareApplication",
+    "name":"Aspect Ratio Calculator",
+    "applicationCategory":"DeveloperApplication",
+    "operatingSystem":"Windows, macOS, Android, iOS",
+    "offers":{
+      "@type":"Offer",
+      "price":"0",
+      "priceCurrency":"USD"
+    },
+    "description":"Browser-local aspect ratio calculator for images and videos. Calculate proportional height from original width and height with a new width."
+  }
+  </script>
+
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">宽高比计算器</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="../aspect-ratio-calculator.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./aspect-ratio-calculator.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+      </a>
+
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span data-theme-sun>☀</span>
+          <span data-theme-moon>☾</span>
+          <span data-theme-label class="hidden sm:inline"></span>
+        </button>
+
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span>
+          <span data-i18n="sponsor">赞赏</span>
+        </button>
+
+        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
+        </div>
       </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
+    </nav>
+  </header>
 
-
-
-
-
-
-
-
-
-
-
-  <div class="pointer-events-none fixed inset-0 overflow-hidden">
-    <div class="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
-  </div>
-
-  <main class="relative z-10 mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 py-6 sm:px-6 lg:px-8">
-    <header class="mb-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-6 py-8 text-center shadow-2xl shadow-cyan-950/30 backdrop-blur md:py-12">
-      <div class="mx-auto mb-4 inline-flex items-center rounded-full border border-cyan-300/30 bg-cyan-400/10 px-4 py-2 text-sm font-medium text-cyan-200">
-        图片 / 视频 / 设计稿等比缩放工具
-      </div>
-      <h1 class="bg-gradient-to-r from-cyan-200 via-white to-indigo-200 bg-clip-text text-4xl font-black tracking-tight text-transparent sm:text-5xl md:text-6xl">图片/视频宽高比计算器</h1>
-      <p class="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
-        输入原始宽高与新的宽度，立即计算保持原始比例的新高度，适合图片裁切、视频发布、网页响应式设计与素材尺寸换算。
-      </p>
-    </header>
-
-    <section class="grid gap-6 lg:grid-cols-5">
-      <div class="lg:col-span-3 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-xl shadow-black/30 backdrop-blur sm:p-7">
-        <div class="mb-6 flex items-center justify-between gap-4">
-          <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输入尺寸</h2>
-            <p class="mt-1 text-sm text-slate-400">请填写大于 0 的数字，可输入小数。</p>
-          </div>
-          <span class="rounded-2xl bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-200 ring-1 ring-cyan-300/20">Input</span>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">宽高比计算器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">
+            快速计算图片或视频在保持原始比例时的新高度。所有计算都在浏览器本地完成，无需上传文件。
+          </p>
         </div>
 
-        <form id="ratioForm" class="space-y-5" novalidate>
-          <div class="grid gap-4 sm:grid-cols-2">
-            <label class="block">
-              <span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">原始宽度</span>
-              <input id="originalWidth" type="text" inputmode="decimal" autocomplete="off" value="1920"
-                class="w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-3 text-lg text-gray-900 dark:text-white outline-none transition focus:border-cyan-300 focus:ring-4 focus:ring-cyan-400/10"
-                placeholder="例如：1920" />
-            </label>
-            <label class="block">
-              <span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">原始高度</span>
-              <input id="originalHeight" type="text" inputmode="decimal" autocomplete="off" value="1080"
-                class="w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-3 text-lg text-gray-900 dark:text-white outline-none transition focus:border-cyan-300 focus:ring-4 focus:ring-cyan-400/10"
-                placeholder="例如：1080" />
-            </label>
-          </div>
-
-          <label class="block">
-            <span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">新的宽度</span>
-            <input id="newWidth" type="text" inputmode="decimal" autocomplete="off" value="1280"
-              class="w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/70 px-4 py-3 text-lg text-gray-900 dark:text-white outline-none transition focus:border-cyan-300 focus:ring-4 focus:ring-cyan-400/10"
-              placeholder="例如：1280" />
-          </label>
-
-          <div id="errorBox" class="hidden rounded-2xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200"></div>
-
-          <div class="flex flex-col gap-3 sm:flex-row">
-            <button id="calculateBtn" type="submit"
-              class="flex-1 rounded-2xl bg-gradient-to-r from-cyan-400 to-indigo-500 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:scale-[1.01] hover:shadow-cyan-500/30 active:scale-[0.98]">
-              Calculate proportional height
-            </button>
-            <button id="resetBtn" type="button"
-              class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-[0.98]">
-              Reset
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <div class="lg:col-span-2 rounded-3xl border border-cyan-300/20 bg-cyan-950/30 p-5 shadow-xl shadow-cyan-950/30 backdrop-blur sm:p-7">
-        <div class="mb-6 flex items-center justify-between gap-4">
-          <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">计算结果</h2>
-            <p class="mt-1 text-sm text-cyan-100/70">自动保持原始宽高比。</p>
-          </div>
-          <span class="rounded-2xl bg-white dark:bg-white/10 px-3 py-1 text-xs font-semibold text-cyan-100 ring-1 ring-white/10">Output</span>
-        </div>
-
-        <div class="space-y-4">
-          <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/60 p-5">
-            <p class="text-sm font-medium text-slate-400">新的高度</p>
-            <div class="mt-3 flex items-end gap-2">
-              <output id="newHeightOutput" class="break-all text-5xl font-black tracking-tight text-cyan-200">720</output>
-              <span class="pb-2 text-slate-400">px</span>
-            </div>
-          </div>
-
-          <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-            <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-4">
-              <p class="text-xs uppercase tracking-wider text-slate-400">宽高比</p>
-              <output id="ratioOutput" class="mt-2 block text-xl font-bold text-gray-900 dark:text-white">16:9</output>
-            </div>
-            <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-4">
-              <p class="text-xs uppercase tracking-wider text-slate-400">新尺寸</p>
-              <output id="sizeOutput" class="mt-2 block text-xl font-bold text-gray-900 dark:text-white">1280 × 720</output>
-            </div>
-          </div>
-
-          <button id="copyBtn" type="button"
-            class="w-full rounded-2xl border border-cyan-300/30 bg-cyan-300/10 px-5 py-3 font-semibold text-cyan-100 transition hover:bg-cyan-300/20 active:scale-[0.98]">
-            Copy result
-          </button>
-
-          <div id="copyBox" class="hidden rounded-2xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm font-medium text-emerald-200"></div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"></path>
+            <path d="M9 12l2 2 4-5"></path>
+          </svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl shadow-black/20 backdrop-blur sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于图片/视频宽高比计算器</h2>
-      <p>
-        Aspect Ratio Calculator 是一款面向设计师、前端开发者、视频创作者和运营人员的在线宽高比计算器。日常处理图片缩放、视频封面制作、网页响应式布局或社交媒体素材时，经常需要在不拉伸、不变形的前提下调整尺寸。本工具只需输入原始宽度、原始高度以及新的宽度，就能自动计算保持原有比例的新高度，并同步显示宽高比和最终尺寸。无论你想进行 16:9 视频尺寸换算、图片等比缩放计算，还是快速得到适合网页展示的图片高度，都可以通过这个图片/视频宽高比计算器完成。使用方法非常简单：填写原始尺寸，输入目标宽度，点击计算即可获得精准结果，帮助你减少手动换算误差，提升内容制作与前端开发效率。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">INPUT</span>
+        </div>
 
-    <footer class="py-8 text-center text-sm text-slate-500">
-      <p>© <span id="year"></span> aspect-ratio-calculator</p>
-    </footer>
+        <div class="space-y-4">
+          <div>
+            <label for="originalWidth" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="originalWidthLabel">原始宽度</label>
+            <input id="originalWidth" type="number" min="1" step="any"
+              class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600"
+              data-i18n-placeholder="originalWidthPlaceholder"
+              placeholder="例如 1920">
+          </div>
+
+          <div>
+            <label for="originalHeight" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="originalHeightLabel">原始高度</label>
+            <input id="originalHeight" type="number" min="1" step="any"
+              class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600"
+              data-i18n-placeholder="originalHeightPlaceholder"
+              placeholder="例如 1080">
+          </div>
+
+          <div>
+            <label for="newWidth" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="newWidthLabel">新的宽度</label>
+            <input id="newWidth" type="number" min="1" step="any"
+              class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600"
+              data-i18n-placeholder="newWidthPlaceholder"
+              placeholder="例如 800">
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="calculateBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">计算</button>
+
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">示例</button>
+
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">OUTPUT</span>
+        </div>
+
+        <div class="space-y-4">
+          <div class="rounded-3xl border border-gray-200 bg-slate-50 p-5 dark:border-white/10 dark:bg-slate-950/50">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="resultLabel">等比高度</p>
+            <p id="resultValue" class="mt-3 break-words text-3xl font-black tracking-tight text-slate-950 dark:text-white tabular-nums">—</p>
+          </div>
+
+          <div class="rounded-3xl border border-gray-200 bg-slate-50 p-5 dark:border-white/10 dark:bg-slate-950/50">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="ratioLabel">原始比例</p>
+            <p id="ratioValue" class="mt-3 break-words text-lg font-semibold text-slate-900 dark:text-slate-100 tabular-nums">—</p>
+          </div>
+
+          <p id="statusText" class="min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="statusReady">
+            输入参数后点击计算。
+          </p>
+
+          <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="copyAction">
+              复制结果
+            </button>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">
+      宽高比计算器适用于图片尺寸调整、视频封面设计、响应式布局和社交媒体素材处理。输入原始宽度与高度，再填写目标宽度，即可快速得到保持比例后的新高度，避免图片拉伸或视频变形。所有数据都在浏览器本地处理，无需上传文件，适合开发者、设计师和内容创作者快速使用。Micro Tools Matrix 提供免费在线工具，专注于高效、轻量和隐私友好的本地处理体验。
+    </article>
   </main>
 
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">
+    Micro Tools Matrix - 浏览器本地处理，无需上传。
+  </footer>
+
+  <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md">
+    <div class="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
+      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor">×</button>
+
+      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">赞赏支持</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">
+        保持工具免费、快速且无广告。
+      </p>
+
+      <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="buyCoffee">
+        Buy Me a Coffee
+      </a>
+    </div>
+  </div>
+
   <script>
-    (() => {
-      const $ = (id) => document.getElementById(id);
+    const I18N = {
+      zh: {
+        toolName: "宽高比计算器",
+        eyebrow: "浏览器本地处理",
+        h1: "宽高比计算器",
+        intro: "快速计算图片或视频在保持原始比例时的新高度。所有计算都在浏览器本地完成，无需上传文件。",
+        localBadge: "本地运行",
+        sponsor: "赞赏",
+        inputTitle: "输入",
+        inputBadge: "INPUT",
+        outputTitle: "结果",
+        outputBadge: "OUTPUT",
+        originalWidthLabel: "原始宽度",
+        originalHeightLabel: "原始高度",
+        newWidthLabel: "新的宽度",
+        originalWidthPlaceholder: "例如 1920",
+        originalHeightPlaceholder: "例如 1080",
+        newWidthPlaceholder: "例如 800",
+        primaryAction: "计算",
+        sampleAction: "示例",
+        secondaryAction: "清空",
+        resultLabel: "等比高度",
+        ratioLabel: "原始比例",
+        copyAction: "复制结果",
+        statusReady: "输入参数后点击计算。",
+        statusCopied: "结果已复制到剪贴板。",
+        statusCleared: "已清空输入和结果。",
+        statusSample: "已填充示例数据。",
+        errorInvalid: "请输入有效的正数宽度和高度。",
+        resultSuccess: "计算完成。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。",
+        sponsorTitle: "赞赏支持",
+        sponsorSubtitle: "保持工具免费、快速且无广告。",
+        buyCoffee: "Buy Me a Coffee",
+        closeSponsor: "关闭赞赏窗口",
+        seoArticle: "宽高比计算器适用于图片尺寸调整、视频封面设计、响应式布局和社交媒体素材处理。输入原始宽度与高度，再填写目标宽度，即可快速得到保持比例后的新高度，避免图片拉伸或视频变形。所有数据都在浏览器本地处理，无需上传文件，适合开发者、设计师和内容创作者快速使用。Micro Tools Matrix 提供免费在线工具，专注于高效、轻量和隐私友好的本地处理体验。",
+        title: "宽高比计算器 - Micro Tools Matrix",
+        description: "免费宽高比计算器，在浏览器本地处理图片和视频比例。输入原始宽高和新的宽度，自动计算等比高度，无需上传。",
+        keywords: "宽高比计算器, aspect ratio calculator, 图片比例, 视频比例, 浏览器本地处理, Micro Tools Matrix",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统"
+      },
+      en: {
+        toolName: "Aspect Ratio Calculator",
+        eyebrow: "BROWSER-LOCAL PROCESSING",
+        h1: "Aspect Ratio Calculator",
+        intro: "Calculate proportional height for images and videos while preserving the original ratio. Everything runs locally in your browser with no uploads.",
+        localBadge: "Local",
+        sponsor: "Sponsor",
+        inputTitle: "Input",
+        inputBadge: "INPUT",
+        outputTitle: "Result",
+        outputBadge: "OUTPUT",
+        originalWidthLabel: "Original Width",
+        originalHeightLabel: "Original Height",
+        newWidthLabel: "New Width",
+        originalWidthPlaceholder: "Example 1920",
+        originalHeightPlaceholder: "Example 1080",
+        newWidthPlaceholder: "Example 800",
+        primaryAction: "Calculate",
+        sampleAction: "Sample",
+        secondaryAction: "Clear",
+        resultLabel: "Scaled Height",
+        ratioLabel: "Original Ratio",
+        copyAction: "Copy Result",
+        statusReady: "Enter values and click calculate.",
+        statusCopied: "Result copied to clipboard.",
+        statusCleared: "Inputs and results cleared.",
+        statusSample: "Sample values filled.",
+        errorInvalid: "Please enter valid positive numbers for width and height.",
+        resultSuccess: "Calculation completed.",
+        footer: "Micro Tools Matrix - Browser-local processing with no uploads.",
+        sponsorTitle: "Support",
+        sponsorSubtitle: "Keep tools free, fast, and ad-free.",
+        buyCoffee: "Buy Me a Coffee",
+        closeSponsor: "Close sponsor modal",
+        seoArticle: "This aspect ratio calculator helps you resize images and videos without distortion. Enter the original width and height, then provide a new width to instantly calculate the proportional height while preserving the original ratio. It is useful for responsive layouts, thumbnails, social media assets, and video production workflows. Everything runs with browser-local processing, so no files are uploaded and your data stays private. Micro Tools Matrix provides free online developer tools focused on speed, privacy, and lightweight everyday workflows.",
+        title: "Aspect Ratio Calculator - Micro Tools Matrix",
+        description: "Free browser-local aspect ratio calculator for images and videos. Enter original width and height, then calculate proportional height from a new width.",
+        keywords: "aspect ratio calculator,image ratio,video ratio,browser local processing,free online developer tool,Micro Tools Matrix",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System"
+      }
+    };
 
-      const form = $("ratioForm");
-      const originalWidthInput = $("originalWidth");
-      const originalHeightInput = $("originalHeight");
-      const newWidthInput = $("newWidth");
-      const errorBox = $("errorBox");
-      const copyBox = $("copyBox");
-      const newHeightOutput = $("newHeightOutput");
-      const ratioOutput = $("ratioOutput");
-      const sizeOutput = $("sizeOutput");
-      const resetBtn = $("resetBtn");
-      const copyBtn = $("copyBtn");
-      const calculateBtn = $("calculateBtn");
-
-      $("year").textContent = new Date().getFullYear();
-
-      const parsePositiveNumber = (value) => {
-        const normalized = String(value ?? "").trim().replace(/,/g, "");
-        if (normalized === "") return NaN;
-        if (!/^\d*\.?\d+$/.test(normalized)) return NaN;
-        const number = Number(normalized);
-        return Number.isFinite(number) && number > 0 ? number : NaN;
-      };
-
-      const gcd = (a, b) => {
-        a = Math.round(Math.abs(a));
-        b = Math.round(Math.abs(b));
-        if (a === 0 || b === 0) return 1;
-        while (b !== 0) {
-          const t = b;
-          b = a % b;
-          a = t;
-        }
-        return a || 1;
-      };
-
-      const formatNumber = (num) => {
-        if (!Number.isFinite(num)) return "";
-        const rounded = Math.round((num + Number.EPSILON) * 100) / 100;
-        return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(2).replace(/\.?0+$/, "");
-      };
-
-      const showError = (message) => {
-        errorBox.textContent = message;
-        errorBox.classList.remove("hidden");
-        copyBox.classList.add("hidden");
-      };
-
-      const clearError = () => {
-        errorBox.textContent = "";
-        errorBox.classList.add("hidden");
-      };
-
-      const setButtonFeedback = () => {
-        calculateBtn.textContent = "Calculated";
-        calculateBtn.classList.add("brightness-110");
-        window.setTimeout(() => {
-          calculateBtn.textContent = "Calculate proportional height";
-          calculateBtn.classList.remove("brightness-110");
-        }, 650);
-      };
-
-      const calculate = () => {
-        clearError();
-
-        const originalWidth = parsePositiveNumber(originalWidthInput.value);
-        const originalHeight = parsePositiveNumber(originalHeightInput.value);
-        const newWidth = parsePositiveNumber(newWidthInput.value);
-
-        if (!Number.isFinite(originalWidth)) {
-          showError("Please enter有效的原始宽度，必须是大于 0 的数字。");
-          originalWidthInput.focus();
-          return false;
-        }
-
-        if (!Number.isFinite(originalHeight)) {
-          showError("Please enter有效的原始高度，必须是大于 0 的数字。");
-          originalHeightInput.focus();
-          return false;
-        }
-
-        if (!Number.isFinite(newWidth)) {
-          showError("Please enter有效的新宽度，必须是大于 0 的数字。");
-          newWidthInput.focus();
-          return false;
-        }
-
-        if (originalWidth > 100000000 || originalHeight > 100000000 || newWidth > 100000000) {
-          showError("输入数值过大，Please enter不超过 100,000,000 的尺寸。");
-          return false;
-        }
-
-        const newHeight = (newWidth * originalHeight) / originalWidth;
-
-        if (!Number.isFinite(newHeight) || newHeight <= 0) {
-          showError("计算失败，请检查输入尺寸是否合理。");
-          return false;
-        }
-
-        const ratioDivisor = gcd(originalWidth, originalHeight);
-        const ratioW = Math.round(originalWidth / ratioDivisor);
-        const ratioH = Math.round(originalHeight / ratioDivisor);
-
-        newHeightOutput.textContent = formatNumber(newHeight);
-        ratioOutput.textContent = `${ratioW}:${ratioH}`;
-        sizeOutput.textContent = `${formatNumber(newWidth)} × ${formatNumber(newHeight)}`;
-
-        setButtonFeedback();
-        return true;
-      };
-
-      form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        calculate();
-      });
-
-      [originalWidthInput, originalHeightInput, newWidthInput].forEach((input) => {
-        input.addEventListener("input", () => {
-          clearError();
-          copyBox.classList.add("hidden");
-        });
-
-        input.addEventListener("keydown", (event) => {
-          if (event.key === "Enter") {
-            event.preventDefault();
-            calculate();
-          }
-        });
-      });
-
-      resetBtn.addEventListener("click", () => {
-        originalWidthInput.value = "1920";
-        originalHeightInput.value = "1080";
-        newWidthInput.value = "1280";
-        clearError();
-        copyBox.classList.add("hidden");
-        calculate();
-        resetBtn.textContent = "Reset";
-        window.setTimeout(() => {
-          resetBtn.textContent = "Reset";
-        }, 700);
-      });
-
-      copyBtn.addEventListener("click", async () => {
-        const ok = calculate();
-        if (!ok) return;
-
-        const text = `宽高比：${ratioOutput.textContent}；新尺寸：${sizeOutput.textContent}px；新高度：${newHeightOutput.textContent}px`;
-
-        try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(text);
-          } else {
-            const textarea = document.createElement("textarea");
-            textarea.value = text;
-            textarea.setAttribute("readonly", "");
-            textarea.style.position = "fixed";
-            textarea.style.top = "-9999px";
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand("copy");
-            document.body.removeChild(textarea);
-          }
-
-          copyBox.textContent = "结果Copied到剪贴板。";
-          copyBox.classList.remove("hidden");
-          copyBtn.textContent = "Copied";
-          window.setTimeout(() => {
-            copyBtn.textContent = "Copy result";
-          }, 900);
-        } catch (error) {
-          showError("Copy failed，请手动选择结果进行Copy。");
-        }
-      });
-
-      calculate();
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      return localStorage.getItem("microToolsLanguage") || "zh";
     }
+
+    function updateThemeLabel(lang) {
+      const label = document.querySelector("[data-theme-label]");
+      if (!label) return;
+
+      const currentTheme = document.documentElement.getAttribute("data-theme") || "system";
+      if (currentTheme === "light") label.textContent = I18N[lang].themeLight;
+      else if (currentTheme === "dark") label.textContent = I18N[lang].themeDark;
+      else label.textContent = I18N[lang].themeSystem;
+    }
+
+    function applyLanguage(lang) {
+      const dict = I18N[lang] || I18N.zh;
+      document.documentElement.lang = lang === "en" ? "en" : "zh-CN";
+
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.dataset.i18n;
+        if (dict[key]) el.textContent = dict[key];
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+        const key = el.dataset.i18nPlaceholder;
+        if (dict[key]) el.setAttribute("placeholder", dict[key]);
+      });
+
+      document.querySelectorAll("[data-i18n-aria-label]").forEach(el => {
+        const key = el.dataset.i18nAriaLabel;
+        if (dict[key]) el.setAttribute("aria-label", dict[key]);
+      });
+
+      document.title = dict.title;
+      document.getElementById("metaDescription")?.setAttribute("content", dict.description);
+      document.getElementById("metaKeywords")?.setAttribute("content", dict.keywords);
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+
+      if (lang === "zh") {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 bg-cyan-400 text-slate-950";
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 text-slate-600 dark:text-slate-400";
+      } else {
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 bg-cyan-400 text-slate-950";
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 text-slate-600 dark:text-slate-400";
+      }
+
+      updateThemeLabel(lang);
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function setLanguage(lang) {
+      localStorage.setItem("microToolsLanguage", lang);
+      applyLanguage(lang);
+    }
+
+    function openSponsorModal(event) {
+      if (event) event.preventDefault();
+      const modal = document.getElementById("sponsorModal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeSponsorModal() {
+      const modal = document.getElementById("sponsorModal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    function currentLang() {
+      return document.documentElement.lang.startsWith("en") ? "en" : "zh";
+    }
+
+    function setStatus(key) {
+      const lang = currentLang();
+      document.getElementById("statusText").textContent = I18N[lang][key];
+    }
+
+    function calculateRatio() {
+      const ow = parseFloat(document.getElementById("originalWidth").value);
+      const oh = parseFloat(document.getElementById("originalHeight").value);
+      const nw = parseFloat(document.getElementById("newWidth").value);
+
+      if (!(ow > 0 && oh > 0 && nw > 0)) {
+        document.getElementById("resultValue").textContent = "—";
+        document.getElementById("ratioValue").textContent = "—";
+        setStatus("errorInvalid");
+        return;
+      }
+
+      const newHeight = (nw * oh) / ow;
+      document.getElementById("resultValue").textContent = Number(newHeight.toFixed(2)).toString();
+      document.getElementById("ratioValue").textContent = `${ow}:${oh}`;
+      setStatus("resultSuccess");
+    }
+
+    function clearAll() {
+      document.getElementById("originalWidth").value = "";
+      document.getElementById("originalHeight").value = "";
+      document.getElementById("newWidth").value = "";
+      document.getElementById("resultValue").textContent = "—";
+      document.getElementById("ratioValue").textContent = "—";
+      setStatus("statusCleared");
+    }
+
+    function fillSample() {
+      document.getElementById("originalWidth").value = "1920";
+      document.getElementById("originalHeight").value = "1080";
+      document.getElementById("newWidth").value = "800";
+      calculateRatio();
+      setStatus("statusSample");
+    }
+
+    async function copyResult() {
+      const value = document.getElementById("resultValue").textContent;
+      if (!value || value === "—") return;
+      try {
+        await navigator.clipboard.writeText(value);
+        setStatus("statusCopied");
+      } catch {
+        setStatus("statusCopied");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+
+      document.getElementById("calculateBtn")?.addEventListener("click", calculateRatio);
+      document.getElementById("clearBtn")?.addEventListener("click", clearAll);
+      document.getElementById("sampleBtn")?.addEventListener("click", fillSample);
+      document.getElementById("copyBtn")?.addEventListener("click", copyResult);
+
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+
+  <script src="../sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

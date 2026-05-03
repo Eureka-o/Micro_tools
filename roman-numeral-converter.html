@@ -1,475 +1,470 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="罗马数字与阿拉伯数字互转工具。最高支持转换到3999的罗马数字系统，包含非法输入的错误提示。">
-  <meta name="keywords" content="roman-numeral-converter,罗马数字转换器,阿拉伯数字转罗马数字,罗马数字转阿拉伯数字,罗马数字在线转换,数字转换工具">
-  <title>roman-numeral-converter｜罗马数字与阿拉伯数字互转工具</title>
-  <link rel="icon" type="image/png" href="./assets/logo.png">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          boxShadow: {
-            glow: '0 0 35px rgba(59,130,246,0.22)'
-          }
-        }
-      }
-    };
-  </script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>罗马数字转换器 - Micro Tools Matrix</title>
+  <meta name="description" content="Micro Tools Matrix 罗马数字与阿拉伯数字互转工具，浏览器本地处理，无需上传，支持 1 到 3999 的标准罗马数字系统并提示非法输入。">
+  <meta name="keywords" content="罗马数字转换器,阿拉伯数字转罗马数字,罗马数字转数字,浏览器本地处理,无需上传,Micro Tools Matrix">
   <link rel="canonical" href="https://mymicrotools.xyz/roman-numeral-converter.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/roman-numeral-converter.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/roman-numeral-converter.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/roman-numeral-converter.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/roman-numeral-converter.html">
-  <meta property="og:title" content="roman-numeral-converter｜罗马数字与阿拉伯数字互转工具">
-  <meta property="og:description" content="罗马数字与阿拉伯数字互转工具。最高支持转换到3999的罗马数字系统，包含非法输入的错误提示。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="roman-numeral-converter｜罗马数字与阿拉伯数字互转工具">
-  <meta name="twitter:description" content="罗马数字与阿拉伯数字互转工具。最高支持转换到3999的罗马数字系统，包含非法输入的错误提示。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Roman Numeral Converter",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A browser-local Roman numeral and Arabic number converter for values from 1 to 3999.",
+      "url": "https://mymicrotools.xyz/roman-numeral-converter.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "category": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="切换主题" title="切换主题">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">罗马数字转换器</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="./roman-numeral-converter.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
-        <a href="./en/roman-numeral-converter.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="语言" data-i18n-aria-label="languageGroup" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
+        </div>
       </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="pointer-events-none fixed inset-0 overflow-hidden">
-    <div class="absolute -top-32 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-blue-500/20 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-cyan-400/10 blur-3xl"></div>
-  </div>
-
-  <header class="relative border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 backdrop-blur">
-    <div class="mx-auto flex max-w-6xl flex-col gap-5 px-5 py-10 sm:px-8 lg:px-10">
-      <div class="inline-flex w-fit items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/10 px-4 py-2 text-sm text-blue-200">
-        <span class="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_16px_rgba(52,211,153,0.85)]"></span>
-        支持 1 - 3999 标准罗马数字系统
-      </div>
-      <div>
-        <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">罗马数字与阿拉伯数字互转工具</h1>
-        <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
-          快速完成罗马数字与阿拉伯数字互转，自动校验非法格式，适合学习、写作、排版、历史资料整理与开发测试场景。
-        </p>
-      </div>
-    </div>
+    </nav>
   </header>
 
-  <main class="relative mx-auto max-w-6xl px-5 py-8 sm:px-8 lg:px-10">
-    <section class="grid gap-6 lg:grid-cols-[1.05fr_0.95fr]" aria-label="罗马数字转换工具">
-      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5 shadow-glow backdrop-blur sm:p-7">
-        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输入区</h2>
-            <p class="mt-1 text-sm text-slate-400">选择转换方向并输入需要转换的内容。</p>
-          </div>
-          <div class="rounded-2xl bg-white dark:bg-slate-900/80 p-1">
-            <button id="modeNumberToRoman" type="button" class="mode-btn rounded-xl px-4 py-2 text-sm font-semibold transition bg-blue-500 text-gray-900 dark:text-white shadow-lg shadow-blue-500/25" data-mode="numberToRoman">
-              数字 → 罗马
-            </button>
-            <button id="modeRomanToNumber" type="button" class="mode-btn rounded-xl px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300 transition hover:bg-white/10" data-mode="romanToNumber">
-              罗马 → 数字
-            </button>
-          </div>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">罗马数字转换器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中本地完成罗马数字与阿拉伯数字互转，支持 1 到 3999，并对非法写法给出清晰提示。</p>
         </div>
-
-        <label for="converterInput" id="inputLabel" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">请输入 1 到 3999 的整数</label>
-        <div class="relative">
-          <input
-            id="converterInput"
-            type="text"
-            inputmode="numeric"
-            autocomplete="off"
-            spellcheck="false"
-            maxlength="40"
-            placeholder="例如：2024"
-            class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/90 px-4 py-4 pr-12 text-lg text-gray-900 dark:text-white outline-none transition placeholder:text-slate-600 focus:border-blue-400 focus:ring-4 focus:ring-blue-500/20"
-            aria-describedby="helperText errorBox"
-          />
-          <div class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500" aria-hidden="true">↵</div>
-        </div>
-        <p id="helperText" class="mt-3 text-sm text-slate-400">阿拉伯数字只支持整数 1-3999。</p>
-
-        <div id="errorBox" class="mt-4 hidden rounded-2xl border border-red-400/40 bg-red-500/15 px-4 py-3 text-sm font-medium text-red-100" role="alert"></div>
-
-        <div class="mt-6 grid gap-3 sm:grid-cols-3">
-          <button id="convertBtn" type="button" class="rounded-2xl bg-blue-500 px-5 py-3 font-bold text-gray-900 dark:text-white shadow-lg shadow-blue-500/25 transition hover:bg-blue-400 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-blue-500/30">
-            开始转换
-          </button>
-          <button id="swapBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-5 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:bg-white/15 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-white/10">
-            切换方向
-          </button>
-          <button id="clearBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-5 py-3 font-bold text-slate-700 dark:text-slate-300 transition hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-white/10">
-            清空
-          </button>
-        </div>
-      </div>
-
-      <div class="rounded-3xl border border-cyan-300/15 bg-cyan-950/20 p-5 shadow-glow backdrop-blur sm:p-7">
-        <div class="mb-6 flex items-start justify-between gap-4">
-          <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输出区</h2>
-            <p class="mt-1 text-sm text-cyan-100/70">转换结果会显示在这里。</p>
-          </div>
-          <span id="statusBadge" class="rounded-full border border-slate-600 bg-slate-100 dark:bg-slate-900 px-3 py-1 text-xs font-semibold text-slate-400">等待输入</span>
-        </div>
-
-        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/75 p-5">
-          <p id="outputType" class="text-sm font-semibold uppercase tracking-wider text-cyan-300">Roman Numeral</p>
-          <output id="resultOutput" class="mt-4 block min-h-[96px] break-words text-4xl font-black leading-tight tracking-tight text-gray-900 dark:text-white sm:text-5xl">—</output>
-        </div>
-
-        <div class="mt-5 grid gap-3 sm:grid-cols-2">
-          <button id="copyBtn" type="button" class="rounded-2xl bg-emerald-500 px-5 py-3 font-bold text-emerald-950 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-400 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-emerald-500/30">
-            复制结果
-          </button>
-          <button id="exampleBtn" type="button" class="rounded-2xl border border-cyan-300/20 bg-cyan-400/10 px-5 py-3 font-bold text-cyan-100 transition hover:bg-cyan-400/15 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-cyan-400/20">
-            填入示例
-          </button>
-        </div>
-
-        <div class="mt-6 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-4 text-sm leading-6 text-slate-700 dark:text-slate-300">
-          <p class="font-semibold text-gray-900 dark:text-white">规则提示</p>
-          <ul class="mt-2 list-inside list-disc space-y-1">
-            <li>最大支持 3999，即罗马数字 MMMCMXCIX。</li>
-            <li>支持标准减法写法，例如 IV、IX、XL、XC、CD、CM。</li>
-            <li>IIII、VV、IC、MMMM 等非标准写法会被判定为非法输入。</li>
-          </ul>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-6 leading-8 text-slate-700 dark:text-slate-300 backdrop-blur sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于罗马数字与阿拉伯数字互转工具</h2>
-      <p>
-        roman-numeral-converter 是一款面向学习、办公与开发场景的在线罗马数字转换器，可在浏览器中快速完成阿拉伯数字转罗马数字、罗马数字转阿拉伯数字等常见需求。传统罗马数字存在固定书写规则，例如 I、V、X、L、C、D、M 的组合以及 IV、IX、XL、XC、CD、CM 等减法表示，手动换算容易出错。本工具最高支持 3999 的标准罗马数字系统，并内置严格校验机制，当输入为空、数字超出范围，或出现 IIII、IC、MMMM 等非法罗马数字格式时，会立即给出清晰的错误提示。使用时只需选择转换方向，输入整数或罗马数字，点击“开始转换”即可得到结果，还可以一键复制。无论你是在整理历史资料、设计章节编号、校对文档标题，还是寻找一个免费的罗马数字在线转换工具，本页面都能提供简洁、准确、响应迅速的转换体验。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <label for="modeSelect" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="modeLabel">转换方向</label>
+        <select id="modeSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+          <option value="romanToNumber" data-i18n="modeRomanToNumber">罗马数字转阿拉伯数字</option>
+          <option value="numberToRoman" data-i18n="modeNumberToRoman">阿拉伯数字转罗马数字</option>
+        </select>
+
+        <label for="sourceInput" class="mb-2 mt-4 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="sourceLabel">待转换内容</label>
+        <textarea id="sourceInput" rows="7" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="inputPlaceholder" placeholder="输入罗马数字，例如 MCMXCIV"></textarea>
+
+        <p id="inputHint" class="mt-3 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="hint">罗马数字使用 I、V、X、L、C、D、M，标准范围为 1 到 3999。</p>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="convertBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">转换</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">填入示例</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">结果</span>
+        </div>
+
+        <label for="resultOutput" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="resultLabel">转换结果</label>
+        <textarea id="resultOutput" rows="7" readonly class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600 tabular-nums" data-i18n-placeholder="outputPlaceholder" placeholder="结果会显示在这里"></textarea>
+
+        <div class="mt-4 rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+          <div class="grid gap-3 sm:grid-cols-3">
+            <div>
+              <p class="text-xs font-semibold text-slate-500 dark:text-slate-400" data-i18n="rangeLabel">范围</p>
+              <p class="mt-1 text-sm font-bold text-slate-900 dark:text-slate-100 tabular-nums">1–3999</p>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-slate-500 dark:text-slate-400" data-i18n="strictLabel">校验</p>
+              <p class="mt-1 text-sm font-bold text-slate-900 dark:text-slate-100" data-i18n="strictValue">标准写法</p>
+            </div>
+            <div>
+              <p class="text-xs font-semibold text-slate-500 dark:text-slate-400" data-i18n="privacyLabel">隐私</p>
+              <p class="mt-1 text-sm font-bold text-slate-900 dark:text-slate-100" data-i18n="privacyValue">不上传</p>
+            </div>
+          </div>
+        </div>
+
+        <p id="statusText" class="mt-3 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="readyStatus">请输入内容后点击转换。</p>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
+          <button id="swapBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="swapAction">切换方向</button>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">这款罗马数字转换器是 Micro Tools Matrix 的免费在线开发者工具，适合在文档、题库、排版、前端调试和历史资料整理中快速完成罗马数字与阿拉伯数字互转。工具严格遵循常见的 1 到 3999 标准罗马数字系统，会识别重复次数、减法组合和非法顺序等问题，并用友好的错误提示说明原因。所有计算都在浏览器本地处理，无需上传输入内容，也不会把文本发送到服务器。你可以输入 MCMXCIV、XLII 等罗马数字获得对应数值，也可以输入 2024、3999 等整数生成规范写法。页面支持深色模式和中英文界面，适合移动端与桌面端随时使用。</article>
   </main>
 
-  <footer class="relative mx-auto max-w-6xl px-5 pb-8 text-center text-sm text-slate-500 sm:px-8 lg:px-10">
-    <p>© <span id="year"></span> roman-numeral-converter</p>
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
 
   <script>
-    (() => {
-      'use strict';
+    const I18N = {
+      zh: {
+        toolName: "罗马数字转换器",
+        sponsor: "赞赏",
+        buyCoffee: "Buy Me a Coffee",
+        languageGroup: "语言",
+        eyebrow: "浏览器本地处理",
+        h1: "罗马数字转换器",
+        intro: "在 Micro Tools Matrix 中本地完成罗马数字与阿拉伯数字互转，支持 1 到 3999，并对非法写法给出清晰提示。",
+        localBadge: "本地运行",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        outputTitle: "结果",
+        outputBadge: "结果",
+        modeLabel: "转换方向",
+        modeRomanToNumber: "罗马数字转阿拉伯数字",
+        modeNumberToRoman: "阿拉伯数字转罗马数字",
+        sourceLabel: "待转换内容",
+        inputPlaceholder: "输入罗马数字，例如 MCMXCIV",
+        inputPlaceholderNumber: "输入 1 到 3999 的整数，例如 2024",
+        outputPlaceholder: "结果会显示在这里",
+        resultLabel: "转换结果",
+        hint: "罗马数字使用 I、V、X、L、C、D、M，标准范围为 1 到 3999。",
+        hintNumber: "请输入 1 到 3999 的整数，小数、负数和 0 不属于标准罗马数字范围。",
+        primaryAction: "转换",
+        sampleAction: "填入示例",
+        secondaryAction: "清空",
+        copyAction: "复制结果",
+        swapAction: "切换方向",
+        rangeLabel: "范围",
+        strictLabel: "校验",
+        strictValue: "标准写法",
+        privacyLabel: "隐私",
+        privacyValue: "不上传",
+        readyStatus: "请输入内容后点击转换。",
+        emptyError: "请输入要转换的内容。",
+        numberInvalid: "请输入 1 到 3999 之间的整数。",
+        romanInvalidChars: "罗马数字只能包含 I、V、X、L、C、D、M。",
+        romanInvalidFormat: "这不是 1 到 3999 范围内的标准罗马数字写法。",
+        successRomanToNumber: "转换完成：罗马数字已解析为阿拉伯数字。",
+        successNumberToRoman: "转换完成：阿拉伯数字已转换为标准罗马数字。",
+        copied: "结果已复制到剪贴板。",
+        copyEmpty: "没有可复制的结果。",
+        cleared: "已清空输入和结果。",
+        sampleLoaded: "已填入示例。",
+        swapped: "已切换转换方向。",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        title: "罗马数字转换器 - Micro Tools Matrix",
+        metaDescription: "Micro Tools Matrix 罗马数字与阿拉伯数字互转工具，浏览器本地处理，无需上传，支持 1 到 3999 的标准罗马数字系统并提示非法输入。",
+        metaKeywords: "罗马数字转换器,阿拉伯数字转罗马数字,罗马数字转数字,浏览器本地处理,无需上传,Micro Tools Matrix",
+        seoArticle: "这款罗马数字转换器是 Micro Tools Matrix 的免费在线开发者工具，适合在文档、题库、排版、前端调试和历史资料整理中快速完成罗马数字与阿拉伯数字互转。工具严格遵循常见的 1 到 3999 标准罗马数字系统，会识别重复次数、减法组合和非法顺序等问题，并用友好的错误提示说明原因。所有计算都在浏览器本地处理，无需上传输入内容，也不会把文本发送到服务器。你可以输入 MCMXCIV、XLII 等罗马数字获得对应数值，也可以输入 2024、3999 等整数生成规范写法。页面支持深色模式和中英文界面，适合移动端与桌面端随时使用。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
+      },
+      en: {
+        toolName: "Roman Numeral Converter",
+        sponsor: "Sponsor",
+        buyCoffee: "Buy Me a Coffee",
+        languageGroup: "Language",
+        eyebrow: "Browser-local processing",
+        h1: "Roman Numeral Converter",
+        intro: "Convert Roman numerals and Arabic numbers locally in Micro Tools Matrix, with support for the standard 1 to 3999 system and clear invalid-input feedback.",
+        localBadge: "Local",
+        inputTitle: "Input",
+        inputBadge: "Input",
+        outputTitle: "Result",
+        outputBadge: "Output",
+        modeLabel: "Conversion direction",
+        modeRomanToNumber: "Roman numeral to Arabic number",
+        modeNumberToRoman: "Arabic number to Roman numeral",
+        sourceLabel: "Value to convert",
+        inputPlaceholder: "Enter a Roman numeral, for example MCMXCIV",
+        inputPlaceholderNumber: "Enter an integer from 1 to 3999, for example 2024",
+        outputPlaceholder: "The result will appear here",
+        resultLabel: "Conversion result",
+        hint: "Roman numerals use I, V, X, L, C, D, and M. The standard range is 1 to 3999.",
+        hintNumber: "Enter an integer from 1 to 3999. Decimals, negative numbers, and 0 are outside the standard Roman numeral range.",
+        primaryAction: "Convert",
+        sampleAction: "Load sample",
+        secondaryAction: "Clear",
+        copyAction: "Copy result",
+        swapAction: "Switch direction",
+        rangeLabel: "Range",
+        strictLabel: "Validation",
+        strictValue: "Canonical",
+        privacyLabel: "Privacy",
+        privacyValue: "No upload",
+        readyStatus: "Enter a value and click convert.",
+        emptyError: "Please enter a value to convert.",
+        numberInvalid: "Please enter an integer from 1 to 3999.",
+        romanInvalidChars: "Roman numerals may only contain I, V, X, L, C, D, and M.",
+        romanInvalidFormat: "This is not a standard Roman numeral within the 1 to 3999 range.",
+        successRomanToNumber: "Conversion complete: the Roman numeral was parsed as an Arabic number.",
+        successNumberToRoman: "Conversion complete: the Arabic number was converted to a canonical Roman numeral.",
+        copied: "Result copied to the clipboard.",
+        copyEmpty: "There is no result to copy.",
+        cleared: "Input and result have been cleared.",
+        sampleLoaded: "Sample loaded.",
+        swapped: "Conversion direction switched.",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        title: "Roman Numeral Converter - Micro Tools Matrix",
+        metaDescription: "A Micro Tools Matrix Roman numeral and Arabic number converter with browser-local processing, no upload, support for the standard 1 to 3999 system, and friendly invalid-input errors.",
+        metaKeywords: "Roman numeral converter,Arabic number to Roman numeral,Roman numeral to number,browser-local processing,no upload,free online developer tool,Micro Tools Matrix",
+        seoArticle: "This Roman numeral converter is a free online developer tool from Micro Tools Matrix for quick work with Roman numerals and Arabic numbers. It is useful when editing documentation, building educational content, checking UI copy, preparing historical references, or validating examples in frontend projects. The converter follows the common standard Roman numeral system from 1 to 3999 and checks for canonical notation, including repetition limits, subtractive pairs, and invalid ordering. Friendly messages explain invalid input instead of failing silently. All conversion logic runs with browser-local processing, so your value is handled in memory and does not need to be uploaded. You can enter numerals such as MCMXCIV or XLII to get their numeric values, or enter integers such as 2024 and 3999 to generate canonical Roman notation. The page supports light and dark themes, Chinese and English interfaces, and a responsive layout for both mobile and desktop use.",
+        footer: "Micro Tools Matrix - browser-local processing with no upload."
+      }
+    };
 
-      const elements = {
-        input: document.getElementById('converterInput'),
-        inputLabel: document.getElementById('inputLabel'),
-        helperText: document.getElementById('helperText'),
-        errorBox: document.getElementById('errorBox'),
-        resultOutput: document.getElementById('resultOutput'),
-        outputType: document.getElementById('outputType'),
-        statusBadge: document.getElementById('statusBadge'),
-        convertBtn: document.getElementById('convertBtn'),
-        swapBtn: document.getElementById('swapBtn'),
-        clearBtn: document.getElementById('clearBtn'),
-        copyBtn: document.getElementById('copyBtn'),
-        exampleBtn: document.getElementById('exampleBtn'),
-        modeButtons: Array.from(document.querySelectorAll('.mode-btn')),
-        year: document.getElementById('year')
-      };
+    let currentLanguage = "zh";
+    let lastStatusKey = "readyStatus";
 
-      let mode = 'numberToRoman';
-      let lastResult = '';
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      const saved = localStorage.getItem("microToolsLanguage");
+      return saved === "en" || saved === "zh" ? saved : "zh";
+    }
 
-      const romanMap = [
-        [1000, 'M'], [900, 'CM'], [500, 'D'], [400, 'CD'],
-        [100, 'C'], [90, 'XC'], [50, 'L'], [40, 'XL'],
-        [10, 'X'], [9, 'IX'], [5, 'V'], [4, 'IV'], [1, 'I']
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (dict[key]) node.textContent = dict[key];
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (dict[key]) node.setAttribute("placeholder", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (dict[key]) node.setAttribute("title", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (dict[key]) node.setAttribute("aria-label", dict[key]);
+      });
+
+      document.title = dict.title;
+      const metaDescription = document.querySelector('meta[name="description"]');
+      const metaKeywords = document.querySelector('meta[name="keywords"]');
+      if (metaDescription) metaDescription.setAttribute("content", dict.metaDescription);
+      if (metaKeywords) metaKeywords.setAttribute("content", dict.metaKeywords);
+
+      document.querySelectorAll("option[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (dict[key]) node.textContent = dict[key];
+      });
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "zh" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "en" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+      }
+
+      const themeLabel = document.querySelector("[data-theme-label]");
+      if (themeLabel && !themeLabel.textContent.trim()) themeLabel.textContent = dict.themeSystem;
+
+      updateModeText();
+      setStatus(lastStatusKey);
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function setLanguage(lang) {
+      localStorage.setItem("microToolsLanguage", lang);
+      applyLanguage(lang);
+    }
+
+    function setStatus(key, isError) {
+      lastStatusKey = key;
+      const status = document.getElementById("statusText");
+      if (!status) return;
+      status.textContent = I18N[currentLanguage][key] || "";
+      status.className = "mt-3 min-h-6 text-sm leading-6 " + (isError ? "text-rose-600 dark:text-rose-300" : "text-slate-500 dark:text-slate-400");
+    }
+
+    function updateModeText() {
+      const mode = document.getElementById("modeSelect")?.value || "romanToNumber";
+      const input = document.getElementById("sourceInput");
+      const hint = document.getElementById("inputHint");
+      const dict = I18N[currentLanguage];
+      if (input) input.setAttribute("placeholder", mode === "numberToRoman" ? dict.inputPlaceholderNumber : dict.inputPlaceholder);
+      if (hint) hint.textContent = mode === "numberToRoman" ? dict.hintNumber : dict.hint;
+    }
+
+    function numberToRoman(number) {
+      const pairs = [
+        [1000, "M"], [900, "CM"], [500, "D"], [400, "CD"],
+        [100, "C"], [90, "XC"], [50, "L"], [40, "XL"],
+        [10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]
       ];
+      let result = "";
+      let remaining = number;
+      for (const [value, symbol] of pairs) {
+        while (remaining >= value) {
+          result += symbol;
+          remaining -= value;
+        }
+      }
+      return result;
+    }
 
-      const romanValues = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
-      const validRomanPattern = /^(?=.)M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/;
+    function romanToNumber(roman) {
+      const values = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
+      let total = 0;
+      for (let i = 0; i < roman.length; i++) {
+        const current = values[roman[i]];
+        const next = values[roman[i + 1]] || 0;
+        total += current < next ? -current : current;
+      }
+      return total;
+    }
 
-      function setError(message) {
-        if (!message) {
-          elements.errorBox.classList.add('hidden');
-          elements.errorBox.textContent = '';
-          elements.input.classList.remove('border-red-400', 'focus:border-red-400', 'focus:ring-red-500/20');
+    function convertValue() {
+      const mode = document.getElementById("modeSelect").value;
+      const input = document.getElementById("sourceInput").value.trim();
+      const output = document.getElementById("resultOutput");
+      output.value = "";
+
+      if (!input) {
+        setStatus("emptyError", true);
+        return;
+      }
+
+      if (mode === "numberToRoman") {
+        if (!/^\d+$/.test(input)) {
+          setStatus("numberInvalid", true);
           return;
         }
-        elements.errorBox.textContent = message;
-        elements.errorBox.classList.remove('hidden');
-        elements.input.classList.add('border-red-400', 'focus:border-red-400', 'focus:ring-red-500/20');
-        setStatus('输入有误', 'error');
+        const number = Number(input);
+        if (!Number.isInteger(number) || number < 1 || number > 3999) {
+          setStatus("numberInvalid", true);
+          return;
+        }
+        output.value = numberToRoman(number);
+        setStatus("successNumberToRoman", false);
+        return;
       }
 
-      function setStatus(text, type) {
-        elements.statusBadge.textContent = text;
-        elements.statusBadge.className = 'rounded-full border px-3 py-1 text-xs font-semibold';
-        if (type === 'success') {
-          elements.statusBadge.classList.add('border-emerald-400/30', 'bg-emerald-500/15', 'text-emerald-200');
-        } else if (type === 'error') {
-          elements.statusBadge.classList.add('border-red-400/30', 'bg-red-500/15', 'text-red-200');
-        } else {
-          elements.statusBadge.classList.add('border-slate-600', 'bg-slate-900', 'text-slate-400');
-        }
+      const roman = input.toUpperCase().replace(/\s+/g, "");
+      if (!/^[IVXLCDM]+$/.test(roman)) {
+        setStatus("romanInvalidChars", true);
+        return;
       }
-
-      function numberToRoman(num) {
-        let remaining = num;
-        let result = '';
-        for (const [value, numeral] of romanMap) {
-          while (remaining >= value) {
-            result += numeral;
-            remaining -= value;
-          }
-        }
-        return result;
+      const number = romanToNumber(roman);
+      if (number < 1 || number > 3999 || numberToRoman(number) !== roman) {
+        setStatus("romanInvalidFormat", true);
+        return;
       }
-
-      function romanToNumber(roman) {
-        let total = 0;
-        for (let i = 0; i < roman.length; i++) {
-          const current = romanValues[roman[i]] || 0;
-          const next = romanValues[roman[i + 1]] || 0;
-          if (current < next) {
-            total -= current;
-          } else {
-            total += current;
-          }
-        }
-        return total;
-      }
-
-      function validateAndConvert() {
-        try {
-          setError('');
-          const raw = String(elements.input.value || '').trim();
-
-          if (raw.length === 0) {
-            throw new Error('请输入需要转换的内容。');
-          }
-
-          if (raw.length > 30) {
-            throw new Error('输入内容过长，请检查后重新输入。');
-          }
-
-          let result = '';
-
-          if (mode === 'numberToRoman') {
-            if (!/^[+-]?\d+$/.test(raw)) {
-              throw new Error('请输入有效整数，例如 2024。不要包含小数、空格或其他字符。');
-            }
-
-            const num = Number(raw);
-            if (!Number.isSafeInteger(num)) {
-              throw new Error('数字过大，请输入 1 到 3999 之间的整数。');
-            }
-
-            if (num < 1 || num > 3999) {
-              throw new Error('超出支持范围：请输入 1 到 3999 之间的整数。');
-            }
-
-            result = numberToRoman(num);
-            elements.outputType.textContent = 'Roman Numeral';
-          } else {
-            const roman = raw.toUpperCase().replace(/\s+/g, '');
-            if (!/^[IVXLCDM]+$/i.test(roman)) {
-              throw new Error('罗马数字只能包含 I、V、X、L、C、D、M 这些字符。');
-            }
-
-            if (!validRomanPattern.test(roman)) {
-              throw new Error('非法罗马数字格式。请使用标准写法，例如 IV、IX、XL、XC、CD、CM。');
-            }
-
-            const num = romanToNumber(roman);
-            if (num < 1 || num > 3999 || numberToRoman(num) !== roman) {
-              throw new Error('该罗马数字不在 1 到 3999 的标准范围内。');
-            }
-
-            result = String(num);
-            elements.outputType.textContent = 'Arabic Number';
-            elements.input.value = roman;
-          }
-
-          lastResult = result;
-          elements.resultOutput.textContent = result;
-          setStatus('转换成功', 'success');
-
-          elements.convertBtn.textContent = '已转换';
-          elements.convertBtn.classList.add('bg-blue-400');
-          window.setTimeout(() => {
-            elements.convertBtn.textContent = '开始转换';
-            elements.convertBtn.classList.remove('bg-blue-400');
-          }, 650);
-        } catch (err) {
-          lastResult = '';
-          elements.resultOutput.textContent = '—';
-          setError(err && err.message ? err.message : '发生未知错误，请检查输入内容后重试。');
-        }
-      }
-
-      function updateMode(nextMode) {
-        mode = nextMode === 'romanToNumber' ? 'romanToNumber' : 'numberToRoman';
-        setError('');
-        lastResult = '';
-        elements.resultOutput.textContent = '—';
-        setStatus('等待输入', 'idle');
-
-        elements.modeButtons.forEach((btn) => {
-          const active = btn.dataset.mode === mode;
-          btn.className = active
-            ? 'mode-btn rounded-xl px-4 py-2 text-sm font-semibold transition bg-blue-500 text-white shadow-lg shadow-blue-500/25'
-            : 'mode-btn rounded-xl px-4 py-2 text-sm font-semibold text-slate-300 transition hover:bg-white/10';
-        });
-
-        if (mode === 'numberToRoman') {
-          elements.inputLabel.textContent = '请输入 1 到 3999 的整数';
-          elements.helperText.textContent = '阿拉伯数字只支持整数 1-3999。';
-          elements.input.placeholder = '例如：2024';
-          elements.input.inputMode = 'numeric';
-          elements.outputType.textContent = 'Roman Numeral';
-        } else {
-          elements.inputLabel.textContent = '请输入标准罗马数字';
-          elements.helperText.textContent = '罗马数字仅支持 I、V、X、L、C、D、M，最大 MMMCMXCIX。';
-          elements.input.placeholder = '例如：MMXXIV';
-          elements.input.inputMode = 'text';
-          elements.outputType.textContent = 'Arabic Number';
-        }
-      }
-
-      function clearAll() {
-        elements.input.value = '';
-        elements.resultOutput.textContent = '—';
-        lastResult = '';
-        setError('');
-        setStatus('等待输入', 'idle');
-        elements.input.focus();
-      }
-
-      async function copyResult() {
-        try {
-          setError('');
-          if (!lastResult) {
-            throw new Error('当前没有可复制的转换结果。');
-          }
-
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(lastResult);
-          } else {
-            const temp = document.createElement('textarea');
-            temp.value = lastResult;
-            temp.setAttribute('readonly', '');
-            temp.style.position = 'fixed';
-            temp.style.left = '-9999px';
-            document.body.appendChild(temp);
-            temp.select();
-            const ok = document.execCommand('copy');
-            document.body.removeChild(temp);
-            if (!ok) throw new Error('复制失败，请手动选择结果复制。');
-          }
-
-          const original = elements.copyBtn.textContent;
-          elements.copyBtn.textContent = '已复制';
-          elements.copyBtn.classList.add('bg-emerald-400');
-          window.setTimeout(() => {
-            elements.copyBtn.textContent = original;
-            elements.copyBtn.classList.remove('bg-emerald-400');
-          }, 900);
-        } catch (err) {
-          setError(err && err.message ? err.message : '复制失败，请稍后重试。');
-        }
-      }
-
-      function fillExample() {
-        setError('');
-        if (mode === 'numberToRoman') {
-          elements.input.value = '2024';
-        } else {
-          elements.input.value = 'MMXXIV';
-        }
-        validateAndConvert();
-      }
-
-      elements.modeButtons.forEach((btn) => {
-        btn.addEventListener('click', () => updateMode(btn.dataset.mode));
-      });
-
-      elements.convertBtn.addEventListener('click', validateAndConvert);
-      elements.swapBtn.addEventListener('click', () => updateMode(mode === 'numberToRoman' ? 'romanToNumber' : 'numberToRoman'));
-      elements.clearBtn.addEventListener('click', clearAll);
-      elements.copyBtn.addEventListener('click', copyResult);
-      elements.exampleBtn.addEventListener('click', fillExample);
-
-      elements.input.addEventListener('keydown', (event) => {
-        if (event.key === 'Enter') {
-          event.preventDefault();
-          validateAndConvert();
-        }
-      });
-
-      elements.input.addEventListener('input', () => {
-        setError('');
-        setStatus('等待转换', 'idle');
-        if (mode === 'romanToNumber') {
-          const start = elements.input.selectionStart;
-          const end = elements.input.selectionEnd;
-          elements.input.value = elements.input.value.toUpperCase();
-          try {
-            elements.input.setSelectionRange(start, end);
-          } catch (_) {}
-        }
-      });
-
-      elements.year.textContent = new Date().getFullYear();
-      updateMode('numberToRoman');
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
+      output.value = String(number);
+      setStatus("successRomanToNumber", false);
     }
+
+    function loadSample() {
+      const mode = document.getElementById("modeSelect").value;
+      document.getElementById("sourceInput").value = mode === "numberToRoman" ? "2024" : "MCMXCIV";
+      document.getElementById("resultOutput").value = "";
+      setStatus("sampleLoaded", false);
+    }
+
+    function clearAll() {
+      document.getElementById("sourceInput").value = "";
+      document.getElementById("resultOutput").value = "";
+      setStatus("cleared", false);
+    }
+
+    async function copyResult() {
+      const value = document.getElementById("resultOutput").value;
+      if (!value) {
+        setStatus("copyEmpty", true);
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(value);
+        setStatus("copied", false);
+      } catch (error) {
+        const output = document.getElementById("resultOutput");
+        output.focus();
+        output.select();
+        document.execCommand("copy");
+        setStatus("copied", false);
+      }
+    }
+
+    function swapMode() {
+      const select = document.getElementById("modeSelect");
+      const input = document.getElementById("sourceInput");
+      const output = document.getElementById("resultOutput");
+      select.value = select.value === "romanToNumber" ? "numberToRoman" : "romanToNumber";
+      if (output.value) input.value = output.value;
+      output.value = "";
+      updateModeText();
+      setStatus("swapped", false);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+      document.getElementById("convertBtn")?.addEventListener("click", convertValue);
+      document.getElementById("sampleBtn")?.addEventListener("click", loadSample);
+      document.getElementById("clearBtn")?.addEventListener("click", clearAll);
+      document.getElementById("copyBtn")?.addEventListener("click", copyResult);
+      document.getElementById("swapBtn")?.addEventListener("click", swapMode);
+      document.getElementById("modeSelect")?.addEventListener("change", () => {
+        document.getElementById("resultOutput").value = "";
+        updateModeText();
+        setStatus("readyStatus", false);
+      });
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="./sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

@@ -1,526 +1,662 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>markdown-table-generator - 可视化 Markdown 表格Generate器</title>
-  <meta name="description" content="可视化 Markdown 表格Generate器。支持通过按钮增加行列，并在单元格填入内容后实时Generate标准的Markdown表格代码。">
-  <meta name="keywords" content="Markdown表格Generate器, markdown-table-generator, 可视化Markdown表格, Markdown table generator, README表格工具, Markdown在线工具, Markdown表格代码Generate">
-  <link rel="icon" type="image/png" href="../assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
-  <link rel="canonical" href="https://mymicrotools.xyz/en/markdown-table-generator.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown 表格生成器 - Micro Tools Matrix</title>
+  <meta name="description" content="Micro Tools Matrix 的 Markdown 表格生成器在浏览器本地处理内容，可视化编辑行列并实时生成标准 Markdown 表格代码，无需上传。">
+  <meta name="keywords" content="Markdown 表格生成器, Markdown table generator, 浏览器本地处理, 无需上传, Micro Tools Matrix, developer tool">
+  <link rel="canonical" href="https://mymicrotools.xyz/markdown-table-generator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/markdown-table-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/markdown-table-generator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/markdown-table-generator.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/en/markdown-table-generator.html">
-  <meta property="og:title" content="markdown-table-generator - 可视化 Markdown 表格Generate器">
-  <meta property="og:description" content="可视化 Markdown 表格Generate器。支持通过按钮增加行列，并在单元格填入内容后实时Generate标准的Markdown表格代码。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="markdown-table-generator - 可视化 Markdown 表格Generate器">
-  <meta name="twitter:description" content="可视化 Markdown 表格Generate器。支持通过按钮增加行列，并在单元格填入内容后实时Generate标准的Markdown表格代码。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="../style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Markdown Table Generator",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "url": "https://mymicrotools.xyz/markdown-table-generator.html",
+      "description": "A browser-local Markdown table generator for visually editing rows and columns and producing standard Markdown table code.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "description": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">Markdown 表格生成器</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="../markdown-table-generator.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./markdown-table-generator.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline"></span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
+        </div>
       </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
-    <div class="absolute inset-0 opacity-30">
-      <div class="absolute -top-24 left-1/4 h-72 w-72 rounded-full bg-cyan-500 blur-3xl"></div>
-      <div class="absolute -bottom-24 right-1/4 h-72 w-72 rounded-full bg-blue-600 blur-3xl"></div>
-    </div>
-    <div class="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <div class="max-w-3xl">
-        <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-1 text-sm font-medium text-cyan-200">
-          Visual Markdown Table Builder
-        </p>
-        <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">可视化 Markdown 表格Generate器</h1>
-        <p class="mt-5 text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
-          通过可视化表格编辑内容，实时Generate标准 Markdown 表格代码。适合 README、技术文档、博客文章与项目说明。
-        </p>
-      </div>
-    </div>
+    </nav>
   </header>
 
-  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-2" aria-label="Markdown 表格Generate工具">
-      <div class="rounded-3xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/90 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
-        <div class="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">可视化编辑区</h2>
-            <p class="mt-1 text-sm text-slate-400">第一行为表头，下面为表格内容。输入后会自动Generate Markdown。</p>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <button id="addRowBtn" type="button" class="rounded-xl bg-cyan-500 px-4 py-2 text-sm font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400 active:scale-95 focus:outline-none focus:ring-2 focus:ring-cyan-300">增加行</button>
-            <button id="addColBtn" type="button" class="rounded-xl bg-blue-500 px-4 py-2 text-sm font-bold text-gray-900 dark:text-white shadow-lg shadow-blue-500/20 transition hover:bg-blue-400 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-300">增加列</button>
-            <button id="removeRowBtn" type="button" class="rounded-xl border border-rose-400/40 bg-rose-500/10 px-4 py-2 text-sm font-bold text-rose-200 transition hover:bg-rose-500/20 active:scale-95 focus:outline-none focus:ring-2 focus:ring-rose-300">删除行</button>
-            <button id="removeColBtn" type="button" class="rounded-xl border border-amber-400/40 bg-amber-500/10 px-4 py-2 text-sm font-bold text-amber-200 transition hover:bg-amber-500/20 active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-300">删除列</button>
-          </div>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">Markdown 表格生成器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中可视化编辑 Markdown 表格，添加行列、填写单元格后实时生成标准代码；所有内容仅在浏览器本地处理，无需上传。</p>
+        </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">可视化表格</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
         </div>
 
-        <div id="errorBox" class="mb-4 hidden rounded-2xl border border-red-400/50 bg-red-500/15 px-4 py-3 text-sm font-medium text-red-100" role="alert"></div>
-
-        <div class="mb-4 grid gap-3 sm:grid-cols-3">
-          <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/70 p-4">
-            <p class="text-xs uppercase tracking-widest text-slate-500">当前行数</p>
-            <p id="rowCount" class="mt-1 text-2xl font-black text-cyan-300">0</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/70 p-4">
-            <p class="text-xs uppercase tracking-widest text-slate-500">当前列数</p>
-            <p id="colCount" class="mt-1 text-2xl font-black text-blue-300">0</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/70 p-4">
-            <p class="text-xs uppercase tracking-widest text-slate-500">实时状态</p>
-            <p id="statusText" class="mt-2 text-sm font-semibold text-emerald-300">已就绪</p>
-          </div>
+        <div class="grid gap-3 sm:grid-cols-2">
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="columnCountLabel">列数</span>
+            <input id="columnCount" type="number" min="1" max="12" inputmode="numeric" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" value="3" data-i18n-aria-label="columnCountLabel">
+          </label>
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="rowCountLabel">数据行数</span>
+            <input id="rowCount" type="number" min="1" max="30" inputmode="numeric" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" value="3" data-i18n-aria-label="rowCountLabel">
+          </label>
         </div>
 
-        <div class="overflow-x-auto rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950">
-          <table class="min-w-full border-collapse" aria-label="可编辑 Markdown 表格">
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="addColumnBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="addColumn">增加列</button>
+          <button id="addRowBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="addRow">增加行</button>
+          <button id="removeColumnBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="removeColumn">删除列</button>
+          <button id="removeRowBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="removeRow">删除行</button>
+        </div>
+
+        <div class="mt-5 overflow-x-auto rounded-2xl border border-gray-200 bg-slate-50 dark:border-white/10 dark:bg-slate-950/50">
+          <table class="w-full min-w-[520px] border-collapse text-sm">
             <thead id="tableHead"></thead>
             <tbody id="tableBody"></tbody>
           </table>
         </div>
 
-        <div class="mt-4 flex flex-wrap gap-2">
-          <button id="resetBtn" type="button" class="rounded-xl border border-slate-600 bg-slate-50 dark:bg-slate-800 px-4 py-2 text-sm font-bold text-slate-800 dark:text-slate-200 transition hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95 focus:outline-none focus:ring-2 focus:ring-slate-400">Reset示例</button>
-          <button id="clearBtn" type="button" class="rounded-xl border border-slate-600 bg-slate-50 dark:bg-slate-800 px-4 py-2 text-sm font-bold text-slate-800 dark:text-slate-200 transition hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95 focus:outline-none focus:ring-2 focus:ring-slate-400">Clear内容</button>
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">填入示例</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空内容</button>
         </div>
-      </div>
 
-      <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/30 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
-        <div class="mb-5 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite">已生成 3 列、3 行数据的 Markdown 表格。</p>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">Markdown 代码</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+        </div>
+
+        <label class="block">
+          <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="outputLabel">实时生成结果</span>
+          <textarea id="markdownOutput" rows="18" readonly class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="outputPlaceholder" placeholder="Markdown 表格代码将在这里显示"></textarea>
+        </label>
+
+        <div class="mt-4 grid gap-3 rounded-2xl border border-gray-200 bg-slate-50 p-4 text-sm text-slate-600 dark:border-white/10 dark:bg-slate-950/50 dark:text-slate-400 sm:grid-cols-3">
           <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Markdown 输出区</h2>
-            <p class="mt-1 text-sm text-cyan-100/70">Copy下方代码即可粘贴到 Markdown 文档中使用。</p>
+            <div class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="statColumns">列</div>
+            <div id="statColumnsValue" class="mt-1 tabular-nums text-lg font-black text-slate-950 dark:text-white">3</div>
           </div>
-          <button id="copyBtn" type="button" class="rounded-xl bg-emerald-400 px-4 py-2 text-sm font-black text-slate-950 dark:text-slate-100 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-300 active:scale-95 focus:outline-none focus:ring-2 focus:ring-emerald-200">Copy代码</button>
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="statRows">数据行</div>
+            <div id="statRowsValue" class="mt-1 tabular-nums text-lg font-black text-slate-950 dark:text-white">3</div>
+          </div>
+          <div>
+            <div class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="statChars">字符</div>
+            <div id="statCharsValue" class="mt-1 tabular-nums text-lg font-black text-slate-950 dark:text-white">0</div>
+          </div>
         </div>
 
-        <textarea id="markdownOutput" readonly spellcheck="false" class="h-[420px] w-full resize-y rounded-2xl border border-cyan-300/20 bg-white dark:bg-slate-950 p-4 font-mono text-sm leading-6 text-cyan-100 shadow-inner outline-none focus:ring-2 focus:ring-cyan-400" aria-label="Generate的 Markdown 表格代码"></textarea>
-
-        <div class="mt-4 rounded-2xl border border-cyan-300/20 bg-white dark:bg-slate-950/60 p-4">
-          <h3 class="font-bold text-cyan-100">提示</h3>
-          <ul class="mt-2 list-disc space-y-1 pl-5 text-sm leading-6 text-slate-700 dark:text-slate-300">
-            <li>单元格中的竖线 <code class="rounded bg-slate-50 dark:bg-slate-800 px-1 text-cyan-200">|</code> 会自动转义，避免破坏 Markdown 表格结构。</li>
-            <li>换行会被转换为 <code class="rounded bg-slate-50 dark:bg-slate-800 px-1 text-cyan-200">&lt;br&gt;</code>，便于在表格内保留多行内容。</li>
-            <li>每一列都可以单独设置左对齐、居中或右对齐。</li>
-          </ul>
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制代码</button>
+          <button id="downloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadAction">下载文件</button>
         </div>
-      </div>
+      </section>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900/80 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl shadow-slate-950/30 sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于可视化 Markdown 表格Generate器</h2>
-      <p>
-        markdown-table-generator 是一个面向开发者、产品经理、技术写作者和内容创作者的在线 Markdown 表格Generate器。很多人在编写 README 文档、项目说明、接口文档或博客教程时，都遇到过手写 Markdown 表格容易错位、分隔符难以维护、列数增加后排版混乱的问题。本工具通过可视化表格编辑方式解决这些痛点：你只需要点击按钮增加行列，在单元格中填写内容，系统就会实时Generate标准 Markdown table 代码。它支持表头、普通单元格、列对齐方式、特殊字符自动转义和一键Copy，非常适合快速制作 GitHub README 表格、Markdown 技术文档表格、产品参数对比表和教程示例表。使用方法也很简单：先在编辑区调整需要的行数与列数，再输入表格内容，最后Copy输出区代码并粘贴到支持 Markdown 的编辑器中即可。对于需要高效Generate Markdown 表格代码的用户来说，这个可视化 Markdown 表格Generate工具可以显著减少格式错误，提高文档编写效率。
-      </p>
-    </article>
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">Markdown 表格生成器是 Micro Tools Matrix 提供的免费在线开发者工具，适合快速制作 README、技术文档、知识库和工单说明中的表格。你可以像编辑普通表格一样增加行列、填写表头与单元格，页面会实时输出标准 Markdown 代码，减少手动对齐分隔符带来的错误。所有内容都通过浏览器本地处理完成，无需上传文本、无需登录，也不会调用远程接口。无论你在 Windows、macOS、Android 或 iOS 上整理项目清单、参数说明、接口字段或发布记录，都可以用这个 browser-local processing 工具安全生成可复制的 Markdown table。</article>
   </main>
 
-  <footer class="border-t border-slate-800 py-6 text-center text-sm text-slate-500">
-    <p>markdown-table-generator · Zero Dependency Single Page Tool</p>
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理的免费在线开发者工具。</footer>
+
+  <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md">
+    <div class="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
+      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor">×</button>
+      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">赞赏支持</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">保持工具免费、快速且无广告。</p>
+      <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="buyCoffee">Buy Me a Coffee</a>
+    </div>
+  </div>
 
   <script>
-    (() => {
-      'use strict';
+    const I18N = {
+      zh: {
+        htmlLang: "zh-CN",
+        documentTitle: "Markdown 表格生成器 - Micro Tools Matrix",
+        metaDescription: "Micro Tools Matrix 的 Markdown 表格生成器在浏览器本地处理内容，可视化编辑行列并实时生成标准 Markdown 表格代码，无需上传。",
+        metaKeywords: "Markdown 表格生成器, Markdown table generator, 浏览器本地处理, 无需上传, Micro Tools Matrix, developer tool",
+        toolName: "Markdown 表格生成器",
+        sponsor: "赞赏",
+        eyebrow: "浏览器本地处理",
+        h1: "Markdown 表格生成器",
+        intro: "在 Micro Tools Matrix 中可视化编辑 Markdown 表格，添加行列、填写单元格后实时生成标准代码；所有内容仅在浏览器本地处理，无需上传。",
+        localBadge: "本地运行",
+        inputTitle: "可视化表格",
+        inputBadge: "输入",
+        outputTitle: "Markdown 代码",
+        outputBadge: "输出",
+        columnCountLabel: "列数",
+        rowCountLabel: "数据行数",
+        addColumn: "增加列",
+        addRow: "增加行",
+        removeColumn: "删除列",
+        removeRow: "删除行",
+        primaryAction: "填入示例",
+        secondaryAction: "清空内容",
+        outputLabel: "实时生成结果",
+        outputPlaceholder: "Markdown 表格代码将在这里显示",
+        statColumns: "列",
+        statRows: "数据行",
+        statChars: "字符",
+        copyAction: "复制代码",
+        downloadAction: "下载文件",
+        closeSponsor: "关闭赞赏窗口",
+        sponsorTitle: "赞赏支持",
+        sponsorSubtitle: "保持工具免费、快速且无广告。",
+        buyCoffee: "Buy Me a Coffee",
+        seoArticle: "Markdown 表格生成器是 Micro Tools Matrix 提供的免费在线开发者工具，适合快速制作 README、技术文档、知识库和工单说明中的表格。你可以像编辑普通表格一样增加行列、填写表头与单元格，页面会实时输出标准 Markdown 代码，减少手动对齐分隔符带来的错误。所有内容都通过浏览器本地处理完成，无需上传文本、无需登录，也不会调用远程接口。无论你在 Windows、macOS、Android 或 iOS 上整理项目清单、参数说明、接口字段或发布记录，都可以用这个 browser-local processing 工具安全生成可复制的 Markdown table。",
+        footer: "Micro Tools Matrix - 浏览器本地处理的免费在线开发者工具。",
+        headerPrefix: "表头",
+        cellPrefix: "单元格",
+        headerPlaceholder: "表头",
+        cellPlaceholder: "内容",
+        generatedStatus: "已生成 {columns} 列、{rows} 行数据的 Markdown 表格。",
+        copiedStatus: "Markdown 表格代码已复制到剪贴板。",
+        copyFailedStatus: "复制失败，请手动选择代码并复制。",
+        clearedStatus: "内容已清空，表格结构保留。",
+        sampleStatus: "示例表格已填入，可继续编辑。",
+        downloadedStatus: "Markdown 文件已下载。",
+        minColumnStatus: "至少需要保留 1 列。",
+        minRowStatus: "至少需要保留 1 行数据。",
+        maxColumnStatus: "最多支持 12 列，适合移动端编辑。",
+        maxRowStatus: "最多支持 30 行数据，避免页面过长。",
+        invalidCountStatus: "请输入有效的行列数量。",
+        downloadFileName: "markdown-table.md",
+        sampleHeaders: ["项目", "状态", "负责人"],
+        sampleRows: [
+          ["文档结构", "进行中", "林同学"],
+          ["接口说明", "已完成", "周同学"],
+          ["发布检查", "待确认", "陈同学"]
+        ],
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统"
+      },
+      en: {
+        htmlLang: "en",
+        documentTitle: "Markdown Table Generator - Micro Tools Matrix",
+        metaDescription: "A Micro Tools Matrix Markdown table generator with browser-local processing. Visually edit rows and columns, then generate standard Markdown table code without uploads.",
+        metaKeywords: "Markdown table generator, free online developer tool, browser-local processing, no upload, Micro Tools Matrix, Markdown table",
+        toolName: "Markdown Table Generator",
+        sponsor: "Sponsor",
+        eyebrow: "Browser-local processing",
+        h1: "Markdown Table Generator",
+        intro: "Visually build Markdown tables in Micro Tools Matrix. Add rows or columns, edit cells, and generate standard Markdown code in real time with browser-local processing and no uploads.",
+        localBadge: "Local",
+        inputTitle: "Visual Table",
+        inputBadge: "INPUT",
+        outputTitle: "Markdown Code",
+        outputBadge: "OUTPUT",
+        columnCountLabel: "Columns",
+        rowCountLabel: "Data rows",
+        addColumn: "Add column",
+        addRow: "Add row",
+        removeColumn: "Remove column",
+        removeRow: "Remove row",
+        primaryAction: "Load sample",
+        secondaryAction: "Clear cells",
+        outputLabel: "Live result",
+        outputPlaceholder: "Markdown table code will appear here",
+        statColumns: "Columns",
+        statRows: "Data rows",
+        statChars: "Characters",
+        copyAction: "Copy code",
+        downloadAction: "Download file",
+        closeSponsor: "Close sponsor dialog",
+        sponsorTitle: "Sponsor this project",
+        sponsorSubtitle: "Keep these tools free, fast, and ad-free.",
+        buyCoffee: "Buy Me a Coffee",
+        seoArticle: "The Markdown Table Generator from Micro Tools Matrix is a free online developer tool for writing clean tables in README files, technical documentation, knowledge bases, release notes, and issue templates. Instead of manually counting pipes and separator rows, you can edit a compact visual grid, add rows or columns with buttons, and receive standard Markdown table code instantly. The workflow is designed for browser-local processing: your table headings, notes, project data, API fields, and task lists stay in memory on your device and are never uploaded to a server. This makes the tool practical for everyday documentation on Windows, macOS, Android, and iOS, especially when you need a quick Markdown table generator that is private, lightweight, and easy to copy into GitHub, GitLab, Notion-compatible exports, static site content, or developer handoff notes. Micro Tools Matrix focuses on small, focused utilities that solve common work without accounts, tracking, or remote APIs.",
+        footer: "Micro Tools Matrix - Free online developer tools with browser-local processing.",
+        headerPrefix: "Header",
+        cellPrefix: "Cell",
+        headerPlaceholder: "Header",
+        cellPlaceholder: "Content",
+        generatedStatus: "Generated a Markdown table with {columns} columns and {rows} data rows.",
+        copiedStatus: "Markdown table code copied to the clipboard.",
+        copyFailedStatus: "Copy failed. Please select the code and copy it manually.",
+        clearedStatus: "Cells cleared. The table structure was kept.",
+        sampleStatus: "Sample table loaded. You can keep editing it.",
+        downloadedStatus: "Markdown file downloaded.",
+        minColumnStatus: "Keep at least 1 column.",
+        minRowStatus: "Keep at least 1 data row.",
+        maxColumnStatus: "Up to 12 columns are supported for mobile-friendly editing.",
+        maxRowStatus: "Up to 30 data rows are supported to keep the page manageable.",
+        invalidCountStatus: "Enter valid row and column counts.",
+        downloadFileName: "markdown-table.md",
+        sampleHeaders: ["Project", "Status", "Owner"],
+        sampleRows: [
+          ["Documentation", "In progress", "Avery"],
+          ["API notes", "Done", "Morgan"],
+          ["Release check", "Pending", "Taylor"]
+        ],
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System"
+      }
+    };
 
-      const MAX_ROWS = 50;
-      const MAX_COLS = 20;
-      const MIN_ROWS = 2;
-      const MIN_COLS = 1;
+    const state = {
+      lang: "zh",
+      headers: ["", "", ""],
+      rows: [
+        ["", "", ""],
+        ["", "", ""],
+        ["", "", ""]
+      ],
+      lastStatusKey: "generatedStatus"
+    };
 
-      const elements = {
-        tableHead: document.getElementById('tableHead'),
-        tableBody: document.getElementById('tableBody'),
-        output: document.getElementById('markdownOutput'),
-        errorBox: document.getElementById('errorBox'),
-        rowCount: document.getElementById('rowCount'),
-        colCount: document.getElementById('colCount'),
-        statusText: document.getElementById('statusText'),
-        addRowBtn: document.getElementById('addRowBtn'),
-        addColBtn: document.getElementById('addColBtn'),
-        removeRowBtn: document.getElementById('removeRowBtn'),
-        removeColBtn: document.getElementById('removeColBtn'),
-        resetBtn: document.getElementById('resetBtn'),
-        clearBtn: document.getElementById('clearBtn'),
-        copyBtn: document.getElementById('copyBtn')
-      };
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      const saved = localStorage.getItem("microToolsLanguage");
+      return saved === "en" ? "en" : "zh";
+    }
 
-      let data = [
-        ['名称', '说明', '示例'],
-        ['项目', 'Markdown 表格Generate器', 'README 文档'],
-        ['特点', '实时Generate、可视化编辑', '一键Copy']
-      ];
-      let aligns = ['left', 'center', 'right'];
-      let errorTimer = null;
+    function t(key) {
+      return (I18N[state.lang] && I18N[state.lang][key]) || I18N.zh[key] || "";
+    }
 
-      const safeText = (value) => String(value ?? '');
+    function formatMessage(key, values) {
+      let message = t(key);
+      Object.keys(values || {}).forEach((name) => {
+        message = message.replaceAll("{" + name + "}", String(values[name]));
+      });
+      return message;
+    }
 
-      const showError = (message) => {
-        const text = safeText(message).trim() || '发生Unknown错误，请检查输入后重试。';
-        elements.errorBox.textContent = text;
-        elements.errorBox.classList.remove('hidden');
-        elements.statusText.textContent = '需要处理';
-        elements.statusText.className = 'mt-2 text-sm font-semibold text-red-300';
-        clearTimeout(errorTimer);
-        errorTimer = setTimeout(() => {
-          elements.errorBox.classList.add('hidden');
-          elements.statusText.textContent = '已就绪';
-          elements.statusText.className = 'mt-2 text-sm font-semibold text-emerald-300';
-        }, 3500);
-      };
+    function setLanguage(lang) {
+      const nextLang = lang === "en" ? "en" : "zh";
+      localStorage.setItem("microToolsLanguage", nextLang);
+      applyLanguage(nextLang);
+    }
 
-      const setStatus = (message, colorClass = 'text-emerald-300') => {
-        elements.statusText.textContent = message;
-        elements.statusText.className = `mt-2 text-sm font-semibold ${colorClass}`;
-      };
+    function applyLanguage(lang) {
+      state.lang = lang === "en" ? "en" : "zh";
+      const dict = I18N[state.lang];
 
-      const escapeMarkdownCell = (value) => {
-        return safeText(value)
-          .replace(/\\/g, '\\\\')
-          .replace(/\|/g, '\\|')
-          .replace(/\r\n|\r|\n/g, '<br>')
-          .trim() || ' ';
-      };
+      document.documentElement.lang = dict.htmlLang;
+      document.title = dict.documentTitle;
 
-      const separatorFor = (align) => {
-        if (align === 'center') return ':---:';
-        if (align === 'right') return '---:';
-        return ':---';
-      };
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) metaDescription.setAttribute("content", dict.metaDescription);
 
-      const normalizeState = () => {
-        if (!Array.isArray(data) || data.length < MIN_ROWS) {
-          data = [['列 1'], ['']];
-        }
+      const metaKeywords = document.querySelector('meta[name="keywords"]');
+      if (metaKeywords) metaKeywords.setAttribute("content", dict.metaKeywords);
 
-        const colLength = Math.max(
-          MIN_COLS,
-          Math.min(MAX_COLS, ...data.map(row => Array.isArray(row) ? row.length : 0))
-        );
-
-        data = data.slice(0, MAX_ROWS).map(row => {
-          const safeRow = Array.isArray(row) ? row.slice(0, colLength) : [];
-          while (safeRow.length < colLength) safeRow.push('');
-          return safeRow.map(safeText);
-        });
-
-        while (data.length < MIN_ROWS) {
-          data.push(Array(colLength).fill(''));
-        }
-
-        aligns = Array.isArray(aligns) ? aligns.slice(0, colLength) : [];
-        while (aligns.length < colLength) aligns.push('left');
-        aligns = aligns.map(item => ['left', 'center', 'right'].includes(item) ? item : 'left');
-      };
-
-      const generateMarkdown = () => {
-        normalizeState();
-        const header = data[0].map(escapeMarkdownCell);
-        const separator = aligns.map(separatorFor);
-        const body = data.slice(1).map(row => row.map(escapeMarkdownCell));
-
-        const lines = [
-          `| ${header.join(' | ')} |`,
-          `| ${separator.join(' | ')} |`,
-          ...body.map(row => `| ${row.join(' | ')} |`)
-        ];
-
-        elements.output.value = lines.join('\n');
-        elements.rowCount.textContent = String(data.length);
-        elements.colCount.textContent = String(data[0].length);
-      };
-
-      const createCellInput = (rowIndex, colIndex, value) => {
-        const input = document.createElement('textarea');
-        input.value = safeText(value);
-        input.rows = 2;
-        input.dataset.row = String(rowIndex);
-        input.dataset.col = String(colIndex);
-        input.maxLength = 5000;
-        input.className = 'min-h-[54px] w-44 resize-y rounded-xl border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-300 focus:ring-2 focus:ring-cyan-400/40 sm:w-52';
-        input.placeholder = rowIndex === 0 ? `表头 ${colIndex + 1}` : `内容 ${rowIndex}-${colIndex + 1}`;
-        input.setAttribute('aria-label', rowIndex === 0 ? `第 ${colIndex + 1} 列表头` : `第 ${rowIndex} 行第 ${colIndex + 1} 列内容`);
-        return input;
-      };
-
-      const renderTable = () => {
-        normalizeState();
-
-        elements.tableHead.innerHTML = '';
-        elements.tableBody.innerHTML = '';
-
-        const controlRow = document.createElement('tr');
-        controlRow.className = 'border-b border-slate-700 bg-slate-900';
-
-        data[0].forEach((_, colIndex) => {
-          const th = document.createElement('th');
-          th.className = 'min-w-44 border-r border-slate-800 p-3 text-left align-top last:border-r-0 sm:min-w-52';
-
-          const label = document.createElement('div');
-          label.className = 'mb-2 flex items-center justify-between gap-2';
-          label.innerHTML = `<span class="rounded-full bg-cyan-400/10 px-2 py-1 text-xs font-bold text-cyan-200">第 ${colIndex + 1} 列</span>`;
-
-          const select = document.createElement('select');
-          select.dataset.alignCol = String(colIndex);
-          select.className = 'w-full rounded-xl border border-slate-700 bg-slate-950 px-3 py-2 text-sm font-medium text-slate-200 outline-none transition focus:border-cyan-300 focus:ring-2 focus:ring-cyan-400/40';
-          [
-            ['left', '左对齐'],
-            ['center', '居中'],
-            ['right', '右对齐']
-          ].forEach(([value, text]) => {
-            const option = document.createElement('option');
-            option.value = value;
-            option.textContent = text;
-            option.selected = aligns[colIndex] === value;
-            select.appendChild(option);
-          });
-
-          th.appendChild(label);
-          th.appendChild(select);
-          controlRow.appendChild(th);
-        });
-
-        elements.tableHead.appendChild(controlRow);
-
-        data.forEach((row, rowIndex) => {
-          const tr = document.createElement('tr');
-          tr.className = rowIndex === 0 ? 'border-b border-cyan-400/20 bg-cyan-950/20' : 'border-b border-slate-800 last:border-b-0';
-
-          row.forEach((cell, colIndex) => {
-            const td = document.createElement(rowIndex === 0 ? 'th' : 'td');
-            td.className = 'border-r border-slate-800 p-3 align-top last:border-r-0';
-
-            if (rowIndex === 0) {
-              const badge = document.createElement('div');
-              badge.className = 'mb-2 text-xs font-black uppercase tracking-widest text-cyan-300';
-              badge.textContent = 'Header';
-              td.appendChild(badge);
-            }
-
-            td.appendChild(createCellInput(rowIndex, colIndex, cell));
-            tr.appendChild(td);
-          });
-
-          elements.tableBody.appendChild(tr);
-        });
-
-        generateMarkdown();
-      };
-
-      const addRow = () => {
-        normalizeState();
-        if (data.length >= MAX_ROWS) {
-          showError(`最多支持 ${MAX_ROWS} 行，当前已达到上限。`);
-          return;
-        }
-        data.push(Array(data[0].length).fill(''));
-        renderTable();
-        setStatus('已增加一行');
-      };
-
-      const addCol = () => {
-        normalizeState();
-        if (data[0].length >= MAX_COLS) {
-          showError(`最多支持 ${MAX_COLS} 列，当前已达到上限。`);
-          return;
-        }
-        const newIndex = data[0].length + 1;
-        data.forEach((row, index) => row.push(index === 0 ? `列 ${newIndex}` : ''));
-        aligns.push('left');
-        renderTable();
-        setStatus('已增加一列');
-      };
-
-      const removeRow = () => {
-        normalizeState();
-        if (data.length <= MIN_ROWS) {
-          showError('至少需要保留表头和一行内容，不能继续删除行。');
-          return;
-        }
-        data.pop();
-        renderTable();
-        setStatus('已删除最后一行');
-      };
-
-      const removeCol = () => {
-        normalizeState();
-        if (data[0].length <= MIN_COLS) {
-          showError('至少需要保留一列，不能继续删除列。');
-          return;
-        }
-        data.forEach(row => row.pop());
-        aligns.pop();
-        renderTable();
-        setStatus('已删除最后一列');
-      };
-
-      const clearContent = () => {
-        normalizeState();
-        data = data.map(row => row.map(() => ''));
-        renderTable();
-        setStatus('内容已Clear');
-      };
-
-      const resetExample = () => {
-        data = [
-          ['名称', '说明', '示例'],
-          ['项目', 'Markdown 表格Generate器', 'README 文档'],
-          ['特点', '实时Generate、可视化编辑', '一键Copy']
-        ];
-        aligns = ['left', 'center', 'right'];
-        renderTable();
-        setStatus('示例Reset');
-      };
-
-      const copyOutput = async () => {
-        try {
-          const text = elements.output.value;
-          if (!text.trim()) {
-            showError('当前没有可Copy的 Markdown 内容。');
-            return;
-          }
-
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(text);
-          } else {
-            elements.output.focus();
-            elements.output.select();
-            const successful = document.execCommand('copy');
-            if (!successful) throw new Error('Copy命令未成功执行');
-            window.getSelection()?.removeAllRanges();
-          }
-
-          const original = elements.copyBtn.textContent;
-          elements.copyBtn.textContent = 'Copied';
-          elements.copyBtn.classList.remove('bg-emerald-400');
-          elements.copyBtn.classList.add('bg-cyan-300');
-          setStatus('Markdown Copied到剪贴板');
-          setTimeout(() => {
-            elements.copyBtn.textContent = original;
-            elements.copyBtn.classList.add('bg-emerald-400');
-            elements.copyBtn.classList.remove('bg-cyan-300');
-          }, 1200);
-        } catch (err) {
-          showError('Copy failed，请手动选择输出区内容后Copy。');
-        }
-      };
-
-      elements.tableBody.addEventListener('input', (event) => {
-        try {
-          const target = event.target;
-          if (!(target instanceof HTMLTextAreaElement)) return;
-
-          const row = Number.parseInt(target.dataset.row, 10);
-          const col = Number.parseInt(target.dataset.col, 10);
-
-          if (!Number.isInteger(row) || !Number.isInteger(col) || row < 0 || col < 0 || !data[row] || col >= data[row].length) {
-            showError('单元格位置异常，已自动刷新表格。');
-            renderTable();
-            return;
-          }
-
-          data[row][col] = safeText(target.value);
-          generateMarkdown();
-          setStatus('已实时更新');
-        } catch (err) {
-          showError('输入处理失败，请刷新页面或重试。');
-        }
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.textContent = dict[key];
       });
 
-      elements.tableHead.addEventListener('change', (event) => {
-        try {
-          const target = event.target;
-          if (!(target instanceof HTMLSelectElement)) return;
-
-          const col = Number.parseInt(target.dataset.alignCol, 10);
-          if (!Number.isInteger(col) || col < 0 || col >= aligns.length) {
-            showError('列对齐设置异常，已恢复默认值。');
-            renderTable();
-            return;
-          }
-
-          aligns[col] = ['left', 'center', 'right'].includes(target.value) ? target.value : 'left';
-          generateMarkdown();
-          setStatus('列对齐已更新');
-        } catch (err) {
-          showError('对齐设置失败，请重试。');
-        }
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("placeholder", dict[key]);
       });
 
-      elements.addRowBtn.addEventListener('click', addRow);
-      elements.addColBtn.addEventListener('click', addCol);
-      elements.removeRowBtn.addEventListener('click', removeRow);
-      elements.removeColBtn.addEventListener('click', removeCol);
-      elements.clearBtn.addEventListener('click', clearContent);
-      elements.resetBtn.addEventListener('click', resetExample);
-      elements.copyBtn.addEventListener('click', copyOutput);
-
-      window.addEventListener('error', () => {
-        showError('页面遇到异常，但工具已尽力保持可用。');
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("title", dict[key]);
       });
 
-      window.addEventListener('unhandledrejection', () => {
-        showError('异步操作失败，请稍后重试。');
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("aria-label", dict[key]);
       });
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (state.lang === "zh" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (state.lang === "en" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+        zhBtn.setAttribute("aria-pressed", state.lang === "zh" ? "true" : "false");
+        enBtn.setAttribute("aria-pressed", state.lang === "en" ? "true" : "false");
+      }
+
+      window.microToolsThemeLabels = {
+        light: dict.themeLight,
+        dark: dict.themeDark,
+        system: dict.themeSystem
+      };
 
       renderTable();
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      updateMarkdown(state.lastStatusKey);
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function normalizeTable() {
+      const columns = Math.min(12, Math.max(1, Number.parseInt(document.getElementById("columnCount")?.value || state.headers.length, 10) || state.headers.length || 1));
+      const rows = Math.min(30, Math.max(1, Number.parseInt(document.getElementById("rowCount")?.value || state.rows.length, 10) || state.rows.length || 1));
+
+      while (state.headers.length < columns) state.headers.push("");
+      state.headers = state.headers.slice(0, columns);
+
+      while (state.rows.length < rows) state.rows.push(Array(columns).fill(""));
+      state.rows = state.rows.slice(0, rows).map((row) => {
+        const next = row.slice(0, columns);
+        while (next.length < columns) next.push("");
+        return next;
+      });
+
+      const columnCount = document.getElementById("columnCount");
+      const rowCount = document.getElementById("rowCount");
+      if (columnCount) columnCount.value = String(columns);
+      if (rowCount) rowCount.value = String(rows);
+    }
+
+    function renderTable() {
+      normalizeTable();
+      const head = document.getElementById("tableHead");
+      const body = document.getElementById("tableBody");
+      if (!head || !body) return;
+
+      head.innerHTML = "";
+      body.innerHTML = "";
+
+      const headerRow = document.createElement("tr");
+      state.headers.forEach((value, index) => {
+        const th = document.createElement("th");
+        th.className = "border-b border-r border-gray-200 p-2 last:border-r-0 dark:border-white/10";
+        const label = document.createElement("label");
+        label.className = "block";
+        const labelText = document.createElement("span");
+        labelText.className = "mb-1 block text-xs font-semibold text-slate-500 dark:text-slate-400";
+        labelText.textContent = t("headerPrefix") + " " + (index + 1);
+        const input = document.createElement("input");
+        input.type = "text";
+        input.value = value;
+        input.placeholder = t("headerPlaceholder") + " " + (index + 1);
+        input.setAttribute("aria-label", t("headerPrefix") + " " + (index + 1));
+        input.className = "w-full rounded-2xl border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600";
+        input.addEventListener("input", () => {
+          state.headers[index] = input.value;
+          updateMarkdown("generatedStatus");
+        });
+        label.appendChild(labelText);
+        label.appendChild(input);
+        th.appendChild(label);
+        headerRow.appendChild(th);
+      });
+      head.appendChild(headerRow);
+
+      state.rows.forEach((row, rowIndex) => {
+        const tr = document.createElement("tr");
+        row.forEach((value, columnIndex) => {
+          const td = document.createElement("td");
+          td.className = "border-b border-r border-gray-200 p-2 last:border-r-0 dark:border-white/10";
+          const input = document.createElement("input");
+          input.type = "text";
+          input.value = value;
+          input.placeholder = t("cellPlaceholder");
+          input.setAttribute("aria-label", t("cellPrefix") + " " + (rowIndex + 1) + "-" + (columnIndex + 1));
+          input.className = "w-full rounded-2xl border border-gray-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600";
+          input.addEventListener("input", () => {
+            state.rows[rowIndex][columnIndex] = input.value;
+            updateMarkdown("generatedStatus");
+          });
+          td.appendChild(input);
+          tr.appendChild(td);
+        });
+        body.appendChild(tr);
       });
     }
+
+    function escapeMarkdownCell(value) {
+      return String(value || "")
+        .replace(/\\/g, "\\\\")
+        .replace(/\|/g, "\\|")
+        .replace(/\r?\n/g, "<br>")
+        .trim();
+    }
+
+    function generateMarkdown() {
+      normalizeTable();
+      const headers = state.headers.map((value, index) => escapeMarkdownCell(value) || (t("headerPrefix") + " " + (index + 1)));
+      const separator = headers.map(() => "---");
+      const bodyRows = state.rows.map((row) => row.map((value) => escapeMarkdownCell(value)));
+      const lines = [
+        "| " + headers.join(" | ") + " |",
+        "| " + separator.join(" | ") + " |",
+        ...bodyRows.map((row) => "| " + row.join(" | ") + " |")
+      ];
+      return lines.join("\n");
+    }
+
+    function updateMarkdown(statusKey) {
+      normalizeTable();
+      state.lastStatusKey = statusKey || "generatedStatus";
+      const markdown = generateMarkdown();
+      const output = document.getElementById("markdownOutput");
+      if (output) output.value = markdown;
+
+      const statColumns = document.getElementById("statColumnsValue");
+      const statRows = document.getElementById("statRowsValue");
+      const statChars = document.getElementById("statCharsValue");
+      if (statColumns) statColumns.textContent = String(state.headers.length);
+      if (statRows) statRows.textContent = String(state.rows.length);
+      if (statChars) statChars.textContent = String(markdown.length);
+
+      const status = document.getElementById("statusText");
+      if (status) {
+        if (state.lastStatusKey === "generatedStatus") {
+          status.textContent = formatMessage("generatedStatus", { columns: state.headers.length, rows: state.rows.length });
+        } else {
+          status.textContent = t(state.lastStatusKey);
+        }
+      }
+    }
+
+    function setCountsFromInputs() {
+      const columnInput = document.getElementById("columnCount");
+      const rowInput = document.getElementById("rowCount");
+      const columns = Number.parseInt(columnInput?.value || "", 10);
+      const rows = Number.parseInt(rowInput?.value || "", 10);
+
+      if (!Number.isFinite(columns) || !Number.isFinite(rows) || columns < 1 || rows < 1) {
+        updateMarkdown("invalidCountStatus");
+        return;
+      }
+
+      if (columns > 12) {
+        if (columnInput) columnInput.value = "12";
+        updateMarkdown("maxColumnStatus");
+      }
+      if (rows > 30) {
+        if (rowInput) rowInput.value = "30";
+        updateMarkdown("maxRowStatus");
+      }
+
+      renderTable();
+      updateMarkdown("generatedStatus");
+    }
+
+    function addColumn() {
+      if (state.headers.length >= 12) {
+        updateMarkdown("maxColumnStatus");
+        return;
+      }
+      state.headers.push("");
+      state.rows = state.rows.map((row) => [...row, ""]);
+      renderTable();
+      updateMarkdown("generatedStatus");
+    }
+
+    function addRow() {
+      if (state.rows.length >= 30) {
+        updateMarkdown("maxRowStatus");
+        return;
+      }
+      state.rows.push(Array(state.headers.length).fill(""));
+      renderTable();
+      updateMarkdown("generatedStatus");
+    }
+
+    function removeColumn() {
+      if (state.headers.length <= 1) {
+        updateMarkdown("minColumnStatus");
+        return;
+      }
+      state.headers.pop();
+      state.rows = state.rows.map((row) => row.slice(0, state.headers.length));
+      renderTable();
+      updateMarkdown("generatedStatus");
+    }
+
+    function removeRow() {
+      if (state.rows.length <= 1) {
+        updateMarkdown("minRowStatus");
+        return;
+      }
+      state.rows.pop();
+      renderTable();
+      updateMarkdown("generatedStatus");
+    }
+
+    function loadSample() {
+      state.headers = t("sampleHeaders").slice();
+      state.rows = t("sampleRows").map((row) => row.slice());
+      renderTable();
+      updateMarkdown("sampleStatus");
+    }
+
+    function clearCells() {
+      state.headers = state.headers.map(() => "");
+      state.rows = state.rows.map((row) => row.map(() => ""));
+      renderTable();
+      updateMarkdown("clearedStatus");
+    }
+
+    async function copyMarkdown() {
+      const output = document.getElementById("markdownOutput");
+      const text = output ? output.value : generateMarkdown();
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          output?.focus();
+          output?.select();
+          const ok = document.execCommand("copy");
+          if (!ok) throw new Error("copy failed");
+          window.getSelection()?.removeAllRanges();
+        }
+        updateMarkdown("copiedStatus");
+      } catch (error) {
+        updateMarkdown("copyFailedStatus");
+      }
+    }
+
+    function downloadMarkdown() {
+      const blob = new Blob([generateMarkdown()], { type: "text/markdown;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = t("downloadFileName");
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
+      updateMarkdown("downloadedStatus");
+    }
+
+    function openSponsorModal(event) {
+      if (event && typeof event.preventDefault === "function") event.preventDefault();
+      const modal = document.getElementById("sponsorModal");
+      if (modal) {
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      }
+    }
+
+    function closeSponsorModal() {
+      const modal = document.getElementById("sponsorModal");
+      if (modal) {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+
+      document.getElementById("columnCount")?.addEventListener("change", setCountsFromInputs);
+      document.getElementById("rowCount")?.addEventListener("change", setCountsFromInputs);
+      document.getElementById("addColumnBtn")?.addEventListener("click", addColumn);
+      document.getElementById("addRowBtn")?.addEventListener("click", addRow);
+      document.getElementById("removeColumnBtn")?.addEventListener("click", removeColumn);
+      document.getElementById("removeRowBtn")?.addEventListener("click", removeRow);
+      document.getElementById("sampleBtn")?.addEventListener("click", loadSample);
+      document.getElementById("clearBtn")?.addEventListener("click", clearCells);
+      document.getElementById("copyBtn")?.addEventListener("click", copyMarkdown);
+      document.getElementById("downloadBtn")?.addEventListener("click", downloadMarkdown);
+
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="../sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

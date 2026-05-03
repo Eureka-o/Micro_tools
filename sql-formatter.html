@@ -1,566 +1,628 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="SQL 语句美化与格式化工具。支持将混乱的单行SQL语句按照标准缩进格式排版，高亮关键字。">
-  <meta name="keywords" content="sql formatter, SQL格式化工具, SQL美化工具, SQL语句格式化,在线SQL格式化, SQL关键字高亮, SQL排版工具">
-  <title>sql-formatter - 在线 SQL 语句美化与格式化工具</title>
-  <link rel="icon" type="image/png" href="./assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL 格式化工具 - Micro Tools Matrix 浏览器本地开发者工具</title>
+  <meta name="description" content="Micro Tools Matrix 的 SQL 格式化工具可在浏览器本地处理 SQL 语句，支持标准缩进排版、关键字高亮、复制与下载，无需上传。">
+  <meta name="keywords" content="SQL格式化,SQL美化,SQL formatter,SQL高亮,浏览器本地处理,无需上传,Micro Tools Matrix">
   <link rel="canonical" href="https://mymicrotools.xyz/sql-formatter.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/sql-formatter.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/sql-formatter.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/sql-formatter.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/sql-formatter.html">
-  <meta property="og:title" content="sql-formatter - 在线 SQL 语句美化与格式化工具">
-  <meta property="og:description" content="SQL 语句美化与格式化工具。支持将混乱的单行SQL语句按照标准缩进格式排版，高亮关键字。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="sql-formatter - 在线 SQL 语句美化与格式化工具">
-  <meta name="twitter:description" content="SQL 语句美化与格式化工具。支持将混乱的单行SQL语句按照标准缩进格式排版，高亮关键字。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "SQL Formatter",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A browser-local SQL formatting and keyword highlighting tool from Micro Tools Matrix.",
+      "url": "https://mymicrotools.xyz/sql-formatter.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "description": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+    .sql-keyword { color: rgb(8 145 178); font-weight: 800; }
+    .dark .sql-keyword { color: rgb(103 232 249); }
+    .sql-comment { color: rgb(100 116 139); font-style: italic; }
+    .dark .sql-comment { color: rgb(148 163 184); }
+    .sql-string { color: rgb(15 118 110); }
+    .dark .sql-string { color: rgb(94 234 212); }
+    .sql-number { color: rgb(124 58 237); }
+    .dark .sql-number { color: rgb(196 181 253); }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="切换主题" title="切换主题">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">SQL 格式化工具</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="./sql-formatter.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
-        <a href="./en/sql-formatter.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <header class="relative overflow-hidden border-b border-cyan-400/20 bg-white dark:bg-slate-950">
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.25),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(99,102,241,0.2),transparent_35%)]"></div>
-    <div class="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-1 text-sm font-medium text-cyan-200">Online SQL Formatter</p>
-          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">在线 SQL 语句美化与格式化工具</h1>
-          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">将混乱的单行 SQL 语句快速美化为可读、标准缩进的格式，并自动高亮核心 SQL 关键字。</p>
-        </div>
-        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 shadow-2xl backdrop-blur">
-          <p class="text-sm text-slate-700 dark:text-slate-300">零依赖逻辑 · 本地浏览器处理 · 不上传数据</p>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeAria">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" data-i18n-aria-label="languageAria" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
         </div>
       </div>
-    </div>
+    </nav>
   </header>
 
-  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-2" aria-label="SQL 格式化工作区">
-      <div class="rounded-3xl border border-slate-700/80 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-cyan-950/20">
-        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入 SQL</h2>
-            <p class="mt-1 text-sm text-slate-400">粘贴需要格式化的 SQL 语句。</p>
-          </div>
-          <button id="sampleBtn" type="button" class="rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">填入示例</button>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">SQL 格式化工具</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中将混乱的单行 SQL 语句整理为清晰缩进，并在浏览器本地完成关键字高亮，无需上传文本。</p>
         </div>
-        <textarea id="sqlInput" class="h-[420px] w-full resize-y rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" spellcheck="false" placeholder="例如：select id,name from users where status='active' order by created_at desc;"></textarea>
-        <div id="errorBox" class="mt-4 hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200" role="alert"></div>
-        <div class="mt-5 flex flex-wrap gap-3">
-          <button id="formatBtn" type="button" class="rounded-xl bg-cyan-400 px-5 py-2.5 text-sm font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-95">格式化 SQL</button>
-          <button id="minifyBtn" type="button" class="rounded-xl border border-slate-600 bg-slate-50 dark:bg-slate-800 px-5 py-2.5 text-sm font-semibold text-slate-900 dark:text-slate-100 transition hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95">压缩为单行</button>
-          <button id="clearBtn" type="button" class="rounded-xl border border-slate-600 bg-transparent px-5 py-2.5 text-sm font-semibold text-slate-700 dark:text-slate-300 transition hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-95">清空</button>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
-      </div>
-
-      <div class="rounded-3xl border border-cyan-400/20 bg-gradient-to-b from-slate-900 to-slate-950 p-5 shadow-2xl shadow-indigo-950/20">
-        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">格式化结果</h2>
-            <p class="mt-1 text-sm text-slate-400">输出包含缩进排版与关键字高亮。</p>
-          </div>
-          <button id="copyBtn" type="button" class="rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-400/20 active:scale-95">复制纯文本</button>
-        </div>
-        <div class="relative h-[420px] overflow-auto rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950">
-          <pre id="sqlOutput" class="min-h-full whitespace-pre p-4 font-mono text-sm leading-6 text-slate-800 dark:text-slate-200"><span class="text-slate-500">格式化后的 SQL 将显示在这里。</span></pre>
-        </div>
-        <div id="statusBox" class="mt-4 hidden rounded-2xl border border-emerald-400/40 bg-emerald-500/10 px-4 py-3 text-sm font-medium text-emerald-200" role="status"></div>
       </div>
     </section>
 
-    <article class="mt-10 rounded-3xl border border-slate-200 dark:border-white/10 dark:border-slate-700/70 bg-white dark:bg-slate-900/70 p-6 shadow-xl">
-      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">在线 SQL 格式化工具的作用与使用方法</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">
-        sql-formatter 是一款面向开发者、数据分析师和数据库管理员的在线 SQL 语句美化与格式化工具。实际开发中，SQL 往往来自日志、接口参数、ORM 输出或临时拼接脚本，常见问题是整段语句挤在一行，SELECT、FROM、WHERE、JOIN、GROUP BY 等结构不清晰，排查条件和性能问题非常低效。本工具可以将混乱的单行 SQL 自动转换为标准缩进格式，并对常用 SQL 关键字进行高亮展示，让查询结构、嵌套括号、排序分组和过滤条件一目了然。使用方式很简单：将需要处理的 SQL 粘贴到输入框，点击“格式化 SQL”即可获得可读性更强的排版结果；如果需要放入日志或脚本，也可以使用“压缩为单行”。对于正在寻找在线 SQL 格式化、SQL 美化工具、SQL 关键字高亮、数据库查询语句排版工具的用户，这个页面提供了轻量、快速且无需上传数据的本地化处理体验。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <label for="sqlInput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="inputLabel">粘贴 SQL 语句</label>
+        <textarea id="sqlInput" rows="15" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="inputPlaceholder" placeholder="例如：select u.id,u.name from users u where u.status='active' order by u.id desc;"></textarea>
+
+        <div class="mt-4 grid gap-3 sm:grid-cols-2">
+          <div>
+            <label for="indentSize" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="indentLabel">缩进空格</label>
+            <select id="indentSize" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+              <option value="2" data-i18n="indentTwo">2 个空格</option>
+              <option value="4" data-i18n="indentFour">4 个空格</option>
+            </select>
+          </div>
+          <div>
+            <label for="keywordCase" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="caseLabel">关键字大小写</label>
+            <select id="keywordCase" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+              <option value="upper" data-i18n="caseUpper">大写</option>
+              <option value="lower" data-i18n="caseLower">小写</option>
+              <option value="preserve" data-i18n="casePreserve">保持原样</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="formatBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">格式化</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">填入示例</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+        </div>
+        <p id="inputStatus" class="mt-3 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="readyStatus">准备就绪。输入 SQL 后点击格式化。</p>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+        </div>
+
+        <div class="overflow-hidden rounded-2xl border border-gray-200 bg-slate-50 dark:border-white/10 dark:bg-slate-950/70">
+          <pre class="min-h-[24rem] max-h-[34rem] overflow-auto p-4 text-sm leading-6"><code id="sqlOutput" class="font-mono text-slate-800 dark:text-slate-100" data-i18n="outputEmpty">格式化后的 SQL 将显示在这里。</code></pre>
+        </div>
+
+        <div class="mt-4 grid grid-cols-2 gap-3 text-xs text-slate-500 dark:text-slate-400 sm:grid-cols-4">
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-white/[0.04]">
+            <span class="block font-semibold" data-i18n="statChars">字符</span>
+            <span id="charCount" class="mt-1 block font-mono text-base font-bold text-slate-800 dark:text-slate-200 tabular-nums">0</span>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-white/[0.04]">
+            <span class="block font-semibold" data-i18n="statLines">行数</span>
+            <span id="lineCount" class="mt-1 block font-mono text-base font-bold text-slate-800 dark:text-slate-200 tabular-nums">0</span>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-white/[0.04]">
+            <span class="block font-semibold" data-i18n="statKeywords">关键字</span>
+            <span id="keywordCount" class="mt-1 block font-mono text-base font-bold text-slate-800 dark:text-slate-200 tabular-nums">0</span>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-white/[0.04]">
+            <span class="block font-semibold" data-i18n="statTables">表名</span>
+            <span id="tableCount" class="mt-1 block font-mono text-base font-bold text-slate-800 dark:text-slate-200 tabular-nums">0</span>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
+          <button id="downloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadAction">下载 SQL</button>
+        </div>
+        <p id="outputStatus" class="mt-3 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="outputReady">结果仅保存在当前浏览器内存中。</p>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">SQL 格式化工具是 Micro Tools Matrix 提供的免费在线开发者工具，适合在排查查询语句、整理数据库脚本、编写文档或代码评审前快速统一 SQL 风格。你可以把压缩成一行或缩进混乱的 SELECT、JOIN、WHERE、GROUP BY、ORDER BY 等语句粘贴进来，页面会在浏览器本地处理文本，输出更易阅读的层级排版，并对常见关键字进行高亮。整个过程无需上传、无需登录，也不会把 SQL 内容发送到服务器，适合处理包含表名、字段名或业务条件的敏感片段。工具支持复制结果、下载 .sql 文件、示例填充和清空重置，帮助你用轻量方式完成 SQL 美化与格式化。</article>
   </main>
 
-  <footer class="border-t border-slate-800 px-4 py-6 text-center text-sm text-slate-500">
-    <p>sql-formatter · SQL formatting runs entirely in your browser.</p>
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理的免费开发者工具。</footer>
 
   <script>
-    (() => {
-      "use strict";
-
-      const input = document.getElementById("sqlInput");
-      const output = document.getElementById("sqlOutput");
-      const errorBox = document.getElementById("errorBox");
-      const statusBox = document.getElementById("statusBox");
-      const formatBtn = document.getElementById("formatBtn");
-      const minifyBtn = document.getElementById("minifyBtn");
-      const clearBtn = document.getElementById("clearBtn");
-      const copyBtn = document.getElementById("copyBtn");
-      const sampleBtn = document.getElementById("sampleBtn");
-
-      let plainResult = "";
-
-      const keywords = new Set([
-        "SELECT","FROM","WHERE","AND","OR","NOT","NULL","IS","IN","EXISTS","BETWEEN","LIKE","ILIKE",
-        "JOIN","INNER","LEFT","RIGHT","FULL","OUTER","CROSS","ON","USING","GROUP","BY","ORDER","HAVING",
-        "LIMIT","OFFSET","FETCH","UNION","ALL","DISTINCT","AS","CASE","WHEN","THEN","ELSE","END",
-        "INSERT","INTO","VALUES","UPDATE","SET","DELETE","CREATE","ALTER","DROP","TABLE","VIEW","INDEX",
-        "PRIMARY","KEY","FOREIGN","REFERENCES","DEFAULT","CONSTRAINT","CHECK","UNIQUE","DATABASE",
-        "WITH","RECURSIVE","OVER","PARTITION","ROWS","RANGE","CURRENT","ROW","PRECEDING","FOLLOWING",
-        "ASC","DESC","TRUE","FALSE","CAST","CONVERT","INTERVAL","RETURNING","TOP"
-      ]);
-
-      const clauseKeywords = new Set([
-        "SELECT","FROM","WHERE","GROUP BY","ORDER BY","HAVING","LIMIT","OFFSET","UNION","UNION ALL",
-        "INSERT INTO","VALUES","UPDATE","SET","DELETE","CREATE","ALTER","DROP","WITH","RETURNING"
-      ]);
-
-      const joinStarts = new Set(["JOIN","INNER","LEFT","RIGHT","FULL","CROSS"]);
-
-      function showError(message) {
-        errorBox.textContent = message;
-        errorBox.classList.remove("hidden");
+    const I18N = {
+      zh: {
+        toolName: "SQL 格式化工具",
+        sponsor: "赞赏",
+        buyCoffee: "Buy Me a Coffee",
+        themeAria: "切换主题",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        languageAria: "语言",
+        eyebrow: "浏览器本地处理",
+        h1: "SQL 格式化工具",
+        intro: "在 Micro Tools Matrix 中将混乱的单行 SQL 语句整理为清晰缩进，并在浏览器本地完成关键字高亮，无需上传文本。",
+        localBadge: "本地运行",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        inputLabel: "粘贴 SQL 语句",
+        inputPlaceholder: "例如：select u.id,u.name from users u where u.status='active' order by u.id desc;",
+        indentLabel: "缩进空格",
+        indentTwo: "2 个空格",
+        indentFour: "4 个空格",
+        caseLabel: "关键字大小写",
+        caseUpper: "大写",
+        caseLower: "小写",
+        casePreserve: "保持原样",
+        primaryAction: "格式化",
+        sampleAction: "填入示例",
+        secondaryAction: "清空",
+        readyStatus: "准备就绪。输入 SQL 后点击格式化。",
+        outputTitle: "结果",
+        outputBadge: "输出",
+        outputEmpty: "格式化后的 SQL 将显示在这里。",
+        statChars: "字符",
+        statLines: "行数",
+        statKeywords: "关键字",
+        statTables: "表名",
+        copyAction: "复制结果",
+        downloadAction: "下载 SQL",
+        outputReady: "结果仅保存在当前浏览器内存中。",
+        errorEmpty: "请先输入需要格式化的 SQL 语句。",
+        errorTooShort: "输入内容过短，暂时无法识别为有效 SQL。",
+        formattedStatus: "已完成格式化：{lines} 行，识别到 {keywords} 个关键字。",
+        sampleStatus: "已填入示例 SQL，可直接格式化。",
+        clearedStatus: "已清空输入和结果。",
+        copiedStatus: "结果已复制到剪贴板。",
+        copyError: "复制失败，请手动选择结果文本复制。",
+        noOutput: "请先生成格式化结果。",
+        downloadedStatus: "已生成 SQL 文件下载。",
+        invalidDownload: "没有可下载的格式化结果。",
+        seoArticle: "SQL 格式化工具是 Micro Tools Matrix 提供的免费在线开发者工具，适合在排查查询语句、整理数据库脚本、编写文档或代码评审前快速统一 SQL 风格。你可以把压缩成一行或缩进混乱的 SELECT、JOIN、WHERE、GROUP BY、ORDER BY 等语句粘贴进来，页面会在浏览器本地处理文本，输出更易阅读的层级排版，并对常见关键字进行高亮。整个过程无需上传、无需登录，也不会把 SQL 内容发送到服务器，适合处理包含表名、字段名或业务条件的敏感片段。工具支持复制结果、下载 .sql 文件、示例填充和清空重置，帮助你用轻量方式完成 SQL 美化与格式化。",
+        footer: "Micro Tools Matrix - 浏览器本地处理的免费开发者工具。",
+        docTitle: "SQL 格式化工具 - Micro Tools Matrix 浏览器本地开发者工具",
+        metaDescription: "Micro Tools Matrix 的 SQL 格式化工具可在浏览器本地处理 SQL 语句，支持标准缩进排版、关键字高亮、复制与下载，无需上传。",
+        metaKeywords: "SQL格式化,SQL美化,SQL formatter,SQL高亮,浏览器本地处理,无需上传,Micro Tools Matrix",
+        sampleSql: "select u.id,u.name,u.email,o.order_no,o.total_amount from users u inner join orders o on u.id=o.user_id where u.status='active' and o.created_at>='2024-01-01' group by u.id,u.name,u.email,o.order_no,o.total_amount having sum(o.total_amount)>100 order by o.created_at desc limit 20;"
+      },
+      en: {
+        toolName: "SQL Formatter",
+        sponsor: "Sponsor",
+        buyCoffee: "Buy Me a Coffee",
+        themeAria: "Switch theme",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        languageAria: "Language",
+        eyebrow: "Browser-local processing",
+        h1: "SQL Formatter",
+        intro: "Format messy one-line SQL into readable indentation inside Micro Tools Matrix, with browser-local keyword highlighting and no text upload.",
+        localBadge: "Local",
+        inputTitle: "Input",
+        inputBadge: "INPUT",
+        inputLabel: "Paste SQL statement",
+        inputPlaceholder: "Example: select u.id,u.name from users u where u.status='active' order by u.id desc;",
+        indentLabel: "Indent spaces",
+        indentTwo: "2 spaces",
+        indentFour: "4 spaces",
+        caseLabel: "Keyword case",
+        caseUpper: "Uppercase",
+        caseLower: "Lowercase",
+        casePreserve: "Preserve",
+        primaryAction: "Format",
+        sampleAction: "Load sample",
+        secondaryAction: "Clear",
+        readyStatus: "Ready. Enter SQL and run formatting.",
+        outputTitle: "Output",
+        outputBadge: "OUTPUT",
+        outputEmpty: "Formatted SQL will appear here.",
+        statChars: "Chars",
+        statLines: "Lines",
+        statKeywords: "Keywords",
+        statTables: "Tables",
+        copyAction: "Copy result",
+        downloadAction: "Download SQL",
+        outputReady: "The result stays only in current browser memory.",
+        errorEmpty: "Please enter a SQL statement to format.",
+        errorTooShort: "The input is too short to be recognized as useful SQL.",
+        formattedStatus: "Formatting complete: {lines} lines and {keywords} keywords detected.",
+        sampleStatus: "Sample SQL loaded. You can format it now.",
+        clearedStatus: "Input and output have been cleared.",
+        copiedStatus: "Result copied to clipboard.",
+        copyError: "Copy failed. Please select the result text manually.",
+        noOutput: "Please generate a formatted result first.",
+        downloadedStatus: "SQL file download has been created.",
+        invalidDownload: "There is no formatted result to download.",
+        seoArticle: "This SQL Formatter from Micro Tools Matrix is a free online developer tool for cleaning up database queries before debugging, documentation, code review, or sharing with teammates. Paste a compressed or poorly indented statement, and the page formats common clauses such as SELECT, FROM, JOIN, WHERE, GROUP BY, HAVING, ORDER BY, INSERT, UPDATE, and DELETE into a more readable structure. The tool also highlights SQL keywords so you can scan complex conditions, joins, and nested expressions faster. All browser-local processing happens in memory: your table names, column names, filters, and business logic are not uploaded to a server, and no account is required. You can copy the formatted output, download it as a .sql file, load a realistic sample, or clear the workspace at any time. It is designed as a lightweight Micro Tools Matrix utility for quick SQL beautification when you need a private, reliable, and fast formatting workflow.",
+        footer: "Micro Tools Matrix - free developer tools with browser-local processing.",
+        docTitle: "SQL Formatter - Micro Tools Matrix Browser-Local Developer Tool",
+        metaDescription: "Format and beautify SQL in your browser with Micro Tools Matrix. Standard indentation, keyword highlighting, copy and download actions, with no upload required.",
+        metaKeywords: "SQL formatter,SQL beautifier,SQL highlight,browser-local processing,no upload,free online developer tool,Micro Tools Matrix",
+        sampleSql: "select u.id,u.name,u.email,o.order_no,o.total_amount from users u inner join orders o on u.id=o.user_id where u.status='active' and o.created_at>='2024-01-01' group by u.id,u.name,u.email,o.order_no,o.total_amount having sum(o.total_amount)>100 order by o.created_at desc limit 20;"
       }
+    };
 
-      function hideError() {
-        errorBox.textContent = "";
-        errorBox.classList.add("hidden");
-      }
+    const SQL_KEYWORDS = new Set([
+      "SELECT","FROM","WHERE","AND","OR","NOT","NULL","IS","IN","LIKE","BETWEEN","EXISTS",
+      "JOIN","INNER","LEFT","RIGHT","FULL","OUTER","CROSS","ON","USING","GROUP","BY","HAVING",
+      "ORDER","ASC","DESC","LIMIT","OFFSET","UNION","ALL","DISTINCT","AS","CASE","WHEN","THEN",
+      "ELSE","END","INSERT","INTO","VALUES","UPDATE","SET","DELETE","CREATE","ALTER","DROP",
+      "TABLE","VIEW","INDEX","PRIMARY","KEY","FOREIGN","REFERENCES","DEFAULT","CONSTRAINT",
+      "WITH","RECURSIVE","OVER","PARTITION","WINDOW","RETURNING","COUNT","SUM","AVG","MIN","MAX"
+    ]);
 
-      function showStatus(message) {
-        statusBox.textContent = message;
-        statusBox.classList.remove("hidden");
-        window.clearTimeout(showStatus.timer);
-        showStatus.timer = window.setTimeout(() => statusBox.classList.add("hidden"), 2200);
-      }
+    const BREAK_BEFORE = [
+      "SELECT", "FROM", "WHERE", "GROUP BY", "ORDER BY", "HAVING", "LIMIT", "OFFSET", "UNION",
+      "UNION ALL", "INNER JOIN", "LEFT JOIN", "RIGHT JOIN", "FULL JOIN", "FULL OUTER JOIN",
+      "LEFT OUTER JOIN", "RIGHT OUTER JOIN", "CROSS JOIN", "JOIN", "ON", "INSERT INTO",
+      "VALUES", "UPDATE", "SET", "DELETE FROM", "WITH", "RETURNING"
+    ];
 
-      function escapeHtml(str) {
-        return String(str)
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#39;");
-      }
+    let currentLanguage = "zh";
+    let formattedPlainText = "";
+    let statusKeyInput = "readyStatus";
+    let statusKeyOutput = "outputReady";
 
-      function tokenize(sql) {
-        const tokens = [];
-        let i = 0;
-        const s = String(sql);
-        while (i < s.length) {
-          const ch = s[i];
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      const saved = localStorage.getItem("microToolsLanguage");
+      return saved === "en" ? "en" : "zh";
+    }
 
-          if (/\s/.test(ch)) {
-            i++;
-            continue;
-          }
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
 
-          if (ch === "-" && s[i + 1] === "-") {
-            let j = i + 2;
-            while (j < s.length && s[j] !== "\n") j++;
-            tokens.push({ type: "comment", value: s.slice(i, j) });
-            i = j;
-            continue;
-          }
-
-          if (ch === "/" && s[i + 1] === "*") {
-            let j = i + 2;
-            while (j < s.length - 1 && !(s[j] === "*" && s[j + 1] === "/")) j++;
-            j = Math.min(j + 2, s.length);
-            tokens.push({ type: "comment", value: s.slice(i, j) });
-            i = j;
-            continue;
-          }
-
-          if (ch === "'" || ch === '"' || ch === "`") {
-            const quote = ch;
-            let j = i + 1;
-            while (j < s.length) {
-              if (s[j] === "\\" && j + 1 < s.length) {
-                j += 2;
-                continue;
-              }
-              if (s[j] === quote) {
-                if (quote === "'" && s[j + 1] === "'") {
-                  j += 2;
-                  continue;
-                }
-                j++;
-                break;
-              }
-              j++;
-            }
-            tokens.push({ type: "string", value: s.slice(i, j) });
-            i = j;
-            continue;
-          }
-
-          if (/[(),;]/.test(ch)) {
-            tokens.push({ type: "punct", value: ch });
-            i++;
-            continue;
-          }
-
-          if (/[<>=!+\-*\/%|&^:.]/.test(ch)) {
-            let j = i + 1;
-            while (j < s.length && /[<>=!+\-*\/%|&^:.]/.test(s[j])) j++;
-            tokens.push({ type: "operator", value: s.slice(i, j) });
-            i = j;
-            continue;
-          }
-
-          let j = i;
-          while (j < s.length && !/\s/.test(s[j]) && !/[(),;'"`<>=!+\-*\/%|&^:.]/.test(s[j])) j++;
-          const raw = s.slice(i, j);
-          const upper = raw.toUpperCase();
-          tokens.push({ type: keywords.has(upper) ? "keyword" : "word", value: raw });
-          i = j;
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.textContent = dict[key];
         }
-        return tokens;
-      }
+      });
 
-      function normalizeTokenValue(token) {
-        return token.type === "keyword" ? token.value.toUpperCase() : token.value;
-      }
-
-      function combinedKeyword(tokens, index) {
-        const a = tokens[index] ? normalizeTokenValue(tokens[index]).toUpperCase() : "";
-        const b = tokens[index + 1] ? normalizeTokenValue(tokens[index + 1]).toUpperCase() : "";
-        if ((a === "GROUP" || a === "ORDER") && b === "BY") return a + " BY";
-        if (a === "UNION" && b === "ALL") return "UNION ALL";
-        if (a === "INSERT" && b === "INTO") return "INSERT INTO";
-        return a;
-      }
-
-      function formatSql(sql) {
-        const trimmed = String(sql || "").trim();
-        if (!trimmed) throw new Error("请输入需要格式化的 SQL 语句。");
-        if (trimmed.length > 200000) throw new Error("输入内容过长，请控制在 200,000 个字符以内。");
-
-        const tokens = tokenize(trimmed);
-        if (!tokens.length) throw new Error("未识别到有效的 SQL 内容。");
-
-        let lines = [""];
-        let indent = 0;
-        const unit = "  ";
-
-        const current = () => lines[lines.length - 1];
-        const setCurrent = (v) => { lines[lines.length - 1] = v; };
-        const newLine = (level = indent) => {
-          const last = lines[lines.length - 1];
-          if (last.trim() !== "") lines.push(unit.repeat(Math.max(0, level)));
-          else setCurrent(unit.repeat(Math.max(0, level)));
-        };
-        const append = (text) => {
-          if (!text) return;
-          let line = current();
-          if (line.trim() === "") {
-            setCurrent(line + text);
-            return;
-          }
-          if (/^[,.;)]$/.test(text)) {
-            setCurrent(line.replace(/\s+$/g, "") + text);
-          } else if (text === "(") {
-            setCurrent(line.replace(/\s+$/g, "") + " (");
-          } else if (/^(=|<>|!=|<=|>=|<|>|\+|-|\*|\/|%|\|\||&&)$/i.test(text)) {
-            setCurrent(line.replace(/\s+$/g, "") + " " + text + " ");
-          } else {
-            setCurrent(line.replace(/\s+$/g, "") + " " + text);
-          }
-        };
-
-        for (let i = 0; i < tokens.length; i++) {
-          const token = tokens[i];
-          let value = normalizeTokenValue(token);
-          const upper = value.toUpperCase();
-          const combo = combinedKeyword(tokens, i);
-
-          if (combo === "GROUP BY" || combo === "ORDER BY" || combo === "UNION ALL" || combo === "INSERT INTO") {
-            if (clauseKeywords.has(combo)) newLine(combo.startsWith("UNION") ? 0 : indent);
-            append(combo);
-            i++;
-            continue;
-          }
-
-          if (token.type === "comment") {
-            newLine(indent);
-            append(value);
-            newLine(indent);
-            continue;
-          }
-
-          if (value === ";") {
-            append(";");
-            newLine(0);
-            continue;
-          }
-
-          if (value === "(") {
-            append("(");
-            indent++;
-            const next = tokens[i + 1] ? normalizeTokenValue(tokens[i + 1]).toUpperCase() : "";
-            if (["SELECT", "WITH", "INSERT", "UPDATE", "DELETE"].includes(next)) newLine(indent);
-            continue;
-          }
-
-          if (value === ")") {
-            indent = Math.max(0, indent - 1);
-            newLine(indent);
-            append(")");
-            continue;
-          }
-
-          if (value === ",") {
-            append(",");
-            newLine(indent);
-            continue;
-          }
-
-          if (clauseKeywords.has(upper)) {
-            newLine(upper === "UNION" ? 0 : indent);
-            append(upper);
-            continue;
-          }
-
-          if (joinStarts.has(upper)) {
-            newLine(indent);
-            append(upper);
-            continue;
-          }
-
-          if (upper === "ON" || upper === "USING") {
-            newLine(indent + 1);
-            append(upper);
-            continue;
-          }
-
-          if (upper === "AND" || upper === "OR") {
-            newLine(indent + 1);
-            append(upper);
-            continue;
-          }
-
-          if (upper === "WHEN" || upper === "ELSE") {
-            newLine(indent + 1);
-            append(upper);
-            continue;
-          }
-
-          if (upper === "THEN") {
-            append(upper);
-            continue;
-          }
-
-          if (upper === "END") {
-            newLine(indent);
-            append(upper);
-            continue;
-          }
-
-          append(value);
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("placeholder", dict[key]);
         }
+      });
 
-        return lines
-          .map(line => line.replace(/[ \t]+$/g, ""))
-          .filter((line, idx, arr) => line.trim() !== "" || (arr[idx - 1] && arr[idx - 1].trim() !== ""))
-          .join("\n")
-          .trim();
-      }
-
-      function minifySql(sql) {
-        const trimmed = String(sql || "").trim();
-        if (!trimmed) throw new Error("请输入需要压缩的 SQL 语句。");
-        if (trimmed.length > 200000) throw new Error("输入内容过长，请控制在 200,000 个字符以内。");
-        const tokens = tokenize(trimmed);
-        let result = "";
-        for (const token of tokens) {
-          const value = normalizeTokenValue(token);
-          if (!result) {
-            result = value;
-          } else if (/^[,.;)]$/.test(value)) {
-            result = result.replace(/\s+$/g, "") + value;
-          } else if (value === "(") {
-            result = result.replace(/\s+$/g, "") + "(";
-          } else if (/^(=|<>|!=|<=|>=|<|>|\+|-|\*|\/|%|\|\||&&)$/i.test(value)) {
-            result = result.replace(/\s+$/g, "") + " " + value + " ";
-          } else {
-            result = result.replace(/\s+$/g, "") + " " + value;
-          }
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("title", dict[key]);
         }
-        return result.replace(/\s+/g, " ").trim();
-      }
+      });
 
-      function highlightSql(sql) {
-        const tokens = tokenize(sql);
-        let html = "";
-        for (const token of tokens) {
-          const value = normalizeTokenValue(token);
-          const safe = escapeHtml(value);
-          if (token.type === "keyword") {
-            html += `<span class="font-bold text-cyan-300">${safe}</span> `;
-          } else if (token.type === "string") {
-            html += `<span class="text-emerald-300">${safe}</span> `;
-          } else if (token.type === "comment") {
-            html += `<span class="italic text-slate-500">${safe}</span>\n`;
-          } else if (token.type === "operator") {
-            html += `<span class="text-fuchsia-300">${safe}</span> `;
-          } else if (token.value === "," || token.value === ";" || token.value === "(" || token.value === ")") {
-            html = html.replace(/[ ]$/g, "") + `<span class="text-slate-400">${safe}</span>`;
-            if (token.value === "," || token.value === ";") html += " ";
-          } else {
-            html += `<span class="text-slate-900 dark:text-slate-100">${safe}</span> `;
-          }
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("aria-label", dict[key]);
         }
-        return html;
+      });
+
+      document.title = dict.docTitle;
+      const metaDescription = document.querySelector('meta[name="description"]');
+      const metaKeywords = document.querySelector('meta[name="keywords"]');
+      if (metaDescription) metaDescription.setAttribute("content", dict.metaDescription);
+      if (metaKeywords) metaKeywords.setAttribute("content", dict.metaKeywords);
+
+      const themeLabel = document.querySelector("[data-theme-label]");
+      if (themeLabel) themeLabel.textContent = dict.themeSystem;
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        if (currentLanguage === "zh") {
+          zhBtn.className += " bg-cyan-400 text-slate-950";
+          enBtn.className += " text-slate-600 dark:text-slate-400";
+          zhBtn.setAttribute("aria-pressed", "true");
+          enBtn.setAttribute("aria-pressed", "false");
+        } else {
+          enBtn.className += " bg-cyan-400 text-slate-950";
+          zhBtn.className += " text-slate-600 dark:text-slate-400";
+          enBtn.setAttribute("aria-pressed", "true");
+          zhBtn.setAttribute("aria-pressed", "false");
+        }
       }
 
-      function renderResult(text) {
-        plainResult = text;
-        output.innerHTML = highlightSql(text)
-          .replace(/ \n/g, "\n")
-          .replace(/\n/g, "\n");
+      if (!formattedPlainText) {
+        const output = document.getElementById("sqlOutput");
+        if (output) output.textContent = dict.outputEmpty;
       }
+      setInputStatus(statusKeyInput);
+      setOutputStatus(statusKeyOutput);
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
 
-      function withButtonFeedback(button, label, fn) {
-        const original = button.textContent;
-        button.disabled = true;
-        button.classList.add("opacity-75");
-        button.textContent = label;
-        window.setTimeout(() => {
-          try {
-            fn();
-          } finally {
-            button.disabled = false;
-            button.classList.remove("opacity-75");
-            button.textContent = original;
-          }
-        }, 80);
-      }
+    function setLanguage(lang) {
+      const next = lang === "en" ? "en" : "zh";
+      localStorage.setItem("microToolsLanguage", next);
+      applyLanguage(next);
+    }
 
-      formatBtn.addEventListener("click", () => {
-        withButtonFeedback(formatBtn, "处理中...", () => {
-          try {
-            hideError();
-            const formatted = formatSql(input.value);
-            renderResult(formatted);
-            showStatus("SQL 格式化完成。");
-          } catch (err) {
-            showError(err && err.message ? err.message : "格式化失败，请检查输入内容。");
-          }
+    function t(key, vars) {
+      let value = I18N[currentLanguage][key] || I18N.zh[key] || "";
+      if (vars) {
+        Object.keys(vars).forEach((name) => {
+          value = value.replaceAll("{" + name + "}", String(vars[name]));
         });
-      });
+      }
+      return value;
+    }
 
-      minifyBtn.addEventListener("click", () => {
-        withButtonFeedback(minifyBtn, "处理中...", () => {
-          try {
-            hideError();
-            const minified = minifySql(input.value);
-            renderResult(minified);
-            showStatus("SQL 已压缩为单行。");
-          } catch (err) {
-            showError(err && err.message ? err.message : "压缩失败，请检查输入内容。");
-          }
-        });
-      });
+    function setInputStatus(key, vars) {
+      statusKeyInput = key;
+      const node = document.getElementById("inputStatus");
+      if (node) node.textContent = t(key, vars);
+    }
 
-      clearBtn.addEventListener("click", () => {
-        input.value = "";
-        plainResult = "";
-        output.innerHTML = '<span class="text-slate-500">格式化后的 SQL 将显示在这里。</span>';
-        hideError();
-        showStatus("内容已清空。");
-        input.focus();
-      });
+    function setOutputStatus(key, vars) {
+      statusKeyOutput = key;
+      const node = document.getElementById("outputStatus");
+      if (node) node.textContent = t(key, vars);
+    }
 
-      sampleBtn.addEventListener("click", () => {
-        input.value = "select u.id,u.name,u.email,count(o.id) as order_count,sum(o.amount) total_amount from users u left join orders o on u.id=o.user_id where u.status='active' and o.created_at between '2024-01-01' and '2024-12-31' group by u.id,u.name,u.email having count(o.id)>0 order by total_amount desc limit 20;";
-        hideError();
-        showStatus("示例 SQL 已填入。");
-        input.focus();
-      });
+    function escapeHtml(text) {
+      return text.replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[char]);
+    }
 
-      copyBtn.addEventListener("click", async () => {
-        try {
-          if (!plainResult.trim()) throw new Error("当前没有可复制的格式化结果。");
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(plainResult);
-          } else {
-            const temp = document.createElement("textarea");
-            temp.value = plainResult;
-            temp.setAttribute("readonly", "readonly");
-            temp.style.position = "fixed";
-            temp.style.left = "-9999px";
-            document.body.appendChild(temp);
-            temp.select();
-            const ok = document.execCommand("copy");
-            document.body.removeChild(temp);
-            if (!ok) throw new Error("浏览器拒绝复制，请手动选择结果文本复制。");
-          }
-          showStatus("已复制到剪贴板。");
-        } catch (err) {
-          showError(err && err.message ? err.message : "复制失败，请手动复制。");
+    function normalizeKeyword(word, mode) {
+      if (!SQL_KEYWORDS.has(word.toUpperCase())) return word;
+      if (mode === "lower") return word.toLowerCase();
+      if (mode === "preserve") return word;
+      return word.toUpperCase();
+    }
+
+    function protectLiterals(sql) {
+      const literals = [];
+      const protectedSql = sql.replace(/('(?:''|[^'])*'|"(?:\\"|[^"])*"|`(?:``|[^`])*`|--[^\n\r]*|\/\*[\s\S]*?\*\/)/g, (match) => {
+        const token = "__SQL_LITERAL_" + literals.length + "__";
+        literals.push(match);
+        return token;
+      });
+      return { protectedSql, literals };
+    }
+
+    function restoreLiterals(sql, literals) {
+      return sql.replace(/__SQL_LITERAL_(\d+)__/g, (_, index) => literals[Number(index)] || "");
+    }
+
+    function compactWhitespace(sql) {
+      return sql.replace(/\s+/g, " ").trim();
+    }
+
+    function addBreaks(sql) {
+      let result = " " + sql + " ";
+      const ordered = BREAK_BEFORE.slice().sort((a, b) => b.length - a.length);
+      ordered.forEach((keyword) => {
+        const pattern = new RegExp("\\s+(" + keyword.replace(/\s+/g, "\\s+") + ")\\b", "gi");
+        result = result.replace(pattern, "\n$1");
+      });
+      result = result.replace(/\s*,\s*/g, ",\n");
+      result = result.replace(/\s*;\s*/g, ";\n");
+      return result.trim();
+    }
+
+    function formatSql(sql, indentSize, keywordCase) {
+      const { protectedSql, literals } = protectLiterals(sql);
+      let working = compactWhitespace(protectedSql);
+
+      working = working.replace(/\b(group)\s+(by)\b/gi, "GROUP BY");
+      working = working.replace(/\b(order)\s+(by)\b/gi, "ORDER BY");
+      working = working.replace(/\b(union)\s+(all)\b/gi, "UNION ALL");
+      working = working.replace(/\b(inner|left|right|full|cross)\s+(outer\s+)?(join)\b/gi, (match) => match.toUpperCase());
+      working = working.replace(/\b(insert)\s+(into)\b/gi, "INSERT INTO");
+      working = working.replace(/\b(delete)\s+(from)\b/gi, "DELETE FROM");
+
+      working = addBreaks(working);
+
+      const lines = working.split("\n").map((line) => line.trim()).filter(Boolean);
+      let level = 0;
+      const indent = " ".repeat(indentSize);
+      const formatted = [];
+
+      lines.forEach((line) => {
+        let current = line.replace(/\s+/g, " ");
+        current = current.replace(/\b[A-Za-z_][A-Za-z0-9_]*\b/g, (word) => normalizeKeyword(word, keywordCase));
+
+        const closes = (current.match(/\)/g) || []).length;
+        const opens = (current.match(/\(/g) || []).length;
+        if (/^\)/.test(current)) level = Math.max(0, level - 1);
+
+        const upper = current.toUpperCase();
+        let lineIndent = level;
+        if (/^(FROM|WHERE|GROUP BY|ORDER BY|HAVING|LIMIT|OFFSET|UNION|UNION ALL|RETURNING)\b/.test(upper)) {
+          lineIndent = Math.max(0, level);
         }
+        if (/^(AND|OR|ON)\b/.test(upper)) {
+          lineIndent = level + 1;
+        }
+        if (/^(INNER JOIN|LEFT JOIN|RIGHT JOIN|FULL JOIN|FULL OUTER JOIN|LEFT OUTER JOIN|RIGHT OUTER JOIN|CROSS JOIN|JOIN)\b/.test(upper)) {
+          lineIndent = level + 1;
+        }
+        if (current === "," || current === ";") lineIndent = Math.max(0, level);
+
+        formatted.push(indent.repeat(Math.max(0, lineIndent)) + current);
+
+        level += opens - closes;
+        level = Math.max(0, Math.min(level, 8));
       });
 
-      input.addEventListener("input", () => {
-        if (errorBox && !errorBox.classList.contains("hidden")) hideError();
-      });
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      return restoreLiterals(formatted.join("\n"), literals).replace(/\n{3,}/g, "\n\n").trim();
+    }
+
+    function highlightSql(sql) {
+      const escaped = escapeHtml(sql);
+      return escaped.replace(/(--[^\n]*|\/\*[\s\S]*?\*\/)|('(?:''|[^'])*'|&quot;(?:\\&quot;|[^&])*?&quot;|`(?:``|[^`])*`)|\b(\d+(?:\.\d+)?)\b|\b([A-Za-z_][A-Za-z0-9_]*)\b/g, (match, comment, string, number, word) => {
+        if (comment) return '<span class="sql-comment">' + comment + '</span>';
+        if (string) return '<span class="sql-string">' + string + '</span>';
+        if (number) return '<span class="sql-number">' + number + '</span>';
+        if (word && SQL_KEYWORDS.has(word.toUpperCase())) return '<span class="sql-keyword">' + word + '</span>';
+        return match;
       });
     }
+
+    function countKeywords(sql) {
+      const matches = sql.match(/\b[A-Za-z_][A-Za-z0-9_]*\b/g) || [];
+      return matches.filter((word) => SQL_KEYWORDS.has(word.toUpperCase())).length;
+    }
+
+    function countTables(sql) {
+      const tables = new Set();
+      const regex = /\b(?:FROM|JOIN|UPDATE|INTO)\s+([A-Za-z_][A-Za-z0-9_$]*(?:\.[A-Za-z_][A-Za-z0-9_$]*)?)/gi;
+      let match;
+      while ((match = regex.exec(sql)) !== null) {
+        tables.add(match[1]);
+      }
+      return tables.size;
+    }
+
+    function updateStats(text) {
+      document.getElementById("charCount").textContent = text ? String(text.length) : "0";
+      document.getElementById("lineCount").textContent = text ? String(text.split(/\r?\n/).length) : "0";
+      document.getElementById("keywordCount").textContent = text ? String(countKeywords(text)) : "0";
+      document.getElementById("tableCount").textContent = text ? String(countTables(text)) : "0";
+    }
+
+    function runFormat() {
+      const input = document.getElementById("sqlInput").value;
+      const trimmed = input.trim();
+      if (!trimmed) {
+        formattedPlainText = "";
+        document.getElementById("sqlOutput").textContent = t("outputEmpty");
+        updateStats("");
+        setInputStatus("errorEmpty");
+        setOutputStatus("outputReady");
+        return;
+      }
+      if (trimmed.length < 6 || !/[A-Za-z]/.test(trimmed)) {
+        formattedPlainText = "";
+        document.getElementById("sqlOutput").textContent = t("outputEmpty");
+        updateStats("");
+        setInputStatus("errorTooShort");
+        setOutputStatus("outputReady");
+        return;
+      }
+
+      const indentSize = Number(document.getElementById("indentSize").value) || 2;
+      const keywordCase = document.getElementById("keywordCase").value;
+      formattedPlainText = formatSql(trimmed, indentSize, keywordCase);
+      document.getElementById("sqlOutput").innerHTML = highlightSql(formattedPlainText);
+      updateStats(formattedPlainText);
+
+      const lines = formattedPlainText.split(/\r?\n/).length;
+      const keywords = countKeywords(formattedPlainText);
+      setInputStatus("formattedStatus", { lines, keywords });
+      setOutputStatus("formattedStatus", { lines, keywords });
+    }
+
+    async function copyResult() {
+      if (!formattedPlainText) {
+        setOutputStatus("noOutput");
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(formattedPlainText);
+        setOutputStatus("copiedStatus");
+      } catch (error) {
+        setOutputStatus("copyError");
+      }
+    }
+
+    function downloadResult() {
+      if (!formattedPlainText) {
+        setOutputStatus("invalidDownload");
+        return;
+      }
+      const blob = new Blob([formattedPlainText], { type: "text/sql;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = "formatted.sql";
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      URL.revokeObjectURL(url);
+      setOutputStatus("downloadedStatus");
+    }
+
+    function loadSample() {
+      document.getElementById("sqlInput").value = t("sampleSql");
+      setInputStatus("sampleStatus");
+    }
+
+    function clearAll() {
+      document.getElementById("sqlInput").value = "";
+      formattedPlainText = "";
+      document.getElementById("sqlOutput").textContent = t("outputEmpty");
+      updateStats("");
+      setInputStatus("clearedStatus");
+      setOutputStatus("outputReady");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+      document.getElementById("formatBtn")?.addEventListener("click", runFormat);
+      document.getElementById("sampleBtn")?.addEventListener("click", loadSample);
+      document.getElementById("clearBtn")?.addEventListener("click", clearAll);
+      document.getElementById("copyBtn")?.addEventListener("click", copyResult);
+      document.getElementById("downloadBtn")?.addEventListener("click", downloadResult);
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="./sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

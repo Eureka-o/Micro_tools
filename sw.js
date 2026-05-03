@@ -1,10 +1,12 @@
-const CACHE_NAME = "micro-tools-cache-v20260502-nav-theme-50";
+const CACHE_NAME = "micro-tools-cache-v20260503-sponsor-style-50";
 const CACHE_ASSETS = [
   "/",
   "/index.html",
   "/en/",
   "/en/index.html",
   "/manifest.json",
+  "/style.css",
+  "/sponsor.js",
   "/theme-init.js",
   "/theme-toggle.js",
   "/en/theme-init.js",

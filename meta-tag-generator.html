@@ -3,567 +3,476 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>meta-tag-generator｜SEO Meta 标签生成器</title>
-  <meta name="description" content="SEO Meta 标签生成器。填入网站标题、描述、关键词和作者，一键生成标准的 `&lt;head&gt;` 区域 Meta 代码。">
-  <meta name="keywords" content="meta-tag-generator,SEO Meta标签生成器,Meta代码生成,网站标题描述关键词,head标签生成工具">
-  <meta name="author" content="meta-tag-generator">
-  <link rel="icon" type="image/png" href="./assets/logo.png">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            tech: {
-              50: '#eef8ff',
-              100: '#d9efff',
-              500: '#0ea5e9',
-              600: '#0284c7',
-              700: '#0369a1',
-              900: '#0b1220'
-            }
-          },
-          boxShadow: {
-            glow: '0 0 35px rgba(14,165,233,.25)'
-          }
-        }
-      }
-    }
-  </script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
+  <title>SEO Meta 标签生成器 - Micro Tools Matrix 本地工具箱</title>
+  <meta name="description" content="Micro Tools Matrix 的 SEO Meta 标签生成器可在浏览器本地处理标题、描述、关键词和作者，一键生成标准 head 区域 Meta 代码，无需上传。">
+  <meta name="keywords" content="SEO Meta 标签生成器, Meta 代码, head 标签, 浏览器本地处理, 无需上传, Micro Tools Matrix">
   <link rel="canonical" href="https://mymicrotools.xyz/meta-tag-generator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/meta-tag-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/meta-tag-generator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/meta-tag-generator.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/meta-tag-generator.html">
-  <meta property="og:title" content="meta-tag-generator｜SEO Meta 标签生成器">
-  <meta property="og:description" content="SEO Meta 标签生成器。填入网站标题、描述、关键词和作者，一键生成标准的 `&lt;head&gt;` 区域 Meta 代码。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="meta-tag-generator｜SEO Meta 标签生成器">
-  <meta name="twitter:description" content="SEO Meta 标签生成器。填入网站标题、描述、关键词和作者，一键生成标准的 `&lt;head&gt;` 区域 Meta 代码。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "SEO Meta Tag Generator",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A browser-local SEO meta tag generator for creating standard HTML head meta code.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "category": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="切换主题" title="切换主题">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">SEO Meta 标签生成器</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="./meta-tag-generator.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
-        <a href="./en/meta-tag-generator.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="absolute inset-0 -z-10 overflow-hidden">
-    <div class="absolute left-1/2 top-[-12rem] h-[30rem] w-[30rem] -translate-x-1/2 rounded-full bg-sky-500/20 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 h-[24rem] w-[24rem] rounded-full bg-cyan-400/10 blur-3xl"></div>
-  </div>
-
-  <header class="border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 backdrop-blur">
-    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p class="mb-3 inline-flex rounded-full border border-sky-400/30 bg-sky-400/10 px-3 py-1 text-sm font-medium text-sky-200">
-            在线 SEO 工具 · 零安装 · 即时生成
-          </p>
-          <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">SEO Meta 标签生成器</h1>
-          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            填入网站标题、描述、关键词和作者，一键生成标准的 <code class="rounded bg-white dark:bg-white/10 px-1.5 py-0.5 text-sky-200">&lt;head&gt;</code> 区域 Meta 代码。
-          </p>
-        </div>
-        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 text-sm text-slate-700 dark:text-slate-300 shadow-glow">
-          <div class="font-semibold text-gray-900 dark:text-white">生成建议</div>
-          <div class="mt-1">标题 ≤ 60 字符，描述 ≤ 160 字符</div>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
         </div>
       </div>
-    </div>
+    </nav>
   </header>
 
-  <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-2" aria-label="SEO Meta 标签生成器">
-      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5 shadow-2xl backdrop-blur sm:p-7">
-        <div class="mb-6 flex items-center justify-between gap-4">
-          <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输入信息</h2>
-            <p class="mt-1 text-sm text-slate-400">请填写基础 SEO 信息，系统会自动进行格式校验。</p>
-          </div>
-          <span class="rounded-full bg-sky-500/15 px-3 py-1 text-xs font-semibold text-sky-200">INPUT</span>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">SEO Meta 标签生成器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">填写网站标题、描述、关键词和作者，在浏览器内生成标准 head 区域 Meta 代码，无需上传文本。</p>
         </div>
-
-        <div id="errorBox" class="mb-5 hidden rounded-2xl border border-red-400/40 bg-red-500/15 px-4 py-3 text-sm text-red-100" role="alert"></div>
-
-        <form id="metaForm" class="space-y-5" novalidate>
-          <div>
-            <label for="siteTitle" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">网站标题 <span class="text-red-300">*</span></label>
-            <input id="siteTitle" name="siteTitle" type="text" maxlength="120" autocomplete="off" placeholder="例如：品牌官网｜专业数字化解决方案"
-              class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-3 text-gray-900 dark:text-white outline-none transition placeholder:text-slate-500 focus:border-sky-400 focus:ring-4 focus:ring-sky-400/15">
-            <div class="mt-2 flex justify-between text-xs text-slate-400">
-              <span>建议 10-60 字符</span>
-              <span><b id="titleCount">0</b>/120</span>
-            </div>
-          </div>
-
-          <div>
-            <label for="siteDescription" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">网站描述 <span class="text-red-300">*</span></label>
-            <textarea id="siteDescription" name="siteDescription" rows="4" maxlength="320" placeholder="例如：提供高性能网站建设、SEO 优化与企业数字化增长服务，帮助品牌提升线上转化。"
-              class="w-full resize-none rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-3 text-gray-900 dark:text-white outline-none transition placeholder:text-slate-500 focus:border-sky-400 focus:ring-4 focus:ring-sky-400/15"></textarea>
-            <div class="mt-2 flex justify-between text-xs text-slate-400">
-              <span>建议 50-160 字符</span>
-              <span><b id="descCount">0</b>/320</span>
-            </div>
-          </div>
-
-          <div>
-            <label for="siteKeywords" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">关键词 <span class="text-red-300">*</span></label>
-            <input id="siteKeywords" name="siteKeywords" type="text" maxlength="300" autocomplete="off" placeholder="例如：SEO优化,网站建设,数字营销,企业官网"
-              class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-3 text-gray-900 dark:text-white outline-none transition placeholder:text-slate-500 focus:border-sky-400 focus:ring-4 focus:ring-sky-400/15">
-            <p class="mt-2 text-xs text-slate-400">请使用英文逗号或中文逗号分隔，最多 20 个关键词。</p>
-          </div>
-
-          <div>
-            <label for="siteAuthor" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">作者 / 机构 <span class="text-red-300">*</span></label>
-            <input id="siteAuthor" name="siteAuthor" type="text" maxlength="80" autocomplete="off" placeholder="例如：Acme Studio"
-              class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-3 text-gray-900 dark:text-white outline-none transition placeholder:text-slate-500 focus:border-sky-400 focus:ring-4 focus:ring-sky-400/15">
-          </div>
-
-          <div>
-            <label for="siteUrl" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">规范网址 Canonical URL <span class="text-slate-500">（可选）</span></label>
-            <input id="siteUrl" name="siteUrl" type="url" maxlength="300" autocomplete="off" placeholder="例如：https://www.example.com/"
-              class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-3 text-gray-900 dark:text-white outline-none transition placeholder:text-slate-500 focus:border-sky-400 focus:ring-4 focus:ring-sky-400/15">
-          </div>
-
-          <div class="grid gap-3 sm:grid-cols-2">
-            <button id="generateBtn" type="submit"
-              class="rounded-2xl bg-sky-500 px-5 py-3 font-bold text-gray-900 dark:text-white shadow-lg shadow-sky-500/20 transition hover:bg-sky-400 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-sky-400/30">
-              一键生成 Meta 代码
-            </button>
-            <button id="resetBtn" type="button"
-              class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-3 font-bold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-white/10">
-              清空内容
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <div class="rounded-3xl border border-sky-300/20 bg-slate-100 dark:bg-slate-900 p-5 shadow-glow sm:p-7">
-        <div class="mb-6 flex items-center justify-between gap-4">
-          <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输出代码</h2>
-            <p class="mt-1 text-sm text-slate-400">复制后粘贴到网页 HTML 的 <code class="text-sky-200">&lt;head&gt;</code> 区域。</p>
-          </div>
-          <span class="rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-semibold text-emerald-200">OUTPUT</span>
-        </div>
-
-        <div id="successBox" class="mb-5 hidden rounded-2xl border border-emerald-400/40 bg-emerald-500/15 px-4 py-3 text-sm text-emerald-100" role="status"></div>
-
-        <textarea id="outputCode" rows="18" readonly spellcheck="false"
-          class="min-h-[420px] w-full resize-none rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950 px-4 py-4 font-mono text-sm leading-6 text-sky-100 outline-none focus:border-sky-400 focus:ring-4 focus:ring-sky-400/15"
-          placeholder="生成后的 Meta 标签代码将显示在这里。"></textarea>
-
-        <div class="mt-4 grid gap-3 sm:grid-cols-2">
-          <button id="copyBtn" type="button"
-            class="rounded-2xl bg-emerald-500 px-5 py-3 font-bold text-gray-900 dark:text-white shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-400 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
-            disabled>
-            复制代码
-          </button>
-          <button id="downloadBtn" type="button"
-            class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-3 font-bold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
-            disabled>
-            下载 head-meta.html
-          </button>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 SEO Meta 标签生成器</h2>
-      <p>
-        meta-tag-generator 是一款面向站长、前端开发者和内容运营人员的在线 SEO Meta 标签生成器，专注解决手写 head 区域代码容易遗漏、格式不统一、字符转义不安全等痛点。用户只需输入网站标题、页面描述、关键词和作者信息，即可快速生成包含 title、description、keywords、author、robots、Open Graph 与 Twitter Card 的标准 Meta 代码。对于新站上线、落地页制作、企业官网优化和博客文章发布，本工具都能帮助你提升基础搜索引擎可读性，减少重复配置时间。使用方法非常简单：在左侧表单填写符合 SEO 建议长度的内容，点击“一键生成 Meta 代码”，再将右侧结果复制到 HTML 文档的 head 标签中即可。通过规范的网站标题描述关键词生成流程，可以让页面在搜索结果和社交分享中展示得更清晰、更专业。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入信息</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <div class="space-y-4">
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="siteTitleLabel">网站标题</span>
+            <input id="siteTitle" type="text" maxlength="120" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="siteTitlePlaceholder" placeholder="例如：Micro Tools Matrix - 免费本地开发工具">
+          </label>
+
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="descriptionLabel">网站描述</span>
+            <textarea id="siteDescription" rows="4" maxlength="320" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="descriptionPlaceholder" placeholder="简洁说明页面内容，建议 120 到 160 个字符。"></textarea>
+            <span id="descriptionCount" class="mt-1 block text-xs text-slate-500 dark:text-slate-500">0 / 320</span>
+          </label>
+
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="keywordsLabel">关键词</span>
+            <input id="siteKeywords" type="text" maxlength="220" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="keywordsPlaceholder" placeholder="例如：SEO, Meta 标签, 开发工具">
+          </label>
+
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="authorLabel">作者</span>
+            <input id="siteAuthor" type="text" maxlength="120" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="authorPlaceholder" placeholder="例如：Micro Tools Matrix">
+          </label>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="generateBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">生成代码</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">填入示例</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+        </div>
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="readyStatus">填写内容后生成 Meta 代码。</p>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">生成结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+        </div>
+
+        <label class="block">
+          <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="codeLabel">head 区域代码</span>
+          <textarea id="metaOutput" rows="16" readonly class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-xs leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600 sm:text-sm" data-i18n-placeholder="outputPlaceholder" placeholder="生成后的 Meta 代码会显示在这里。"></textarea>
+        </label>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制代码</button>
+          <button id="downloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadAction">下载 HTML</button>
+        </div>
+
+        <div class="mt-5 rounded-2xl border border-gray-200 bg-slate-50 p-4 text-sm leading-7 text-slate-600 dark:border-white/10 dark:bg-slate-950/50 dark:text-slate-400">
+          <p class="font-semibold text-slate-800 dark:text-slate-200" data-i18n="tipsTitle">使用提示</p>
+          <p class="mt-1" data-i18n="tipsBody">将生成的代码粘贴到 HTML 文档的 head 区域，并根据页面实际内容调整标题和描述长度。</p>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">SEO Meta 标签生成器是 Micro Tools Matrix 提供的免费在线开发工具，适合快速为落地页、博客、产品页和静态站点准备标准 head 区域代码。你只需要填写网站标题、描述、关键词和作者，页面会在浏览器本地处理并生成可复制的 Meta 标签，无需上传任何文本。良好的 title 与 description 能帮助搜索引擎和社交预览更准确地理解页面内容，也能提升团队交付静态页面时的规范性。本工具不包含远程脚本、账号登录或数据同步，适合需要轻量、快速、注重隐私的日常 SEO 工作流。</article>
   </main>
 
-  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-    <p>© <span id="year"></span> meta-tag-generator. Built with native HTML, JavaScript and Tailwind CSS.</p>
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+
+  <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md">
+    <div class="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
+      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor">×</button>
+      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">赞赏支持</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">保持工具免费、快速且无广告。</p>
+      <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="buyCoffee">Buy Me a Coffee</a>
+    </div>
+  </div>
 
   <script>
-    (function () {
-      'use strict';
-
-      const $ = (id) => document.getElementById(id);
-
-      const form = $('metaForm');
-      const titleInput = $('siteTitle');
-      const descInput = $('siteDescription');
-      const keywordsInput = $('siteKeywords');
-      const authorInput = $('siteAuthor');
-      const urlInput = $('siteUrl');
-      const outputCode = $('outputCode');
-      const errorBox = $('errorBox');
-      const successBox = $('successBox');
-      const generateBtn = $('generateBtn');
-      const resetBtn = $('resetBtn');
-      const copyBtn = $('copyBtn');
-      const downloadBtn = $('downloadBtn');
-      const titleCount = $('titleCount');
-      const descCount = $('descCount');
-
-      $('year').textContent = new Date().getFullYear();
-
-      function safeTrim(value) {
-        return String(value || '').replace(/\s+/g, ' ').trim();
+    const I18N = {
+      zh: {
+        langCode: "zh-CN",
+        documentTitle: "SEO Meta 标签生成器 - Micro Tools Matrix 本地工具箱",
+        metaDescription: "Micro Tools Matrix 的 SEO Meta 标签生成器可在浏览器本地处理标题、描述、关键词和作者，一键生成标准 head 区域 Meta 代码，无需上传。",
+        metaKeywords: "SEO Meta 标签生成器, Meta 代码, head 标签, 浏览器本地处理, 无需上传, Micro Tools Matrix",
+        toolName: "SEO Meta 标签生成器",
+        sponsor: "赞赏",
+        eyebrow: "浏览器本地处理",
+        h1: "SEO Meta 标签生成器",
+        intro: "填写网站标题、描述、关键词和作者，在浏览器内生成标准 head 区域 Meta 代码，无需上传文本。",
+        localBadge: "本地运行",
+        inputTitle: "输入信息",
+        inputBadge: "输入",
+        outputTitle: "生成结果",
+        outputBadge: "输出",
+        siteTitleLabel: "网站标题",
+        siteTitlePlaceholder: "例如：Micro Tools Matrix - 免费本地开发工具",
+        descriptionLabel: "网站描述",
+        descriptionPlaceholder: "简洁说明页面内容，建议 120 到 160 个字符。",
+        keywordsLabel: "关键词",
+        keywordsPlaceholder: "例如：SEO, Meta 标签, 开发工具",
+        authorLabel: "作者",
+        authorPlaceholder: "例如：Micro Tools Matrix",
+        primaryAction: "生成代码",
+        sampleAction: "填入示例",
+        secondaryAction: "清空",
+        readyStatus: "填写内容后生成 Meta 代码。",
+        codeLabel: "head 区域代码",
+        outputPlaceholder: "生成后的 Meta 代码会显示在这里。",
+        copyAction: "复制代码",
+        downloadAction: "下载 HTML",
+        tipsTitle: "使用提示",
+        tipsBody: "将生成的代码粘贴到 HTML 文档的 head 区域，并根据页面实际内容调整标题和描述长度。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。",
+        seoArticle: "SEO Meta 标签生成器是 Micro Tools Matrix 提供的免费在线开发工具，适合快速为落地页、博客、产品页和静态站点准备标准 head 区域代码。你只需要填写网站标题、描述、关键词和作者，页面会在浏览器本地处理并生成可复制的 Meta 标签，无需上传任何文本。良好的 title 与 description 能帮助搜索引擎和社交预览更准确地理解页面内容，也能提升团队交付静态页面时的规范性。本工具不包含远程脚本、账号登录或数据同步，适合需要轻量、快速、注重隐私的日常 SEO 工作流。",
+        sponsorTitle: "赞赏支持",
+        sponsorSubtitle: "保持工具免费、快速且无广告。",
+        buyCoffee: "Buy Me a Coffee",
+        closeSponsor: "关闭赞赏弹窗",
+        generatedStatus: "已生成 Meta 代码。",
+        errorTitleRequired: "请至少填写网站标题或网站描述。",
+        copiedStatus: "代码已复制到剪贴板。",
+        copyFailedStatus: "复制失败，请手动选择并复制。",
+        clearedStatus: "已清空输入和结果。",
+        sampleStatus: "已填入示例内容。",
+        downloadStatus: "已下载 HTML 文件。",
+        downloadEmptyStatus: "请先生成 Meta 代码，再下载文件。",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统"
+      },
+      en: {
+        langCode: "en",
+        documentTitle: "SEO Meta Tag Generator - Micro Tools Matrix Local Toolkit",
+        metaDescription: "Generate standard HTML head meta code from a site title, description, keywords, and author with browser-local processing in Micro Tools Matrix. No upload required.",
+        metaKeywords: "SEO meta tag generator, meta code, head tags, browser-local processing, free online developer tool, Micro Tools Matrix",
+        toolName: "SEO Meta Tag Generator",
+        sponsor: "Sponsor",
+        eyebrow: "Browser-local processing",
+        h1: "SEO Meta Tag Generator",
+        intro: "Enter a site title, description, keywords, and author to generate standard HTML head meta code in your browser. No upload required.",
+        localBadge: "Local",
+        inputTitle: "Input",
+        inputBadge: "INPUT",
+        outputTitle: "Result",
+        outputBadge: "OUTPUT",
+        siteTitleLabel: "Site title",
+        siteTitlePlaceholder: "Example: Micro Tools Matrix - Free Local Developer Tools",
+        descriptionLabel: "Site description",
+        descriptionPlaceholder: "Briefly describe the page. A length around 120 to 160 characters is usually helpful.",
+        keywordsLabel: "Keywords",
+        keywordsPlaceholder: "Example: SEO, meta tags, developer tools",
+        authorLabel: "Author",
+        authorPlaceholder: "Example: Micro Tools Matrix",
+        primaryAction: "Generate code",
+        sampleAction: "Use sample",
+        secondaryAction: "Clear",
+        readyStatus: "Fill in the fields to generate meta code.",
+        codeLabel: "Head code",
+        outputPlaceholder: "Generated meta code will appear here.",
+        copyAction: "Copy code",
+        downloadAction: "Download HTML",
+        tipsTitle: "Tip",
+        tipsBody: "Paste the generated code into the head section of your HTML document, then adjust the title and description length for the real page content.",
+        footer: "Micro Tools Matrix - browser-local processing. No upload required.",
+        seoArticle: "The SEO Meta Tag Generator in Micro Tools Matrix is a free online developer tool for preparing clean HTML head metadata for landing pages, blogs, product pages, and static websites. Enter a title, description, keywords, and author, then generate copy-ready meta tags with browser-local processing. Your text stays in the current page memory and no upload is required, making the workflow useful for quick SEO drafts, privacy-sensitive projects, and static site handoff. A clear title and description help search engines and link previews understand the purpose of a page, while consistent metadata can make team reviews and deployments more predictable. This tool focuses on practical, standard tags rather than noisy extras, so developers, marketers, and makers can move from draft content to production-ready HTML faster while keeping the Micro Tools Matrix experience lightweight, fast, and local.",
+        sponsorTitle: "Support the project",
+        sponsorSubtitle: "Keep these tools free, fast, and ad-free.",
+        buyCoffee: "Buy Me a Coffee",
+        closeSponsor: "Close sponsor modal",
+        generatedStatus: "Meta code generated.",
+        errorTitleRequired: "Please enter at least a site title or a site description.",
+        copiedStatus: "Code copied to clipboard.",
+        copyFailedStatus: "Copy failed. Please select and copy manually.",
+        clearedStatus: "Input and result cleared.",
+        sampleStatus: "Sample content added.",
+        downloadStatus: "HTML file downloaded.",
+        downloadEmptyStatus: "Generate meta code before downloading the file.",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System"
       }
+    };
 
-      function escapeHtml(value) {
-        return String(value || '')
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;')
-          .replace(/'/g, '&#39;');
-      }
+    let currentLanguage = "zh";
+    let lastStatusKey = "readyStatus";
 
-      function hasControlChars(value) {
-        return /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/.test(value);
-      }
-
-      function isValidUrl(value) {
-        if (!value) return true;
-        try {
-          const url = new URL(value);
-          return url.protocol === 'http:' || url.protocol === 'https:';
-        } catch (e) {
-          return false;
-        }
-      }
-
-      function normalizeKeywords(value) {
-        const raw = String(value || '').replace(/，/g, ',');
-        const list = raw.split(',')
-          .map((item) => safeTrim(item))
-          .filter(Boolean);
-        return Array.from(new Set(list));
-      }
-
-      function showError(messages) {
-        const list = Array.isArray(messages) ? messages : [String(messages || '输入有误，请检查后重试。')];
-        errorBox.innerHTML = '<strong class="font-bold">请修正以下问题：</strong><ul class="mt-2 list-disc space-y-1 pl-5">' +
-          list.map((msg) => '<li>' + escapeHtml(msg) + '</li>').join('') +
-          '</ul>';
-        errorBox.classList.remove('hidden');
-        successBox.classList.add('hidden');
-      }
-
-      function showSuccess(message) {
-        successBox.textContent = message;
-        successBox.classList.remove('hidden');
-        errorBox.classList.add('hidden');
-        window.clearTimeout(showSuccess.timer);
-        showSuccess.timer = window.setTimeout(() => {
-          successBox.classList.add('hidden');
-        }, 3200);
-      }
-
-      function clearMessages() {
-        errorBox.classList.add('hidden');
-        successBox.classList.add('hidden');
-      }
-
-      function updateCounts() {
-        titleCount.textContent = Array.from(titleInput.value || '').length;
-        descCount.textContent = Array.from(descInput.value || '').length;
-      }
-
-      function setInvalidState(fields) {
-        [titleInput, descInput, keywordsInput, authorInput, urlInput].forEach((el) => {
-          el.classList.remove('border-red-400', 'focus:border-red-400', 'focus:ring-red-400/20');
-          el.classList.add('border-white/10', 'focus:border-sky-400', 'focus:ring-sky-400/15');
-        });
-
-        fields.forEach((el) => {
-          el.classList.remove('border-white/10', 'focus:border-sky-400', 'focus:ring-sky-400/15');
-          el.classList.add('border-red-400', 'focus:border-red-400', 'focus:ring-red-400/20');
-        });
-
-        if (fields[0]) fields[0].focus({ preventScroll: false });
-      }
-
-      function validate() {
-        const errors = [];
-        const invalidFields = [];
-
-        const title = safeTrim(titleInput.value);
-        const description = safeTrim(descInput.value);
-        const author = safeTrim(authorInput.value);
-        const canonicalUrl = safeTrim(urlInput.value);
-        const keywords = normalizeKeywords(keywordsInput.value);
-
-        if (!title) {
-          errors.push('网站标题不能为空。');
-          invalidFields.push(titleInput);
-        } else if (Array.from(title).length > 120) {
-          errors.push('网站标题过长，请控制在 120 个字符以内。');
-          invalidFields.push(titleInput);
-        } else if (hasControlChars(title)) {
-          errors.push('网站标题包含不可见控制字符，请删除后重试。');
-          invalidFields.push(titleInput);
-        }
-
-        if (!description) {
-          errors.push('网站描述不能为空。');
-          invalidFields.push(descInput);
-        } else if (Array.from(description).length > 320) {
-          errors.push('网站描述过长，请控制在 320 个字符以内。');
-          invalidFields.push(descInput);
-        } else if (hasControlChars(description)) {
-          errors.push('网站描述包含不可见控制字符，请删除后重试。');
-          invalidFields.push(descInput);
-        }
-
-        if (!safeTrim(keywordsInput.value)) {
-          errors.push('关键词不能为空。');
-          invalidFields.push(keywordsInput);
-        } else if (keywords.length === 0) {
-          errors.push('请输入至少 1 个有效关键词。');
-          invalidFields.push(keywordsInput);
-        } else if (keywords.length > 20) {
-          errors.push('关键词最多支持 20 个，请精简后重试。');
-          invalidFields.push(keywordsInput);
-        } else if (keywords.some((kw) => Array.from(kw).length > 50)) {
-          errors.push('单个关键词不能超过 50 个字符。');
-          invalidFields.push(keywordsInput);
-        } else if (hasControlChars(keywords.join(','))) {
-          errors.push('关键词包含不可见控制字符，请删除后重试。');
-          invalidFields.push(keywordsInput);
-        }
-
-        if (!author) {
-          errors.push('作者或机构不能为空。');
-          invalidFields.push(authorInput);
-        } else if (Array.from(author).length > 80) {
-          errors.push('作者或机构名称过长，请控制在 80 个字符以内。');
-          invalidFields.push(authorInput);
-        } else if (hasControlChars(author)) {
-          errors.push('作者或机构包含不可见控制字符，请删除后重试。');
-          invalidFields.push(authorInput);
-        }
-
-        if (canonicalUrl && !isValidUrl(canonicalUrl)) {
-          errors.push('Canonical URL 必须是以 http:// 或 https:// 开头的有效网址。');
-          invalidFields.push(urlInput);
-        }
-
-        return {
-          ok: errors.length === 0,
-          errors,
-          invalidFields,
-          data: {
-            title,
-            description,
-            keywords,
-            author,
-            canonicalUrl
-          }
-        };
-      }
-
-      function generateMeta(data) {
-        const title = escapeHtml(data.title);
-        const description = escapeHtml(data.description);
-        const keywords = escapeHtml(data.keywords.join(', '));
-        const author = escapeHtml(data.author);
-        const canonicalUrl = escapeHtml(data.canonicalUrl);
-
-        const lines = [
-          '<head>',
-          '  <meta charset="UTF-8">',
-          '  <meta name="viewport" content="width=device-width, initial-scale=1.0">',
-          '  <title>' + title + '</title>',
-          '  <meta name="description" content="' + description + '">',
-          '  <meta name="keywords" content="' + keywords + '">',
-          '  <meta name="author" content="' + author + '">',
-          '',
-          '',
-          '',
-          '',
-          '',
-          ''
-        ];
-
-        if (canonicalUrl) {
-          lines.push('');
-          lines.push('');
-        }
-
-        lines.push(
-          '',
-          '',
-          '',
-          '',
-          '</head>'
-        );
-
-        return lines.join('\n');
-      }
-
-      form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        clearMessages();
-
-        generateBtn.disabled = true;
-        generateBtn.textContent = '正在生成...';
-
-        window.setTimeout(() => {
-          try {
-            const result = validate();
-            if (!result.ok) {
-              outputCode.value = '';
-              copyBtn.disabled = true;
-              downloadBtn.disabled = true;
-              setInvalidState(result.invalidFields);
-              showError(result.errors);
-              return;
-            }
-
-            setInvalidState([]);
-            outputCode.value = generateMeta(result.data);
-            copyBtn.disabled = false;
-            downloadBtn.disabled = false;
-            showSuccess('Meta 标签代码已成功生成。');
-          } catch (e) {
-            showError('生成过程中出现异常，请检查输入内容后重试。');
-            outputCode.value = '';
-            copyBtn.disabled = true;
-            downloadBtn.disabled = true;
-          } finally {
-            generateBtn.disabled = false;
-            generateBtn.textContent = '一键生成 Meta 代码';
-          }
-        }, 180);
-      });
-
-      resetBtn.addEventListener('click', function () {
-        form.reset();
-        outputCode.value = '';
-        copyBtn.disabled = true;
-        downloadBtn.disabled = true;
-        updateCounts();
-        setInvalidState([]);
-        clearMessages();
-        showSuccess('内容已清空，可以重新填写。');
-      });
-
-      copyBtn.addEventListener('click', async function () {
-        const code = outputCode.value || '';
-        if (!code) {
-          showError('暂无可复制的代码，请先生成 Meta 标签。');
-          return;
-        }
-
-        try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(code);
-          } else {
-            outputCode.focus();
-            outputCode.select();
-            const copied = document.execCommand('copy');
-            if (!copied) throw new Error('copy failed');
-            window.getSelection().removeAllRanges();
-          }
-          copyBtn.textContent = '已复制';
-          showSuccess('代码已复制到剪贴板。');
-          window.setTimeout(() => {
-            copyBtn.textContent = '复制代码';
-          }, 1400);
-        } catch (e) {
-          showError('复制失败，请手动选中输出框内容后复制。');
-        }
-      });
-
-      downloadBtn.addEventListener('click', function () {
-        const code = outputCode.value || '';
-        if (!code) {
-          showError('暂无可下载的代码，请先生成 Meta 标签。');
-          return;
-        }
-
-        try {
-          const blob = new Blob([code], { type: 'text/html;charset=utf-8' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'head-meta.html';
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-          URL.revokeObjectURL(url);
-          showSuccess('文件已开始下载。');
-        } catch (e) {
-          showError('下载失败，请直接复制输出框中的代码。');
-        }
-      });
-
-      [titleInput, descInput].forEach((el) => {
-        el.addEventListener('input', updateCounts);
-      });
-
-      [titleInput, descInput, keywordsInput, authorInput, urlInput].forEach((el) => {
-        el.addEventListener('input', function () {
-          if (!errorBox.classList.contains('hidden')) {
-            clearMessages();
-          }
-          el.classList.remove('border-red-400', 'focus:border-red-400', 'focus:ring-red-400/20');
-          el.classList.add('border-white/10', 'focus:border-sky-400', 'focus:ring-sky-400/15');
-        });
-      });
-
-      updateCounts();
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      const saved = localStorage.getItem("microToolsLanguage");
+      return saved === "en" || saved === "zh" ? saved : "zh";
     }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+      document.documentElement.lang = dict.langCode;
+      document.title = dict.documentTitle;
+
+      const descriptionMeta = document.querySelector('meta[name="description"]');
+      if (descriptionMeta) descriptionMeta.setAttribute("content", dict.metaDescription);
+      const keywordsMeta = document.querySelector('meta[name="keywords"]');
+      if (keywordsMeta) keywordsMeta.setAttribute("content", dict.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.textContent = dict[key];
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("placeholder", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("title", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("aria-label", dict[key]);
+      });
+
+      const statusText = document.getElementById("statusText");
+      if (statusText && dict[lastStatusKey]) statusText.textContent = dict[lastStatusKey];
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "zh" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "en" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+      }
+
+      window.microToolsThemeLabels = {
+        light: dict.themeLight,
+        dark: dict.themeDark,
+        system: dict.themeSystem
+      };
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function setLanguage(lang) {
+      localStorage.setItem("microToolsLanguage", lang);
+      applyLanguage(lang);
+    }
+
+    function setStatus(key) {
+      lastStatusKey = key;
+      const statusText = document.getElementById("statusText");
+      if (statusText) statusText.textContent = I18N[currentLanguage][key] || "";
+    }
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function normalizeKeywords(value) {
+      return String(value || "")
+        .split(/[,，\n]/)
+        .map((item) => item.trim())
+        .filter(Boolean)
+        .join(", ");
+    }
+
+    function generateMetaCode() {
+      const title = document.getElementById("siteTitle").value.trim();
+      const description = document.getElementById("siteDescription").value.trim();
+      const keywords = normalizeKeywords(document.getElementById("siteKeywords").value);
+      const author = document.getElementById("siteAuthor").value.trim();
+
+      if (!title && !description) {
+        setStatus("errorTitleRequired");
+        document.getElementById("metaOutput").value = "";
+        return;
+      }
+
+      const lines = [
+        "<head>",
+        '  <meta charset="UTF-8">',
+        '  <meta name="viewport" content="width=device-width, initial-scale=1.0">'
+      ];
+
+      if (title) lines.push("  <title>" + escapeHtml(title) + "</title>");
+      if (description) lines.push('  <meta name="description" content="' + escapeHtml(description) + '">');
+      if (keywords) lines.push('  <meta name="keywords" content="' + escapeHtml(keywords) + '">');
+      if (author) lines.push('  <meta name="author" content="' + escapeHtml(author) + '">');
+
+      lines.push("</head>");
+      document.getElementById("metaOutput").value = lines.join("\n");
+      setStatus("generatedStatus");
+    }
+
+    function clearTool() {
+      ["siteTitle", "siteDescription", "siteKeywords", "siteAuthor", "metaOutput"].forEach((id) => {
+        const node = document.getElementById(id);
+        if (node) node.value = "";
+      });
+      updateDescriptionCount();
+      setStatus("clearedStatus");
+    }
+
+    function fillSample() {
+      const isEn = currentLanguage === "en";
+      document.getElementById("siteTitle").value = isEn ? "Micro Tools Matrix - Free Local Developer Tools" : "Micro Tools Matrix - 免费本地开发工具";
+      document.getElementById("siteDescription").value = isEn
+        ? "A collection of fast, privacy-friendly developer tools that run locally in your browser with no upload required."
+        : "一组快速、注重隐私的开发者工具，在浏览器本地运行，无需上传文本或文件。";
+      document.getElementById("siteKeywords").value = isEn ? "developer tools, local tools, SEO, Micro Tools Matrix" : "开发工具, 本地工具, SEO, Micro Tools Matrix";
+      document.getElementById("siteAuthor").value = "Micro Tools Matrix";
+      updateDescriptionCount();
+      generateMetaCode();
+      setStatus("sampleStatus");
+    }
+
+    async function copyOutput() {
+      const output = document.getElementById("metaOutput");
+      if (!output.value.trim()) generateMetaCode();
+      if (!output.value.trim()) return;
+
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(output.value);
+        } else {
+          output.focus();
+          output.select();
+          document.execCommand("copy");
+        }
+        setStatus("copiedStatus");
+      } catch (error) {
+        output.focus();
+        output.select();
+        setStatus("copyFailedStatus");
+      }
+    }
+
+    function downloadOutput() {
+      const output = document.getElementById("metaOutput");
+      if (!output.value.trim()) {
+        setStatus("downloadEmptyStatus");
+        return;
+      }
+      const blob = new Blob(["<!DOCTYPE html>\n<html>\n" + output.value + "\n<body>\n</body>\n</html>\n"], { type: "text/html;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "meta-tags.html";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      setStatus("downloadStatus");
+    }
+
+    function updateDescriptionCount() {
+      const node = document.getElementById("siteDescription");
+      const counter = document.getElementById("descriptionCount");
+      if (node && counter) counter.textContent = String(node.value.length) + " / 320";
+    }
+
+    function openSponsorModal(event) {
+      if (event?.preventDefault) event.preventDefault();
+      const modal = document.getElementById("sponsorModal");
+      if (modal) {
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      }
+    }
+
+    function closeSponsorModal() {
+      const modal = document.getElementById("sponsorModal");
+      if (modal) {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+
+      document.getElementById("generateBtn")?.addEventListener("click", generateMetaCode);
+      document.getElementById("sampleBtn")?.addEventListener("click", fillSample);
+      document.getElementById("clearBtn")?.addEventListener("click", clearTool);
+      document.getElementById("copyBtn")?.addEventListener("click", copyOutput);
+      document.getElementById("downloadBtn")?.addEventListener("click", downloadOutput);
+      document.getElementById("siteDescription")?.addEventListener("input", updateDescriptionCount);
+
+      applyLanguage(getInitialLanguage());
+      updateDescriptionCount();
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="./sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

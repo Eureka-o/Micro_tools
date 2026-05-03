@@ -1,672 +1,680 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>bland-altman-plot｜极简 X/Y 数据绘图工具</title>
-  <meta name="description" content="极简数据绘图工具。输入两列X/Y坐标数据，利用纯前端图表库（如Chart.js CDN）实时绘制简单的折线图/散点图。">
-  <meta name="keywords" content="bland-altman-plot,Bland Altman 图,在线散点图工具,在线折线图工具,两列数据绘图,X Y 坐标绘图,实验数据可视化,纯前端图表工具">
-  <link rel="icon" type="image/png" href="./assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bland-Altman 图 - Micro Tools Matrix 本地绘图工具</title>
+  <meta name="description" content="在 Micro Tools Matrix 中使用 Bland-Altman 图工具，输入两列配对数据，在浏览器本地处理并绘制一致性分析散点图，无需上传。">
+  <meta name="keywords" content="Bland-Altman 图,一致性分析,本地绘图工具,无需上传,浏览器本地处理,Micro Tools Matrix">
   <link rel="canonical" href="https://mymicrotools.xyz/bland-altman-plot.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/bland-altman-plot.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/bland-altman-plot.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/bland-altman-plot.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/bland-altman-plot.html">
-  <meta property="og:title" content="bland-altman-plot｜极简 X/Y 数据绘图工具">
-  <meta property="og:description" content="极简数据绘图工具。输入两列X/Y坐标数据，利用纯前端图表库（如Chart.js CDN）实时绘制简单的折线图/散点图。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="bland-altman-plot｜极简 X/Y 数据绘图工具">
-  <meta name="twitter:description" content="极简数据绘图工具。输入两列X/Y坐标数据，利用纯前端图表库（如Chart.js CDN）实时绘制简单的折线图/散点图。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Bland-Altman Plot - Micro Tools Matrix","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock"},"description":"A free browser-local Bland-Altman plot tool for paired numeric data."}</script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="切换主题" title="切换主题">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">Bland-Altman 图</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="./bland-altman-plot.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
-        <a href="./en/bland-altman-plot.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="absolute inset-0 -z-10 overflow-hidden">
-    <div class="absolute left-1/2 top-0 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl"></div>
-  </div>
-
-  <header class="border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 backdrop-blur">
-    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-            Pure Frontend Data Visualization
-          </p>
-          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">极简 X/Y 数据绘图工具</h1>
-          <p class="mt-3 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            输入两列 X/Y 数据，实时绘制散点图、折线图或 Bland-Altman 分析图。
-          </p>
-        </div>
-        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 text-sm text-slate-700 dark:text-slate-300 shadow-2xl">
-          <div class="font-semibold text-gray-900 dark:text-white">本地计算 · 不上传数据</div>
-          <div class="mt-1">适合科研、质控、实验与快速探索分析</div>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
         </div>
       </div>
-    </div>
+    </nav>
   </header>
 
-  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-5">
-      <div class="lg:col-span-2">
-        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/90 p-5 shadow-2xl">
-          <div class="mb-5 flex items-center justify-between gap-3">
-            <div>
-              <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入区</h2>
-              <p class="mt-1 text-sm text-slate-400">每行一组数据，支持空格、逗号、Tab、分号分隔。</p>
-            </div>
-            <span class="rounded-full bg-indigo-500/15 px-3 py-1 text-xs font-semibold text-indigo-200">实时解析</span>
-          </div>
-
-          <label for="dataInput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">两列 X/Y 坐标数据</label>
-          <textarea id="dataInput" spellcheck="false" class="h-72 w-full resize-y rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="例如：
-1, 1.2
-2, 2.4
-3, 2.9
-4, 4.1
-5, 5.3"></textarea>
-
-          <div id="errorBox" class="mt-4 hidden rounded-2xl border border-red-400/30 bg-red-500/10 p-4 text-sm leading-6 text-red-100"></div>
-          <div id="successBox" class="mt-4 rounded-2xl border border-emerald-400/30 bg-emerald-500/10 p-4 text-sm leading-6 text-emerald-100">
-            已载入示例数据，可直接绘图或粘贴自己的两列数据。
-          </div>
-
-          <div class="mt-5 grid gap-4 sm:grid-cols-2">
-            <div>
-              <label for="chartType" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">图表类型</label>
-              <select id="chartType" class="w-full rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-3 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
-                <option value="scatter">散点图</option>
-                <option value="line">折线图</option>
-                <option value="ba">Bland-Altman 图</option>
-              </select>
-            </div>
-            <div>
-              <label for="pointColor" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">主题颜色</label>
-              <select id="pointColor" class="w-full rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-3 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
-                <option value="#22d3ee">科技青</option>
-                <option value="#818cf8">靛蓝紫</option>
-                <option value="#34d399">翡翠绿</option>
-                <option value="#fb7185">玫瑰红</option>
-                <option value="#fbbf24">琥珀黄</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <button id="drawBtn" type="button" class="rounded-xl bg-cyan-400 px-4 py-3 text-sm font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-95">绘制</button>
-            <button id="sampleBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-4 py-3 text-sm font-bold text-gray-900 dark:text-white transition hover:bg-white/15 active:scale-95">示例</button>
-            <button id="clearBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-4 py-3 text-sm font-bold text-gray-900 dark:text-white transition hover:bg-white/15 active:scale-95">清空</button>
-            <button id="downloadBtn" type="button" class="rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-3 text-sm font-bold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">下载</button>
-          </div>
-
-          <div class="mt-5 rounded-2xl bg-white dark:bg-slate-950/70 p-4">
-            <h3 class="text-sm font-bold text-gray-900 dark:text-white">输入提示</h3>
-            <ul class="mt-2 space-y-1 text-sm leading-6 text-slate-400">
-              <li>支持格式：<code class="text-cyan-200">1,2</code>、<code class="text-cyan-200">1 2</code>、<code class="text-cyan-200">1;2</code>、<code class="text-cyan-200">1	2</code></li>
-              <li>空行会自动忽略，非数字内容会给出明确错误提示。</li>
-              <li>Bland-Altman 图会将 X/Y 视为两种测量方法，横轴为均值，纵轴为差值。</li>
-            </ul>
-          </div>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">Bland-Altman 图</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">输入两列配对数值，Micro Tools Matrix 会在浏览器内绘制 Bland-Altman 一致性分析图，并计算均值差、标准差与一致性界限。</p>
         </div>
-      </div>
-
-      <div class="lg:col-span-3">
-        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5 shadow-2xl">
-          <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h2 class="text-xl font-bold text-gray-900 dark:text-white">输出区</h2>
-              <p id="chartSubtitle" class="mt-1 text-sm text-slate-400">图表将在此处实时更新。</p>
-            </div>
-            <div class="flex flex-wrap gap-2 text-xs">
-              <span id="countBadge" class="rounded-full bg-white dark:bg-white/10 px-3 py-1 font-semibold text-slate-800 dark:text-slate-200">0 点</span>
-              <span id="xRangeBadge" class="rounded-full bg-white dark:bg-white/10 px-3 py-1 font-semibold text-slate-800 dark:text-slate-200">X: -</span>
-              <span id="yRangeBadge" class="rounded-full bg-white dark:bg-white/10 px-3 py-1 font-semibold text-slate-800 dark:text-slate-200">Y: -</span>
-            </div>
-          </div>
-
-          <div class="relative h-[420px] rounded-3xl border border-slate-700/80 bg-white dark:bg-slate-950/80 p-4 sm:h-[540px]">
-            <canvas id="chartCanvas" aria-label="数据绘图画布" role="img"></canvas>
-            <div id="chartFallback" class="pointer-events-none absolute inset-0 hidden items-center justify-center rounded-3xl bg-white dark:bg-slate-950/90 p-6 text-center text-sm leading-6 text-red-100">
-              图表库加载失败，请检查网络连接后刷新页面。
-            </div>
-          </div>
-
-          <div class="mt-5 grid gap-4 sm:grid-cols-3">
-            <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/70 p-4">
-              <div class="text-xs font-semibold uppercase tracking-wider text-slate-500">Mean X</div>
-              <div id="meanX" class="mt-2 text-2xl font-black text-gray-900 dark:text-white">-</div>
-            </div>
-            <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/70 p-4">
-              <div class="text-xs font-semibold uppercase tracking-wider text-slate-500">Mean Y</div>
-              <div id="meanY" class="mt-2 text-2xl font-black text-gray-900 dark:text-white">-</div>
-            </div>
-            <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/70 p-4">
-              <div class="text-xs font-semibold uppercase tracking-wider text-slate-500">Correlation</div>
-              <div id="corrValue" class="mt-2 text-2xl font-black text-gray-900 dark:text-white">-</div>
-            </div>
-          </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl">
-      <h2 class="mb-4 text-2xl font-black text-gray-900 dark:text-white">关于 bland-altman-plot 在线绘图工具</h2>
-      <p>
-        bland-altman-plot 是一款面向科研人员、工程师、数据分析师和学生的极简在线数据绘图工具。很多实验数据只需要快速查看两列 X/Y 坐标之间的趋势、离散程度或两种测量方法的一致性，传统软件往往安装复杂、导入步骤繁琐。本工具基于浏览器纯前端运行，用户只需粘贴两列数字数据，即可生成在线散点图、在线折线图以及 Bland-Altman 一致性分析图。它特别适合用于医学检验方法比较、仪器测量误差评估、实验结果初筛、课堂统计演示和小规模数据可视化。使用时，将每组数据按行输入，选择图表类型并点击绘制即可；若选择 Bland-Altman 图，系统会自动计算均值、差值、偏倚和一致性限。整个过程无需上传文件，数据保留在本地浏览器中，兼顾效率与隐私，是快速完成两列数据绘图和 Bland Altman plot 在线分析的实用工具。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label for="dataInput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="dataLabel">配对数据</label>
+            <textarea id="dataInput" rows="12" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="dataPlaceholder" placeholder="每行一组：方法A, 方法B&#10;10.1, 9.8&#10;12.4, 12.0"></textarea>
+            <p class="mt-2 text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="dataHint">支持逗号、制表符、空格或分号分隔；会忽略表头与空行。</p>
+          </div>
+
+          <div class="grid gap-3 sm:grid-cols-2">
+            <div>
+              <label for="plotMode" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="modeLabel">绘图方式</label>
+              <select id="plotMode" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+                <option value="scatter" data-i18n="modeScatter">散点图</option>
+                <option value="line" data-i18n="modeLine">连线图</option>
+              </select>
+            </div>
+            <div>
+              <label for="precisionInput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="precisionLabel">小数位数</label>
+              <input id="precisionInput" type="number" min="0" max="8" value="3" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+            </div>
+          </div>
+
+          <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <button id="drawBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">绘制图表</button>
+            <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">填入示例</button>
+            <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+          </div>
+
+          <p id="statusText" class="min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="statusReady">准备就绪：输入至少 3 组配对数据后绘制。</p>
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+        </div>
+
+        <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-slate-950/70">
+          <canvas id="plotCanvas" class="block h-80 w-full max-w-full rounded-xl bg-white dark:bg-slate-950" data-i18n-aria-label="canvasLabel" aria-label="Bland-Altman 图"></canvas>
+        </div>
+
+        <div class="mt-4 grid gap-3 sm:grid-cols-2">
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="countLabel">样本数</p>
+            <p id="countValue" class="mt-2 text-xl font-black tabular-nums text-slate-950 dark:text-white">0</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="biasLabel">均值差</p>
+            <p id="biasValue" class="mt-2 text-xl font-black tabular-nums text-slate-950 dark:text-white">—</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="loaUpperLabel">上限</p>
+            <p id="upperValue" class="mt-2 text-xl font-black tabular-nums text-slate-950 dark:text-white">—</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="loaLowerLabel">下限</p>
+            <p id="lowerValue" class="mt-2 text-xl font-black tabular-nums text-slate-950 dark:text-white">—</p>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制摘要</button>
+          <button id="downloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadAction">下载图片</button>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">Bland-Altman 图常用于比较两种测量方法的一致性，比单纯相关系数更适合发现系统偏差与异常点。这个 Micro Tools Matrix 免费在线开发者工具支持将两列配对数据粘贴到页面中，自动计算每组均值、差值、均值差以及 95% 一致性界限，并在浏览器本地处理后即时绘图。所有数字只存在于当前页面内存中，无需上传文件，无需登录，也不会调用后端接口。你可以用它快速检查实验数据、医学测量、仪器校准或 A/B 方法对照结果，并复制统计摘要或下载图像用于报告草稿。</article>
   </main>
 
-  <footer class="mx-auto max-w-7xl px-4 pb-8 pt-2 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-    © <span id="year"></span> bland-altman-plot · Client-side charting tool
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+
+  <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md">
+    <div class="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
+      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor" aria-label="关闭赞赏弹窗">×</button>
+      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">赞赏支持</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">保持工具免费、快速且无广告。</p>
+      <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="buyCoffee">Buy Me a Coffee</a>
+    </div>
+  </div>
 
   <script>
-    (() => {
-      'use strict';
-
-      const $ = (id) => document.getElementById(id);
-      const dataInput = $('dataInput');
-      const chartType = $('chartType');
-      const pointColor = $('pointColor');
-      const errorBox = $('errorBox');
-      const successBox = $('successBox');
-      const drawBtn = $('drawBtn');
-      const sampleBtn = $('sampleBtn');
-      const clearBtn = $('clearBtn');
-      const downloadBtn = $('downloadBtn');
-      const countBadge = $('countBadge');
-      const xRangeBadge = $('xRangeBadge');
-      const yRangeBadge = $('yRangeBadge');
-      const meanXEl = $('meanX');
-      const meanYEl = $('meanY');
-      const corrValueEl = $('corrValue');
-      const chartSubtitle = $('chartSubtitle');
-      const chartFallback = $('chartFallback');
-      const canvas = $('chartCanvas');
-      const year = $('year');
-
-      year.textContent = new Date().getFullYear();
-
-      const sampleData = `1, 1.12
-2, 2.08
-3, 2.85
-4, 4.12
-5, 5.05
-6, 5.92
-7, 7.18
-8, 7.86
-9, 9.12
-10, 10.25
-11, 10.78
-12, 12.16`;
-
-      dataInput.value = sampleData;
-
-      let chart = null;
-      let debounceTimer = null;
-
-      function showError(message) {
-        errorBox.textContent = message;
-        errorBox.classList.remove('hidden');
-        successBox.classList.add('hidden');
+    const I18N = {
+      zh: {
+        documentTitle: "Bland-Altman 图 - Micro Tools Matrix 本地绘图工具",
+        metaDescription: "在 Micro Tools Matrix 中使用 Bland-Altman 图工具，输入两列配对数据，在浏览器本地处理并绘制一致性分析散点图，无需上传。",
+        metaKeywords: "Bland-Altman 图,一致性分析,本地绘图工具,无需上传,浏览器本地处理,Micro Tools Matrix",
+        toolName: "Bland-Altman 图",
+        sponsor: "赞赏",
+        closeSponsor: "关闭赞赏弹窗",
+        sponsorTitle: "赞赏支持",
+        sponsorSubtitle: "保持工具免费、快速且无广告。",
+        buyCoffee: "Buy Me a Coffee",
+        eyebrow: "浏览器本地处理",
+        h1: "Bland-Altman 图",
+        intro: "输入两列配对数值，Micro Tools Matrix 会在浏览器内绘制 Bland-Altman 一致性分析图，并计算均值差、标准差与一致性界限。",
+        localBadge: "本地运行",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        outputTitle: "结果",
+        outputBadge: "输出",
+        dataLabel: "配对数据",
+        dataPlaceholder: "每行一组：方法A, 方法B\n10.1, 9.8\n12.4, 12.0",
+        dataHint: "支持逗号、制表符、空格或分号分隔；会忽略表头与空行。",
+        modeLabel: "绘图方式",
+        modeScatter: "散点图",
+        modeLine: "连线图",
+        precisionLabel: "小数位数",
+        primaryAction: "绘制图表",
+        sampleAction: "填入示例",
+        secondaryAction: "清空",
+        statusReady: "准备就绪：输入至少 3 组配对数据后绘制。",
+        statusSample: "已填入示例数据，可以直接绘制。",
+        statusCleared: "已清空输入与结果。",
+        statusDrawn: "已绘制 {count} 组数据。",
+        statusCopied: "统计摘要已复制到剪贴板。",
+        statusCopyFailed: "复制失败，请手动选择摘要内容。",
+        statusDownloaded: "图片已生成下载。",
+        errorNotEnough: "请至少提供 3 组有效的配对数值。",
+        errorNoCanvas: "当前浏览器无法创建绘图画布。",
+        canvasLabel: "Bland-Altman 图",
+        countLabel: "样本数",
+        biasLabel: "均值差",
+        loaUpperLabel: "上限",
+        loaLowerLabel: "下限",
+        copyAction: "复制摘要",
+        downloadAction: "下载图片",
+        chartTitle: "Bland-Altman 一致性分析",
+        chartXAxis: "两列均值",
+        chartYAxis: "差值",
+        chartBias: "均值差",
+        chartUpper: "上限",
+        chartLower: "下限",
+        summaryTitle: "Bland-Altman 统计摘要",
+        summaryCount: "样本数",
+        summaryBias: "均值差",
+        summarySd: "差值标准差",
+        summaryUpper: "上限",
+        summaryLower: "下限",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。",
+        seoArticle: "Bland-Altman 图常用于比较两种测量方法的一致性，比单纯相关系数更适合发现系统偏差与异常点。这个 Micro Tools Matrix 免费在线开发者工具支持将两列配对数据粘贴到页面中，自动计算每组均值、差值、均值差以及 95% 一致性界限，并在浏览器本地处理后即时绘图。所有数字只存在于当前页面内存中，无需上传文件，无需登录，也不会调用后端接口。你可以用它快速检查实验数据、医学测量、仪器校准或 A/B 方法对照结果，并复制统计摘要或下载图像用于报告草稿。",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统"
+      },
+      en: {
+        documentTitle: "Bland-Altman Plot - Micro Tools Matrix Local Chart Tool",
+        metaDescription: "Use the Micro Tools Matrix Bland-Altman plot tool to paste paired numeric columns, run browser-local processing, and draw an agreement analysis chart without uploading data.",
+        metaKeywords: "Bland-Altman plot,agreement analysis,local chart tool,browser-local processing,no upload,free online developer tool,Micro Tools Matrix",
+        toolName: "Bland-Altman Plot",
+        sponsor: "Sponsor",
+        closeSponsor: "Close sponsor dialog",
+        sponsorTitle: "Sponsor Support",
+        sponsorSubtitle: "Keep the tools free, fast, and ad-free.",
+        buyCoffee: "Buy Me a Coffee",
+        eyebrow: "Browser-local processing",
+        h1: "Bland-Altman Plot",
+        intro: "Paste two paired numeric columns and Micro Tools Matrix will draw a browser-local Bland-Altman agreement plot with bias, standard deviation, and limits of agreement.",
+        localBadge: "Local",
+        inputTitle: "Input",
+        inputBadge: "Input",
+        outputTitle: "Result",
+        outputBadge: "Output",
+        dataLabel: "Paired data",
+        dataPlaceholder: "One pair per row: Method A, Method B\n10.1, 9.8\n12.4, 12.0",
+        dataHint: "Comma, tab, space, or semicolon separators are supported; headers and blank rows are ignored.",
+        modeLabel: "Plot mode",
+        modeScatter: "Scatter plot",
+        modeLine: "Connected plot",
+        precisionLabel: "Decimal places",
+        primaryAction: "Draw chart",
+        sampleAction: "Fill sample",
+        secondaryAction: "Clear",
+        statusReady: "Ready: enter at least 3 paired rows to draw the chart.",
+        statusSample: "Sample data has been inserted and is ready to draw.",
+        statusCleared: "Input and result have been cleared.",
+        statusDrawn: "Drawn with {count} paired rows.",
+        statusCopied: "The statistical summary has been copied to the clipboard.",
+        statusCopyFailed: "Copy failed. Please select the summary manually.",
+        statusDownloaded: "The image download has been created.",
+        errorNotEnough: "Please provide at least 3 valid paired numeric rows.",
+        errorNoCanvas: "This browser cannot create the drawing canvas.",
+        canvasLabel: "Bland-Altman plot",
+        countLabel: "Samples",
+        biasLabel: "Bias",
+        loaUpperLabel: "Upper limit",
+        loaLowerLabel: "Lower limit",
+        copyAction: "Copy summary",
+        downloadAction: "Download image",
+        chartTitle: "Bland-Altman Agreement Analysis",
+        chartXAxis: "Mean of two columns",
+        chartYAxis: "Difference",
+        chartBias: "Bias",
+        chartUpper: "Upper limit",
+        chartLower: "Lower limit",
+        summaryTitle: "Bland-Altman statistical summary",
+        summaryCount: "Samples",
+        summaryBias: "Bias",
+        summarySd: "Standard deviation of differences",
+        summaryUpper: "Upper limit",
+        summaryLower: "Lower limit",
+        footer: "Micro Tools Matrix - browser-local processing with no upload.",
+        seoArticle: "The Bland-Altman plot is a practical way to compare two measurement methods and inspect agreement beyond a simple correlation coefficient. This free online developer tool from Micro Tools Matrix lets you paste two paired numeric columns, then calculates the mean of each pair, the difference between methods, the average bias, the standard deviation of differences, and the 95% limits of agreement. Everything runs with browser-local processing: your numbers stay in page memory, no upload is required, and no backend service receives the dataset. The tool is useful for experiment review, medical measurement checks, instrument calibration, quality control, and quick A/B method comparison. You can switch between a clean scatter view and a connected view, copy a localized statistical summary, or download the chart image for drafts and reports. It is intentionally lightweight, private, and fast, matching the Micro Tools Matrix approach to small, reliable utilities that work directly in modern browsers.",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System"
       }
+    };
 
-      function showSuccess(message) {
-        successBox.textContent = message;
-        successBox.classList.remove('hidden');
-        errorBox.classList.add('hidden');
+    let currentLanguage = "zh";
+    let currentStatusKey = "statusReady";
+    let currentStatusVars = {};
+    let lastStats = null;
+    let lastPoints = [];
+
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      try {
+        return localStorage.getItem("microToolsLanguage") || "zh";
+      } catch (error) {
+        return "zh";
       }
-
-      function clearMessages() {
-        errorBox.classList.add('hidden');
-        successBox.classList.add('hidden');
-      }
-
-      function formatNumber(num, digits = 4) {
-        if (!Number.isFinite(num)) return '-';
-        const fixed = Number(num.toFixed(digits));
-        return String(fixed);
-      }
-
-      function parseInput(raw) {
-        const text = String(raw || '').trim();
-        if (!text) {
-          return { ok: false, message: '请输入至少两行或两组有效的 X/Y 数字数据。', points: [] };
-        }
-
-        const lines = text.split(/\r?\n/);
-        const points = [];
-        const errors = [];
-
-        lines.forEach((line, index) => {
-          const original = line.trim();
-          if (!original) return;
-
-          const normalized = original.replace(/[，；、]/g, ',');
-          const parts = normalized.split(/[\s,;]+/).filter(Boolean);
-
-          if (parts.length < 2) {
-            errors.push(`第 ${index + 1} 行缺少第二列数据：${original}`);
-            return;
-          }
-
-          if (parts.length > 2) {
-            const firstTwo = parts.slice(0, 2);
-            const rest = parts.slice(2).join(' ');
-            if (rest.length > 0) {
-              errors.push(`第 ${index + 1} 行包含多余字段，请仅保留两列：${original}`);
-              return;
-            }
-            parts.length = 2;
-          }
-
-          const x = Number(parts[0]);
-          const y = Number(parts[1]);
-
-          if (!Number.isFinite(x) || !Number.isFinite(y)) {
-            errors.push(`第 ${index + 1} 行存在非数字内容：${original}`);
-            return;
-          }
-
-          points.push({ x, y });
-        });
-
-        if (errors.length > 0) {
-          return { ok: false, message: errors.slice(0, 5).join('\n') + (errors.length > 5 ? `\n另有 ${errors.length - 5} 处错误。` : ''), points: [] };
-        }
-
-        if (points.length < 2) {
-          return { ok: false, message: '有效数据点不足。请至少输入 2 组 X/Y 数字数据。', points: [] };
-        }
-
-        return { ok: true, message: '', points };
-      }
-
-      function mean(values) {
-        return values.reduce((sum, v) => sum + v, 0) / values.length;
-      }
-
-      function sampleStd(values) {
-        if (values.length < 2) return 0;
-        const m = mean(values);
-        const variance = values.reduce((sum, v) => sum + Math.pow(v - m, 2), 0) / (values.length - 1);
-        return Math.sqrt(variance);
-      }
-
-      function correlation(points) {
-        const xs = points.map(p => p.x);
-        const ys = points.map(p => p.y);
-        const mx = mean(xs);
-        const my = mean(ys);
-        let numerator = 0;
-        let dx2 = 0;
-        let dy2 = 0;
-        points.forEach(p => {
-          const dx = p.x - mx;
-          const dy = p.y - my;
-          numerator += dx * dy;
-          dx2 += dx * dx;
-          dy2 += dy * dy;
-        });
-        const denom = Math.sqrt(dx2 * dy2);
-        return denom === 0 ? NaN : numerator / denom;
-      }
-
-      function getRange(values) {
-        const min = Math.min(...values);
-        const max = Math.max(...values);
-        return `${formatNumber(min)} ~ ${formatNumber(max)}`;
-      }
-
-      function updateStats(points) {
-        const xs = points.map(p => p.x);
-        const ys = points.map(p => p.y);
-        countBadge.textContent = `${points.length} 点`;
-        xRangeBadge.textContent = `X: ${getRange(xs)}`;
-        yRangeBadge.textContent = `Y: ${getRange(ys)}`;
-        meanXEl.textContent = formatNumber(mean(xs));
-        meanYEl.textContent = formatNumber(mean(ys));
-        const corr = correlation(points);
-        corrValueEl.textContent = Number.isFinite(corr) ? formatNumber(corr, 4) : '无法计算';
-      }
-
-      function resetStats() {
-        countBadge.textContent = '0 点';
-        xRangeBadge.textContent = 'X: -';
-        yRangeBadge.textContent = 'Y: -';
-        meanXEl.textContent = '-';
-        meanYEl.textContent = '-';
-        corrValueEl.textContent = '-';
-      }
-
-      function destroyChart() {
-        if (chart) {
-          chart.destroy();
-          chart = null;
-        }
-      }
-
-      function buildChart(points) {
-        if (typeof Chart === 'undefined') {
-          chartFallback.classList.remove('hidden');
-          chartFallback.classList.add('flex');
-          return;
-        }
-
-        chartFallback.classList.add('hidden');
-        chartFallback.classList.remove('flex');
-
-        const type = chartType.value;
-        const color = pointColor.value;
-        const gridColor = 'rgba(148, 163, 184, 0.18)';
-        const tickColor = 'rgba(226, 232, 240, 0.78)';
-
-        destroyChart();
-
-        let config;
-
-        if (type === 'ba') {
-          const baPoints = points.map(p => ({ x: (p.x + p.y) / 2, y: p.y - p.x }));
-          const diffs = baPoints.map(p => p.y);
-          const bias = mean(diffs);
-          const sd = sampleStd(diffs);
-          const upper = bias + 1.96 * sd;
-          const lower = bias - 1.96 * sd;
-          const means = baPoints.map(p => p.x);
-          const minMean = Math.min(...means);
-          const maxMean = Math.max(...means);
-          const pad = (maxMean - minMean) * 0.04 || 1;
-          const x1 = minMean - pad;
-          const x2 = maxMean + pad;
-
-          chartSubtitle.textContent = `Bland-Altman：偏倚 ${formatNumber(bias)}，95% 一致性限 ${formatNumber(lower)} 到 ${formatNumber(upper)}。`;
-
-          config = {
-            type: 'scatter',
-            data: {
-              datasets: [
-                {
-                  label: '差值点（Y - X）',
-                  data: baPoints,
-                  backgroundColor: color,
-                  borderColor: color,
-                  pointRadius: 5,
-                  pointHoverRadius: 7
-                },
-                {
-                  label: '偏倚 Mean Diff',
-                  data: [{ x: x1, y: bias }, { x: x2, y: bias }],
-                  type: 'line',
-                  borderColor: '#fbbf24',
-                  borderWidth: 2,
-                  pointRadius: 0,
-                  borderDash: [6, 4]
-                },
-                {
-                  label: '+1.96 SD',
-                  data: [{ x: x1, y: upper }, { x: x2, y: upper }],
-                  type: 'line',
-                  borderColor: '#fb7185',
-                  borderWidth: 2,
-                  pointRadius: 0,
-                  borderDash: [4, 4]
-                },
-                {
-                  label: '-1.96 SD',
-                  data: [{ x: x1, y: lower }, { x: x2, y: lower }],
-                  type: 'line',
-                  borderColor: '#fb7185',
-                  borderWidth: 2,
-                  pointRadius: 0,
-                  borderDash: [4, 4]
-                }
-              ]
-            },
-            options: baseOptions('均值（X 与 Y 的平均）', '差值（Y - X）', gridColor, tickColor)
-          };
-        } else if (type === 'line') {
-          const sorted = [...points].sort((a, b) => a.x - b.x);
-          chartSubtitle.textContent = '折线图：按 X 值升序连接数据点，适合观察连续趋势。';
-          config = {
-            type: 'line',
-            data: {
-              datasets: [{
-                label: 'X/Y 折线',
-                data: sorted,
-                borderColor: color,
-                backgroundColor: color + '33',
-                pointBackgroundColor: color,
-                pointBorderColor: '#ffffff',
-                pointBorderWidth: 1,
-                pointRadius: 4,
-                pointHoverRadius: 7,
-                borderWidth: 3,
-                tension: 0.25,
-                fill: true
-              }]
-            },
-            options: baseOptions('X', 'Y', gridColor, tickColor)
-          };
-        } else {
-          chartSubtitle.textContent = '散点图：展示两列 X/Y 坐标的分布关系，适合快速发现相关性与异常点。';
-          config = {
-            type: 'scatter',
-            data: {
-              datasets: [{
-                label: 'X/Y 散点',
-                data: points,
-                backgroundColor: color,
-                borderColor: '#ffffff',
-                borderWidth: 1,
-                pointRadius: 5,
-                pointHoverRadius: 8
-              }]
-            },
-            options: baseOptions('X', 'Y', gridColor, tickColor)
-          };
-        }
-
-        chart = new Chart(canvas, config);
-      }
-
-      function baseOptions(xTitle, yTitle, gridColor, tickColor) {
-        return {
-          responsive: true,
-          maintainAspectRatio: false,
-          parsing: false,
-          animation: {
-            duration: 420,
-            easing: 'easeOutQuart'
-          },
-          interaction: {
-            mode: 'nearest',
-            intersect: false
-          },
-          plugins: {
-            legend: {
-              labels: {
-                color: 'rgba(226, 232, 240, 0.9)',
-                usePointStyle: true,
-                boxWidth: 8,
-                boxHeight: 8
-              }
-            },
-            tooltip: {
-              backgroundColor: 'rgba(15, 23, 42, 0.96)',
-              titleColor: '#ffffff',
-              bodyColor: '#e2e8f0',
-              borderColor: 'rgba(34, 211, 238, 0.35)',
-              borderWidth: 1,
-              padding: 12,
-              callbacks: {
-                label: (ctx) => {
-                  const p = ctx.raw || {};
-                  return `${ctx.dataset.label || '数据'}：(${formatNumber(p.x)}, ${formatNumber(p.y)})`;
-                }
-              }
-            }
-          },
-          scales: {
-            x: {
-              type: 'linear',
-              title: {
-                display: true,
-                text: xTitle,
-                color: tickColor,
-                font: { weight: 'bold' }
-              },
-              grid: { color: gridColor },
-              ticks: { color: tickColor }
-            },
-            y: {
-              title: {
-                display: true,
-                text: yTitle,
-                color: tickColor,
-                font: { weight: 'bold' }
-              },
-              grid: { color: gridColor },
-              ticks: { color: tickColor }
-            }
-          }
-        };
-      }
-
-      function draw() {
-        try {
-          const result = parseInput(dataInput.value);
-          if (!result.ok) {
-            destroyChart();
-            resetStats();
-            chartSubtitle.textContent = '请修正输入错误后重新绘制。';
-            showError(result.message);
-            return;
-          }
-          updateStats(result.points);
-          buildChart(result.points);
-          showSuccess(`成功解析 ${result.points.length} 个数据点，图表已更新。`);
-        } catch (err) {
-          destroyChart();
-          resetStats();
-          chartSubtitle.textContent = '发生异常，请检查输入后重试。';
-          showError('处理数据时出现异常，但应用仍可继续使用。请检查输入格式是否为两列数字。');
-        }
-      }
-
-      function scheduleDraw() {
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(draw, 350);
-      }
-
-      function flashButton(btn) {
-        btn.classList.add('ring-4', 'ring-cyan-300/30');
-        setTimeout(() => btn.classList.remove('ring-4', 'ring-cyan-300/30'), 180);
-      }
-
-      drawBtn.addEventListener('click', () => {
-        flashButton(drawBtn);
-        draw();
-      });
-
-      sampleBtn.addEventListener('click', () => {
-        flashButton(sampleBtn);
-        dataInput.value = sampleData;
-        chartType.value = 'scatter';
-        draw();
-      });
-
-      clearBtn.addEventListener('click', () => {
-        flashButton(clearBtn);
-        dataInput.value = '';
-        destroyChart();
-        resetStats();
-        clearMessages();
-        chartSubtitle.textContent = '已清空数据，请输入两列 X/Y 坐标。';
-      });
-
-      downloadBtn.addEventListener('click', () => {
-        flashButton(downloadBtn);
-        try {
-          if (!chart) {
-            showError('当前没有可下载的图表。请先输入有效数据并绘制图表。');
-            return;
-          }
-          const link = document.createElement('a');
-          link.download = `bland-altman-plot-${Date.now()}.png`;
-          link.href = canvas.toDataURL('image/png', 1);
-          document.body.appendChild(link);
-          link.click();
-          link.remove();
-          showSuccess('图表 PNG 已开始下载。');
-        } catch (err) {
-          showError('下载失败。请确认浏览器允许当前页面导出画布图片。');
-        }
-      });
-
-      dataInput.addEventListener('input', scheduleDraw);
-      chartType.addEventListener('change', draw);
-      pointColor.addEventListener('change', draw);
-
-      window.addEventListener('load', draw);
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
     }
+
+    function t(key, vars = {}) {
+      const dict = I18N[currentLanguage] || I18N.zh;
+      let value = dict[key] || I18N.zh[key] || "";
+      Object.keys(vars).forEach((name) => {
+        value = value.replaceAll("{" + name + "}", String(vars[name]));
+      });
+      return value;
+    }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.title = dict.documentTitle;
+
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute("content", dict.metaDescription);
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (keywords) keywords.setAttribute("content", dict.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.textContent = dict[key];
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("placeholder", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("title", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("aria-label", dict[key]);
+      });
+
+      const themeLabel = document.querySelector("[data-theme-label]");
+      if (themeLabel) themeLabel.textContent = dict.themeSystem;
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        if (currentLanguage === "zh") {
+          zhBtn.classList.add("bg-cyan-400", "text-slate-950");
+          enBtn.classList.add("text-slate-600", "dark:text-slate-400");
+        } else {
+          enBtn.classList.add("bg-cyan-400", "text-slate-950");
+          zhBtn.classList.add("text-slate-600", "dark:text-slate-400");
+        }
+      }
+
+      setStatus(currentStatusKey, currentStatusVars);
+      updateStatsDisplay();
+      drawPlot();
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function setLanguage(lang) {
+      try {
+        localStorage.setItem("microToolsLanguage", lang === "en" ? "en" : "zh");
+      } catch (error) {}
+      applyLanguage(lang);
+    }
+
+    function setStatus(key, vars = {}) {
+      currentStatusKey = key;
+      currentStatusVars = vars;
+      const status = document.getElementById("statusText");
+      if (status) status.textContent = t(key, vars);
+    }
+
+    function openSponsorModal(event) {
+      if (event && typeof event.preventDefault === "function") event.preventDefault();
+      const modal = document.getElementById("sponsorModal");
+      if (modal) {
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      }
+    }
+
+    function closeSponsorModal() {
+      const modal = document.getElementById("sponsorModal");
+      if (modal) {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+    }
+
+    function parseData(text) {
+      const rows = text.split(/\r?\n/);
+      const pairs = [];
+      rows.forEach((row) => {
+        const clean = row.trim();
+        if (!clean) return;
+        const parts = clean.split(/[,\t; ]+/).filter(Boolean);
+        if (parts.length < 2) return;
+        const x = Number(parts[0]);
+        const y = Number(parts[1]);
+        if (Number.isFinite(x) && Number.isFinite(y)) pairs.push({ x, y });
+      });
+      return pairs;
+    }
+
+    function computeStats(pairs) {
+      const points = pairs.map((pair) => ({
+        mean: (pair.x + pair.y) / 2,
+        diff: pair.x - pair.y
+      }));
+      const count = points.length;
+      const bias = points.reduce((sum, point) => sum + point.diff, 0) / count;
+      const variance = count > 1
+        ? points.reduce((sum, point) => sum + Math.pow(point.diff - bias, 2), 0) / (count - 1)
+        : 0;
+      const sd = Math.sqrt(variance);
+      const upper = bias + 1.96 * sd;
+      const lower = bias - 1.96 * sd;
+      return { count, bias, sd, upper, lower };
+    }
+
+    function precision() {
+      const value = Number(document.getElementById("precisionInput")?.value);
+      if (!Number.isFinite(value)) return 3;
+      return Math.min(8, Math.max(0, Math.round(value)));
+    }
+
+    function formatNumber(value) {
+      if (!Number.isFinite(value)) return "—";
+      return value.toFixed(precision());
+    }
+
+    function updateStatsDisplay() {
+      document.getElementById("countValue").textContent = lastStats ? String(lastStats.count) : "0";
+      document.getElementById("biasValue").textContent = lastStats ? formatNumber(lastStats.bias) : "—";
+      document.getElementById("upperValue").textContent = lastStats ? formatNumber(lastStats.upper) : "—";
+      document.getElementById("lowerValue").textContent = lastStats ? formatNumber(lastStats.lower) : "—";
+    }
+
+    function canvasColors() {
+      const dark = document.documentElement.classList.contains("dark");
+      return {
+        bg: dark ? "#020617" : "#ffffff",
+        text: dark ? "#e2e8f0" : "#0f172a",
+        muted: dark ? "#94a3b8" : "#64748b",
+        grid: dark ? "rgba(148,163,184,0.18)" : "rgba(100,116,139,0.18)",
+        cyan: "#22d3ee",
+        bias: "#06b6d4",
+        upper: "#f97316",
+        lower: "#10b981"
+      };
+    }
+
+    function drawPlot() {
+      const canvas = document.getElementById("plotCanvas");
+      if (!canvas) return;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        setStatus("errorNoCanvas");
+        return;
+      }
+
+      const rect = canvas.getBoundingClientRect();
+      const cssWidth = Math.max(280, Math.floor(rect.width || 640));
+      const cssHeight = Math.max(300, Math.floor(rect.height || 320));
+      const ratio = window.devicePixelRatio || 1;
+      canvas.width = Math.floor(cssWidth * ratio);
+      canvas.height = Math.floor(cssHeight * ratio);
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+      const colors = canvasColors();
+      ctx.fillStyle = colors.bg;
+      ctx.fillRect(0, 0, cssWidth, cssHeight);
+
+      const pad = { left: 54, right: 18, top: 46, bottom: 48 };
+      const width = cssWidth - pad.left - pad.right;
+      const height = cssHeight - pad.top - pad.bottom;
+
+      ctx.fillStyle = colors.text;
+      ctx.font = "700 14px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+      ctx.fillText(t("chartTitle"), pad.left, 24);
+
+      if (!lastStats || lastPoints.length === 0) {
+        ctx.fillStyle = colors.muted;
+        ctx.font = "13px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+        ctx.fillText(t("statusReady"), pad.left, pad.top + 30);
+        return;
+      }
+
+      const xs = lastPoints.map((point) => point.mean);
+      const ys = lastPoints.map((point) => point.diff).concat([lastStats.bias, lastStats.upper, lastStats.lower]);
+      let minX = Math.min(...xs), maxX = Math.max(...xs);
+      let minY = Math.min(...ys), maxY = Math.max(...ys);
+      if (minX === maxX) { minX -= 1; maxX += 1; }
+      if (minY === maxY) { minY -= 1; maxY += 1; }
+      const xPad = (maxX - minX) * 0.08;
+      const yPad = (maxY - minY) * 0.14;
+      minX -= xPad; maxX += xPad; minY -= yPad; maxY += yPad;
+
+      const xScale = (value) => pad.left + ((value - minX) / (maxX - minX)) * width;
+      const yScale = (value) => pad.top + height - ((value - minY) / (maxY - minY)) * height;
+
+      ctx.strokeStyle = colors.grid;
+      ctx.lineWidth = 1;
+      ctx.font = "11px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+      ctx.fillStyle = colors.muted;
+      for (let i = 0; i <= 4; i++) {
+        const x = pad.left + (width * i) / 4;
+        const y = pad.top + (height * i) / 4;
+        ctx.beginPath(); ctx.moveTo(x, pad.top); ctx.lineTo(x, pad.top + height); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + width, y); ctx.stroke();
+        const xv = minX + ((maxX - minX) * i) / 4;
+        const yv = maxY - ((maxY - minY) * i) / 4;
+        ctx.fillText(xv.toFixed(2), x - 12, pad.top + height + 18);
+        ctx.fillText(yv.toFixed(2), 8, y + 4);
+      }
+
+      ctx.strokeStyle = colors.muted;
+      ctx.beginPath();
+      ctx.moveTo(pad.left, pad.top);
+      ctx.lineTo(pad.left, pad.top + height);
+      ctx.lineTo(pad.left + width, pad.top + height);
+      ctx.stroke();
+
+      function referenceLine(value, color, label) {
+        const y = yScale(value);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 1.5;
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+        ctx.moveTo(pad.left, y);
+        ctx.lineTo(pad.left + width, y);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = color;
+        ctx.font = "11px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+        ctx.fillText(label + " " + formatNumber(value), pad.left + 8, y - 6);
+      }
+
+      referenceLine(lastStats.upper, colors.upper, t("chartUpper"));
+      referenceLine(lastStats.bias, colors.bias, t("chartBias"));
+      referenceLine(lastStats.lower, colors.lower, t("chartLower"));
+
+      const mode = document.getElementById("plotMode")?.value || "scatter";
+      if (mode === "line") {
+        ctx.strokeStyle = "rgba(34,211,238,0.45)";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        lastPoints.forEach((point, index) => {
+          const x = xScale(point.mean);
+          const y = yScale(point.diff);
+          if (index === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+      }
+
+      lastPoints.forEach((point) => {
+        ctx.fillStyle = colors.cyan;
+        ctx.beginPath();
+        ctx.arc(xScale(point.mean), yScale(point.diff), 4, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      ctx.fillStyle = colors.muted;
+      ctx.font = "12px -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif";
+      ctx.fillText(t("chartXAxis"), pad.left + width / 2 - 48, cssHeight - 12);
+      ctx.save();
+      ctx.translate(14, pad.top + height / 2 + 48);
+      ctx.rotate(-Math.PI / 2);
+      ctx.fillText(t("chartYAxis"), 0, 0);
+      ctx.restore();
+    }
+
+    function drawFromInput() {
+      const input = document.getElementById("dataInput");
+      const pairs = parseData(input?.value || "");
+      if (pairs.length < 3) {
+        lastStats = null;
+        lastPoints = [];
+        updateStatsDisplay();
+        drawPlot();
+        setStatus("errorNotEnough");
+        return;
+      }
+      lastPoints = pairs.map((pair) => ({ mean: (pair.x + pair.y) / 2, diff: pair.x - pair.y }));
+      lastStats = computeStats(pairs);
+      updateStatsDisplay();
+      drawPlot();
+      setStatus("statusDrawn", { count: pairs.length });
+    }
+
+    function fillSample() {
+      const sample = [
+        "101.2, 100.4",
+        "98.7, 99.1",
+        "110.3, 108.8",
+        "95.4, 96.0",
+        "123.1, 121.9",
+        "117.6, 116.8",
+        "104.5, 105.2",
+        "88.9, 89.6",
+        "132.4, 130.5",
+        "76.8, 77.4",
+        "144.2, 142.6",
+        "91.3, 92.0"
+      ].join("\n");
+      document.getElementById("dataInput").value = sample;
+      setStatus("statusSample");
+      drawFromInput();
+    }
+
+    function clearAll() {
+      document.getElementById("dataInput").value = "";
+      lastStats = null;
+      lastPoints = [];
+      updateStatsDisplay();
+      drawPlot();
+      setStatus("statusCleared");
+    }
+
+    async function copySummary() {
+      if (!lastStats) {
+        setStatus("errorNotEnough");
+        return;
+      }
+      const summary = [
+        t("summaryTitle"),
+        t("summaryCount") + ": " + lastStats.count,
+        t("summaryBias") + ": " + formatNumber(lastStats.bias),
+        t("summarySd") + ": " + formatNumber(lastStats.sd),
+        t("summaryUpper") + ": " + formatNumber(lastStats.upper),
+        t("summaryLower") + ": " + formatNumber(lastStats.lower)
+      ].join("\n");
+      try {
+        await navigator.clipboard.writeText(summary);
+        setStatus("statusCopied");
+      } catch (error) {
+        setStatus("statusCopyFailed");
+      }
+    }
+
+    function downloadImage() {
+      if (!lastStats) {
+        setStatus("errorNotEnough");
+        return;
+      }
+      drawPlot();
+      const canvas = document.getElementById("plotCanvas");
+      const link = document.createElement("a");
+      link.download = "bland-altman-plot.png";
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+      setStatus("statusDownloaded");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+
+      document.getElementById("drawBtn")?.addEventListener("click", drawFromInput);
+      document.getElementById("sampleBtn")?.addEventListener("click", fillSample);
+      document.getElementById("clearBtn")?.addEventListener("click", clearAll);
+      document.getElementById("copyBtn")?.addEventListener("click", copySummary);
+      document.getElementById("downloadBtn")?.addEventListener("click", downloadImage);
+      document.getElementById("plotMode")?.addEventListener("change", drawPlot);
+      document.getElementById("precisionInput")?.addEventListener("input", () => {
+        updateStatsDisplay();
+        drawPlot();
+      });
+      window.addEventListener("resize", drawPlot);
+
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="./sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

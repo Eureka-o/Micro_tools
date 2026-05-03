@@ -1,500 +1,529 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>text-to-binary｜文本转二进制字符串工具</title>
-  <meta name="description" content="文本转二进制字符串工具。将用户输入的普通文本编码为由0和1组成的二进制流，并支持反向解码。">
-  <meta name="keywords" content="text-to-binary,文本转二进制,二进制转文本,字符串转二进制,在线二进制转换工具,UTF-8二进制编码,0和1转换器">
-  <link rel="icon" type="image/png" href="../assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
-  <link rel="canonical" href="https://mymicrotools.xyz/en/text-to-binary.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文本转二进制 - Micro Tools Matrix 本地工具箱</title>
+  <meta name="description" content="Micro Tools Matrix 文本转二进制字符串工具，在浏览器本地处理普通文本与二进制流互转，无需上传。">
+  <meta name="keywords" content="文本转二进制,二进制转文本,浏览器本地处理,无需上传,Micro Tools Matrix">
+  <link rel="canonical" href="https://mymicrotools.xyz/text-to-binary.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/text-to-binary.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/text-to-binary.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/text-to-binary.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/en/text-to-binary.html">
-  <meta property="og:title" content="text-to-binary｜文本转二进制字符串工具">
-  <meta property="og:description" content="文本转二进制字符串工具。将用户输入的普通文本编码为由0和1组成的二进制流，并支持反向解码。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="text-to-binary｜文本转二进制字符串工具">
-  <meta name="twitter:description" content="文本转二进制字符串工具。将用户输入的普通文本编码为由0和1组成的二进制流，并支持反向解码。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="../style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Text to Binary",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "category": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">文本转二进制</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="../text-to-binary.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./text-to-binary.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="pointer-events-none fixed inset-0 overflow-hidden">
-    <div class="absolute left-1/2 top-[-12rem] h-[34rem] w-[34rem] -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute bottom-[-14rem] right-[-8rem] h-[32rem] w-[32rem] rounded-full bg-indigo-500/20 blur-3xl"></div>
-  </div>
-
-  <header class="relative border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 backdrop-blur-xl">
-    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-            在线编码 / 解码工具
-          </p>
-          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">文本转二进制字符串工具</h1>
-          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            将普通文本快速编码为由 0 和 1 组成的二进制流，也可以把合法的二进制字符串反向还原为文本。
-          </p>
-        </div>
-        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 text-sm text-slate-700 dark:text-slate-300 shadow-2xl">
-          <div class="font-semibold text-gray-900 dark:text-white">编码标准</div>
-          <div class="mt-1">UTF-8 字节编码 · 8 位一组</div>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
         </div>
       </div>
-    </div>
+    </nav>
   </header>
 
-  <main class="relative mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-4 shadow-2xl shadow-black/20 sm:p-6 lg:p-8">
-      <div class="grid gap-6 lg:grid-cols-2">
-        <div class="rounded-2xl border border-cyan-400/20 bg-slate-50 dark:bg-slate-900/90 p-5">
-          <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入区</h2>
-            <div class="inline-flex rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 p-1">
-              <button id="encodeMode" type="button" class="mode-btn rounded-lg px-4 py-2 text-sm font-semibold transition bg-cyan-400 text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20">
-                文本转二进制
-              </button>
-              <button id="decodeMode" type="button" class="mode-btn rounded-lg px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300 transition hover:bg-white/10">
-                二进制转文本
-              </button>
-            </div>
-          </div>
-
-          <label for="inputText" id="inputLabel" class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
-            Please enter要转换的文本
-          </label>
-          <textarea id="inputText" rows="12" spellcheck="false" class="w-full resize-y rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none ring-0 transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" placeholder="例如：Hello，世界！"></textarea>
-
-          <div id="errorBox" class="mt-4 hidden rounded-2xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm leading-6 text-red-200"></div>
-
-          <div class="mt-5 grid gap-4 sm:grid-cols-2">
-            <div>
-              <label for="separatorSelect" class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">输出分隔符</label>
-              <select id="separatorSelect" class="w-full rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 px-4 py-3 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10">
-                <option value="space">空格分隔</option>
-                <option value="none">连续二进制流</option>
-                <option value="newline">换行分隔</option>
-                <option value="comma">逗号分隔</option>
-              </select>
-            </div>
-            <div class="flex items-end">
-              <button id="sampleBtn" type="button" class="w-full rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm font-semibold text-slate-900 dark:text-slate-100 transition hover:bg-white/10 active:scale-[0.98]">
-                填入示例
-              </button>
-            </div>
-          </div>
-
-          <div class="mt-5 grid gap-3 sm:grid-cols-3">
-            <button id="convertBtn" type="button" class="rounded-xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-[0.98]">
-              开始转换
-            </button>
-            <button id="swapBtn" type="button" class="rounded-xl border border-indigo-300/30 bg-indigo-400/10 px-5 py-3 font-semibold text-indigo-100 transition hover:bg-indigo-400/20 active:scale-[0.98]">
-              交换输入输出
-            </button>
-            <button id="clearBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-3 font-semibold text-slate-900 dark:text-slate-100 transition hover:bg-white/10 active:scale-[0.98]">
-              Clear
-            </button>
-          </div>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">文本转二进制</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">将普通文本编码为由 0 和 1 组成的二进制流，也可以把二进制流反向解码为文本。所有处理都在浏览器内完成，无需上传。</p>
         </div>
-
-        <div class="rounded-2xl border border-indigo-400/20 bg-indigo-950/30 p-5">
-          <div class="mb-4 flex items-center justify-between gap-3">
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输出区</h2>
-            <span id="statsText" class="rounded-full border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">等待转换</span>
-          </div>
-
-          <label for="outputText" class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
-            转换结果
-          </label>
-          <textarea id="outputText" rows="12" readonly spellcheck="false" class="w-full resize-y rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 p-4 font-mono text-sm leading-6 text-cyan-100 outline-none placeholder:text-slate-500" placeholder="转换结果会显示在这里"></textarea>
-
-          <div id="successBox" class="mt-4 hidden rounded-2xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm leading-6 text-emerald-200"></div>
-
-          <div class="mt-5 grid gap-3 sm:grid-cols-2">
-            <button id="copyBtn" type="button" class="rounded-xl bg-white px-5 py-3 font-bold text-slate-950 dark:text-slate-100 transition hover:bg-slate-200 active:scale-[0.98]">
-              Copy result
-            </button>
-            <button id="downloadBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-3 font-semibold text-slate-900 dark:text-slate-100 transition hover:bg-white/10 active:scale-[0.98]">
-              Download .txt
-            </button>
-          </div>
-
-          <div class="mt-5 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/50 p-4 text-sm leading-6 text-slate-700 dark:text-slate-300">
-            <p class="font-semibold text-gray-900 dark:text-white">提示</p>
-            <p class="mt-1">编码时会将文本按 UTF-8 转为字节，每个字节输出 8 位二进制；解码时会自动忽略空格、换行、逗号、分号、竖线、下划线和短横线等常见分隔符。</p>
-          </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/70 p-6 shadow-xl sm:p-8">
-      <h2 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">关于 text-to-binary 文本转二进制字符串工具</h2>
-      <div class="mt-4 space-y-4 text-base leading-8 text-slate-700 dark:text-slate-300">
-        <p>
-          text-to-binary 是一款面向开发者、学生和技术文档编写者的在线文本转二进制工具，可将Chinese、英文、数字、标点和 Emoji 等普通文本编码为由 0 和 1 组成的二进制字符串。工具采用 UTF-8 字节编码方式，每个字节固定输出 8 位，适合用于学习计算机编码原理、调试数据传输内容、Generate二进制示例以及验证字符串底层表示。
-        </p>
-        <p>
-          传统手动转换容易出现位数不足、分隔混乱或Chinese乱码等问题，本工具提供文本转二进制和二进制转文本双向转换能力，并支持空格、换行、逗号或连续二进制流等输出格式。使用时只需在输入区粘贴文本，点击“开始转换”即可得到结果；若需要反向解码，切换到“二进制转文本”模式并输入合法的 0 和 1 characters串即可。对于搜索“在线字符串转二进制”“二进制转文本解码”“UTF-8 二进制编码转换器”的用户来说，这是一款简洁、安全、无需安装的软件工具。
-        </p>
-      </div>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <label for="modeSelect" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="modeLabel">转换方向</label>
+        <select id="modeSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+          <option value="encode" data-i18n="modeEncode">文本转二进制</option>
+          <option value="decode" data-i18n="modeDecode">二进制转文本</option>
+        </select>
+
+        <label for="inputText" class="mb-2 mt-4 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="textLabel">内容</label>
+        <textarea id="inputText" rows="11" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="inputPlaceholder" placeholder="输入要转换的文本"></textarea>
+
+        <div class="mt-3 grid gap-3 sm:grid-cols-2">
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="separatorLabel">二进制分隔符</span>
+            <select id="separatorSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100">
+              <option value="space" data-i18n="separatorSpace">空格</option>
+              <option value="none" data-i18n="separatorNone">不分隔</option>
+              <option value="newline" data-i18n="separatorNewline">换行</option>
+            </select>
+          </label>
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="encodingLabel">编码</span>
+            <select id="encodingSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100">
+              <option value="utf8">UTF-8</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="convertBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">转换</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">填入示例</button>
+          <button id="swapBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="swapAction">交换</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+        </div>
+
+        <label for="outputText" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="resultLabel">转换结果</label>
+        <textarea id="outputText" rows="14" readonly class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="outputPlaceholder" placeholder="结果会显示在这里"></textarea>
+
+        <div class="mt-3 grid gap-3 sm:grid-cols-3">
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-white/[0.04]">
+            <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="bytesLabel">字节数</p>
+            <p id="byteCount" class="mt-1 text-lg font-bold tabular-nums text-slate-950 dark:text-white">0</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-white/[0.04]">
+            <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="bitsLabel">位数</p>
+            <p id="bitCount" class="mt-1 text-lg font-bold tabular-nums text-slate-950 dark:text-white">0</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-white/[0.04]">
+            <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="charsLabel">字符数</p>
+            <p id="charCount" class="mt-1 text-lg font-bold tabular-nums text-slate-950 dark:text-white">0</p>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
+          <button id="downloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadAction">下载结果</button>
+        </div>
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite" data-i18n="statusReady">准备就绪。</p>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">这款文本转二进制工具专为开发者、学习者和内容校验场景设计，可以把普通文本转换为由 0 和 1 组成的二进制字符串，也支持将规范二进制流解码回文本。工具使用 UTF-8 编码，适合处理中文、英文、符号和常见表情字符。所有转换都在浏览器本地处理，无需上传文本、无需注册账号，也不会把输入内容发送到服务器。你可以选择空格、换行或不分隔输出，便于复制到文档、代码注释、课堂示例或调试记录中。Micro Tools Matrix 保持工具免费、轻量、快速，适合日常开发、数据学习和隐私敏感的临时转换任务。</article>
   </main>
 
-  <footer class="relative mx-auto max-w-6xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-    <p>text-to-binary · 本地浏览器内完成转换，不上传输入内容</p>
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+
+  <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md">
+    <div class="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
+      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor">×</button>
+      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">赞赏支持</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">保持工具免费、快速且无广告。</p>
+      <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="buyCoffee">Buy Me a Coffee</a>
+    </div>
+  </div>
 
   <script>
-    (() => {
-      'use strict';
-
-      const els = {
-        encodeMode: document.getElementById('encodeMode'),
-        decodeMode: document.getElementById('decodeMode'),
-        inputLabel: document.getElementById('inputLabel'),
-        inputText: document.getElementById('inputText'),
-        outputText: document.getElementById('outputText'),
-        separatorSelect: document.getElementById('separatorSelect'),
-        convertBtn: document.getElementById('convertBtn'),
-        sampleBtn: document.getElementById('sampleBtn'),
-        swapBtn: document.getElementById('swapBtn'),
-        clearBtn: document.getElementById('clearBtn'),
-        copyBtn: document.getElementById('copyBtn'),
-        downloadBtn: document.getElementById('downloadBtn'),
-        errorBox: document.getElementById('errorBox'),
-        successBox: document.getElementById('successBox'),
-        statsText: document.getElementById('statsText')
-      };
-
-      let mode = 'encode';
-      const encoder = new TextEncoder();
-      const decoder = new TextDecoder('utf-8', { fatal: true });
-
-      function setMode(nextMode) {
-        mode = nextMode === 'decode' ? 'decode' : 'encode';
-        const activeClass = ['bg-cyan-400', 'text-slate-950', 'shadow-lg', 'shadow-cyan-400/20'];
-        const inactiveClass = ['text-slate-300', 'hover:bg-white/10'];
-
-        if (mode === 'encode') {
-          els.encodeMode.classList.add(...activeClass);
-          els.encodeMode.classList.remove(...inactiveClass);
-          els.decodeMode.classList.remove(...activeClass);
-          els.decodeMode.classList.add(...inactiveClass);
-          els.inputLabel.textContent = 'Please enter要转换的文本';
-          els.inputText.placeholder = '例如：Hello，世界！';
-          els.separatorSelect.disabled = false;
-          els.separatorSelect.classList.remove('opacity-50', 'cursor-not-allowed');
-        } else {
-          els.decodeMode.classList.add(...activeClass);
-          els.decodeMode.classList.remove(...inactiveClass);
-          els.encodeMode.classList.remove(...activeClass);
-          els.encodeMode.classList.add(...inactiveClass);
-          els.inputLabel.textContent = 'Please enter要解码的二进制字符串';
-          els.inputText.placeholder = '例如：01001000 01100101 01101100 01101100 01101111';
-          els.separatorSelect.disabled = true;
-          els.separatorSelect.classList.add('opacity-50', 'cursor-not-allowed');
-        }
-        hideMessages();
-        updateStats();
+    const I18N = {
+      zh: {
+        toolName: "文本转二进制",
+        documentTitle: "文本转二进制 - Micro Tools Matrix 本地工具箱",
+        metaDescription: "Micro Tools Matrix 文本转二进制字符串工具，在浏览器本地处理普通文本与二进制流互转，无需上传。",
+        metaKeywords: "文本转二进制,二进制转文本,浏览器本地处理,无需上传,Micro Tools Matrix",
+        sponsor: "赞赏",
+        closeSponsor: "关闭赞赏窗口",
+        sponsorTitle: "赞赏支持",
+        sponsorSubtitle: "保持工具免费、快速且无广告。",
+        buyCoffee: "Buy Me a Coffee",
+        eyebrow: "浏览器本地处理",
+        h1: "文本转二进制",
+        intro: "将普通文本编码为由 0 和 1 组成的二进制流，也可以把二进制流反向解码为文本。所有处理都在浏览器内完成，无需上传。",
+        localBadge: "本地运行",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        outputTitle: "结果",
+        outputBadge: "输出",
+        modeLabel: "转换方向",
+        modeEncode: "文本转二进制",
+        modeDecode: "二进制转文本",
+        textLabel: "内容",
+        inputPlaceholder: "输入要转换的文本",
+        outputPlaceholder: "结果会显示在这里",
+        separatorLabel: "二进制分隔符",
+        separatorSpace: "空格",
+        separatorNone: "不分隔",
+        separatorNewline: "换行",
+        encodingLabel: "编码",
+        primaryAction: "转换",
+        sampleAction: "填入示例",
+        swapAction: "交换",
+        secondaryAction: "清空",
+        resultLabel: "转换结果",
+        bytesLabel: "字节数",
+        bitsLabel: "位数",
+        charsLabel: "字符数",
+        copyAction: "复制结果",
+        downloadAction: "下载结果",
+        statusReady: "准备就绪。",
+        statusConverted: "转换完成。",
+        statusCleared: "已清空。",
+        statusSample: "已填入示例。",
+        statusSwapped: "已交换输入与结果。",
+        statusCopied: "结果已复制。",
+        statusDownloaded: "结果已下载。",
+        errorEmpty: "请输入要转换的内容。",
+        errorInvalidBinary: "二进制输入只能包含 0、1、空格、换行或制表符。",
+        errorInvalidLength: "二进制位数必须是 8 的倍数。请检查是否缺少 0 或 1。",
+        errorDecodeFailed: "无法解码该二进制内容，请检查输入是否为有效 UTF-8 数据。",
+        errorCopy: "复制失败，请手动选择结果复制。",
+        errorNoOutput: "暂无可操作的结果。",
+        sampleText: "Micro Tools Matrix 本地运行",
+        sampleBinary: "01001101 01101001 01100011 01110010 01101111 00100000 01010100 01101111 01101111 01101100 01110011",
+        seoArticle: "这款文本转二进制工具专为开发者、学习者和内容校验场景设计，可以把普通文本转换为由 0 和 1 组成的二进制字符串，也支持将规范二进制流解码回文本。工具使用 UTF-8 编码，适合处理中文、英文、符号和常见表情字符。所有转换都在浏览器本地处理，无需上传文本、无需注册账号，也不会把输入内容发送到服务器。你可以选择空格、换行或不分隔输出，便于复制到文档、代码注释、课堂示例或调试记录中。Micro Tools Matrix 保持工具免费、轻量、快速，适合日常开发、数据学习和隐私敏感的临时转换任务。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统"
+      },
+      en: {
+        toolName: "Text to Binary",
+        documentTitle: "Text to Binary - Micro Tools Matrix Local Toolkit",
+        metaDescription: "Micro Tools Matrix text to binary converter runs browser-local processing for text and binary stream conversion with no upload required.",
+        metaKeywords: "text to binary,binary to text,browser-local processing,no upload,free online developer tool,Micro Tools Matrix",
+        sponsor: "Sponsor",
+        closeSponsor: "Close sponsor dialog",
+        sponsorTitle: "Support the project",
+        sponsorSubtitle: "Keep the tools free, fast, and ad-free.",
+        buyCoffee: "Buy Me a Coffee",
+        eyebrow: "Browser-local processing",
+        h1: "Text to Binary",
+        intro: "Encode plain text into a binary stream made of 0 and 1, or decode binary back into readable text. Everything runs in your browser with no upload.",
+        localBadge: "Local",
+        inputTitle: "Input",
+        inputBadge: "Input",
+        outputTitle: "Result",
+        outputBadge: "Output",
+        modeLabel: "Direction",
+        modeEncode: "Text to binary",
+        modeDecode: "Binary to text",
+        textLabel: "Content",
+        inputPlaceholder: "Enter text to convert",
+        outputPlaceholder: "The result will appear here",
+        separatorLabel: "Binary separator",
+        separatorSpace: "Space",
+        separatorNone: "None",
+        separatorNewline: "New line",
+        encodingLabel: "Encoding",
+        primaryAction: "Convert",
+        sampleAction: "Load sample",
+        swapAction: "Swap",
+        secondaryAction: "Clear",
+        resultLabel: "Converted result",
+        bytesLabel: "Bytes",
+        bitsLabel: "Bits",
+        charsLabel: "Characters",
+        copyAction: "Copy result",
+        downloadAction: "Download result",
+        statusReady: "Ready.",
+        statusConverted: "Conversion complete.",
+        statusCleared: "Cleared.",
+        statusSample: "Sample loaded.",
+        statusSwapped: "Input and result swapped.",
+        statusCopied: "Result copied.",
+        statusDownloaded: "Result downloaded.",
+        errorEmpty: "Enter content to convert.",
+        errorInvalidBinary: "Binary input can only contain 0, 1, spaces, line breaks, or tabs.",
+        errorInvalidLength: "The number of binary bits must be a multiple of 8. Check for a missing 0 or 1.",
+        errorDecodeFailed: "This binary content could not be decoded. Check that it is valid UTF-8 data.",
+        errorCopy: "Copy failed. Please select and copy the result manually.",
+        errorNoOutput: "There is no result to use yet.",
+        sampleText: "Micro Tools Matrix runs locally",
+        sampleBinary: "01001101 01101001 01100011 01110010 01101111 00100000 01010100 01101111 01101111 01101100 01110011",
+        seoArticle: "This text to binary tool is a free online developer tool for converting readable text into a stream of 0 and 1, and for decoding well-formed binary data back into text. It uses UTF-8, so it works with English, Chinese, symbols, and many common emoji characters. The workflow is intentionally simple: paste your content, choose the direction, select a separator, and copy or download the result. All processing stays in browser memory through browser-local processing, with no upload required and no account needed. That makes it useful for quick debugging, classroom examples, documentation snippets, protocol notes, and privacy-sensitive temporary conversions. Micro Tools Matrix keeps small utilities lightweight, consistent, and fast, so you can complete everyday development and learning tasks without installing extra software or sending private text to a server.",
+        footer: "Micro Tools Matrix - Browser-local processing with no upload.",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System"
       }
+    };
 
-      function hideMessages() {
-        els.errorBox.classList.add('hidden');
-        els.successBox.classList.add('hidden');
-        els.errorBox.textContent = '';
-        els.successBox.textContent = '';
-      }
+    let currentLanguage = "zh";
 
-      function showError(message) {
-        els.errorBox.textContent = message;
-        els.errorBox.classList.remove('hidden');
-        els.successBox.classList.add('hidden');
-      }
-
-      function showSuccess(message) {
-        els.successBox.textContent = message;
-        els.successBox.classList.remove('hidden');
-        els.errorBox.classList.add('hidden');
-      }
-
-      function pressFeedback(button, label, duration = 900) {
-        const original = button.textContent;
-        button.textContent = label;
-        button.disabled = true;
-        button.classList.add('opacity-80');
-        window.setTimeout(() => {
-          button.textContent = original;
-          button.disabled = false;
-          button.classList.remove('opacity-80');
-        }, duration);
-      }
-
-      function getSeparator() {
-        const value = els.separatorSelect.value;
-        if (value === 'none') return '';
-        if (value === 'newline') return '\n';
-        if (value === 'comma') return ',';
-        return ' ';
-      }
-
-      function encodeTextToBinary(text) {
-        const bytes = encoder.encode(text);
-        return Array.from(bytes, byte => byte.toString(2).padStart(8, '0')).join(getSeparator());
-      }
-
-      function decodeBinaryToText(input) {
-        const trimmed = input.trim();
-        if (!trimmed) {
-          throw new Error('Please enter需要解码的二进制内容。');
-        }
-
-        if (!/^[01\s,;|_\-]+$/.test(trimmed)) {
-          const invalid = trimmed.match(/[^01\s,;|_\-]/);
-          throw new Error(`二进制内容只能包含 0、1 以及常见分隔符。检测到非法字符：${invalid ? invalid[0] : 'Unknown字符'}`);
-        }
-
-        const compact = trimmed.replace(/[\s,;|_\-]/g, '');
-        if (!compact) {
-          throw new Error('未检测到有效的 0 或 1。');
-        }
-
-        if (compact.length % 8 !== 0) {
-          throw new Error(`二进制位数必须是 8 的倍数。当前为 ${compact.length} 位，还差 ${8 - (compact.length % 8)} 位。`);
-        }
-
-        const bytes = new Uint8Array(compact.length / 8);
-        for (let i = 0; i < compact.length; i += 8) {
-          const chunk = compact.slice(i, i + 8);
-          const value = Number.parseInt(chunk, 2);
-          if (!Number.isFinite(value) || value < 0 || value > 255) {
-            throw new Error(`无法解析二进制片段：${chunk}`);
-          }
-          bytes[i / 8] = value;
-        }
-
-        try {
-          return decoder.decode(bytes);
-        } catch (err) {
-          throw new Error('该二进制数据不是有效的 UTF-8 文本编码，无法安全解码。');
-        }
-      }
-
-      function updateStats() {
-        const input = els.inputText.value || '';
-        const output = els.outputText.value || '';
-        if (!input && !output) {
-          els.statsText.textContent = '等待转换';
-          return;
-        }
-
-        if (mode === 'encode') {
-          const byteCount = encoder.encode(input).length;
-          const bitCount = byteCount * 8;
-          els.statsText.textContent = `输入 ${input.length} characters · ${byteCount} 字节 · ${bitCount} 位`;
-        } else {
-          const bits = input.replace(/[\s,;|_\-]/g, '');
-          els.statsText.textContent = `输入 ${bits.length} 位 · 输出 ${output.length} characters`;
-        }
-      }
-
-      function convert() {
-        hideMessages();
-
-        try {
-          const input = els.inputText.value;
-          if (mode === 'encode') {
-            if (input.length === 0) {
-              showError('Please enter要转换的文本，输入不能为空。');
-              els.outputText.value = '';
-              updateStats();
-              return;
-            }
-            els.outputText.value = encodeTextToBinary(input);
-            showSuccess('文本已成功转换为二进制字符串。');
-          } else {
-            els.outputText.value = decodeBinaryToText(input);
-            showSuccess('二进制字符串已成功解码为文本。');
-          }
-          updateStats();
-          pressFeedback(els.convertBtn, '转换完成');
-        } catch (err) {
-          els.outputText.value = '';
-          showError(err && err.message ? err.message : '转换失败，请检查输入格式后重试。');
-          updateStats();
-        }
-      }
-
-      async function copyResult() {
-        hideMessages();
-        const text = els.outputText.value;
-        if (!text) {
-          showError('当前没有可Copy的转换结果。');
-          return;
-        }
-
-        try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(text);
-          } else {
-            els.outputText.focus();
-            els.outputText.select();
-            const ok = document.execCommand('copy');
-            window.getSelection().removeAllRanges();
-            if (!ok) throw new Error('copy failed');
-          }
-          showSuccess('结果Copied到剪贴板。');
-          pressFeedback(els.copyBtn, 'Copied');
-        } catch (err) {
-          showError('Copy failed，请手动选中输出内容进行Copy。');
-        }
-      }
-
-      function downloadResult() {
-        hideMessages();
-        const text = els.outputText.value;
-        if (!text) {
-          showError('当前没有可Download的转换结果。');
-          return;
-        }
-
-        try {
-          const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          const stamp = new Date().toISOString().replace(/[:.]/g, '-');
-          a.href = url;
-          a.download = `text-to-binary-${mode}-${stamp}.txt`;
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-          URL.revokeObjectURL(url);
-          showSuccess('文件已开始Download。');
-          pressFeedback(els.downloadBtn, '已Download');
-        } catch (err) {
-          showError('Download失败，请Copy result后手动保存。');
-        }
-      }
-
-      function fillSample() {
-        hideMessages();
-        if (mode === 'encode') {
-          els.inputText.value = 'Hello，世界！';
-        } else {
-          els.inputText.value = '01001000 01100101 01101100 01101100 01101111';
-        }
-        els.outputText.value = '';
-        updateStats();
-        els.inputText.focus();
-      }
-
-      function clearAll() {
-        hideMessages();
-        els.inputText.value = '';
-        els.outputText.value = '';
-        updateStats();
-        els.inputText.focus();
-        pressFeedback(els.clearBtn, '已Clear');
-      }
-
-      function swapInputOutput() {
-        hideMessages();
-        const output = els.outputText.value;
-        const input = els.inputText.value;
-        els.inputText.value = output;
-        els.outputText.value = input;
-        setMode(mode === 'encode' ? 'decode' : 'encode');
-        updateStats();
-        pressFeedback(els.swapBtn, '已交换');
-      }
-
-      els.encodeMode.addEventListener('click', () => setMode('encode'));
-      els.decodeMode.addEventListener('click', () => setMode('decode'));
-      els.convertBtn.addEventListener('click', convert);
-      els.copyBtn.addEventListener('click', copyResult);
-      els.downloadBtn.addEventListener('click', downloadResult);
-      els.sampleBtn.addEventListener('click', fillSample);
-      els.clearBtn.addEventListener('click', clearAll);
-      els.swapBtn.addEventListener('click', swapInputOutput);
-
-      els.inputText.addEventListener('input', () => {
-        hideMessages();
-        updateStats();
-      });
-
-      els.separatorSelect.addEventListener('change', () => {
-        if (mode === 'encode' && els.inputText.value) {
-          convert();
-        }
-      });
-
-      els.inputText.addEventListener('keydown', (event) => {
-        if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
-          event.preventDefault();
-          convert();
-        }
-      });
-
-      setMode('encode');
-      updateStats();
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      const saved = localStorage.getItem("microToolsLanguage");
+      return saved === "en" || saved === "zh" ? saved : "zh";
     }
+
+    function t(key) {
+      return (I18N[currentLanguage] && I18N[currentLanguage][key]) || I18N.zh[key] || key;
+    }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && Object.prototype.hasOwnProperty.call(I18N[currentLanguage], key)) {
+          node.textContent = I18N[currentLanguage][key];
+        }
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && Object.prototype.hasOwnProperty.call(I18N[currentLanguage], key)) {
+          node.setAttribute("placeholder", I18N[currentLanguage][key]);
+        }
+      });
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && Object.prototype.hasOwnProperty.call(I18N[currentLanguage], key)) {
+          node.setAttribute("title", I18N[currentLanguage][key]);
+        }
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && Object.prototype.hasOwnProperty.call(I18N[currentLanguage], key)) {
+          node.setAttribute("aria-label", I18N[currentLanguage][key]);
+        }
+      });
+
+      document.title = t("documentTitle");
+      const description = document.querySelector('meta[name="description"]');
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (description) description.setAttribute("content", t("metaDescription"));
+      if (keywords) keywords.setAttribute("content", t("metaKeywords"));
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "zh" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "en" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+      }
+
+      const status = document.getElementById("statusText");
+      if (status && status.dataset.statusKey) status.textContent = t(status.dataset.statusKey);
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function setLanguage(lang) {
+      localStorage.setItem("microToolsLanguage", lang);
+      applyLanguage(lang);
+    }
+
+    function setStatus(key, isError) {
+      const status = document.getElementById("statusText");
+      if (!status) return;
+      status.dataset.statusKey = key;
+      status.textContent = t(key);
+      status.className = "mt-4 min-h-6 text-sm leading-6 " + (isError ? "text-red-600 dark:text-red-400" : "text-slate-500 dark:text-slate-400");
+    }
+
+    function textToBinary(text, separatorMode) {
+      const bytes = new TextEncoder().encode(text);
+      const chunks = Array.from(bytes, (byte) => byte.toString(2).padStart(8, "0"));
+      if (separatorMode === "none") return chunks.join("");
+      if (separatorMode === "newline") return chunks.join("\n");
+      return chunks.join(" ");
+    }
+
+    function binaryToText(binary) {
+      if (!/^[01\s]+$/.test(binary)) throw new Error("invalidBinary");
+      const compact = binary.replace(/\s+/g, "");
+      if (compact.length === 0) throw new Error("empty");
+      if (compact.length % 8 !== 0) throw new Error("invalidLength");
+      const bytes = new Uint8Array(compact.match(/.{8}/g).map((chunk) => parseInt(chunk, 2)));
+      try {
+        return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+      } catch (error) {
+        throw new Error("decodeFailed");
+      }
+    }
+
+    function updateStats(output) {
+      const mode = document.getElementById("modeSelect").value;
+      const byteCount = document.getElementById("byteCount");
+      const bitCount = document.getElementById("bitCount");
+      const charCount = document.getElementById("charCount");
+      if (!output) {
+        byteCount.textContent = "0";
+        bitCount.textContent = "0";
+        charCount.textContent = "0";
+        return;
+      }
+      if (mode === "encode") {
+        const compact = output.replace(/\s+/g, "");
+        byteCount.textContent = String(compact.length / 8);
+        bitCount.textContent = String(compact.length);
+        charCount.textContent = String(document.getElementById("inputText").value.length);
+      } else {
+        const bytes = new TextEncoder().encode(output);
+        byteCount.textContent = String(bytes.length);
+        bitCount.textContent = String(bytes.length * 8);
+        charCount.textContent = String(output.length);
+      }
+    }
+
+    function convertValue() {
+      const input = document.getElementById("inputText").value;
+      const output = document.getElementById("outputText");
+      const mode = document.getElementById("modeSelect").value;
+      const separator = document.getElementById("separatorSelect").value;
+      if (!input.trim()) {
+        output.value = "";
+        updateStats("");
+        setStatus("errorEmpty", true);
+        return;
+      }
+      try {
+        output.value = mode === "encode" ? textToBinary(input, separator) : binaryToText(input);
+        updateStats(output.value);
+        setStatus("statusConverted", false);
+      } catch (error) {
+        output.value = "";
+        updateStats("");
+        if (error.message === "invalidBinary") setStatus("errorInvalidBinary", true);
+        else if (error.message === "invalidLength") setStatus("errorInvalidLength", true);
+        else if (error.message === "decodeFailed") setStatus("errorDecodeFailed", true);
+        else setStatus("errorEmpty", true);
+      }
+    }
+
+    function clearAll() {
+      document.getElementById("inputText").value = "";
+      document.getElementById("outputText").value = "";
+      updateStats("");
+      setStatus("statusCleared", false);
+    }
+
+    function loadSample() {
+      const mode = document.getElementById("modeSelect").value;
+      document.getElementById("inputText").value = mode === "encode" ? t("sampleText") : t("sampleBinary");
+      setStatus("statusSample", false);
+      convertValue();
+    }
+
+    function swapValues() {
+      const input = document.getElementById("inputText");
+      const output = document.getElementById("outputText");
+      if (!output.value) {
+        setStatus("errorNoOutput", true);
+        return;
+      }
+      input.value = output.value;
+      output.value = "";
+      const mode = document.getElementById("modeSelect");
+      mode.value = mode.value === "encode" ? "decode" : "encode";
+      updateStats("");
+      setStatus("statusSwapped", false);
+    }
+
+    async function copyResult() {
+      const output = document.getElementById("outputText").value;
+      if (!output) {
+        setStatus("errorNoOutput", true);
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(output);
+        setStatus("statusCopied", false);
+      } catch (error) {
+        setStatus("errorCopy", true);
+      }
+    }
+
+    function downloadResult() {
+      const output = document.getElementById("outputText").value;
+      if (!output) {
+        setStatus("errorNoOutput", true);
+        return;
+      }
+      const blob = new Blob([output], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = document.getElementById("modeSelect").value === "encode" ? "text-to-binary.txt" : "binary-to-text.txt";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      setStatus("statusDownloaded", false);
+    }
+
+    function openSponsorModal(event) {
+      if (event && typeof event.preventDefault === "function") event.preventDefault();
+      const modal = document.getElementById("sponsorModal");
+      modal?.classList.remove("hidden");
+      modal?.classList.add("flex");
+    }
+
+    function closeSponsorModal() {
+      const modal = document.getElementById("sponsorModal");
+      modal?.classList.add("hidden");
+      modal?.classList.remove("flex");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+      document.getElementById("convertBtn")?.addEventListener("click", convertValue);
+      document.getElementById("clearBtn")?.addEventListener("click", clearAll);
+      document.getElementById("sampleBtn")?.addEventListener("click", loadSample);
+      document.getElementById("swapBtn")?.addEventListener("click", swapValues);
+      document.getElementById("copyBtn")?.addEventListener("click", copyResult);
+      document.getElementById("downloadBtn")?.addEventListener("click", downloadResult);
+      document.getElementById("modeSelect")?.addEventListener("change", () => {
+        const input = document.getElementById("inputText");
+        input.setAttribute("placeholder", document.getElementById("modeSelect").value === "encode" ? t("inputPlaceholder") : t("sampleBinary"));
+      });
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="../sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

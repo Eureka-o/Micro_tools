@@ -1,470 +1,590 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>regex-tester - 正则表达式在线测试工具</title>
-  <meta name="description" content="正则表达式在线测试工具。支持高亮匹配结果，内置常用正则片段（如邮箱、手机号）的快捷插入。">
-  <meta name="keywords" content="regex-tester, 正则表达式在线测试, Regex 在线工具, 正则匹配高亮, 邮箱正则, 手机号正则, JavaScript 正则测试工具">
-  <link rel="icon" type="image/png" href="../assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
-  <link rel="canonical" href="https://mymicrotools.xyz/en/regex-tester.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>正则测试器 - Micro Tools Matrix 浏览器本地开发工具</title>
+  <meta name="description" content="Micro Tools Matrix 正则表达式在线测试工具，支持浏览器本地处理、高亮匹配结果和常用正则片段快捷插入，无需上传文本。">
+  <meta name="keywords" content="正则测试器,正则表达式在线测试,匹配高亮,浏览器本地处理,无需上传,Micro Tools Matrix">
+  <link rel="canonical" href="https://mymicrotools.xyz/regex-tester.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/regex-tester.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/regex-tester.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/regex-tester.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/en/regex-tester.html">
-  <meta property="og:title" content="regex-tester - 正则表达式在线测试工具">
-  <meta property="og:description" content="正则表达式在线测试工具。支持高亮匹配结果，内置常用正则片段（如邮箱、手机号）的快捷插入。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="regex-tester - 正则表达式在线测试工具">
-  <meta name="twitter:description" content="正则表达式在线测试工具。支持高亮匹配结果，内置常用正则片段（如邮箱、手机号）的快捷插入。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="../style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Regex Tester",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+    .regex-highlight mark { border-radius: 0.375rem; background: rgba(34, 211, 238, 0.35); color: inherit; padding: 0.05rem 0.15rem; }
+    .regex-highlight mark:nth-of-type(even) { background: rgba(16, 185, 129, 0.25); }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">正则测试器</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="../regex-tester.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./regex-tester.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="absolute inset-0 -z-10 overflow-hidden">
-    <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-violet-500/10 blur-3xl"></div>
-  </div>
-
-  <header class="border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 backdrop-blur">
-    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm text-cyan-200">在线开发工具</p>
-          <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">正则表达式在线测试工具</h1>
-          <p class="mt-3 max-w-2xl text-slate-700 dark:text-slate-300">正则表达式在线测试工具：实时高亮匹配结果，快捷插入常用正则片段，快速验证文本规则。</p>
-        </div>
-        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 shadow-2xl">
-          <div class="text-sm text-slate-400">当前匹配数</div>
-          <div id="matchCount" class="mt-1 text-3xl font-bold text-cyan-300">0</div>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline"></span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
         </div>
       </div>
-    </div>
+    </nav>
   </header>
 
-  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-2" aria-label="正则表达式测试器">
-      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-black/30">
-        <div class="mb-5 flex items-center justify-between gap-3">
-          <h2 class="text-xl font-semibold text-gray-900 dark:text-white">输入区</h2>
-          <button id="clearBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-2 text-sm text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-95">Clear</button>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">正则测试器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中本地测试正则表达式，实时高亮匹配结果，并可快速插入常用片段，无需上传文本。</p>
         </div>
-
-        <label for="patternInput" class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">正则表达式 Pattern</label>
-        <div class="flex overflow-hidden rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950 focus-within:border-cyan-400/70 focus-within:ring-4 focus-within:ring-cyan-400/10">
-          <span class="select-none px-4 py-3 text-slate-500">/</span>
-          <input id="patternInput" type="text" spellcheck="false" autocomplete="off" class="min-w-0 flex-1 bg-transparent py-3 text-slate-900 dark:text-slate-100 outline-none placeholder:text-slate-600" placeholder="例如：\b\w+@\w+\.\w+\b" />
-          <span class="select-none px-4 py-3 text-slate-500">/</span>
-        </div>
-
-        <div class="mt-4">
-          <div class="mb-2 text-sm font-medium text-slate-700 dark:text-slate-300">Flags</div>
-          <div class="grid grid-cols-3 gap-2 sm:grid-cols-6">
-            <label class="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-3 py-2 text-sm transition hover:bg-white/10">
-              <input type="checkbox" class="flag accent-cyan-400" value="g" checked />
-              <span>g</span>
-            </label>
-            <label class="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-3 py-2 text-sm transition hover:bg-white/10">
-              <input type="checkbox" class="flag accent-cyan-400" value="i" />
-              <span>i</span>
-            </label>
-            <label class="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-3 py-2 text-sm transition hover:bg-white/10">
-              <input type="checkbox" class="flag accent-cyan-400" value="m" />
-              <span>m</span>
-            </label>
-            <label class="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-3 py-2 text-sm transition hover:bg-white/10">
-              <input type="checkbox" class="flag accent-cyan-400" value="s" />
-              <span>s</span>
-            </label>
-            <label class="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-3 py-2 text-sm transition hover:bg-white/10">
-              <input type="checkbox" class="flag accent-cyan-400" value="u" />
-              <span>u</span>
-            </label>
-            <label class="flex cursor-pointer items-center justify-center gap-2 rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-3 py-2 text-sm transition hover:bg-white/10">
-              <input type="checkbox" class="flag accent-cyan-400" value="y" />
-              <span>y</span>
-            </label>
-          </div>
-        </div>
-
-        <div class="mt-5">
-          <div class="mb-2 text-sm font-medium text-slate-700 dark:text-slate-300">常用正则片段快捷插入</div>
-          <div id="snippetBox" class="flex flex-wrap gap-2">
-            <button type="button" data-snippet="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}" class="snippet rounded-xl bg-cyan-500/15 px-3 py-2 text-sm text-cyan-100 ring-1 ring-cyan-400/30 transition hover:bg-cyan-500/25 active:scale-95">邮箱</button>
-            <button type="button" data-snippet="1[3-9]\\d{9}" class="snippet rounded-xl bg-cyan-500/15 px-3 py-2 text-sm text-cyan-100 ring-1 ring-cyan-400/30 transition hover:bg-cyan-500/25 active:scale-95">中国手机号</button>
-            <button type="button" data-snippet="https?:\\/\\/[^\\s]+" class="snippet rounded-xl bg-cyan-500/15 px-3 py-2 text-sm text-cyan-100 ring-1 ring-cyan-400/30 transition hover:bg-cyan-500/25 active:scale-95">URL</button>
-            <button type="button" data-snippet="\\d{4}-\\d{2}-\\d{2}" class="snippet rounded-xl bg-cyan-500/15 px-3 py-2 text-sm text-cyan-100 ring-1 ring-cyan-400/30 transition hover:bg-cyan-500/25 active:scale-95">日期</button>
-            <button type="button" data-snippet="\\b\\d{15}|\\d{18}\\b" class="snippet rounded-xl bg-cyan-500/15 px-3 py-2 text-sm text-cyan-100 ring-1 ring-cyan-400/30 transition hover:bg-cyan-500/25 active:scale-95">身份证位数</button>
-            <button type="button" data-snippet="\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b" class="snippet rounded-xl bg-cyan-500/15 px-3 py-2 text-sm text-cyan-100 ring-1 ring-cyan-400/30 transition hover:bg-cyan-500/25 active:scale-95">IPv4</button>
-          </div>
-        </div>
-
-        <label for="textInput" class="mb-2 mt-5 block text-sm font-medium text-slate-700 dark:text-slate-300">测试文本</label>
-        <textarea id="textInput" spellcheck="false" class="min-h-72 w-full resize-y rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950 p-4 leading-7 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400/70 focus:ring-4 focus:ring-cyan-400/10" placeholder="在这里粘贴需要测试的文本...">联系邮箱：hello@example.com，备用邮箱：dev.team@test.cn
-手机号：13800138000，网址：https://example.com/docs
-日期：2026-05-01，IP：192.168.1.1</textarea>
-
-        <div id="errorBox" class="mt-4 hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm text-red-200" role="alert"></div>
-      </div>
-
-      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-50 dark:bg-slate-800/70 p-5 shadow-2xl shadow-black/30">
-        <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <h2 class="text-xl font-semibold text-gray-900 dark:text-white">输出区</h2>
-          <div class="flex gap-2">
-            <button id="copyMatchesBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-2 text-sm text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-95">Copy匹配</button>
-            <button id="sampleBtn" type="button" class="rounded-xl bg-cyan-500 px-4 py-2 text-sm font-medium text-slate-950 dark:text-slate-100 transition hover:bg-cyan-400 active:scale-95">填入示例</button>
-          </div>
-        </div>
-
-        <div class="mb-5 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 p-4">
-          <div class="mb-2 flex items-center justify-between">
-            <h3 class="text-sm font-medium text-slate-700 dark:text-slate-300">高亮预览</h3>
-            <span id="statusText" class="text-xs text-slate-500">等待输入</span>
-          </div>
-          <pre id="highlightOutput" class="min-h-72 whitespace-pre-wrap break-words rounded-xl bg-white dark:bg-slate-950 p-4 font-mono text-sm leading-7 text-slate-700 dark:text-slate-300"></pre>
-        </div>
-
-        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 p-4">
-          <h3 class="mb-3 text-sm font-medium text-slate-700 dark:text-slate-300">匹配详情</h3>
-          <div id="matchList" class="max-h-96 space-y-2 overflow-auto pr-1"></div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl shadow-black/20">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 regex-tester 正则表达式在线测试工具</h2>
-      <p>
-        regex-tester 是一款面向前端开发者、后端工程师、测试人员和数据处理用户的正则表达式在线测试工具。日常开发中，邮箱校验、手机号校验、URL 提取、日期匹配、日志清洗等场景经常需要反复调试正则规则；如果只依赖代码运行环境，排查效率较低，也不容易直观看到匹配范围。本工具提供实时正则匹配高亮、匹配数量统计和匹配详情列表，帮助你快速确认 pattern 与 flags 是否符合预期。
-      </p>
-      <p class="mt-3">
-        使用时，只需在输入区填写 JavaScript 正则表达式主体，选择 g、i、m、s、u、y 等标志位，再粘贴测试文本，即可在输出区查看高亮结果。工具还内置邮箱正则、手机号正则、URL 正则、日期正则、IPv4 正则等常用正则片段，点击即可插入，适合快速构建规则。对于非法正则格式，页面会显示友好的错误提示，避免调试中断。无论是进行正则表达式在线验证，还是查找文本中的特定内容，regex-tester 都能提供轻量、直观、响应式的测试体验。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <label for="patternInput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="patternLabel">正则表达式</label>
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <input id="patternInput" type="text" spellcheck="false" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="patternPlaceholder" placeholder="输入正则，例如 \b\w+@\w+\.\w+\b">
+          <select id="snippetSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 sm:max-w-[13rem]" data-i18n-aria-label="snippetAria" aria-label="常用片段">
+            <option value="" data-i18n="snippetDefault">插入常用片段</option>
+            <option value="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}" data-i18n="snippetEmail">邮箱地址</option>
+            <option value="1[3-9]\d{9}" data-i18n="snippetPhone">中国手机号</option>
+            <option value="https?:\/\/[^\s]+" data-i18n="snippetUrl">网址</option>
+            <option value="\b\d{4}-\d{2}-\d{2}\b" data-i18n="snippetDate">日期</option>
+            <option value="\b(?:\d{1,3}\.){3}\d{1,3}\b" data-i18n="snippetIp">IPv4 地址</option>
+          </select>
+        </div>
+
+        <div class="mt-4 grid gap-3 sm:grid-cols-3">
+          <label class="flex min-h-11 items-center gap-2 rounded-2xl border border-gray-200 bg-slate-50 px-3 text-sm font-semibold text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">
+            <input id="flagG" type="checkbox" checked class="h-4 w-4 accent-cyan-400">
+            <span data-i18n="flagGlobal">全局匹配</span>
+          </label>
+          <label class="flex min-h-11 items-center gap-2 rounded-2xl border border-gray-200 bg-slate-50 px-3 text-sm font-semibold text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">
+            <input id="flagI" type="checkbox" class="h-4 w-4 accent-cyan-400">
+            <span data-i18n="flagIgnoreCase">忽略大小写</span>
+          </label>
+          <label class="flex min-h-11 items-center gap-2 rounded-2xl border border-gray-200 bg-slate-50 px-3 text-sm font-semibold text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">
+            <input id="flagM" type="checkbox" class="h-4 w-4 accent-cyan-400">
+            <span data-i18n="flagMultiline">多行模式</span>
+          </label>
+        </div>
+
+        <label for="testText" class="mb-2 mt-5 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="textLabel">测试文本</label>
+        <textarea id="testText" rows="12" spellcheck="false" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="textPlaceholder" placeholder="粘贴需要测试的文本"></textarea>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="testBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">测试匹配</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">示例</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+        </div>
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="statusReady">输入表达式和文本后开始测试。</p>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">结果</span>
+        </div>
+
+        <div class="grid gap-3 sm:grid-cols-3">
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="matchCountLabel">匹配数</p>
+            <p id="matchCount" class="mt-2 text-2xl font-black tabular-nums text-slate-950 dark:text-white">0</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="flagLabel">标志</p>
+            <p id="activeFlags" class="mt-2 break-words text-2xl font-black tabular-nums text-slate-950 dark:text-white">g</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="firstIndexLabel">首个位置</p>
+            <p id="firstIndex" class="mt-2 text-2xl font-black tabular-nums text-slate-950 dark:text-white">-</p>
+          </div>
+        </div>
+
+        <div class="mt-5">
+          <div class="mb-2 flex items-center justify-between gap-3">
+            <h2 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="highlightTitle">高亮预览</h2>
+          </div>
+          <div id="highlightOutput" class="regex-highlight min-h-[10rem] max-h-[26rem] overflow-auto whitespace-pre-wrap break-words rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-900 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100" data-i18n="emptyHighlight">匹配结果会显示在这里。</div>
+        </div>
+
+        <div class="mt-5">
+          <div class="mb-2 flex items-center justify-between gap-3">
+            <h2 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="matchesTitle">匹配列表</h2>
+          </div>
+          <div id="matchesList" class="max-h-80 overflow-auto rounded-2xl border border-gray-200 bg-slate-50 p-3 text-sm dark:border-white/10 dark:bg-slate-950/70">
+            <p class="text-slate-500 dark:text-slate-400" data-i18n="emptyMatches">暂无匹配项。</p>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyMatchesBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyMatches">复制匹配项</button>
+          <button id="copyPatternBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="copyPattern">复制表达式</button>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">这款正则表达式在线测试工具属于 Micro Tools Matrix 的浏览器本地处理工具集，适合前端、后端、测试与运营人员快速验证匹配规则。你可以输入正则和测试文本，页面会即时高亮命中内容，并列出每个匹配项的位置，便于排查边界条件。工具内置邮箱、手机号、网址、日期、IPv4 等常用正则片段，可一键插入后继续调整。所有文本仅在当前浏览器内存中处理，无需上传到服务器，也不会调用远程接口，适合作为免费在线开发工具在日常调试、数据清洗和表单校验前验证使用。</article>
   </main>
 
-  <footer class="border-t border-gray-200 dark:border-white/10 py-6 text-center text-sm text-slate-500">
-    regex-tester · 原生 JavaScript 构建 · 支持桌面端与移动端
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+
+  <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md">
+    <div class="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
+      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor" aria-label="关闭赞赏弹窗">×</button>
+      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">赞赏支持</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">保持工具免费、快速且无广告。</p>
+      <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="buyCoffee">Buy Me a Coffee</a>
+    </div>
+  </div>
 
   <script>
-    (() => {
-      const patternInput = document.getElementById('patternInput');
-      const textInput = document.getElementById('textInput');
-      const flagInputs = Array.from(document.querySelectorAll('.flag'));
-      const highlightOutput = document.getElementById('highlightOutput');
-      const matchList = document.getElementById('matchList');
-      const matchCount = document.getElementById('matchCount');
-      const errorBox = document.getElementById('errorBox');
-      const statusText = document.getElementById('statusText');
-      const clearBtn = document.getElementById('clearBtn');
-      const sampleBtn = document.getElementById('sampleBtn');
-      const copyMatchesBtn = document.getElementById('copyMatchesBtn');
-      const snippetButtons = Array.from(document.querySelectorAll('.snippet'));
+    const I18N = {
+      zh: {
+        documentTitle: "正则测试器 - Micro Tools Matrix 浏览器本地开发工具",
+        metaDescription: "Micro Tools Matrix 正则表达式在线测试工具，支持浏览器本地处理、高亮匹配结果和常用正则片段快捷插入，无需上传文本。",
+        metaKeywords: "正则测试器,正则表达式在线测试,匹配高亮,浏览器本地处理,无需上传,Micro Tools Matrix",
+        toolName: "正则测试器",
+        sponsor: "赞赏",
+        eyebrow: "浏览器本地处理",
+        h1: "正则测试器",
+        intro: "在 Micro Tools Matrix 中本地测试正则表达式，实时高亮匹配结果，并可快速插入常用片段，无需上传文本。",
+        localBadge: "本地运行",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        outputTitle: "结果",
+        outputBadge: "结果",
+        patternLabel: "正则表达式",
+        patternPlaceholder: "输入正则，例如 \\b\\w+@\\w+\\.\\w+\\b",
+        snippetAria: "常用片段",
+        snippetDefault: "插入常用片段",
+        snippetEmail: "邮箱地址",
+        snippetPhone: "中国手机号",
+        snippetUrl: "网址",
+        snippetDate: "日期",
+        snippetIp: "IPv4 地址",
+        flagGlobal: "全局匹配",
+        flagIgnoreCase: "忽略大小写",
+        flagMultiline: "多行模式",
+        textLabel: "测试文本",
+        textPlaceholder: "粘贴需要测试的文本",
+        primaryAction: "测试匹配",
+        sampleAction: "示例",
+        secondaryAction: "清空",
+        statusReady: "输入表达式和文本后开始测试。",
+        statusMatched: "找到 {count} 个匹配项。",
+        statusNoMatch: "未找到匹配项。",
+        statusInvalid: "正则表达式无效：{message}",
+        statusCleared: "已清空输入和结果。",
+        statusSample: "已填入示例。",
+        statusSnippet: "已插入片段：{name}",
+        statusCopied: "已复制到剪贴板。",
+        statusCopyFailed: "复制失败，请手动选择内容。",
+        statusNothingToCopy: "没有可复制的内容。",
+        matchCountLabel: "匹配数",
+        flagLabel: "标志",
+        firstIndexLabel: "首个位置",
+        highlightTitle: "高亮预览",
+        emptyHighlight: "匹配结果会显示在这里。",
+        matchesTitle: "匹配列表",
+        emptyMatches: "暂无匹配项。",
+        copyMatches: "复制匹配项",
+        copyPattern: "复制表达式",
+        matchItem: "第 {number} 项",
+        matchIndex: "位置 {index}",
+        emptyValue: "空匹配",
+        noFlags: "无",
+        closeSponsor: "关闭赞赏弹窗",
+        sponsorTitle: "赞赏支持",
+        sponsorSubtitle: "保持工具免费、快速且无广告。",
+        buyCoffee: "Buy Me a Coffee",
+        seoArticle: "这款正则表达式在线测试工具属于 Micro Tools Matrix 的浏览器本地处理工具集，适合前端、后端、测试与运营人员快速验证匹配规则。你可以输入正则和测试文本，页面会即时高亮命中内容，并列出每个匹配项的位置，便于排查边界条件。工具内置邮箱、手机号、网址、日期、IPv4 等常用正则片段，可一键插入后继续调整。所有文本仅在当前浏览器内存中处理，无需上传到服务器，也不会调用远程接口，适合作为免费在线开发工具在日常调试、数据清洗和表单校验前验证使用。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统"
+      },
+      en: {
+        documentTitle: "Regex Tester - Micro Tools Matrix Browser-Local Developer Tool",
+        metaDescription: "A browser-local regex tester from Micro Tools Matrix with highlighted matches, quick snippets for common patterns, and no text upload.",
+        metaKeywords: "regex tester,online regular expression test,match highlighting,browser-local processing,no upload,free online developer tool,Micro Tools Matrix",
+        toolName: "Regex Tester",
+        sponsor: "Sponsor",
+        eyebrow: "Browser-local processing",
+        h1: "Regex Tester",
+        intro: "Test regular expressions locally in Micro Tools Matrix, highlight matches in real time, and insert common snippets without uploading your text.",
+        localBadge: "Local",
+        inputTitle: "Input",
+        inputBadge: "Input",
+        outputTitle: "Output",
+        outputBadge: "Output",
+        patternLabel: "Regular expression",
+        patternPlaceholder: "Enter a pattern, for example \\b\\w+@\\w+\\.\\w+\\b",
+        snippetAria: "Common snippets",
+        snippetDefault: "Insert a snippet",
+        snippetEmail: "Email address",
+        snippetPhone: "Chinese mobile number",
+        snippetUrl: "URL",
+        snippetDate: "Date",
+        snippetIp: "IPv4 address",
+        flagGlobal: "Global match",
+        flagIgnoreCase: "Ignore case",
+        flagMultiline: "Multiline mode",
+        textLabel: "Test text",
+        textPlaceholder: "Paste the text you want to test",
+        primaryAction: "Test matches",
+        sampleAction: "Sample",
+        secondaryAction: "Clear",
+        statusReady: "Enter a pattern and text to start testing.",
+        statusMatched: "Found {count} match(es).",
+        statusNoMatch: "No matches found.",
+        statusInvalid: "Invalid regular expression: {message}",
+        statusCleared: "Input and results have been cleared.",
+        statusSample: "Sample content has been loaded.",
+        statusSnippet: "Snippet inserted: {name}",
+        statusCopied: "Copied to clipboard.",
+        statusCopyFailed: "Copy failed. Please select the content manually.",
+        statusNothingToCopy: "There is nothing to copy.",
+        matchCountLabel: "Matches",
+        flagLabel: "Flags",
+        firstIndexLabel: "First index",
+        highlightTitle: "Highlighted preview",
+        emptyHighlight: "Matched results will appear here.",
+        matchesTitle: "Match list",
+        emptyMatches: "No matches yet.",
+        copyMatches: "Copy matches",
+        copyPattern: "Copy pattern",
+        matchItem: "Match {number}",
+        matchIndex: "Index {index}",
+        emptyValue: "Empty match",
+        noFlags: "None",
+        closeSponsor: "Close sponsor dialog",
+        sponsorTitle: "Sponsor support",
+        sponsorSubtitle: "Keep the tools free, fast, and ad-free.",
+        buyCoffee: "Buy Me a Coffee",
+        seoArticle: "This regex tester is part of the Micro Tools Matrix collection of browser-local processing utilities. It is designed for frontend engineers, backend developers, QA specialists, technical writers, and operations teams who need a fast way to validate regular expressions before using them in code, forms, logs, or data-cleaning workflows. Enter a pattern and sample text, then review highlighted matches, match counts, first indexes, and a copyable list of results. Built-in snippets for email addresses, Chinese mobile numbers, URLs, dates, and IPv4 addresses help you start quickly while still allowing full manual editing. All processing happens in your current browser session; your pattern and text are not uploaded, and no remote API is called. As a free online developer tool, it supports practical debugging, privacy-aware validation, and repeatable regex experimentation inside Micro Tools Matrix.",
+        footer: "Micro Tools Matrix - Browser-local processing with no upload.",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System"
+      }
+    };
 
-      let latestMatches = [];
+    let currentLanguage = "zh";
+    let lastMatches = [];
 
-      const escapeHtml = (value) => String(value)
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
-
-      const getFlags = () => {
-        const flags = flagInputs.filter(input => input.checked).map(input => input.value).join('');
-        return Array.from(new Set(flags.split(''))).join('');
-      };
-
-      const showError = (message) => {
-        errorBox.textContent = message;
-        errorBox.classList.remove('hidden');
-      };
-
-      const hideError = () => {
-        errorBox.textContent = '';
-        errorBox.classList.add('hidden');
-      };
-
-      const setButtonFeedback = (button, text) => {
-        const original = button.textContent;
-        button.textContent = text;
-        button.classList.add('ring-2', 'ring-cyan-300');
-        window.setTimeout(() => {
-          button.textContent = original;
-          button.classList.remove('ring-2', 'ring-cyan-300');
-        }, 900);
-      };
-
-      const createRegex = () => {
-        const pattern = patternInput.value;
-        const flags = getFlags();
-        if (!pattern.trim()) {
-          return { regex: null, reason: 'Please enter正则表达式 Pattern。' };
-        }
-        try {
-          return { regex: new RegExp(pattern, flags), reason: '' };
-        } catch (error) {
-          return { regex: null, reason: `正则表达式格式无效：${error.message}` };
-        }
-      };
-
-      const collectMatches = (regex, text) => {
-        const matches = [];
-        if (!regex) return matches;
-
-        try {
-          if (regex.global) {
-            regex.lastIndex = 0;
-            let match;
-            let guard = 0;
-            const maxIterations = Math.max(text.length * 2 + 10, 1000);
-
-            while ((match = regex.exec(text)) !== null) {
-              matches.push({
-                index: match.index,
-                end: match.index + match[0].length,
-                text: match[0],
-                groups: match.slice(1)
-              });
-
-              if (match[0] === '') {
-                regex.lastIndex += 1;
-              }
-
-              guard += 1;
-              if (guard > maxIterations) {
-                showError('匹配次数过多，已自动停止以保护浏览器性能。请优化正则表达式。');
-                break;
-              }
-            }
-          } else {
-            const match = regex.exec(text);
-            if (match) {
-              matches.push({
-                index: match.index,
-                end: match.index + match[0].length,
-                text: match[0],
-                groups: match.slice(1)
-              });
-            }
-          }
-        } catch (error) {
-          showError(`匹配过程出现异常：${error.message}`);
-        }
-
-        return matches;
-      };
-
-      const renderHighlight = (text, matches) => {
-        if (!text) {
-          highlightOutput.innerHTML = '<span class="text-slate-600 dark:text-slate-400">测试文本为空。</span>';
-          return;
-        }
-
-        if (!matches.length) {
-          highlightOutput.innerHTML = escapeHtml(text);
-          return;
-        }
-
-        let html = '';
-        let cursor = 0;
-
-        matches.forEach((match, idx) => {
-          const start = Math.max(0, Math.min(match.index, text.length));
-          const end = Math.max(start, Math.min(match.end, text.length));
-
-          if (start >= cursor) {
-            html += escapeHtml(text.slice(cursor, start));
-          }
-
-          if (end === start) {
-            html += `<span class="mx-0.5 inline-flex rounded bg-amber-400 px-1 align-middle text-[10px] font-bold text-slate-950 dark:text-slate-100" title="零宽匹配 #${idx + 1}">#${idx + 1}</span>`;
-            cursor = start;
-          } else {
-            html += `<mark class="rounded bg-cyan-300 px-1 py-0.5 font-semibold text-slate-950 dark:text-slate-100">${escapeHtml(text.slice(start, end))}</mark>`;
-            cursor = end;
-          }
-        });
-
-        html += escapeHtml(text.slice(cursor));
-        highlightOutput.innerHTML = html;
-      };
-
-      const renderMatchList = (matches) => {
-        if (!matches.length) {
-          matchList.innerHTML = '<div class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-4 text-sm text-slate-400">暂无匹配结果。</div>';
-          return;
-        }
-
-        matchList.innerHTML = matches.map((match, index) => {
-          const groupHtml = match.groups.length
-            ? `<div class="mt-2 text-xs text-slate-400">捕获组：${match.groups.map((g, i) => `<span class="mr-2 inline-block rounded bg-white dark:bg-white/5 px-2 py-1">\$${i + 1}: ${escapeHtml(g ?? 'undefined')}</span>`).join('')}</div>`
-            : '<div class="mt-2 text-xs text-slate-500">无捕获组</div>';
-
-          return `
-            <div class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-3">
-              <div class="flex flex-wrap items-center justify-between gap-2">
-                <span class="rounded-lg bg-cyan-400/15 px-2 py-1 text-xs font-semibold text-cyan-200">#${index + 1}</span>
-                <span class="text-xs text-slate-400">位置 ${match.index} - ${match.end}</span>
-              </div>
-              <div class="mt-2 break-words rounded-lg bg-white dark:bg-slate-950 p-2 font-mono text-sm text-slate-900 dark:text-slate-100">${match.text === '' ? '<span class="text-amber-300">零宽匹配</span>' : escapeHtml(match.text)}</div>
-              ${groupHtml}
-            </div>
-          `;
-        }).join('');
-      };
-
-      const update = () => {
-        hideError();
-        const text = textInput.value;
-        const { regex, reason } = createRegex();
-
-        if (!regex) {
-          latestMatches = [];
-          matchCount.textContent = '0';
-          statusText.textContent = reason || '等待输入';
-          renderHighlight(text, []);
-          renderMatchList([]);
-          if (patternInput.value.trim()) showError(reason);
-          return;
-        }
-
-        latestMatches = collectMatches(regex, text);
-        matchCount.textContent = String(latestMatches.length);
-        statusText.textContent = latestMatches.length ? `已匹配 ${latestMatches.length} 项` : '未发现匹配';
-        renderHighlight(text, latestMatches);
-        renderMatchList(latestMatches);
-      };
-
-      const insertAtCursor = (input, value) => {
-        const start = Number.isFinite(input.selectionStart) ? input.selectionStart : input.value.length;
-        const end = Number.isFinite(input.selectionEnd) ? input.selectionEnd : input.value.length;
-        input.value = input.value.slice(0, start) + value + input.value.slice(end);
-        const nextPos = start + value.length;
-        input.focus();
-        input.setSelectionRange(nextPos, nextPos);
-      };
-
-      patternInput.addEventListener('input', update);
-      textInput.addEventListener('input', update);
-      flagInputs.forEach(input => input.addEventListener('change', update));
-
-      snippetButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          insertAtCursor(patternInput, button.dataset.snippet || '');
-          setButtonFeedback(button, '已插入');
-          update();
-        });
-      });
-
-      clearBtn.addEventListener('click', () => {
-        patternInput.value = '';
-        textInput.value = '';
-        flagInputs.forEach(input => {
-          input.checked = input.value === 'g';
-        });
-        setButtonFeedback(clearBtn, '已Clear');
-        update();
-      });
-
-      sampleBtn.addEventListener('click', () => {
-        patternInput.value = '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}|1[3-9]\\d{9}|https?:\\/\\/[^\\s]+';
-        textInput.value = '联系邮箱：hello@example.com，备用邮箱：dev.team@test.cn\\n手机号：13800138000，网址：https://example.com/docs\\n日期：2026-05-01，IP：192.168.1.1';
-        flagInputs.forEach(input => {
-          input.checked = input.value === 'g';
-        });
-        setButtonFeedback(sampleBtn, '已填入');
-        update();
-      });
-
-      copyMatchesBtn.addEventListener('click', async () => {
-        const content = latestMatches.map((match, index) => `#${index + 1} [${match.index}-${match.end}] ${match.text}`).join('\n');
-        if (!content) {
-          showError('当前没有可Copy的匹配结果。');
-          setButtonFeedback(copyMatchesBtn, '无结果');
-          return;
-        }
-
-        try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(content);
-          } else {
-            const temp = document.createElement('textarea');
-            temp.value = content;
-            temp.setAttribute('readonly', '');
-            temp.style.position = 'fixed';
-            temp.style.opacity = '0';
-            document.body.appendChild(temp);
-            temp.select();
-            document.execCommand('copy');
-            document.body.removeChild(temp);
-          }
-          hideError();
-          setButtonFeedback(copyMatchesBtn, 'Copied');
-        } catch (error) {
-          showError(`Copy failed：${error.message}`);
-          setButtonFeedback(copyMatchesBtn, '失败');
-        }
-      });
-
-      update();
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      try {
+        return localStorage.getItem("microToolsLanguage") || "zh";
+      } catch (error) {
+        return "zh";
+      }
     }
+
+    function t(key, params = {}) {
+      const dict = I18N[currentLanguage] || I18N.zh;
+      let value = dict[key] || I18N.zh[key] || "";
+      Object.keys(params).forEach((name) => {
+        value = value.replaceAll("{" + name + "}", String(params[name]));
+      });
+      return value;
+    }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.title = dict.documentTitle;
+      const description = document.querySelector('meta[name="description"]');
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (description) description.setAttribute("content", dict.metaDescription);
+      if (keywords) keywords.setAttribute("content", dict.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.textContent = dict[key];
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("placeholder", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("title", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("aria-label", dict[key]);
+      });
+
+      const langZhBtn = document.getElementById("langZhBtn");
+      const langEnBtn = document.getElementById("langEnBtn");
+      if (langZhBtn && langEnBtn) {
+        langZhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "zh" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+        langEnBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "en" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+      }
+
+      const status = document.getElementById("statusText");
+      if (status && status.dataset.statusKey) {
+        const params = status.dataset.statusParams ? JSON.parse(status.dataset.statusParams) : {};
+        status.textContent = t(status.dataset.statusKey, params);
+      }
+
+      updateRegex(false);
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function setLanguage(lang) {
+      try {
+        localStorage.setItem("microToolsLanguage", lang === "en" ? "en" : "zh");
+      } catch (error) {}
+      applyLanguage(lang);
+    }
+
+    function setStatus(key, params = {}) {
+      const status = document.getElementById("statusText");
+      if (!status) return;
+      status.dataset.statusKey = key;
+      status.dataset.statusParams = JSON.stringify(params);
+      status.textContent = t(key, params);
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[char]));
+    }
+
+    function getFlags() {
+      let flags = "";
+      if (document.getElementById("flagG")?.checked) flags += "g";
+      if (document.getElementById("flagI")?.checked) flags += "i";
+      if (document.getElementById("flagM")?.checked) flags += "m";
+      return flags;
+    }
+
+    function setEmptyOutput() {
+      document.getElementById("matchCount").textContent = "0";
+      document.getElementById("activeFlags").textContent = getFlags() || t("noFlags");
+      document.getElementById("firstIndex").textContent = "-";
+      document.getElementById("highlightOutput").textContent = t("emptyHighlight");
+      document.getElementById("matchesList").innerHTML = '<p class="text-slate-500 dark:text-slate-400">' + escapeHtml(t("emptyMatches")) + "</p>";
+      lastMatches = [];
+    }
+
+    function updateRegex(showReadyStatus = true) {
+      const pattern = document.getElementById("patternInput").value;
+      const text = document.getElementById("testText").value;
+      const flags = getFlags();
+      document.getElementById("activeFlags").textContent = flags || t("noFlags");
+
+      if (!pattern || !text) {
+        setEmptyOutput();
+        if (showReadyStatus) setStatus("statusReady");
+        return;
+      }
+
+      let regex;
+      try {
+        regex = new RegExp(pattern, flags.includes("g") ? flags : flags + "g");
+      } catch (error) {
+        setEmptyOutput();
+        setStatus("statusInvalid", { message: error.message });
+        return;
+      }
+
+      const matches = [];
+      let match;
+      let guard = 0;
+      while ((match = regex.exec(text)) !== null) {
+        matches.push({ value: match[0], index: match.index });
+        if (match[0] === "") regex.lastIndex += 1;
+        guard += 1;
+        if (guard > 10000) break;
+      }
+      lastMatches = matches;
+
+      document.getElementById("matchCount").textContent = String(matches.length);
+      document.getElementById("firstIndex").textContent = matches.length ? String(matches[0].index) : "-";
+
+      if (!matches.length) {
+        document.getElementById("highlightOutput").textContent = text;
+        document.getElementById("matchesList").innerHTML = '<p class="text-slate-500 dark:text-slate-400">' + escapeHtml(t("emptyMatches")) + "</p>";
+        setStatus("statusNoMatch");
+        return;
+      }
+
+      let html = "";
+      let cursor = 0;
+      matches.forEach((item) => {
+        html += escapeHtml(text.slice(cursor, item.index));
+        html += "<mark>" + escapeHtml(item.value || t("emptyValue")) + "</mark>";
+        cursor = item.index + item.value.length;
+      });
+      html += escapeHtml(text.slice(cursor));
+      document.getElementById("highlightOutput").innerHTML = html;
+
+      document.getElementById("matchesList").innerHTML = matches.map((item, index) => {
+        return '<div class="mb-2 rounded-2xl border border-gray-200 bg-white p-3 last:mb-0 dark:border-white/10 dark:bg-white/[0.04]">' +
+          '<div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">' +
+          '<strong class="text-slate-900 dark:text-slate-100">' + escapeHtml(t("matchItem", { number: index + 1 })) + '</strong>' +
+          '<span class="text-xs tabular-nums text-slate-500 dark:text-slate-400">' + escapeHtml(t("matchIndex", { index: item.index })) + '</span>' +
+          '</div>' +
+          '<pre class="mt-2 overflow-auto whitespace-pre-wrap break-words text-sm leading-6 text-slate-700 dark:text-slate-300">' + escapeHtml(item.value || t("emptyValue")) + '</pre>' +
+          '</div>';
+      }).join("");
+      setStatus("statusMatched", { count: matches.length });
+    }
+
+    async function copyText(value) {
+      if (!value) {
+        setStatus("statusNothingToCopy");
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(value);
+        setStatus("statusCopied");
+      } catch (error) {
+        const helper = document.createElement("textarea");
+        helper.value = value;
+        helper.setAttribute("readonly", "readonly");
+        helper.style.position = "fixed";
+        helper.style.left = "-9999px";
+        document.body.appendChild(helper);
+        helper.select();
+        try {
+          document.execCommand("copy");
+          setStatus("statusCopied");
+        } catch (copyError) {
+          setStatus("statusCopyFailed");
+        }
+        document.body.removeChild(helper);
+      }
+    }
+
+    function openSponsorModal(event) {
+      if (event && typeof event.preventDefault === "function") event.preventDefault();
+      const modal = document.getElementById("sponsorModal");
+      if (!modal) return;
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeSponsorModal() {
+      const modal = document.getElementById("sponsorModal");
+      if (!modal) return;
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+
+      document.getElementById("testBtn")?.addEventListener("click", () => updateRegex(true));
+      document.getElementById("patternInput")?.addEventListener("input", () => updateRegex(false));
+      document.getElementById("testText")?.addEventListener("input", () => updateRegex(false));
+      ["flagG", "flagI", "flagM"].forEach((id) => document.getElementById(id)?.addEventListener("change", () => updateRegex(true)));
+
+      document.getElementById("snippetSelect")?.addEventListener("change", (event) => {
+        const select = event.currentTarget;
+        if (!select.value) return;
+        document.getElementById("patternInput").value = select.value;
+        const name = select.options[select.selectedIndex].textContent;
+        setStatus("statusSnippet", { name });
+        select.value = "";
+        updateRegex(false);
+      });
+
+      document.getElementById("sampleBtn")?.addEventListener("click", () => {
+        document.getElementById("patternInput").value = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}";
+        document.getElementById("testText").value = currentLanguage === "en"
+          ? "Contact support@example.com or sales.team+cn@example.org. Invalid address: hello@localhost"
+          : "请联系 support@example.com 或 sales.team+cn@example.org。无效地址：hello@localhost";
+        document.getElementById("flagG").checked = true;
+        document.getElementById("flagI").checked = true;
+        document.getElementById("flagM").checked = false;
+        setStatus("statusSample");
+        updateRegex(false);
+      });
+
+      document.getElementById("clearBtn")?.addEventListener("click", () => {
+        document.getElementById("patternInput").value = "";
+        document.getElementById("testText").value = "";
+        document.getElementById("flagG").checked = true;
+        document.getElementById("flagI").checked = false;
+        document.getElementById("flagM").checked = false;
+        setEmptyOutput();
+        setStatus("statusCleared");
+      });
+
+      document.getElementById("copyMatchesBtn")?.addEventListener("click", () => {
+        copyText(lastMatches.map((item) => item.value).join("\n"));
+      });
+
+      document.getElementById("copyPatternBtn")?.addEventListener("click", () => {
+        const pattern = document.getElementById("patternInput").value;
+        const flags = getFlags();
+        copyText(pattern ? "/" + pattern + "/" + flags : "");
+      });
+
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="../sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

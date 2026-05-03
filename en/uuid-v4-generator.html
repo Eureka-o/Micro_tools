@@ -1,414 +1,479 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>uuid-v4-generator｜UUID v4 批量Generate器</title>
-  <meta name="description" content="UUID v4 批量Generate器。支持一次性Generate1到100个标准UUID，并提供Copy所有结果的按钮。">
-  <meta name="keywords" content="uuid-v4-generator, UUID v4 批量Generate器, 在线 UUID Generate器, 批量Generate UUID, UUID v4, 随机 UUID, 开发工具, 一键Copy UUID">
-  <link rel="icon" type="image/png" href="../assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
-  <link rel="canonical" href="https://mymicrotools.xyz/en/uuid-v4-generator.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UUID v4 批量生成器 - Micro Tools Matrix 本地开发者工具</title>
+  <meta name="description" content="Micro Tools Matrix UUID v4 批量生成器，支持一次生成 1 到 100 个标准 UUID，浏览器本地处理，无需上传，免费在线开发者工具。">
+  <meta name="keywords" content="UUID v4 批量生成器, UUID 生成, GUID 生成, 浏览器本地处理, 无需上传, Micro Tools Matrix">
+  <link rel="canonical" href="https://mymicrotools.xyz/uuid-v4-generator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/uuid-v4-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/uuid-v4-generator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/uuid-v4-generator.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/en/uuid-v4-generator.html">
-  <meta property="og:title" content="uuid-v4-generator｜UUID v4 批量Generate器">
-  <meta property="og:description" content="UUID v4 批量Generate器。支持一次性Generate1到100个标准UUID，并提供Copy所有结果的按钮。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="uuid-v4-generator｜UUID v4 批量Generate器">
-  <meta name="twitter:description" content="UUID v4 批量Generate器。支持一次性Generate1到100个标准UUID，并提供Copy所有结果的按钮。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="../style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "UUID v4 Generator",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A browser-local UUID v4 batch generator by Micro Tools Matrix.",
+      "url": "https://mymicrotools.xyz/uuid-v4-generator.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "description": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">UUID v4 批量生成器</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="../uuid-v4-generator.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./uuid-v4-generator.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="pointer-events-none fixed inset-0 overflow-hidden">
-    <div class="absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
-  </div>
-
-  <main class="relative mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 py-6 sm:px-6 lg:px-8">
-    <header class="mb-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-6 py-8 shadow-2xl shadow-cyan-950/30 backdrop-blur md:px-10 md:py-12">
-      <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-        <div>
-          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-            Online Developer Tool
-          </p>
-          <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl md:text-5xl">UUID v4 批量Generate器</h1>
-          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            UUID v4 批量Generate器，支持一次性Generate 1 到 100 个标准随机 UUID，并可一键Copy全部结果。
-          </p>
-        </div>
-        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/70 p-4 text-sm text-slate-700 dark:text-slate-300">
-          <div class="flex items-center gap-2">
-            <span class="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-lg shadow-emerald-400/50"></span>
-            <span>本地Generate · 不上传数据</span>
-          </div>
-          <div class="mt-2 flex items-center gap-2">
-            <span class="h-2.5 w-2.5 rounded-full bg-cyan-400 shadow-lg shadow-cyan-400/50"></span>
-            <span>标准格式 · RFC 4122 v4</span>
-          </div>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="语言" data-i18n-aria-label="languageGroup" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langZh">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langEn">EN</button>
         </div>
       </div>
-    </header>
+    </nav>
+  </header>
 
-    <section class="grid gap-6 lg:grid-cols-5">
-      <div class="lg:col-span-2">
-        <div class="h-full rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-50 dark:bg-slate-900/90 p-6 shadow-xl shadow-black/20 backdrop-blur">
-          <h2 class="text-xl font-semibold text-gray-900 dark:text-white">输入设置</h2>
-          <p class="mt-2 text-sm leading-6 text-slate-400">Please enter需要Generate的 UUID 数量，范围为 1 到 100。</p>
-
-          <form id="uuidForm" class="mt-6 space-y-5" novalidate>
-            <div>
-              <label for="countInput" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">Generate数量</label>
-              <input
-                id="countInput"
-                name="count"
-                type="number"
-                inputmode="numeric"
-                min="1"
-                max="100"
-                step="1"
-                value="10"
-                autocomplete="off"
-                class="w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-base text-gray-900 dark:text-white outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
-                aria-describedby="countHelp"
-              />
-              <p id="countHelp" class="mt-2 text-xs text-slate-500">仅允许整数，例如：1、10、100。</p>
-            </div>
-
-            <div id="errorBox" class="hidden rounded-2xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200" role="alert"></div>
-
-            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-              <button
-                type="submit"
-                id="generateBtn"
-                class="rounded-2xl bg-cyan-400 px-5 py-3 font-semibold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-cyan-400/30"
-              >
-                Generate UUID
-              </button>
-              <button
-                type="button"
-                id="clearBtn"
-                class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-5 py-3 font-semibold text-slate-900 dark:text-slate-100 transition hover:border-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-slate-500/30"
-              >
-                Clear结果
-              </button>
-            </div>
-          </form>
-
-          <div class="mt-6 rounded-2xl border border-cyan-400/20 bg-cyan-400/5 p-4 text-sm leading-6 text-cyan-100">
-            <strong class="text-cyan-200">提示：</strong>
-            UUID v4 使用随机数Generate，常用于数据库主键、分布式系统标识、测试数据和接口请求追踪。
-          </div>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">UUID v4 批量生成器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中一次生成 1 到 100 个标准 UUID v4。所有随机值都在浏览器本地创建，无需上传任何内容。</p>
         </div>
-      </div>
-
-      <div class="lg:col-span-3">
-        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-800/80 p-6 shadow-xl shadow-black/20 backdrop-blur">
-          <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Generate结果</h2>
-              <p id="resultSummary" class="mt-2 text-sm text-slate-400">尚未Generate UUID。</p>
-            </div>
-            <button
-              type="button"
-              id="copyBtn"
-              disabled
-              class="rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-5 py-3 font-semibold text-emerald-100 transition hover:bg-emerald-400/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:border-slate-700 disabled:bg-slate-900 disabled:text-slate-500 focus:outline-none focus:ring-4 focus:ring-emerald-400/20"
-            >
-              Copy所有结果
-            </button>
-          </div>
-
-          <div id="copyFeedback" class="mt-4 hidden rounded-2xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm font-medium text-emerald-200" role="status"></div>
-
-          <div class="mt-5 rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/90">
-            <textarea
-              id="outputArea"
-              readonly
-              spellcheck="false"
-              placeholder="Generate的 UUID 将显示在这里，每行一个。"
-              class="min-h-[360px] w-full resize-y rounded-2xl bg-transparent p-4 font-mono text-sm leading-7 text-slate-900 dark:text-slate-100 outline-none placeholder:text-slate-600"
-            ></textarea>
-          </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl shadow-black/10 backdrop-blur md:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 UUID v4 批量Generate器</h2>
-      <p>
-        uuid-v4-generator 是一款面向开发者、测试工程师与系统架构师的在线 UUID v4 批量Generate器。它可以在浏览器本地快速Generate 1 到 100 个符合 RFC 4122 标准的随机 UUID，适用于数据库主键、分布式服务唯一标识、日志链路追踪、接口调试参数以及测试数据构造等场景。相比手动编写脚本或逐个Copy，使用这个在线 UUID Generate器能够显著减少重复操作，并避免格式错误带来的排查成本。使用方法非常简单：在输入框中填写需要Generate的数量，点击“Generate UUID”，结果会按行展示；如需导入到代码、表格或数据库脚本中，只需点击“Copy所有结果”即可。本工具采用本地Generate方式，不会上传或保存任何数据，适合需要安全、快速、轻量的批量Generate UUID v4 长尾关键词场景。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
 
-    <footer class="py-8 text-center text-sm text-slate-500">
-      <p>© <span id="year"></span> uuid-v4-generator · Zero Dependency Web Tool</p>
-    </footer>
+        <label for="uuidCount" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="countLabel">生成数量</label>
+        <input id="uuidCount" type="number" min="1" max="100" step="1" inputmode="numeric" value="10" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-aria-label="countLabel" aria-label="生成数量">
+        <p class="mt-3 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="countHelp">请输入 1 到 100 之间的整数。每个结果都是标准 8-4-4-4-12 格式。</p>
+
+        <div class="mt-5 rounded-2xl border border-cyan-200 bg-cyan-50/70 p-4 text-sm leading-6 text-cyan-900 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-100">
+          <p class="font-semibold" data-i18n="privacyTitle">隐私说明</p>
+          <p class="mt-1" data-i18n="privacyText">UUID 由当前页面直接生成，结果只保存在浏览器内存中，不会发送到服务器。</p>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="generateBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">生成 UUID</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">示例数量</button>
+        </div>
+        <p id="inputStatus" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+        </div>
+
+        <label for="uuidOutput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="outputLabel">UUID 列表</label>
+        <textarea id="uuidOutput" readonly rows="13" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="outputPlaceholder" data-i18n-aria-label="outputLabel" placeholder="生成的 UUID 会显示在这里。" aria-label="UUID 列表"></textarea>
+
+        <div class="mt-3 flex flex-col gap-2 rounded-2xl border border-gray-200 bg-slate-50 p-4 text-sm leading-6 text-slate-600 dark:border-white/10 dark:bg-slate-950/40 dark:text-slate-400">
+          <div class="flex items-center justify-between gap-3">
+            <span data-i18n="resultCountLabel">当前数量</span>
+            <strong id="resultCount" class="tabular-nums text-slate-950 dark:text-white">0</strong>
+          </div>
+          <div class="flex items-center justify-between gap-3">
+            <span data-i18n="formatLabel">格式</span>
+            <strong class="text-right text-slate-950 dark:text-white">xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx</strong>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAll">复制全部</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="clearResults">清空结果</button>
+        </div>
+        <p id="outputStatus" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite"></p>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">UUID v4 批量生成器是 Micro Tools Matrix 为开发、测试、数据库建模和接口调试准备的免费在线开发者工具。你可以一次生成 1 到 100 个标准 UUID，适合创建临时主键、模拟数据、配置样例或排查分布式系统中的标识字段。整个过程采用浏览器本地处理，随机字节在当前页面内生成，结果无需上传，也不会经过远程接口。工具保持简洁、快速、无广告，并支持浅色与深色主题，方便在桌面和移动设备上随时使用。</article>
   </main>
 
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理的免费开发者工具。</footer>
+
+  <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md">
+    <div class="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
+      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor" aria-label="关闭赞赏窗口">×</button>
+      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">赞赏支持</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">保持工具免费、快速且无广告。</p>
+      <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="buyCoffee">Buy Me a Coffee</a>
+    </div>
+  </div>
+
   <script>
-    (() => {
-      "use strict";
-
-      const form = document.getElementById("uuidForm");
-      const countInput = document.getElementById("countInput");
-      const errorBox = document.getElementById("errorBox");
-      const outputArea = document.getElementById("outputArea");
-      const copyBtn = document.getElementById("copyBtn");
-      const clearBtn = document.getElementById("clearBtn");
-      const resultSummary = document.getElementById("resultSummary");
-      const copyFeedback = document.getElementById("copyFeedback");
-      const year = document.getElementById("year");
-
-      year.textContent = String(new Date().getFullYear());
-
-      let feedbackTimer = null;
-
-      function showError(message) {
-        errorBox.textContent = message;
-        errorBox.classList.remove("hidden");
-        countInput.classList.add("border-red-400", "focus:border-red-400", "focus:ring-red-400/20");
-        countInput.classList.remove("border-slate-700", "focus:border-cyan-400", "focus:ring-cyan-400/10");
+    const I18N = {
+      zh: {
+        documentTitle: "UUID v4 批量生成器 - Micro Tools Matrix 本地开发者工具",
+        metaDescription: "Micro Tools Matrix UUID v4 批量生成器，支持一次生成 1 到 100 个标准 UUID，浏览器本地处理，无需上传，免费在线开发者工具。",
+        metaKeywords: "UUID v4 批量生成器, UUID 生成, GUID 生成, 浏览器本地处理, 无需上传, Micro Tools Matrix",
+        toolName: "UUID v4 批量生成器",
+        h1: "UUID v4 批量生成器",
+        eyebrow: "浏览器本地处理",
+        intro: "在 Micro Tools Matrix 中一次生成 1 到 100 个标准 UUID v4。所有随机值都在浏览器本地创建，无需上传任何内容。",
+        localBadge: "本地运行",
+        sponsor: "赞赏",
+        langZh: "中",
+        langEn: "EN",
+        languageGroup: "语言",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        outputTitle: "结果",
+        outputBadge: "输出",
+        countLabel: "生成数量",
+        countHelp: "请输入 1 到 100 之间的整数。每个结果都是标准 8-4-4-4-12 格式。",
+        privacyTitle: "隐私说明",
+        privacyText: "UUID 由当前页面直接生成，结果只保存在浏览器内存中，不会发送到服务器。",
+        primaryAction: "生成 UUID",
+        secondaryAction: "示例数量",
+        outputLabel: "UUID 列表",
+        outputPlaceholder: "生成的 UUID 会显示在这里。",
+        resultCountLabel: "当前数量",
+        formatLabel: "格式",
+        copyAll: "复制全部",
+        clearResults: "清空结果",
+        readyStatus: "请输入数量并生成 UUID。",
+        sampleStatus: "已填入示例数量 10。",
+        generatedStatus: "已生成 {count} 个 UUID。",
+        invalidCount: "请输入 1 到 100 之间的整数。",
+        cryptoError: "当前浏览器不支持安全随机数生成，请更换现代浏览器后重试。",
+        emptyCopy: "没有可复制的 UUID，请先生成结果。",
+        copiedStatus: "已复制 {count} 个 UUID。",
+        copyFailed: "复制失败，请手动选择结果后复制。",
+        clearedStatus: "结果已清空。",
+        closeSponsor: "关闭赞赏窗口",
+        sponsorTitle: "赞赏支持",
+        sponsorSubtitle: "保持工具免费、快速且无广告。",
+        buyCoffee: "Buy Me a Coffee",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        seoArticle: "UUID v4 批量生成器是 Micro Tools Matrix 为开发、测试、数据库建模和接口调试准备的免费在线开发者工具。你可以一次生成 1 到 100 个标准 UUID，适合创建临时主键、模拟数据、配置样例或排查分布式系统中的标识字段。整个过程采用浏览器本地处理，随机字节在当前页面内生成，结果无需上传，也不会经过远程接口。工具保持简洁、快速、无广告，并支持浅色与深色主题，方便在桌面和移动设备上随时使用。",
+        footer: "Micro Tools Matrix - 浏览器本地处理的免费开发者工具。"
+      },
+      en: {
+        documentTitle: "UUID v4 Batch Generator - Micro Tools Matrix Local Developer Tool",
+        metaDescription: "Micro Tools Matrix UUID v4 batch generator creates 1 to 100 standard UUIDs with browser-local processing, no upload, and a free online developer tool workflow.",
+        metaKeywords: "UUID v4 generator, UUID batch generator, GUID generator, browser-local processing, no upload, free online developer tool, Micro Tools Matrix",
+        toolName: "UUID v4 Batch Generator",
+        h1: "UUID v4 Batch Generator",
+        eyebrow: "Browser-local processing",
+        intro: "Generate 1 to 100 standard UUID v4 values in Micro Tools Matrix. Random values are created locally in your browser, with no upload required.",
+        localBadge: "Local",
+        sponsor: "Sponsor",
+        langZh: "ZH",
+        langEn: "EN",
+        languageGroup: "Language",
+        inputTitle: "Input",
+        inputBadge: "INPUT",
+        outputTitle: "Result",
+        outputBadge: "OUTPUT",
+        countLabel: "Quantity",
+        countHelp: "Enter an integer from 1 to 100. Every result uses the standard 8-4-4-4-12 format.",
+        privacyTitle: "Privacy note",
+        privacyText: "UUIDs are generated directly on this page. Results stay in browser memory and are never sent to a server.",
+        primaryAction: "Generate UUIDs",
+        secondaryAction: "Use sample",
+        outputLabel: "UUID list",
+        outputPlaceholder: "Generated UUIDs will appear here.",
+        resultCountLabel: "Current count",
+        formatLabel: "Format",
+        copyAll: "Copy all",
+        clearResults: "Clear results",
+        readyStatus: "Enter a quantity and generate UUIDs.",
+        sampleStatus: "Sample quantity 10 has been filled in.",
+        generatedStatus: "Generated {count} UUIDs.",
+        invalidCount: "Enter an integer from 1 to 100.",
+        cryptoError: "This browser does not support secure random number generation. Please try a modern browser.",
+        emptyCopy: "There are no UUIDs to copy. Generate results first.",
+        copiedStatus: "Copied {count} UUIDs.",
+        copyFailed: "Copy failed. Please select the results and copy them manually.",
+        clearedStatus: "Results cleared.",
+        closeSponsor: "Close sponsor dialog",
+        sponsorTitle: "Sponsor support",
+        sponsorSubtitle: "Keep the tools free, fast, and ad-free.",
+        buyCoffee: "Buy Me a Coffee",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        seoArticle: "The UUID v4 Batch Generator in Micro Tools Matrix is a free online developer tool for testing, database modeling, API debugging, mock data creation, and configuration examples. It creates between 1 and 100 standard UUID v4 values at once, using the familiar 8-4-4-4-12 layout required by most frameworks and databases. The workflow is intentionally simple: choose a quantity, generate the list, and copy every result with one button. All generation happens with browser-local processing, so the values are produced on the current page and no input or output is uploaded to a remote service. This makes the tool convenient for privacy-sensitive development tasks, quick QA sessions, and mobile use. Like the rest of Micro Tools Matrix, it is lightweight, ad-free, theme-aware, and designed to remain fast without external runtime libraries.",
+        footer: "Micro Tools Matrix - free developer tools with browser-local processing."
       }
+    };
 
-      function hideError() {
-        errorBox.textContent = "";
-        errorBox.classList.add("hidden");
-        countInput.classList.remove("border-red-400", "focus:border-red-400", "focus:ring-red-400/20");
-        countInput.classList.add("border-slate-700", "focus:border-cyan-400", "focus:ring-cyan-400/10");
-      }
+    let currentLanguage = "zh";
+    let lastInputStatus = "readyStatus";
+    let lastInputVars = {};
+    let lastOutputStatus = "";
+    let lastOutputVars = {};
 
-      function showFeedback(message, isSuccess = true) {
-        if (feedbackTimer) {
-          window.clearTimeout(feedbackTimer);
-        }
-        copyFeedback.textContent = message;
-        copyFeedback.classList.remove("hidden", "border-red-400/30", "bg-red-500/10", "text-red-200", "border-emerald-400/30", "bg-emerald-500/10", "text-emerald-200");
-        if (isSuccess) {
-          copyFeedback.classList.add("border-emerald-400/30", "bg-emerald-500/10", "text-emerald-200");
-        } else {
-          copyFeedback.classList.add("border-red-400/30", "bg-red-500/10", "text-red-200");
-        }
-        feedbackTimer = window.setTimeout(() => {
-          copyFeedback.classList.add("hidden");
-        }, 2600);
-      }
-
-      function validateCount(rawValue) {
-        const value = String(rawValue ?? "").trim();
-
-        if (value === "") {
-          return { valid: false, message: "Please enter需要Generate的 UUID 数量。" };
-        }
-
-        if (!/^\d+$/.test(value)) {
-          return { valid: false, message: "Generate数量必须是 1 到 100 之间的整数，不能包含小数、负数或其他字符。" };
-        }
-
-        const count = Number(value);
-
-        if (!Number.isSafeInteger(count)) {
-          return { valid: false, message: "输入的数字过大，Please enter 1 到 100 之间的整数。" };
-        }
-
-        if (count < 1 || count > 100) {
-          return { valid: false, message: "Generate数量超出范围，Please enter 1 到 100 之间的整数。" };
-        }
-
-        return { valid: true, count };
-      }
-
-      function getRandomBytes(length) {
-        const bytes = new Uint8Array(length);
-        if (window.crypto && typeof window.crypto.getRandomValues === "function") {
-          window.crypto.getRandomValues(bytes);
-        } else {
-          for (let i = 0; i < length; i += 1) {
-            bytes[i] = Math.floor(Math.random() * 256);
-          }
-        }
-        return bytes;
-      }
-
-      function generateUuidV4() {
-        const bytes = getRandomBytes(16);
-
-        bytes[6] = (bytes[6] & 0x0f) | 0x40;
-        bytes[8] = (bytes[8] & 0x3f) | 0x80;
-
-        const hex = Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0"));
-        return (
-          hex.slice(0, 4).join("") + "-" +
-          hex.slice(4, 6).join("") + "-" +
-          hex.slice(6, 8).join("") + "-" +
-          hex.slice(8, 10).join("") + "-" +
-          hex.slice(10, 16).join("")
-        );
-      }
-
-      function generateBatch(count) {
-        const results = [];
-        for (let i = 0; i < count; i += 1) {
-          results.push(generateUuidV4());
-        }
-        return results;
-      }
-
-      async function copyText(text) {
-        if (!text) {
-          throw new Error("没有可Copy的内容。");
-        }
-
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(text);
-          return;
-        }
-
-        outputArea.focus();
-        outputArea.select();
-
-        const ok = document.execCommand("copy");
-        window.getSelection()?.removeAllRanges();
-
-        if (!ok) {
-          throw new Error("当前浏览器不支持自动Copy，请手动选中结果Copy。");
-        }
-      }
-
-      form.addEventListener("submit", (event) => {
-        event.preventDefault();
-
-        try {
-          const validation = validateCount(countInput.value);
-          if (!validation.valid) {
-            showError(validation.message);
-            outputArea.value = "";
-            copyBtn.disabled = true;
-            resultSummary.textContent = "输入有误，暂未Generate UUID。";
-            return;
-          }
-
-          hideError();
-          const list = generateBatch(validation.count);
-          outputArea.value = list.join("\n");
-          copyBtn.disabled = false;
-          resultSummary.textContent = `已Generate ${list.length} 个标准 UUID v4。`;
-          showFeedback("UUID 已成功Generate。", true);
-        } catch (error) {
-          showError("Generate过程中出现异常，请刷新页面后重试。");
-          resultSummary.textContent = "Generate失败。";
-          copyBtn.disabled = true;
-        }
-      });
-
-      copyBtn.addEventListener("click", async () => {
-        const text = outputArea.value.trim();
-
-        if (!text) {
-          showFeedback("当前没有可Copy的 UUID，请先Generate结果。", false);
-          copyBtn.disabled = true;
-          return;
-        }
-
-        try {
-          await copyText(text);
-          copyBtn.textContent = "Copied";
-          showFeedback("所有 UUID Copied到剪贴板。", true);
-          window.setTimeout(() => {
-            copyBtn.textContent = "Copy所有结果";
-          }, 1200);
-        } catch (error) {
-          showFeedback(error && error.message ? error.message : "Copy failed，请手动Copy文本框内容。", false);
-        }
-      });
-
-      clearBtn.addEventListener("click", () => {
-        outputArea.value = "";
-        copyBtn.disabled = true;
-        resultSummary.textContent = "结果已Clear。";
-        hideError();
-        showFeedback("已ClearGenerate结果。", true);
-      });
-
-      countInput.addEventListener("input", () => {
-        if (!errorBox.classList.contains("hidden")) {
-          const validation = validateCount(countInput.value);
-          if (validation.valid) {
-            hideError();
-          }
-        }
-      });
-
-      document.addEventListener("DOMContentLoaded", () => {
-        try {
-          const initialList = generateBatch(10);
-          outputArea.value = initialList.join("\n");
-          copyBtn.disabled = false;
-          resultSummary.textContent = "已Generate 10 个标准 UUID v4。";
-        } catch (error) {
-          outputArea.value = "";
-          copyBtn.disabled = true;
-          resultSummary.textContent = "请点击Generate按钮创建 UUID。";
-        }
-      });
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      const saved = localStorage.getItem("microToolsLanguage");
+      return saved === "en" ? "en" : "zh";
     }
+
+    function formatMessage(key, vars = {}) {
+      const dict = I18N[currentLanguage] || I18N.zh;
+      return String(dict[key] || "").replace(/\{(\w+)\}/g, (_, name) => vars[name] ?? "");
+    }
+
+    function setInputStatus(key, vars = {}) {
+      lastInputStatus = key;
+      lastInputVars = vars;
+      const node = document.getElementById("inputStatus");
+      if (node) node.textContent = key ? formatMessage(key, vars) : "";
+    }
+
+    function setOutputStatus(key, vars = {}) {
+      lastOutputStatus = key;
+      lastOutputVars = vars;
+      const node = document.getElementById("outputStatus");
+      if (node) node.textContent = key ? formatMessage(key, vars) : "";
+    }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.title = dict.documentTitle;
+
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) metaDescription.setAttribute("content", dict.metaDescription);
+
+      const metaKeywords = document.querySelector('meta[name="keywords"]');
+      if (metaKeywords) metaKeywords.setAttribute("content", dict.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.textContent = dict[key];
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("placeholder", dict[key]);
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("title", dict[key]);
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("aria-label", dict[key]);
+        }
+      });
+
+      const themeLabel = document.querySelector("[data-theme-label]");
+      if (themeLabel && !themeLabel.textContent.trim()) {
+        themeLabel.textContent = dict.themeSystem;
+      }
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        const selected = "bg-cyan-400 text-slate-950";
+        const inactive = "text-slate-600 dark:text-slate-400";
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "zh" ? selected : inactive);
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "en" ? selected : inactive);
+        zhBtn.setAttribute("aria-pressed", currentLanguage === "zh" ? "true" : "false");
+        enBtn.setAttribute("aria-pressed", currentLanguage === "en" ? "true" : "false");
+      }
+
+      setInputStatus(lastInputStatus, lastInputVars);
+      setOutputStatus(lastOutputStatus, lastOutputVars);
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function setLanguage(lang) {
+      const next = lang === "en" ? "en" : "zh";
+      localStorage.setItem("microToolsLanguage", next);
+      applyLanguage(next);
+    }
+
+    function openSponsorModal(event) {
+      if (event && typeof event.preventDefault === "function") event.preventDefault();
+      const modal = document.getElementById("sponsorModal");
+      if (modal) {
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      }
+    }
+
+    function closeSponsorModal() {
+      const modal = document.getElementById("sponsorModal");
+      if (modal) {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+    }
+
+    function createUuidV4() {
+      if (!window.crypto || typeof window.crypto.getRandomValues !== "function") {
+        throw new Error("crypto-unavailable");
+      }
+
+      const bytes = new Uint8Array(16);
+      window.crypto.getRandomValues(bytes);
+      bytes[6] = (bytes[6] & 0x0f) | 0x40;
+      bytes[8] = (bytes[8] & 0x3f) | 0x80;
+
+      const hex = Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0"));
+      return [
+        hex.slice(0, 4).join(""),
+        hex.slice(4, 6).join(""),
+        hex.slice(6, 8).join(""),
+        hex.slice(8, 10).join(""),
+        hex.slice(10, 16).join("")
+      ].join("-");
+    }
+
+    function getRequestedCount() {
+      const input = document.getElementById("uuidCount");
+      const value = Number(input ? input.value : 0);
+      if (!Number.isInteger(value) || value < 1 || value > 100) return null;
+      return value;
+    }
+
+    function updateResultCount() {
+      const output = document.getElementById("uuidOutput");
+      const countNode = document.getElementById("resultCount");
+      const value = output ? output.value.trim() : "";
+      const count = value ? value.split(/\n/).filter(Boolean).length : 0;
+      if (countNode) countNode.textContent = String(count);
+      return count;
+    }
+
+    function generateUuids() {
+      const count = getRequestedCount();
+      if (count === null) {
+        setInputStatus("invalidCount");
+        return;
+      }
+
+      try {
+        const uuids = Array.from({ length: count }, createUuidV4);
+        const output = document.getElementById("uuidOutput");
+        if (output) output.value = uuids.join("\n");
+        updateResultCount();
+        setInputStatus("generatedStatus", { count });
+        setOutputStatus("generatedStatus", { count });
+      } catch (error) {
+        setInputStatus("cryptoError");
+      }
+    }
+
+    async function copyAllResults() {
+      const output = document.getElementById("uuidOutput");
+      const text = output ? output.value.trim() : "";
+      if (!text) {
+        setOutputStatus("emptyCopy");
+        return;
+      }
+
+      const count = updateResultCount();
+
+      try {
+        if (!navigator.clipboard || typeof navigator.clipboard.writeText !== "function") {
+          throw new Error("clipboard-unavailable");
+        }
+        await navigator.clipboard.writeText(text);
+        setOutputStatus("copiedStatus", { count });
+      } catch (error) {
+        if (output) {
+          output.focus();
+          output.select();
+        }
+        setOutputStatus("copyFailed");
+      }
+    }
+
+    function clearResults() {
+      const output = document.getElementById("uuidOutput");
+      if (output) output.value = "";
+      updateResultCount();
+      setOutputStatus("clearedStatus");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+
+      document.getElementById("generateBtn")?.addEventListener("click", generateUuids);
+      document.getElementById("sampleBtn")?.addEventListener("click", () => {
+        const input = document.getElementById("uuidCount");
+        if (input) input.value = "10";
+        setInputStatus("sampleStatus");
+      });
+      document.getElementById("copyBtn")?.addEventListener("click", copyAllResults);
+      document.getElementById("clearBtn")?.addEventListener("click", clearResults);
+      document.getElementById("uuidCount")?.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") generateUuids();
+      });
+
+      applyLanguage(getInitialLanguage());
+      setInputStatus("readyStatus");
+      updateResultCount();
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="../sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

@@ -1,502 +1,464 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>keycode-info - 键盘键值 Keycode 捕获器</title>
-  <meta name="description" content="键盘键值 (Keycode) 捕获器。按键盘上的任意键，屏幕中央显示该按键的 event.keyCode、event.key 和 event.code。">
-  <meta name="keywords" content="keycode-info, Keycode 捕获器, 键盘键值, event.keyCode, event.key, event.code, JavaScript 键盘事件, 在线按键检测工具, 快捷键调试">
-  <link rel="icon" type="image/png" href="../assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
-  <link rel="canonical" href="https://mymicrotools.xyz/en/keycode-info.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>键盘键值捕获器 - Micro Tools Matrix 本地开发者工具</title>
+  <meta name="description" content="Micro Tools Matrix 键盘键值捕获器可在浏览器本地捕获按键事件，显示 event.keyCode、event.key 和 event.code，无需上传任何输入。">
+  <meta name="keywords" content="键盘键值,keyCode,event.key,event.code,键盘事件,浏览器本地处理,无需上传,Micro Tools Matrix">
+  <link rel="canonical" href="https://mymicrotools.xyz/keycode-info.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/keycode-info.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/keycode-info.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/keycode-info.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/en/keycode-info.html">
-  <meta property="og:title" content="keycode-info - 键盘键值 Keycode 捕获器">
-  <meta property="og:description" content="键盘键值 (Keycode) 捕获器。按键盘上的任意键，屏幕中央显示该按键的 event.keyCode、event.key 和 event.code。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="keycode-info - 键盘键值 Keycode 捕获器">
-  <meta name="twitter:description" content="键盘键值 (Keycode) 捕获器。按键盘上的任意键，屏幕中央显示该按键的 event.keyCode、event.key 和 event.code。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="../style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Keycode Info",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A browser-local keyboard keycode capture tool that displays event.keyCode, event.key, and event.code.",
+      "url": "https://mymicrotools.xyz/keycode-info.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "category": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">键盘键值捕获器</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="../keycode-info.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./keycode-info.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="pointer-events-none fixed inset-0 overflow-hidden">
-    <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
-  </div>
-
-  <header class="relative border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 backdrop-blur">
-    <div class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-xs font-medium text-cyan-200">
-            Keyboard Event Inspector
-          </p>
-          <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">键盘键值 Keycode 捕获器</h1>
-          <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-700 dark:text-slate-300 sm:text-base">
-            按下键盘上的任意键，立即查看该按键对应的 <strong>event.keyCode</strong>、<strong>event.key</strong> 与 <strong>event.code</strong>。
-          </p>
-        </div>
-        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm text-slate-700 dark:text-slate-300 shadow-2xl">
-          <span class="inline-block h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_#34d399]"></span>
-          <span class="ml-2">实时监听中</span>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeAria">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="sponsorAria">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]" data-i18n-aria-label="languageAria">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langZh">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langEn">EN</button>
         </div>
       </div>
-    </div>
+    </nav>
   </header>
 
-  <main class="relative mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-5">
-      <div class="lg:col-span-2">
-        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl backdrop-blur">
-          <h2 class="text-lg font-semibold text-gray-900 dark:text-white">输入区</h2>
-          <p class="mt-2 text-sm leading-6 text-slate-400">
-            点击下方捕获区域后按任意键。桌面端可直接按键；手机端可点击输入框唤起软键盘进行测试。
-          </p>
-
-          <div
-            id="captureZone"
-            tabindex="0"
-            role="button"
-            aria-label="键盘按键捕获区域"
-            class="mt-5 flex min-h-52 cursor-text select-none flex-col items-center justify-center rounded-2xl border border-dashed border-cyan-300/40 bg-cyan-300/10 p-6 text-center outline-none transition duration-200 focus:border-cyan-300 focus:bg-cyan-300/15 focus:ring-4 focus:ring-cyan-400/20"
-          >
-            <div class="mb-4 rounded-2xl bg-white dark:bg-slate-950/70 px-5 py-4 shadow-inner">
-              <span id="bigKey" class="block break-all text-5xl font-black tracking-tight text-cyan-200 sm:text-6xl">按键</span>
-            </div>
-            <p id="captureHint" class="text-sm text-slate-700 dark:text-slate-300">请按下键盘上的任意键</p>
-          </div>
-
-          <label for="mobileInput" class="mt-5 block text-sm font-medium text-slate-700 dark:text-slate-300">移动端辅助输入</label>
-          <input
-            id="mobileInput"
-            type="text"
-            inputmode="text"
-            autocomplete="off"
-            autocapitalize="off"
-            spellcheck="false"
-            placeholder="点击这里后按键"
-            class="mt-2 w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 px-4 py-3 text-slate-900 dark:text-slate-100 placeholder:text-slate-500 outline-none transition focus:border-cyan-300 focus:ring-4 focus:ring-cyan-400/20"
-          />
-
-          <div class="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-            <button
-              id="focusBtn"
-              type="button"
-              class="rounded-2xl bg-cyan-400 px-4 py-3 text-sm font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98]"
-            >
-              聚焦捕获
-            </button>
-            <button
-              id="copyBtn"
-              type="button"
-              class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/10 px-4 py-3 text-sm font-bold text-gray-900 dark:text-white transition hover:bg-white/15 active:scale-[0.98]"
-            >
-              Copy result
-            </button>
-            <button
-              id="clearBtn"
-              type="button"
-              class="rounded-2xl border border-rose-300/20 bg-rose-400/10 px-4 py-3 text-sm font-bold text-rose-100 transition hover:bg-rose-400/15 active:scale-[0.98]"
-            >
-              Clear
-            </button>
-          </div>
-
-          <div id="errorBox" class="mt-5 hidden rounded-2xl border border-red-400/40 bg-red-500/15 px-4 py-3 text-sm text-red-100" role="alert"></div>
-          <div id="successBox" class="mt-5 hidden rounded-2xl border border-emerald-400/40 bg-emerald-500/15 px-4 py-3 text-sm text-emerald-100" role="status"></div>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">键盘键值捕获器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">按下任意键，Micro Tools Matrix 会在浏览器本地显示该按键的 event.keyCode、event.key 和 event.code，无需上传任何输入。</p>
         </div>
-      </div>
-
-      <div class="lg:col-span-3">
-        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-5 shadow-2xl backdrop-blur">
-          <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h2 class="text-lg font-semibold text-gray-900 dark:text-white">输出区</h2>
-              <p class="mt-2 text-sm text-slate-400">实时显示 KeyboardEvent 的核心字段。</p>
-            </div>
-            <p id="timeLabel" class="text-xs text-slate-500">尚未捕获</p>
-          </div>
-
-          <div class="mt-6 grid gap-4 md:grid-cols-3">
-            <div class="rounded-3xl border border-cyan-300/20 bg-white dark:bg-slate-950/70 p-5">
-              <p class="text-xs font-semibold uppercase tracking-wider text-cyan-200">event.keyCode</p>
-              <p id="keyCodeValue" class="mt-4 break-all text-4xl font-black text-gray-900 dark:text-white sm:text-5xl">--</p>
-              <p class="mt-3 text-xs leading-5 text-slate-500">旧版数值键码，仍常用于兼容性排查。</p>
-            </div>
-
-            <div class="rounded-3xl border border-indigo-300/20 bg-white dark:bg-slate-950/70 p-5">
-              <p class="text-xs font-semibold uppercase tracking-wider text-indigo-200">event.key</p>
-              <p id="keyValue" class="mt-4 break-all text-4xl font-black text-gray-900 dark:text-white sm:text-5xl">--</p>
-              <p class="mt-3 text-xs leading-5 text-slate-500">表示用户按下的键值，受键盘布局影响。</p>
-            </div>
-
-            <div class="rounded-3xl border border-emerald-300/20 bg-white dark:bg-slate-950/70 p-5">
-              <p class="text-xs font-semibold uppercase tracking-wider text-emerald-200">event.code</p>
-              <p id="codeValue" class="mt-4 break-all text-4xl font-black text-gray-900 dark:text-white sm:text-5xl">--</p>
-              <p class="mt-3 text-xs leading-5 text-slate-500">表示物理按键位置，通常不受键盘布局影响。</p>
-            </div>
-          </div>
-
-          <div class="mt-5 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 p-5">
-            <h3 class="text-sm font-semibold text-slate-800 dark:text-slate-200">完整捕获结果</h3>
-            <pre id="jsonOutput" class="mt-3 max-h-72 overflow-auto whitespace-pre-wrap break-words rounded-2xl bg-black/40 p-4 text-sm leading-6 text-slate-700 dark:text-slate-300">等待按键输入...</pre>
-          </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/75 p-6 shadow-2xl backdrop-blur sm:p-8">
-      <h2 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">关于 keycode-info 键盘键值捕获器</h2>
-      <p class="mt-4 leading-8 text-slate-700 dark:text-slate-300">
-        keycode-info 是一款面向前端开发者、测试工程师和产品交互设计人员的在线键盘键值 Keycode 捕获器。开发快捷键、游戏控制、表单增强或后台管理系统热键时，经常需要确认某个按键在浏览器中的 event.keyCode、event.key 和 event.code。本工具可以在页面中央实时展示按键结果，避免反复编写临时代码或打开控制台调试。使用方法非常简单：打开页面后点击捕获区域，按下任意键即可获得对应的 JavaScript 键盘事件信息；如果需要记录结果，可一键Copy为 JSON。对于需要排查不同键盘布局、功能键、方向键、组合键触发差异的场景，这个在线按键检测工具能够快速定位问题，提升快捷键调试效率，并帮助你更准确地理解 KeyboardEvent 的实际表现。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">捕获按键</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <button id="captureArea" type="button" class="flex min-h-[16rem] w-full flex-col items-center justify-center rounded-3xl border border-dashed border-cyan-300 bg-slate-50 px-4 py-8 text-center outline-none transition hover:border-cyan-400 hover:bg-cyan-50 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-cyan-400/30 dark:bg-slate-950/70 dark:hover:bg-cyan-400/10" data-i18n-aria-label="captureAria">
+          <span class="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-400 text-xl font-black text-slate-950 shadow-sm">⌨</span>
+          <span class="max-w-full break-words text-lg font-black tracking-tight text-slate-950 dark:text-white" data-i18n="captureTitle">点击这里后按任意键</span>
+          <span class="mt-3 max-w-md text-sm leading-6 text-slate-600 dark:text-slate-400" data-i18n="captureHint">页面也会监听全局键盘事件。为避免浏览器快捷键干扰，建议先聚焦此区域再测试。</span>
+        </button>
+
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite" data-i18n="statusReady">等待按键输入。</p>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">查看示例</button>
+          <button id="resetBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">重置</button>
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">按键结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+        </div>
+
+        <div class="grid gap-3">
+          <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <div class="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="keyCodeLabel">event.keyCode</div>
+            <div id="keyCodeValue" class="tabular-nums break-words text-4xl font-black tracking-tighter text-slate-950 dark:text-white">—</div>
+          </div>
+          <div class="grid gap-3 sm:grid-cols-2">
+            <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+              <div class="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="keyLabel">event.key</div>
+              <div id="keyValue" class="tabular-nums min-h-10 break-words text-2xl font-black tracking-tight text-slate-950 dark:text-white">—</div>
+            </div>
+            <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+              <div class="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="codeLabel">event.code</div>
+              <div id="codeValue" class="tabular-nums min-h-10 break-words text-2xl font-black tracking-tight text-slate-950 dark:text-white">—</div>
+            </div>
+          </div>
+          <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <div class="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="eventSummaryLabel">事件摘要</div>
+            <pre id="summaryValue" class="min-h-24 whitespace-pre-wrap break-words text-sm leading-6 text-slate-700 dark:text-slate-300">—</pre>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="clearAction">清空结果</button>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">键盘键值捕获器是 Micro Tools Matrix 提供的免费在线开发者工具，适合调试快捷键、表单交互、游戏控制、无障碍键盘操作和前端事件兼容性。你只需在页面中按下任意键，即可立即看到 event.keyCode、event.key 与 event.code，便于确认不同按键在浏览器中的事件表现。所有捕获与展示都在浏览器本地处理，无需上传按键输入、无需连接后端，也不会保存你的测试内容。对于需要快速排查键盘事件的前端工程师、测试人员和产品设计者，这个轻量工具可以作为安全、直观、随开随用的本地参考面板。</article>
   </main>
 
-  <footer class="relative mx-auto max-w-6xl px-4 pb-8 text-center text-xs text-slate-500 sm:px-6 lg:px-8">
-    <p>keycode-info · 原生 JavaScript 实时键盘事件检测工具</p>
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
 
   <script>
-    (function () {
-      "use strict";
-
-      const state = {
-        lastResult: null,
-        hideErrorTimer: null,
-        hideSuccessTimer: null
-      };
-
-      const $ = (id) => document.getElementById(id);
-
-      const elements = {
-        captureZone: $("captureZone"),
-        mobileInput: $("mobileInput"),
-        bigKey: $("bigKey"),
-        captureHint: $("captureHint"),
-        keyCodeValue: $("keyCodeValue"),
-        keyValue: $("keyValue"),
-        codeValue: $("codeValue"),
-        jsonOutput: $("jsonOutput"),
-        timeLabel: $("timeLabel"),
-        errorBox: $("errorBox"),
-        successBox: $("successBox"),
-        focusBtn: $("focusBtn"),
-        copyBtn: $("copyBtn"),
-        clearBtn: $("clearBtn")
-      };
-
-      function safeText(value) {
-        if (value === undefined || value === null) return "未提供";
-        const text = String(value);
-        if (text === "") return "空字符串";
-        if (text === " ") return "Space (空格)";
-        return text;
+    const I18N = {
+      zh: {
+        documentTitle: "键盘键值捕获器 - Micro Tools Matrix 本地开发者工具",
+        metaDescription: "Micro Tools Matrix 键盘键值捕获器可在浏览器本地捕获按键事件，显示 event.keyCode、event.key 和 event.code，无需上传任何输入。",
+        metaKeywords: "键盘键值,keyCode,event.key,event.code,键盘事件,浏览器本地处理,无需上传,Micro Tools Matrix",
+        toolName: "键盘键值捕获器",
+        h1: "键盘键值捕获器",
+        eyebrow: "浏览器本地处理",
+        intro: "按下任意键，Micro Tools Matrix 会在浏览器本地显示该按键的 event.keyCode、event.key 和 event.code，无需上传任何输入。",
+        localBadge: "本地运行",
+        sponsor: "赞赏",
+        sponsorAria: "打开赞赏面板",
+        buyCoffee: "Buy Me a Coffee",
+        langZh: "中",
+        langEn: "EN",
+        languageAria: "语言",
+        themeAria: "切换主题",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        inputTitle: "捕获按键",
+        inputBadge: "输入",
+        outputTitle: "按键结果",
+        outputBadge: "输出",
+        captureTitle: "点击这里后按任意键",
+        captureHint: "页面也会监听全局键盘事件。为避免浏览器快捷键干扰，建议先聚焦此区域再测试。",
+        captureAria: "键盘按键捕获区域",
+        statusReady: "等待按键输入。",
+        statusCaptured: "已捕获按键：{key}。",
+        statusReset: "结果已重置，请按任意键。",
+        statusSample: "已载入示例：Escape。",
+        statusCopied: "结果已复制到剪贴板。",
+        statusCopyEmpty: "暂无可复制的按键结果。",
+        statusCopyFailed: "复制失败，请手动选择结果文本。",
+        primaryAction: "查看示例",
+        secondaryAction: "重置",
+        copyAction: "复制结果",
+        clearAction: "清空结果",
+        keyCodeLabel: "event.keyCode",
+        keyLabel: "event.key",
+        codeLabel: "event.code",
+        eventSummaryLabel: "事件摘要",
+        noValue: "—",
+        unknownKey: "未知按键",
+        summaryKeyCode: "keyCode",
+        summaryKey: "key",
+        summaryCode: "code",
+        summaryAlt: "altKey",
+        summaryCtrl: "ctrlKey",
+        summaryShift: "shiftKey",
+        summaryMeta: "metaKey",
+        seoArticle: "键盘键值捕获器是 Micro Tools Matrix 提供的免费在线开发者工具，适合调试快捷键、表单交互、游戏控制、无障碍键盘操作和前端事件兼容性。你只需在页面中按下任意键，即可立即看到 event.keyCode、event.key 与 event.code，便于确认不同按键在浏览器中的事件表现。所有捕获与展示都在浏览器本地处理，无需上传按键输入、无需连接后端，也不会保存你的测试内容。对于需要快速排查键盘事件的前端工程师、测试人员和产品设计者，这个轻量工具可以作为安全、直观、随开随用的本地参考面板。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
+      },
+      en: {
+        documentTitle: "Keycode Info - Micro Tools Matrix Local Developer Tool",
+        metaDescription: "Micro Tools Matrix Keycode Info captures keyboard events in your browser and displays event.keyCode, event.key, and event.code with browser-local processing.",
+        metaKeywords: "keycode info,event.keyCode,event.key,event.code,keyboard event,browser-local processing,free online developer tool,Micro Tools Matrix",
+        toolName: "Keycode Info",
+        h1: "Keycode Info",
+        eyebrow: "Browser-local processing",
+        intro: "Press any key and Micro Tools Matrix will show event.keyCode, event.key, and event.code locally in your browser. Nothing is uploaded.",
+        localBadge: "Local",
+        sponsor: "Sponsor",
+        sponsorAria: "Open sponsor panel",
+        buyCoffee: "Buy Me a Coffee",
+        langZh: "中",
+        langEn: "EN",
+        languageAria: "Language",
+        themeAria: "Toggle theme",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        inputTitle: "Capture Key",
+        inputBadge: "INPUT",
+        outputTitle: "Key Result",
+        outputBadge: "OUTPUT",
+        captureTitle: "Click here, then press any key",
+        captureHint: "The page also listens for global keyboard events. To reduce browser shortcut interference, focus this area before testing.",
+        captureAria: "Keyboard key capture area",
+        statusReady: "Waiting for a key press.",
+        statusCaptured: "Captured key: {key}.",
+        statusReset: "Results reset. Press any key to continue.",
+        statusSample: "Loaded sample: Escape.",
+        statusCopied: "Result copied to the clipboard.",
+        statusCopyEmpty: "No key result is available to copy.",
+        statusCopyFailed: "Copy failed. Please select the result text manually.",
+        primaryAction: "Show Sample",
+        secondaryAction: "Reset",
+        copyAction: "Copy Result",
+        clearAction: "Clear Result",
+        keyCodeLabel: "event.keyCode",
+        keyLabel: "event.key",
+        codeLabel: "event.code",
+        eventSummaryLabel: "Event Summary",
+        noValue: "—",
+        unknownKey: "Unknown key",
+        summaryKeyCode: "keyCode",
+        summaryKey: "key",
+        summaryCode: "code",
+        summaryAlt: "altKey",
+        summaryCtrl: "ctrlKey",
+        summaryShift: "shiftKey",
+        summaryMeta: "metaKey",
+        seoArticle: "Keycode Info by Micro Tools Matrix is a free online developer tool for inspecting keyboard events without sending input to a server. Press any key and the page immediately displays event.keyCode, event.key, and event.code, making it easier to debug shortcuts, form controls, browser interactions, games, and accessibility workflows. The tool uses browser-local processing only: your keystrokes are handled in page memory, no upload is required, and no backend call is made. It is useful when comparing physical key positions with character values, checking modifier keys, or explaining why a shortcut behaves differently across browsers and operating systems. Because the interface is lightweight and responsive, it works well on desktop and mobile browsers with external keyboards. Developers, testers, educators, and product teams can keep this Micro Tools Matrix page open as a safe reference panel whenever they need quick keyboard event details.",
+        footer: "Micro Tools Matrix - Browser-local processing with no upload."
       }
+    };
 
-      function setText(el, value) {
-        if (!el) return;
-        el.textContent = safeText(value);
-      }
+    let currentLanguage = "zh";
+    let lastKeyInfo = null;
 
-      function showError(message) {
-        if (!elements.errorBox) return;
-        clearTimeout(state.hideErrorTimer);
-        elements.errorBox.textContent = message || "发生Unknown错误，请重试。";
-        elements.errorBox.classList.remove("hidden");
-        state.hideErrorTimer = setTimeout(() => {
-          elements.errorBox.classList.add("hidden");
-        }, 4500);
-      }
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      try {
+        const saved = localStorage.getItem("microToolsLanguage");
+        if (saved === "zh" || saved === "en") return saved;
+      } catch (error) {}
+      return "zh";
+    }
 
-      function showSuccess(message) {
-        if (!elements.successBox) return;
-        clearTimeout(state.hideSuccessTimer);
-        elements.successBox.textContent = message || "操作成功。";
-        elements.successBox.classList.remove("hidden");
-        state.hideSuccessTimer = setTimeout(() => {
-          elements.successBox.classList.add("hidden");
-        }, 2500);
-      }
-
-      function formatTime(date) {
-        try {
-          return new Intl.DateTimeFormat("zh-CN", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit"
-          }).format(date);
-        } catch (error) {
-          return date.toLocaleString();
-        }
-      }
-
-      function normalizeKeyboardEvent(event) {
-        if (!event || typeof event !== "object") {
-          throw new Error("未检测到有效的键盘事件。");
-        }
-
-        const keyCodeRaw = event.keyCode ?? event.which ?? event.charCode ?? 0;
-        const keyCode = Number.isFinite(Number(keyCodeRaw)) ? Number(keyCodeRaw) : 0;
-        const key = typeof event.key === "string" ? event.key : "Unidentified";
-        const code = typeof event.code === "string" && event.code.length > 0 ? event.code : "Unidentified";
-
-        return {
-          keyCode,
-          key,
-          code,
-          which: Number.isFinite(Number(event.which)) ? Number(event.which) : keyCode,
-          altKey: Boolean(event.altKey),
-          ctrlKey: Boolean(event.ctrlKey),
-          shiftKey: Boolean(event.shiftKey),
-          metaKey: Boolean(event.metaKey),
-          repeat: Boolean(event.repeat),
-          location: Number.isFinite(Number(event.location)) ? Number(event.location) : 0,
-          type: event.type || "keydown",
-          capturedAt: new Date().toISOString()
-        };
-      }
-
-      function renderResult(result) {
-        state.lastResult = result;
-
-        setText(elements.bigKey, result.key);
-        setText(elements.keyCodeValue, result.keyCode);
-        setText(elements.keyValue, result.key);
-        setText(elements.codeValue, result.code);
-
-        if (elements.captureHint) {
-          const modifiers = [];
-          if (result.ctrlKey) modifiers.push("Ctrl");
-          if (result.altKey) modifiers.push("Alt");
-          if (result.shiftKey) modifiers.push("Shift");
-          if (result.metaKey) modifiers.push("Meta");
-          elements.captureHint.textContent = modifiers.length
-            ? "检测到组合键：" + modifiers.join(" + ") + " + " + safeText(result.key)
-            : "已捕获按键：" + safeText(result.key);
-        }
-
-        if (elements.timeLabel) {
-          elements.timeLabel.textContent = "捕获时间：" + formatTime(new Date(result.capturedAt));
-        }
-
-        if (elements.jsonOutput) {
-          elements.jsonOutput.textContent = JSON.stringify(result, null, 2);
-        }
-
-        if (elements.captureZone) {
-          elements.captureZone.classList.add("ring-4", "ring-cyan-400/30", "border-cyan-300");
-          setTimeout(() => {
-            elements.captureZone.classList.remove("ring-4", "ring-cyan-400/30");
-          }, 180);
-        }
-      }
-
-      function handleKeydown(event) {
-        try {
-          if (!event) {
-            showError("浏览器未返回有效按键事件，请重新按键。");
-            return;
-          }
-
-          const target = event.target;
-          const isEditable =
-            target &&
-            (target.tagName === "INPUT" ||
-              target.tagName === "TEXTAREA" ||
-              target.isContentEditable);
-
-          if ([" ", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key) && !isEditable) {
-            event.preventDefault();
-          }
-
-          const result = normalizeKeyboardEvent(event);
-          renderResult(result);
-
-          if (elements.mobileInput && target === elements.mobileInput) {
-            elements.mobileInput.value = "";
-          }
-        } catch (error) {
-          showError(error && error.message ? error.message : "按键解析失败，请尝试其他按键。");
-        }
-      }
-
-      async function copyText(text) {
-        if (!text || typeof text !== "string") {
-          throw new Error("没有可Copy的内容。");
-        }
-
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(text);
-          return;
-        }
-
-        const textarea = document.createElement("textarea");
-        textarea.value = text;
-        textarea.setAttribute("readonly", "readonly");
-        textarea.style.position = "fixed";
-        textarea.style.top = "-9999px";
-        textarea.style.left = "-9999px";
-        document.body.appendChild(textarea);
-        textarea.select();
-
-        const ok = document.execCommand("copy");
-        document.body.removeChild(textarea);
-
-        if (!ok) {
-          throw new Error("当前浏览器不允许自动Copy，请手动选择结果文本Copy。");
-        }
-      }
-
-      function clearResult() {
-        state.lastResult = null;
-        setText(elements.bigKey, "按键");
-        setText(elements.keyCodeValue, "--");
-        setText(elements.keyValue, "--");
-        setText(elements.codeValue, "--");
-
-        if (elements.captureHint) elements.captureHint.textContent = "请按下键盘上的任意键";
-        if (elements.timeLabel) elements.timeLabel.textContent = "尚未捕获";
-        if (elements.jsonOutput) elements.jsonOutput.textContent = "等待按键输入...";
-        if (elements.mobileInput) elements.mobileInput.value = "";
-
-        showSuccess("已Clear捕获结果。");
-      }
-
-      function addButtonFeedback(button) {
-        if (!button) return;
-        button.classList.add("scale-[0.98]");
-        setTimeout(() => button.classList.remove("scale-[0.98]"), 140);
-      }
-
-      function init() {
-        if (!elements.captureZone || !elements.focusBtn || !elements.copyBtn || !elements.clearBtn) {
-          showError("页面初始化失败，请刷新后重试。");
-          return;
-        }
-
-        document.addEventListener("keydown", handleKeydown, { passive: false });
-
-        elements.captureZone.addEventListener("click", () => {
-          try {
-            elements.captureZone.focus();
-            showSuccess("捕获区域已聚焦，请按任意键。");
-          } catch (error) {
-            showError("无法聚焦捕获区域，请直接按键或刷新页面。");
-          }
-        });
-
-        elements.focusBtn.addEventListener("click", () => {
-          addButtonFeedback(elements.focusBtn);
-          try {
-            elements.captureZone.focus();
-            showSuccess("捕获区域已聚焦，请按任意键。");
-          } catch (error) {
-            showError("聚焦失败，请点击捕获区域后再试。");
-          }
-        });
-
-        elements.copyBtn.addEventListener("click", async () => {
-          addButtonFeedback(elements.copyBtn);
-          try {
-            if (!state.lastResult) {
-              showError("当前还没有捕获结果，请先按下任意键。");
-              return;
-            }
-            await copyText(JSON.stringify(state.lastResult, null, 2));
-            showSuccess("捕获结果Copied到剪贴板。");
-          } catch (error) {
-            showError(error && error.message ? error.message : "Copy failed，请手动Copy result。");
-          }
-        });
-
-        elements.clearBtn.addEventListener("click", () => {
-          addButtonFeedback(elements.clearBtn);
-          clearResult();
-        });
-
-        if (elements.mobileInput) {
-          elements.mobileInput.addEventListener("input", () => {
-            elements.mobileInput.value = "";
-          });
-        }
-
-        setTimeout(() => {
-          try {
-            elements.captureZone.focus();
-          } catch (error) {
-            showError("自动聚焦失败，请点击捕获区域开始。");
-          }
-        }, 300);
-      }
-
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", init);
-      } else {
-        init();
-      }
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
+    function templateText(text, values) {
+      return String(text).replace(/\{(\w+)\}/g, (match, key) => {
+        return Object.prototype.hasOwnProperty.call(values, key) ? values[key] : match;
       });
     }
+
+    function getText(key) {
+      const dict = I18N[currentLanguage] || I18N.zh;
+      return dict[key] || I18N.zh[key] || "";
+    }
+
+    function updateMeta(name, content) {
+      const node = document.querySelector(`meta[name="${name}"]`);
+      if (node) node.setAttribute("content", content);
+    }
+
+    function setStatus(key, values = {}) {
+      const status = document.getElementById("statusText");
+      if (status) status.textContent = templateText(getText(key), values);
+    }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.title = dict.documentTitle;
+      updateMeta("description", dict.metaDescription);
+      updateMeta("keywords", dict.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && dict[key]) node.textContent = dict[key];
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && dict[key]) node.setAttribute("placeholder", dict[key]);
+      });
+
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && dict[key]) node.setAttribute("title", dict[key]);
+      });
+
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && dict[key]) node.setAttribute("aria-label", dict[key]);
+      });
+
+      const themeLabel = document.querySelector("[data-theme-label]");
+      if (themeLabel) themeLabel.textContent = dict.themeSystem;
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        const activeClass = ["bg-cyan-400", "text-slate-950"];
+        const inactiveClass = ["text-slate-600", "dark:text-slate-400"];
+        zhBtn.classList.remove(...activeClass, ...inactiveClass);
+        enBtn.classList.remove(...activeClass, ...inactiveClass);
+        if (currentLanguage === "zh") {
+          zhBtn.classList.add(...activeClass);
+          enBtn.classList.add(...inactiveClass);
+          zhBtn.setAttribute("aria-pressed", "true");
+          enBtn.setAttribute("aria-pressed", "false");
+        } else {
+          enBtn.classList.add(...activeClass);
+          zhBtn.classList.add(...inactiveClass);
+          enBtn.setAttribute("aria-pressed", "true");
+          zhBtn.setAttribute("aria-pressed", "false");
+        }
+      }
+
+      if (lastKeyInfo) {
+        renderKeyInfo(lastKeyInfo, false);
+      } else {
+        renderEmpty();
+        setStatus("statusReady");
+      }
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function setLanguage(lang) {
+      const normalized = lang === "en" ? "en" : "zh";
+      try {
+        localStorage.setItem("microToolsLanguage", normalized);
+      } catch (error) {}
+      applyLanguage(normalized);
+    }
+
+    function normalizeKey(value) {
+      if (value === " ") return "Space";
+      if (value === "" || value == null) return getText("unknownKey");
+      return String(value);
+    }
+
+    function buildSummary(info) {
+      return [
+        `${getText("summaryKeyCode")}: ${info.keyCode}`,
+        `${getText("summaryKey")}: ${normalizeKey(info.key)}`,
+        `${getText("summaryCode")}: ${info.code || getText("unknownKey")}`,
+        `${getText("summaryAlt")}: ${info.altKey ? "true" : "false"}`,
+        `${getText("summaryCtrl")}: ${info.ctrlKey ? "true" : "false"}`,
+        `${getText("summaryShift")}: ${info.shiftKey ? "true" : "false"}`,
+        `${getText("summaryMeta")}: ${info.metaKey ? "true" : "false"}`
+      ].join("\n");
+    }
+
+    function renderEmpty() {
+      const empty = getText("noValue");
+      document.getElementById("keyCodeValue").textContent = empty;
+      document.getElementById("keyValue").textContent = empty;
+      document.getElementById("codeValue").textContent = empty;
+      document.getElementById("summaryValue").textContent = empty;
+    }
+
+    function renderKeyInfo(info, updateStatus = true) {
+      document.getElementById("keyCodeValue").textContent = String(info.keyCode);
+      document.getElementById("keyValue").textContent = normalizeKey(info.key);
+      document.getElementById("codeValue").textContent = info.code || getText("unknownKey");
+      document.getElementById("summaryValue").textContent = buildSummary(info);
+      if (updateStatus) {
+        setStatus("statusCaptured", { key: normalizeKey(info.key) });
+      }
+    }
+
+    function captureKeyboardEvent(event) {
+      const activeTag = document.activeElement?.tagName?.toLowerCase();
+      if (activeTag === "input" || activeTag === "textarea" || activeTag === "select") return;
+
+      const codeValue = typeof event.keyCode === "number" && event.keyCode !== 0 ? event.keyCode : (typeof event.which === "number" ? event.which : 0);
+      lastKeyInfo = {
+        keyCode: codeValue,
+        key: event.key || "",
+        code: event.code || "",
+        altKey: Boolean(event.altKey),
+        ctrlKey: Boolean(event.ctrlKey),
+        shiftKey: Boolean(event.shiftKey),
+        metaKey: Boolean(event.metaKey)
+      };
+      renderKeyInfo(lastKeyInfo, true);
+
+      const blockedKeys = ["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+      if (blockedKeys.includes(event.code)) event.preventDefault();
+    }
+
+    async function copyResult() {
+      if (!lastKeyInfo) {
+        setStatus("statusCopyEmpty");
+        return;
+      }
+      const text = buildSummary(lastKeyInfo);
+      try {
+        await navigator.clipboard.writeText(text);
+        setStatus("statusCopied");
+      } catch (error) {
+        setStatus("statusCopyFailed");
+      }
+    }
+
+    function resetResult(statusKey = "statusReset") {
+      lastKeyInfo = null;
+      renderEmpty();
+      setStatus(statusKey);
+    }
+
+    function showSample() {
+      lastKeyInfo = {
+        keyCode: 27,
+        key: "Escape",
+        code: "Escape",
+        altKey: false,
+        ctrlKey: false,
+        shiftKey: false,
+        metaKey: false
+      };
+      renderKeyInfo(lastKeyInfo, false);
+      setStatus("statusSample");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+      document.getElementById("captureArea")?.addEventListener("keydown", captureKeyboardEvent);
+      document.addEventListener("keydown", captureKeyboardEvent);
+      document.getElementById("sampleBtn")?.addEventListener("click", showSample);
+      document.getElementById("resetBtn")?.addEventListener("click", () => resetResult("statusReset"));
+      document.getElementById("clearBtn")?.addEventListener("click", () => resetResult("statusReset"));
+      document.getElementById("copyBtn")?.addEventListener("click", copyResult);
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="../sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

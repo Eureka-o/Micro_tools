@@ -1,486 +1,591 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>subnets-calculator - IP 子网掩码计算器</title>
-  <meta name="description" content="IP 子网掩码计算器。输入IP地址和CIDR前缀，计算网络地址、广播地址和可用IP范围（适合网络工程师）。">
-  <meta name="keywords" content="subnets-calculator,IP子网掩码计算器,CIDR计算器,网络地址计算,广播地址计算,可用IP范围,IPv4子网计算,在线子网计算工具,网络工程师工具">
-  <link rel="icon" type="image/png" href="./assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IP 子网掩码计算器 - Micro Tools Matrix 浏览器本地工具</title>
+  <meta name="description" content="Micro Tools Matrix 的 IP 子网掩码计算器在浏览器本地处理 IPv4 与 CIDR 前缀，快速计算网络地址、广播地址、可用 IP 范围和主机数量，无需上传。">
+  <meta name="keywords" content="IP 子网掩码计算器,CIDR 计算器,网络地址,广播地址,可用 IP 范围,浏览器本地处理,无需上传,Micro Tools Matrix">
   <link rel="canonical" href="https://mymicrotools.xyz/subnets-calculator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/subnets-calculator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/subnets-calculator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/subnets-calculator.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/subnets-calculator.html">
-  <meta property="og:title" content="subnets-calculator - IP 子网掩码计算器">
-  <meta property="og:description" content="IP 子网掩码计算器。输入IP地址和CIDR前缀，计算网络地址、广播地址和可用IP范围（适合网络工程师）。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="subnets-calculator - IP 子网掩码计算器">
-  <meta name="twitter:description" content="IP 子网掩码计算器。输入IP地址和CIDR前缀，计算网络地址、广播地址和可用IP范围（适合网络工程师）。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "IP Subnet Calculator",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A free browser-local IPv4 subnet calculator for CIDR, network address, broadcast address, usable host range, and host count.",
+      "url": "https://mymicrotools.xyz/subnets-calculator.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "category": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="切换主题" title="切换主题">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">IP 子网掩码计算器</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="./subnets-calculator.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
-        <a href="./en/subnets-calculator.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeToggleAria" aria-label="切换主题">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="语言" data-i18n-aria-label="languageGroupAria" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="langZhAria" aria-label="切换到中文">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="langEnAria" aria-label="切换到英文">EN</button>
+        </div>
       </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
-    <div class="absolute inset-0 opacity-30">
-      <div class="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-cyan-500 blur-3xl"></div>
-      <div class="absolute -bottom-32 -left-24 h-80 w-80 rounded-full bg-blue-600 blur-3xl"></div>
-    </div>
-    <div class="relative mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
-      <div class="max-w-3xl">
-        <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-1 text-sm font-medium text-cyan-200">
-          IPv4 CIDR Subnet Calculator
-        </p>
-        <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">IP 子网掩码计算器</h1>
-        <p class="mt-5 text-lg leading-8 text-slate-700 dark:text-slate-300">
-          输入 IP 地址与 CIDR 前缀，快速计算网络地址、广播地址、子网掩码和可用 IP 范围，帮助网络工程师高效完成子网规划。
-        </p>
-      </div>
-    </div>
+    </nav>
   </header>
 
-  <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-5">
-      <div class="lg:col-span-2 rounded-3xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900/80 p-6 shadow-2xl shadow-cyan-950/30">
-        <div class="mb-6">
-          <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">输入参数</h2>
-          <p class="mt-2 text-sm text-slate-400">支持标准 IPv4 地址与 CIDR 前缀，例如：192.168.1.10 / 24。</p>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">IP 子网掩码计算器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">输入 IPv4 地址和 CIDR 前缀，Micro Tools Matrix 会在浏览器本地计算网络地址、广播地址、可用 IP 范围和主机数量，无需上传任何网络信息。</p>
         </div>
-
-        <form id="calculatorForm" class="space-y-5" novalidate>
-          <div>
-            <label for="ipAddress" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">IP 地址</label>
-            <input
-              id="ipAddress"
-              name="ipAddress"
-              type="text"
-              inputmode="decimal"
-              autocomplete="off"
-              placeholder="例如：192.168.1.10"
-              class="w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-gray-900 dark:text-white outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
-            />
-          </div>
-
-          <div>
-            <label for="cidrPrefix" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">CIDR 前缀</label>
-            <div class="flex items-center rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 transition focus-within:border-cyan-400 focus-within:ring-4 focus-within:ring-cyan-400/10">
-              <span class="pl-4 text-slate-500">/</span>
-              <input
-                id="cidrPrefix"
-                name="cidrPrefix"
-                type="number"
-                min="0"
-                max="32"
-                step="1"
-                inputmode="numeric"
-                placeholder="24"
-                class="w-full rounded-2xl bg-transparent px-2 py-3 text-gray-900 dark:text-white outline-none"
-              />
-            </div>
-            <p class="mt-2 text-xs text-slate-500">有效范围：0 - 32</p>
-          </div>
-
-          <div id="errorBox" class="hidden rounded-2xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-200"></div>
-
-          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <button
-              id="calculateBtn"
-              type="submit"
-              class="rounded-2xl bg-cyan-400 px-5 py-3 font-semibold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-cyan-300/30"
-            >
-              立即计算
-            </button>
-            <button
-              id="resetBtn"
-              type="button"
-              class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-5 py-3 font-semibold text-slate-900 dark:text-slate-100 transition hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-slate-500/20"
-            >
-              重置
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <div class="lg:col-span-3 rounded-3xl border border-cyan-400/20 bg-gradient-to-br from-slate-900 to-slate-800 p-6 shadow-2xl shadow-cyan-950/40">
-        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">计算结果</h2>
-            <p class="mt-2 text-sm text-slate-400">结果会根据输入实时更新，便于复制到网络配置文档。</p>
-          </div>
-          <button
-            id="copyBtn"
-            type="button"
-            class="rounded-2xl border border-cyan-300/30 bg-cyan-300/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-300/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40"
-            disabled
-          >
-            复制结果
-          </button>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
-
-        <div id="resultGrid" class="grid gap-4 sm:grid-cols-2">
-          <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/60 p-4">
-            <p class="text-sm text-slate-400">网络地址</p>
-            <p id="networkAddress" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/60 p-4">
-            <p class="text-sm text-slate-400">广播地址</p>
-            <p id="broadcastAddress" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/60 p-4">
-            <p class="text-sm text-slate-400">子网掩码</p>
-            <p id="subnetMask" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/60 p-4">
-            <p class="text-sm text-slate-400">通配符掩码</p>
-            <p id="wildcardMask" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/60 p-4 sm:col-span-2">
-            <p class="text-sm text-slate-400">可用 IP 范围</p>
-            <p id="usableRange" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/60 p-4">
-            <p class="text-sm text-slate-400">总地址数</p>
-            <p id="totalAddresses" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/60 p-4">
-            <p class="text-sm text-slate-400">可用主机数</p>
-            <p id="usableHosts" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/60 p-4 sm:col-span-2">
-            <p class="text-sm text-slate-400">CIDR 表示</p>
-            <p id="cidrNotation" class="mt-2 break-all font-mono text-lg text-cyan-200">--</p>
-          </div>
-        </div>
-
-        <div id="successBox" class="mt-5 hidden rounded-2xl border border-emerald-400/40 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-200"></div>
       </div>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl">
-      <h2 class="mb-4 text-2xl font-semibold text-gray-900 dark:text-white">关于 IP 子网掩码计算器</h2>
-      <p>
-        subnets-calculator 是一款面向网络工程师、系统管理员和运维人员的在线 IP 子网掩码计算器。日常进行 IPv4 地址规划、VLAN 划分、路由策略配置或防火墙规则编写时，手动计算网络地址、广播地址和可用 IP 范围不仅耗时，还容易因二进制换算错误导致配置故障。本工具通过输入 IP 地址和 CIDR 前缀，即可自动生成子网掩码、通配符掩码、总地址数、可用主机数以及完整的可用地址区间，帮助用户快速校验网络设计是否合理。使用方法非常简单：在输入框填写类似 192.168.1.10 的 IPv4 地址，再输入 0 到 32 之间的 CIDR 前缀，例如 24，点击立即计算即可获得结果。无论是进行小型办公室网络规划，还是排查生产环境中的子网划分问题，这个在线 CIDR 子网计算工具都能提供清晰、准确、可复制的结果，显著提升网络配置效率。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label for="ipInput" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="ipLabel">IPv4 地址</label>
+            <input id="ipInput" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="ipPlaceholder" placeholder="例如：192.168.1.25">
+          </div>
+
+          <div>
+            <label for="prefixInput" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="prefixLabel">CIDR 前缀</label>
+            <input id="prefixInput" type="number" min="0" max="32" step="1" inputmode="numeric" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="prefixPlaceholder" placeholder="例如：24">
+          </div>
+
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 text-sm leading-7 text-slate-600 dark:border-white/10 dark:bg-slate-950/50 dark:text-slate-400">
+            <p data-i18n="inputHint">支持 0 到 32 的 IPv4 CIDR 前缀。/31 和 /32 会按点到点链路与单主机网络显示可用地址。</p>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="calculateBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">计算</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">填入示例</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+        </div>
+
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="readyStatus">请输入 IPv4 地址和 CIDR 前缀，然后开始计算。</p>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">结果</span>
+        </div>
+
+        <div class="overflow-hidden rounded-2xl border border-gray-200 dark:border-white/10">
+          <dl class="divide-y divide-gray-200 dark:divide-white/10">
+            <div class="grid gap-1 bg-slate-50 p-4 dark:bg-slate-950/50 sm:grid-cols-[9rem_1fr] sm:gap-4">
+              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="networkAddressLabel">网络地址</dt>
+              <dd id="networkAddress" class="break-words font-mono text-sm tabular-nums text-slate-900 dark:text-slate-100">—</dd>
+            </div>
+            <div class="grid gap-1 bg-white p-4 dark:bg-transparent sm:grid-cols-[9rem_1fr] sm:gap-4">
+              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="broadcastAddressLabel">广播地址</dt>
+              <dd id="broadcastAddress" class="break-words font-mono text-sm tabular-nums text-slate-900 dark:text-slate-100">—</dd>
+            </div>
+            <div class="grid gap-1 bg-slate-50 p-4 dark:bg-slate-950/50 sm:grid-cols-[9rem_1fr] sm:gap-4">
+              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="usableRangeLabel">可用 IP 范围</dt>
+              <dd id="usableRange" class="break-words font-mono text-sm tabular-nums text-slate-900 dark:text-slate-100">—</dd>
+            </div>
+            <div class="grid gap-1 bg-white p-4 dark:bg-transparent sm:grid-cols-[9rem_1fr] sm:gap-4">
+              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="subnetMaskLabel">子网掩码</dt>
+              <dd id="subnetMask" class="break-words font-mono text-sm tabular-nums text-slate-900 dark:text-slate-100">—</dd>
+            </div>
+            <div class="grid gap-1 bg-slate-50 p-4 dark:bg-slate-950/50 sm:grid-cols-[9rem_1fr] sm:gap-4">
+              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="wildcardMaskLabel">反掩码</dt>
+              <dd id="wildcardMask" class="break-words font-mono text-sm tabular-nums text-slate-900 dark:text-slate-100">—</dd>
+            </div>
+            <div class="grid gap-1 bg-white p-4 dark:bg-transparent sm:grid-cols-[9rem_1fr] sm:gap-4">
+              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="hostCountLabel">可用主机数</dt>
+              <dd id="hostCount" class="break-words font-mono text-sm tabular-nums text-slate-900 dark:text-slate-100">—</dd>
+            </div>
+            <div class="grid gap-1 bg-slate-50 p-4 dark:bg-slate-950/50 sm:grid-cols-[9rem_1fr] sm:gap-4">
+              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="totalAddressLabel">地址总数</dt>
+              <dd id="totalAddress" class="break-words font-mono text-sm tabular-nums text-slate-900 dark:text-slate-100">—</dd>
+            </div>
+            <div class="grid gap-1 bg-white p-4 dark:bg-transparent sm:grid-cols-[9rem_1fr] sm:gap-4">
+              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="cidrLabel">CIDR 表示</dt>
+              <dd id="cidrOutput" class="break-words font-mono text-sm tabular-nums text-slate-900 dark:text-slate-100">—</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
+          <button id="resetOutputBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="resetOutputAction">重置结果</button>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">这款 IP 子网掩码计算器面向网络工程师、运维人员和开发者，适合在规划 VLAN、ACL、路由策略或云服务器网段时快速核对 IPv4 CIDR。输入一个 IP 地址和前缀长度后，工具会在浏览器本地处理并计算网络地址、广播地址、子网掩码、反掩码、可用 IP 范围以及主机数量。所有数据只存在于当前页面内存中，无需上传到服务器，也不会调用远程接口。作为 Micro Tools Matrix 的免费在线开发者工具，它强调轻量、准确和隐私友好，可用于日常排障、文档编写、实验环境设计与网络变更前的快速校验。</article>
   </main>
 
-  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-    <p>subnets-calculator · 在线 IPv4 子网计算工具</p>
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
 
   <script>
-    const form = document.getElementById('calculatorForm');
-    const ipInput = document.getElementById('ipAddress');
-    const cidrInput = document.getElementById('cidrPrefix');
-    const errorBox = document.getElementById('errorBox');
-    const successBox = document.getElementById('successBox');
-    const copyBtn = document.getElementById('copyBtn');
-    const resetBtn = document.getElementById('resetBtn');
-    const calculateBtn = document.getElementById('calculateBtn');
-
-    const fields = {
-      networkAddress: document.getElementById('networkAddress'),
-      broadcastAddress: document.getElementById('broadcastAddress'),
-      subnetMask: document.getElementById('subnetMask'),
-      wildcardMask: document.getElementById('wildcardMask'),
-      usableRange: document.getElementById('usableRange'),
-      totalAddresses: document.getElementById('totalAddresses'),
-      usableHosts: document.getElementById('usableHosts'),
-      cidrNotation: document.getElementById('cidrNotation')
+    const I18N = {
+      zh: {
+        toolName: "IP 子网掩码计算器",
+        h1: "IP 子网掩码计算器",
+        documentTitle: "IP 子网掩码计算器 - Micro Tools Matrix 浏览器本地工具",
+        metaDescription: "Micro Tools Matrix 的 IP 子网掩码计算器在浏览器本地处理 IPv4 与 CIDR 前缀，快速计算网络地址、广播地址、可用 IP 范围和主机数量，无需上传。",
+        metaKeywords: "IP 子网掩码计算器,CIDR 计算器,网络地址,广播地址,可用 IP 范围,浏览器本地处理,无需上传,Micro Tools Matrix",
+        eyebrow: "浏览器本地处理",
+        intro: "输入 IPv4 地址和 CIDR 前缀，Micro Tools Matrix 会在浏览器本地计算网络地址、广播地址、可用 IP 范围和主机数量，无需上传任何网络信息。",
+        localBadge: "本地运行",
+        sponsor: "赞赏",
+        buyCoffee: "Buy Me a Coffee",
+        themeToggleAria: "切换主题",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        languageGroupAria: "语言",
+        langZhAria: "切换到中文",
+        langEnAria: "切换到英文",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        outputTitle: "结果",
+        outputBadge: "结果",
+        ipLabel: "IPv4 地址",
+        prefixLabel: "CIDR 前缀",
+        ipPlaceholder: "例如：192.168.1.25",
+        prefixPlaceholder: "例如：24",
+        inputHint: "支持 0 到 32 的 IPv4 CIDR 前缀。/31 和 /32 会按点到点链路与单主机网络显示可用地址。",
+        primaryAction: "计算",
+        sampleAction: "填入示例",
+        secondaryAction: "清空",
+        readyStatus: "请输入 IPv4 地址和 CIDR 前缀，然后开始计算。",
+        calculatedStatus: "已完成子网计算。",
+        sampleStatus: "已填入示例，可以直接计算。",
+        clearedStatus: "已清空输入和结果。",
+        resetStatus: "已重置结果。",
+        copiedStatus: "结果已复制到剪贴板。",
+        copyFailedStatus: "复制失败，请手动选择结果内容。",
+        invalidIpError: "请输入有效的 IPv4 地址，每段应为 0 到 255。",
+        invalidPrefixError: "请输入 0 到 32 之间的 CIDR 前缀。",
+        networkAddressLabel: "网络地址",
+        broadcastAddressLabel: "广播地址",
+        usableRangeLabel: "可用 IP 范围",
+        subnetMaskLabel: "子网掩码",
+        wildcardMaskLabel: "反掩码",
+        hostCountLabel: "可用主机数",
+        totalAddressLabel: "地址总数",
+        cidrLabel: "CIDR 表示",
+        copyAction: "复制结果",
+        resetOutputAction: "重置结果",
+        noUsableHosts: "无传统可用主机",
+        singleHostRange: "单主机地址",
+        seoArticle: "这款 IP 子网掩码计算器面向网络工程师、运维人员和开发者，适合在规划 VLAN、ACL、路由策略或云服务器网段时快速核对 IPv4 CIDR。输入一个 IP 地址和前缀长度后，工具会在浏览器本地处理并计算网络地址、广播地址、子网掩码、反掩码、可用 IP 范围以及主机数量。所有数据只存在于当前页面内存中，无需上传到服务器，也不会调用远程接口。作为 Micro Tools Matrix 的免费在线开发者工具，它强调轻量、准确和隐私友好，可用于日常排障、文档编写、实验环境设计与网络变更前的快速校验。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
+      },
+      en: {
+        toolName: "IP Subnet Calculator",
+        h1: "IP Subnet Calculator",
+        documentTitle: "IP Subnet Calculator - Micro Tools Matrix Browser-Local Tool",
+        metaDescription: "Micro Tools Matrix IP Subnet Calculator performs browser-local IPv4 and CIDR calculations for network address, broadcast address, usable IP range, and host count without uploads.",
+        metaKeywords: "IP subnet calculator,CIDR calculator,network address,broadcast address,usable IP range,browser-local processing,no upload,Micro Tools Matrix",
+        eyebrow: "Browser-local processing",
+        intro: "Enter an IPv4 address and CIDR prefix. Micro Tools Matrix calculates the network address, broadcast address, usable IP range, and host count locally in your browser without uploading network data.",
+        localBadge: "Local",
+        sponsor: "Sponsor",
+        buyCoffee: "Buy Me a Coffee",
+        themeToggleAria: "Toggle theme",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        languageGroupAria: "Language",
+        langZhAria: "Switch to Chinese",
+        langEnAria: "Switch to English",
+        inputTitle: "Input",
+        inputBadge: "Input",
+        outputTitle: "Output",
+        outputBadge: "Output",
+        ipLabel: "IPv4 address",
+        prefixLabel: "CIDR prefix",
+        ipPlaceholder: "Example: 192.168.1.25",
+        prefixPlaceholder: "Example: 24",
+        inputHint: "Supports IPv4 CIDR prefixes from 0 to 32. /31 and /32 are displayed for point-to-point links and single-host networks.",
+        primaryAction: "Calculate",
+        sampleAction: "Use sample",
+        secondaryAction: "Clear",
+        readyStatus: "Enter an IPv4 address and CIDR prefix, then start the calculation.",
+        calculatedStatus: "Subnet calculation completed.",
+        sampleStatus: "Sample values added. You can calculate now.",
+        clearedStatus: "Input and results cleared.",
+        resetStatus: "Results reset.",
+        copiedStatus: "Results copied to the clipboard.",
+        copyFailedStatus: "Copy failed. Please select the result content manually.",
+        invalidIpError: "Enter a valid IPv4 address. Each octet must be between 0 and 255.",
+        invalidPrefixError: "Enter a CIDR prefix between 0 and 32.",
+        networkAddressLabel: "Network address",
+        broadcastAddressLabel: "Broadcast address",
+        usableRangeLabel: "Usable IP range",
+        subnetMaskLabel: "Subnet mask",
+        wildcardMaskLabel: "Wildcard mask",
+        hostCountLabel: "Usable hosts",
+        totalAddressLabel: "Total addresses",
+        cidrLabel: "CIDR notation",
+        copyAction: "Copy results",
+        resetOutputAction: "Reset results",
+        noUsableHosts: "No traditional usable host",
+        singleHostRange: "Single-host address",
+        seoArticle: "This IP subnet calculator is built for network engineers, DevOps teams, cloud administrators, and developers who need fast IPv4 CIDR checks during planning or troubleshooting. Enter an IP address and prefix length to calculate the network address, broadcast address, subnet mask, wildcard mask, usable IP range, total addresses, and usable host count. The tool uses browser-local processing, so your network information stays in the page memory and is never uploaded to a server or sent to a remote API. As a free online developer tool from Micro Tools Matrix, it is useful for VLAN planning, ACL review, route summarization, lab design, documentation, and quick validation before network changes. The interface is intentionally minimal and works well on desktop and mobile, making it easy to verify subnet details whenever you need an accurate local calculator.",
+        footer: "Micro Tools Matrix - Browser-local processing with no uploads."
+      }
     };
 
-    let latestResultText = '';
+    let currentLanguage = "zh";
+    let lastResult = null;
 
-    function showError(message) {
-      errorBox.textContent = message;
-      errorBox.classList.remove('hidden');
-      successBox.classList.add('hidden');
-      copyBtn.disabled = true;
-    }
-
-    function showSuccess(message) {
-      successBox.textContent = message;
-      successBox.classList.remove('hidden');
-      setTimeout(() => successBox.classList.add('hidden'), 2200);
-    }
-
-    function clearError() {
-      errorBox.textContent = '';
-      errorBox.classList.add('hidden');
-    }
-
-    function setInputInvalid(element, invalid) {
-      if (invalid) {
-        element.classList.add('border-red-500', 'ring-4', 'ring-red-500/10');
-      } else {
-        element.classList.remove('border-red-500', 'ring-4', 'ring-red-500/10');
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      try {
+        const saved = localStorage.getItem("microToolsLanguage");
+        return saved === "en" ? "en" : "zh";
+      } catch (error) {
+        return "zh";
       }
     }
 
-    function parseIPv4(ip) {
-      if (typeof ip !== 'string') return null;
-      const trimmed = ip.trim();
-      const parts = trimmed.split('.');
-      if (parts.length !== 4) return null;
+    function getThemeLabel(lang) {
+      const dict = I18N[lang] || I18N.zh;
+      let theme = "system";
+      try {
+        theme = localStorage.getItem("microToolsTheme") || localStorage.getItem("theme") || "system";
+      } catch (error) {
+        theme = "system";
+      }
+      if (theme === "light") return dict.themeLight;
+      if (theme === "dark") return dict.themeDark;
+      return dict.themeSystem;
+    }
 
-      const nums = [];
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.title = dict.documentTitle;
+
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute("content", dict.metaDescription);
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (keywords) keywords.setAttribute("content", dict.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.textContent = dict[key];
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("placeholder", dict[key]);
+      });
+
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("title", dict[key]);
+      });
+
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("aria-label", dict[key]);
+      });
+
+      const sponsorLabel = document.querySelector("#openSponsorBtn [data-i18n='sponsor']");
+      if (sponsorLabel) sponsorLabel.textContent = dict.sponsor;
+
+      const themeLabel = document.querySelector("[data-theme-label]");
+      if (themeLabel) themeLabel.textContent = getThemeLabel(currentLanguage);
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        const activeClass = ["bg-cyan-400", "text-slate-950"];
+        const inactiveClass = ["text-slate-600", "dark:text-slate-400"];
+        zhBtn.classList.remove(...activeClass, ...inactiveClass);
+        enBtn.classList.remove(...activeClass, ...inactiveClass);
+        if (currentLanguage === "zh") {
+          zhBtn.classList.add(...activeClass);
+          enBtn.classList.add(...inactiveClass);
+        } else {
+          enBtn.classList.add(...activeClass);
+          zhBtn.classList.add(...inactiveClass);
+        }
+      }
+
+      if (lastResult) renderResult(lastResult);
+      const statusText = document.getElementById("statusText");
+      if (statusText && statusText.dataset.statusKey) {
+        statusText.textContent = dict[statusText.dataset.statusKey] || dict.readyStatus;
+      }
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function setLanguage(lang) {
+      const nextLang = lang === "en" ? "en" : "zh";
+      try {
+        localStorage.setItem("microToolsLanguage", nextLang);
+      } catch (error) {}
+      applyLanguage(nextLang);
+    }
+
+    function parseIPv4(value) {
+      const text = String(value || "").trim();
+      const parts = text.split(".");
+      if (parts.length !== 4) return null;
+      const octets = [];
       for (const part of parts) {
         if (!/^\d{1,3}$/.test(part)) return null;
-        if (part.length > 1 && part.startsWith('0')) {
-          const numericValue = Number(part);
-          if (!Number.isInteger(numericValue)) return null;
-        }
-        const n = Number(part);
-        if (!Number.isInteger(n) || n < 0 || n > 255) return null;
-        nums.push(n);
+        const number = Number(part);
+        if (!Number.isInteger(number) || number < 0 || number > 255) return null;
+        octets.push(number);
       }
-      return nums;
+      return (((octets[0] << 24) >>> 0) | (octets[1] << 16) | (octets[2] << 8) | octets[3]) >>> 0;
     }
 
-    function ipArrayToInt(parts) {
-      return (((parts[0] << 24) >>> 0) | (parts[1] << 16) | (parts[2] << 8) | parts[3]) >>> 0;
-    }
-
-    function intToIp(num) {
-      const n = num >>> 0;
+    function numberToIp(number) {
+      const value = number >>> 0;
       return [
-        (n >>> 24) & 255,
-        (n >>> 16) & 255,
-        (n >>> 8) & 255,
-        n & 255
-      ].join('.');
+        (value >>> 24) & 255,
+        (value >>> 16) & 255,
+        (value >>> 8) & 255,
+        value & 255
+      ].join(".");
     }
 
-    function formatNumber(num) {
-      return new Intl.NumberFormat('zh-CN').format(num);
+    function prefixToMask(prefix) {
+      if (prefix === 0) return 0;
+      return (0xffffffff << (32 - prefix)) >>> 0;
     }
 
-    function calculateSubnet(ipText, cidrText) {
-      const ipParts = parseIPv4(ipText);
-      const cidrTrimmed = String(cidrText).trim();
-
-      if (!ipParts) {
-        throw new Error('请输入有效的 IPv4 地址，例如：192.168.1.10。每段必须是 0 到 255 的整数。');
-      }
-
-      if (!/^\d+$/.test(cidrTrimmed)) {
-        throw new Error('请输入有效的 CIDR 前缀，范围必须是 0 到 32 的整数。');
-      }
-
-      const cidr = Number(cidrTrimmed);
-      if (!Number.isInteger(cidr) || cidr < 0 || cidr > 32) {
-        throw new Error('CIDR 前缀超出范围，请输入 0 到 32 之间的整数。');
-      }
-
-      const ipInt = ipArrayToInt(ipParts);
-      const mask = cidr === 0 ? 0 : (0xFFFFFFFF << (32 - cidr)) >>> 0;
-      const wildcard = (~mask) >>> 0;
-      const network = (ipInt & mask) >>> 0;
-      const broadcast = (network | wildcard) >>> 0;
-      const total = Math.pow(2, 32 - cidr);
-
-      let firstUsable;
-      let lastUsable;
-      let usableHosts;
-      let usableRangeText;
-
-      if (cidr === 32) {
-        firstUsable = network;
-        lastUsable = network;
-        usableHosts = 1;
-        usableRangeText = intToIp(network) + '（单主机地址）';
-      } else if (cidr === 31) {
-        firstUsable = network;
-        lastUsable = broadcast;
-        usableHosts = 2;
-        usableRangeText = intToIp(firstUsable) + ' - ' + intToIp(lastUsable) + '（点到点链路常用）';
-      } else {
-        firstUsable = (network + 1) >>> 0;
-        lastUsable = (broadcast - 1) >>> 0;
-        usableHosts = Math.max(total - 2, 0);
-        usableRangeText = intToIp(firstUsable) + ' - ' + intToIp(lastUsable);
-      }
-
-      return {
-        inputIp: ipParts.join('.'),
-        cidr,
-        networkAddress: intToIp(network),
-        broadcastAddress: intToIp(broadcast),
-        subnetMask: intToIp(mask),
-        wildcardMask: intToIp(wildcard),
-        usableRange: usableRangeText,
-        totalAddresses: formatNumber(total),
-        usableHosts: formatNumber(usableHosts),
-        cidrNotation: intToIp(network) + '/' + cidr
-      };
+    function formatInteger(value) {
+      return new Intl.NumberFormat(currentLanguage === "en" ? "en-US" : "zh-CN").format(value);
     }
 
-    function renderResult(result) {
-      fields.networkAddress.textContent = result.networkAddress;
-      fields.broadcastAddress.textContent = result.broadcastAddress;
-      fields.subnetMask.textContent = result.subnetMask;
-      fields.wildcardMask.textContent = result.wildcardMask;
-      fields.usableRange.textContent = result.usableRange;
-      fields.totalAddresses.textContent = result.totalAddresses;
-      fields.usableHosts.textContent = result.usableHosts;
-      fields.cidrNotation.textContent = result.cidrNotation;
-
-      latestResultText = [
-        'IP 子网掩码计算结果',
-        '输入 IP：' + result.inputIp,
-        'CIDR 前缀：/' + result.cidr,
-        '网络地址：' + result.networkAddress,
-        '广播地址：' + result.broadcastAddress,
-        '子网掩码：' + result.subnetMask,
-        '通配符掩码：' + result.wildcardMask,
-        '可用 IP 范围：' + result.usableRange,
-        '总地址数：' + result.totalAddresses,
-        '可用主机数：' + result.usableHosts,
-        'CIDR 表示：' + result.cidrNotation
-      ].join('\n');
-
-      copyBtn.disabled = false;
+    function setStatus(key) {
+      const statusText = document.getElementById("statusText");
+      if (!statusText) return;
+      statusText.dataset.statusKey = key;
+      statusText.textContent = (I18N[currentLanguage] || I18N.zh)[key] || "";
     }
 
-    function resetResult() {
-      Object.values(fields).forEach(field => field.textContent = '--');
-      latestResultText = '';
-      copyBtn.disabled = true;
-      clearError();
-      successBox.classList.add('hidden');
-      setInputInvalid(ipInput, false);
-      setInputInvalid(cidrInput, false);
+    function clearResultDisplay() {
+      lastResult = null;
+      ["networkAddress", "broadcastAddress", "usableRange", "subnetMask", "wildcardMask", "hostCount", "totalAddress", "cidrOutput"].forEach((id) => {
+        const node = document.getElementById(id);
+        if (node) node.textContent = "—";
+      });
     }
 
-    form.addEventListener('submit', (event) => {
-      event.preventDefault();
-      clearError();
-      successBox.classList.add('hidden');
-      setInputInvalid(ipInput, false);
-      setInputInvalid(cidrInput, false);
+    function calculateSubnet() {
+      const dict = I18N[currentLanguage] || I18N.zh;
+      const ipInput = document.getElementById("ipInput");
+      const prefixInput = document.getElementById("prefixInput");
+      const ipNumber = parseIPv4(ipInput?.value);
+      const prefix = Number(prefixInput?.value);
 
-      calculateBtn.classList.add('scale-[0.98]');
-      setTimeout(() => calculateBtn.classList.remove('scale-[0.98]'), 120);
-
-      try {
-        const result = calculateSubnet(ipInput.value, cidrInput.value);
-        renderResult(result);
-        showSuccess('计算完成，结果已更新。');
-      } catch (error) {
-        resetResult();
-        const message = error instanceof Error ? error.message : '输入有误，请检查 IP 地址和 CIDR 前缀。';
-        showError(message);
-        setInputInvalid(ipInput, !parseIPv4(ipInput.value));
-        setInputInvalid(cidrInput, !/^\d+$/.test(String(cidrInput.value).trim()) || Number(cidrInput.value) < 0 || Number(cidrInput.value) > 32);
-      }
-    });
-
-    resetBtn.addEventListener('click', () => {
-      ipInput.value = '';
-      cidrInput.value = '';
-      resetResult();
-      ipInput.focus();
-    });
-
-    copyBtn.addEventListener('click', async () => {
-      if (!latestResultText) {
-        showError('当前没有可复制的计算结果，请先完成一次计算。');
+      if (ipNumber === null) {
+        setStatus("invalidIpError");
+        clearResultDisplay();
         return;
       }
 
-      try {
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(latestResultText);
-        } else {
-          const temp = document.createElement('textarea');
-          temp.value = latestResultText;
-          temp.style.position = 'fixed';
-          temp.style.left = '-9999px';
-          document.body.appendChild(temp);
-          temp.focus();
-          temp.select();
-          const copied = document.execCommand('copy');
-          document.body.removeChild(temp);
-          if (!copied) throw new Error('复制失败');
-        }
-        clearError();
-        showSuccess('结果已复制到剪贴板。');
-      } catch (error) {
-        showError('复制失败，请手动选择结果文本进行复制。');
+      if (!Number.isInteger(prefix) || prefix < 0 || prefix > 32) {
+        setStatus("invalidPrefixError");
+        clearResultDisplay();
+        return;
       }
-    });
 
-    ipInput.addEventListener('input', () => {
-      clearError();
-      setInputInvalid(ipInput, false);
-    });
+      const mask = prefixToMask(prefix);
+      const wildcard = (~mask) >>> 0;
+      const network = (ipNumber & mask) >>> 0;
+      const broadcast = (network | wildcard) >>> 0;
+      const total = Math.pow(2, 32 - prefix);
 
-    cidrInput.addEventListener('input', () => {
-      clearError();
-      setInputInvalid(cidrInput, false);
-    });
+      let usableStart = network;
+      let usableEnd = broadcast;
+      let usableHosts = total;
 
-    ipInput.value = '192.168.1.10';
-    cidrInput.value = '24';
-    try {
-      renderResult(calculateSubnet(ipInput.value, cidrInput.value));
-    } catch (error) {}
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      if (prefix <= 30) {
+        usableStart = (network + 1) >>> 0;
+        usableEnd = (broadcast - 1) >>> 0;
+        usableHosts = Math.max(total - 2, 0);
+      } else if (prefix === 31) {
+        usableHosts = 2;
+      } else {
+        usableHosts = 1;
+      }
+
+      let usableRangeText = "";
+      if (prefix === 32) {
+        usableRangeText = `${dict.singleHostRange}: ${numberToIp(network)}`;
+      } else if (usableHosts === 0) {
+        usableRangeText = dict.noUsableHosts;
+      } else {
+        usableRangeText = `${numberToIp(usableStart)} - ${numberToIp(usableEnd)}`;
+      }
+
+      lastResult = {
+        networkAddress: numberToIp(network),
+        broadcastAddress: numberToIp(broadcast),
+        usableRange: usableRangeText,
+        subnetMask: numberToIp(mask),
+        wildcardMask: numberToIp(wildcard),
+        hostCount: usableHosts,
+        totalAddress: total,
+        cidrOutput: `${numberToIp(ipNumber)}/${prefix}`
+      };
+
+      renderResult(lastResult);
+      setStatus("calculatedStatus");
+    }
+
+    function renderResult(result) {
+      if (!result) return;
+      const values = {
+        networkAddress: result.networkAddress,
+        broadcastAddress: result.broadcastAddress,
+        usableRange: result.usableRange,
+        subnetMask: result.subnetMask,
+        wildcardMask: result.wildcardMask,
+        hostCount: formatInteger(result.hostCount),
+        totalAddress: formatInteger(result.totalAddress),
+        cidrOutput: result.cidrOutput
+      };
+
+      Object.entries(values).forEach(([id, value]) => {
+        const node = document.getElementById(id);
+        if (node) node.textContent = value;
       });
     }
+
+    function buildCopyText() {
+      if (!lastResult) return "";
+      const dict = I18N[currentLanguage] || I18N.zh;
+      return [
+        `${dict.cidrLabel}: ${lastResult.cidrOutput}`,
+        `${dict.networkAddressLabel}: ${lastResult.networkAddress}`,
+        `${dict.broadcastAddressLabel}: ${lastResult.broadcastAddress}`,
+        `${dict.usableRangeLabel}: ${lastResult.usableRange}`,
+        `${dict.subnetMaskLabel}: ${lastResult.subnetMask}`,
+        `${dict.wildcardMaskLabel}: ${lastResult.wildcardMask}`,
+        `${dict.hostCountLabel}: ${formatInteger(lastResult.hostCount)}`,
+        `${dict.totalAddressLabel}: ${formatInteger(lastResult.totalAddress)}`
+      ].join("\n");
+    }
+
+    async function copyResult() {
+      if (!lastResult) {
+        calculateSubnet();
+        if (!lastResult) return;
+      }
+
+      const text = buildCopyText();
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const textarea = document.createElement("textarea");
+          textarea.value = text;
+          textarea.setAttribute("readonly", "readonly");
+          textarea.style.position = "fixed";
+          textarea.style.left = "-9999px";
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          document.body.removeChild(textarea);
+        }
+        setStatus("copiedStatus");
+      } catch (error) {
+        setStatus("copyFailedStatus");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("calculateBtn")?.addEventListener("click", calculateSubnet);
+      document.getElementById("sampleBtn")?.addEventListener("click", () => {
+        const ipInput = document.getElementById("ipInput");
+        const prefixInput = document.getElementById("prefixInput");
+        if (ipInput) ipInput.value = "192.168.10.42";
+        if (prefixInput) prefixInput.value = "26";
+        setStatus("sampleStatus");
+      });
+      document.getElementById("clearBtn")?.addEventListener("click", () => {
+        const ipInput = document.getElementById("ipInput");
+        const prefixInput = document.getElementById("prefixInput");
+        if (ipInput) ipInput.value = "";
+        if (prefixInput) prefixInput.value = "";
+        clearResultDisplay();
+        setStatus("clearedStatus");
+      });
+      document.getElementById("copyBtn")?.addEventListener("click", copyResult);
+      document.getElementById("resetOutputBtn")?.addEventListener("click", () => {
+        clearResultDisplay();
+        setStatus("resetStatus");
+      });
+      document.getElementById("ipInput")?.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") calculateSubnet();
+      });
+      document.getElementById("prefixInput")?.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") calculateSubnet();
+      });
+
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="./sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

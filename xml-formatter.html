@@ -1,518 +1,508 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>xml-formatter - XML 美化与压缩工具</title>
-  <meta name="description" content="XML 美化与压缩工具。修复错乱的XML标签缩进，或者将其压缩为单行。">
-  <meta name="keywords" content="xml-formatter, XML格式化, XML美化工具, XML压缩工具, XML缩进修复, 在线XML格式化, XML单行压缩, XML校验工具">
-  <link rel="icon" type="image/png" href="./assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XML 美化与压缩 - Micro Tools Matrix</title>
+  <meta name="description" content="Micro Tools Matrix 的 XML 美化与压缩工具，支持在浏览器本地处理 XML 缩进、格式化和单行压缩，无需上传文本。">
+  <meta name="keywords" content="XML美化,XML压缩,XML格式化,浏览器本地处理,无需上传,Micro Tools Matrix">
   <link rel="canonical" href="https://mymicrotools.xyz/xml-formatter.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/xml-formatter.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/xml-formatter.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/xml-formatter.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/xml-formatter.html">
-  <meta property="og:title" content="xml-formatter - XML 美化与压缩工具">
-  <meta property="og:description" content="XML 美化与压缩工具。修复错乱的XML标签缩进，或者将其压缩为单行。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="xml-formatter - XML 美化与压缩工具">
-  <meta name="twitter:description" content="XML 美化与压缩工具。修复错乱的XML标签缩进，或者将其压缩为单行。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "XML Formatter and Minifier",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A browser-local XML formatter and minifier by Micro Tools Matrix.",
+      "url": "https://mymicrotools.xyz/xml-formatter.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "category": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="切换主题" title="切换主题">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">XML 美化与压缩</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="./xml-formatter.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
-        <a href="./en/xml-formatter.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
-    <div class="absolute inset-0 opacity-30">
-      <div class="absolute left-1/4 top-0 h-56 w-56 rounded-full bg-cyan-500 blur-3xl"></div>
-      <div class="absolute right-1/4 bottom-0 h-56 w-56 rounded-full bg-blue-600 blur-3xl"></div>
-    </div>
-    <div class="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-1 text-sm text-cyan-200">在线开发者工具</p>
-          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">XML 美化与压缩工具</h1>
-          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">XML 美化与压缩工具：快速修复错乱的 XML 标签缩进，或将 XML 压缩为单行，适合接口调试、日志分析与数据整理。</p>
-        </div>
-        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 shadow-2xl backdrop-blur">
-          <p class="text-sm text-slate-700 dark:text-slate-300">零依赖 · 本地处理 · 即开即用</p>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label data-i18n="themeSystem" class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="语言" data-i18n-aria-label="languageLabel" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
         </div>
       </div>
-    </div>
+    </nav>
   </header>
 
-  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-2">
-      <div class="rounded-3xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900/80 p-5 shadow-xl">
-        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入 XML</h2>
-          <div class="flex flex-wrap gap-2">
-            <button id="sampleBtn" type="button" class="rounded-xl border border-cyan-400/40 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">示例</button>
-            <button id="clearBtn" type="button" class="rounded-xl border border-slate-600 bg-slate-50 dark:bg-slate-800 px-4 py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95">清空</button>
-          </div>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">XML 美化与压缩</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中修复错乱的 XML 标签缩进，或将 XML 压缩为单行。所有内容只在浏览器本地处理，无需上传文件或文本。</p>
         </div>
-        <textarea id="inputXml" spellcheck="false" class="h-96 w-full resize-y rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder="请粘贴 XML 内容，例如：&#10;<root><item id=&quot;1&quot;>Hello</item></root>"></textarea>
-
-        <div class="mt-4 grid gap-3 sm:grid-cols-2">
-          <label class="block">
-            <span class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">缩进空格数</span>
-            <select id="indentSize" class="w-full rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-slate-900 dark:text-slate-100 outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
-              <option value="2" selected>2 个空格</option>
-              <option value="4">4 个空格</option>
-              <option value="1">1 个空格</option>
-              <option value="tab">Tab</option>
-            </select>
-          </label>
-          <label class="block">
-            <span class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">处理模式</span>
-            <select id="mode" class="w-full rounded-xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-3 py-2 text-slate-900 dark:text-slate-100 outline-none focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
-              <option value="format" selected>美化 / 修复缩进</option>
-              <option value="minify">压缩为单行</option>
-            </select>
-          </label>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
-
-        <div id="errorBox" class="mt-4 hidden rounded-2xl border border-red-400/40 bg-red-500/10 p-4 text-sm leading-6 text-red-200"></div>
-
-        <div class="mt-5 flex flex-col gap-3 sm:flex-row">
-          <button id="formatBtn" type="button" class="flex-1 rounded-2xl bg-gradient-to-r from-cyan-400 to-blue-500 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:brightness-110 active:scale-[0.98]">开始处理</button>
-          <button id="swapBtn" type="button" class="rounded-2xl border border-slate-600 bg-slate-50 dark:bg-slate-800 px-5 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-[0.98]">输出转输入</button>
-        </div>
-      </div>
-
-      <div class="rounded-3xl border border-cyan-500/30 bg-cyan-950/30 p-5 shadow-xl">
-        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <h2 class="text-xl font-bold text-gray-900 dark:text-white">输出结果</h2>
-          <div class="flex flex-wrap gap-2">
-            <button id="copyBtn" type="button" class="rounded-xl border border-emerald-400/40 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-400/20 active:scale-95">复制</button>
-            <button id="downloadBtn" type="button" class="rounded-xl border border-blue-400/40 bg-blue-400/10 px-4 py-2 text-sm font-semibold text-blue-100 transition hover:bg-blue-400/20 active:scale-95">下载</button>
-          </div>
-        </div>
-        <textarea id="outputXml" readonly spellcheck="false" class="h-96 w-full resize-y rounded-2xl border border-cyan-500/20 bg-white dark:bg-slate-950/90 p-4 font-mono text-sm leading-6 text-cyan-50 outline-none placeholder:text-slate-500" placeholder="处理后的 XML 将显示在这里"></textarea>
-
-        <div class="mt-4 grid gap-3 sm:grid-cols-3">
-          <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-4">
-            <p class="text-xs text-slate-400">输入字符</p>
-            <p id="inputCount" class="mt-1 text-2xl font-black text-gray-900 dark:text-white">0</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-4">
-            <p class="text-xs text-slate-400">输出字符</p>
-            <p id="outputCount" class="mt-1 text-2xl font-black text-gray-900 dark:text-white">0</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-4">
-            <p class="text-xs text-slate-400">状态</p>
-            <p id="statusText" class="mt-1 text-lg font-bold text-slate-700 dark:text-slate-300">等待输入</p>
-          </div>
-        </div>
-
-        <div id="toast" class="mt-4 hidden rounded-2xl border border-emerald-400/40 bg-emerald-500/10 p-4 text-sm text-emerald-200"></div>
       </div>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 xml-formatter 在线 XML 美化与压缩工具</h2>
-      <p>
-        xml-formatter 是面向开发者、测试工程师和数据处理人员的在线 XML 格式化工具，专注解决接口返回内容难读、XML 标签缩进混乱、日志片段无法快速排查等常见痛点。你只需将 XML 文本粘贴到输入区，选择“美化 / 修复缩进”即可把紧凑或错乱排版的内容整理成层级清晰、便于阅读的结构；选择“压缩为单行”则可去除多余换行和缩进，生成适合传输、存储或嵌入配置的精简 XML。工具会在浏览器本地完成 XML 校验、格式化和压缩处理，不上传数据，适用于 API 调试、SOAP 报文整理、配置文件检查、在线 XML 缩进修复、XML 单行压缩等场景。当输入存在未闭合标签、非法字符或结构错误时，页面会给出友好的错误提示，帮助你更快定位问题并提升排查效率。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <label for="xmlInput" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="inputLabel">XML 文本</label>
+        <textarea id="xmlInput" rows="16" spellcheck="false" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="inputPlaceholder" placeholder="粘贴需要美化或压缩的 XML 文本"></textarea>
+
+        <div class="mt-4 grid gap-3 sm:grid-cols-2">
+          <label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="modeLabel">处理方式</span>
+            <select id="modeSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100">
+              <option value="format" data-i18n="modeFormat">美化缩进</option>
+              <option value="minify" data-i18n="modeMinify">压缩单行</option>
+            </select>
+          </label>
+          <label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="indentLabel">缩进宽度</span>
+            <select id="indentSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100">
+              <option value="2" data-i18n="indentTwo">2 个空格</option>
+              <option value="4" data-i18n="indentFour">4 个空格</option>
+              <option value="tab" data-i18n="indentTab">制表符</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="processBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">处理</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">示例</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+        </div>
+
+        <p id="inputHint" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="inputHint">提示：会先检查 XML 结构，再输出格式化或压缩结果。</p>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+        </div>
+
+        <label for="xmlOutput" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="outputLabel">处理结果</label>
+        <textarea id="xmlOutput" rows="16" spellcheck="false" readonly class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="outputPlaceholder" placeholder="结果会显示在这里"></textarea>
+
+        <div class="mt-4 grid gap-3 rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/40 sm:grid-cols-3">
+          <div class="min-w-0">
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-500" data-i18n="statChars">字符数</p>
+            <p id="charCount" class="mt-1 text-lg font-bold tabular-nums text-slate-950 dark:text-white">0</p>
+          </div>
+          <div class="min-w-0">
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-500" data-i18n="statLines">行数</p>
+            <p id="lineCount" class="mt-1 text-lg font-bold tabular-nums text-slate-950 dark:text-white">0</p>
+          </div>
+          <div class="min-w-0">
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-500" data-i18n="statBytes">字节数</p>
+            <p id="byteCount" class="mt-1 text-lg font-bold tabular-nums text-slate-950 dark:text-white">0</p>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
+          <button id="downloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadAction">下载文件</button>
+        </div>
+
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="statusReady">准备就绪。粘贴 XML 后点击处理。</p>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">XML 美化与压缩工具适合前端、后端、测试和运维人员快速整理接口响应、配置文件、站点地图或构建产物。它会在浏览器本地处理输入内容，先检查 XML 是否可解析，再输出整齐缩进的结构，帮助你查看层级、定位标签错位与复制片段；也可以将 XML 压缩为单行，便于嵌入脚本、日志或传输字段。整个过程无需上传到服务器，不会调用远程接口，适合处理日常开发中的敏感配置和临时数据。作为 Micro Tools Matrix 的免费在线开发者工具，它强调轻量、隐私和跨设备可用性。</article>
   </main>
 
-  <footer class="border-t border-slate-800 py-6 text-center text-sm text-slate-500">
-    <p>xml-formatter · XML 美化与压缩工具</p>
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
 
   <script>
-    const inputXml = document.getElementById('inputXml');
-    const outputXml = document.getElementById('outputXml');
-    const indentSize = document.getElementById('indentSize');
-    const mode = document.getElementById('mode');
-    const formatBtn = document.getElementById('formatBtn');
-    const clearBtn = document.getElementById('clearBtn');
-    const sampleBtn = document.getElementById('sampleBtn');
-    const copyBtn = document.getElementById('copyBtn');
-    const downloadBtn = document.getElementById('downloadBtn');
-    const swapBtn = document.getElementById('swapBtn');
-    const errorBox = document.getElementById('errorBox');
-    const toast = document.getElementById('toast');
-    const inputCount = document.getElementById('inputCount');
-    const outputCount = document.getElementById('outputCount');
-    const statusText = document.getElementById('statusText');
+    const I18N = {
+      zh: {
+        toolName: "XML 美化与压缩",
+        h1: "XML 美化与压缩",
+        title: "XML 美化与压缩 - Micro Tools Matrix",
+        description: "Micro Tools Matrix 的 XML 美化与压缩工具，支持在浏览器本地处理 XML 缩进、格式化和单行压缩，无需上传文本。",
+        keywords: "XML美化,XML压缩,XML格式化,浏览器本地处理,无需上传,Micro Tools Matrix",
+        sponsor: "赞赏",
+        buyCoffee: "Buy Me a Coffee",
+        languageLabel: "语言",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        eyebrow: "浏览器本地处理",
+        intro: "在 Micro Tools Matrix 中修复错乱的 XML 标签缩进，或将 XML 压缩为单行。所有内容只在浏览器本地处理，无需上传文件或文本。",
+        localBadge: "本地运行",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        inputLabel: "XML 文本",
+        inputPlaceholder: "粘贴需要美化或压缩的 XML 文本",
+        modeLabel: "处理方式",
+        modeFormat: "美化缩进",
+        modeMinify: "压缩单行",
+        indentLabel: "缩进宽度",
+        indentTwo: "2 个空格",
+        indentFour: "4 个空格",
+        indentTab: "制表符",
+        primaryAction: "处理",
+        sampleAction: "示例",
+        secondaryAction: "清空",
+        inputHint: "提示：会先检查 XML 结构，再输出格式化或压缩结果。",
+        outputTitle: "结果",
+        outputBadge: "输出",
+        outputLabel: "处理结果",
+        outputPlaceholder: "结果会显示在这里",
+        statChars: "字符数",
+        statLines: "行数",
+        statBytes: "字节数",
+        copyAction: "复制结果",
+        downloadAction: "下载文件",
+        statusReady: "准备就绪。粘贴 XML 后点击处理。",
+        statusEmpty: "请先粘贴 XML 内容。",
+        statusInvalid: "XML 解析失败：{message}",
+        statusFormatted: "已完成美化缩进，输出 {chars} 个字符。",
+        statusMinified: "已完成单行压缩，输出 {chars} 个字符。",
+        statusCleared: "已清空输入和结果。",
+        statusSample: "已填入示例 XML，可直接处理。",
+        statusCopied: "结果已复制到剪贴板。",
+        statusCopyFailed: "复制失败，请手动选择结果文本。",
+        statusNoOutput: "还没有可复制或下载的结果。",
+        statusDownloaded: "已生成本地下载文件。",
+        seoArticle: "XML 美化与压缩工具适合前端、后端、测试和运维人员快速整理接口响应、配置文件、站点地图或构建产物。它会在浏览器本地处理输入内容，先检查 XML 是否可解析，再输出整齐缩进的结构，帮助你查看层级、定位标签错位与复制片段；也可以将 XML 压缩为单行，便于嵌入脚本、日志或传输字段。整个过程无需上传到服务器，不会调用远程接口，适合处理日常开发中的敏感配置和临时数据。作为 Micro Tools Matrix 的免费在线开发者工具，它强调轻量、隐私和跨设备可用性。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
+      },
+      en: {
+        toolName: "XML Formatter",
+        h1: "XML Formatter",
+        title: "XML Formatter and Minifier - Micro Tools Matrix",
+        description: "Format messy XML indentation or minify XML into one line with Micro Tools Matrix. Browser-local processing, no upload required.",
+        keywords: "XML formatter,XML minifier,XML beautifier,browser-local processing,no upload,free online developer tool,Micro Tools Matrix",
+        sponsor: "Sponsor",
+        buyCoffee: "Buy Me a Coffee",
+        languageLabel: "Language",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        eyebrow: "Browser-local processing",
+        intro: "Fix messy XML indentation or compress XML into a single line in Micro Tools Matrix. Everything runs locally in your browser, with no file or text upload.",
+        localBadge: "Local",
+        inputTitle: "Input",
+        inputBadge: "Input",
+        inputLabel: "XML text",
+        inputPlaceholder: "Paste XML text to format or minify",
+        modeLabel: "Mode",
+        modeFormat: "Format indentation",
+        modeMinify: "Minify to one line",
+        indentLabel: "Indent size",
+        indentTwo: "2 spaces",
+        indentFour: "4 spaces",
+        indentTab: "Tab",
+        primaryAction: "Process",
+        sampleAction: "Sample",
+        secondaryAction: "Clear",
+        inputHint: "Tip: the tool validates the XML structure before producing formatted or minified output.",
+        outputTitle: "Result",
+        outputBadge: "Output",
+        outputLabel: "Processed result",
+        outputPlaceholder: "The result will appear here",
+        statChars: "Characters",
+        statLines: "Lines",
+        statBytes: "Bytes",
+        copyAction: "Copy result",
+        downloadAction: "Download file",
+        statusReady: "Ready. Paste XML and click Process.",
+        statusEmpty: "Please paste XML content first.",
+        statusInvalid: "XML parsing failed: {message}",
+        statusFormatted: "Formatting complete. Output has {chars} characters.",
+        statusMinified: "Minifying complete. Output has {chars} characters.",
+        statusCleared: "Input and result have been cleared.",
+        statusSample: "Sample XML inserted. You can process it now.",
+        statusCopied: "Result copied to the clipboard.",
+        statusCopyFailed: "Copy failed. Please select the result text manually.",
+        statusNoOutput: "There is no result to copy or download yet.",
+        statusDownloaded: "A local download file has been created.",
+        seoArticle: "This XML formatter and minifier helps developers, testers, operations teams, and technical writers clean up API responses, configuration files, sitemap fragments, and generated XML documents. It performs browser-local processing, so your XML stays in the current page memory and is not uploaded to a server. The tool validates the document first, then produces readable indentation for reviewing nested elements, spotting mismatched tags, and sharing snippets in code review. When compact output is needed, it can also minify XML into a single line for logs, scripts, embedded fields, or transport payloads. Micro Tools Matrix keeps the workflow focused: paste, process, copy, or download. There are no external runtime libraries, no remote API calls, and no tracking requests. As a free online developer tool, it is useful on Windows, macOS, Android, and iOS whenever you need quick XML beautifying or compression with privacy-conscious local execution.",
+        footer: "Micro Tools Matrix - Browser-local processing, no upload required."
+      }
+    };
 
-    function updateCounts() {
-      inputCount.textContent = String(inputXml.value.length);
-      outputCount.textContent = String(outputXml.value.length);
+    let currentLanguage = "zh";
+    let currentStatus = { key: "statusReady", params: {} };
+
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      try {
+        return localStorage.getItem("microToolsLanguage") || "zh";
+      } catch (error) {
+        return "zh";
+      }
     }
 
-    function showError(message) {
-      errorBox.textContent = message;
-      errorBox.classList.remove('hidden');
-      statusText.textContent = '处理失败';
-      statusText.className = 'mt-1 text-lg font-bold text-red-300';
+    function setLanguage(lang) {
+      const safeLang = lang === "en" ? "en" : "zh";
+      try {
+        localStorage.setItem("microToolsLanguage", safeLang);
+      } catch (error) {}
+      applyLanguage(safeLang);
     }
 
-    function clearError() {
-      errorBox.textContent = '';
-      errorBox.classList.add('hidden');
+    function translateTemplate(key, params = {}) {
+      const dict = I18N[currentLanguage] || I18N.zh;
+      return (dict[key] || I18N.zh[key] || "").replace(/\{(\w+)\}/g, (match, name) => {
+        return Object.prototype.hasOwnProperty.call(params, name) ? String(params[name]) : match;
+      });
     }
 
-    function showToast(message, type = 'success') {
-      toast.textContent = message;
-      toast.classList.remove('hidden');
-      toast.className = type === 'success'
-        ? 'mt-4 rounded-2xl border border-emerald-400/40 bg-emerald-500/10 p-4 text-sm text-emerald-200'
-        : 'mt-4 rounded-2xl border border-red-400/40 bg-red-500/10 p-4 text-sm text-red-200';
-      window.clearTimeout(showToast.timer);
-      showToast.timer = window.setTimeout(() => toast.classList.add('hidden'), 2200);
+    function setStatus(key, params = {}) {
+      currentStatus = { key, params };
+      const statusEl = document.getElementById("statusText");
+      if (statusEl) statusEl.textContent = translateTemplate(key, params);
     }
 
-    function escapeText(value) {
-      return String(value)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
+    function applyLanguage(lang) {
+      const safeLang = lang === "en" ? "en" : "zh";
+      currentLanguage = safeLang;
+      const dict = I18N[safeLang];
+
+      document.documentElement.lang = safeLang === "en" ? "en" : "zh-CN";
+      document.title = dict.title;
+
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute("content", dict.description);
+
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (keywords) keywords.setAttribute("content", dict.keywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && dict[key]) node.textContent = dict[key];
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && dict[key]) node.setAttribute("placeholder", dict[key]);
+      });
+
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && dict[key]) node.setAttribute("title", dict[key]);
+      });
+
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && dict[key]) node.setAttribute("aria-label", dict[key]);
+      });
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (safeLang === "zh" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (safeLang === "en" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+      }
+
+      setStatus(currentStatus.key, currentStatus.params);
+      updateStats();
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
     }
 
-    function escapeAttr(value) {
-      return String(value)
-        .replace(/&/g, '&amp;')
-        .replace(/"/g, '&quot;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
+    function normalizeParseError(doc) {
+      const parserError = doc.getElementsByTagName("parsererror")[0];
+      if (!parserError) return "";
+      return (parserError.textContent || "").replace(/\s+/g, " ").trim();
     }
 
-    function getIndentUnit() {
-      return indentSize.value === 'tab' ? '\t' : ' '.repeat(Number(indentSize.value) || 2);
-    }
-
-    function parseXml(xmlText) {
+    function parseXml(text) {
       const parser = new DOMParser();
-      const doc = parser.parseFromString(xmlText, 'application/xml');
-      const parserError = doc.getElementsByTagName('parsererror')[0];
-      if (parserError) {
-        const message = parserError.textContent ? parserError.textContent.trim().replace(/\s+/g, ' ') : 'XML 格式不合法，请检查标签是否闭合、属性引号是否正确。';
-        throw new Error('XML 解析失败：' + message);
-      }
-      if (!doc.documentElement) {
-        throw new Error('XML 内容为空或缺少根节点，请输入完整的 XML 文档。');
-      }
+      const doc = parser.parseFromString(text, "application/xml");
+      const error = normalizeParseError(doc);
+      if (error) throw new Error(error);
       return doc;
     }
 
-    function getXmlDeclaration(xmlText) {
-      const match = xmlText.match(/^\s*(<\?xml\s+[^?]*\?>)/i);
-      return match ? match[1].trim() : '';
+    function serializeXml(doc) {
+      return new XMLSerializer().serializeToString(doc);
     }
 
-    function attrsToString(node) {
-      if (!node.attributes || node.attributes.length === 0) return '';
-      return Array.from(node.attributes)
-        .map(attr => `${attr.name}="${escapeAttr(attr.value)}"`)
-        .join(' ');
+    function minifyXml(text) {
+      const doc = parseXml(text);
+      return serializeXml(doc).replace(/>\s+</g, "><").trim();
     }
 
-    function formatNode(node, level, indentUnit) {
-      const pad = indentUnit.repeat(level);
+    function formatXml(text, indentUnit) {
+      const compact = minifyXml(text);
+      const indent = indentUnit === "tab" ? "\t" : " ".repeat(Number(indentUnit) || 2);
+      const tokens = compact.replace(/>\s*</g, "><").replace(/(>)(<)(\/*)/g, "$1\n$2$3").split("\n");
+      let depth = 0;
+      const lines = [];
 
-      if (node.nodeType === Node.ELEMENT_NODE) {
-        const attrs = attrsToString(node);
-        const openTag = attrs ? `<${node.nodeName} ${attrs}>` : `<${node.nodeName}>`;
-        const closeTag = `</${node.nodeName}>`;
-        const children = Array.from(node.childNodes);
-        const meaningful = children.filter(child => !(child.nodeType === Node.TEXT_NODE && child.textContent.trim() === ''));
+      tokens.forEach((rawToken) => {
+        const token = rawToken.trim();
+        if (!token) return;
 
-        if (meaningful.length === 0) {
-          const selfTag = attrs ? `<${node.nodeName} ${attrs}/>` : `<${node.nodeName}/>`;
-          return pad + selfTag;
-        }
+        if (/^<\//.test(token)) depth = Math.max(depth - 1, 0);
 
-        const onlyText = meaningful.length === 1 && meaningful[0].nodeType === Node.TEXT_NODE;
-        const onlyCdata = meaningful.length === 1 && meaningful[0].nodeType === Node.CDATA_SECTION_NODE;
+        lines.push(indent.repeat(depth) + token);
 
-        if (onlyText) {
-          return pad + openTag + escapeText(meaningful[0].textContent.trim()) + closeTag;
-        }
-
-        if (onlyCdata) {
-          return pad + openTag + `<![CDATA[${meaningful[0].data}]]>` + closeTag;
-        }
-
-        const inner = meaningful.map(child => formatNode(child, level + 1, indentUnit)).filter(Boolean).join('\n');
-        return pad + openTag + '\n' + inner + '\n' + pad + closeTag;
-      }
-
-      if (node.nodeType === Node.TEXT_NODE) {
-        const text = node.textContent.trim();
-        return text ? pad + escapeText(text) : '';
-      }
-
-      if (node.nodeType === Node.CDATA_SECTION_NODE) {
-        return pad + `<![CDATA[${node.data}]]>`;
-      }
-
-      if (node.nodeType === Node.COMMENT_NODE) {
-        return pad + `<!--${node.data}-->`;
-      }
-
-      if (node.nodeType === Node.PROCESSING_INSTRUCTION_NODE) {
-        return pad + `<?${node.target}${node.data ? ' ' + node.data : ''}?>`;
-      }
-
-      if (node.nodeType === Node.DOCUMENT_TYPE_NODE) {
-        let doctype = `<!DOCTYPE ${node.name}`;
-        if (node.publicId) doctype += ` PUBLIC "${node.publicId}"`;
-        if (node.systemId) doctype += node.publicId ? ` "${node.systemId}"` : ` SYSTEM "${node.systemId}"`;
-        doctype += '>';
-        return pad + doctype;
-      }
-
-      return '';
-    }
-
-    function formatXml(xmlText) {
-      const doc = parseXml(xmlText);
-      const declaration = getXmlDeclaration(xmlText);
-      const parts = [];
-      if (declaration) parts.push(declaration);
-
-      Array.from(doc.childNodes).forEach(node => {
-        if (node.nodeType === Node.PROCESSING_INSTRUCTION_NODE && /^xml$/i.test(node.target)) return;
-        const formatted = formatNode(node, 0, getIndentUnit());
-        if (formatted) parts.push(formatted);
+        const isOpening = /^<[^!?/][^>]*[^/]?>$/.test(token);
+        const isClosingSameLine = /^<[^!?/][\s\S]*>[\s\S]*<\/[^>]+>$/.test(token);
+        if (isOpening && !isClosingSameLine) depth += 1;
       });
 
-      return parts.join('\n');
+      return lines.join("\n");
     }
 
-    function minifyNode(node) {
-      if (node.nodeType === Node.ELEMENT_NODE) {
-        const attrs = attrsToString(node);
-        const openTag = attrs ? `<${node.nodeName} ${attrs}>` : `<${node.nodeName}>`;
-        const children = Array.from(node.childNodes).filter(child => !(child.nodeType === Node.TEXT_NODE && child.textContent.trim() === ''));
-
-        if (children.length === 0) {
-          return attrs ? `<${node.nodeName} ${attrs}/>` : `<${node.nodeName}/>`;
-        }
-
-        return openTag + children.map(minifyNode).join('') + `</${node.nodeName}>`;
-      }
-
-      if (node.nodeType === Node.TEXT_NODE) {
-        return escapeText(node.textContent.trim());
-      }
-
-      if (node.nodeType === Node.CDATA_SECTION_NODE) {
-        return `<![CDATA[${node.data}]]>`;
-      }
-
-      if (node.nodeType === Node.COMMENT_NODE) {
-        return `<!--${node.data}-->`;
-      }
-
-      if (node.nodeType === Node.PROCESSING_INSTRUCTION_NODE) {
-        return `<?${node.target}${node.data ? ' ' + node.data : ''}?>`;
-      }
-
-      if (node.nodeType === Node.DOCUMENT_TYPE_NODE) {
-        let doctype = `<!DOCTYPE ${node.name}`;
-        if (node.publicId) doctype += ` PUBLIC "${node.publicId}"`;
-        if (node.systemId) doctype += node.publicId ? ` "${node.systemId}"` : ` SYSTEM "${node.systemId}"`;
-        return doctype + '>';
-      }
-
-      return '';
-    }
-
-    function minifyXml(xmlText) {
-      const doc = parseXml(xmlText);
-      const declaration = getXmlDeclaration(xmlText);
-      const parts = [];
-      if (declaration) parts.push(declaration);
-
-      Array.from(doc.childNodes).forEach(node => {
-        if (node.nodeType === Node.PROCESSING_INSTRUCTION_NODE && /^xml$/i.test(node.target)) return;
-        const minified = minifyNode(node);
-        if (minified) parts.push(minified);
-      });
-
-      return parts.join('');
+    function updateStats() {
+      const output = document.getElementById("xmlOutput")?.value || "";
+      const charCount = document.getElementById("charCount");
+      const lineCount = document.getElementById("lineCount");
+      const byteCount = document.getElementById("byteCount");
+      if (charCount) charCount.textContent = String(output.length);
+      if (lineCount) lineCount.textContent = output ? String(output.split(/\r\n|\r|\n/).length) : "0";
+      if (byteCount) byteCount.textContent = String(new Blob([output]).size);
     }
 
     function processXml() {
-      clearError();
-      const raw = inputXml.value || '';
+      const input = document.getElementById("xmlInput");
+      const output = document.getElementById("xmlOutput");
+      const mode = document.getElementById("modeSelect")?.value || "format";
+      const indent = document.getElementById("indentSelect")?.value || "2";
+      const text = input?.value || "";
 
-      if (!raw.trim()) {
-        outputXml.value = '';
-        updateCounts();
-        showError('请输入需要处理的 XML 内容。');
+      if (!text.trim()) {
+        if (output) output.value = "";
+        updateStats();
+        setStatus("statusEmpty");
         return;
       }
 
       try {
-        formatBtn.disabled = true;
-        formatBtn.textContent = '处理中...';
-        const result = mode.value === 'minify' ? minifyXml(raw) : formatXml(raw);
-        outputXml.value = result;
-        statusText.textContent = '处理成功';
-        statusText.className = 'mt-1 text-lg font-bold text-emerald-300';
-        showToast(mode.value === 'minify' ? 'XML 已压缩为单行。' : 'XML 已完成美化与缩进修复。');
+        const result = mode === "minify" ? minifyXml(text) : formatXml(text, indent);
+        if (output) output.value = result;
+        updateStats();
+        setStatus(mode === "minify" ? "statusMinified" : "statusFormatted", { chars: result.length });
       } catch (error) {
-        outputXml.value = '';
-        showError(error && error.message ? error.message : '处理失败，请检查 XML 内容是否有效。');
-      } finally {
-        formatBtn.disabled = false;
-        formatBtn.textContent = '开始处理';
-        updateCounts();
+        if (output) output.value = "";
+        updateStats();
+        setStatus("statusInvalid", { message: error.message || "XML error" });
       }
     }
 
-    async function copyOutput() {
-      clearError();
-      if (!outputXml.value) {
-        showToast('没有可复制的输出内容，请先处理 XML。', 'error');
+    function fillSample() {
+      const sample = '<catalog><book id="bk101"><author>Gambardella, Matthew</author><title>XML Developer Guide</title><genre>Computer</genre><price currency="USD">44.95</price><publish_date>2000-10-01</publish_date></book><book id="bk102"><author>Ralls, Kim</author><title>Midnight Rain</title><genre>Fantasy</genre><price currency="USD">5.95</price></book></catalog>';
+      const input = document.getElementById("xmlInput");
+      const output = document.getElementById("xmlOutput");
+      if (input) input.value = sample;
+      if (output) output.value = "";
+      updateStats();
+      setStatus("statusSample");
+    }
+
+    function clearAll() {
+      const input = document.getElementById("xmlInput");
+      const output = document.getElementById("xmlOutput");
+      if (input) input.value = "";
+      if (output) output.value = "";
+      updateStats();
+      setStatus("statusCleared");
+    }
+
+    async function copyResult() {
+      const output = document.getElementById("xmlOutput");
+      const value = output?.value || "";
+      if (!value) {
+        setStatus("statusNoOutput");
         return;
       }
 
       try {
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(outputXml.value);
-        } else {
-          outputXml.focus();
-          outputXml.select();
-          document.execCommand('copy');
-          window.getSelection().removeAllRanges();
+        await navigator.clipboard.writeText(value);
+        setStatus("statusCopied");
+      } catch (error) {
+        if (output) {
+          output.focus();
+          output.select();
         }
-        showToast('输出结果已复制到剪贴板。');
-      } catch (error) {
-        showToast('复制失败，请手动选择输出内容复制。', 'error');
+        setStatus("statusCopyFailed");
       }
     }
 
-    function downloadOutput() {
-      if (!outputXml.value) {
-        showToast('没有可下载的输出内容，请先处理 XML。', 'error');
+    function downloadResult() {
+      const output = document.getElementById("xmlOutput");
+      const value = output?.value || "";
+      if (!value) {
+        setStatus("statusNoOutput");
         return;
       }
 
-      try {
-        const blob = new Blob([outputXml.value], { type: 'application/xml;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        const now = new Date();
-        const stamp = [
-          now.getFullYear(),
-          String(now.getMonth() + 1).padStart(2, '0'),
-          String(now.getDate()).padStart(2, '0'),
-          String(now.getHours()).padStart(2, '0'),
-          String(now.getMinutes()).padStart(2, '0'),
-          String(now.getSeconds()).padStart(2, '0')
-        ].join('');
-        a.href = url;
-        a.download = `formatted-${stamp}.xml`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
-        showToast('XML 文件已开始下载。');
-      } catch (error) {
-        showToast('下载失败，请复制内容后手动保存。', 'error');
-      }
+      const blob = new Blob([value], { type: "application/xml;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "formatted.xml";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      setStatus("statusDownloaded");
     }
 
-    inputXml.addEventListener('input', updateCounts);
-    outputXml.addEventListener('input', updateCounts);
-    formatBtn.addEventListener('click', processXml);
-    copyBtn.addEventListener('click', copyOutput);
-    downloadBtn.addEventListener('click', downloadOutput);
-
-    clearBtn.addEventListener('click', () => {
-      inputXml.value = '';
-      outputXml.value = '';
-      clearError();
-      statusText.textContent = '等待输入';
-      statusText.className = 'mt-1 text-lg font-bold text-slate-300';
-      updateCounts();
-      showToast('内容已清空。');
-    });
-
-    sampleBtn.addEventListener('click', () => {
-      inputXml.value = `<?xml version="1.0" encoding="UTF-8"?>
-<catalog><book id="bk101"><author>Gambardella, Matthew</author><title>XML Developer Guide</title><genre>Computer</genre><price>44.95</price><publish_date>2024-01-18</publish_date><description>Useful guide for XML formatting.</description></book><book id="bk102"><author>Ralls, Kim</author><title>Midnight Rain</title><genre>Fantasy</genre><price>5.95</price></book></catalog>`;
-      clearError();
-      updateCounts();
-      showToast('示例 XML 已填入输入区。');
-    });
-
-    swapBtn.addEventListener('click', () => {
-      if (!outputXml.value) {
-        showToast('输出区为空，无法转入输入区。', 'error');
-        return;
-      }
-      inputXml.value = outputXml.value;
-      outputXml.value = '';
-      clearError();
-      statusText.textContent = '已转入输入';
-      statusText.className = 'mt-1 text-lg font-bold text-cyan-300';
-      updateCounts();
-      showToast('输出内容已转入输入区。');
-    });
-
-    updateCounts();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
       });
-    }
+
+      document.getElementById("processBtn")?.addEventListener("click", processXml);
+      document.getElementById("sampleBtn")?.addEventListener("click", fillSample);
+      document.getElementById("clearBtn")?.addEventListener("click", clearAll);
+      document.getElementById("copyBtn")?.addEventListener("click", copyResult);
+      document.getElementById("downloadBtn")?.addEventListener("click", downloadResult);
+
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="./sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

@@ -1,488 +1,582 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>box-shadow-generator｜CSS 阴影调试与Generate器</title>
-  <meta name="description" content="CSS 阴影 (Box-Shadow) 调试与Generate器。通过滑动条调整偏移量、模糊半径、扩散半径和颜色，实时预览并GenerateCSS。">
-  <meta name="keywords" content="box-shadow-generator,CSS阴影Generate器,box-shadowGenerate器,在线CSS阴影工具,CSS box-shadow调试,网页阴影效果,前端阴影代码Generate">
-  <link rel="icon" type="image/png" href="../assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
-  <link rel="canonical" href="https://mymicrotools.xyz/en/box-shadow-generator.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS 阴影生成器 - Micro Tools Matrix 本地开发工具</title>
+  <meta name="description" content="Micro Tools Matrix CSS 阴影生成器，浏览器本地处理 box-shadow 参数，实时预览并生成可复制的 CSS，无需上传。">
+  <meta name="keywords" content="CSS 阴影生成器, box-shadow generator, CSS box shadow, 浏览器本地处理, 无需上传, Micro Tools Matrix">
+  <link rel="canonical" href="https://mymicrotools.xyz/box-shadow-generator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/box-shadow-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/box-shadow-generator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/box-shadow-generator.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/en/box-shadow-generator.html">
-  <meta property="og:title" content="box-shadow-generator｜CSS 阴影调试与Generate器">
-  <meta property="og:description" content="CSS 阴影 (Box-Shadow) 调试与Generate器。通过滑动条调整偏移量、模糊半径、扩散半径和颜色，实时预览并GenerateCSS。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="box-shadow-generator｜CSS 阴影调试与Generate器">
-  <meta name="twitter:description" content="CSS 阴影 (Box-Shadow) 调试与Generate器。通过滑动条调整偏移量、模糊半径、扩散半径和颜色，实时预览并GenerateCSS。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="../style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Box Shadow Generator",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A free browser-local CSS box-shadow generator by Micro Tools Matrix.",
+      "url": "https://mymicrotools.xyz/box-shadow-generator.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "category": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+    input[type="range"] { accent-color: #22d3ee; }
+    input[type="color"] { appearance: none; -webkit-appearance: none; padding: 0; }
+    input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+    input[type="color"]::-webkit-color-swatch { border: 0; border-radius: 0.875rem; }
+    input[type="color"]::-moz-color-swatch { border: 0; border-radius: 0.875rem; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">CSS 阴影生成器</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="../box-shadow-generator.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./box-shadow-generator.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="pointer-events-none fixed inset-0 overflow-hidden">
-    <div class="absolute -top-28 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-violet-500/10 blur-3xl"></div>
-  </div>
-
-  <header class="relative border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 backdrop-blur-xl">
-    <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-            在线 CSS 工具 · 实时预览 · 一键Copy
-          </p>
-          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">CSS 阴影调试与Generate器</h1>
-          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            CSS 阴影（Box-Shadow）调试与Generate器。通过滑动条调整偏移量、模糊半径、扩散半径和颜色，实时预览并Generate可直接使用的 CSS。
-          </p>
-        </div>
-        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 text-sm text-slate-700 dark:text-slate-300 shadow-2xl">
-          <div class="flex items-center gap-2">
-            <span class="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_18px_rgba(52,211,153,.8)]"></span>
-            <span>零依赖逻辑 · 原生 JavaScript</span>
-          </div>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeToggle">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]" data-i18n-aria-label="language">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langZh">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langEn">EN</button>
         </div>
       </div>
-    </div>
+    </nav>
   </header>
 
-  <main class="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-12">
-      <div class="lg:col-span-5">
-        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl backdrop-blur-xl sm:p-6">
-          <div class="mb-6 flex items-center justify-between gap-4">
-            <div>
-              <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入区</h2>
-              <p class="mt-1 text-sm text-slate-400">拖动参数即可实时Generate阴影。</p>
-            </div>
-            <button id="resetBtn" type="button" class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:border-cyan-300/40 hover:bg-cyan-400/10 active:scale-95">
-              Reset
-            </button>
-          </div>
-
-          <div id="errorBox" class="mb-5 hidden rounded-2xl border border-red-400/30 bg-red-500/15 px-4 py-3 text-sm text-red-100" role="alert"></div>
-
-          <div class="space-y-5">
-            <label class="block">
-              <div class="mb-2 flex items-center justify-between">
-                <span class="font-medium text-slate-800 dark:text-slate-200">水平偏移 X</span>
-                <span id="xValue" class="rounded-lg bg-slate-50 dark:bg-slate-800 px-2 py-1 text-sm text-cyan-200">12px</span>
-              </div>
-              <input id="offsetX" type="range" min="-100" max="100" step="1" value="12" class="w-full accent-cyan-400" />
-            </label>
-
-            <label class="block">
-              <div class="mb-2 flex items-center justify-between">
-                <span class="font-medium text-slate-800 dark:text-slate-200">垂直偏移 Y</span>
-                <span id="yValue" class="rounded-lg bg-slate-50 dark:bg-slate-800 px-2 py-1 text-sm text-cyan-200">18px</span>
-              </div>
-              <input id="offsetY" type="range" min="-100" max="100" step="1" value="18" class="w-full accent-cyan-400" />
-            </label>
-
-            <label class="block">
-              <div class="mb-2 flex items-center justify-between">
-                <span class="font-medium text-slate-800 dark:text-slate-200">模糊半径 Blur</span>
-                <span id="blurValue" class="rounded-lg bg-slate-50 dark:bg-slate-800 px-2 py-1 text-sm text-cyan-200">35px</span>
-              </div>
-              <input id="blurRadius" type="range" min="0" max="160" step="1" value="35" class="w-full accent-cyan-400" />
-            </label>
-
-            <label class="block">
-              <div class="mb-2 flex items-center justify-between">
-                <span class="font-medium text-slate-800 dark:text-slate-200">扩散半径 Spread</span>
-                <span id="spreadValue" class="rounded-lg bg-slate-50 dark:bg-slate-800 px-2 py-1 text-sm text-cyan-200">0px</span>
-              </div>
-              <input id="spreadRadius" type="range" min="-80" max="80" step="1" value="0" class="w-full accent-cyan-400" />
-            </label>
-
-            <label class="block">
-              <div class="mb-2 flex items-center justify-between">
-                <span class="font-medium text-slate-800 dark:text-slate-200">透明度 Alpha</span>
-                <span id="alphaValue" class="rounded-lg bg-slate-50 dark:bg-slate-800 px-2 py-1 text-sm text-cyan-200">0.28</span>
-              </div>
-              <input id="alpha" type="range" min="0" max="1" step="0.01" value="0.28" class="w-full accent-cyan-400" />
-            </label>
-
-            <div class="grid gap-4 sm:grid-cols-2">
-              <label class="block rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 p-4">
-                <span class="mb-3 block font-medium text-slate-800 dark:text-slate-200">阴影颜色</span>
-                <div class="flex items-center gap-3">
-                  <input id="shadowColor" type="color" value="#000000" class="h-11 w-14 cursor-pointer rounded-lg border border-gray-200 dark:border-white/10 bg-transparent p-1" />
-                  <input id="shadowColorText" type="text" value="#000000" aria-label="阴影颜色十六进制值" class="min-w-0 flex-1 rounded-xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-300/60" />
-                </div>
-              </label>
-
-              <label class="block rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 p-4">
-                <span class="mb-3 block font-medium text-slate-800 dark:text-slate-200">阴影类型</span>
-                <select id="shadowType" class="w-full rounded-xl border border-gray-200 dark:border-white/10 bg-slate-100 dark:bg-slate-900 px-3 py-2.5 text-sm text-slate-900 dark:text-slate-100 outline-none transition focus:border-cyan-300/60">
-                  <option value="outset">外阴影 outset</option>
-                  <option value="inset">内阴影 inset</option>
-                </select>
-              </label>
-            </div>
-
-            <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 p-4">
-              <label class="mb-3 flex items-center gap-3">
-                <input id="multiShadow" type="checkbox" class="h-4 w-4 accent-cyan-400" />
-                <span class="font-medium text-slate-800 dark:text-slate-200">增强层叠阴影</span>
-              </label>
-              <p class="text-sm leading-6 text-slate-400">开启后会自动叠加一层更柔和的远距离阴影，适合卡片与弹窗视觉效果。</p>
-            </div>
-          </div>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">CSS 阴影生成器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中本地调试 CSS box-shadow，实时调整偏移、模糊、扩散和颜色，无需上传任何内容。</p>
         </div>
-      </div>
-
-      <div class="lg:col-span-7">
-        <div class="grid gap-6">
-          <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-gradient-to-br from-slate-100 to-slate-300 p-5 shadow-2xl sm:p-8">
-            <div class="mb-5 flex items-center justify-between">
-              <div>
-                <h2 class="text-xl font-bold text-slate-950 dark:text-slate-100">实时预览</h2>
-                <p class="mt-1 text-sm text-slate-600 dark:text-slate-400">观察阴影在真实卡片上的表现。</p>
-              </div>
-              <span class="rounded-full bg-slate-50 dark:bg-slate-950/10 px-3 py-1 text-xs font-semibold text-slate-700 dark:text-slate-300">Preview</span>
-            </div>
-            <div class="flex min-h-[360px] items-center justify-center rounded-3xl border border-slate-950/10 bg-white/60 p-6">
-              <div id="previewBox" class="flex h-56 w-full max-w-sm flex-col justify-between rounded-3xl bg-white p-7 transition-all duration-150">
-                <div>
-                  <div class="mb-5 h-12 w-12 rounded-2xl bg-gradient-to-br from-cyan-400 to-violet-500"></div>
-                  <h3 class="text-2xl font-black text-slate-950 dark:text-slate-100">Shadow Card</h3>
-                  <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">拖动左侧控件，阴影效果会立即应用到这个预览卡片。</p>
-                </div>
-                <div class="flex gap-2">
-                  <span class="h-2 flex-1 rounded-full bg-cyan-400"></span>
-                  <span class="h-2 flex-1 rounded-full bg-violet-400"></span>
-                  <span class="h-2 flex-1 rounded-full bg-slate-300"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="rounded-3xl border border-cyan-300/20 bg-cyan-950/30 p-5 shadow-2xl backdrop-blur-xl sm:p-6">
-            <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <h2 class="text-xl font-bold text-gray-900 dark:text-white">输出区</h2>
-                <p class="mt-1 text-sm text-cyan-100/70">Generate的 CSS 可直接Copy到项目中。</p>
-              </div>
-              <button id="copyBtn" type="button" class="rounded-xl bg-cyan-400 px-5 py-2.5 text-sm font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-95">
-                Copy CSS
-              </button>
-            </div>
-            <pre class="overflow-x-auto rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950 p-4 text-sm leading-7 text-cyan-100"><code id="cssOutput"></code></pre>
-            <div id="copyStatus" class="mt-3 hidden rounded-xl border border-emerald-400/30 bg-emerald-500/15 px-4 py-2 text-sm text-emerald-100"></div>
-          </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl backdrop-blur-xl sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 CSS 阴影Generate器</h2>
-      <p>
-        box-shadow-generator 是一款面向前端开发者、设计师与站长的在线 CSS 阴影Generate器，专门用于快速调试和Generate网页元素的 box-shadow 代码。传统方式需要反复在浏览器开发者工具中手写水平偏移、垂直偏移、模糊半径、扩散半径与颜色参数，既费时又容易出现视觉不一致。本工具通过可视化滑动条和颜色选择器，让你在页面中实时预览卡片阴影、按钮阴影、弹窗阴影等常见 UI 效果，并同步输出标准 CSS。使用时，只需拖动各项参数，选择阴影颜色和透明度，必要时开启 inset 内阴影或增强层叠阴影，即可获得适合现代网页设计的阴影样式。对于正在寻找“在线 box-shadow Generate器”“CSS 阴影代码Generate工具”“网页卡片阴影调试工具”的用户来说，它能显著提升样式开发效率，减少反复试错，并帮助项目保持更统一、更专业的视觉层次。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">阴影参数</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <div class="space-y-5">
+          <label class="block">
+            <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
+              <span data-i18n="offsetXLabel">水平偏移</span>
+              <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="offsetXValue">12</span>px</span>
+            </span>
+            <input id="offsetX" type="range" min="-80" max="80" step="1" value="12" class="w-full" data-i18n-aria-label="offsetXLabel">
+          </label>
+
+          <label class="block">
+            <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
+              <span data-i18n="offsetYLabel">垂直偏移</span>
+              <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="offsetYValue">18</span>px</span>
+            </span>
+            <input id="offsetY" type="range" min="-80" max="80" step="1" value="18" class="w-full" data-i18n-aria-label="offsetYLabel">
+          </label>
+
+          <label class="block">
+            <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
+              <span data-i18n="blurLabel">模糊半径</span>
+              <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="blurValue">36</span>px</span>
+            </span>
+            <input id="blur" type="range" min="0" max="120" step="1" value="36" class="w-full" data-i18n-aria-label="blurLabel">
+          </label>
+
+          <label class="block">
+            <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
+              <span data-i18n="spreadLabel">扩散半径</span>
+              <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="spreadValue">-8</span>px</span>
+            </span>
+            <input id="spread" type="range" min="-80" max="80" step="1" value="-8" class="w-full" data-i18n-aria-label="spreadLabel">
+          </label>
+
+          <label class="block">
+            <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
+              <span data-i18n="opacityLabel">不透明度</span>
+              <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="opacityValue">24</span>%</span>
+            </span>
+            <input id="opacity" type="range" min="0" max="100" step="1" value="24" class="w-full" data-i18n-aria-label="opacityLabel">
+          </label>
+
+          <div class="grid gap-3 sm:grid-cols-2">
+            <label class="block">
+              <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="colorLabel">阴影颜色</span>
+              <input id="shadowColor" type="color" value="#020617" class="h-12 w-full rounded-2xl border border-gray-200 bg-slate-50 text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100" data-i18n-aria-label="colorLabel">
+            </label>
+            <label class="flex min-h-12 items-center gap-3 rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">
+              <input id="inset" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-cyan-400 focus:ring-cyan-400" data-i18n-aria-label="insetLabel">
+              <span data-i18n="insetLabel">内阴影</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyCssBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">复制 CSS</button>
+          <button id="resetBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">重置</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">示例</button>
+        </div>
+        <p id="statusText" class="mt-3 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite" data-i18n="statusReady">调整滑动条即可实时生成 CSS。</p>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">预览与结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+        </div>
+
+        <div class="rounded-3xl border border-gray-200 bg-slate-50 p-6 dark:border-white/10 dark:bg-slate-950/70">
+          <div class="flex min-h-64 items-center justify-center rounded-3xl bg-[linear-gradient(135deg,rgba(6,182,212,0.10),rgba(148,163,184,0.10))] p-8">
+            <div id="previewCard" class="flex h-36 w-36 max-w-full items-center justify-center rounded-3xl border border-white/70 bg-white text-center text-sm font-bold text-slate-900 transition dark:border-white/10 dark:bg-slate-900 dark:text-slate-100">
+              <span data-i18n="previewText">预览</span>
+            </div>
+          </div>
+        </div>
+
+        <label class="mt-5 block">
+          <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="cssLabel">生成的 CSS</span>
+          <textarea id="cssOutput" readonly rows="5" class="w-full resize-none rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-aria-label="cssLabel"></textarea>
+        </label>
+
+        <div class="mt-4 grid gap-3 rounded-3xl border border-gray-200 bg-slate-50 p-4 text-sm dark:border-white/10 dark:bg-slate-950/70 sm:grid-cols-2">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="summaryColor">颜色</p>
+            <p id="summaryColorValue" class="mt-1 break-words font-semibold text-slate-800 dark:text-slate-200">rgba(2, 6, 23, 0.24)</p>
+          </div>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="summaryMode">模式</p>
+            <p id="summaryModeValue" class="mt-1 font-semibold text-slate-800 dark:text-slate-200" data-i18n="summaryOuter">外阴影</p>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">Micro Tools Matrix 的 CSS 阴影生成器是一款免费的在线开发者工具，适合快速设计卡片、按钮、弹窗和产品界面的 box-shadow 效果。你可以通过滑动条精确调整水平偏移、垂直偏移、模糊半径、扩散半径、颜色和不透明度，并在浏览器中即时预览最终视觉效果。所有计算都在浏览器本地处理，无需上传代码、截图或设计稿，适合对隐私和效率都有要求的前端开发者、设计师和独立产品团队。生成结果可直接复制到 CSS、Tailwind 自定义样式或组件样式文件中，帮助你用更少试错时间获得稳定、克制且可复用的阴影参数。</article>
   </main>
 
-  <footer class="relative mx-auto max-w-7xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-    <p>box-shadow-generator · CSS Box-Shadow Online Tool</p>
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+
+  <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md">
+    <div class="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
+      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor">×</button>
+      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">赞赏支持</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">保持工具免费、快速且无广告。</p>
+      <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="buyCoffee">Buy Me a Coffee</a>
+    </div>
+  </div>
 
   <script>
-    (() => {
-      "use strict";
+    const I18N = {
+      zh: {
+        documentTitle: "CSS 阴影生成器 - Micro Tools Matrix 本地开发工具",
+        metaDescription: "Micro Tools Matrix CSS 阴影生成器，浏览器本地处理 box-shadow 参数，实时预览并生成可复制的 CSS，无需上传。",
+        metaKeywords: "CSS 阴影生成器, box-shadow generator, CSS box shadow, 浏览器本地处理, 无需上传, Micro Tools Matrix",
+        toolName: "CSS 阴影生成器",
+        h1: "CSS 阴影生成器",
+        eyebrow: "浏览器本地处理",
+        intro: "在 Micro Tools Matrix 中本地调试 CSS box-shadow，实时调整偏移、模糊、扩散和颜色，无需上传任何内容。",
+        localBadge: "本地运行",
+        sponsor: "赞赏",
+        language: "语言",
+        langZh: "中",
+        langEn: "EN",
+        themeToggle: "切换主题",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        inputTitle: "阴影参数",
+        inputBadge: "输入",
+        outputTitle: "预览与结果",
+        outputBadge: "输出",
+        offsetXLabel: "水平偏移",
+        offsetYLabel: "垂直偏移",
+        blurLabel: "模糊半径",
+        spreadLabel: "扩散半径",
+        opacityLabel: "不透明度",
+        colorLabel: "阴影颜色",
+        insetLabel: "内阴影",
+        primaryAction: "复制 CSS",
+        secondaryAction: "重置",
+        sampleAction: "示例",
+        statusReady: "调整滑动条即可实时生成 CSS。",
+        statusUpdated: "CSS 已更新，可复制使用。",
+        statusCopied: "CSS 已复制到剪贴板。",
+        statusCopyFailed: "复制失败，请手动选择结果文本。",
+        statusReset: "参数已重置。",
+        statusSample: "已载入柔和卡片阴影示例。",
+        previewText: "预览",
+        cssLabel: "生成的 CSS",
+        summaryColor: "颜色",
+        summaryMode: "模式",
+        summaryOuter: "外阴影",
+        summaryInset: "内阴影",
+        closeSponsor: "关闭赞赏弹窗",
+        sponsorTitle: "赞赏支持",
+        sponsorSubtitle: "保持工具免费、快速且无广告。",
+        buyCoffee: "Buy Me a Coffee",
+        seoArticle: "Micro Tools Matrix 的 CSS 阴影生成器是一款免费的在线开发者工具，适合快速设计卡片、按钮、弹窗和产品界面的 box-shadow 效果。你可以通过滑动条精确调整水平偏移、垂直偏移、模糊半径、扩散半径、颜色和不透明度，并在浏览器中即时预览最终视觉效果。所有计算都在浏览器本地处理，无需上传代码、截图或设计稿，适合对隐私和效率都有要求的前端开发者、设计师和独立产品团队。生成结果可直接复制到 CSS、Tailwind 自定义样式或组件样式文件中，帮助你用更少试错时间获得稳定、克制且可复用的阴影参数。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
+      },
+      en: {
+        documentTitle: "Box Shadow Generator - Micro Tools Matrix Local Developer Tool",
+        metaDescription: "A Micro Tools Matrix box-shadow generator with browser-local processing. Tune offsets, blur, spread, color, and copy ready-to-use CSS without uploading anything.",
+        metaKeywords: "box shadow generator, CSS box-shadow, CSS shadow tool, browser-local processing, free online developer tool, Micro Tools Matrix",
+        toolName: "Box Shadow Generator",
+        h1: "Box Shadow Generator",
+        eyebrow: "Browser-local processing",
+        intro: "Tune CSS box-shadow values inside Micro Tools Matrix with live preview, color control, opacity, and copy-ready output without uploading anything.",
+        localBadge: "Local",
+        sponsor: "Sponsor",
+        language: "Language",
+        langZh: "中",
+        langEn: "EN",
+        themeToggle: "Toggle theme",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        inputTitle: "Shadow Controls",
+        inputBadge: "INPUT",
+        outputTitle: "Preview and Output",
+        outputBadge: "OUTPUT",
+        offsetXLabel: "Horizontal offset",
+        offsetYLabel: "Vertical offset",
+        blurLabel: "Blur radius",
+        spreadLabel: "Spread radius",
+        opacityLabel: "Opacity",
+        colorLabel: "Shadow color",
+        insetLabel: "Inset shadow",
+        primaryAction: "Copy CSS",
+        secondaryAction: "Reset",
+        sampleAction: "Sample",
+        statusReady: "Move the sliders to generate CSS in real time.",
+        statusUpdated: "CSS is updated and ready to copy.",
+        statusCopied: "CSS copied to the clipboard.",
+        statusCopyFailed: "Copy failed. Please select the result text manually.",
+        statusReset: "Settings have been reset.",
+        statusSample: "A soft card shadow sample has been loaded.",
+        previewText: "Preview",
+        cssLabel: "Generated CSS",
+        summaryColor: "Color",
+        summaryMode: "Mode",
+        summaryOuter: "Outer shadow",
+        summaryInset: "Inset shadow",
+        closeSponsor: "Close sponsor dialog",
+        sponsorTitle: "Sponsor Support",
+        sponsorSubtitle: "Keep these tools free, fast, and ad-free.",
+        buyCoffee: "Buy Me a Coffee",
+        seoArticle: "The Micro Tools Matrix Box Shadow Generator is a free online developer tool for building polished CSS box-shadow values without trial-and-error in a separate design file. Adjust horizontal offset, vertical offset, blur radius, spread radius, color, opacity, and inset mode while the preview updates instantly. Because everything uses browser-local processing, your CSS experiments, interface ideas, and design parameters are never uploaded to a server. This makes the tool useful for frontend developers, UI designers, indie makers, and product teams who want a fast privacy-conscious workflow. The generated declaration can be copied directly into CSS files, component styles, design prototypes, or custom utility classes. Use it to refine card elevation, button depth, modal surfaces, dashboard panels, and landing page sections while keeping shadows restrained, readable, and consistent with modern interface systems.",
+        footer: "Micro Tools Matrix - Browser-local processing with no uploads."
+      }
+    };
 
-      const $ = (id) => document.getElementById(id);
+    let currentLanguage = "zh";
+    let lastStatusKey = "statusReady";
 
-      const elements = {
-        offsetX: $("offsetX"),
-        offsetY: $("offsetY"),
-        blurRadius: $("blurRadius"),
-        spreadRadius: $("spreadRadius"),
-        alpha: $("alpha"),
-        shadowColor: $("shadowColor"),
-        shadowColorText: $("shadowColorText"),
-        shadowType: $("shadowType"),
-        multiShadow: $("multiShadow"),
-        previewBox: $("previewBox"),
-        cssOutput: $("cssOutput"),
-        copyBtn: $("copyBtn"),
-        resetBtn: $("resetBtn"),
-        errorBox: $("errorBox"),
-        copyStatus: $("copyStatus"),
-        xValue: $("xValue"),
-        yValue: $("yValue"),
-        blurValue: $("blurValue"),
-        spreadValue: $("spreadValue"),
-        alphaValue: $("alphaValue")
+    const controls = {
+      offsetX: null,
+      offsetY: null,
+      blur: null,
+      spread: null,
+      opacity: null,
+      shadowColor: null,
+      inset: null
+    };
+
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      try {
+        const saved = localStorage.getItem("microToolsLanguage");
+        return saved === "en" ? "en" : "zh";
+      } catch (error) {
+        return "zh";
+      }
+    }
+
+    function setLanguage(lang) {
+      const nextLang = lang === "en" ? "en" : "zh";
+      try {
+        localStorage.setItem("microToolsLanguage", nextLang);
+      } catch (error) {}
+      applyLanguage(nextLang);
+    }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.title = dict.documentTitle;
+
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute("content", dict.metaDescription);
+
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (keywords) keywords.setAttribute("content", dict.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.textContent = dict[key];
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("placeholder", dict[key]);
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("title", dict[key]);
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("aria-label", dict[key]);
+        }
+      });
+
+      const themeLabel = document.querySelector("[data-theme-label]");
+      if (themeLabel) {
+        themeLabel.textContent = dict.themeSystem;
+        themeLabel.setAttribute("data-label-light", dict.themeLight);
+        themeLabel.setAttribute("data-label-dark", dict.themeDark);
+        themeLabel.setAttribute("data-label-system", dict.themeSystem);
+      }
+
+      updateLanguageButtons();
+      updateShadow(false);
+      setStatus(lastStatusKey);
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function updateLanguageButtons() {
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      const activeClass = "bg-cyan-400 text-slate-950";
+      const inactiveClass = "text-slate-600 dark:text-slate-400";
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "zh" ? activeClass : inactiveClass);
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "en" ? activeClass : inactiveClass);
+        zhBtn.setAttribute("aria-pressed", currentLanguage === "zh" ? "true" : "false");
+        enBtn.setAttribute("aria-pressed", currentLanguage === "en" ? "true" : "false");
+      }
+    }
+
+    function setStatus(key) {
+      lastStatusKey = key;
+      const status = document.getElementById("statusText");
+      const dict = I18N[currentLanguage];
+      if (status && dict[key]) status.textContent = dict[key];
+    }
+
+    function numberValue(id, fallback) {
+      const element = controls[id];
+      const value = element ? Number(element.value) : fallback;
+      return Number.isFinite(value) ? value : fallback;
+    }
+
+    function hexToRgb(hex) {
+      const safe = /^#[0-9a-fA-F]{6}$/.test(hex) ? hex : "#020617";
+      const value = safe.slice(1);
+      return {
+        r: parseInt(value.slice(0, 2), 16),
+        g: parseInt(value.slice(2, 4), 16),
+        b: parseInt(value.slice(4, 6), 16)
+      };
+    }
+
+    function buildShadow() {
+      const x = numberValue("offsetX", 12);
+      const y = numberValue("offsetY", 18);
+      const blur = Math.max(0, numberValue("blur", 36));
+      const spread = numberValue("spread", -8);
+      const opacity = Math.min(100, Math.max(0, numberValue("opacity", 24)));
+      const color = controls.shadowColor ? controls.shadowColor.value : "#020617";
+      const rgb = hexToRgb(color);
+      const alpha = Math.round((opacity / 100) * 100) / 100;
+      const rgba = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
+      const inset = controls.inset && controls.inset.checked;
+      const cssValue = `${inset ? "inset " : ""}${x}px ${y}px ${blur}px ${spread}px ${rgba}`;
+      return { x, y, blur, spread, opacity, rgba, inset, cssValue };
+    }
+
+    function updateShadow(markUpdated) {
+      const shadow = buildShadow();
+
+      const valueMap = {
+        offsetXValue: shadow.x,
+        offsetYValue: shadow.y,
+        blurValue: shadow.blur,
+        spreadValue: shadow.spread,
+        opacityValue: shadow.opacity
       };
 
-      const defaults = {
+      Object.keys(valueMap).forEach((id) => {
+        const node = document.getElementById(id);
+        if (node) node.textContent = String(valueMap[id]);
+      });
+
+      const preview = document.getElementById("previewCard");
+      if (preview) preview.style.boxShadow = shadow.cssValue;
+
+      const output = document.getElementById("cssOutput");
+      if (output) output.value = `box-shadow: ${shadow.cssValue};`;
+
+      const colorSummary = document.getElementById("summaryColorValue");
+      if (colorSummary) colorSummary.textContent = shadow.rgba;
+
+      const modeSummary = document.getElementById("summaryModeValue");
+      if (modeSummary) modeSummary.textContent = shadow.inset ? I18N[currentLanguage].summaryInset : I18N[currentLanguage].summaryOuter;
+
+      if (markUpdated) setStatus("statusUpdated");
+    }
+
+    async function copyCss() {
+      const output = document.getElementById("cssOutput");
+      if (!output) return;
+      const text = output.value;
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          output.focus();
+          output.select();
+          document.execCommand("copy");
+          output.setSelectionRange(0, 0);
+        }
+        setStatus("statusCopied");
+      } catch (error) {
+        setStatus("statusCopyFailed");
+      }
+    }
+
+    function setControlValues(values) {
+      Object.keys(values).forEach((key) => {
+        if (!controls[key]) return;
+        if (controls[key].type === "checkbox") {
+          controls[key].checked = Boolean(values[key]);
+        } else {
+          controls[key].value = values[key];
+        }
+      });
+      updateShadow(false);
+    }
+
+    function resetControls() {
+      setControlValues({
         offsetX: 12,
         offsetY: 18,
-        blurRadius: 35,
-        spreadRadius: 0,
-        alpha: 0.28,
-        shadowColor: "#000000",
-        shadowType: "outset",
-        multiShadow: false
-      };
-
-      function showError(message) {
-        elements.errorBox.textContent = message;
-        elements.errorBox.classList.remove("hidden");
-      }
-
-      function hideError() {
-        elements.errorBox.textContent = "";
-        elements.errorBox.classList.add("hidden");
-      }
-
-      function showCopyStatus(message, isError = false) {
-        elements.copyStatus.textContent = message;
-        elements.copyStatus.classList.remove("hidden", "border-emerald-400/30", "bg-emerald-500/15", "text-emerald-100", "border-red-400/30", "bg-red-500/15", "text-red-100");
-        if (isError) {
-          elements.copyStatus.classList.add("border-red-400/30", "bg-red-500/15", "text-red-100");
-        } else {
-          elements.copyStatus.classList.add("border-emerald-400/30", "bg-emerald-500/15", "text-emerald-100");
-        }
-        window.clearTimeout(showCopyStatus.timer);
-        showCopyStatus.timer = window.setTimeout(() => {
-          elements.copyStatus.classList.add("hidden");
-        }, 2200);
-      }
-
-      function clampNumber(value, min, max, fallback) {
-        const num = Number(value);
-        if (!Number.isFinite(num)) return fallback;
-        return Math.min(max, Math.max(min, num));
-      }
-
-      function normalizeHexColor(value) {
-        const raw = String(value || "").trim();
-        const shortHex = /^#([0-9a-fA-F]{3})$/;
-        const fullHex = /^#([0-9a-fA-F]{6})$/;
-
-        if (fullHex.test(raw)) return raw.toLowerCase();
-
-        if (shortHex.test(raw)) {
-          const chars = raw.slice(1).split("");
-          return ("#" + chars.map((c) => c + c).join("")).toLowerCase();
-        }
-
-        return null;
-      }
-
-      function hexToRgb(hex) {
-        const normalized = normalizeHexColor(hex);
-        if (!normalized) return { r: 0, g: 0, b: 0 };
-        const value = normalized.slice(1);
-        return {
-          r: parseInt(value.slice(0, 2), 16),
-          g: parseInt(value.slice(2, 4), 16),
-          b: parseInt(value.slice(4, 6), 16)
-        };
-      }
-
-      function getState() {
-        const color = normalizeHexColor(elements.shadowColorText.value);
-        if (!color) {
-          showError("Please enter合法的十六进制颜色，例如 #000000 或 #0ea5e9。");
-        } else {
-          hideError();
-        }
-
-        const safeColor = color || defaults.shadowColor;
-
-        return {
-          offsetX: clampNumber(elements.offsetX.value, -100, 100, defaults.offsetX),
-          offsetY: clampNumber(elements.offsetY.value, -100, 100, defaults.offsetY),
-          blurRadius: clampNumber(elements.blurRadius.value, 0, 160, defaults.blurRadius),
-          spreadRadius: clampNumber(elements.spreadRadius.value, -80, 80, defaults.spreadRadius),
-          alpha: clampNumber(elements.alpha.value, 0, 1, defaults.alpha),
-          shadowColor: safeColor,
-          shadowType: elements.shadowType.value === "inset" ? "inset" : "outset",
-          multiShadow: Boolean(elements.multiShadow.checked)
-        };
-      }
-
-      function buildShadow(state) {
-        const rgb = hexToRgb(state.shadowColor);
-        const color = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${state.alpha.toFixed(2)})`;
-        const inset = state.shadowType === "inset" ? "inset " : "";
-        const primary = `${inset}${state.offsetX}px ${state.offsetY}px ${state.blurRadius}px ${state.spreadRadius}px ${color}`;
-
-        if (!state.multiShadow || state.shadowType === "inset") return primary;
-
-        const secondaryAlpha = Math.max(0, state.alpha * 0.45);
-        const secondaryColor = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${secondaryAlpha.toFixed(2)})`;
-        const secondaryX = Math.round(state.offsetX * 0.4);
-        const secondaryY = Math.round(state.offsetY * 1.9);
-        const secondaryBlur = Math.round(state.blurRadius * 1.8 + 10);
-        const secondarySpread = Math.round(state.spreadRadius - 4);
-
-        return `${primary}, ${secondaryX}px ${secondaryY}px ${secondaryBlur}px ${secondarySpread}px ${secondaryColor}`;
-      }
-
-      function updateUI() {
-        const state = getState();
-
-        elements.xValue.textContent = `${state.offsetX}px`;
-        elements.yValue.textContent = `${state.offsetY}px`;
-        elements.blurValue.textContent = `${state.blurRadius}px`;
-        elements.spreadValue.textContent = `${state.spreadRadius}px`;
-        elements.alphaValue.textContent = state.alpha.toFixed(2);
-
-        if (normalizeHexColor(elements.shadowColorText.value)) {
-          elements.shadowColor.value = state.shadowColor;
-        }
-
-        const shadow = buildShadow(state);
-        elements.previewBox.style.boxShadow = shadow;
-        elements.cssOutput.textContent = `.your-element {\n  box-shadow: ${shadow};\n}`;
-      }
-
-      function resetAll() {
-        elements.offsetX.value = defaults.offsetX;
-        elements.offsetY.value = defaults.offsetY;
-        elements.blurRadius.value = defaults.blurRadius;
-        elements.spreadRadius.value = defaults.spreadRadius;
-        elements.alpha.value = defaults.alpha;
-        elements.shadowColor.value = defaults.shadowColor;
-        elements.shadowColorText.value = defaults.shadowColor;
-        elements.shadowType.value = defaults.shadowType;
-        elements.multiShadow.checked = defaults.multiShadow;
-        hideError();
-        updateUI();
-      }
-
-      async function copyCss() {
-        const css = elements.cssOutput.textContent || "";
-        if (!css.trim()) {
-          showCopyStatus("当前没有可Copy的 CSS 代码。", true);
-          return;
-        }
-
-        try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(css);
-          } else {
-            const textarea = document.createElement("textarea");
-            textarea.value = css;
-            textarea.setAttribute("readonly", "");
-            textarea.style.position = "fixed";
-            textarea.style.left = "-9999px";
-            document.body.appendChild(textarea);
-            textarea.select();
-            const success = document.execCommand("copy");
-            document.body.removeChild(textarea);
-            if (!success) throw new Error("copy failed");
-          }
-          showCopyStatus("CSS Copied到剪贴板。");
-          elements.copyBtn.textContent = "Copied";
-          window.setTimeout(() => {
-            elements.copyBtn.textContent = "Copy CSS";
-          }, 1200);
-        } catch (error) {
-          showCopyStatus("Copy failed，请手动选中代码Copy。", true);
-        }
-      }
-
-      const inputIds = ["offsetX", "offsetY", "blurRadius", "spreadRadius", "alpha"];
-      inputIds.forEach((id) => {
-        elements[id].addEventListener("input", updateUI);
-        elements[id].addEventListener("change", updateUI);
+        blur: 36,
+        spread: -8,
+        opacity: 24,
+        shadowColor: "#020617",
+        inset: false
       });
-
-      elements.shadowColor.addEventListener("input", () => {
-        elements.shadowColorText.value = elements.shadowColor.value;
-        updateUI();
-      });
-
-      elements.shadowColorText.addEventListener("input", () => {
-        const normalized = normalizeHexColor(elements.shadowColorText.value);
-        if (normalized) {
-          elements.shadowColor.value = normalized;
-        }
-        updateUI();
-      });
-
-      elements.shadowColorText.addEventListener("blur", () => {
-        const normalized = normalizeHexColor(elements.shadowColorText.value);
-        if (normalized) {
-          elements.shadowColorText.value = normalized;
-        }
-        updateUI();
-      });
-
-      elements.shadowType.addEventListener("change", updateUI);
-      elements.multiShadow.addEventListener("change", updateUI);
-      elements.resetBtn.addEventListener("click", resetAll);
-      elements.copyBtn.addEventListener("click", copyCss);
-
-      window.addEventListener("error", () => {
-        showError("发生了意外错误，请刷新页面或Reset参数后继续使用。");
-      });
-
-      updateUI();
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
+      setStatus("statusReset");
     }
+
+    function loadSample() {
+      setControlValues({
+        offsetX: 0,
+        offsetY: 24,
+        blur: 60,
+        spread: -18,
+        opacity: 18,
+        shadowColor: "#0891b2",
+        inset: false
+      });
+      setStatus("statusSample");
+    }
+
+    function openSponsorModal(event) {
+      if (event && typeof event.preventDefault === "function") event.preventDefault();
+      const modal = document.getElementById("sponsorModal");
+      if (modal) {
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      }
+    }
+
+    function closeSponsorModal() {
+      const modal = document.getElementById("sponsorModal");
+      if (modal) {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      controls.offsetX = document.getElementById("offsetX");
+      controls.offsetY = document.getElementById("offsetY");
+      controls.blur = document.getElementById("blur");
+      controls.spread = document.getElementById("spread");
+      controls.opacity = document.getElementById("opacity");
+      controls.shadowColor = document.getElementById("shadowColor");
+      controls.inset = document.getElementById("inset");
+
+      Object.values(controls).forEach((control) => {
+        if (control) control.addEventListener("input", () => updateShadow(true));
+      });
+
+      document.getElementById("copyCssBtn")?.addEventListener("click", copyCss);
+      document.getElementById("resetBtn")?.addEventListener("click", resetControls);
+      document.getElementById("sampleBtn")?.addEventListener("click", loadSample);
+
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") closeSponsorModal();
+      });
+
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="../sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

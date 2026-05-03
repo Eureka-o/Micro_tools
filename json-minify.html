@@ -1,365 +1,477 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>json-minify - JSON 压缩/去空格工具</title>
-  <meta name="description" content="JSON 压缩/去空格工具。将格式化后的JSON代码压缩为一行，去除所有多余空格和换行符，减小体积。">
-  <meta name="keywords" content="json-minify, JSON压缩, JSON去空格, JSON压缩工具,在线JSON压缩, JSON一行化, JSON格式压缩, JSON代码压缩">
-  <link rel="icon" type="image/png" href="./assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON 压缩 - Micro Tools Matrix 本地开发者工具</title>
+  <meta name="description" content="使用 Micro Tools Matrix 的 JSON 压缩工具，在浏览器本地将格式化 JSON 压缩为一行，去除多余空格和换行，无需上传。">
+  <meta name="keywords" content="JSON压缩,JSON去空格,JSON minify,浏览器本地处理,无需上传,Micro Tools Matrix,免费开发者工具">
   <link rel="canonical" href="https://mymicrotools.xyz/json-minify.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/json-minify.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/json-minify.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/json-minify.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/json-minify.html">
-  <meta property="og:title" content="json-minify - JSON 压缩/去空格工具">
-  <meta property="og:description" content="JSON 压缩/去空格工具。将格式化后的JSON代码压缩为一行，去除所有多余空格和换行符，减小体积。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="json-minify - JSON 压缩/去空格工具">
-  <meta name="twitter:description" content="JSON 压缩/去空格工具。将格式化后的JSON代码压缩为一行，去除所有多余空格和换行符，减小体积。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
-</head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="切换主题" title="切换主题">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="./json-minify.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
-        <a href="./en/json-minify.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="fixed inset-0 -z-10 overflow-hidden">
-    <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl"></div>
-  </div>
-
-  <header class="border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 backdrop-blur">
-    <div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-            Online JSON Minifier
-          </p>
-          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">JSON 压缩/去空格工具</h1>
-          <p class="mt-3 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            JSON 压缩/去空格工具：将格式化后的 JSON 代码压缩为一行，去除多余空格和换行符，减小数据体积。
-          </p>
-        </div>
-        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 text-sm text-slate-700 dark:text-slate-300 shadow-2xl">
-          <span class="text-cyan-300">零依赖逻辑</span> · 本地浏览器处理 · 不上传数据
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-2" aria-label="JSON 压缩工具">
-      <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-5 shadow-2xl">
-        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入 JSON</h2>
-            <p class="mt-1 text-sm text-slate-400">粘贴格式化或未格式化的 JSON 内容</p>
-          </div>
-          <button id="sampleBtn" type="button" class="rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20 active:scale-95">
-            填入示例
-          </button>
-        </div>
-        <textarea id="inputJson" spellcheck="false" class="h-96 w-full resize-y rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950/90 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" placeholder='请输入 JSON，例如：
-{
-  "name": "json-minify",
-  "features": ["compress", "remove whitespace"]
-}'></textarea>
-        <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-400">
-          <span id="inputStats" class="rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1">输入：0 字符</span>
-          <span class="rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1">支持对象、数组、字符串、数字、布尔值和 null</span>
-        </div>
-      </div>
-
-      <div class="rounded-3xl border border-cyan-400/20 bg-cyan-950/20 p-5 shadow-2xl">
-        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">压缩结果</h2>
-            <p class="mt-1 text-sm text-slate-400">输出为单行 JSON，可直接复制使用</p>
-          </div>
-          <button id="copyBtn" type="button" class="rounded-xl border border-emerald-400/30 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-400/20 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50" disabled>
-            复制结果
-          </button>
-        </div>
-        <textarea id="outputJson" spellcheck="false" readonly class="h-96 w-full resize-y rounded-2xl border border-cyan-500/30 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-cyan-50 outline-none placeholder:text-slate-600" placeholder="压缩后的 JSON 将显示在这里"></textarea>
-        <div class="mt-3 flex flex-wrap items-center gap-2 text-xs text-slate-400">
-          <span id="outputStats" class="rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1">输出：0 字符</span>
-          <span id="saveStats" class="rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1">节省：0%</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="mt-6 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-4 shadow-2xl">
-      <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        <div id="message" class="min-h-10 flex-1 rounded-2xl border border-gray-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-900 px-4 py-3 text-sm text-slate-700 dark:text-slate-300">
-          准备就绪：请输入 JSON 后点击“压缩 JSON”。
-        </div>
-        <div class="flex flex-col gap-3 sm:flex-row">
-          <button id="minifyBtn" type="button" class="rounded-2xl bg-cyan-400 px-6 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-400/20 transition hover:bg-cyan-300 active:scale-95">
-            压缩 JSON
-          </button>
-          <button id="clearBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-slate-50 dark:bg-slate-800 px-6 py-3 font-bold text-slate-900 dark:text-slate-100 transition hover:bg-slate-100 dark:hover:bg-slate-700 active:scale-95">
-            清空
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl sm:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 json-minify JSON 压缩/去空格工具</h2>
-      <p>
-        json-minify 是一款面向前端开发者、后端工程师、测试人员和接口调试场景的在线 JSON 压缩工具。日常开发中，格式化后的 JSON 虽然便于阅读，但会包含大量缩进、空格和换行符，在配置发布、接口传输、日志存储或嵌入脚本时可能造成不必要的体积浪费。本工具可以将 JSON 代码压缩为一行，自动去除多余空白字符，同时通过标准 JSON 解析确保输出内容合法可靠。
-      </p>
-      <p class="mt-4">
-        使用方法非常简单：将需要处理的 JSON 文本粘贴到输入框，点击“压缩 JSON”，即可在结果区获得一行化的 JSON 字符串。如果输入存在缺少逗号、引号不匹配、尾随逗号等非法格式，页面会给出清晰的错误提示，帮助你快速定位问题。所有处理均在浏览器本地完成，不会上传你的数据，适合处理接口响应、Mock 数据、前端配置文件和在线 JSON 去空格等需求。对于需要减小 JSON 体积、优化网络传输、快速复制压缩 JSON 的用户来说，json-minify 是一个轻量、高效且易用的选择。
-      </p>
-    </article>
-  </main>
-
-  <footer class="mx-auto max-w-7xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-    <p>© <span id="year"></span> json-minify · JSON 压缩/去空格工具</p>
-  </footer>
-
-  <script>
-    (() => {
-      const inputJson = document.getElementById('inputJson');
-      const outputJson = document.getElementById('outputJson');
-      const minifyBtn = document.getElementById('minifyBtn');
-      const clearBtn = document.getElementById('clearBtn');
-      const copyBtn = document.getElementById('copyBtn');
-      const sampleBtn = document.getElementById('sampleBtn');
-      const message = document.getElementById('message');
-      const inputStats = document.getElementById('inputStats');
-      const outputStats = document.getElementById('outputStats');
-      const saveStats = document.getElementById('saveStats');
-      const year = document.getElementById('year');
-
-      year.textContent = new Date().getFullYear();
-
-      const sample = {
-        name: "json-minify",
-        description: "JSON 压缩/去空格工具",
-        features: [
-          "将格式化 JSON 压缩为一行",
-          "去除多余空格和换行",
-          "校验 JSON 格式",
-          "本地浏览器处理"
-        ],
-        config: {
-          safe: true,
-          upload: false,
-          version: "1.0.0"
-        },
-        numbers: [1, 2, 3],
-        enabled: true,
-        value: null
-      };
-
-      function setMessage(text, type) {
-        const base = 'min-h-10 flex-1 rounded-2xl px-4 py-3 text-sm border ';
-        if (type === 'error') {
-          message.className = base + 'border-red-400/40 bg-red-500/10 text-red-100';
-        } else if (type === 'success') {
-          message.className = base + 'border-emerald-400/40 bg-emerald-500/10 text-emerald-100';
-        } else if (type === 'info') {
-          message.className = base + 'border-cyan-400/40 bg-cyan-500/10 text-cyan-100';
-        } else {
-          message.className = base + 'border-slate-700 bg-slate-900 text-slate-300';
-        }
-        message.textContent = text;
+  <link rel="stylesheet" href="./style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "JSON Minifier - Micro Tools Matrix",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A browser-local JSON minifier that removes unnecessary whitespace and line breaks from formatted JSON.",
+      "url": "https://mymicrotools.xyz/json-minify.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "category": "Free"
       }
-
-      function updateStats() {
-        const inputLen = inputJson.value.length;
-        const outputLen = outputJson.value.length;
-        inputStats.textContent = `输入：${inputLen.toLocaleString('zh-CN')} 字符`;
-        outputStats.textContent = `输出：${outputLen.toLocaleString('zh-CN')} 字符`;
-
-        if (inputLen > 0 && outputLen > 0) {
-          const saved = Math.max(0, ((inputLen - outputLen) / inputLen) * 100);
-          saveStats.textContent = `节省：${saved.toFixed(2)}%`;
-        } else {
-          saveStats.textContent = '节省：0%';
-        }
-
-        copyBtn.disabled = outputLen === 0;
-      }
-
-      function getFriendlyJsonError(error) {
-        const raw = error && error.message ? error.message : '未知错误';
-        let hint = 'JSON 格式无效，请检查引号、逗号、括号或是否存在尾随逗号。';
-        const posMatch = raw.match(/position\s+(\d+)/i);
-        if (posMatch) {
-          const pos = Number(posMatch[1]);
-          if (Number.isFinite(pos)) {
-            const before = inputJson.value.slice(0, pos);
-            const line = before.split('\n').length;
-            const col = before.length - before.lastIndexOf('\n');
-            hint = `JSON 格式无效，错误位置约在第 ${line} 行，第 ${col} 列。请检查附近的标点、引号或括号。`;
-          }
-        }
-        return `${hint} 原始错误：${raw}`;
-      }
-
-      function minifyJson() {
-        try {
-          const raw = inputJson.value;
-          if (!raw.trim()) {
-            outputJson.value = '';
-            updateStats();
-            setMessage('请输入需要压缩的 JSON 内容。', 'error');
-            return;
-          }
-
-          minifyBtn.disabled = true;
-          minifyBtn.textContent = '压缩中...';
-
-          const parsed = JSON.parse(raw);
-          const minified = JSON.stringify(parsed);
-
-          if (typeof minified !== 'string') {
-            outputJson.value = '';
-            setMessage('无法生成压缩结果，请确认输入内容是否为有效 JSON。', 'error');
-            return;
-          }
-
-          outputJson.value = minified;
-          updateStats();
-
-          const inputLen = raw.length;
-          const outputLen = minified.length;
-          const saved = inputLen > 0 ? Math.max(0, ((inputLen - outputLen) / inputLen) * 100) : 0;
-          setMessage(`压缩成功：已生成单行 JSON，字符数由 ${inputLen.toLocaleString('zh-CN')} 减少到 ${outputLen.toLocaleString('zh-CN')}，约节省 ${saved.toFixed(2)}%。`, 'success');
-        } catch (error) {
-          outputJson.value = '';
-          updateStats();
-          setMessage(getFriendlyJsonError(error), 'error');
-        } finally {
-          minifyBtn.disabled = false;
-          minifyBtn.textContent = '压缩 JSON';
-        }
-      }
-
-      async function copyOutput() {
-        const text = outputJson.value;
-        if (!text) {
-          setMessage('当前没有可复制的压缩结果。', 'error');
-          return;
-        }
-
-        try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(text);
-          } else {
-            outputJson.focus();
-            outputJson.select();
-            const ok = document.execCommand('copy');
-            window.getSelection().removeAllRanges();
-            if (!ok) throw new Error('复制命令未成功执行');
-          }
-          const oldText = copyBtn.textContent;
-          copyBtn.textContent = '已复制';
-          setMessage('压缩结果已复制到剪贴板。', 'success');
-          setTimeout(() => {
-            copyBtn.textContent = oldText;
-          }, 1200);
-        } catch (error) {
-          setMessage('复制失败，请手动选中结果内容后复制。', 'error');
-        }
-      }
-
-      function clearAll() {
-        inputJson.value = '';
-        outputJson.value = '';
-        updateStats();
-        setMessage('已清空输入和输出内容。', 'info');
-        inputJson.focus();
-      }
-
-      function fillSample() {
-        inputJson.value = JSON.stringify(sample, null, 2);
-        outputJson.value = '';
-        updateStats();
-        setMessage('已填入示例 JSON，点击“压缩 JSON”查看效果。', 'info');
-        inputJson.focus();
-      }
-
-      inputJson.addEventListener('input', () => {
-        updateStats();
-        if (!inputJson.value.trim()) {
-          outputJson.value = '';
-          updateStats();
-          setMessage('准备就绪：请输入 JSON 后点击“压缩 JSON”。', 'neutral');
-        }
-      });
-
-      minifyBtn.addEventListener('click', minifyJson);
-      clearBtn.addEventListener('click', clearAll);
-      copyBtn.addEventListener('click', copyOutput);
-      sampleBtn.addEventListener('click', fillSample);
-
-      inputJson.addEventListener('keydown', (event) => {
-        if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
-          event.preventDefault();
-          minifyJson();
-        }
-      });
-
-      updateStats();
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
     }
   </script>
-  <!-- pwa-register:end -->
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">JSON 压缩</span>
+        </span>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeAria">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="sponsorAria">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]" data-i18n-aria-label="languageAria">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="zhAria">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="enAria">EN</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">JSON 压缩</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">将格式化后的 JSON 压缩为一行，去除多余空格和换行。所有内容都在 Micro Tools Matrix 页面内完成处理，无需上传文本。</p>
+        </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+        <label for="jsonInput" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="inputLabel">粘贴格式化 JSON</label>
+        <textarea id="jsonInput" rows="16" spellcheck="false" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="inputPlaceholder" placeholder="在这里粘贴需要压缩的 JSON 文本"></textarea>
+        <div class="mt-3 grid gap-2 text-xs text-slate-500 dark:text-slate-400 sm:grid-cols-3">
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 px-3 py-2 dark:border-white/10 dark:bg-white/[0.04]">
+            <span data-i18n="inputCharsLabel">输入字符</span>
+            <span id="inputChars" class="ml-1 font-semibold tabular-nums text-slate-800 dark:text-slate-200">0</span>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 px-3 py-2 dark:border-white/10 dark:bg-white/[0.04]">
+            <span data-i18n="inputLinesLabel">输入行数</span>
+            <span id="inputLines" class="ml-1 font-semibold tabular-nums text-slate-800 dark:text-slate-200">0</span>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 px-3 py-2 dark:border-white/10 dark:bg-white/[0.04]">
+            <span data-i18n="inputSizeLabel">输入大小</span>
+            <span id="inputSize" class="ml-1 font-semibold tabular-nums text-slate-800 dark:text-slate-200">0 B</span>
+          </div>
+        </div>
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="minifyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">压缩 JSON</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">填入示例</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="clearAction">清空</button>
+        </div>
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="statusReady">准备就绪。粘贴 JSON 后点击压缩。</p>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">结果</span>
+        </div>
+        <label for="jsonOutput" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="outputLabel">压缩后 JSON</label>
+        <textarea id="jsonOutput" rows="16" spellcheck="false" readonly class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="outputPlaceholder" placeholder="压缩结果会显示在这里"></textarea>
+        <div class="mt-3 grid gap-2 text-xs text-slate-500 dark:text-slate-400 sm:grid-cols-3">
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 px-3 py-2 dark:border-white/10 dark:bg-white/[0.04]">
+            <span data-i18n="outputCharsLabel">结果字符</span>
+            <span id="outputChars" class="ml-1 font-semibold tabular-nums text-slate-800 dark:text-slate-200">0</span>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 px-3 py-2 dark:border-white/10 dark:bg-white/[0.04]">
+            <span data-i18n="savedLabel">节省比例</span>
+            <span id="savedPercent" class="ml-1 font-semibold tabular-nums text-slate-800 dark:text-slate-200">0%</span>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 px-3 py-2 dark:border-white/10 dark:bg-white/[0.04]">
+            <span data-i18n="outputSizeLabel">结果大小</span>
+            <span id="outputSize" class="ml-1 font-semibold tabular-nums text-slate-800 dark:text-slate-200">0 B</span>
+          </div>
+        </div>
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
+          <button id="downloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadAction">下载文件</button>
+        </div>
+        <p class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="outputHint">压缩会保留 JSON 数据结构与字符串内容，只移除结构外的多余空白。</p>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">JSON 压缩工具适合在发布配置、接口示例、前端静态数据或调试片段前快速减小体积。它会先在浏览器本地解析 JSON，确认语法有效后再输出一行紧凑结果，因此能避免把无效内容直接带入项目。整个过程无需上传，文本不会离开当前页面，适合处理内部配置、测试响应和临时数据。Micro Tools Matrix 提供这类轻量、免费的本地开发者工具，帮助你在日常工作中完成 JSON 去空格、减少换行、复制结果和下载文件等操作，同时保持清爽界面与深色模式体验。</article>
+  </main>
+
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+
+  <script>
+    const I18N = {
+      zh: {
+        documentTitle: "JSON 压缩 - Micro Tools Matrix 本地开发者工具",
+        metaDescription: "使用 Micro Tools Matrix 的 JSON 压缩工具，在浏览器本地将格式化 JSON 压缩为一行，去除多余空格和换行，无需上传。",
+        metaKeywords: "JSON压缩,JSON去空格,JSON minify,浏览器本地处理,无需上传,Micro Tools Matrix,免费开发者工具",
+        toolName: "JSON 压缩",
+        h1: "JSON 压缩",
+        eyebrow: "浏览器本地处理",
+        intro: "将格式化后的 JSON 压缩为一行，去除多余空格和换行。所有内容都在 Micro Tools Matrix 页面内完成处理，无需上传文本。",
+        localBadge: "本地运行",
+        sponsor: "赞赏",
+        sponsorAria: "打开赞赏窗口",
+        themeAria: "切换主题",
+        languageAria: "语言切换",
+        zhAria: "切换到中文",
+        enAria: "切换到英文",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        inputLabel: "粘贴格式化 JSON",
+        inputPlaceholder: "在这里粘贴需要压缩的 JSON 文本",
+        inputCharsLabel: "输入字符",
+        inputLinesLabel: "输入行数",
+        inputSizeLabel: "输入大小",
+        primaryAction: "压缩 JSON",
+        sampleAction: "填入示例",
+        clearAction: "清空",
+        statusReady: "准备就绪。粘贴 JSON 后点击压缩。",
+        outputTitle: "结果",
+        outputBadge: "结果",
+        outputLabel: "压缩后 JSON",
+        outputPlaceholder: "压缩结果会显示在这里",
+        outputCharsLabel: "结果字符",
+        savedLabel: "节省比例",
+        outputSizeLabel: "结果大小",
+        copyAction: "复制结果",
+        downloadAction: "下载文件",
+        outputHint: "压缩会保留 JSON 数据结构与字符串内容，只移除结构外的多余空白。",
+        statusEmpty: "请输入需要压缩的 JSON 文本。",
+        statusInvalid: "JSON 语法无效：{message}",
+        statusSuccess: "压缩完成：从 {input} 个字符减少到 {output} 个字符。",
+        statusCleared: "已清空输入和结果。",
+        statusSample: "已填入示例 JSON，可以直接压缩。",
+        statusCopied: "结果已复制到剪贴板。",
+        statusCopyFailed: "复制失败，请手动选择结果文本复制。",
+        statusNoOutput: "请先生成压缩结果。",
+        statusDownloaded: "已生成本地下载文件。",
+        sampleJson: "{\n  \"project\": \"Micro Tools Matrix\",\n  \"tool\": \"json-minify\",\n  \"local\": true,\n  \"features\": [\n    \"parse\",\n    \"minify\",\n    \"copy\",\n    \"download\"\n  ],\n  \"settings\": {\n    \"theme\": \"system\",\n    \"version\": 1\n  }\n}",
+        downloadFileName: "minified.json",
+        buyCoffee: "Buy Me a Coffee",
+        seoArticle: "JSON 压缩工具适合在发布配置、接口示例、前端静态数据或调试片段前快速减小体积。它会先在浏览器本地解析 JSON，确认语法有效后再输出一行紧凑结果，因此能避免把无效内容直接带入项目。整个过程无需上传，文本不会离开当前页面，适合处理内部配置、测试响应和临时数据。Micro Tools Matrix 提供这类轻量、免费的本地开发者工具，帮助你在日常工作中完成 JSON 去空格、减少换行、复制结果和下载文件等操作，同时保持清爽界面与深色模式体验。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
+      },
+      en: {
+        documentTitle: "JSON Minifier - Micro Tools Matrix Local Developer Tool",
+        metaDescription: "Use the Micro Tools Matrix JSON minifier to compress formatted JSON into one line in your browser, removing unnecessary spaces and line breaks with no upload.",
+        metaKeywords: "JSON minifier,JSON compressor,JSON remove whitespace,browser-local processing,no upload,Micro Tools Matrix,free online developer tool",
+        toolName: "JSON Minifier",
+        h1: "JSON Minifier",
+        eyebrow: "Browser-local processing",
+        intro: "Compress formatted JSON into a single line and remove unnecessary spaces and line breaks. Everything runs inside this Micro Tools Matrix page, with no text upload.",
+        localBadge: "Local",
+        sponsor: "Sponsor",
+        sponsorAria: "Open sponsor dialog",
+        themeAria: "Change theme",
+        languageAria: "Language switcher",
+        zhAria: "Switch to Chinese",
+        enAria: "Switch to English",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        inputTitle: "Input",
+        inputBadge: "Input",
+        inputLabel: "Paste formatted JSON",
+        inputPlaceholder: "Paste the JSON text you want to minify here",
+        inputCharsLabel: "Input chars",
+        inputLinesLabel: "Input lines",
+        inputSizeLabel: "Input size",
+        primaryAction: "Minify JSON",
+        sampleAction: "Load sample",
+        clearAction: "Clear",
+        statusReady: "Ready. Paste JSON and minify it.",
+        outputTitle: "Output",
+        outputBadge: "Output",
+        outputLabel: "Minified JSON",
+        outputPlaceholder: "The minified result will appear here",
+        outputCharsLabel: "Output chars",
+        savedLabel: "Saved",
+        outputSizeLabel: "Output size",
+        copyAction: "Copy result",
+        downloadAction: "Download file",
+        outputHint: "Minifying preserves the JSON data structure and string values, while removing whitespace outside the structure.",
+        statusEmpty: "Enter JSON text before minifying.",
+        statusInvalid: "Invalid JSON syntax: {message}",
+        statusSuccess: "Minified successfully: reduced from {input} characters to {output} characters.",
+        statusCleared: "Input and output have been cleared.",
+        statusSample: "Sample JSON has been loaded and is ready to minify.",
+        statusCopied: "Result copied to the clipboard.",
+        statusCopyFailed: "Copy failed. Please select the result text and copy it manually.",
+        statusNoOutput: "Generate a minified result first.",
+        statusDownloaded: "Local download file has been created.",
+        sampleJson: "{\n  \"project\": \"Micro Tools Matrix\",\n  \"tool\": \"json-minify\",\n  \"local\": true,\n  \"features\": [\n    \"parse\",\n    \"minify\",\n    \"copy\",\n    \"download\"\n  ],\n  \"settings\": {\n    \"theme\": \"system\",\n    \"version\": 1\n  }\n}",
+        downloadFileName: "minified.json",
+        buyCoffee: "Buy Me a Coffee",
+        seoArticle: "This JSON minifier is a free online developer tool for reducing formatted JSON before it is pasted into code, stored in a configuration file, shared in documentation, or embedded in a static front-end project. The tool first parses the input in your browser to confirm that the JSON syntax is valid, then outputs a compact single-line string with unnecessary whitespace and line breaks removed. Because the workflow uses browser-local processing, your content is not uploaded to a server and never leaves the page. That makes it useful for internal configuration snippets, temporary API responses, test fixtures, and other data that should stay private. Micro Tools Matrix focuses on small, fast, privacy-aware utilities with a consistent interface, light and dark themes, copy actions, and local downloads. Use this page whenever you need a reliable JSON compressor, JSON whitespace remover, or compact JSON formatter without installing software or sending data to a backend.",
+        footer: "Micro Tools Matrix - Browser-local processing with no upload."
+      }
+    };
+
+    let currentLanguage = "zh";
+    let statusState = { key: "statusReady", args: {} };
+
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      const saved = localStorage.getItem("microToolsLanguage");
+      return saved === "en" ? "en" : "zh";
+    }
+
+    function formatMessage(template, args = {}) {
+      return String(template || "").replace(/\{(\w+)\}/g, (_, key) => args[key] ?? "");
+    }
+
+    function setStatus(key, args = {}) {
+      statusState = { key, args };
+      const node = document.getElementById("statusText");
+      if (node) node.textContent = formatMessage(I18N[currentLanguage][key], args);
+    }
+
+    function updateThemeLabel(lang) {
+      const label = document.querySelector("[data-theme-label]");
+      if (!label) return;
+      const saved = localStorage.getItem("microToolsTheme") || localStorage.getItem("theme") || "system";
+      const key = saved === "light" ? "themeLight" : saved === "dark" ? "themeDark" : "themeSystem";
+      label.textContent = I18N[lang][key];
+    }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.title = dict.documentTitle;
+
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute("content", dict.metaDescription);
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (keywords) keywords.setAttribute("content", dict.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.textContent = dict[key];
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("placeholder", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("title", dict[key]);
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("aria-label", dict[key]);
+      });
+
+      const sponsorLabel = document.querySelector("#openSponsorBtn [data-i18n='sponsor']");
+      if (sponsorLabel) sponsorLabel.textContent = dict.sponsor;
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        if (currentLanguage === "zh") {
+          zhBtn.classList.add("bg-cyan-400", "text-slate-950");
+          enBtn.classList.add("text-slate-600", "dark:text-slate-400");
+        } else {
+          enBtn.classList.add("bg-cyan-400", "text-slate-950");
+          zhBtn.classList.add("text-slate-600", "dark:text-slate-400");
+        }
+      }
+
+      updateThemeLabel(currentLanguage);
+      setStatus(statusState.key, statusState.args);
+      updateStats();
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function setLanguage(lang) {
+      const normalized = lang === "en" ? "en" : "zh";
+      localStorage.setItem("microToolsLanguage", normalized);
+      applyLanguage(normalized);
+    }
+
+    function byteSize(value) {
+      return new Blob([value]).size;
+    }
+
+    function formatBytes(bytes) {
+      if (!bytes) return "0 B";
+      if (bytes < 1024) return bytes + " B";
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+      return (bytes / 1024 / 1024).toFixed(2) + " MB";
+    }
+
+    function updateStats() {
+      const input = document.getElementById("jsonInput")?.value || "";
+      const output = document.getElementById("jsonOutput")?.value || "";
+      const inputChars = document.getElementById("inputChars");
+      const inputLines = document.getElementById("inputLines");
+      const inputSize = document.getElementById("inputSize");
+      const outputChars = document.getElementById("outputChars");
+      const outputSize = document.getElementById("outputSize");
+      const savedPercent = document.getElementById("savedPercent");
+
+      if (inputChars) inputChars.textContent = String(input.length);
+      if (inputLines) inputLines.textContent = input.length ? String(input.split(/\r\n|\r|\n/).length) : "0";
+      if (inputSize) inputSize.textContent = formatBytes(byteSize(input));
+      if (outputChars) outputChars.textContent = String(output.length);
+      if (outputSize) outputSize.textContent = formatBytes(byteSize(output));
+
+      if (savedPercent) {
+        const saved = input.length && output.length ? Math.max(0, Math.round((1 - output.length / input.length) * 100)) : 0;
+        savedPercent.textContent = saved + "%";
+      }
+    }
+
+    function minifyJson() {
+      const inputEl = document.getElementById("jsonInput");
+      const outputEl = document.getElementById("jsonOutput");
+      const input = inputEl?.value || "";
+      if (!input.trim()) {
+        if (outputEl) outputEl.value = "";
+        updateStats();
+        setStatus("statusEmpty");
+        return;
+      }
+
+      try {
+        const parsed = JSON.parse(input);
+        const minified = JSON.stringify(parsed);
+        if (outputEl) outputEl.value = minified;
+        updateStats();
+        setStatus("statusSuccess", { input: input.length, output: minified.length });
+      } catch (error) {
+        if (outputEl) outputEl.value = "";
+        updateStats();
+        setStatus("statusInvalid", { message: error.message || "parse error" });
+      }
+    }
+
+    async function copyOutput() {
+      const output = document.getElementById("jsonOutput")?.value || "";
+      if (!output) {
+        setStatus("statusNoOutput");
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(output);
+        setStatus("statusCopied");
+      } catch (error) {
+        const outputEl = document.getElementById("jsonOutput");
+        if (outputEl) {
+          outputEl.focus();
+          outputEl.select();
+        }
+        setStatus("statusCopyFailed");
+      }
+    }
+
+    function clearAll() {
+      const inputEl = document.getElementById("jsonInput");
+      const outputEl = document.getElementById("jsonOutput");
+      if (inputEl) inputEl.value = "";
+      if (outputEl) outputEl.value = "";
+      updateStats();
+      setStatus("statusCleared");
+    }
+
+    function loadSample() {
+      const inputEl = document.getElementById("jsonInput");
+      const outputEl = document.getElementById("jsonOutput");
+      if (inputEl) inputEl.value = I18N[currentLanguage].sampleJson;
+      if (outputEl) outputEl.value = "";
+      updateStats();
+      setStatus("statusSample");
+      inputEl?.focus();
+    }
+
+    function downloadOutput() {
+      const output = document.getElementById("jsonOutput")?.value || "";
+      if (!output) {
+        setStatus("statusNoOutput");
+        return;
+      }
+      const blob = new Blob([output], { type: "application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = I18N[currentLanguage].downloadFileName;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      setStatus("statusDownloaded");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+
+      document.getElementById("minifyBtn")?.addEventListener("click", minifyJson);
+      document.getElementById("copyBtn")?.addEventListener("click", copyOutput);
+      document.getElementById("clearBtn")?.addEventListener("click", clearAll);
+      document.getElementById("sampleBtn")?.addEventListener("click", loadSample);
+      document.getElementById("downloadBtn")?.addEventListener("click", downloadOutput);
+      document.getElementById("jsonInput")?.addEventListener("input", updateStats);
+
+      applyLanguage(getInitialLanguage());
+    });
+  </script>
+  <script src="./sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

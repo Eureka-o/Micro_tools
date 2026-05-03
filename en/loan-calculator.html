@@ -1,472 +1,626 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>loan-calculator｜房贷/贷款等额本息计算器</title>
-  <meta name="description" content="房贷/贷款等额本息计算器。输入总金额、年化利率和贷款期数，Generate每月的还款计划明细表。">
-  <meta name="keywords" content="loan-calculator, 房贷计算器, 贷款计算器, 等额本息计算器, 每月还款计划, 房贷还款明细, 贷款利息计算, 月供计算器">
-  <link rel="icon" type="image/png" href="../assets/logo.png">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ink: '#0f172a',
-            neon: '#38bdf8'
-          },
-          boxShadow: {
-            glow: '0 0 40px rgba(56, 189, 248, 0.18)'
-          }
-        }
-      }
-    }
-  </script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
-  <link rel="canonical" href="https://mymicrotools.xyz/en/loan-calculator.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>等额本息贷款计算器 - Micro Tools Matrix 本地工具箱</title>
+  <meta name="description" content="Micro Tools Matrix 等额本息贷款计算器，在浏览器本地处理房贷和贷款月供、总利息与每月还款计划，无需上传任何数据。">
+  <meta name="keywords" content="等额本息计算器,房贷计算器,贷款计算器,还款计划,月供计算,无需上传,浏览器本地处理,Micro Tools Matrix">
+  <link rel="canonical" href="https://mymicrotools.xyz/loan-calculator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/loan-calculator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/loan-calculator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/loan-calculator.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/en/loan-calculator.html">
-  <meta property="og:title" content="loan-calculator｜房贷/贷款等额本息计算器">
-  <meta property="og:description" content="房贷/贷款等额本息计算器。输入总金额、年化利率和贷款期数，Generate每月的还款计划明细表。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="loan-calculator｜房贷/贷款等额本息计算器">
-  <meta name="twitter:description" content="房贷/贷款等额本息计算器。输入总金额、年化利率和贷款期数，Generate每月的还款计划明细表。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="../style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Loan Calculator - Micro Tools Matrix",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A free browser-local equal monthly installment loan calculator for mortgage and loan repayment schedules.",
+      "url": "https://mymicrotools.xyz/loan-calculator.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "category": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">等额本息贷款计算器</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="../loan-calculator.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./loan-calculator.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="fixed inset-0 -z-10 overflow-hidden">
-    <div class="absolute left-1/2 top-[-10rem] h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute bottom-[-12rem] right-[-8rem] h-[30rem] w-[30rem] rounded-full bg-indigo-500/20 blur-3xl"></div>
-  </div>
-
-  <header class="border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 backdrop-blur">
-    <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-            等额本息 · 月供明细 · 在线计算
-          </p>
-          <h1 class="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">房贷/贷款等额本息计算器</h1>
-          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            输入贷款总金额、年化利率与期数，快速Generate完整的每月还款计划表。
-          </p>
-        </div>
-        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-5 py-4 shadow-glow">
-          <p class="text-sm text-slate-400">计算方式</p>
-          <p class="mt-1 text-lg font-semibold text-cyan-200">等额本息</p>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeToggle">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" data-i18n-aria-label="languageGroup" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
         </div>
       </div>
-    </div>
+    </nav>
   </header>
 
-  <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-12">
-      <div class="lg:col-span-4">
-        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-6 shadow-glow backdrop-blur">
-          <div class="mb-6">
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输入贷款信息</h2>
-            <p class="mt-2 text-sm text-slate-400">支持房贷、车贷、消费贷等按等额本息方式计算的贷款。</p>
-          </div>
-
-          <div id="errorBox" class="mb-5 hidden rounded-2xl border border-red-400/40 bg-red-500/15 px-4 py-3 text-sm leading-6 text-red-100"></div>
-
-          <form id="loanForm" class="space-y-5" novalidate>
-            <div>
-              <label for="amount" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">贷款总金额</label>
-              <div class="relative">
-                <input id="amount" name="amount" type="text" inputmode="decimal" autocomplete="off" placeholder="例如：1000000"
-                  class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-3 pr-16 text-gray-900 dark:text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
-                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">元</span>
-              </div>
-            </div>
-
-            <div>
-              <label for="rate" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">年化利率</label>
-              <div class="relative">
-                <input id="rate" name="rate" type="text" inputmode="decimal" autocomplete="off" placeholder="例如：3.85"
-                  class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-3 pr-16 text-gray-900 dark:text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
-                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">%</span>
-              </div>
-            </div>
-
-            <div>
-              <label for="months" class="mb-2 block text-sm font-medium text-slate-800 dark:text-slate-200">贷款期数</label>
-              <div class="relative">
-                <input id="months" name="months" type="text" inputmode="numeric" autocomplete="off" placeholder="例如：360"
-                  class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-3 pr-16 text-gray-900 dark:text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-300/10" />
-                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">月</span>
-              </div>
-              <p class="mt-2 text-xs text-slate-500">常见：20 年 = 240 期，30 年 = 360 期。</p>
-            </div>
-
-            <div class="grid grid-cols-2 gap-3 pt-2">
-              <button type="submit" id="calcBtn"
-                class="rounded-2xl bg-cyan-400 px-4 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98]">
-                开始计算
-              </button>
-              <button type="button" id="resetBtn"
-                class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 font-bold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-[0.98]">
-                Reset
-              </button>
-            </div>
-          </form>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">等额本息贷款计算器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">输入贷款总额、年化利率和贷款期数，在 Micro Tools Matrix 中本地生成月供、总利息和逐月还款明细，无需上传任何数据。</p>
         </div>
-      </div>
-
-      <div class="lg:col-span-8">
-        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/70 p-6 shadow-glow backdrop-blur">
-          <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h2 class="text-2xl font-bold text-gray-900 dark:text-white">计算结果</h2>
-              <p class="mt-2 text-sm text-slate-400">下方展示月供、总利息与逐月还款明细。</p>
-            </div>
-            <button id="downloadBtn" type="button" disabled
-              class="rounded-2xl border border-cyan-300/30 bg-cyan-300/10 px-4 py-2 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-300/15 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-40">
-              Download CSV
-            </button>
-          </div>
-
-          <div id="emptyState" class="rounded-3xl border border-dashed border-gray-200 dark:border-white/15 bg-white/[0.03] px-6 py-12 text-center">
-            <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-400/10 text-2xl">⌁</div>
-            <p class="text-lg font-semibold text-slate-800 dark:text-slate-200">尚未Generate还款计划</p>
-            <p class="mt-2 text-sm text-slate-400">请在左侧输入贷款信息后点击“开始计算”。</p>
-          </div>
-
-          <div id="resultArea" class="hidden">
-            <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-              <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-4">
-                <p class="text-sm text-slate-400">每月还款</p>
-                <p id="monthlyPayment" class="mt-2 text-2xl font-extrabold text-cyan-200">--</p>
-              </div>
-              <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-4">
-                <p class="text-sm text-slate-400">还款总额</p>
-                <p id="totalPayment" class="mt-2 text-2xl font-extrabold text-gray-900 dark:text-white">--</p>
-              </div>
-              <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-4">
-                <p class="text-sm text-slate-400">总利息</p>
-                <p id="totalInterest" class="mt-2 text-2xl font-extrabold text-amber-200">--</p>
-              </div>
-              <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-4">
-                <p class="text-sm text-slate-400">贷款期数</p>
-                <p id="totalMonths" class="mt-2 text-2xl font-extrabold text-gray-900 dark:text-white">--</p>
-              </div>
-            </div>
-
-            <div class="mt-6 overflow-hidden rounded-2xl border border-gray-200 dark:border-white/10">
-              <div class="max-h-[520px] overflow-auto">
-                <table class="min-w-full divide-y divide-white/10 text-sm">
-                  <thead class="sticky top-0 bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-200">
-                    <tr>
-                      <th class="whitespace-nowrap px-4 py-3 text-left font-semibold">期数</th>
-                      <th class="whitespace-nowrap px-4 py-3 text-right font-semibold">月供</th>
-                      <th class="whitespace-nowrap px-4 py-3 text-right font-semibold">本金</th>
-                      <th class="whitespace-nowrap px-4 py-3 text-right font-semibold">利息</th>
-                      <th class="whitespace-nowrap px-4 py-3 text-right font-semibold">剩余本金</th>
-                    </tr>
-                  </thead>
-                  <tbody id="scheduleBody" class="divide-y divide-white/10 bg-white dark:bg-slate-950/40"></tbody>
-                </table>
-              </div>
-            </div>
-          </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-glow backdrop-blur">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于等额本息贷款计算器</h2>
-      <p>
-        loan-calculator 是一款面向购房者、贷款申请人和财务规划用户的在线房贷计算器。它采用常见的等额本息计算方式，只需输入贷款总金额、年化利率和贷款期数，即可快速得到每月月供、还款总额、总利息以及完整的每月还款计划明细。很多人在比较房贷方案、车贷方案或消费贷款方案时，常常难以直观看清长期利息成本，本工具可以帮助你提前评估现金流压力，判断不同利率和期限下的真实还款负担。使用时，在输入区填写本金、贷款年利率和期数，点击开始计算，系统会自动Generate包含每期本金、利息和剩余本金的明细表。无论你需要“房贷等额本息月供计算”“贷款利息明细查询”还是“30年房贷还款计划表”，都可以通过本页面快速完成测算。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label for="loanAmount" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="amountLabel">贷款总额</label>
+            <div class="flex min-w-0 items-center gap-2">
+              <input id="loanAmount" type="number" min="0" step="1000" inputmode="decimal" class="w-full min-w-0 rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="amountPlaceholder" placeholder="例如：1000000">
+              <span class="shrink-0 text-sm font-semibold text-slate-500 dark:text-slate-400" data-i18n="currencyUnit">元</span>
+            </div>
+          </div>
+
+          <div>
+            <label for="annualRate" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="rateLabel">年化利率</label>
+            <div class="flex min-w-0 items-center gap-2">
+              <input id="annualRate" type="number" min="0" step="0.01" inputmode="decimal" class="w-full min-w-0 rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="ratePlaceholder" placeholder="例如：3.85">
+              <span class="shrink-0 text-sm font-semibold text-slate-500 dark:text-slate-400">%</span>
+            </div>
+          </div>
+
+          <div>
+            <label for="loanMonths" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="monthsLabel">贷款期数</label>
+            <div class="flex min-w-0 items-center gap-2">
+              <input id="loanMonths" type="number" min="1" step="1" inputmode="numeric" class="w-full min-w-0 rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="monthsPlaceholder" placeholder="例如：360">
+              <span class="shrink-0 text-sm font-semibold text-slate-500 dark:text-slate-400" data-i18n="monthsUnit">期</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="calculateBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">计算</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">填入示例</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+        </div>
+
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="readyStatus">请输入贷款信息后开始计算。</p>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">结果</span>
+        </div>
+
+        <div id="summaryCards" class="grid gap-3 sm:grid-cols-3">
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-400" data-i18n="monthlyPayment">每月月供</p>
+            <p id="monthlyPaymentValue" class="mt-2 break-words text-xl font-black tracking-tight text-slate-950 dark:text-white tabular-nums">--</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-400" data-i18n="totalInterest">总利息</p>
+            <p id="totalInterestValue" class="mt-2 break-words text-xl font-black tracking-tight text-slate-950 dark:text-white tabular-nums">--</p>
+          </div>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-400" data-i18n="totalPayment">还款总额</p>
+            <p id="totalPaymentValue" class="mt-2 break-words text-xl font-black tracking-tight text-slate-950 dark:text-white tabular-nums">--</p>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制明细</button>
+          <button id="downloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadAction">下载 CSV</button>
+        </div>
+
+        <div class="mt-4 overflow-hidden rounded-2xl border border-gray-200 bg-slate-50 dark:border-white/10 dark:bg-slate-950/70">
+          <div class="max-h-[28rem] overflow-auto">
+            <table class="w-full min-w-[42rem] text-left text-sm">
+              <thead class="sticky top-0 bg-slate-100 text-xs font-bold text-slate-600 dark:bg-slate-900 dark:text-slate-300">
+                <tr>
+                  <th class="px-4 py-3" data-i18n="thMonth">期数</th>
+                  <th class="px-4 py-3" data-i18n="thPayment">月供</th>
+                  <th class="px-4 py-3" data-i18n="thPrincipal">本金</th>
+                  <th class="px-4 py-3" data-i18n="thInterest">利息</th>
+                  <th class="px-4 py-3" data-i18n="thRemaining">剩余本金</th>
+                </tr>
+              </thead>
+              <tbody id="scheduleBody" class="divide-y divide-gray-200 text-slate-700 dark:divide-white/10 dark:text-slate-300">
+                <tr>
+                  <td colspan="5" class="px-4 py-8 text-center text-sm text-slate-500 dark:text-slate-400" data-i18n="emptyTable">计算后将在这里显示逐月还款计划。</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">这款等额本息贷款计算器适合估算房贷、消费贷或经营贷的月供压力。你只需要输入贷款总额、年化利率和贷款期数，页面会在浏览器本地处理并生成每月还款计划，包含月供、本金、利息和剩余本金。所有计算都在当前设备内完成，无需上传贷款金额、利率或其他敏感信息。作为 Micro Tools Matrix 的免费在线开发者工具，它也适合产品经理、财务人员和开发者快速验证贷款展示逻辑、导出 CSV 明细，或对比不同利率与期数下的还款成本。</article>
   </main>
 
-  <footer class="mx-auto max-w-7xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-    © <span id="year"></span> loan-calculator. 计算结果仅供参考，实际还款以贷款机构合同为准。
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
 
   <script>
-    (() => {
-      const form = document.getElementById('loanForm');
-      const amountInput = document.getElementById('amount');
-      const rateInput = document.getElementById('rate');
-      const monthsInput = document.getElementById('months');
-      const errorBox = document.getElementById('errorBox');
-      const emptyState = document.getElementById('emptyState');
-      const resultArea = document.getElementById('resultArea');
-      const scheduleBody = document.getElementById('scheduleBody');
-      const monthlyPaymentEl = document.getElementById('monthlyPayment');
-      const totalPaymentEl = document.getElementById('totalPayment');
-      const totalInterestEl = document.getElementById('totalInterest');
-      const totalMonthsEl = document.getElementById('totalMonths');
-      const resetBtn = document.getElementById('resetBtn');
-      const downloadBtn = document.getElementById('downloadBtn');
-      const yearEl = document.getElementById('year');
+    const I18N = {
+      zh: {
+        toolName: "等额本息贷款计算器",
+        h1: "等额本息贷款计算器",
+        title: "等额本息贷款计算器 - Micro Tools Matrix 本地工具箱",
+        metaDescription: "Micro Tools Matrix 等额本息贷款计算器，在浏览器本地处理房贷和贷款月供、总利息与每月还款计划，无需上传任何数据。",
+        metaKeywords: "等额本息计算器,房贷计算器,贷款计算器,还款计划,月供计算,无需上传,浏览器本地处理,Micro Tools Matrix",
+        eyebrow: "浏览器本地处理",
+        intro: "输入贷款总额、年化利率和贷款期数，在 Micro Tools Matrix 中本地生成月供、总利息和逐月还款明细，无需上传任何数据。",
+        localBadge: "本地运行",
+        sponsor: "赞赏",
+        buyCoffee: "Buy Me a Coffee",
+        themeToggle: "切换主题",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        languageGroup: "语言",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        outputTitle: "结果",
+        outputBadge: "结果",
+        amountLabel: "贷款总额",
+        amountPlaceholder: "例如：1000000",
+        currencyUnit: "元",
+        rateLabel: "年化利率",
+        ratePlaceholder: "例如：3.85",
+        monthsLabel: "贷款期数",
+        monthsPlaceholder: "例如：360",
+        monthsUnit: "期",
+        primaryAction: "计算",
+        sampleAction: "填入示例",
+        secondaryAction: "清空",
+        readyStatus: "请输入贷款信息后开始计算。",
+        calculatedStatus: "已生成 {months} 期还款计划。",
+        sampleStatus: "已填入示例数据，可直接计算或修改参数。",
+        clearStatus: "已清空输入和结果。",
+        copyStatus: "还款明细已复制到剪贴板。",
+        downloadStatus: "CSV 文件已生成。",
+        noResultStatus: "请先计算还款计划。",
+        invalidAmount: "请输入大于 0 的贷款总额。",
+        invalidRate: "请输入不小于 0 的年化利率。",
+        invalidMonths: "请输入 1 到 1200 之间的整数期数。",
+        clipboardError: "当前浏览器不允许写入剪贴板，请尝试下载 CSV。",
+        monthlyPayment: "每月月供",
+        totalInterest: "总利息",
+        totalPayment: "还款总额",
+        copyAction: "复制明细",
+        downloadAction: "下载 CSV",
+        thMonth: "期数",
+        thPayment: "月供",
+        thPrincipal: "本金",
+        thInterest: "利息",
+        thRemaining: "剩余本金",
+        emptyTable: "计算后将在这里显示逐月还款计划。",
+        seoArticle: "这款等额本息贷款计算器适合估算房贷、消费贷或经营贷的月供压力。你只需要输入贷款总额、年化利率和贷款期数，页面会在浏览器本地处理并生成每月还款计划，包含月供、本金、利息和剩余本金。所有计算都在当前设备内完成，无需上传贷款金额、利率或其他敏感信息。作为 Micro Tools Matrix 的免费在线开发者工具，它也适合产品经理、财务人员和开发者快速验证贷款展示逻辑、导出 CSV 明细，或对比不同利率与期数下的还款成本。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。",
+        csvMonth: "期数",
+        csvPayment: "月供",
+        csvPrincipal: "本金",
+        csvInterest: "利息",
+        csvRemaining: "剩余本金",
+        csvSummaryItem: "项目",
+        csvSummaryValue: "数值",
+        csvMonthlyPayment: "每月月供",
+        csvTotalInterest: "总利息",
+        csvTotalPayment: "还款总额"
+      },
+      en: {
+        toolName: "Loan Calculator",
+        h1: "Loan Calculator",
+        title: "Loan Calculator - Micro Tools Matrix Local Toolkit",
+        metaDescription: "Micro Tools Matrix loan calculator runs browser-local processing for mortgage payments, total interest, and monthly repayment schedules without uploading any data.",
+        metaKeywords: "loan calculator,mortgage calculator,equal monthly installment,repayment schedule,monthly payment,browser-local processing,free online developer tool,Micro Tools Matrix",
+        eyebrow: "Browser-local processing",
+        intro: "Enter the principal, annual interest rate, and loan term to generate monthly payments, total interest, and a full repayment schedule locally in Micro Tools Matrix without uploading any data.",
+        localBadge: "Local",
+        sponsor: "Sponsor",
+        buyCoffee: "Buy Me a Coffee",
+        themeToggle: "Switch theme",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        languageGroup: "Language",
+        inputTitle: "Input",
+        inputBadge: "Input",
+        outputTitle: "Result",
+        outputBadge: "Output",
+        amountLabel: "Loan principal",
+        amountPlaceholder: "Example: 1000000",
+        currencyUnit: "unit",
+        rateLabel: "Annual interest rate",
+        ratePlaceholder: "Example: 3.85",
+        monthsLabel: "Loan term",
+        monthsPlaceholder: "Example: 360",
+        monthsUnit: "months",
+        primaryAction: "Calculate",
+        sampleAction: "Fill sample",
+        secondaryAction: "Clear",
+        readyStatus: "Enter loan details to start the calculation.",
+        calculatedStatus: "Generated a {months}-month repayment schedule.",
+        sampleStatus: "Sample data has been filled. You can calculate now or adjust the values.",
+        clearStatus: "Inputs and results have been cleared.",
+        copyStatus: "Repayment details copied to the clipboard.",
+        downloadStatus: "CSV file has been generated.",
+        noResultStatus: "Please calculate a repayment schedule first.",
+        invalidAmount: "Enter a loan principal greater than 0.",
+        invalidRate: "Enter an annual interest rate of 0 or higher.",
+        invalidMonths: "Enter an integer term between 1 and 1200 months.",
+        clipboardError: "This browser does not allow clipboard writing. Try downloading the CSV instead.",
+        monthlyPayment: "Monthly payment",
+        totalInterest: "Total interest",
+        totalPayment: "Total payment",
+        copyAction: "Copy details",
+        downloadAction: "Download CSV",
+        thMonth: "Month",
+        thPayment: "Payment",
+        thPrincipal: "Principal",
+        thInterest: "Interest",
+        thRemaining: "Remaining principal",
+        emptyTable: "The monthly repayment schedule will appear here after calculation.",
+        seoArticle: "This equal monthly installment loan calculator helps estimate mortgage, consumer loan, or business loan repayment pressure with a clear month-by-month schedule. Enter the loan principal, annual interest rate, and term, and Micro Tools Matrix performs browser-local processing to calculate the fixed monthly payment, total interest, total repayment amount, monthly principal, monthly interest, and remaining balance. No loan amount, rate, or repayment data is uploaded, which makes the page useful for privacy-conscious planning and quick validation. As a free online developer tool, it is also helpful when product teams, finance analysts, and developers need realistic repayment data for forms, dashboards, CSV exports, or loan comparison features. You can change the rate or term repeatedly and immediately inspect how the amortization schedule changes, all inside your browser.",
+        footer: "Micro Tools Matrix - browser-local processing with no uploads.",
+        csvMonth: "Month",
+        csvPayment: "Payment",
+        csvPrincipal: "Principal",
+        csvInterest: "Interest",
+        csvRemaining: "Remaining principal",
+        csvSummaryItem: "Item",
+        csvSummaryValue: "Value",
+        csvMonthlyPayment: "Monthly payment",
+        csvTotalInterest: "Total interest",
+        csvTotalPayment: "Total payment"
+      }
+    };
 
-      let currentSchedule = [];
+    let currentLanguage = "zh";
+    let currentStatus = { key: "readyStatus", type: "neutral", params: {} };
+    let lastResult = null;
 
-      yearEl.textContent = new Date().getFullYear();
+    const elements = {};
 
-      const parseNumber = (value) => {
-        if (typeof value !== 'string') return NaN;
-        const normalized = value.trim().replace(/,/g, '').replace(/，/g, '');
-        if (normalized === '') return NaN;
-        return Number(normalized);
-      };
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      try {
+        return localStorage.getItem("microToolsLanguage") || "zh";
+      } catch (error) {
+        return "zh";
+      }
+    }
 
-      const money = (num) => {
-        const safe = Number.isFinite(num) ? num : 0;
-        return safe.toLocaleString('zh-CN', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        }) + ' 元';
-      };
+    function setLanguage(lang) {
+      const safeLang = lang === "en" ? "en" : "zh";
+      try {
+        localStorage.setItem("microToolsLanguage", safeLang);
+      } catch (error) {}
+      applyLanguage(safeLang);
+    }
 
-      const showError = (message) => {
-        errorBox.textContent = message;
-        errorBox.classList.remove('hidden');
-      };
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const t = I18N[currentLanguage];
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.title = t.title;
 
-      const clearError = () => {
-        errorBox.textContent = '';
-        errorBox.classList.add('hidden');
-      };
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute("content", t.metaDescription);
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (keywords) keywords.setAttribute("content", t.metaKeywords);
 
-      const validate = () => {
-        const amount = parseNumber(amountInput.value);
-        const annualRate = parseNumber(rateInput.value);
-        const monthsRaw = parseNumber(monthsInput.value);
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && Object.prototype.hasOwnProperty.call(t, key)) node.textContent = t[key];
+      });
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && Object.prototype.hasOwnProperty.call(t, key)) node.setAttribute("placeholder", t[key]);
+      });
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && Object.prototype.hasOwnProperty.call(t, key)) node.setAttribute("title", t[key]);
+      });
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && Object.prototype.hasOwnProperty.call(t, key)) node.setAttribute("aria-label", t[key]);
+      });
 
-        if (!Number.isFinite(amount) || amount <= 0) {
-          return { ok: false, message: 'Please enter有效的贷款总金额，金额必须大于 0。' };
-        }
-        if (amount > 1000000000000) {
-          return { ok: false, message: '贷款总金额过大，Please enter不超过 1,000,000,000,000 元的数值。' };
-        }
-        if (!Number.isFinite(annualRate) || annualRate < 0) {
-          return { ok: false, message: 'Please enter有效的年化利率，利率不能为负数。' };
-        }
-        if (annualRate > 100) {
-          return { ok: false, message: '年化利率过高，Please enter 0 到 100 之间的百分比数值。' };
-        }
-        if (!Number.isFinite(monthsRaw) || monthsRaw <= 0 || !Number.isInteger(monthsRaw)) {
-          return { ok: false, message: 'Please enter有效的贷款期数，期数必须为大于 0 的整数月。' };
-        }
-        if (monthsRaw > 1200) {
-          return { ok: false, message: '贷款期数过长，Please enter不超过 1200 期的整数。' };
-        }
+      const sponsorLabel = document.querySelector("#openSponsorBtn [data-i18n='sponsor']");
+      if (sponsorLabel) sponsorLabel.textContent = t.sponsor;
 
-        return { ok: true, amount, annualRate, months: monthsRaw };
-      };
+      const themeLabel = document.querySelector("[data-theme-label]");
+      if (themeLabel) themeLabel.textContent = t.themeSystem;
 
-      const calculateSchedule = (amount, annualRate, months) => {
-        const monthlyRate = annualRate / 100 / 12;
-        let monthlyPayment;
-
-        if (monthlyRate === 0) {
-          monthlyPayment = amount / months;
+      const langZhBtn = document.getElementById("langZhBtn");
+      const langEnBtn = document.getElementById("langEnBtn");
+      if (langZhBtn && langEnBtn) {
+        langZhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        langEnBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        if (currentLanguage === "zh") {
+          langZhBtn.className += " bg-cyan-400 text-slate-950";
+          langEnBtn.className += " text-slate-600 dark:text-slate-400";
         } else {
-          const factor = Math.pow(1 + monthlyRate, months);
-          monthlyPayment = amount * monthlyRate * factor / (factor - 1);
+          langEnBtn.className += " bg-cyan-400 text-slate-950";
+          langZhBtn.className += " text-slate-600 dark:text-slate-400";
+        }
+      }
+
+      renderStatus();
+      renderResult();
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function translate(key, params = {}) {
+      let value = I18N[currentLanguage][key] || I18N.zh[key] || "";
+      Object.keys(params).forEach((name) => {
+        value = value.replace(new RegExp("\\{" + name + "\\}", "g"), String(params[name]));
+      });
+      return value;
+    }
+
+    function setStatus(key, type = "neutral", params = {}) {
+      currentStatus = { key, type, params };
+      renderStatus();
+    }
+
+    function renderStatus() {
+      const status = elements.statusText || document.getElementById("statusText");
+      if (!status) return;
+      status.textContent = translate(currentStatus.key, currentStatus.params);
+      status.className = "mt-4 min-h-6 text-sm leading-6";
+      if (currentStatus.type === "error") {
+        status.className += " text-rose-600 dark:text-rose-300";
+      } else if (currentStatus.type === "success") {
+        status.className += " text-emerald-700 dark:text-emerald-300";
+      } else {
+        status.className += " text-slate-500 dark:text-slate-400";
+      }
+    }
+
+    function formatMoney(value) {
+      const locale = currentLanguage === "en" ? "en-US" : "zh-CN";
+      return new Intl.NumberFormat(locale, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(value);
+    }
+
+    function getInputs() {
+      const amount = Number(elements.loanAmount.value);
+      const annualRate = Number(elements.annualRate.value);
+      const monthsRaw = Number(elements.loanMonths.value);
+      if (!Number.isFinite(amount) || amount <= 0) {
+        setStatus("invalidAmount", "error");
+        return null;
+      }
+      if (!Number.isFinite(annualRate) || annualRate < 0) {
+        setStatus("invalidRate", "error");
+        return null;
+      }
+      if (!Number.isInteger(monthsRaw) || monthsRaw < 1 || monthsRaw > 1200) {
+        setStatus("invalidMonths", "error");
+        return null;
+      }
+      return { amount, annualRate, months: monthsRaw };
+    }
+
+    function calculateLoan() {
+      const input = getInputs();
+      if (!input) return;
+
+      const monthlyRate = input.annualRate / 100 / 12;
+      let monthlyPayment;
+      if (monthlyRate === 0) {
+        monthlyPayment = input.amount / input.months;
+      } else {
+        const factor = Math.pow(1 + monthlyRate, input.months);
+        monthlyPayment = input.amount * monthlyRate * factor / (factor - 1);
+      }
+
+      let remaining = input.amount;
+      const rows = [];
+      for (let month = 1; month <= input.months; month += 1) {
+        const interest = monthlyRate === 0 ? 0 : remaining * monthlyRate;
+        let principal = monthlyPayment - interest;
+        let payment = monthlyPayment;
+
+        if (month === input.months) {
+          principal = remaining;
+          payment = principal + interest;
+          remaining = 0;
+        } else {
+          remaining = Math.max(0, remaining - principal);
         }
 
-        const rows = [];
-        let remaining = amount;
-        let totalInterest = 0;
-        let totalPayment = 0;
-
-        for (let i = 1; i <= months; i++) {
-          let interest = remaining * monthlyRate;
-          let principal = monthlyPayment - interest;
-          let payment = monthlyPayment;
-
-          if (i === months) {
-            principal = remaining;
-            interest = remaining * monthlyRate;
-            payment = principal + interest;
-            remaining = 0;
-          } else {
-            remaining = Math.max(0, remaining - principal);
-          }
-
-          totalInterest += interest;
-          totalPayment += payment;
-
-          rows.push({
-            period: i,
-            payment,
-            principal,
-            interest,
-            remaining
-          });
-        }
-
-        return { rows, monthlyPayment, totalPayment, totalInterest };
-      };
-
-      const render = (data, months) => {
-        monthlyPaymentEl.textContent = money(data.monthlyPayment);
-        totalPaymentEl.textContent = money(data.totalPayment);
-        totalInterestEl.textContent = money(data.totalInterest);
-        totalMonthsEl.textContent = months + ' 期';
-
-        scheduleBody.innerHTML = '';
-        const fragment = document.createDocumentFragment();
-
-        data.rows.forEach((row) => {
-          const tr = document.createElement('tr');
-          tr.className = 'transition hover:bg-cyan-400/5';
-
-          const cells = [
-            { text: row.period, align: 'text-left' },
-            { text: money(row.payment), align: 'text-right' },
-            { text: money(row.principal), align: 'text-right' },
-            { text: money(row.interest), align: 'text-right' },
-            { text: money(row.remaining), align: 'text-right' }
-          ];
-
-          cells.forEach((cell) => {
-            const td = document.createElement('td');
-            td.className = `whitespace-nowrap px-4 py-3 ${cell.align} text-slate-300`;
-            td.textContent = cell.text;
-            tr.appendChild(td);
-          });
-
-          fragment.appendChild(tr);
+        rows.push({
+          month,
+          payment,
+          principal,
+          interest,
+          remaining
         });
+      }
 
-        scheduleBody.appendChild(fragment);
-        emptyState.classList.add('hidden');
-        resultArea.classList.remove('hidden');
-        downloadBtn.disabled = false;
-        currentSchedule = data.rows;
+      const totalPayment = rows.reduce((sum, row) => sum + row.payment, 0);
+      const totalInterest = rows.reduce((sum, row) => sum + row.interest, 0);
+
+      lastResult = {
+        input,
+        monthlyPayment,
+        totalPayment,
+        totalInterest,
+        rows
       };
 
-      form.addEventListener('submit', (event) => {
-        event.preventDefault();
-        clearError();
+      renderResult();
+      setStatus("calculatedStatus", "success", { months: input.months });
+    }
 
-        const valid = validate();
-        if (!valid.ok) {
-          showError(valid.message);
-          return;
-        }
+    function renderResult() {
+      if (!elements.scheduleBody) return;
+      if (!lastResult) {
+        elements.monthlyPaymentValue.textContent = "--";
+        elements.totalInterestValue.textContent = "--";
+        elements.totalPaymentValue.textContent = "--";
+        elements.scheduleBody.innerHTML = '<tr><td colspan="5" class="px-4 py-8 text-center text-sm text-slate-500 dark:text-slate-400">' + translate("emptyTable") + "</td></tr>";
+        return;
+      }
 
-        try {
-          const data = calculateSchedule(valid.amount, valid.annualRate, valid.months);
-          if (!data.rows.length || !Number.isFinite(data.totalPayment)) {
-            showError('计算失败，请检查输入数值是否合理。');
-            return;
-          }
-          render(data, valid.months);
-        } catch (error) {
-          showError('计算过程中出现异常，请调整输入后重试。');
-        }
-      });
+      elements.monthlyPaymentValue.textContent = formatMoney(lastResult.monthlyPayment);
+      elements.totalInterestValue.textContent = formatMoney(lastResult.totalInterest);
+      elements.totalPaymentValue.textContent = formatMoney(lastResult.totalPayment);
 
-      resetBtn.addEventListener('click', () => {
-        amountInput.value = '';
-        rateInput.value = '';
-        monthsInput.value = '';
-        clearError();
-        scheduleBody.innerHTML = '';
-        currentSchedule = [];
-        resultArea.classList.add('hidden');
-        emptyState.classList.remove('hidden');
-        downloadBtn.disabled = true;
-        amountInput.focus();
-      });
+      const html = lastResult.rows.map((row) => {
+        return [
+          '<tr class="tabular-nums">',
+          '<td class="px-4 py-3 font-semibold text-slate-900 dark:text-slate-100">', row.month, "</td>",
+          '<td class="px-4 py-3">', formatMoney(row.payment), "</td>",
+          '<td class="px-4 py-3">', formatMoney(row.principal), "</td>",
+          '<td class="px-4 py-3">', formatMoney(row.interest), "</td>",
+          '<td class="px-4 py-3">', formatMoney(row.remaining), "</td>",
+          "</tr>"
+        ].join("");
+      }).join("");
+      elements.scheduleBody.innerHTML = html;
+    }
 
-      downloadBtn.addEventListener('click', () => {
-        if (!Array.isArray(currentSchedule) || currentSchedule.length === 0) {
-          showError('当前没有可Download的还款计划，请先完成计算。');
-          return;
-        }
-
-        const header = ['期数', '月供', '本金', '利息', '剩余本金'];
-        const lines = currentSchedule.map(row => [
-          row.period,
+    function buildCsv() {
+      if (!lastResult) return "";
+      const t = I18N[currentLanguage];
+      const lines = [
+        [t.csvSummaryItem, t.csvSummaryValue],
+        [t.csvMonthlyPayment, lastResult.monthlyPayment.toFixed(2)],
+        [t.csvTotalInterest, lastResult.totalInterest.toFixed(2)],
+        [t.csvTotalPayment, lastResult.totalPayment.toFixed(2)],
+        [],
+        [t.csvMonth, t.csvPayment, t.csvPrincipal, t.csvInterest, t.csvRemaining]
+      ];
+      lastResult.rows.forEach((row) => {
+        lines.push([
+          row.month,
           row.payment.toFixed(2),
           row.principal.toFixed(2),
           row.interest.toFixed(2),
           row.remaining.toFixed(2)
         ]);
-
-        const csv = '\uFEFF' + [header, ...lines].map(arr => arr.map(item => `"${String(item).replace(/"/g, '""')}"`).join(',')).join('\n');
-        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'loan-calculator-schedule.csv';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
       });
-
-      [amountInput, rateInput, monthsInput].forEach(input => {
-        input.addEventListener('input', () => {
-          if (!errorBox.classList.contains('hidden')) clearError();
-        });
-      });
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
+      return lines.map((line) => line.map((cell) => {
+        const text = String(cell);
+        return /[",\n]/.test(text) ? '"' + text.replace(/"/g, '""') + '"' : text;
+      }).join(",")).join("\n");
     }
+
+    async function copyCsv() {
+      if (!lastResult) {
+        setStatus("noResultStatus", "error");
+        return;
+      }
+      const csv = buildCsv();
+      try {
+        await navigator.clipboard.writeText(csv);
+        setStatus("copyStatus", "success");
+      } catch (error) {
+        setStatus("clipboardError", "error");
+      }
+    }
+
+    function downloadCsv() {
+      if (!lastResult) {
+        setStatus("noResultStatus", "error");
+        return;
+      }
+      const csv = "\uFEFF" + buildCsv();
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "loan-schedule.csv";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      setStatus("downloadStatus", "success");
+    }
+
+    function fillSample() {
+      elements.loanAmount.value = "1000000";
+      elements.annualRate.value = "3.85";
+      elements.loanMonths.value = "360";
+      setStatus("sampleStatus", "success");
+    }
+
+    function clearAll() {
+      elements.loanAmount.value = "";
+      elements.annualRate.value = "";
+      elements.loanMonths.value = "";
+      lastResult = null;
+      renderResult();
+      setStatus("clearStatus", "neutral");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      elements.loanAmount = document.getElementById("loanAmount");
+      elements.annualRate = document.getElementById("annualRate");
+      elements.loanMonths = document.getElementById("loanMonths");
+      elements.statusText = document.getElementById("statusText");
+      elements.monthlyPaymentValue = document.getElementById("monthlyPaymentValue");
+      elements.totalInterestValue = document.getElementById("totalInterestValue");
+      elements.totalPaymentValue = document.getElementById("totalPaymentValue");
+      elements.scheduleBody = document.getElementById("scheduleBody");
+
+      document.getElementById("calculateBtn")?.addEventListener("click", calculateLoan);
+      document.getElementById("sampleBtn")?.addEventListener("click", fillSample);
+      document.getElementById("clearBtn")?.addEventListener("click", clearAll);
+      document.getElementById("copyBtn")?.addEventListener("click", copyCsv);
+      document.getElementById("downloadBtn")?.addEventListener("click", downloadCsv);
+
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="../sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

@@ -1,452 +1,636 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="JSON与CSV双向转换与校验工具。包含输入输出框，错误提示，以及一键Copy功能。">
-  <meta name="keywords" content="JSON转CSV, CSV转JSON, JSON格式化, JSON校验工具, CSV格式化转换, 在线数据转换工具, JSON CSV互转">
-  <title>JSON 与 CSV 双向格式化转换与校验工具</title>
-  <link rel="icon" type="image/png" href="../assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
-  <link rel="canonical" href="https://mymicrotools.xyz/en/json-to-csv.html">
+  <title>JSON 转 CSV - Micro Tools Matrix 浏览器本地开发工具</title>
+  <meta name="description" content="Micro Tools Matrix 的 JSON 与 CSV 双向转换与校验工具，支持浏览器本地处理、错误提示和一键复制，无需上传数据。">
+  <meta name="keywords" content="JSON转CSV,CSV转JSON,JSON校验,CSV转换,浏览器本地处理,无需上传,Micro Tools Matrix">
+  <link rel="canonical" href="https://mymicrotools.xyz/json-to-csv.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/json-to-csv.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/json-to-csv.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/json-to-csv.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/en/json-to-csv.html">
-  <meta property="og:title" content="JSON 与 CSV 双向格式化转换与校验工具">
-  <meta property="og:description" content="JSON与CSV双向转换与校验工具。包含输入输出框，错误提示，以及一键Copy功能。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="JSON 与 CSV 双向格式化转换与校验工具">
-  <meta name="twitter:description" content="JSON与CSV双向转换与校验工具。包含输入输出框，错误提示，以及一键Copy功能。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="../style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "JSON to CSV Converter",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A browser-local JSON and CSV converter with validation, copy support, and no upload requirement.",
+      "url": "https://mymicrotools.xyz/json-to-csv.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "category": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen overflow-x-hidden bg-white text-slate-900 dark:text-slate-100 antialiased dark:bg-slate-950">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">JSON 转 CSV</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="../json-to-csv.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./json-to-csv.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-<div class="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-    <div class="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl"></div>
-  </div>
-
-
-  <header class="relative border-b border-gray-200 bg-white backdrop-blur dark:border-white/10 dark:bg-slate-950/80">
-    <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-        <div class="max-w-4xl">
-          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-700 dark:text-cyan-200">在线工具 · 本地解析 · 无需上传</p>
-          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">JSON 与 CSV 双向格式化转换与校验工具</h1>
-          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300">在浏览器本地完成 JSON、CSV 转换、格式化与校验，适合接口调试、表格整理和批量导入前的数据清洗。</p>
-        </div>
-        <div class="grid grid-cols-3 gap-3 text-center">
-          <div class="rounded-2xl border border-gray-200 bg-white px-4 py-3 text-center dark:border-white/10 dark:bg-white/5">
-            <div class="text-xl font-bold text-cyan-300">JSON</div>
-            <div class="text-xs text-slate-500 dark:text-slate-400">结构校验</div>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white px-4 py-3 text-center dark:border-white/10 dark:bg-white/5">
-            <div class="text-xl font-bold text-cyan-300">CSV</div>
-            <div class="text-xs text-slate-500 dark:text-slate-400">双向互转</div>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-white px-4 py-3 text-center dark:border-white/10 dark:bg-white/5">
-            <div class="text-xl font-bold text-cyan-300">Local</div>
-            <div class="text-xs text-slate-500 dark:text-slate-400">浏览器本地</div>
-          </div>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="语言" data-i18n-aria-label="languageLabel" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
         </div>
       </div>
-    </div>
+    </nav>
   </header>
 
-  <main class="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-3 shadow-2xl shadow-black/10 backdrop-blur dark:border-white/10 dark:bg-white/5 dark:shadow-black/20" aria-label="转换操作">
-      <div class="grid gap-3 md:grid-cols-3">
-          <button id="jsonToCsvBtn" type="button" class="rounded-2xl px-4 py-3 font-bold transition active:scale-[0.98] focus:outline-none focus:ring-4 bg-cyan-500 text-slate-950 dark:text-slate-100 shadow-cyan-500/20 hover:bg-cyan-400 focus:ring-cyan-400/20 shadow-lg">JSON 转 CSV</button>
-          <button id="csvToJsonBtn" type="button" class="rounded-2xl px-4 py-3 font-bold transition active:scale-[0.98] focus:outline-none focus:ring-4 bg-emerald-500 text-slate-950 dark:text-slate-100 shadow-emerald-500/20 hover:bg-emerald-400 focus:ring-emerald-400/20 shadow-lg">CSV 转 JSON</button>
-          <button id="formatJsonBtn" type="button" class="rounded-2xl px-4 py-3 font-bold transition active:scale-[0.98] focus:outline-none focus:ring-4 border border-gray-200 bg-white text-slate-800 dark:text-slate-200 hover:border-cyan-400/60 hover:bg-slate-50 focus:ring-slate-300 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10 shadow-lg">格式化 / 校验 JSON</button>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">JSON 转 CSV</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中完成 JSON 与 CSV 的双向转换和格式校验，文本只在浏览器内处理，无需上传。</p>
+        </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
+        </div>
       </div>
     </section>
 
-    <section class="grid gap-6 lg:grid-cols-2" aria-label="Data conversion workspace">
-      <div class="rounded-3xl border border-cyan-400/20 bg-slate-50 dark:bg-slate-900/90 p-5 shadow-2xl shadow-cyan-950/20 backdrop-blur dark:border-white/10 dark:bg-slate-900/80 dark:shadow-black/30">
-        <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <div class="mb-2 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-xs font-semibold text-cyan-700 dark:text-cyan-200">输入区</div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">粘贴 JSON 或 CSV</h2>
-            <p id="inputStats" class="mt-1 text-sm text-slate-400">0 characters</p>
-            <p class="mt-1 text-sm text-slate-400">支持对象数组、普通 CSV 表格和 JSON 格式化校验。</p>
-          </div>
-          <button id="clearBtn" type="button" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white px-4 py-3 text-sm font-bold text-slate-800 dark:text-slate-200 transition hover:border-cyan-400/60 hover:text-cyan-700 active:scale-[0.98] dark:bg-white/5 dark:hover:bg-white/10">Clear输入</button>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
         </div>
-        <textarea id="inputText" spellcheck="false" class="h-80 w-full resize-y rounded-2xl border border-gray-200 bg-white p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none ring-cyan-400/30 transition placeholder:text-slate-500 focus:border-cyan-400 focus:ring-4 dark:border-white/10 dark:bg-slate-950/80 dark:placeholder:text-slate-600 lg:h-[28rem]" placeholder='[{"name":"Alice","age":28},{"name":"Bob","age":31}]'></textarea>
-        <div id="errorBox" class="mt-3 hidden rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm leading-6 text-red-700 dark:border-red-400/30 dark:bg-red-500/10 dark:text-red-200" role="alert" aria-live="polite"></div>
-      </div>
 
-      <div class="rounded-3xl border border-cyan-400/20 bg-slate-50 dark:bg-slate-900/90 p-5 shadow-2xl shadow-cyan-950/20 backdrop-blur dark:border-white/10 dark:bg-slate-900/80 dark:shadow-black/30">
-        <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <div class="mb-2 inline-flex rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-700 dark:text-emerald-200">输出区</div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">转换结果</h2>
-            <p id="outputStats" class="mt-1 text-sm text-slate-400">0 characters</p>
-            <p class="mt-1 text-sm text-slate-400">结果可Copy到剪贴板，继续粘贴到表格、接口或文档中。</p>
-          </div>
-          <button id="copyBtn" type="button" class="rounded-2xl bg-emerald-500 px-4 py-3 text-sm font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-400 active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500">一键Copy</button>
+        <div class="space-y-4">
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="modeLabel">转换方向</span>
+            <select id="modeSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+              <option value="jsonToCsv" data-i18n="modeJsonToCsv">JSON 转 CSV</option>
+              <option value="csvToJson" data-i18n="modeCsvToJson">CSV 转 JSON</option>
+            </select>
+          </label>
+
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="inputLabel">粘贴 JSON 或 CSV</span>
+            <textarea id="inputText" rows="16" spellcheck="false" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="inputPlaceholder" placeholder="粘贴 JSON 数组或 CSV 文本"></textarea>
+          </label>
+
+          <p id="statusText" class="min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" aria-live="polite" data-i18n="statusReady">准备就绪。选择方向后点击转换。</p>
         </div>
-        <textarea id="outputText" spellcheck="false" readonly class="h-80 w-full resize-y rounded-2xl border border-gray-200 bg-white p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none ring-indigo-400/30 transition placeholder:text-slate-500 focus:border-indigo-400 focus:ring-4 dark:border-white/10 dark:bg-slate-950/70 dark:placeholder:text-slate-600 lg:h-[28rem]"></textarea>
-        <p id="successBox" class="mt-3 hidden rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm leading-6 text-emerald-700 dark:border-emerald-400/30 dark:bg-emerald-500/10 dark:text-emerald-200" aria-live="polite"></p>
-      </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="convertBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">转换</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">示例</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+        </div>
+
+        <div class="space-y-4">
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="outputLabel">转换结果</span>
+            <textarea id="outputText" rows="19" spellcheck="false" readonly class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="outputPlaceholder" placeholder="转换后的内容会显示在这里"></textarea>
+          </label>
+
+          <div class="grid gap-3 rounded-2xl border border-gray-200 bg-slate-50 p-4 text-sm text-slate-600 dark:border-white/10 dark:bg-slate-950/40 dark:text-slate-400 sm:grid-cols-3">
+            <div>
+              <div class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="rowsLabel">行数</div>
+              <div id="rowsCount" class="mt-1 font-semibold tabular-nums text-slate-900 dark:text-slate-100">0</div>
+            </div>
+            <div>
+              <div class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="columnsLabel">列数</div>
+              <div id="columnsCount" class="mt-1 font-semibold tabular-nums text-slate-900 dark:text-slate-100">0</div>
+            </div>
+            <div>
+              <div class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="charsLabel">字符</div>
+              <div id="charsCount" class="mt-1 font-semibold tabular-nums text-slate-900 dark:text-slate-100">0</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
+          <button id="downloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadAction">下载结果</button>
+        </div>
+      </section>
     </section>
 
-    <article class="mt-10 rounded-3xl border border-gray-200 bg-white p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl backdrop-blur dark:border-white/10 dark:bg-white/[0.06] md:p-8">
-      <h2 class="mb-4 text-2xl font-black text-gray-900 dark:text-white">关于 JSON 与 CSV 转换工具</h2>
-      <p>这款 JSON 与 CSV 转换工具面向开发者、数据分析师、运营和内容管理人员，可快速处理接口返回、表格导出、日志记录和批量数据迁移中的结构化数据。</p>
-      <p class="mt-3">工具支持 JSON 转 CSV、CSV 转 JSON、JSON 格式化校验和一键Copy。解析逻辑在浏览器本地完成，适合需要快速整理数据但又不希望上传内容的日常工作流。</p>
-    </article>
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">这款 JSON 与 CSV 双向转换工具来自 Micro Tools Matrix，适合开发者、数据运营和测试人员快速整理接口返回、表格导出或配置数据。你可以把 JSON 数组转换为 CSV，也可以把带表头的 CSV 解析为 JSON，并在输入不合法时获得清晰的错误提示。所有转换都在浏览器本地处理，文本不会上传到服务器，适合处理敏感字段、内部样例和临时数据。作为免费在线开发工具，它强调轻量、快速、无广告和无需上传，帮助你在日常调试、数据清洗、文档编写和跨工具粘贴时节省时间。</article>
   </main>
 
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+
+  <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md">
+    <div class="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
+      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor">×</button>
+      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">赞赏支持</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">保持工具免费、快速且无广告。</p>
+      <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="buyCoffee">Buy Me a Coffee</a>
+    </div>
+  </div>
+
   <script>
-    const inputText = document.getElementById('inputText');
-    const outputText = document.getElementById('outputText');
-    const errorBox = document.getElementById('errorBox');
-    const successBox = document.getElementById('successBox');
-    const copyBtn = document.getElementById('copyBtn');
-    const inputStats = document.getElementById('inputStats');
-    const outputStats = document.getElementById('outputStats');
-
-    function updateStats() {
-      inputStats.textContent = `${inputText.value.length} 个字符`;
-      outputStats.textContent = `${outputText.value.length} 个字符`;
-      copyBtn.disabled = outputText.value.length === 0;
-    }
-
-    function showError(message) {
-      errorBox.textContent = message;
-      errorBox.classList.remove('hidden');
-      successBox.classList.add('hidden');
-    }
-
-    function showSuccess(message) {
-      successBox.textContent = message;
-      successBox.classList.remove('hidden');
-      errorBox.classList.add('hidden');
-    }
-
-    function clearMessages() {
-      errorBox.classList.add('hidden');
-      successBox.classList.add('hidden');
-      errorBox.textContent = '';
-      successBox.textContent = '';
-    }
-
-    function requireInput() {
-      const value = inputText.value.trim();
-      if (!value) {
-        throw new Error('输入内容不能为空，请粘贴 JSON 或 CSV 数据后再操作。');
+    const I18N = {
+      zh: {
+        documentTitle: "JSON 转 CSV - Micro Tools Matrix 浏览器本地开发工具",
+        metaDescription: "Micro Tools Matrix 的 JSON 与 CSV 双向转换与校验工具，支持浏览器本地处理、错误提示和一键复制，无需上传数据。",
+        metaKeywords: "JSON转CSV,CSV转JSON,JSON校验,CSV转换,浏览器本地处理,无需上传,Micro Tools Matrix",
+        toolName: "JSON 转 CSV",
+        sponsor: "赞赏",
+        languageLabel: "语言",
+        eyebrow: "浏览器本地处理",
+        h1: "JSON 转 CSV",
+        intro: "在 Micro Tools Matrix 中完成 JSON 与 CSV 的双向转换和格式校验，文本只在浏览器内处理，无需上传。",
+        localBadge: "本地运行",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        outputTitle: "结果",
+        outputBadge: "输出",
+        modeLabel: "转换方向",
+        modeJsonToCsv: "JSON 转 CSV",
+        modeCsvToJson: "CSV 转 JSON",
+        inputLabel: "粘贴 JSON 或 CSV",
+        inputPlaceholder: "粘贴 JSON 数组或 CSV 文本",
+        outputLabel: "转换结果",
+        outputPlaceholder: "转换后的内容会显示在这里",
+        statusReady: "准备就绪。选择方向后点击转换。",
+        primaryAction: "转换",
+        sampleAction: "示例",
+        secondaryAction: "清空",
+        copyAction: "复制结果",
+        downloadAction: "下载结果",
+        rowsLabel: "行数",
+        columnsLabel: "列数",
+        charsLabel: "字符",
+        sponsorTitle: "赞赏支持",
+        sponsorSubtitle: "保持工具免费、快速且无广告。",
+        buyCoffee: "Buy Me a Coffee",
+        closeSponsor: "关闭赞赏窗口",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。",
+        seoArticle: "这款 JSON 与 CSV 双向转换工具来自 Micro Tools Matrix，适合开发者、数据运营和测试人员快速整理接口返回、表格导出或配置数据。你可以把 JSON 数组转换为 CSV，也可以把带表头的 CSV 解析为 JSON，并在输入不合法时获得清晰的错误提示。所有转换都在浏览器本地处理，文本不会上传到服务器，适合处理敏感字段、内部样例和临时数据。作为免费在线开发工具，它强调轻量、快速、无广告和无需上传，帮助你在日常调试、数据清洗、文档编写和跨工具粘贴时节省时间。",
+        statusConverted: "转换完成：{rows} 行，{columns} 列。",
+        statusCleared: "已清空输入和结果。",
+        statusSample: "已填入示例内容。",
+        statusCopied: "结果已复制到剪贴板。",
+        statusDownloaded: "结果已下载。",
+        errorEmpty: "请输入需要转换的内容。",
+        errorJsonInvalid: "JSON 格式不正确：{message}",
+        errorJsonShape: "JSON 需要是对象数组，或包含对象的单个对象。",
+        errorCsvEmpty: "CSV 内容为空或缺少表头。",
+        errorCsvInvalid: "CSV 格式不正确：引号没有正确闭合。",
+        errorCopy: "复制失败，请手动选择结果内容复制。",
+        errorNoOutput: "没有可操作的结果，请先完成转换。",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统"
+      },
+      en: {
+        documentTitle: "JSON to CSV - Micro Tools Matrix Browser-Local Developer Tool",
+        metaDescription: "A Micro Tools Matrix JSON and CSV converter with validation, browser-local processing, friendly errors, and one-click copy. No upload required.",
+        metaKeywords: "JSON to CSV,CSV to JSON,JSON validator,CSV converter,browser-local processing,no upload,free online developer tool,Micro Tools Matrix",
+        toolName: "JSON to CSV",
+        sponsor: "Sponsor",
+        languageLabel: "Language",
+        eyebrow: "Browser-local processing",
+        h1: "JSON to CSV",
+        intro: "Convert and validate JSON and CSV in both directions with Micro Tools Matrix. Your text is processed in the browser and never uploaded.",
+        localBadge: "Local",
+        inputTitle: "Input",
+        inputBadge: "Input",
+        outputTitle: "Result",
+        outputBadge: "Output",
+        modeLabel: "Conversion direction",
+        modeJsonToCsv: "JSON to CSV",
+        modeCsvToJson: "CSV to JSON",
+        inputLabel: "Paste JSON or CSV",
+        inputPlaceholder: "Paste a JSON array or CSV text",
+        outputLabel: "Converted result",
+        outputPlaceholder: "The converted content will appear here",
+        statusReady: "Ready. Choose a direction and convert.",
+        primaryAction: "Convert",
+        sampleAction: "Sample",
+        secondaryAction: "Clear",
+        copyAction: "Copy result",
+        downloadAction: "Download result",
+        rowsLabel: "Rows",
+        columnsLabel: "Columns",
+        charsLabel: "Characters",
+        sponsorTitle: "Sponsor support",
+        sponsorSubtitle: "Keep these tools free, fast, and ad-free.",
+        buyCoffee: "Buy Me a Coffee",
+        closeSponsor: "Close sponsor dialog",
+        footer: "Micro Tools Matrix - Browser-local processing with no upload.",
+        seoArticle: "This JSON and CSV converter from Micro Tools Matrix is a free online developer tool for everyday data cleanup, API debugging, documentation, and spreadsheet handoff work. It converts a JSON array of objects into CSV, parses CSV with a header row back into JSON, validates malformed input, and gives clear errors without interrupting your workflow. All browser-local processing happens in memory on your device, so pasted samples, internal fields, and temporary datasets are not uploaded to a server. The tool is intentionally small and fast: paste data, choose the direction, convert, then copy or download the result. Developers can use it to inspect API responses, QA teams can prepare test fixtures, and analysts can move structured data between code editors and spreadsheet tools. Micro Tools Matrix keeps the interface restrained, private, and consistent, making this a practical no-upload utility for quick JSON to CSV and CSV to JSON tasks.",
+        statusConverted: "Converted: {rows} rows and {columns} columns.",
+        statusCleared: "Input and result cleared.",
+        statusSample: "Sample content inserted.",
+        statusCopied: "Result copied to clipboard.",
+        statusDownloaded: "Result downloaded.",
+        errorEmpty: "Enter content to convert.",
+        errorJsonInvalid: "Invalid JSON: {message}",
+        errorJsonShape: "JSON must be an array of objects, or a single object containing objects.",
+        errorCsvEmpty: "CSV is empty or missing a header row.",
+        errorCsvInvalid: "Invalid CSV: quotes are not closed correctly.",
+        errorCopy: "Copy failed. Please select and copy the result manually.",
+        errorNoOutput: "There is no result yet. Convert something first.",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System"
       }
-      return value;
+    };
+
+    let currentLanguage = "zh";
+    let currentStatusKey = "statusReady";
+    let currentStatusParams = {};
+
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      const saved = localStorage.getItem("microToolsLanguage");
+      return saved === "en" ? "en" : "zh";
     }
 
-    function parseJsonWithDetails(text) {
-      try {
-        return JSON.parse(text);
-      } catch (err) {
-        const match = String(err.message).match(/position\s+(\d+)/i);
-        if (match) {
-          const position = Number(match[1]);
-          const before = text.slice(0, position);
-          const line = before.split(/\n/).length;
-          const column = before.length - before.lastIndexOf('\n');
-          throw new Error(`JSON 解析失败：第 ${line} 行第 ${column} 列附近格式不正确。${err.message}`);
+    function template(text, params) {
+      return String(text || "").replace(/\{(\w+)\}/g, (_, key) => {
+        return Object.prototype.hasOwnProperty.call(params || {}, key) ? String(params[key]) : "";
+      });
+    }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.title = dict.documentTitle;
+
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute("content", dict.metaDescription);
+
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (keywords) keywords.setAttribute("content", dict.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.textContent = dict[key];
         }
-        throw new Error(`JSON 解析失败：${err.message}`);
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("placeholder", dict[key]);
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("title", dict[key]);
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("aria-label", dict[key]);
+        }
+      });
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "zh" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "en" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
       }
+
+      window.microToolsThemeLabels = {
+        light: dict.themeLight,
+        dark: dict.themeDark,
+        system: dict.themeSystem
+      };
+      const themeLabel = document.querySelector("[data-theme-label]");
+      if (themeLabel && !themeLabel.textContent.trim()) themeLabel.textContent = dict.themeSystem;
+
+      updateStatus(currentStatusKey, currentStatusParams, false);
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
     }
 
-    function stringifyCell(value) {
-      if (value === null || value === undefined) return '';
-      if (typeof value === 'object') return JSON.stringify(value);
-      return String(value);
+    function setLanguage(lang) {
+      const nextLang = lang === "en" ? "en" : "zh";
+      localStorage.setItem("microToolsLanguage", nextLang);
+      applyLanguage(nextLang);
+    }
+
+    function updateStatus(key, params, isError) {
+      currentStatusKey = key || "statusReady";
+      currentStatusParams = params || {};
+      const status = document.getElementById("statusText");
+      if (!status) return;
+      const dict = I18N[currentLanguage] || I18N.zh;
+      status.textContent = template(dict[currentStatusKey] || dict.statusReady, currentStatusParams);
+      status.className = isError
+        ? "min-h-6 text-sm leading-6 text-rose-600 dark:text-rose-300"
+        : "min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400";
+    }
+
+    function openSponsorModal(event) {
+      if (event && typeof event.preventDefault === "function") event.preventDefault();
+      const modal = document.getElementById("sponsorModal");
+      if (!modal) return;
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeSponsorModal() {
+      const modal = document.getElementById("sponsorModal");
+      if (!modal) return;
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    }
+
+    function normalizeJsonInput(value) {
+      if (Array.isArray(value)) return value;
+      if (value && typeof value === "object") {
+        const arrayValue = Object.values(value).find((item) => Array.isArray(item));
+        if (arrayValue) return arrayValue;
+        return [value];
+      }
+      return null;
+    }
+
+    function flattenObject(value, prefix, target) {
+      Object.keys(value || {}).forEach((key) => {
+        const nextKey = prefix ? prefix + "." + key : key;
+        const item = value[key];
+        if (item && typeof item === "object" && !Array.isArray(item)) {
+          flattenObject(item, nextKey, target);
+        } else if (Array.isArray(item)) {
+          target[nextKey] = JSON.stringify(item);
+        } else {
+          target[nextKey] = item == null ? "" : item;
+        }
+      });
+      return target;
     }
 
     function escapeCsvCell(value) {
-      const text = stringifyCell(value);
-      return /[",\n\r]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+      const text = value == null ? "" : String(value);
+      if (/[",\n\r]/.test(text)) {
+        return '"' + text.replace(/"/g, '""') + '"';
+      }
+      return text;
     }
 
-    function jsonToCsv(data) {
-      const rows = Array.isArray(data) ? data : [data];
-
-      if (rows.length === 0) return '';
-
-      const hasOnlyPrimitives = rows.every(item => item === null || typeof item !== 'object' || Array.isArray(item));
-      if (hasOnlyPrimitives) {
-        return ['value', ...rows.map(item => escapeCsvCell(item))].join('\n');
+    function jsonToCsv(input) {
+      let parsed;
+      try {
+        parsed = JSON.parse(input);
+      } catch (error) {
+        throw { key: "errorJsonInvalid", params: { message: error.message } };
       }
 
-      const invalidIndex = rows.findIndex(item => item === null || typeof item !== 'object' || Array.isArray(item));
-      if (invalidIndex !== -1) {
-        throw new Error(`JSON 转 CSV 失败：数组第 ${invalidIndex + 1} 项不是对象。请使用对象数组，或全部使用基础类型数组。`);
+      const rows = normalizeJsonInput(parsed);
+      if (!rows || rows.some((row) => !row || typeof row !== "object" || Array.isArray(row))) {
+        throw { key: "errorJsonShape", params: {} };
       }
 
+      const flattenedRows = rows.map((row) => flattenObject(row, "", {}));
       const headers = [];
-      rows.forEach(row => {
-        Object.keys(row).forEach(key => {
+      flattenedRows.forEach((row) => {
+        Object.keys(row).forEach((key) => {
           if (!headers.includes(key)) headers.push(key);
         });
       });
 
-      if (headers.length === 0) return '';
+      const csvRows = [headers.map(escapeCsvCell).join(",")];
+      flattenedRows.forEach((row) => {
+        csvRows.push(headers.map((header) => escapeCsvCell(row[header])).join(","));
+      });
 
-      const csvRows = [
-        headers.map(escapeCsvCell).join(','),
-        ...rows.map(row => headers.map(header => escapeCsvCell(row[header])).join(','))
-      ];
-      return csvRows.join('\n');
+      return {
+        output: csvRows.join("\n"),
+        rows: flattenedRows.length,
+        columns: headers.length
+      };
     }
 
-    function parseCsv(text) {
+    function parseCsv(input) {
       const rows = [];
       let row = [];
-      let cell = '';
+      let cell = "";
       let inQuotes = false;
-      let i = 0;
 
-      while (i < text.length) {
-        const char = text[i];
-        const next = text[i + 1];
-
-        if (inQuotes) {
-          if (char === '"' && next === '"') {
-            cell += '"';
-            i += 2;
-            continue;
-          }
-          if (char === '"') {
-            inQuotes = false;
-            i += 1;
-            continue;
-          }
-          cell += char;
-          i += 1;
-          continue;
-        }
+      for (let i = 0; i < input.length; i += 1) {
+        const char = input[i];
+        const next = input[i + 1];
 
         if (char === '"') {
-          if (cell.length === 0) {
-            inQuotes = true;
+          if (inQuotes && next === '"') {
+            cell += '"';
             i += 1;
-            continue;
+          } else {
+            inQuotes = !inQuotes;
           }
-          throw new Error(`CSV 解析失败：第 ${rows.length + 1} 行存在未转义的双引号。`);
-        }
-
-        if (char === ',') {
+        } else if (char === "," && !inQuotes) {
           row.push(cell);
-          cell = '';
-          i += 1;
-          continue;
-        }
-
-        if (char === '\n' || char === '\r') {
+          cell = "";
+        } else if ((char === "\n" || char === "\r") && !inQuotes) {
+          if (char === "\r" && next === "\n") i += 1;
           row.push(cell);
           rows.push(row);
           row = [];
-          cell = '';
-          if (char === '\r' && next === '\n') i += 2;
-          else i += 1;
-          continue;
+          cell = "";
+        } else {
+          cell += char;
         }
-
-        cell += char;
-        i += 1;
       }
 
-      if (inQuotes) {
-        throw new Error('CSV 解析失败：存在未闭合的双引号，请检查包含逗号或换行的字段。');
-      }
-
+      if (inQuotes) throw { key: "errorCsvInvalid", params: {} };
       row.push(cell);
       rows.push(row);
 
-      while (rows.length && rows[rows.length - 1].every(value => value === '')) rows.pop();
-
-      if (rows.length === 0) {
-        throw new Error('CSV 内容为空，请至少提供表头行。');
-      }
-
-      const columnCount = rows[0].length;
-      if (columnCount === 0 || rows[0].every(header => header.trim() === '')) {
-        throw new Error('CSV 解析失败：表头不能为空。');
-      }
-
-      rows.forEach((currentRow, index) => {
-        if (currentRow.length !== columnCount) {
-          throw new Error(`CSV 解析失败：第 ${index + 1} 行有 ${currentRow.length} 列，但表头有 ${columnCount} 列。`);
-        }
-      });
-
-      return rows;
+      return rows.filter((items) => items.some((item) => item.trim() !== ""));
     }
 
-    function csvToJson(text) {
-      const rows = parseCsv(text);
-      const headers = rows[0].map(header => header.trim());
-
-      const emptyHeaderIndex = headers.findIndex(header => header === '');
-      if (emptyHeaderIndex !== -1) {
-        throw new Error(`CSV 解析失败：第 ${emptyHeaderIndex + 1} 个表头为空。`);
+    function csvToJson(input) {
+      const rows = parseCsv(input);
+      if (rows.length < 1 || rows[0].length < 1 || rows[0].every((cell) => cell.trim() === "")) {
+        throw { key: "errorCsvEmpty", params: {} };
       }
 
-      const seen = new Set();
-      for (const header of headers) {
-        if (seen.has(header)) {
-          throw new Error(`CSV 解析失败：表头 "${header}" 重复，请保持字段名唯一。`);
-        }
-        seen.add(header);
-      }
+      const headers = rows[0].map((header, index) => {
+        const clean = header.trim();
+        return clean || "column_" + (index + 1);
+      });
 
-      return rows.slice(1).map(row => {
+      const objects = rows.slice(1).map((row) => {
         const item = {};
         headers.forEach((header, index) => {
-          item[header] = row[index];
+          item[header] = row[index] == null ? "" : row[index];
         });
         return item;
       });
+
+      return {
+        output: JSON.stringify(objects, null, 2),
+        rows: objects.length,
+        columns: headers.length
+      };
     }
 
-    function setOutput(value, message) {
-      outputText.value = value;
-      updateStats();
-      showSuccess(message);
+    function updateMetrics(rows, columns, chars) {
+      document.getElementById("rowsCount").textContent = String(rows || 0);
+      document.getElementById("columnsCount").textContent = String(columns || 0);
+      document.getElementById("charsCount").textContent = String(chars || 0);
     }
 
-    document.getElementById('jsonToCsvBtn').addEventListener('click', () => {
-      try {
-        clearMessages();
-        const source = requireInput();
-        const data = parseJsonWithDetails(source);
-        setOutput(jsonToCsv(data), 'JSON 已成功转换为 CSV。');
-      } catch (err) {
-        outputText.value = '';
-        updateStats();
-        showError(err.message || '转换失败，请检查输入内容。');
+    function convertInput() {
+      const input = document.getElementById("inputText").value;
+      const mode = document.getElementById("modeSelect").value;
+      const output = document.getElementById("outputText");
+
+      if (!input.trim()) {
+        output.value = "";
+        updateMetrics(0, 0, 0);
+        updateStatus("errorEmpty", {}, true);
+        return;
       }
-    });
 
-    document.getElementById('csvToJsonBtn').addEventListener('click', () => {
       try {
-        clearMessages();
-        const source = requireInput();
-        const data = csvToJson(source);
-        setOutput(JSON.stringify(data, null, 2), 'CSV 已成功转换为 JSON。');
-      } catch (err) {
-        outputText.value = '';
-        updateStats();
-        showError(err.message || '转换失败，请检查输入内容。');
+        const result = mode === "csvToJson" ? csvToJson(input) : jsonToCsv(input);
+        output.value = result.output;
+        updateMetrics(result.rows, result.columns, result.output.length);
+        updateStatus("statusConverted", { rows: result.rows, columns: result.columns }, false);
+      } catch (error) {
+        output.value = "";
+        updateMetrics(0, 0, 0);
+        updateStatus(error.key || "errorEmpty", error.params || {}, true);
       }
-    });
+    }
 
-    document.getElementById('formatJsonBtn').addEventListener('click', () => {
-      try {
-        clearMessages();
-        const source = requireInput();
-        const data = parseJsonWithDetails(source);
-        setOutput(JSON.stringify(data, null, 2), 'JSON 格式正确，已完成格式化。');
-      } catch (err) {
-        outputText.value = '';
-        updateStats();
-        showError(err.message || 'JSON 校验失败，请检查输入内容。');
+    function fillSample() {
+      const mode = document.getElementById("modeSelect").value;
+      const input = document.getElementById("inputText");
+      if (mode === "csvToJson") {
+        input.value = "name,role,city\nAda,Engineer,London\nLin,Designer,Shanghai\nSam,Tester,Singapore";
+      } else {
+        input.value = JSON.stringify([
+          { name: "Ada", role: "Engineer", city: "London", active: true },
+          { name: "Lin", role: "Designer", city: "Shanghai", active: false },
+          { name: "Sam", role: "Tester", city: "Singapore", active: true }
+        ], null, 2);
       }
-    });
+      document.getElementById("outputText").value = "";
+      updateMetrics(0, 0, 0);
+      updateStatus("statusSample", {}, false);
+    }
 
-    document.getElementById('clearBtn').addEventListener('click', () => {
-      inputText.value = '';
-      outputText.value = '';
-      clearMessages();
-      updateStats();
-      inputText.focus();
-    });
+    function clearAll() {
+      document.getElementById("inputText").value = "";
+      document.getElementById("outputText").value = "";
+      updateMetrics(0, 0, 0);
+      updateStatus("statusCleared", {}, false);
+    }
 
-    inputText.addEventListener('input', updateStats);
-
-    copyBtn.addEventListener('click', async () => {
-      clearMessages();
-      if (!outputText.value) {
-        showError('输出区暂无可Copy内容，请先完成转换或格式化。');
+    async function copyOutput() {
+      const output = document.getElementById("outputText").value;
+      if (!output) {
+        updateStatus("errorNoOutput", {}, true);
         return;
       }
 
       try {
         if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(outputText.value);
+          await navigator.clipboard.writeText(output);
         } else {
-          outputText.focus();
-          outputText.select();
-          document.execCommand('copy');
-          window.getSelection().removeAllRanges();
+          const textarea = document.getElementById("outputText");
+          textarea.focus();
+          textarea.select();
+          document.execCommand("copy");
+          window.getSelection()?.removeAllRanges();
         }
-
-        const original = copyBtn.textContent;
-        copyBtn.textContent = 'Copied';
-        copyBtn.classList.remove('bg-emerald-600', 'hover:bg-emerald-500');
-        copyBtn.classList.add('bg-cyan-600', 'hover:bg-cyan-500');
-        showSuccess('输出内容Copied到剪贴板。');
-
-        setTimeout(() => {
-          copyBtn.textContent = original;
-          copyBtn.classList.add('bg-emerald-600', 'hover:bg-emerald-500');
-          copyBtn.classList.remove('bg-cyan-600', 'hover:bg-cyan-500');
-        }, 1400);
-      } catch (err) {
-        showError('Copy failed，请手动选择输出内容后Copy。');
+        updateStatus("statusCopied", {}, false);
+      } catch (error) {
+        updateStatus("errorCopy", {}, true);
       }
-    });
-
-    updateStats();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
     }
+
+    function downloadOutput() {
+      const output = document.getElementById("outputText").value;
+      if (!output) {
+        updateStatus("errorNoOutput", {}, true);
+        return;
+      }
+
+      const mode = document.getElementById("modeSelect").value;
+      const type = mode === "csvToJson" ? "application/json;charset=utf-8" : "text/csv;charset=utf-8";
+      const extension = mode === "csvToJson" ? "json" : "csv";
+      const blob = new Blob([output], { type });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "micro-tools-matrix-result." + extension;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      updateStatus("statusDownloaded", {}, false);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+
+      document.getElementById("convertBtn")?.addEventListener("click", convertInput);
+      document.getElementById("sampleBtn")?.addEventListener("click", fillSample);
+      document.getElementById("clearBtn")?.addEventListener("click", clearAll);
+      document.getElementById("copyBtn")?.addEventListener("click", copyOutput);
+      document.getElementById("downloadBtn")?.addEventListener("click", downloadOutput);
+      document.getElementById("modeSelect")?.addEventListener("change", () => {
+        document.getElementById("outputText").value = "";
+        updateMetrics(0, 0, 0);
+        updateStatus("statusReady", {}, false);
+      });
+
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="../sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

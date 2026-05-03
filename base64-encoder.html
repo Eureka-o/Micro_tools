@@ -1,653 +1,738 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>base64-encoder - Base64 文本和图片双向编解码器</title>
-  <meta name="description" content="Base64 文本和图片双向编解码器。支持拖拽上传图片转换为Base64字符串。">
-  <meta name="keywords" content="base64-encoder,Base64编码,Base64解码,在线Base64工具,图片转Base64,Base64转图片,中文Base64编码解码,Data URL转换">
-  <link rel="icon" type="image/png" href="./assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base64 编解码器 - Micro Tools Matrix 本地工具箱</title>
+  <meta name="description" content="Micro Tools Matrix 提供免费的 Base64 文本和图片双向编解码器，支持拖拽图片转 Base64，浏览器本地处理，无需上传。">
+  <meta name="keywords" content="Base64 编码, Base64 解码, 图片转 Base64, 文本转 Base64, 浏览器本地处理, 无需上传, Micro Tools Matrix">
   <link rel="canonical" href="https://mymicrotools.xyz/base64-encoder.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/base64-encoder.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/base64-encoder.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/base64-encoder.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/base64-encoder.html">
-  <meta property="og:title" content="base64-encoder - Base64 文本和图片双向编解码器">
-  <meta property="og:description" content="Base64 文本和图片双向编解码器。支持拖拽上传图片转换为Base64字符串。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="base64-encoder - Base64 文本和图片双向编解码器">
-  <meta name="twitter:description" content="Base64 文本和图片双向编解码器。支持拖拽上传图片转换为Base64字符串。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
-</head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="切换主题" title="切换主题">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="./base64-encoder.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
-        <a href="./en/base64-encoder.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="pointer-events-none fixed inset-0 overflow-hidden">
-    <div class="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl"></div>
-  </div>
-
-  <header class="relative border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 backdrop-blur">
-    <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm text-cyan-200">在线工具 · 零依赖 · 本地处理</p>
-          <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl">Base64 文本和图片双向编解码器</h1>
-          <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300">Base64 文本和图片双向编解码器，支持 UTF-8 中文文本处理、拖拽上传图片转换为 Base64 字符串，以及 Base64/Data URL 还原图片预览。</p>
-        </div>
-        <div class="grid grid-cols-3 gap-3 text-center">
-          <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3">
-            <div class="text-xl font-bold text-cyan-300">Text</div>
-            <div class="text-xs text-slate-400">文本编解码</div>
-          </div>
-          <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3">
-            <div class="text-xl font-bold text-indigo-300">Image</div>
-            <div class="text-xs text-slate-400">图片转换</div>
-          </div>
-          <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3">
-            <div class="text-xl font-bold text-emerald-300">Local</div>
-            <div class="text-xs text-slate-400">浏览器本地</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <main class="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-    <section class="mb-6 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-2 shadow-2xl shadow-black/20 backdrop-blur">
-      <div class="grid grid-cols-2 gap-2">
-        <button id="textTab" class="tab-btn rounded-2xl bg-cyan-500 px-4 py-3 font-semibold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition active:scale-[0.99]" type="button">文本 Base64</button>
-        <button id="imageTab" class="tab-btn rounded-2xl px-4 py-3 font-semibold text-slate-700 dark:text-slate-300 transition hover:bg-white/10 active:scale-[0.99]" type="button">图片 Base64</button>
-      </div>
-    </section>
-
-    <div id="alert" class="mb-6 hidden rounded-2xl border px-4 py-3 text-sm font-medium"></div>
-
-    <section id="textPanel" class="grid gap-6 lg:grid-cols-2">
-      <div class="rounded-3xl border border-cyan-400/20 bg-slate-50 dark:bg-slate-900/90 p-5 shadow-xl">
-        <div class="mb-4 flex items-center justify-between gap-3">
-          <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">文本输入区</h2>
-            <p class="mt-1 text-sm text-slate-400">输入普通文本或 Base64 字符串</p>
-          </div>
-          <span id="inputCount" class="shrink-0 rounded-full bg-slate-50 dark:bg-slate-800 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">0 字符</span>
-        </div>
-        <textarea id="textInput" class="h-80 w-full resize-y rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none ring-cyan-400/30 transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4" placeholder="示例：你好，Base64！"></textarea>
-        <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <button id="encodeBtn" class="rounded-2xl bg-cyan-500 px-4 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400 active:scale-[0.98]" type="button">编码为 Base64</button>
-          <button id="decodeBtn" class="rounded-2xl bg-indigo-500 px-4 py-3 font-bold text-gray-900 dark:text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-400 active:scale-[0.98]" type="button">解码为文本</button>
-          <button id="clearTextBtn" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 font-bold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-[0.98]" type="button">清空</button>
-        </div>
-      </div>
-
-      <div class="rounded-3xl border border-indigo-400/20 bg-slate-800/90 p-5 shadow-xl">
-        <div class="mb-4 flex items-center justify-between gap-3">
-          <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">文本输出区</h2>
-            <p class="mt-1 text-sm text-slate-400">结果可复制或下载为 TXT</p>
-          </div>
-          <span id="outputCount" class="shrink-0 rounded-full bg-slate-100 dark:bg-slate-900 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">0 字符</span>
-        </div>
-        <textarea id="textOutput" class="h-80 w-full resize-y rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/60 p-4 font-mono text-sm leading-6 text-slate-900 dark:text-slate-100 outline-none ring-indigo-400/30 transition placeholder:text-slate-600 focus:border-indigo-400 focus:ring-4" placeholder="编码或解码结果会显示在这里"></textarea>
-        <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <button id="copyTextBtn" class="rounded-2xl bg-emerald-500 px-4 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-400 active:scale-[0.98]" type="button">复制结果</button>
-          <button id="downloadTextBtn" class="rounded-2xl bg-slate-100 px-4 py-3 font-bold text-slate-950 dark:text-slate-100 transition hover:bg-white active:scale-[0.98]" type="button">下载 TXT</button>
-          <button id="swapTextBtn" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 font-bold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-[0.98]" type="button">结果转输入</button>
-        </div>
-      </div>
-    </section>
-
-    <section id="imagePanel" class="hidden grid gap-6 lg:grid-cols-2">
-      <div class="rounded-3xl border border-cyan-400/20 bg-slate-50 dark:bg-slate-900/90 p-5 shadow-xl">
-        <div class="mb-4">
-          <h2 class="text-xl font-bold text-gray-900 dark:text-white">图片输入区</h2>
-          <p class="mt-1 text-sm text-slate-400">拖拽或选择图片，自动转换为 Base64 Data URL</p>
-        </div>
-
-        <div id="dropZone" class="flex min-h-72 cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed border-cyan-400/40 bg-cyan-400/5 p-6 text-center transition hover:border-cyan-300 hover:bg-cyan-400/10">
-          <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-cyan-400/10 text-3xl">🖼️</div>
-          <p class="text-lg font-bold text-gray-900 dark:text-white">拖拽图片到这里</p>
-          <p class="mt-2 text-sm text-slate-400">支持 PNG、JPG、JPEG、GIF、WebP、SVG 等常见图片格式</p>
-          <label class="mt-5 inline-flex cursor-pointer rounded-2xl bg-cyan-500 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400 active:scale-[0.98]">
-            选择图片
-            <input id="fileInput" class="hidden" type="file" accept="image/*" />
-          </label>
-        </div>
-
-        <div id="imageInfo" class="mt-4 hidden rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-4 text-sm text-slate-700 dark:text-slate-300"></div>
-      </div>
-
-      <div class="rounded-3xl border border-indigo-400/20 bg-slate-800/90 p-5 shadow-xl">
-        <div class="mb-4 flex items-center justify-between gap-3">
-          <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">图片 Base64 输出区</h2>
-            <p class="mt-1 text-sm text-slate-400">可复制 Data URL，或粘贴 Base64 还原图片</p>
-          </div>
-          <span id="imageBase64Count" class="shrink-0 rounded-full bg-slate-100 dark:bg-slate-900 px-3 py-1 text-xs text-slate-700 dark:text-slate-300">0 字符</span>
-        </div>
-        <textarea id="imageBase64" class="h-64 w-full resize-y rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/60 p-4 font-mono text-xs leading-5 text-slate-900 dark:text-slate-100 outline-none ring-indigo-400/30 transition placeholder:text-slate-600 focus:border-indigo-400 focus:ring-4" placeholder="图片 Base64 Data URL 会显示在这里；也可以粘贴 data:image/png;base64,... 或纯 Base64 字符串后点击“还原图片”"></textarea>
-        <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <button id="copyImageBtn" class="rounded-2xl bg-emerald-500 px-4 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-emerald-500/20 transition hover:bg-emerald-400 active:scale-[0.98]" type="button">复制 Base64</button>
-          <button id="previewImageBtn" class="rounded-2xl bg-indigo-500 px-4 py-3 font-bold text-gray-900 dark:text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-400 active:scale-[0.98]" type="button">还原图片</button>
-          <button id="clearImageBtn" class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 font-bold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-[0.98]" type="button">清空</button>
-        </div>
-
-        <div id="previewWrap" class="mt-5 hidden rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/60 p-4">
-          <div class="mb-3 flex items-center justify-between gap-3">
-            <h3 class="font-bold text-gray-900 dark:text-white">图片预览</h3>
-            <button id="downloadImageBtn" class="rounded-xl bg-slate-100 px-3 py-2 text-sm font-bold text-slate-950 dark:text-slate-100 transition hover:bg-white active:scale-[0.98]" type="button">下载图片</button>
-          </div>
-          <img id="imagePreview" class="max-h-96 w-full rounded-2xl object-contain ring-1 ring-white/10" alt="Base64 还原图片预览" />
-        </div>
-      </div>
-    </section>
-
-    <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl backdrop-blur md:p-8">
-      <h2 class="mb-4 text-2xl font-black text-gray-900 dark:text-white">关于 base64-encoder 在线 Base64 编解码工具</h2>
-      <p>
-        base64-encoder 是一款面向开发者、运营人员和内容编辑的在线 Base64 文本和图片双向编解码器。它可以将普通文本快速转换为 Base64 字符串，也能把合法的 Base64 内容解码回可读文本，特别适合处理接口调试、配置传输、日志排查、邮件内容编码和前端数据嵌入等场景。工具采用浏览器本地计算方式完成转换，输入内容不会上传到服务器，使用更安心。
-      </p>
-      <p class="mt-3">
-        对于图片处理，本工具支持拖拽上传图片转换为 Base64 Data URL，生成的字符串可直接用于 CSS、HTML img 标签、小图标内联、Markdown 文档或 JSON 配置中，减少静态资源请求；同时也支持粘贴 data:image/png;base64 形式或纯 Base64 图片字符串，一键还原为图片预览并下载。使用方法非常简单：在文本区域输入内容后点击“编码为 Base64”或“解码为文本”；在图片区域拖入文件即可自动生成结果。如果你正在寻找中文 Base64 编码解码、图片转 Base64 在线工具、Base64 转图片预览工具，base64-encoder 可以提供高效、干净且响应式的体验。
-      </p>
-    </article>
-  </main>
-
-  <footer class="relative mx-auto max-w-7xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-6 lg:px-8">
-    <p>© <span id="year"></span> base64-encoder · All processing runs locally in your browser.</p>
-  </footer>
-
-  <script>
-    (() => {
-      'use strict';
-
-      const $ = (id) => document.getElementById(id);
-
-      const elements = {
-        textTab: $('textTab'),
-        imageTab: $('imageTab'),
-        textPanel: $('textPanel'),
-        imagePanel: $('imagePanel'),
-        alert: $('alert'),
-        textInput: $('textInput'),
-        textOutput: $('textOutput'),
-        inputCount: $('inputCount'),
-        outputCount: $('outputCount'),
-        encodeBtn: $('encodeBtn'),
-        decodeBtn: $('decodeBtn'),
-        clearTextBtn: $('clearTextBtn'),
-        copyTextBtn: $('copyTextBtn'),
-        downloadTextBtn: $('downloadTextBtn'),
-        swapTextBtn: $('swapTextBtn'),
-        dropZone: $('dropZone'),
-        fileInput: $('fileInput'),
-        imageInfo: $('imageInfo'),
-        imageBase64: $('imageBase64'),
-        imageBase64Count: $('imageBase64Count'),
-        copyImageBtn: $('copyImageBtn'),
-        previewImageBtn: $('previewImageBtn'),
-        clearImageBtn: $('clearImageBtn'),
-        previewWrap: $('previewWrap'),
-        imagePreview: $('imagePreview'),
-        downloadImageBtn: $('downloadImageBtn'),
-        year: $('year')
-      };
-
-      let currentImageDataUrl = '';
-      elements.year.textContent = new Date().getFullYear();
-
-      function showAlert(message, type = 'error') {
-        const isError = type === 'error';
-        elements.alert.className = `mb-6 rounded-2xl border px-4 py-3 text-sm font-medium ${isError ? 'border-red-400/40 bg-red-500/15 text-red-100' : 'border-emerald-400/40 bg-emerald-500/15 text-emerald-100'}`;
-        elements.alert.textContent = message;
-        elements.alert.classList.remove('hidden');
-        clearTimeout(showAlert.timer);
-        showAlert.timer = setTimeout(() => elements.alert.classList.add('hidden'), 4200);
+  <link rel="stylesheet" href="./style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Base64 Encoder Decoder",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A free browser-local Base64 text and image encoder decoder by Micro Tools Matrix.",
+      "url": "https://mymicrotools.xyz/base64-encoder.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "category": "Free"
       }
-
-      function setButtonLoading(button, text) {
-        const original = button.textContent;
-        button.textContent = text;
-        button.disabled = true;
-        button.classList.add('opacity-70', 'cursor-not-allowed');
-        return () => {
-          button.textContent = original;
-          button.disabled = false;
-          button.classList.remove('opacity-70', 'cursor-not-allowed');
-        };
-      }
-
-      function updateCounts() {
-        elements.inputCount.textContent = `${elements.textInput.value.length} 字符`;
-        elements.outputCount.textContent = `${elements.textOutput.value.length} 字符`;
-        elements.imageBase64Count.textContent = `${elements.imageBase64.value.length} 字符`;
-      }
-
-      function switchTab(tab) {
-        const activeClasses = ['bg-cyan-500', 'text-slate-950', 'shadow-lg', 'shadow-cyan-500/20'];
-        const inactiveClasses = ['text-slate-300', 'hover:bg-white/10'];
-        if (tab === 'text') {
-          elements.textPanel.classList.remove('hidden');
-          elements.textPanel.classList.add('grid');
-          elements.imagePanel.classList.add('hidden');
-          elements.imagePanel.classList.remove('grid');
-          elements.textTab.classList.add(...activeClasses);
-          elements.textTab.classList.remove(...inactiveClasses);
-          elements.imageTab.classList.remove(...activeClasses);
-          elements.imageTab.classList.add(...inactiveClasses);
-        } else {
-          elements.imagePanel.classList.remove('hidden');
-          elements.imagePanel.classList.add('grid');
-          elements.textPanel.classList.add('hidden');
-          elements.textPanel.classList.remove('grid');
-          elements.imageTab.classList.add(...activeClasses);
-          elements.imageTab.classList.remove(...inactiveClasses);
-          elements.textTab.classList.remove(...activeClasses);
-          elements.textTab.classList.add(...inactiveClasses);
-        }
-      }
-
-      function encodeUtf8ToBase64(str) {
-        const bytes = new TextEncoder().encode(str);
-        let binary = '';
-        const chunkSize = 0x8000;
-        for (let i = 0; i < bytes.length; i += chunkSize) {
-          binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
-        }
-        return btoa(binary);
-      }
-
-      function decodeBase64ToUtf8(base64) {
-        const clean = base64.replace(/\s+/g, '');
-        if (!clean) throw new Error('请输入需要解码的 Base64 字符串。');
-        if (!/^[A-Za-z0-9+/]*={0,2}$/.test(clean) || clean.length % 4 === 1) {
-          throw new Error('Base64 格式不正确，请检查是否包含非法字符或缺少补位符。');
-        }
-        const padded = clean + '='.repeat((4 - clean.length % 4) % 4);
-        let binary;
-        try {
-          binary = atob(padded);
-        } catch (e) {
-          throw new Error('Base64 解码失败，请确认输入内容完整有效。');
-        }
-        const bytes = new Uint8Array(binary.length);
-        for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-        try {
-          return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
-        } catch (e) {
-          throw new Error('解码后的内容不是有效的 UTF-8 文本，可能是图片、二进制文件或其他数据。');
-        }
-      }
-
-      function downloadBlob(content, filename, type) {
-        const blob = new Blob([content], { type });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
-      }
-
-      async function copyToClipboard(text) {
-        if (!text) throw new Error('没有可复制的内容。');
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(text);
-          return;
-        }
-        const temp = document.createElement('textarea');
-        temp.value = text;
-        temp.style.position = 'fixed';
-        temp.style.opacity = '0';
-        document.body.appendChild(temp);
-        temp.focus();
-        temp.select();
-        const ok = document.execCommand('copy');
-        temp.remove();
-        if (!ok) throw new Error('复制失败，请手动选择内容复制。');
-      }
-
-      function handleFile(file) {
-        if (!file) {
-          showAlert('未选择任何文件。');
-          return;
-        }
-        if (!file.type || !file.type.startsWith('image/')) {
-          showAlert('请选择有效的图片文件，例如 PNG、JPG、GIF、WebP 或 SVG。');
-          return;
-        }
-        const maxSize = 15 * 1024 * 1024;
-        if (file.size > maxSize) {
-          showAlert('图片过大，请选择 15MB 以内的图片，以避免浏览器处理缓慢。');
-          return;
-        }
-
-        const reader = new FileReader();
-        reader.onerror = () => showAlert('读取图片失败，请重试或更换文件。');
-        reader.onload = () => {
-          const result = typeof reader.result === 'string' ? reader.result : '';
-          if (!result.startsWith('data:image/')) {
-            showAlert('图片转换失败，生成的 Data URL 格式异常。');
-            return;
-          }
-          currentImageDataUrl = result;
-          elements.imageBase64.value = result;
-          elements.imagePreview.src = result;
-          elements.previewWrap.classList.remove('hidden');
-          elements.imageInfo.classList.remove('hidden');
-          elements.imageInfo.innerHTML = `
-            <div class="grid gap-2 sm:grid-cols-2">
-              <div><span class="text-slate-500">文件名：</span>${escapeHtml(file.name)}</div>
-              <div><span class="text-slate-500">类型：</span>${escapeHtml(file.type)}</div>
-              <div><span class="text-slate-500">大小：</span>${formatSize(file.size)}</div>
-              <div><span class="text-slate-500">Base64长度：</span>${result.length.toLocaleString()} 字符</div>
-            </div>
-          `;
-          updateCounts();
-          showAlert('图片已成功转换为 Base64。', 'success');
-        };
-        reader.readAsDataURL(file);
-      }
-
-      function escapeHtml(str) {
-        return String(str).replace(/[&<>"']/g, (m) => ({
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;',
-          '"': '&quot;',
-          "'": '&#39;'
-        }[m]));
-      }
-
-      function formatSize(bytes) {
-        if (!Number.isFinite(bytes) || bytes < 0) return '未知';
-        const units = ['B', 'KB', 'MB', 'GB'];
-        let size = bytes;
-        let index = 0;
-        while (size >= 1024 && index < units.length - 1) {
-          size /= 1024;
-          index++;
-        }
-        return `${size.toFixed(index === 0 ? 0 : 2)} ${units[index]}`;
-      }
-
-      function normalizeImageBase64(input) {
-        const raw = input.trim();
-        if (!raw) throw new Error('请先粘贴图片 Base64 字符串或上传图片。');
-
-        if (/^data:image\/[a-zA-Z0-9.+-]+;base64,/i.test(raw)) {
-          const payload = raw.split(',')[1] || '';
-          if (!isLikelyBase64(payload)) throw new Error('Data URL 中的 Base64 数据格式不正确。');
-          return raw;
-        }
-
-        const clean = raw.replace(/\s+/g, '');
-        if (!isLikelyBase64(clean)) {
-          throw new Error('图片 Base64 格式不正确，请粘贴 data:image/...;base64,... 或合法的纯 Base64 字符串。');
-        }
-
-        const mime = detectImageMime(clean);
-        if (!mime) {
-          throw new Error('无法识别图片类型。若使用纯 Base64，请确认它来自 PNG、JPG、GIF、WebP 或 SVG 图片。');
-        }
-        return `data:${mime};base64,${clean}`;
-      }
-
-      function isLikelyBase64(value) {
-        if (!value || value.length < 8) return false;
-        if (!/^[A-Za-z0-9+/]*={0,2}$/.test(value)) return false;
-        return value.length % 4 !== 1;
-      }
-
-      function detectImageMime(base64) {
-        const prefix = base64.slice(0, 32);
-        if (prefix.startsWith('/9j/')) return 'image/jpeg';
-        if (prefix.startsWith('iVBORw0KGgo')) return 'image/png';
-        if (prefix.startsWith('R0lGODlh') || prefix.startsWith('R0lGODdh')) return 'image/gif';
-        if (prefix.startsWith('UklGR')) return 'image/webp';
-        if (prefix.startsWith('PHN2Zy') || prefix.startsWith('PD94bW') || prefix.startsWith('77u/PHN2Zy')) return 'image/svg+xml';
-        if (prefix.startsWith('AAABAA')) return 'image/x-icon';
-        return '';
-      }
-
-      elements.textTab.addEventListener('click', () => switchTab('text'));
-      elements.imageTab.addEventListener('click', () => switchTab('image'));
-
-      elements.textInput.addEventListener('input', updateCounts);
-      elements.textOutput.addEventListener('input', updateCounts);
-      elements.imageBase64.addEventListener('input', updateCounts);
-
-      elements.encodeBtn.addEventListener('click', () => {
-        const stop = setButtonLoading(elements.encodeBtn, '编码中...');
-        try {
-          const input = elements.textInput.value;
-          if (!input) throw new Error('请输入需要编码的文本。');
-          elements.textOutput.value = encodeUtf8ToBase64(input);
-          updateCounts();
-          showAlert('文本已成功编码为 Base64。', 'success');
-        } catch (e) {
-          showAlert(e.message || '编码失败，请检查输入内容。');
-        } finally {
-          stop();
-        }
-      });
-
-      elements.decodeBtn.addEventListener('click', () => {
-        const stop = setButtonLoading(elements.decodeBtn, '解码中...');
-        try {
-          elements.textOutput.value = decodeBase64ToUtf8(elements.textInput.value);
-          updateCounts();
-          showAlert('Base64 已成功解码为文本。', 'success');
-        } catch (e) {
-          showAlert(e.message || '解码失败，请检查输入内容。');
-        } finally {
-          stop();
-        }
-      });
-
-      elements.clearTextBtn.addEventListener('click', () => {
-        elements.textInput.value = '';
-        elements.textOutput.value = '';
-        updateCounts();
-        showAlert('文本输入和输出已清空。', 'success');
-      });
-
-      elements.copyTextBtn.addEventListener('click', async () => {
-        try {
-          await copyToClipboard(elements.textOutput.value);
-          showAlert('文本结果已复制到剪贴板。', 'success');
-        } catch (e) {
-          showAlert(e.message || '复制失败。');
-        }
-      });
-
-      elements.downloadTextBtn.addEventListener('click', () => {
-        const content = elements.textOutput.value;
-        if (!content) {
-          showAlert('没有可下载的文本结果。');
-          return;
-        }
-        downloadBlob(content, `base64-result-${Date.now()}.txt`, 'text/plain;charset=utf-8');
-        showAlert('TXT 文件已开始下载。', 'success');
-      });
-
-      elements.swapTextBtn.addEventListener('click', () => {
-        if (!elements.textOutput.value) {
-          showAlert('输出区为空，无法转入输入区。');
-          return;
-        }
-        elements.textInput.value = elements.textOutput.value;
-        elements.textOutput.value = '';
-        updateCounts();
-        showAlert('输出结果已转入输入区。', 'success');
-      });
-
-      elements.dropZone.addEventListener('click', (event) => {
-        if (event.target.tagName !== 'INPUT') elements.fileInput.click();
-      });
-
-      elements.fileInput.addEventListener('change', () => {
-        handleFile(elements.fileInput.files && elements.fileInput.files[0]);
-        elements.fileInput.value = '';
-      });
-
-      ['dragenter', 'dragover'].forEach((eventName) => {
-        elements.dropZone.addEventListener(eventName, (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          elements.dropZone.classList.add('border-cyan-200', 'bg-cyan-400/15', 'scale-[1.01]');
-        });
-      });
-
-      ['dragleave', 'drop'].forEach((eventName) => {
-        elements.dropZone.addEventListener(eventName, (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          elements.dropZone.classList.remove('border-cyan-200', 'bg-cyan-400/15', 'scale-[1.01]');
-        });
-      });
-
-      elements.dropZone.addEventListener('drop', (event) => {
-        const file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
-        handleFile(file);
-      });
-
-      elements.copyImageBtn.addEventListener('click', async () => {
-        try {
-          await copyToClipboard(elements.imageBase64.value);
-          showAlert('图片 Base64 已复制到剪贴板。', 'success');
-        } catch (e) {
-          showAlert(e.message || '复制失败。');
-        }
-      });
-
-      elements.previewImageBtn.addEventListener('click', () => {
-        const stop = setButtonLoading(elements.previewImageBtn, '还原中...');
-        try {
-          const dataUrl = normalizeImageBase64(elements.imageBase64.value);
-          const img = new Image();
-          img.onload = () => {
-            currentImageDataUrl = dataUrl;
-            elements.imagePreview.src = dataUrl;
-            elements.previewWrap.classList.remove('hidden');
-            updateCounts();
-            showAlert('图片已成功还原并预览。', 'success');
-            stop();
-          };
-          img.onerror = () => {
-            showAlert('图片加载失败，请确认 Base64 内容完整且图片格式受浏览器支持。');
-            stop();
-          };
-          img.src = dataUrl;
-        } catch (e) {
-          showAlert(e.message || '还原图片失败。');
-          stop();
-        }
-      });
-
-      elements.clearImageBtn.addEventListener('click', () => {
-        elements.imageBase64.value = '';
-        elements.imagePreview.removeAttribute('src');
-        currentImageDataUrl = '';
-        elements.previewWrap.classList.add('hidden');
-        elements.imageInfo.classList.add('hidden');
-        elements.imageInfo.textContent = '';
-        updateCounts();
-        showAlert('图片 Base64 和预览已清空。', 'success');
-      });
-
-      elements.downloadImageBtn.addEventListener('click', () => {
-        try {
-          const dataUrl = currentImageDataUrl || normalizeImageBase64(elements.imageBase64.value);
-          const a = document.createElement('a');
-          const mimeMatch = dataUrl.match(/^data:(image\/[a-zA-Z0-9.+-]+);base64,/);
-          const mime = mimeMatch ? mimeMatch[1] : 'image/png';
-          const extMap = {
-            'image/jpeg': 'jpg',
-            'image/png': 'png',
-            'image/gif': 'gif',
-            'image/webp': 'webp',
-            'image/svg+xml': 'svg',
-            'image/x-icon': 'ico'
-          };
-          a.href = dataUrl;
-          a.download = `base64-image-${Date.now()}.${extMap[mime] || 'png'}`;
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-          showAlert('图片已开始下载。', 'success');
-        } catch (e) {
-          showAlert(e.message || '下载图片失败。');
-        }
-      });
-
-      window.addEventListener('error', () => {
-        showAlert('发生了一个意外错误，但应用仍可继续使用。请检查输入内容后重试。');
-      });
-
-      window.addEventListener('unhandledrejection', () => {
-        showAlert('操作未能完成，请稍后重试或检查输入格式。');
-      });
-
-      updateCounts();
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
     }
   </script>
-  <!-- pwa-register:end -->
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
+</head>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">Base64 编解码器</span>
+        </span>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeToggleAria">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline"></span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]" data-i18n-aria-label="languageAria">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">Base64 编解码器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中本地完成文本与图片的 Base64 编码、解码和预览，无需上传文件或文本。</p>
+        </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label for="modeSelect" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="modeLabel">处理方式</label>
+            <select id="modeSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+              <option value="textEncode" data-i18n="modeTextEncode">文本编码为 Base64</option>
+              <option value="textDecode" data-i18n="modeTextDecode">Base64 解码为文本</option>
+              <option value="imageToBase64" data-i18n="modeImageToBase64">图片转换为 Base64</option>
+              <option value="base64ToImage" data-i18n="modeBase64ToImage">Base64 还原为图片</option>
+            </select>
+          </div>
+
+          <div id="textInputWrap">
+            <label for="inputText" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="textLabel">文本或 Base64 字符串</label>
+            <textarea id="inputText" rows="10" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="inputPlaceholder" placeholder="输入文本、Base64 字符串或 Data URL"></textarea>
+          </div>
+
+          <div id="fileInputWrap" class="hidden">
+            <label for="imageFile" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="imageLabel">选择图片</label>
+            <div id="dropZone" class="flex min-h-44 w-full flex-col items-center justify-center gap-3 rounded-3xl border border-dashed border-gray-300 bg-slate-50 px-4 py-6 text-center transition hover:border-cyan-400/70 hover:bg-cyan-50/70 dark:border-white/10 dark:bg-slate-950/70 dark:hover:border-cyan-400/40 dark:hover:bg-white/[0.06]">
+              <input id="imageFile" type="file" accept="image/*" class="sr-only">
+              <button id="chooseFileBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="chooseImage">选择图片</button>
+              <p class="max-w-sm text-sm leading-6 text-slate-600 dark:text-slate-400" data-i18n="dropHint">或将图片拖拽到这里，文件只会在浏览器内读取。</p>
+              <p id="fileInfo" class="min-h-6 max-w-full break-words text-sm leading-6 text-slate-500 dark:text-slate-400"></p>
+            </div>
+          </div>
+
+          <div class="grid gap-3 sm:grid-cols-3">
+            <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-slate-950/70">
+              <p class="text-xs font-semibold text-slate-500 dark:text-slate-400" data-i18n="inputChars">输入字符</p>
+              <p id="inputCount" class="mt-1 text-lg font-bold tabular-nums text-slate-950 dark:text-white">0</p>
+            </div>
+            <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-slate-950/70">
+              <p class="text-xs font-semibold text-slate-500 dark:text-slate-400" data-i18n="outputChars">结果字符</p>
+              <p id="outputCount" class="mt-1 text-lg font-bold tabular-nums text-slate-950 dark:text-white">0</p>
+            </div>
+            <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-slate-950/70">
+              <p class="text-xs font-semibold text-slate-500 dark:text-slate-400" data-i18n="fileSize">文件大小</p>
+              <p id="fileSizeText" class="mt-1 text-lg font-bold tabular-nums text-slate-950 dark:text-white">0 B</p>
+            </div>
+          </div>
+
+          <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <button id="convertBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">转换</button>
+            <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">示例</button>
+            <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+          </div>
+
+          <p id="statusText" class="min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label for="outputText" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="resultLabel">转换结果</label>
+            <textarea id="outputText" rows="12" readonly class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="outputPlaceholder" placeholder="结果会显示在这里"></textarea>
+          </div>
+
+          <div id="imagePreviewWrap" class="hidden rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <div class="mb-3 flex items-center justify-between gap-3">
+              <p class="text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="previewTitle">图片预览</p>
+              <span id="mimeText" class="max-w-[11rem] truncate rounded-full border border-gray-200 bg-white px-2.5 py-1 text-xs font-semibold text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400"></span>
+            </div>
+            <img id="imagePreview" src="" alt="" class="max-h-80 w-full rounded-2xl border border-gray-200 bg-white object-contain p-2 dark:border-white/10 dark:bg-white/[0.04]" data-i18n-alt="previewAlt">
+          </div>
+
+          <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
+            <button id="downloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadAction" disabled>下载图片</button>
+            <button id="swapBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="swapAction">结果转输入</button>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">Base64 编解码器是 Micro Tools Matrix 提供的免费在线开发者工具，适合快速处理配置片段、接口示例、Data URL、图标和小型图片资源。文本编码、文本解码、图片转 Base64、Base64 还原图片都在浏览器本地处理，内容无需上传到服务器，也不会调用远程接口。你可以拖拽图片生成可复制的 Base64 字符串，或粘贴 Data URL 直接预览并下载还原图片。该工具适合前端调试、文档编写、邮件模板、CSS 内联资源和临时数据转换，在保持隐私的同时提供稳定、简洁的工作流。</article>
+  </main>
+
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+
+  <script>
+    const I18N = {
+      zh: {
+        toolName: "Base64 编解码器",
+        h1: "Base64 编解码器",
+        title: "Base64 编解码器 - Micro Tools Matrix 本地工具箱",
+        metaDescription: "Micro Tools Matrix 提供免费的 Base64 文本和图片双向编解码器，支持拖拽图片转 Base64，浏览器本地处理，无需上传。",
+        metaKeywords: "Base64 编码, Base64 解码, 图片转 Base64, 文本转 Base64, 浏览器本地处理, 无需上传, Micro Tools Matrix",
+        sponsor: "赞赏",
+        buyCoffee: "Buy Me a Coffee",
+        themeToggleAria: "切换主题",
+        languageAria: "语言",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        eyebrow: "浏览器本地处理",
+        intro: "在 Micro Tools Matrix 中本地完成文本与图片的 Base64 编码、解码和预览，无需上传文件或文本。",
+        localBadge: "本地运行",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        outputTitle: "结果",
+        outputBadge: "输出",
+        modeLabel: "处理方式",
+        modeTextEncode: "文本编码为 Base64",
+        modeTextDecode: "Base64 解码为文本",
+        modeImageToBase64: "图片转换为 Base64",
+        modeBase64ToImage: "Base64 还原为图片",
+        textLabel: "文本或 Base64 字符串",
+        inputPlaceholder: "输入文本、Base64 字符串或 Data URL",
+        imageLabel: "选择图片",
+        chooseImage: "选择图片",
+        dropHint: "或将图片拖拽到这里，文件只会在浏览器内读取。",
+        inputChars: "输入字符",
+        outputChars: "结果字符",
+        fileSize: "文件大小",
+        primaryAction: "转换",
+        sampleAction: "示例",
+        secondaryAction: "清空",
+        resultLabel: "转换结果",
+        outputPlaceholder: "结果会显示在这里",
+        previewTitle: "图片预览",
+        previewAlt: "Base64 还原的图片预览",
+        copyAction: "复制结果",
+        downloadAction: "下载图片",
+        swapAction: "结果转输入",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。",
+        seoArticle: "Base64 编解码器是 Micro Tools Matrix 提供的免费在线开发者工具，适合快速处理配置片段、接口示例、Data URL、图标和小型图片资源。文本编码、文本解码、图片转 Base64、Base64 还原图片都在浏览器本地处理，内容无需上传到服务器，也不会调用远程接口。你可以拖拽图片生成可复制的 Base64 字符串，或粘贴 Data URL 直接预览并下载还原图片。该工具适合前端调试、文档编写、邮件模板、CSS 内联资源和临时数据转换，在保持隐私的同时提供稳定、简洁的工作流。",
+        statusReady: "请选择处理方式并输入内容。",
+        statusEncoded: "文本已编码为 Base64。",
+        statusDecoded: "Base64 已解码为文本。",
+        statusImageEncoded: "图片已转换为 Base64。",
+        statusImageDecoded: "图片已从 Base64 还原。",
+        statusCleared: "已清空。",
+        statusSample: "已填入示例。",
+        statusCopied: "已复制到剪贴板。",
+        statusSwapped: "结果已移入输入框。",
+        statusFileSelected: "已选择图片：{name}",
+        statusDownloadReady: "图片可预览并下载。",
+        errorEmpty: "请输入需要处理的内容。",
+        errorNoImage: "请选择或拖拽一张图片。",
+        errorInvalidBase64: "这不是有效的 Base64 内容，请检查后重试。",
+        errorInvalidImage: "无法识别图片，请确认 Base64 内容包含图片数据。",
+        errorCopy: "复制失败，请手动选择结果复制。",
+        errorReadFile: "读取图片失败，请重新选择文件。",
+        errorNotImage: "请选择图片文件。",
+        fileNone: "0 B",
+        sampleText: "你好，Micro Tools Matrix！",
+        sampleBase64: "5L2g5aW977yMTWljcm8gVG9vbHMgTWF0cml477yB",
+        sampleImageBase64: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTYwIiB2aWV3Qm94PSIwIDAgMjQwIDE2MCI+PHJlY3Qgd2lkdGg9IjI0MCIgaGVpZ2h0PSIxNjAiIHJ4PSIyOCIiIGZpbGw9IiMwNmI2ZDIiLz48Y2lyY2xlIGN4PSIxMjAiIGN5PSI3MiIgcj0iMzIiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii44NSIvPjx0ZXh0IHg9IjEyMCIgeT0iMTI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMwZjE3MmEiPkJhc2U2NDwvdGV4dD48L3N2Zz4="
+      },
+      en: {
+        toolName: "Base64 Encoder",
+        h1: "Base64 Encoder",
+        title: "Base64 Encoder - Micro Tools Matrix Local Toolkit",
+        metaDescription: "A free Base64 text and image encoder decoder from Micro Tools Matrix. Drag images to create Base64 strings with browser-local processing and no upload.",
+        metaKeywords: "Base64 encoder, Base64 decoder, image to Base64, text to Base64, browser-local processing, no upload, free online developer tool, Micro Tools Matrix",
+        sponsor: "Sponsor",
+        buyCoffee: "Buy Me a Coffee",
+        themeToggleAria: "Toggle theme",
+        languageAria: "Language",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        eyebrow: "Browser-local processing",
+        intro: "Encode, decode, preview, and restore Base64 text and images locally in Micro Tools Matrix without uploading files or text.",
+        localBadge: "Local",
+        inputTitle: "Input",
+        inputBadge: "Input",
+        outputTitle: "Result",
+        outputBadge: "Output",
+        modeLabel: "Mode",
+        modeTextEncode: "Encode text to Base64",
+        modeTextDecode: "Decode Base64 to text",
+        modeImageToBase64: "Convert image to Base64",
+        modeBase64ToImage: "Restore image from Base64",
+        textLabel: "Text or Base64 string",
+        inputPlaceholder: "Enter text, a Base64 string, or a Data URL",
+        imageLabel: "Choose image",
+        chooseImage: "Choose image",
+        dropHint: "Or drag an image here. The file is read only inside your browser.",
+        inputChars: "Input characters",
+        outputChars: "Result characters",
+        fileSize: "File size",
+        primaryAction: "Convert",
+        sampleAction: "Sample",
+        secondaryAction: "Clear",
+        resultLabel: "Converted result",
+        outputPlaceholder: "The result will appear here",
+        previewTitle: "Image preview",
+        previewAlt: "Preview of image restored from Base64",
+        copyAction: "Copy result",
+        downloadAction: "Download image",
+        swapAction: "Move result to input",
+        footer: "Micro Tools Matrix - Browser-local processing with no upload.",
+        seoArticle: "The Base64 Encoder from Micro Tools Matrix is a free online developer tool for quick text and image conversion. It supports text encoding, text decoding, image to Base64, and Base64 to image restoration in one clean workflow. All work uses browser-local processing, so your snippets, configuration values, icons, screenshots, and Data URLs are not uploaded to a server and no remote API is called. You can drag an image into the page to generate a copyable Base64 string, paste a Data URL to preview it, or download the restored image when the input contains valid image data. This tool is useful for frontend debugging, documentation, email templates, CSS inline assets, API examples, and temporary data conversion. It keeps the experience simple while preserving privacy for everyday development tasks.",
+        statusReady: "Choose a mode and enter content.",
+        statusEncoded: "Text has been encoded to Base64.",
+        statusDecoded: "Base64 has been decoded to text.",
+        statusImageEncoded: "Image has been converted to Base64.",
+        statusImageDecoded: "Image has been restored from Base64.",
+        statusCleared: "Cleared.",
+        statusSample: "Sample inserted.",
+        statusCopied: "Copied to clipboard.",
+        statusSwapped: "Result moved to the input field.",
+        statusFileSelected: "Image selected: {name}",
+        statusDownloadReady: "The image is ready to preview and download.",
+        errorEmpty: "Enter content to process.",
+        errorNoImage: "Choose or drag an image first.",
+        errorInvalidBase64: "This is not valid Base64 content. Please check it and try again.",
+        errorInvalidImage: "The image cannot be recognized. Make sure the Base64 content contains image data.",
+        errorCopy: "Copy failed. Please select and copy the result manually.",
+        errorReadFile: "Could not read the image. Please choose the file again.",
+        errorNotImage: "Please choose an image file.",
+        fileNone: "0 B",
+        sampleText: "Hello, Micro Tools Matrix!",
+        sampleBase64: "SGVsbG8sIE1pY3JvIFRvb2xzIE1hdHJpeCE=",
+        sampleImageBase64: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTYwIiB2aWV3Qm94PSIwIDAgMjQwIDE2MCI+PHJlY3Qgd2lkdGg9IjI0MCIgaGVpZ2h0PSIxNjAiIHJ4PSIyOCIiIGZpbGw9IiMwNmI2ZDIiLz48Y2lyY2xlIGN4PSIxMjAiIGN5PSI3MiIgcj0iMzIiIGZpbGw9IiNmZmYiIG9wYWNpdHk9Ii44NSIvPjx0ZXh0IHg9IjEyMCIgeT0iMTI0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LWZhbWlseT0iQXJpYWwsIHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTYiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMwZjE3MmEiPkJhc2U2NDwvdGV4dD48L3N2Zz4="
+      }
+    };
+
+    let currentLanguage = "zh";
+    let lastStatusKey = "statusReady";
+    let lastStatusParams = {};
+    let currentImageDataUrl = "";
+    let downloadableDataUrl = "";
+    let downloadableMime = "";
+    let selectedFileSize = 0;
+
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      const stored = localStorage.getItem("microToolsLanguage");
+      return stored === "en" ? "en" : "zh";
+    }
+
+    function t(key, params = {}) {
+      const dict = I18N[currentLanguage] || I18N.zh;
+      let text = dict[key] || I18N.zh[key] || "";
+      Object.keys(params).forEach((name) => {
+        text = text.replaceAll("{" + name + "}", String(params[name]));
+      });
+      return text;
+    }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.title = dict.title;
+
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) metaDescription.setAttribute("content", dict.metaDescription);
+
+      const metaKeywords = document.querySelector('meta[name="keywords"]');
+      if (metaKeywords) metaKeywords.setAttribute("content", dict.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && dict[key]) node.textContent = dict[key];
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && dict[key]) node.setAttribute("placeholder", dict[key]);
+      });
+
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && dict[key]) node.setAttribute("title", dict[key]);
+      });
+
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && dict[key]) node.setAttribute("aria-label", dict[key]);
+      });
+
+      document.querySelectorAll("[data-i18n-alt]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-alt");
+        if (key && dict[key]) node.setAttribute("alt", dict[key]);
+      });
+
+      const sponsorLabel = document.querySelector("#openSponsorBtn [data-i18n='sponsor']");
+      if (sponsorLabel) sponsorLabel.textContent = dict.sponsor;
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        if (currentLanguage === "zh") {
+          zhBtn.classList.add("bg-cyan-400", "text-slate-950");
+          enBtn.classList.add("text-slate-600", "dark:text-slate-400");
+          zhBtn.setAttribute("aria-pressed", "true");
+          enBtn.setAttribute("aria-pressed", "false");
+        } else {
+          enBtn.classList.add("bg-cyan-400", "text-slate-950");
+          zhBtn.classList.add("text-slate-600", "dark:text-slate-400");
+          zhBtn.setAttribute("aria-pressed", "false");
+          enBtn.setAttribute("aria-pressed", "true");
+        }
+      }
+
+      setStatus(lastStatusKey, lastStatusParams);
+      updateCounts();
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function setLanguage(lang) {
+      localStorage.setItem("microToolsLanguage", lang === "en" ? "en" : "zh");
+      applyLanguage(lang);
+    }
+
+    function setStatus(key, params = {}) {
+      lastStatusKey = key;
+      lastStatusParams = params;
+      const statusText = document.getElementById("statusText");
+      if (statusText) statusText.textContent = t(key, params);
+    }
+
+    function encodeUtf8ToBase64(text) {
+      const bytes = new TextEncoder().encode(text);
+      let binary = "";
+      const chunkSize = 0x8000;
+      for (let i = 0; i < bytes.length; i += chunkSize) {
+        const chunk = bytes.subarray(i, i + chunkSize);
+        binary += String.fromCharCode.apply(null, chunk);
+      }
+      return btoa(binary);
+    }
+
+    function decodeBase64ToUtf8(base64) {
+      const clean = extractBase64Payload(base64);
+      const binary = atob(clean);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+      return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+    }
+
+    function extractBase64Payload(value) {
+      const trimmed = value.trim();
+      const commaIndex = trimmed.indexOf(",");
+      const payload = trimmed.startsWith("data:") && commaIndex >= 0 ? trimmed.slice(commaIndex + 1) : trimmed;
+      return payload.replace(/\s+/g, "");
+    }
+
+    function getMimeFromDataUrl(value) {
+      const match = value.trim().match(/^data:([^;,]+)[;,]/i);
+      return match ? match[1] : "";
+    }
+
+    function makeImageDataUrl(value) {
+      const trimmed = value.trim();
+      if (/^data:image\/[a-z0-9.+-]+;base64,/i.test(trimmed)) return trimmed;
+      const clean = extractBase64Payload(trimmed);
+      atob(clean);
+      return "data:image/png;base64," + clean;
+    }
+
+    function formatBytes(bytes) {
+      if (!bytes) return t("fileNone");
+      const units = ["B", "KB", "MB", "GB"];
+      let value = bytes;
+      let index = 0;
+      while (value >= 1024 && index < units.length - 1) {
+        value /= 1024;
+        index += 1;
+      }
+      return (index === 0 ? value.toFixed(0) : value.toFixed(2)) + " " + units[index];
+    }
+
+    function updateCounts() {
+      const inputText = document.getElementById("inputText");
+      const outputText = document.getElementById("outputText");
+      const inputCount = document.getElementById("inputCount");
+      const outputCount = document.getElementById("outputCount");
+      const fileSizeText = document.getElementById("fileSizeText");
+      if (inputCount) inputCount.textContent = String(inputText?.value.length || 0);
+      if (outputCount) outputCount.textContent = String(outputText?.value.length || 0);
+      if (fileSizeText) fileSizeText.textContent = formatBytes(selectedFileSize);
+    }
+
+    function updateModeUI() {
+      const mode = document.getElementById("modeSelect")?.value || "textEncode";
+      const textInputWrap = document.getElementById("textInputWrap");
+      const fileInputWrap = document.getElementById("fileInputWrap");
+      const downloadBtn = document.getElementById("downloadBtn");
+      if (textInputWrap) textInputWrap.classList.toggle("hidden", mode === "imageToBase64");
+      if (fileInputWrap) fileInputWrap.classList.toggle("hidden", mode !== "imageToBase64");
+      if (downloadBtn) downloadBtn.disabled = !downloadableDataUrl;
+      setStatus("statusReady");
+    }
+
+    function clearPreview() {
+      downloadableDataUrl = "";
+      downloadableMime = "";
+      const wrap = document.getElementById("imagePreviewWrap");
+      const image = document.getElementById("imagePreview");
+      const mimeText = document.getElementById("mimeText");
+      const downloadBtn = document.getElementById("downloadBtn");
+      if (wrap) wrap.classList.add("hidden");
+      if (image) image.removeAttribute("src");
+      if (mimeText) mimeText.textContent = "";
+      if (downloadBtn) downloadBtn.disabled = true;
+    }
+
+    function showPreview(dataUrl, mime) {
+      downloadableDataUrl = dataUrl;
+      downloadableMime = mime || getMimeFromDataUrl(dataUrl) || "image/png";
+      const wrap = document.getElementById("imagePreviewWrap");
+      const image = document.getElementById("imagePreview");
+      const mimeText = document.getElementById("mimeText");
+      const downloadBtn = document.getElementById("downloadBtn");
+      if (image) image.src = dataUrl;
+      if (mimeText) mimeText.textContent = downloadableMime;
+      if (wrap) wrap.classList.remove("hidden");
+      if (downloadBtn) downloadBtn.disabled = false;
+    }
+
+    function convert() {
+      const mode = document.getElementById("modeSelect")?.value || "textEncode";
+      const inputText = document.getElementById("inputText");
+      const outputText = document.getElementById("outputText");
+      if (!outputText) return;
+
+      clearPreview();
+
+      try {
+        if (mode === "textEncode") {
+          const value = inputText?.value || "";
+          if (!value) {
+            setStatus("errorEmpty");
+            return;
+          }
+          outputText.value = encodeUtf8ToBase64(value);
+          setStatus("statusEncoded");
+        } else if (mode === "textDecode") {
+          const value = inputText?.value || "";
+          if (!value.trim()) {
+            setStatus("errorEmpty");
+            return;
+          }
+          outputText.value = decodeBase64ToUtf8(value);
+          setStatus("statusDecoded");
+        } else if (mode === "imageToBase64") {
+          if (!currentImageDataUrl) {
+            setStatus("errorNoImage");
+            return;
+          }
+          outputText.value = currentImageDataUrl;
+          showPreview(currentImageDataUrl, getMimeFromDataUrl(currentImageDataUrl));
+          setStatus("statusImageEncoded");
+        } else if (mode === "base64ToImage") {
+          const value = inputText?.value || "";
+          if (!value.trim()) {
+            setStatus("errorEmpty");
+            return;
+          }
+          const dataUrl = makeImageDataUrl(value);
+          showPreview(dataUrl, getMimeFromDataUrl(dataUrl) || "image/png");
+          outputText.value = dataUrl;
+          setStatus("statusImageDecoded");
+        }
+      } catch (error) {
+        outputText.value = "";
+        clearPreview();
+        setStatus(mode === "base64ToImage" ? "errorInvalidImage" : "errorInvalidBase64");
+      }
+
+      updateCounts();
+    }
+
+    function loadSample() {
+      const mode = document.getElementById("modeSelect")?.value || "textEncode";
+      const inputText = document.getElementById("inputText");
+      const outputText = document.getElementById("outputText");
+      if (outputText) outputText.value = "";
+      clearPreview();
+
+      if (mode === "textEncode") {
+        if (inputText) inputText.value = t("sampleText");
+        selectedFileSize = 0;
+      } else if (mode === "textDecode") {
+        if (inputText) inputText.value = t("sampleBase64");
+        selectedFileSize = 0;
+      } else if (mode === "base64ToImage") {
+        if (inputText) inputText.value = t("sampleImageBase64");
+        selectedFileSize = 0;
+      } else {
+        currentImageDataUrl = t("sampleImageBase64");
+        selectedFileSize = Math.round((currentImageDataUrl.length * 3) / 4);
+        const fileInfo = document.getElementById("fileInfo");
+        if (fileInfo) fileInfo.textContent = t("statusFileSelected", { name: "sample.svg" });
+      }
+
+      setStatus("statusSample");
+      updateCounts();
+    }
+
+    function clearAll() {
+      const inputText = document.getElementById("inputText");
+      const outputText = document.getElementById("outputText");
+      const imageFile = document.getElementById("imageFile");
+      const fileInfo = document.getElementById("fileInfo");
+      if (inputText) inputText.value = "";
+      if (outputText) outputText.value = "";
+      if (imageFile) imageFile.value = "";
+      if (fileInfo) fileInfo.textContent = "";
+      currentImageDataUrl = "";
+      selectedFileSize = 0;
+      clearPreview();
+      setStatus("statusCleared");
+      updateCounts();
+    }
+
+    async function copyResult() {
+      const outputText = document.getElementById("outputText");
+      const value = outputText?.value || "";
+      if (!value) {
+        setStatus("errorEmpty");
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(value);
+        setStatus("statusCopied");
+      } catch (error) {
+        outputText.focus();
+        outputText.select();
+        setStatus("errorCopy");
+      }
+    }
+
+    function swapResultToInput() {
+      const outputText = document.getElementById("outputText");
+      const inputText = document.getElementById("inputText");
+      const value = outputText?.value || "";
+      if (!value || !inputText) {
+        setStatus("errorEmpty");
+        return;
+      }
+      inputText.value = value;
+      setStatus("statusSwapped");
+      updateCounts();
+    }
+
+    function downloadImage() {
+      if (!downloadableDataUrl) return;
+      const extensionMap = {
+        "image/png": "png",
+        "image/jpeg": "jpg",
+        "image/jpg": "jpg",
+        "image/gif": "gif",
+        "image/webp": "webp",
+        "image/svg+xml": "svg"
+      };
+      const extension = extensionMap[downloadableMime] || "png";
+      const anchor = document.createElement("a");
+      anchor.href = downloadableDataUrl;
+      anchor.download = "micro-tools-base64-image." + extension;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
+      setStatus("statusDownloadReady");
+    }
+
+    function handleFile(file) {
+      const fileInfo = document.getElementById("fileInfo");
+      if (!file || !file.type.startsWith("image/")) {
+        setStatus("errorNotImage");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        currentImageDataUrl = String(reader.result || "");
+        selectedFileSize = file.size;
+        if (fileInfo) fileInfo.textContent = t("statusFileSelected", { name: file.name });
+        setStatus("statusFileSelected", { name: file.name });
+        updateCounts();
+      };
+      reader.onerror = () => {
+        setStatus("errorReadFile");
+      };
+      reader.readAsDataURL(file);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const modeSelect = document.getElementById("modeSelect");
+      const inputText = document.getElementById("inputText");
+      const imageFile = document.getElementById("imageFile");
+      const dropZone = document.getElementById("dropZone");
+
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", () => {
+        if (typeof openSponsorModal === "function") openSponsorModal();
+      });
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", () => {
+        if (typeof closeSponsorModal === "function") closeSponsorModal();
+      });
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal" && typeof closeSponsorModal === "function") closeSponsorModal();
+      });
+
+      modeSelect?.addEventListener("change", () => {
+        clearPreview();
+        updateModeUI();
+      });
+      inputText?.addEventListener("input", updateCounts);
+      document.getElementById("convertBtn")?.addEventListener("click", convert);
+      document.getElementById("sampleBtn")?.addEventListener("click", loadSample);
+      document.getElementById("clearBtn")?.addEventListener("click", clearAll);
+      document.getElementById("copyBtn")?.addEventListener("click", copyResult);
+      document.getElementById("swapBtn")?.addEventListener("click", swapResultToInput);
+      document.getElementById("downloadBtn")?.addEventListener("click", downloadImage);
+      document.getElementById("chooseFileBtn")?.addEventListener("click", () => imageFile?.click());
+
+      imageFile?.addEventListener("change", () => {
+        const file = imageFile.files && imageFile.files[0];
+        if (file) handleFile(file);
+      });
+
+      dropZone?.addEventListener("dragover", (event) => {
+        event.preventDefault();
+        dropZone.classList.add("border-cyan-400");
+      });
+
+      dropZone?.addEventListener("dragleave", () => {
+        dropZone.classList.remove("border-cyan-400");
+      });
+
+      dropZone?.addEventListener("drop", (event) => {
+        event.preventDefault();
+        dropZone.classList.remove("border-cyan-400");
+        const file = event.dataTransfer?.files && event.dataTransfer.files[0];
+        if (file) handleFile(file);
+      });
+
+      applyLanguage(getInitialLanguage());
+      updateModeUI();
+      updateCounts();
+    });
+  </script>
+  <script src="./sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

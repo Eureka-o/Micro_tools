@@ -1,392 +1,634 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>chords-generator｜吉他/钢琴和弦组成音查询工具</title>
-  <meta name="description" content="吉他/钢琴和弦指法查询字典（基础版）。选择一个根音（如C）和类型（如maj7），利用前端逻辑展示其组成的音阶名称。">
-  <meta name="keywords" content="chords-generator, 和弦生成器, 吉他和弦查询, 钢琴和弦查询, 和弦组成音, maj7和弦, 基础和弦字典, 音程查询">
-  <link rel="icon" type="image/png" href="./assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>和弦生成器 - Micro Tools Matrix 本地工具箱</title>
+  <meta name="description" content="Micro Tools Matrix 和弦生成器在浏览器本地处理根音与和弦类型，快速查看吉他和钢琴基础和弦组成音，无需上传。">
+  <meta name="keywords" content="和弦生成器, 吉他和弦, 钢琴和弦, 和弦组成音, 浏览器本地处理, Micro Tools Matrix">
   <link rel="canonical" href="https://mymicrotools.xyz/chords-generator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/chords-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/chords-generator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/chords-generator.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/chords-generator.html">
-  <meta property="og:title" content="chords-generator｜吉他/钢琴和弦组成音查询工具">
-  <meta property="og:description" content="吉他/钢琴和弦指法查询字典（基础版）。选择一个根音（如C）和类型（如maj7），利用前端逻辑展示其组成的音阶名称。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="chords-generator｜吉他/钢琴和弦组成音查询工具">
-  <meta name="twitter:description" content="吉他/钢琴和弦指法查询字典（基础版）。选择一个根音（如C）和类型（如maj7），利用前端逻辑展示其组成的音阶名称。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Chords Generator",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A browser-local basic chord dictionary for guitar and piano chord tones.",
+      "url": "https://mymicrotools.xyz/chords-generator.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "category": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="切换主题" title="切换主题">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">和弦生成器</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="./chords-generator.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
-        <a href="./en/chords-generator.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="语言" data-i18n-aria-label="languageGroup" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
+        </div>
       </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <header class="relative overflow-hidden border-b border-cyan-400/20 bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-950">
-    <div class="absolute inset-0 opacity-30" aria-hidden="true">
-      <div class="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-cyan-500 blur-3xl"></div>
-      <div class="absolute -bottom-28 -left-20 h-72 w-72 rounded-full bg-indigo-500 blur-3xl"></div>
-    </div>
-    <div class="relative mx-auto max-w-6xl px-5 py-12 sm:py-16">
-      <p class="mb-3 inline-flex rounded-full border border-cyan-300/30 bg-cyan-300/10 px-4 py-1 text-sm text-cyan-200">
-        吉他 / 钢琴 · 基础和弦字典
-      </p>
-      <h1 class="text-4xl font-black tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl">吉他/钢琴和弦组成音查询工具</h1>
-      <p class="mt-5 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300 sm:text-lg">
-        选择根音与和弦类型，立即查看和弦组成音、音程结构与基础演奏提示，适合编曲、练琴、教学和快速查谱。
-      </p>
-    </div>
+    </nav>
   </header>
 
-  <main class="mx-auto max-w-6xl px-5 py-8 sm:py-12">
-    <section class="grid gap-6 lg:grid-cols-5" aria-label="和弦生成工具">
-      <div class="lg:col-span-2 rounded-3xl border border-slate-200 dark:border-white/10 dark:border-slate-700/70 bg-white dark:bg-slate-900/80 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
-        <div class="mb-6">
-          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输入设置</h2>
-          <p class="mt-2 text-sm text-slate-400">请选择根音和和弦类型，支持常见三和弦、七和弦、挂留和弦与扩展和弦。</p>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">和弦生成器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">选择根音、和弦类型和乐器视角，Micro Tools Matrix 会在浏览器内计算基础和弦组成音，无需上传任何输入。</p>
         </div>
-
-        <form id="chordForm" class="space-y-5" novalidate>
-          <div>
-            <label for="rootNote" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">根音 Root</label>
-            <select id="rootNote" class="w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-gray-900 dark:text-white outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
-              <option value="C">C</option>
-              <option value="C#">C# / Db</option>
-              <option value="D">D</option>
-              <option value="D#">D# / Eb</option>
-              <option value="E">E</option>
-              <option value="F">F</option>
-              <option value="F#">F# / Gb</option>
-              <option value="G">G</option>
-              <option value="G#">G# / Ab</option>
-              <option value="A">A</option>
-              <option value="A#">A# / Bb</option>
-              <option value="B">B</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="chordType" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">和弦类型 Type</label>
-            <select id="chordType" class="w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-gray-900 dark:text-white outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10">
-              <option value="major">Major 大三和弦</option>
-              <option value="minor">Minor 小三和弦</option>
-              <option value="dim">Dim 减三和弦</option>
-              <option value="aug">Aug 增三和弦</option>
-              <option value="sus2">sus2 挂二和弦</option>
-              <option value="sus4">sus4 挂四和弦</option>
-              <option value="6">6 六和弦</option>
-              <option value="m6">m6 小六和弦</option>
-              <option value="7">7 属七和弦</option>
-              <option value="maj7" selected>maj7 大七和弦</option>
-              <option value="m7">m7 小七和弦</option>
-              <option value="mMaj7">mMaj7 小大七和弦</option>
-              <option value="dim7">dim7 减七和弦</option>
-              <option value="m7b5">m7b5 半减七和弦</option>
-              <option value="add9">add9 加九和弦</option>
-              <option value="9">9 九和弦</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="customRoot" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">可选：手动输入根音</label>
-            <input id="customRoot" type="text" inputmode="text" maxlength="2" placeholder="例如 C、F#、Bb" class="w-full rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-gray-900 dark:text-white placeholder:text-slate-500 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10" />
-            <p class="mt-2 text-xs text-slate-500">留空则使用上方选择；支持 C、D、E、F、G、A、B 及 # / b。</p>
-          </div>
-
-          <div id="errorBox" class="hidden rounded-2xl border border-red-400/40 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200" role="alert"></div>
-
-          <button id="generateBtn" type="submit" class="group w-full rounded-2xl bg-cyan-400 px-5 py-3 font-bold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-300 active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-cyan-300/30">
-            <span class="inline-flex items-center justify-center gap-2">
-              生成和弦
-              <span class="transition group-hover:translate-x-1">→</span>
-            </span>
-          </button>
-
-          <button id="resetBtn" type="button" class="w-full rounded-2xl border border-gray-200 dark:border-slate-700 px-5 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:border-cyan-400/60 hover:bg-slate-100 dark:hover:bg-slate-800 active:scale-[0.98]">
-            重置
-          </button>
-        </form>
-      </div>
-
-      <div class="lg:col-span-3 rounded-3xl border border-cyan-400/20 bg-gradient-to-br from-slate-900 to-slate-800 p-5 shadow-2xl shadow-cyan-950/30 sm:p-6">
-        <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">输出结果</h2>
-            <p class="mt-2 text-sm text-slate-400">和弦音将按从根音开始的半音距离计算。</p>
-          </div>
-          <div id="statusBadge" class="w-fit rounded-full border border-emerald-300/30 bg-emerald-300/10 px-4 py-1 text-sm text-emerald-200">
-            已就绪
-          </div>
-        </div>
-
-        <div class="rounded-3xl border border-slate-200 dark:border-white/10 dark:border-slate-700/70 bg-white dark:bg-slate-950/70 p-5">
-          <p class="text-sm font-semibold uppercase tracking-widest text-cyan-300">Chord Name</p>
-          <div id="chordName" class="mt-2 break-words text-4xl font-black text-gray-900 dark:text-white sm:text-5xl">Cmaj7</div>
-
-          <div class="mt-6 grid gap-4 sm:grid-cols-2">
-            <div class="rounded-2xl bg-slate-100 dark:bg-slate-900 p-4">
-              <p class="text-sm font-semibold text-slate-400">组成音</p>
-              <div id="notesDisplay" class="mt-3 flex flex-wrap gap-2"></div>
-            </div>
-            <div class="rounded-2xl bg-slate-100 dark:bg-slate-900 p-4">
-              <p class="text-sm font-semibold text-slate-400">音程结构</p>
-              <div id="intervalDisplay" class="mt-3 flex flex-wrap gap-2"></div>
-            </div>
-          </div>
-
-          <div class="mt-4 grid gap-4 md:grid-cols-2">
-            <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900/80 p-4">
-              <h3 class="font-bold text-gray-900 dark:text-white">钢琴参考</h3>
-              <p id="pianoHint" class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300"></p>
-            </div>
-            <div class="rounded-2xl border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900/80 p-4">
-              <h3 class="font-bold text-gray-900 dark:text-white">吉他参考</h3>
-              <p id="guitarHint" class="mt-2 text-sm leading-6 text-slate-700 dark:text-slate-300"></p>
-            </div>
-          </div>
-
-          <div class="mt-4 rounded-2xl border border-cyan-400/20 bg-cyan-400/10 p-4">
-            <h3 class="font-bold text-cyan-100">使用提示</h3>
-            <p id="usageHint" class="mt-2 text-sm leading-6 text-cyan-50/90"></p>
-          </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-10 rounded-3xl border border-slate-200 dark:border-white/10 dark:border-slate-700/70 bg-white dark:bg-slate-900/70 p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-xl shadow-slate-950/30">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 chords-generator 和弦查询工具</h2>
-      <p>
-        chords-generator 是一款面向吉他手、钢琴学习者、编曲人和音乐教师的基础版和弦生成器。很多人在练习 Cmaj7、Dm7、G7 或 sus4 等常见和弦时，常常需要快速确认和弦组成音与音程关系，本工具通过浏览器前端逻辑即时计算根音到各音的半音距离，帮助你准确理解和弦结构。使用时只需选择一个根音，再选择大三和弦、小七和弦、属七和弦、add9 和弦等类型，页面会自动显示完整组成音、音程结构，以及适合吉他和钢琴的基础练习建议。对于需要“吉他和弦组成音查询”“钢琴和弦音名生成”“maj7 和弦怎么构成”等长尾关键词答案的用户，这个工具能提供清晰、快速、无安装的查询体验，适合日常练琴、写歌配和声和课堂演示。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">选择和弦</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <div class="space-y-4">
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="rootLabel">根音</span>
+            <select id="rootSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" aria-label="根音" data-i18n-aria-label="rootLabel">
+              <option value="C">C</option>
+              <option value="C#">C#</option>
+              <option value="Db">Db</option>
+              <option value="D">D</option>
+              <option value="D#">D#</option>
+              <option value="Eb">Eb</option>
+              <option value="E">E</option>
+              <option value="F">F</option>
+              <option value="F#">F#</option>
+              <option value="Gb">Gb</option>
+              <option value="G">G</option>
+              <option value="G#">G#</option>
+              <option value="Ab">Ab</option>
+              <option value="A">A</option>
+              <option value="A#">A#</option>
+              <option value="Bb">Bb</option>
+              <option value="B">B</option>
+            </select>
+          </label>
+
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="typeLabel">和弦类型</span>
+            <select id="typeSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" aria-label="和弦类型" data-i18n-aria-label="typeLabel">
+              <option value="maj" data-i18n="typeMaj">大三和弦</option>
+              <option value="min" data-i18n="typeMin">小三和弦</option>
+              <option value="dim" data-i18n="typeDim">减三和弦</option>
+              <option value="aug" data-i18n="typeAug">增三和弦</option>
+              <option value="sus2" data-i18n="typeSus2">挂二和弦</option>
+              <option value="sus4" data-i18n="typeSus4">挂四和弦</option>
+              <option value="6" data-i18n="type6">六和弦</option>
+              <option value="m6" data-i18n="typeM6">小六和弦</option>
+              <option value="7" data-i18n="type7">属七和弦</option>
+              <option value="maj7" data-i18n="typeMaj7">大七和弦</option>
+              <option value="m7" data-i18n="typeM7">小七和弦</option>
+              <option value="m7b5" data-i18n="typeM7b5">半减七和弦</option>
+              <option value="dim7" data-i18n="typeDim7">减七和弦</option>
+              <option value="add9" data-i18n="typeAdd9">加九和弦</option>
+              <option value="9" data-i18n="type9">九和弦</option>
+            </select>
+          </label>
+
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="instrumentLabel">乐器视角</span>
+            <select id="instrumentSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" aria-label="乐器视角" data-i18n-aria-label="instrumentLabel">
+              <option value="guitar" data-i18n="instrumentGuitar">吉他</option>
+              <option value="piano" data-i18n="instrumentPiano">钢琴</option>
+            </select>
+          </label>
+
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 text-sm leading-6 text-slate-600 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-400">
+            <p class="font-semibold text-slate-800 dark:text-slate-200" data-i18n="tipTitle">基础说明</p>
+            <p class="mt-1" data-i18n="tipBody">本工具用于快速查询组成音与基础演奏提示，不替代完整乐谱或复杂转位指法。</p>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="generateBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">生成</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">示例</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">重置</button>
+        </div>
+
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite">请选择根音与类型，然后生成和弦组成音。</p>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">和弦结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">结果</span>
+        </div>
+
+        <div class="space-y-4">
+          <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="chordNameLabel">和弦名称</p>
+            <p id="chordNameOutput" class="mt-2 break-words text-2xl font-black tracking-tight text-slate-950 dark:text-white">Cmaj7</p>
+          </div>
+
+          <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="notesLabel">组成音</p>
+            <div id="notesOutput" class="mt-3 flex flex-wrap gap-2"></div>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="intervalsLabel">音程</p>
+              <p id="intervalsOutput" class="mt-2 break-words text-sm leading-7 text-slate-700 dark:text-slate-300">1 · 3 · 5 · 7</p>
+            </div>
+            <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="instrumentOutputLabel">演奏提示</p>
+              <p id="instrumentOutput" class="mt-2 break-words text-sm leading-7 text-slate-700 dark:text-slate-300">吉他可从低音弦寻找根音，按顺序保留 1、3、5、7。</p>
+            </div>
+          </div>
+
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="copyLabel">可复制文本</span>
+            <textarea id="copyText" rows="6" readonly class="w-full resize-none rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" aria-label="可复制文本" data-i18n-aria-label="copyLabel"></textarea>
+          </label>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
+          <button id="downloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadAction">下载文本</button>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">Micro Tools Matrix 和弦生成器是一款免费的浏览器本地处理工具，适合吉他、钢琴初学者和需要快速核对和声素材的创作者。你只需选择根音与和弦类型，即可看到基础组成音、音程结构和简洁演奏提示。整个过程无需上传文本、无需登录，也不会调用远程接口，输入只在当前页面内存中计算。它适用于查询 Cmaj7、Am7、G7、Dsus4 等常见和弦，帮助你在编曲、扒谱、练习转位或制作教学资料时快速确认音名。此基础版专注清晰可靠的和弦字典体验，保持轻量、隐私友好，并与 Micro Tools Matrix 的本地工具箱风格一致。</article>
   </main>
 
-  <footer class="border-t border-slate-800 px-5 py-8 text-center text-sm text-slate-500">
-    chords-generator · 原生前端和弦字典工具
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
 
   <script>
-    const chromaticSharp = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-    const flatToSharp = {
-      "CB": "B",
-      "DB": "C#",
-      "EB": "D#",
-      "FB": "E",
-      "GB": "F#",
-      "AB": "G#",
-      "BB": "A#",
-      "B#": "C",
-      "E#": "F"
+    const I18N = {
+      zh: {
+        toolName: "和弦生成器",
+        sponsor: "赞赏",
+        buyCoffee: "Buy Me a Coffee",
+        languageGroup: "语言",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        eyebrow: "浏览器本地处理",
+        h1: "和弦生成器",
+        intro: "选择根音、和弦类型和乐器视角，Micro Tools Matrix 会在浏览器内计算基础和弦组成音，无需上传任何输入。",
+        localBadge: "本地运行",
+        inputTitle: "选择和弦",
+        inputBadge: "输入",
+        outputTitle: "和弦结果",
+        outputBadge: "结果",
+        rootLabel: "根音",
+        typeLabel: "和弦类型",
+        instrumentLabel: "乐器视角",
+        instrumentGuitar: "吉他",
+        instrumentPiano: "钢琴",
+        typeMaj: "大三和弦",
+        typeMin: "小三和弦",
+        typeDim: "减三和弦",
+        typeAug: "增三和弦",
+        typeSus2: "挂二和弦",
+        typeSus4: "挂四和弦",
+        type6: "六和弦",
+        typeM6: "小六和弦",
+        type7: "属七和弦",
+        typeMaj7: "大七和弦",
+        typeM7: "小七和弦",
+        typeM7b5: "半减七和弦",
+        typeDim7: "减七和弦",
+        typeAdd9: "加九和弦",
+        type9: "九和弦",
+        tipTitle: "基础说明",
+        tipBody: "本工具用于快速查询组成音与基础演奏提示，不替代完整乐谱或复杂转位指法。",
+        primaryAction: "生成",
+        sampleAction: "示例",
+        secondaryAction: "重置",
+        statusReady: "请选择根音与类型，然后生成和弦组成音。",
+        statusGenerated: "已生成 {chord} 的组成音。",
+        statusSample: "已填入示例和弦。",
+        statusReset: "已重置为默认和弦。",
+        statusCopied: "结果已复制到剪贴板。",
+        statusDownloaded: "文本文件已下载。",
+        errorInvalidRoot: "请选择有效的根音。",
+        errorInvalidType: "请选择有效的和弦类型。",
+        errorCopy: "无法自动复制，请手动选择文本复制。",
+        chordNameLabel: "和弦名称",
+        notesLabel: "组成音",
+        intervalsLabel: "音程",
+        instrumentOutputLabel: "演奏提示",
+        copyLabel: "可复制文本",
+        copyAction: "复制结果",
+        downloadAction: "下载文本",
+        guitarHint: "吉他可从低音弦寻找根音，按音程保留这些组成音；开放和弦或封闭把位都可按同一音名调整。",
+        pianoHint: "钢琴可左手弹根音，右手按顺序叠放组成音；需要更顺手时可把高音移低或低音移高形成转位。",
+        copyTemplate: "和弦：{chord}\n根音：{root}\n类型：{type}\n组成音：{notes}\n音程：{intervals}\n乐器视角：{instrument}\n提示：{hint}",
+        documentTitle: "和弦生成器 - Micro Tools Matrix 本地工具箱",
+        metaDescription: "Micro Tools Matrix 和弦生成器在浏览器本地处理根音与和弦类型，快速查看吉他和钢琴基础和弦组成音，无需上传。",
+        metaKeywords: "和弦生成器, 吉他和弦, 钢琴和弦, 和弦组成音, 浏览器本地处理, Micro Tools Matrix",
+        seoArticle: "Micro Tools Matrix 和弦生成器是一款免费的浏览器本地处理工具，适合吉他、钢琴初学者和需要快速核对和声素材的创作者。你只需选择根音与和弦类型，即可看到基础组成音、音程结构和简洁演奏提示。整个过程无需上传文本、无需登录，也不会调用远程接口，输入只在当前页面内存中计算。它适用于查询 Cmaj7、Am7、G7、Dsus4 等常见和弦，帮助你在编曲、扒谱、练习转位或制作教学资料时快速确认音名。此基础版专注清晰可靠的和弦字典体验，保持轻量、隐私友好，并与 Micro Tools Matrix 的本地工具箱风格一致。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
+      },
+      en: {
+        toolName: "Chords Generator",
+        sponsor: "Sponsor",
+        buyCoffee: "Buy Me a Coffee",
+        languageGroup: "Language",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        eyebrow: "Browser-local processing",
+        h1: "Chords Generator",
+        intro: "Choose a root, chord type, and instrument view. Micro Tools Matrix calculates basic chord tones in your browser without uploading any input.",
+        localBadge: "Local",
+        inputTitle: "Choose Chord",
+        inputBadge: "Input",
+        outputTitle: "Chord Result",
+        outputBadge: "Output",
+        rootLabel: "Root note",
+        typeLabel: "Chord type",
+        instrumentLabel: "Instrument view",
+        instrumentGuitar: "Guitar",
+        instrumentPiano: "Piano",
+        typeMaj: "Major triad",
+        typeMin: "Minor triad",
+        typeDim: "Diminished triad",
+        typeAug: "Augmented triad",
+        typeSus2: "Suspended second",
+        typeSus4: "Suspended fourth",
+        type6: "Sixth chord",
+        typeM6: "Minor sixth chord",
+        type7: "Dominant seventh",
+        typeMaj7: "Major seventh",
+        typeM7: "Minor seventh",
+        typeM7b5: "Half-diminished seventh",
+        typeDim7: "Diminished seventh",
+        typeAdd9: "Added ninth",
+        type9: "Ninth chord",
+        tipTitle: "Basic note",
+        tipBody: "This tool is for quick chord-tone lookup and simple playing hints. It does not replace full scores or advanced voicing charts.",
+        primaryAction: "Generate",
+        sampleAction: "Sample",
+        secondaryAction: "Reset",
+        statusReady: "Choose a root and type, then generate the chord tones.",
+        statusGenerated: "Generated chord tones for {chord}.",
+        statusSample: "Sample chord loaded.",
+        statusReset: "Reset to the default chord.",
+        statusCopied: "Result copied to the clipboard.",
+        statusDownloaded: "Text file downloaded.",
+        errorInvalidRoot: "Please choose a valid root note.",
+        errorInvalidType: "Please choose a valid chord type.",
+        errorCopy: "Automatic copy failed. Please select the text and copy it manually.",
+        chordNameLabel: "Chord name",
+        notesLabel: "Chord tones",
+        intervalsLabel: "Intervals",
+        instrumentOutputLabel: "Playing hint",
+        copyLabel: "Copyable text",
+        copyAction: "Copy Result",
+        downloadAction: "Download Text",
+        guitarHint: "On guitar, find the root on a lower string and keep these tones by interval; open shapes and closed positions can both be adjusted by the same note names.",
+        pianoHint: "On piano, play the root with the left hand and stack the tones with the right hand; move high tones down or low tones up when you need a smoother inversion.",
+        copyTemplate: "Chord: {chord}\nRoot: {root}\nType: {type}\nChord tones: {notes}\nIntervals: {intervals}\nInstrument view: {instrument}\nHint: {hint}",
+        documentTitle: "Chords Generator - Micro Tools Matrix Local Toolkit",
+        metaDescription: "Micro Tools Matrix Chords Generator uses browser-local processing to show basic guitar and piano chord tones from a selected root and chord type with no upload.",
+        metaKeywords: "chords generator, guitar chords, piano chords, chord tones, browser-local processing, free online developer tool, Micro Tools Matrix",
+        seoArticle: "Micro Tools Matrix Chords Generator is a free online developer tool for fast, browser-local processing of basic chord formulas. Select a root note and a chord type, then view the chord name, chord tones, interval structure, and a concise guitar or piano playing hint. Nothing is uploaded, no account is required, and the calculation stays in the memory of the current page. The tool is useful when checking common chords such as Cmaj7, Am7, G7, Dsus4, or Fadd9 while arranging music, learning harmony, preparing teaching notes, or validating a quick voicing idea. This basic dictionary focuses on clear note names rather than complex fingering diagrams, so it works well as a lightweight reference beside a DAW, score editor, or practice notebook. Like the rest of Micro Tools Matrix, it keeps the interface minimal, responsive, privacy-friendly, and consistent across desktop and mobile screens.",
+        footer: "Micro Tools Matrix - Browser-local processing with no upload."
+      }
     };
 
-    const chordTypes = {
-      major: { label: "", full: "大三和弦", intervals: [0, 4, 7], names: ["根音", "大三度", "纯五度"] },
-      minor: { label: "m", full: "小三和弦", intervals: [0, 3, 7], names: ["根音", "小三度", "纯五度"] },
-      dim: { label: "dim", full: "减三和弦", intervals: [0, 3, 6], names: ["根音", "小三度", "减五度"] },
-      aug: { label: "aug", full: "增三和弦", intervals: [0, 4, 8], names: ["根音", "大三度", "增五度"] },
-      sus2: { label: "sus2", full: "挂二和弦", intervals: [0, 2, 7], names: ["根音", "大二度", "纯五度"] },
-      sus4: { label: "sus4", full: "挂四和弦", intervals: [0, 5, 7], names: ["根音", "纯四度", "纯五度"] },
-      "6": { label: "6", full: "六和弦", intervals: [0, 4, 7, 9], names: ["根音", "大三度", "纯五度", "大六度"] },
-      m6: { label: "m6", full: "小六和弦", intervals: [0, 3, 7, 9], names: ["根音", "小三度", "纯五度", "大六度"] },
-      "7": { label: "7", full: "属七和弦", intervals: [0, 4, 7, 10], names: ["根音", "大三度", "纯五度", "小七度"] },
-      maj7: { label: "maj7", full: "大七和弦", intervals: [0, 4, 7, 11], names: ["根音", "大三度", "纯五度", "大七度"] },
-      m7: { label: "m7", full: "小七和弦", intervals: [0, 3, 7, 10], names: ["根音", "小三度", "纯五度", "小七度"] },
-      mMaj7: { label: "mMaj7", full: "小大七和弦", intervals: [0, 3, 7, 11], names: ["根音", "小三度", "纯五度", "大七度"] },
-      dim7: { label: "dim7", full: "减七和弦", intervals: [0, 3, 6, 9], names: ["根音", "小三度", "减五度", "减七度"] },
-      m7b5: { label: "m7b5", full: "半减七和弦", intervals: [0, 3, 6, 10], names: ["根音", "小三度", "减五度", "小七度"] },
-      add9: { label: "add9", full: "加九和弦", intervals: [0, 4, 7, 14], names: ["根音", "大三度", "纯五度", "大九度"] },
-      "9": { label: "9", full: "九和弦", intervals: [0, 4, 7, 10, 14], names: ["根音", "大三度", "纯五度", "小七度", "大九度"] }
+    const CHORD_TYPES = {
+      maj: { suffix: "", intervals: [0, 4, 7], names: ["1", "3", "5"], labelKey: "typeMaj" },
+      min: { suffix: "m", intervals: [0, 3, 7], names: ["1", "♭3", "5"], labelKey: "typeMin" },
+      dim: { suffix: "dim", intervals: [0, 3, 6], names: ["1", "♭3", "♭5"], labelKey: "typeDim" },
+      aug: { suffix: "aug", intervals: [0, 4, 8], names: ["1", "3", "♯5"], labelKey: "typeAug" },
+      sus2: { suffix: "sus2", intervals: [0, 2, 7], names: ["1", "2", "5"], labelKey: "typeSus2" },
+      sus4: { suffix: "sus4", intervals: [0, 5, 7], names: ["1", "4", "5"], labelKey: "typeSus4" },
+      "6": { suffix: "6", intervals: [0, 4, 7, 9], names: ["1", "3", "5", "6"], labelKey: "type6" },
+      m6: { suffix: "m6", intervals: [0, 3, 7, 9], names: ["1", "♭3", "5", "6"], labelKey: "typeM6" },
+      "7": { suffix: "7", intervals: [0, 4, 7, 10], names: ["1", "3", "5", "♭7"], labelKey: "type7" },
+      maj7: { suffix: "maj7", intervals: [0, 4, 7, 11], names: ["1", "3", "5", "7"], labelKey: "typeMaj7" },
+      m7: { suffix: "m7", intervals: [0, 3, 7, 10], names: ["1", "♭3", "5", "♭7"], labelKey: "typeM7" },
+      m7b5: { suffix: "m7♭5", intervals: [0, 3, 6, 10], names: ["1", "♭3", "♭5", "♭7"], labelKey: "typeM7b5" },
+      dim7: { suffix: "dim7", intervals: [0, 3, 6, 9], names: ["1", "♭3", "♭5", "𝄫7"], labelKey: "typeDim7" },
+      add9: { suffix: "add9", intervals: [0, 4, 7, 14], names: ["1", "3", "5", "9"], labelKey: "typeAdd9" },
+      "9": { suffix: "9", intervals: [0, 4, 7, 10, 14], names: ["1", "3", "5", "♭7", "9"], labelKey: "type9" }
     };
 
-    const rootSelect = document.getElementById("rootNote");
-    const typeSelect = document.getElementById("chordType");
-    const customRoot = document.getElementById("customRoot");
-    const form = document.getElementById("chordForm");
-    const resetBtn = document.getElementById("resetBtn");
-    const errorBox = document.getElementById("errorBox");
-    const chordName = document.getElementById("chordName");
-    const notesDisplay = document.getElementById("notesDisplay");
-    const intervalDisplay = document.getElementById("intervalDisplay");
-    const pianoHint = document.getElementById("pianoHint");
-    const guitarHint = document.getElementById("guitarHint");
-    const usageHint = document.getElementById("usageHint");
-    const statusBadge = document.getElementById("statusBadge");
-    const generateBtn = document.getElementById("generateBtn");
+    const SHARP_NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+    const FLAT_NOTES = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
+    const ROOT_TO_INDEX = {
+      C: 0, "C#": 1, Db: 1, D: 2, "D#": 3, Eb: 3, E: 4, F: 5,
+      "F#": 6, Gb: 6, G: 7, "G#": 8, Ab: 8, A: 9, "A#": 10, Bb: 10, B: 11
+    };
 
-    function normalizeRoot(input) {
-      const raw = String(input || "").trim();
-      if (!raw) return "";
-      const normalized = raw.charAt(0).toUpperCase() + raw.slice(1).replace("♯", "#").replace("♭", "b");
-      const upper = normalized.toUpperCase();
-      if (/^[A-G](#|b)?$/.test(normalized)) {
-        if (flatToSharp[upper]) return flatToSharp[upper];
-        return normalized.replace(/^([A-G])#?$/, function(match) {
-          return match;
+    let currentLanguage = "zh";
+    let lastResult = null;
+
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      return localStorage.getItem("microToolsLanguage") || "zh";
+    }
+
+    function setLanguage(lang) {
+      const safeLang = lang === "en" ? "en" : "zh";
+      localStorage.setItem("microToolsLanguage", safeLang);
+      applyLanguage(safeLang);
+    }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+      document.title = dict.documentTitle;
+
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute("content", dict.metaDescription);
+
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (keywords) keywords.setAttribute("content", dict.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.textContent = dict[key];
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("placeholder", dict[key]);
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("title", dict[key]);
+        }
+      });
+
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
+          node.setAttribute("aria-label", dict[key]);
+        }
+      });
+
+      const sponsorLabel = document.querySelector("#openSponsorBtn [data-i18n='sponsor']");
+      if (sponsorLabel) sponsorLabel.textContent = dict.sponsor;
+
+      const themeLabel = document.querySelector("[data-theme-label]");
+      if (themeLabel && !themeLabel.textContent.trim()) themeLabel.textContent = dict.themeSystem;
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        if (currentLanguage === "zh") {
+          zhBtn.classList.add("bg-cyan-400", "text-slate-950");
+          enBtn.classList.add("text-slate-600", "dark:text-slate-400");
+        } else {
+          enBtn.classList.add("bg-cyan-400", "text-slate-950");
+          zhBtn.classList.add("text-slate-600", "dark:text-slate-400");
+        }
+      }
+
+      if (lastResult) {
+        renderResult(lastResult, false);
+      } else {
+        setStatus("statusReady");
+        generateChord(false);
+      }
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function translate(key, replacements = {}) {
+      let value = I18N[currentLanguage][key] || "";
+      Object.entries(replacements).forEach(([name, replacement]) => {
+        value = value.replaceAll(`{${name}}`, replacement);
+      });
+      return value;
+    }
+
+    function setStatus(key, replacements = {}, isError = false) {
+      const status = document.getElementById("statusText");
+      if (!status) return;
+      status.textContent = translate(key, replacements);
+      status.className = isError
+        ? "mt-4 min-h-6 text-sm leading-6 text-rose-600 dark:text-rose-300"
+        : "mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400";
+    }
+
+    function getChordName(root, typeKey) {
+      const type = CHORD_TYPES[typeKey];
+      return `${root}${type.suffix}`;
+    }
+
+    function getNotes(root, intervals) {
+      const rootIndex = ROOT_TO_INDEX[root];
+      const noteSet = root.includes("b") ? FLAT_NOTES : SHARP_NOTES;
+      return intervals.map((interval) => noteSet[(rootIndex + interval) % 12]);
+    }
+
+    function getTypeLabel(typeKey) {
+      const type = CHORD_TYPES[typeKey];
+      return type ? translate(type.labelKey) : "";
+    }
+
+    function getInstrumentLabel(instrument) {
+      return instrument === "piano" ? translate("instrumentPiano") : translate("instrumentGuitar");
+    }
+
+    function generateChord(showStatus = true) {
+      const root = document.getElementById("rootSelect")?.value;
+      const typeKey = document.getElementById("typeSelect")?.value;
+      const instrument = document.getElementById("instrumentSelect")?.value || "guitar";
+
+      if (!Object.prototype.hasOwnProperty.call(ROOT_TO_INDEX, root)) {
+        setStatus("errorInvalidRoot", {}, true);
+        return;
+      }
+
+      if (!Object.prototype.hasOwnProperty.call(CHORD_TYPES, typeKey)) {
+        setStatus("errorInvalidType", {}, true);
+        return;
+      }
+
+      const chordType = CHORD_TYPES[typeKey];
+      const result = {
+        root,
+        typeKey,
+        instrument,
+        chord: getChordName(root, typeKey),
+        notes: getNotes(root, chordType.intervals),
+        intervals: chordType.names
+      };
+      lastResult = result;
+      renderResult(result, showStatus);
+    }
+
+    function renderResult(result, showStatus = true) {
+      const chordNameOutput = document.getElementById("chordNameOutput");
+      const notesOutput = document.getElementById("notesOutput");
+      const intervalsOutput = document.getElementById("intervalsOutput");
+      const instrumentOutput = document.getElementById("instrumentOutput");
+      const copyText = document.getElementById("copyText");
+
+      const hint = result.instrument === "piano" ? translate("pianoHint") : translate("guitarHint");
+
+      if (chordNameOutput) chordNameOutput.textContent = result.chord;
+      if (intervalsOutput) intervalsOutput.textContent = result.intervals.join(" · ");
+      if (instrumentOutput) instrumentOutput.textContent = hint;
+
+      if (notesOutput) {
+        notesOutput.textContent = "";
+        result.notes.forEach((note) => {
+          const chip = document.createElement("span");
+          chip.className = "inline-flex min-h-11 items-center justify-center rounded-full border border-cyan-200 bg-cyan-50 px-4 text-sm font-black text-cyan-800 shadow-sm dark:border-cyan-300/20 dark:bg-cyan-300/10 dark:text-cyan-200";
+          chip.textContent = note;
+          notesOutput.appendChild(chip);
         });
       }
-      return null;
-    }
 
-    function showError(message) {
-      errorBox.textContent = message;
-      errorBox.classList.remove("hidden");
-      statusBadge.textContent = "输入有误";
-      statusBadge.className = "w-fit rounded-full border border-red-300/30 bg-red-300/10 px-4 py-1 text-sm text-red-200";
-    }
-
-    function hideError() {
-      errorBox.textContent = "";
-      errorBox.classList.add("hidden");
-    }
-
-    function createPill(text, variant) {
-      const span = document.createElement("span");
-      span.textContent = text;
-      const base = "inline-flex items-center rounded-full px-3 py-1 text-sm font-bold ";
-      span.className = variant === "note"
-        ? base + "bg-cyan-300 text-slate-950"
-        : base + "bg-indigo-300/15 text-indigo-100 border border-indigo-300/20";
-      return span;
-    }
-
-    function getNote(root, semitone) {
-      const rootIndex = chromaticSharp.indexOf(root);
-      if (rootIndex < 0) return null;
-      return chromaticSharp[(rootIndex + semitone) % 12];
-    }
-
-    function generateChord() {
-      hideError();
-
-      const manual = customRoot.value.trim();
-      const selectedRoot = rootSelect.value;
-      const root = manual ? normalizeRoot(manual) : selectedRoot;
-      const typeKey = typeSelect.value;
-      const type = chordTypes[typeKey];
-
-      if (root === null) {
-        showError("根音格式不正确。请输入 C、F#、Bb 这类音名，不能包含数字或其他字符。");
-        return;
+      if (copyText) {
+        copyText.value = translate("copyTemplate", {
+          chord: result.chord,
+          root: result.root,
+          type: getTypeLabel(result.typeKey),
+          notes: result.notes.join(", "),
+          intervals: result.intervals.join(" · "),
+          instrument: getInstrumentLabel(result.instrument),
+          hint
+        });
       }
 
-      if (!root || !chromaticSharp.includes(root)) {
-        showError("未能识别根音，请重新选择或输入有效音名。");
-        return;
-      }
-
-      if (!type) {
-        showError("未能识别和弦类型，请重新选择。");
-        return;
-      }
-
-      const notes = type.intervals.map(interval => getNote(root, interval));
-      if (notes.some(note => note === null)) {
-        showError("生成过程中出现异常，请检查输入后重试。");
-        return;
-      }
-
-      const displayName = root + type.label;
-      chordName.textContent = displayName;
-      notesDisplay.innerHTML = "";
-      intervalDisplay.innerHTML = "";
-
-      notes.forEach(note => notesDisplay.appendChild(createPill(note, "note")));
-      type.names.forEach((name, index) => {
-        intervalDisplay.appendChild(createPill(name + "（+" + type.intervals[index] + "）", "interval"));
-      });
-
-      pianoHint.textContent = "钢琴上可先用右手从低到高依次弹奏：" + notes.join(" - ") + "。熟练后尝试转位，把最低音移到高八度，获得更顺滑的连接。";
-      guitarHint.textContent = "吉他上可围绕根音 " + root + " 寻找同把位内的 " + notes.join("、") + "。先分解拨弦确认音准，再尝试按品格组合成完整和弦。";
-      usageHint.textContent = displayName + " 属于" + type.full + "，核心音为 " + notes.join("、") + "。在编配中可优先保留三度与七度，它们最能体现和弦色彩。";
-
-      statusBadge.textContent = "生成成功";
-      statusBadge.className = "w-fit rounded-full border border-emerald-300/30 bg-emerald-300/10 px-4 py-1 text-sm text-emerald-200";
-
-      generateBtn.classList.add("ring-4", "ring-cyan-300/30");
-      window.setTimeout(() => generateBtn.classList.remove("ring-4", "ring-cyan-300/30"), 220);
+      if (showStatus) setStatus("statusGenerated", { chord: result.chord });
     }
 
-    form.addEventListener("submit", function(event) {
-      event.preventDefault();
+    async function copyResult() {
+      const copyText = document.getElementById("copyText");
+      if (!copyText || !copyText.value.trim()) {
+        generateChord(false);
+      }
+
       try {
-        generateChord();
+        await navigator.clipboard.writeText(document.getElementById("copyText").value);
+        setStatus("statusCopied");
       } catch (error) {
-        showError("抱歉，页面未能完成计算。请刷新后重试，或检查输入内容。");
+        const textArea = document.getElementById("copyText");
+        if (textArea) {
+          textArea.focus();
+          textArea.select();
+        }
+        setStatus("errorCopy", {}, true);
       }
-    });
-
-    resetBtn.addEventListener("click", function() {
-      rootSelect.value = "C";
-      typeSelect.value = "maj7";
-      customRoot.value = "";
-      generateChord();
-      statusBadge.textContent = "已重置";
-    });
-
-    rootSelect.addEventListener("change", generateChord);
-    typeSelect.addEventListener("change", generateChord);
-    customRoot.addEventListener("input", function() {
-      if (customRoot.value.trim().length === 0) {
-        hideError();
-      }
-    });
-
-    generateChord();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
     }
+
+    function downloadResult() {
+      if (!lastResult) generateChord(false);
+      const copyText = document.getElementById("copyText");
+      const content = copyText?.value || "";
+      const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      const safeName = (lastResult?.chord || "chord").replace(/[^\w#♭-]+/g, "-");
+      link.href = url;
+      link.download = `${safeName}.txt`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      setStatus("statusDownloaded");
+    }
+
+    function loadSample() {
+      const root = document.getElementById("rootSelect");
+      const type = document.getElementById("typeSelect");
+      const instrument = document.getElementById("instrumentSelect");
+      if (root) root.value = "C";
+      if (type) type.value = "maj7";
+      if (instrument) instrument.value = "piano";
+      generateChord(false);
+      setStatus("statusSample");
+    }
+
+    function resetTool() {
+      const root = document.getElementById("rootSelect");
+      const type = document.getElementById("typeSelect");
+      const instrument = document.getElementById("instrumentSelect");
+      if (root) root.value = "C";
+      if (type) type.value = "maj";
+      if (instrument) instrument.value = "guitar";
+      generateChord(false);
+      setStatus("statusReset");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+
+      document.getElementById("generateBtn")?.addEventListener("click", () => generateChord(true));
+      document.getElementById("sampleBtn")?.addEventListener("click", loadSample);
+      document.getElementById("clearBtn")?.addEventListener("click", resetTool);
+      document.getElementById("copyBtn")?.addEventListener("click", copyResult);
+      document.getElementById("downloadBtn")?.addEventListener("click", downloadResult);
+
+      document.getElementById("rootSelect")?.addEventListener("change", () => generateChord(true));
+      document.getElementById("typeSelect")?.addEventListener("change", () => generateChord(true));
+      document.getElementById("instrumentSelect")?.addEventListener("change", () => generateChord(true));
+
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="./sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

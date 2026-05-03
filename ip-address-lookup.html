@@ -1,560 +1,578 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ip-address-lookup - 我的IP地址查看器</title>
-  <meta name="description" content="我的IP地址查看器。纯前端调用免费的IP API（如ipify），显示用户当前的公网IP地址及大致地理位置。">
-  <meta name="keywords" content="IP地址查询,公网IP查看器,我的IP地址,IP地理位置查询,ip-address-lookup,在线IP查询,IPv4查询,IPv6查询">
-  <link rel="icon" type="image/png" href="./assets/logo.png">
-  <script>tailwind.config = { darkMode: "class" };</script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IP 地址查看器 - Micro Tools Matrix 浏览器本地工具箱</title>
+  <meta name="description" content="Micro Tools Matrix IP 地址查看器在浏览器本地处理 IP 地址格式、类型和网络范围信息，无需上传用户输入。">
+  <meta name="keywords" content="IP地址查看器, IP查询, IPv4, IPv6, 浏览器本地处理, 无需上传, Micro Tools Matrix">
   <link rel="canonical" href="https://mymicrotools.xyz/ip-address-lookup.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/ip-address-lookup.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/ip-address-lookup.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/ip-address-lookup.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/ip-address-lookup.html">
-  <meta property="og:title" content="ip-address-lookup - 我的IP地址查看器">
-  <meta property="og:description" content="我的IP地址查看器。纯前端调用免费的IP API（如ipify），显示用户当前的公网IP地址及大致地理位置。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="ip-address-lookup - 我的IP地址查看器">
-  <meta name="twitter:description" content="我的IP地址查看器。纯前端调用免费的IP API（如ipify），显示用户当前的公网IP地址及大致地理位置。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "IP Address Lookup",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "description": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="切换主题" title="切换主题">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">IP 地址查看器</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">赞赏</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="./ip-address-lookup.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">中文</a>
-        <a href="./en/ip-address-lookup.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="pointer-events-none fixed inset-0 overflow-hidden">
-    <div class="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-indigo-500/20 blur-3xl"></div>
-  </div>
-
-  <header class="relative border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/80 backdrop-blur">
-    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-      <div class="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-        <div>
-          <p class="mb-3 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-medium text-cyan-200">
-            Free Online IP Address Lookup
-          </p>
-          <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl">我的IP地址查看器</h1>
-          <p class="mt-4 max-w-2xl text-base leading-7 text-slate-700 dark:text-slate-300">
-            我的 IP 地址查看器：一键检测当前公网 IP 地址，并显示大致地理位置、网络运营商与时区信息。
-          </p>
-        </div>
-        <div class="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 p-4 shadow-2xl">
-          <div class="text-sm text-slate-400">当前状态</div>
-          <div id="statusBadge" class="mt-2 inline-flex items-center gap-2 rounded-full bg-slate-50 dark:bg-slate-800 px-4 py-2 text-sm font-semibold text-slate-800 dark:text-slate-200">
-            <span class="h-2.5 w-2.5 rounded-full bg-slate-400"></span>
-            等待检测
-          </div>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline"></span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" data-i18n-aria-label="languageGroup" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langZhShort">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langEnShort">EN</button>
         </div>
       </div>
-    </div>
+    </nav>
   </header>
 
-  <main class="relative mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-    <section class="grid gap-6 lg:grid-cols-5">
-      <div class="lg:col-span-2 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 p-6 shadow-2xl backdrop-blur">
-        <h2 class="text-xl font-bold text-gray-900 dark:text-white">输入与操作</h2>
-        <p class="mt-2 text-sm leading-6 text-slate-400">
-          点击按钮自动查看你的公网 IP，或输入指定 IPv4 / IPv6 地址进行地理位置查询。
-        </p>
-
-        <div class="mt-6 space-y-4">
-          <button
-            id="detectBtn"
-            type="button"
-            class="flex w-full items-center justify-center gap-2 rounded-xl bg-cyan-500 px-5 py-3 font-semibold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            <span id="detectIcon">⚡</span>
-            <span id="detectText">检测我的公网 IP</span>
-          </button>
-
-          <div class="relative">
-            <label for="ipInput" class="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">指定 IP 地址（可选）</label>
-            <input
-              id="ipInput"
-              type="text"
-              inputmode="text"
-              autocomplete="off"
-              placeholder="例如：8.8.8.8 或 2001:4860:4860::8888"
-              class="w-full rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950 px-4 py-3 text-slate-900 dark:text-slate-100 outline-none ring-0 transition placeholder:text-slate-600 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10"
-            />
-          </div>
-
-          <div class="grid grid-cols-2 gap-3">
-            <button
-              id="lookupBtn"
-              type="button"
-              class="rounded-xl bg-indigo-500 px-4 py-3 font-semibold text-gray-900 dark:text-white shadow-lg shadow-indigo-500/20 transition hover:bg-indigo-400 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
-            >
-              查询指定 IP
-            </button>
-            <button
-              id="clearBtn"
-              type="button"
-              class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-3 font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-[0.98]"
-            >
-              清空
-            </button>
-          </div>
-
-          <div id="messageBox" class="hidden rounded-xl border px-4 py-3 text-sm leading-6"></div>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">IP 地址查看器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中本地检查 IP 地址格式、版本和网络范围。为保护隐私，本页面不向第三方服务发送请求。</p>
         </div>
-      </div>
-
-      <div class="lg:col-span-3 rounded-3xl border border-cyan-400/20 bg-gradient-to-br from-slate-900 to-slate-950 p-6 shadow-2xl">
-        <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <h2 class="text-xl font-bold text-gray-900 dark:text-white">查询结果</h2>
-            <p class="mt-2 text-sm text-slate-400">结果来自公开 IP 查询接口，地理位置为网络出口的大致位置。</p>
-          </div>
-          <button
-            id="copyBtn"
-            type="button"
-            class="rounded-xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 px-4 py-2 text-sm font-semibold text-slate-800 dark:text-slate-200 transition hover:bg-white/10 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50"
-            disabled
-          >
-            复制 IP
-          </button>
-        </div>
-
-        <div class="mt-6 rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 p-5">
-          <div class="text-sm text-slate-400">公网 IP 地址</div>
-          <div id="ipValue" class="mt-3 break-all text-3xl font-black tracking-tight text-cyan-300 sm:text-4xl">--</div>
-        </div>
-
-        <div class="mt-5 grid gap-4 sm:grid-cols-2">
-          <div class="rounded-2xl bg-white dark:bg-white/[0.04] p-4 ring-1 ring-white/10">
-            <div class="text-xs uppercase tracking-wider text-slate-500">国家 / 地区</div>
-            <div id="countryValue" class="mt-2 font-semibold text-slate-900 dark:text-slate-100">--</div>
-          </div>
-          <div class="rounded-2xl bg-white dark:bg-white/[0.04] p-4 ring-1 ring-white/10">
-            <div class="text-xs uppercase tracking-wider text-slate-500">城市</div>
-            <div id="cityValue" class="mt-2 font-semibold text-slate-900 dark:text-slate-100">--</div>
-          </div>
-          <div class="rounded-2xl bg-white dark:bg-white/[0.04] p-4 ring-1 ring-white/10">
-            <div class="text-xs uppercase tracking-wider text-slate-500">运营商 / ISP</div>
-            <div id="ispValue" class="mt-2 font-semibold text-slate-900 dark:text-slate-100">--</div>
-          </div>
-          <div class="rounded-2xl bg-white dark:bg-white/[0.04] p-4 ring-1 ring-white/10">
-            <div class="text-xs uppercase tracking-wider text-slate-500">时区</div>
-            <div id="timezoneValue" class="mt-2 font-semibold text-slate-900 dark:text-slate-100">--</div>
-          </div>
-          <div class="rounded-2xl bg-white dark:bg-white/[0.04] p-4 ring-1 ring-white/10 sm:col-span-2">
-            <div class="text-xs uppercase tracking-wider text-slate-500">经纬度</div>
-            <div id="locationValue" class="mt-2 font-semibold text-slate-900 dark:text-slate-100">--</div>
-          </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] p-6 leading-8 text-slate-700 dark:text-slate-300 shadow-2xl">
-      <h2 class="text-2xl font-bold text-gray-900 dark:text-white">关于我的 IP 地址查看器</h2>
-      <p class="mt-4">
-        ip-address-lookup 是一个免费、轻量、无需安装的在线公网 IP 地址查看器，适合需要快速确认网络出口地址的个人用户、站长、运维工程师与跨境办公人员。很多时候，本机显示的内网地址并不能代表互联网上看到的真实地址，而本工具会通过纯前端调用公开 IP API，帮助你立即查看我的公网 IP 地址，并展示大致国家地区、城市、运营商、时区和经纬度信息。使用方法非常简单：打开页面后点击“检测我的公网 IP”，即可自动完成查询；如果你需要进行指定 IPv4 或 IPv6 地址地理位置查询，也可以在输入框中填入 IP 后点击查询。该在线 IP 查询工具无需注册账号，不会依赖后端服务器，适合排查代理、VPN、CDN、远程办公网络异常以及验证网站访问来源等场景。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <label for="ipInput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="ipLabel">IP 地址</label>
+        <input id="ipInput" type="text" inputmode="text" autocomplete="off" spellcheck="false" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" placeholder="例如：8.8.8.8 或 2001:4860:4860::8888" data-i18n-placeholder="ipPlaceholder" aria-label="IP 地址" data-i18n-aria-label="ipLabel">
+
+        <div class="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-800 dark:border-amber-300/20 dark:bg-amber-300/10 dark:text-amber-200">
+          <p data-i18n="privacyNote">隐私说明：公共 IP 与地理位置通常需要请求外部 IP 服务。依据本站工具的本地执行规则，本页面不会自动联网查询；你可以粘贴一个 IP 地址进行本地解析。</p>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="analyzeBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">分析</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">填入示例</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+        </div>
+
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite" data-i18n="statusIdle">请输入 IP 地址，然后进行本地分析。</p>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">结果</span>
+        </div>
+
+        <div class="overflow-hidden rounded-2xl border border-gray-200 bg-slate-50 dark:border-white/10 dark:bg-slate-950/70">
+          <dl class="divide-y divide-gray-200 text-sm dark:divide-white/10">
+            <div class="grid gap-1 p-4 sm:grid-cols-3 sm:gap-4">
+              <dt class="font-semibold text-slate-600 dark:text-slate-400" data-i18n="resultIp">IP 地址</dt>
+              <dd id="resultIp" class="break-words font-mono tabular-nums text-slate-950 dark:text-white sm:col-span-2">—</dd>
+            </div>
+            <div class="grid gap-1 p-4 sm:grid-cols-3 sm:gap-4">
+              <dt class="font-semibold text-slate-600 dark:text-slate-400" data-i18n="resultVersion">版本</dt>
+              <dd id="resultVersion" class="break-words text-slate-950 dark:text-white sm:col-span-2">—</dd>
+            </div>
+            <div class="grid gap-1 p-4 sm:grid-cols-3 sm:gap-4">
+              <dt class="font-semibold text-slate-600 dark:text-slate-400" data-i18n="resultScope">网络范围</dt>
+              <dd id="resultScope" class="break-words text-slate-950 dark:text-white sm:col-span-2">—</dd>
+            </div>
+            <div class="grid gap-1 p-4 sm:grid-cols-3 sm:gap-4">
+              <dt class="font-semibold text-slate-600 dark:text-slate-400" data-i18n="resultGeo">大致地理位置</dt>
+              <dd id="resultGeo" class="break-words text-slate-950 dark:text-white sm:col-span-2">—</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="mt-4 rounded-2xl border border-gray-200 bg-white p-4 dark:border-white/10 dark:bg-white/[0.03]">
+          <h2 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="summaryTitle">摘要</h2>
+          <pre id="summaryOutput" class="mt-3 max-h-64 overflow-auto whitespace-pre-wrap break-words rounded-2xl bg-slate-50 p-4 text-xs leading-6 text-slate-700 dark:bg-slate-950/70 dark:text-slate-300">—</pre>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
+          <button id="resetBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="resetAction">重置结果</button>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">Micro Tools Matrix 的 IP 地址查看器面向开发、运维和安全排查场景，帮助你快速确认 IPv4 或 IPv6 地址的格式、版本以及是否属于私有、环回、链路本地、文档示例或公网范围。为了坚持无需上传与浏览器本地处理原则，本工具不会自动调用外部 IP 服务，也不会把输入内容发送到服务器；所有解析都在当前页面内完成。若你已经从系统网络设置、代理面板或可信服务获得自己的公网 IP，可以粘贴到这里进行本地校验与摘要复制。对于需要合规、低干扰、可离线打开的 free online developer tool，本页面提供轻量、稳定且隐私友好的工作流。</article>
   </main>
 
-  <footer class="relative border-t border-gray-200 dark:border-white/10 py-6 text-center text-sm text-slate-500">
-    <p>© <span id="year"></span> ip-address-lookup. 仅显示公开网络查询结果，地理位置可能存在偏差。</p>
-  </footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
 
   <script>
-    (() => {
-      "use strict";
-
-      const $ = (id) => document.getElementById(id);
-
-      const els = {
-        detectBtn: $("detectBtn"),
-        lookupBtn: $("lookupBtn"),
-        clearBtn: $("clearBtn"),
-        copyBtn: $("copyBtn"),
-        ipInput: $("ipInput"),
-        messageBox: $("messageBox"),
-        statusBadge: $("statusBadge"),
-        detectIcon: $("detectIcon"),
-        detectText: $("detectText"),
-        ipValue: $("ipValue"),
-        countryValue: $("countryValue"),
-        cityValue: $("cityValue"),
-        ispValue: $("ispValue"),
-        timezoneValue: $("timezoneValue"),
-        locationValue: $("locationValue"),
-        year: $("year")
-      };
-
-      let lastIP = "";
-      els.year.textContent = new Date().getFullYear();
-
-      function setStatus(type, text) {
-        const map = {
-          idle: ["bg-slate-800", "text-slate-200", "bg-slate-400"],
-          loading: ["bg-cyan-500/10", "text-cyan-200", "bg-cyan-300 animate-pulse"],
-          success: ["bg-emerald-500/10", "text-emerald-200", "bg-emerald-300"],
-          error: ["bg-rose-500/10", "text-rose-200", "bg-rose-300"]
-        };
-        const [bg, color, dot] = map[type] || map.idle;
-        els.statusBadge.className = `mt-2 inline-flex items-center gap-2 rounded-full ${bg} px-4 py-2 text-sm font-semibold ${color}`;
-        els.statusBadge.innerHTML = `<span class="h-2.5 w-2.5 rounded-full ${dot}"></span>${escapeHtml(text)}`;
+    const I18N = {
+      zh: {
+        documentTitle: "IP 地址查看器 - Micro Tools Matrix 浏览器本地工具箱",
+        metaDescription: "Micro Tools Matrix IP 地址查看器在浏览器本地处理 IP 地址格式、类型和网络范围信息，无需上传用户输入。",
+        metaKeywords: "IP地址查看器, IP查询, IPv4, IPv6, 浏览器本地处理, 无需上传, Micro Tools Matrix",
+        toolName: "IP 地址查看器",
+        sponsor: "赞赏",
+        buyCoffee: "Buy Me a Coffee",
+        languageGroup: "语言",
+        langZhShort: "中",
+        langEnShort: "EN",
+        eyebrow: "浏览器本地处理",
+        h1: "IP 地址查看器",
+        intro: "在 Micro Tools Matrix 中本地检查 IP 地址格式、版本和网络范围。为保护隐私，本页面不向第三方服务发送请求。",
+        localBadge: "本地运行",
+        inputTitle: "输入",
+        inputBadge: "输入",
+        outputTitle: "结果",
+        outputBadge: "结果",
+        ipLabel: "IP 地址",
+        ipPlaceholder: "例如：8.8.8.8 或 2001:4860:4860::8888",
+        privacyNote: "隐私说明：公共 IP 与地理位置通常需要请求外部 IP 服务。依据本站工具的本地执行规则，本页面不会自动联网查询；你可以粘贴一个 IP 地址进行本地解析。",
+        primaryAction: "分析",
+        sampleAction: "填入示例",
+        secondaryAction: "清空",
+        statusIdle: "请输入 IP 地址，然后进行本地分析。",
+        statusAnalyzed: "分析完成。",
+        statusSample: "已填入示例 IP 地址。",
+        statusCleared: "已清空输入和结果。",
+        statusReset: "结果已重置。",
+        statusCopied: "结果已复制到剪贴板。",
+        statusCopyEmpty: "没有可复制的结果。",
+        statusCopyFailed: "复制失败，请手动选择摘要内容。",
+        errorEmpty: "请输入一个 IP 地址。",
+        errorInvalid: "这个 IP 地址格式无效，请检查后重试。",
+        resultIp: "IP 地址",
+        resultVersion: "版本",
+        resultScope: "网络范围",
+        resultGeo: "大致地理位置",
+        summaryTitle: "摘要",
+        copyAction: "复制结果",
+        resetAction: "重置结果",
+        geoUnavailable: "本地模式不查询地理位置",
+        scopePublic: "公网地址",
+        scopePrivate: "私有网络",
+        scopeLoopback: "环回地址",
+        scopeLinkLocal: "链路本地地址",
+        scopeMulticast: "多播地址",
+        scopeBroadcast: "广播地址",
+        scopeDocumentation: "文档示例地址",
+        scopeReserved: "保留地址",
+        scopeUnspecified: "未指定地址",
+        versionIPv4: "IPv4",
+        versionIPv6: "IPv6",
+        noValue: "—",
+        summaryIp: "IP 地址",
+        summaryVersion: "版本",
+        summaryScope: "网络范围",
+        summaryGeo: "大致地理位置",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        seoArticle: "Micro Tools Matrix 的 IP 地址查看器面向开发、运维和安全排查场景，帮助你快速确认 IPv4 或 IPv6 地址的格式、版本以及是否属于私有、环回、链路本地、文档示例或公网范围。为了坚持无需上传与浏览器本地处理原则，本工具不会自动调用外部 IP 服务，也不会把输入内容发送到服务器；所有解析都在当前页面内完成。若你已经从系统网络设置、代理面板或可信服务获得自己的公网 IP，可以粘贴到这里进行本地校验与摘要复制。对于需要合规、低干扰、可离线打开的 free online developer tool，本页面提供轻量、稳定且隐私友好的工作流。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
+      },
+      en: {
+        documentTitle: "IP Address Lookup - Micro Tools Matrix Browser-Local Toolkit",
+        metaDescription: "Micro Tools Matrix IP Address Lookup checks IP format, version, and network scope with browser-local processing and no upload of user input.",
+        metaKeywords: "IP address lookup, IP checker, IPv4, IPv6, browser-local processing, no upload, Micro Tools Matrix",
+        toolName: "IP Address Lookup",
+        sponsor: "Sponsor",
+        buyCoffee: "Buy Me a Coffee",
+        languageGroup: "Language",
+        langZhShort: "ZH",
+        langEnShort: "EN",
+        eyebrow: "Browser-local processing",
+        h1: "IP Address Lookup",
+        intro: "Check an IP address format, version, and network scope locally in Micro Tools Matrix. To protect privacy, this page does not send requests to third-party services.",
+        localBadge: "Local",
+        inputTitle: "Input",
+        inputBadge: "Input",
+        outputTitle: "Result",
+        outputBadge: "Output",
+        ipLabel: "IP address",
+        ipPlaceholder: "Example: 8.8.8.8 or 2001:4860:4860::8888",
+        privacyNote: "Privacy note: public IP and location detection normally require contacting an external IP service. Under this site's local-execution rule, this page does not perform automatic network lookup; paste an IP address to analyze it locally.",
+        primaryAction: "Analyze",
+        sampleAction: "Use sample",
+        secondaryAction: "Clear",
+        statusIdle: "Enter an IP address, then run the local analysis.",
+        statusAnalyzed: "Analysis complete.",
+        statusSample: "Sample IP address inserted.",
+        statusCleared: "Input and result cleared.",
+        statusReset: "Result reset.",
+        statusCopied: "Result copied to the clipboard.",
+        statusCopyEmpty: "There is no result to copy.",
+        statusCopyFailed: "Copy failed. Please select the summary manually.",
+        errorEmpty: "Please enter an IP address.",
+        errorInvalid: "This IP address is not valid. Check it and try again.",
+        resultIp: "IP address",
+        resultVersion: "Version",
+        resultScope: "Network scope",
+        resultGeo: "Approximate location",
+        summaryTitle: "Summary",
+        copyAction: "Copy result",
+        resetAction: "Reset result",
+        geoUnavailable: "Local mode does not query location",
+        scopePublic: "Public address",
+        scopePrivate: "Private network",
+        scopeLoopback: "Loopback address",
+        scopeLinkLocal: "Link-local address",
+        scopeMulticast: "Multicast address",
+        scopeBroadcast: "Broadcast address",
+        scopeDocumentation: "Documentation example address",
+        scopeReserved: "Reserved address",
+        scopeUnspecified: "Unspecified address",
+        versionIPv4: "IPv4",
+        versionIPv6: "IPv6",
+        noValue: "—",
+        summaryIp: "IP address",
+        summaryVersion: "Version",
+        summaryScope: "Network scope",
+        summaryGeo: "Approximate location",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        seoArticle: "Micro Tools Matrix IP Address Lookup is designed for developers, operators, support engineers, and security reviewers who need a quick way to validate an IPv4 or IPv6 address without sending data away from the page. The tool checks whether an address is syntactically valid, identifies its protocol version, and classifies common ranges such as private networks, loopback, link-local, multicast, documentation examples, reserved blocks, and public addresses. Because true public IP and geolocation detection usually require contacting an external service, this implementation follows the stricter privacy model of browser-local processing and avoids automatic network requests. If you already know your public IP from your system settings, router, proxy panel, or a trusted source, paste it here to create a clean local summary that can be copied into tickets, deployment notes, or audit records. It is a free online developer tool for teams that value predictable behavior, no upload workflows, and the consistent Micro Tools Matrix interface.",
+        footer: "Micro Tools Matrix - Browser-local processing with no upload."
       }
+    };
 
-      function showMessage(type, text) {
-        if (!text) {
-          els.messageBox.className = "hidden rounded-xl border px-4 py-3 text-sm leading-6";
-          els.messageBox.textContent = "";
-          return;
+    let currentLanguage = "zh";
+    let lastStatusKey = "statusIdle";
+    let lastResult = null;
+
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      const saved = localStorage.getItem("microToolsLanguage");
+      return saved === "en" || saved === "zh" ? saved : "zh";
+    }
+
+    function t(key) {
+      return (I18N[currentLanguage] && I18N[currentLanguage][key]) || I18N.zh[key] || "";
+    }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && Object.prototype.hasOwnProperty.call(I18N[currentLanguage], key)) {
+          node.textContent = I18N[currentLanguage][key];
         }
-        const classes = type === "error"
-          ? "rounded-xl border border-rose-400/30 bg-rose-500/10 px-4 py-3 text-sm leading-6 text-rose-200"
-          : type === "success"
-            ? "rounded-xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm leading-6 text-emerald-200"
-            : "rounded-xl border border-cyan-400/30 bg-cyan-500/10 px-4 py-3 text-sm leading-6 text-cyan-200";
-        els.messageBox.className = classes;
-        els.messageBox.textContent = text;
-      }
-
-      function setLoading(isLoading) {
-        els.detectBtn.disabled = isLoading;
-        els.lookupBtn.disabled = isLoading;
-        els.detectIcon.textContent = isLoading ? "⏳" : "⚡";
-        els.detectText.textContent = isLoading ? "正在检测..." : "检测我的公网 IP";
-      }
-
-      function resetResult() {
-        lastIP = "";
-        els.ipValue.textContent = "--";
-        els.countryValue.textContent = "--";
-        els.cityValue.textContent = "--";
-        els.ispValue.textContent = "--";
-        els.timezoneValue.textContent = "--";
-        els.locationValue.textContent = "--";
-        els.copyBtn.disabled = true;
-      }
-
-      function renderResult(data) {
-        lastIP = data.ip || "";
-        els.ipValue.textContent = data.ip || "--";
-        els.countryValue.textContent = data.country || "--";
-        els.cityValue.textContent = data.city || "--";
-        els.ispValue.textContent = data.isp || "--";
-        els.timezoneValue.textContent = data.timezone || "--";
-        els.locationValue.textContent = data.latitude !== null && data.longitude !== null
-          ? `${data.latitude}, ${data.longitude}`
-          : "--";
-        els.copyBtn.disabled = !lastIP;
-      }
-
-      function escapeHtml(str) {
-        return String(str).replace(/[&<>"']/g, (m) => ({
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#039;"
-        }[m]));
-      }
-
-      function isValidIPv4(ip) {
-        const parts = ip.split(".");
-        if (parts.length !== 4) return false;
-        return parts.every((part) => {
-          if (!/^\d{1,3}$/.test(part)) return false;
-          if (part.length > 1 && part.startsWith("0")) return false;
-          const num = Number(part);
-          return Number.isInteger(num) && num >= 0 && num <= 255;
-        });
-      }
-
-      function isValidIPv6(ip) {
-        if (!ip || ip.length > 45 || /\s/.test(ip)) return false;
-        if ((ip.match(/::/g) || []).length > 1) return false;
-        const hasDouble = ip.includes("::");
-        const parts = ip.split(":");
-        if (!hasDouble && parts.length !== 8) return false;
-        if (hasDouble && parts.length > 8) return false;
-
-        let ipv4Part = false;
-        for (let i = 0; i < parts.length; i++) {
-          const part = parts[i];
-          if (part === "") continue;
-          if (part.includes(".")) {
-            if (i !== parts.length - 1 || !isValidIPv4(part)) return false;
-            ipv4Part = true;
-          } else if (!/^[0-9a-fA-F]{1,4}$/.test(part)) {
-            return false;
-          }
-        }
-
-        const nonEmpty = parts.filter(Boolean).length;
-        if (hasDouble) return ipv4Part ? nonEmpty <= 7 : nonEmpty <= 7;
-        return ipv4Part ? parts.length === 7 : parts.length === 8;
-      }
-
-      function isValidIP(ip) {
-        return isValidIPv4(ip) || isValidIPv6(ip);
-      }
-
-      async function fetchWithTimeout(url, options = {}, timeout = 8000) {
-        const controller = new AbortController();
-        const timer = setTimeout(() => controller.abort(), timeout);
-        try {
-          const response = await fetch(url, {
-            ...options,
-            signal: controller.signal,
-            headers: {
-              "Accept": "application/json",
-              ...(options.headers || {})
-            }
-          });
-          if (!response.ok) throw new Error(`HTTP ${response.status}`);
-          return await response.json();
-        } finally {
-          clearTimeout(timer);
-        }
-      }
-
-      async function getCurrentIP() {
-        const endpoints = [
-          "https://api.ipify.org?format=json",
-          "https://api64.ipify.org?format=json"
-        ];
-
-        let lastError = null;
-        for (const url of endpoints) {
-          try {
-            const data = await fetchWithTimeout(url);
-            if (data && typeof data.ip === "string" && isValidIP(data.ip.trim())) {
-              return data.ip.trim();
-            }
-          } catch (err) {
-            lastError = err;
-          }
-        }
-        throw lastError || new Error("无法获取公网 IP");
-      }
-
-      function normalizeIpapi(data, ip) {
-        if (!data || data.error) throw new Error(data && data.reason ? data.reason : "ipapi 查询失败");
-        return {
-          ip: data.ip || ip,
-          country: [data.country_name, data.country_code ? `(${data.country_code})` : ""].filter(Boolean).join(" "),
-          city: [data.region, data.city].filter(Boolean).join(" / "),
-          isp: data.org || data.asn || "--",
-          timezone: data.timezone || "--",
-          latitude: typeof data.latitude === "number" ? data.latitude : null,
-          longitude: typeof data.longitude === "number" ? data.longitude : null
-        };
-      }
-
-      function normalizeIpwho(data, ip) {
-        if (!data || data.success === false) throw new Error(data && data.message ? data.message : "ipwho.is 查询失败");
-        return {
-          ip: data.ip || ip,
-          country: [data.country, data.country_code ? `(${data.country_code})` : ""].filter(Boolean).join(" "),
-          city: [data.region, data.city].filter(Boolean).join(" / "),
-          isp: data.connection && (data.connection.isp || data.connection.org) ? (data.connection.isp || data.connection.org) : "--",
-          timezone: data.timezone && data.timezone.id ? data.timezone.id : "--",
-          latitude: typeof data.latitude === "number" ? data.latitude : null,
-          longitude: typeof data.longitude === "number" ? data.longitude : null
-        };
-      }
-
-      async function getGeo(ip) {
-        const endpoints = [
-          {
-            url: `https://ipapi.co/${encodeURIComponent(ip)}/json/`,
-            normalize: normalizeIpapi
-          },
-          {
-            url: `https://ipwho.is/${encodeURIComponent(ip)}`,
-            normalize: normalizeIpwho
-          }
-        ];
-
-        let lastError = null;
-        for (const endpoint of endpoints) {
-          try {
-            const data = await fetchWithTimeout(endpoint.url);
-            return endpoint.normalize(data, ip);
-          } catch (err) {
-            lastError = err;
-          }
-        }
-
-        return {
-          ip,
-          country: "--",
-          city: "--",
-          isp: "--",
-          timezone: "--",
-          latitude: null,
-          longitude: null,
-          partial: true,
-          message: lastError ? lastError.message : "地理位置接口暂不可用"
-        };
-      }
-
-      async function detectMyIP() {
-        setLoading(true);
-        setStatus("loading", "正在检测");
-        showMessage("info", "正在连接公开 IP API，请稍候...");
-        resetResult();
-
-        try {
-          const ip = await getCurrentIP();
-          const geo = await getGeo(ip);
-          renderResult(geo);
-          setStatus("success", "检测完成");
-          if (geo.partial) {
-            showMessage("success", `已获取公网 IP：${ip}。地理位置信息暂时不可用，可稍后重试。`);
-          } else {
-            showMessage("success", "查询成功：已显示你的公网 IP 与大致地理位置。");
-          }
-        } catch (err) {
-          setStatus("error", "检测失败");
-          showMessage("error", "无法获取公网 IP。请检查网络连接、浏览器隐私设置，或稍后再试。");
-        } finally {
-          setLoading(false);
-        }
-      }
-
-      async function lookupSpecifiedIP() {
-        const ip = els.ipInput.value.trim();
-
-        if (!ip) {
-          showMessage("error", "请输入要查询的 IPv4 或 IPv6 地址，或点击“检测我的公网 IP”。");
-          setStatus("error", "输入为空");
-          els.ipInput.focus();
-          return;
-        }
-
-        if (!isValidIP(ip)) {
-          showMessage("error", "IP 地址格式不正确。请检查是否为有效 IPv4（如 8.8.8.8）或 IPv6 地址。");
-          setStatus("error", "格式错误");
-          els.ipInput.focus();
-          return;
-        }
-
-        setLoading(true);
-        setStatus("loading", "正在查询");
-        showMessage("info", "正在查询指定 IP 的公开地理位置信息...");
-        resetResult();
-
-        try {
-          const geo = await getGeo(ip);
-          renderResult(geo);
-          setStatus("success", "查询完成");
-          if (geo.partial) {
-            showMessage("success", `已显示 IP：${ip}。地理位置接口暂不可用或未返回完整信息。`);
-          } else {
-            showMessage("success", "查询成功：已显示指定 IP 的大致地理位置。");
-          }
-        } catch (err) {
-          setStatus("error", "查询失败");
-          showMessage("error", "查询失败。请确认 IP 地址可公开查询，并稍后重试。");
-        } finally {
-          setLoading(false);
-        }
-      }
-
-      async function copyIP() {
-        if (!lastIP) return;
-        try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(lastIP);
-          } else {
-            const temp = document.createElement("textarea");
-            temp.value = lastIP;
-            temp.setAttribute("readonly", "");
-            temp.style.position = "fixed";
-            temp.style.opacity = "0";
-            document.body.appendChild(temp);
-            temp.select();
-            document.execCommand("copy");
-            document.body.removeChild(temp);
-          }
-          showMessage("success", "IP 地址已复制到剪贴板。");
-        } catch (err) {
-          showMessage("error", "复制失败，请手动选择 IP 地址进行复制。");
-        }
-      }
-
-      els.detectBtn.addEventListener("click", detectMyIP);
-      els.lookupBtn.addEventListener("click", lookupSpecifiedIP);
-      els.copyBtn.addEventListener("click", copyIP);
-      els.clearBtn.addEventListener("click", () => {
-        els.ipInput.value = "";
-        resetResult();
-        showMessage("", "");
-        setStatus("idle", "等待检测");
-        els.ipInput.focus();
       });
 
-      els.ipInput.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") lookupSpecifiedIP();
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && Object.prototype.hasOwnProperty.call(I18N[currentLanguage], key)) {
+          node.setAttribute("placeholder", I18N[currentLanguage][key]);
+        }
       });
 
-      setStatus("idle", "等待检测");
-      window.addEventListener("load", () => {
-        setTimeout(detectMyIP, 350);
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && Object.prototype.hasOwnProperty.call(I18N[currentLanguage], key)) {
+          node.setAttribute("aria-label", I18N[currentLanguage][key]);
+        }
       });
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
+
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && Object.prototype.hasOwnProperty.call(I18N[currentLanguage], key)) {
+          node.setAttribute("title", I18N[currentLanguage][key]);
+        }
+      });
+
+      document.title = t("documentTitle");
+      const description = document.querySelector('meta[name="description"]');
+      if (description) description.setAttribute("content", t("metaDescription"));
+      const keywords = document.querySelector('meta[name="keywords"]');
+      if (keywords) keywords.setAttribute("content", t("metaKeywords"));
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "zh" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "en" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+      }
+
+      window.microToolsI18N = I18N[currentLanguage];
+      document.dispatchEvent(new CustomEvent("microToolsLanguageChange", { detail: { language: currentLanguage, dictionary: I18N[currentLanguage] } }));
+
+      renderResult(lastResult);
+      setStatus(lastStatusKey);
+
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
+
+    function setLanguage(lang) {
+      const next = lang === "en" ? "en" : "zh";
+      localStorage.setItem("microToolsLanguage", next);
+      applyLanguage(next);
+    }
+
+    function setStatus(key) {
+      lastStatusKey = key;
+      const status = document.getElementById("statusText");
+      if (status) status.textContent = t(key);
+    }
+
+    function normalizeIp(value) {
+      return String(value || "").trim();
+    }
+
+    function isValidIPv4(ip) {
+      const parts = ip.split(".");
+      if (parts.length !== 4) return false;
+      return parts.every((part) => {
+        if (!/^\d+$/.test(part)) return false;
+        if (part.length > 1 && part.startsWith("0")) return false;
+        const num = Number(part);
+        return num >= 0 && num <= 255;
       });
     }
+
+    function isValidIPv6(ip) {
+      if (!ip || ip.includes(":::")) return false;
+      const value = ip.toLowerCase();
+      if (!/^[0-9a-f:.]+$/.test(value)) return false;
+      const doubleColonCount = (value.match(/::/g) || []).length;
+      if (doubleColonCount > 1) return false;
+
+      const sections = value.split("::");
+      const left = sections[0] ? sections[0].split(":") : [];
+      const right = sections[1] ? sections[1].split(":") : [];
+      const groups = left.concat(right);
+
+      if (groups.some((group) => group.length === 0 || group.length > 4 || !/^[0-9a-f]{1,4}$/.test(group))) return false;
+      if (doubleColonCount === 1) return groups.length < 8;
+      return groups.length === 8;
+    }
+
+    function ipv4Numbers(ip) {
+      return ip.split(".").map((part) => Number(part));
+    }
+
+    function classifyIPv4(ip) {
+      const n = ipv4Numbers(ip);
+      const first = n[0];
+      const second = n[1];
+      const third = n[2];
+      const fourth = n[3];
+
+      if (first === 0) return "scopeUnspecified";
+      if (ip === "255.255.255.255") return "scopeBroadcast";
+      if (first === 10) return "scopePrivate";
+      if (first === 172 && second >= 16 && second <= 31) return "scopePrivate";
+      if (first === 192 && second === 168) return "scopePrivate";
+      if (first === 127) return "scopeLoopback";
+      if (first === 169 && second === 254) return "scopeLinkLocal";
+      if (first >= 224 && first <= 239) return "scopeMulticast";
+      if (first === 192 && second === 0 && third === 2) return "scopeDocumentation";
+      if (first === 198 && second === 51 && third === 100) return "scopeDocumentation";
+      if (first === 203 && second === 0 && third === 113) return "scopeDocumentation";
+      if (first === 100 && second >= 64 && second <= 127) return "scopeReserved";
+      if (first >= 240) return "scopeReserved";
+      if (first === 198 && (second === 18 || second === 19)) return "scopeReserved";
+      if (first === 192 && second === 0 && third === 0 && fourth <= 255) return "scopeReserved";
+      return "scopePublic";
+    }
+
+    function expandIPv6(ip) {
+      const value = ip.toLowerCase();
+      if (!value.includes("::")) return value.split(":");
+      const sections = value.split("::");
+      const left = sections[0] ? sections[0].split(":") : [];
+      const right = sections[1] ? sections[1].split(":") : [];
+      const missing = Math.max(0, 8 - left.length - right.length);
+      return left.concat(Array(missing).fill("0"), right);
+    }
+
+    function classifyIPv6(ip) {
+      const groups = expandIPv6(ip);
+      const first = parseInt(groups[0] || "0", 16);
+      const second = parseInt(groups[1] || "0", 16);
+      const allZero = groups.every((group) => parseInt(group || "0", 16) === 0);
+      const loopback = groups.slice(0, 7).every((group) => parseInt(group || "0", 16) === 0) && parseInt(groups[7] || "0", 16) === 1;
+
+      if (allZero) return "scopeUnspecified";
+      if (loopback) return "scopeLoopback";
+      if ((first & 0xfe00) === 0xfc00) return "scopePrivate";
+      if ((first & 0xffc0) === 0xfe80) return "scopeLinkLocal";
+      if ((first & 0xff00) === 0xff00) return "scopeMulticast";
+      if (first === 0x2001 && second === 0x0db8) return "scopeDocumentation";
+      if (first === 0x2002) return "scopeReserved";
+      return "scopePublic";
+    }
+
+    function analyzeIp() {
+      const input = document.getElementById("ipInput");
+      const ip = normalizeIp(input ? input.value : "");
+      if (!ip) {
+        lastResult = null;
+        renderResult(null);
+        setStatus("errorEmpty");
+        return;
+      }
+
+      let result = null;
+      if (isValidIPv4(ip)) {
+        result = {
+          ip,
+          versionKey: "versionIPv4",
+          scopeKey: classifyIPv4(ip),
+          geoKey: "geoUnavailable"
+        };
+      } else if (isValidIPv6(ip)) {
+        result = {
+          ip,
+          versionKey: "versionIPv6",
+          scopeKey: classifyIPv6(ip),
+          geoKey: "geoUnavailable"
+        };
+      } else {
+        lastResult = null;
+        renderResult(null);
+        setStatus("errorInvalid");
+        return;
+      }
+
+      lastResult = result;
+      renderResult(result);
+      setStatus("statusAnalyzed");
+    }
+
+    function renderResult(result) {
+      const resultIp = document.getElementById("resultIp");
+      const resultVersion = document.getElementById("resultVersion");
+      const resultScope = document.getElementById("resultScope");
+      const resultGeo = document.getElementById("resultGeo");
+      const summary = document.getElementById("summaryOutput");
+
+      if (!result) {
+        if (resultIp) resultIp.textContent = t("noValue");
+        if (resultVersion) resultVersion.textContent = t("noValue");
+        if (resultScope) resultScope.textContent = t("noValue");
+        if (resultGeo) resultGeo.textContent = t("noValue");
+        if (summary) summary.textContent = t("noValue");
+        return;
+      }
+
+      const version = t(result.versionKey);
+      const scope = t(result.scopeKey);
+      const geo = t(result.geoKey);
+
+      if (resultIp) resultIp.textContent = result.ip;
+      if (resultVersion) resultVersion.textContent = version;
+      if (resultScope) resultScope.textContent = scope;
+      if (resultGeo) resultGeo.textContent = geo;
+      if (summary) {
+        summary.textContent = [
+          `${t("summaryIp")}: ${result.ip}`,
+          `${t("summaryVersion")}: ${version}`,
+          `${t("summaryScope")}: ${scope}`,
+          `${t("summaryGeo")}: ${geo}`
+        ].join("\n");
+      }
+    }
+
+    async function copyResult() {
+      const summary = document.getElementById("summaryOutput");
+      const value = summary ? summary.textContent.trim() : "";
+      if (!value || value === t("noValue")) {
+        setStatus("statusCopyEmpty");
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(value);
+        setStatus("statusCopied");
+      } catch (error) {
+        setStatus("statusCopyFailed");
+      }
+    }
+
+    function clearAll() {
+      const input = document.getElementById("ipInput");
+      if (input) input.value = "";
+      lastResult = null;
+      renderResult(null);
+      setStatus("statusCleared");
+    }
+
+    function resetResult() {
+      lastResult = null;
+      renderResult(null);
+      setStatus("statusReset");
+    }
+
+    function fillSample() {
+      const input = document.getElementById("ipInput");
+      if (input) input.value = "8.8.8.8";
+      setStatus("statusSample");
+      analyzeIp();
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal") closeSponsorModal();
+      });
+
+      document.getElementById("analyzeBtn")?.addEventListener("click", analyzeIp);
+      document.getElementById("sampleBtn")?.addEventListener("click", fillSample);
+      document.getElementById("clearBtn")?.addEventListener("click", clearAll);
+      document.getElementById("copyBtn")?.addEventListener("click", copyResult);
+      document.getElementById("resetBtn")?.addEventListener("click", resetResult);
+      document.getElementById("ipInput")?.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") analyzeIp();
+      });
+
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="./sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>

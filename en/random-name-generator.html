@@ -1,415 +1,551 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>random-name-generator｜虚构人物/网名随机Generate器</title>
-  <meta name="description" content="虚构人物/网名随机Generate器。包含男/女选项，点击Generate带有中英双语的随机姓名组合。">
-  <meta name="keywords" content="random-name-generator, 随机姓名Generate器, 网名Generate器, 虚构人物名字Generate器, 中英文名字Generate器, 游戏角色名字Generate器, 小说人物取名工具, 随机英文名, 随机Chinese名">
-  <link rel="icon" type="image/png" href="../assets/logo.png">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            ink: '#0f172a',
-            neon: '#38bdf8'
-          },
-          boxShadow: {
-            glow: '0 0 40px rgba(56, 189, 248, 0.22)'
-          }
-        }
-      }
-    };
-  </script>
-  <script src="./theme-init.js"></script>
-  <!-- pwa-head:start -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#030712">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="apple-touch-icon" href="/assets/logo-web.png">
-  <!-- pwa-head:end -->
-  <link rel="canonical" href="https://mymicrotools.xyz/en/random-name-generator.html">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>随机姓名生成器 - Micro Tools Matrix</title>
+  <meta name="description" content="Micro Tools Matrix 随机姓名生成器可在浏览器本地生成虚构人物名和网名，支持男女性别选项，无需上传。">
+  <meta name="keywords" content="随机姓名生成器,虚构人物,网名生成器,浏览器本地处理,无需上传,Micro Tools Matrix">
+  <link rel="canonical" href="https://mymicrotools.xyz/random-name-generator.html">
   <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/random-name-generator.html">
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/random-name-generator.html">
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/random-name-generator.html">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mymicrotools.xyz/en/random-name-generator.html">
-  <meta property="og:title" content="random-name-generator｜虚构人物/网名随机Generate器">
-  <meta property="og:description" content="虚构人物/网名随机Generate器。包含男/女选项，点击Generate带有中英双语的随机姓名组合。">
-  <meta property="og:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="random-name-generator｜虚构人物/网名随机Generate器">
-  <meta name="twitter:description" content="虚构人物/网名随机Generate器。包含男/女选项，点击Generate带有中英双语的随机姓名组合。">
-  <meta name="twitter:image" content="https://mymicrotools.xyz/assets/logo-web.png">
-  <script src="./theme-toggle.js" defer></script>
+  <link rel="stylesheet" href="../style.css">
+  <script src="./theme-init.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Random Name Generator",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Windows, macOS, Android, iOS",
+      "description": "A browser-local random fictional character and username generator by Micro Tools Matrix.",
+      "url": "https://mymicrotools.xyz/random-name-generator.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "category": "Free"
+      }
+    }
+  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+  </style>
 </head>
-<body class="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased">
-  <!-- static-controls:start -->
-  <nav id="siteControls" class="fixed left-1/2 top-3 z-50 flex w-[92%] max-w-7xl -translate-x-1/2 flex-col gap-2 rounded-[1.75rem] border border-gray-200 bg-white/90 p-2 text-sm font-semibold text-gray-900 dark:text-white shadow-2xl shadow-black/10 backdrop-blur-md dark:border-white/10 dark:bg-[#030712]/85 md:top-4 md:flex-row md:items-center md:justify-between md:rounded-full md:p-1.5" aria-label="Site controls">
-    <a href="./index.html" class="flex min-w-0 w-full items-center gap-2 px-1 md:w-auto md:pl-1 md:pr-3" aria-label="Micro Tools Matrix">
-      <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-cyan-300/25 dark:bg-white/10">
-      <span class="min-w-0 flex-1 whitespace-nowrap text-base tracking-tight text-slate-900 dark:text-slate-100 md:text-sm">Micro Tools</span>
-    </a>
-    <div class="flex w-full items-center justify-between gap-1 md:w-auto md:justify-end">
-      <button id="themeToggleBtn" type="button" data-theme-toggle data-theme-state="system" class="inline-flex min-h-11 min-w-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 dark:text-slate-100 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:hover:bg-cyan-500 dark:hover:text-black sm:px-4" aria-label="Toggle theme" title="Toggle theme">
-        <span class="relative inline-flex h-5 w-9 items-center justify-between">
-          <svg data-theme-sun class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
-          <svg data-theme-moon class="h-4 w-4 transition-opacity" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 14.4A7.8 7.8 0 0 1 9.6 3 8.8 8.8 0 1 0 21 14.4Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
+
+  <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
+    <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
+      <a href="./index.html" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+        <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
+        <span class="min-w-0">
+          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">随机姓名生成器</span>
         </span>
-        <span data-theme-label class="hidden sm:inline">System</span>
-      </button>
-      <a id="openSponsorBtn" href="./index.html#sponsorModal" class="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2 text-xs text-slate-900 dark:text-slate-100 shadow-[0_0_22px_-12px_rgba(34,211,238,0.9)] transition-all hover:border-cyan-400/60 hover:bg-cyan-500 hover:text-black active:scale-95 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 sm:px-4 sm:text-sm md:px-5"><span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-yellow-300 text-lg leading-none text-slate-950 dark:text-slate-100 shadow-lg shadow-yellow-400/30 ring-1 ring-yellow-100/80">☕</span><span class="hidden sm:inline">Sponsor</span></a>
-      <div class="flex min-h-11 items-center gap-1 rounded-full border border-gray-200 bg-white p-0.5 shadow-sm dark:border-white/10 dark:bg-white/5">
-        <a href="../random-name-generator.html" hreflang="zh-CN" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 text-slate-700 dark:text-slate-300 hover:bg-gray-100 dark:text-slate-200 dark:hover:bg-white/10">中文</a>
-        <a href="./random-name-generator.html" hreflang="en" class="inline-flex min-h-10 items-center rounded-full px-3 py-2 text-xs transition active:scale-95 bg-cyan-400 text-slate-950 dark:text-slate-100">EN</a>
-      </div>
-    </div>
-  </nav>
-  <div class="h-28 md:h-20" aria-hidden="true"></div>
-  <!-- static-controls:end -->
-
-
-
-
-
-
-
-
-
-
-
-  <div class="absolute inset-0 -z-10 overflow-hidden">
-    <div class="absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-500/20 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 h-96 w-96 rounded-full bg-violet-500/10 blur-3xl"></div>
-  </div>
-
-  <header class="border-b border-gray-200 dark:border-white/10 bg-white dark:bg-slate-950/70 backdrop-blur">
-    <div class="mx-auto max-w-6xl px-5 py-10 md:py-14">
-      <div class="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm text-cyan-200">
-        <span class="h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_14px_rgba(103,232,249,.9)]"></span>
-        Fictional Identity Generator
-      </div>
-      <h1 class="mt-5 text-4xl font-black tracking-tight text-gray-900 dark:text-white md:text-6xl">虚构人物/网名随机Generate器</h1>
-      <p class="mt-4 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300 md:text-lg">
-        虚构人物 / 网名随机Generate器：选择性别与Generate数量，一键获得带有Chinese名、英文名和昵称风格的双语姓名组合。
-      </p>
-    </div>
-  </header>
-
-  <main class="mx-auto max-w-6xl px-5 py-8 md:py-12">
-    <section class="grid gap-6 lg:grid-cols-5">
-      <div class="lg:col-span-2">
-        <div class="rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.06] p-6 shadow-glow backdrop-blur">
-          <h2 class="text-xl font-bold text-gray-900 dark:text-white">Generate设置</h2>
-          <p class="mt-2 text-sm leading-6 text-slate-400">根据用途选择性别、数量与风格。输入异常时系统会给出友好提示，不会中断运行。</p>
-
-          <div class="mt-6 space-y-6">
-            <fieldset>
-              <legend class="mb-3 text-sm font-semibold text-slate-800 dark:text-slate-200">性别选项</legend>
-              <div class="grid grid-cols-3 gap-3" id="genderGroup">
-                <label class="cursor-pointer">
-                  <input type="radio" name="gender" value="male" class="peer sr-only" checked />
-                  <span class="block rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-3 text-center text-sm font-medium text-slate-700 dark:text-slate-300 transition peer-checked:border-cyan-300 peer-checked:bg-cyan-400/15 peer-checked:text-cyan-100 hover:bg-white/10">男</span>
-                </label>
-                <label class="cursor-pointer">
-                  <input type="radio" name="gender" value="female" class="peer sr-only" />
-                  <span class="block rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-3 text-center text-sm font-medium text-slate-700 dark:text-slate-300 transition peer-checked:border-pink-300 peer-checked:bg-pink-400/15 peer-checked:text-pink-100 hover:bg-white/10">女</span>
-                </label>
-                <label class="cursor-pointer">
-                  <input type="radio" name="gender" value="random" class="peer sr-only" />
-                  <span class="block rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-3 text-center text-sm font-medium text-slate-700 dark:text-slate-300 transition peer-checked:border-violet-300 peer-checked:bg-violet-400/15 peer-checked:text-violet-100 hover:bg-white/10">随机</span>
-                </label>
-              </div>
-            </fieldset>
-
-            <div>
-              <label for="countInput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">Generate数量（1-20）</label>
-              <input id="countInput" type="number" min="1" max="20" value="6" inputmode="numeric"
-                class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-3 text-gray-900 dark:text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300 focus:ring-4 focus:ring-cyan-400/10" />
-            </div>
-
-            <div>
-              <label for="styleSelect" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200">命名风格</label>
-              <select id="styleSelect"
-                class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-slate-900/80 px-4 py-3 text-gray-900 dark:text-white outline-none transition focus:border-cyan-300 focus:ring-4 focus:ring-cyan-400/10">
-                <option value="modern">现代清爽</option>
-                <option value="fantasy">幻想史诗</option>
-                <option value="cyber">赛博科技</option>
-                <option value="classic">经典文艺</option>
-              </select>
-            </div>
-
-            <div id="errorBox" class="hidden rounded-2xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm leading-6 text-red-200"></div>
-
-            <button id="generateBtn"
-              class="group w-full rounded-2xl bg-cyan-400 px-5 py-4 text-base font-extrabold text-slate-950 dark:text-slate-100 shadow-lg shadow-cyan-500/20 transition active:scale-[0.98] hover:bg-cyan-300 focus:outline-none focus:ring-4 focus:ring-cyan-300/30">
-              <span class="inline-flex items-center justify-center gap-2">
-                立即Generate
-                <span class="transition group-hover:translate-x-1">→</span>
-              </span>
-            </button>
-
-            <button id="clearBtn"
-              class="w-full rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] px-5 py-3 text-sm font-semibold text-slate-700 dark:text-slate-300 transition active:scale-[0.98] hover:bg-white/[0.08] hover:text-slate-950 dark:hover:text-white">
-              Clear结果
-            </button>
-          </div>
+      </a>
+      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeToggleAria" aria-label="切换主题">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline" data-i18n="themeSystem">系统</span>
+        </button>
+        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+        </button>
+        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]" data-i18n-aria-label="languageAria">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langZhShort">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langEnShort">EN</button>
         </div>
       </div>
+    </nav>
+  </header>
 
-      <div class="lg:col-span-3">
-        <div class="rounded-3xl border border-cyan-300/20 bg-white dark:bg-slate-900/80 p-6 shadow-glow backdrop-blur">
-          <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <h2 class="text-xl font-bold text-gray-900 dark:text-white">Generate结果</h2>
-              <p class="mt-2 text-sm text-slate-400">点击任意卡片可Copy完整姓名组合。</p>
-            </div>
-            <div id="resultCount" class="rounded-full border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.04] px-4 py-2 text-sm text-slate-700 dark:text-slate-300">尚未Generate</div>
-          </div>
-
-          <div id="resultGrid" class="mt-6 grid gap-4 sm:grid-cols-2">
-            <div class="rounded-3xl border border-dashed border-gray-200 dark:border-white/15 bg-white/[0.03] p-8 text-center text-slate-400 sm:col-span-2">
-              Please select设置后点击“立即Generate”，这里会显示中英双语随机姓名组合。
-            </div>
-          </div>
+  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
+      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <div class="min-w-0">
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">随机姓名生成器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">为虚构人物、账号昵称和灵感草稿生成带中英组合的随机姓名，全部在 Micro Tools Matrix 页面内完成。</p>
+        </div>
+        <div class="inline-flex w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-semibold text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+          <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+          <span data-i18n="localBadge">本地运行</span>
         </div>
       </div>
     </section>
 
-    <article class="mt-10 rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.05] p-6 leading-8 text-slate-700 dark:text-slate-300 md:p-8">
-      <h2 class="mb-4 text-2xl font-bold text-gray-900 dark:text-white">关于 random-name-generator 随机姓名Generate器</h2>
-      <p>
-        random-name-generator 是一个面向创作者、游戏玩家、内容运营和社交媒体用户的虚构人物/网名随机Generate器。很多人在写小说、设计剧本、创建 RPG 角色、注册账号或制作品牌人设时，都会遇到“名字不够自然”“中英文不匹配”“灵感枯竭”的问题。本工具通过预置Chinese姓氏、Chinese名、英文名、英文姓氏与不同风格标签，快速Generate带有中英双语的随机姓名组合，让角色命名更高效、更有辨识度。你可以选择男、女或随机性别，并设置Generate数量与命名风格，例如现代清爽、幻想史诗、赛博科技或经典文艺。点击Generate后，系统会一次输出多个可Copy的姓名方案，适合用作小说人物取名工具、游戏角色名字Generate器、随机英文名Generate器和社交网名灵感工具。所有逻辑都在浏览器本地运行，无需上传信息，使用简单、安全且响应迅速。
-      </p>
-    </article>
+    <section class="grid gap-5 lg:grid-cols-2">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">生成设置</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+        </div>
+
+        <div class="space-y-4">
+          <div>
+            <label for="genderSelect" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="genderLabel">性别倾向</label>
+            <select id="genderSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+              <option value="mixed" data-i18n="genderMixed">随机混合</option>
+              <option value="male" data-i18n="genderMale">男</option>
+              <option value="female" data-i18n="genderFemale">女</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="countSelect" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="countLabel">生成数量</label>
+            <select id="countSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+              <option value="1" data-i18n="countOne">1 个</option>
+              <option value="3" selected data-i18n="countThree">3 个</option>
+              <option value="5" data-i18n="countFive">5 个</option>
+              <option value="10" data-i18n="countTen">10 个</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="styleSelect" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="styleLabel">姓名风格</label>
+            <select id="styleSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+              <option value="balanced" selected data-i18n="styleBalanced">自然角色名</option>
+              <option value="nickname" data-i18n="styleNickname">网名倾向</option>
+            </select>
+          </div>
+
+          <p id="inputHint" class="min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="inputHint">选择性别、数量和风格后点击生成。结果只在当前浏览器内创建。</p>
+        </div>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="generateBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">生成姓名</button>
+          <button id="resetBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">重置设置</button>
+        </div>
+      </section>
+
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">生成结果</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+        </div>
+
+        <div id="resultList" class="space-y-3" aria-live="polite">
+          <div class="rounded-2xl border border-dashed border-gray-200 bg-slate-50 p-4 text-sm leading-7 text-slate-500 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-400" data-i18n="emptyState">尚未生成。点击生成后，这里会显示中文姓名、英文姓名和网名组合。</div>
+        </div>
+
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="readyStatus">准备就绪。</p>
+
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="clearAction">清空结果</button>
+        </div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">随机姓名生成器适合小说设定、游戏角色、产品原型、社交账号和测试数据准备。你可以选择男、女或随机混合，快速得到中文姓名、英文姓名与网名组合，便于为虚构人物建立更完整的身份线索。Micro Tools Matrix 坚持浏览器本地处理，生成过程无需上传文本、无需登录，也不会调用远程接口。这个免费在线开发者工具可用于灵感草稿、界面占位、演示样例和创作练习，帮助你在保持隐私的前提下获得可复制的命名结果。</article>
   </main>
 
-  <footer class="mx-auto max-w-6xl px-5 pb-8 text-center text-sm text-slate-500">
-    © <span id="year"></span> random-name-generator · 本地浏览器运行
-  </footer>
-
-  <div id="toast" class="fixed bottom-5 left-1/2 z-50 hidden -translate-x-1/2 rounded-full border border-emerald-300/30 bg-emerald-500/15 px-5 py-3 text-sm font-semibold text-emerald-100 shadow-2xl backdrop-blur">
-    Copied到剪贴板
-  </div>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
 
   <script>
-    (() => {
-      'use strict';
+    const I18N = {
+      zh: {
+        toolName: "随机姓名生成器",
+        h1: "随机姓名生成器",
+        documentTitle: "随机姓名生成器 - Micro Tools Matrix",
+        metaDescription: "Micro Tools Matrix 随机姓名生成器可在浏览器本地生成虚构人物名和网名，支持男女性别选项，无需上传。",
+        metaKeywords: "随机姓名生成器,虚构人物,网名生成器,浏览器本地处理,无需上传,Micro Tools Matrix",
+        eyebrow: "浏览器本地处理",
+        intro: "为虚构人物、账号昵称和灵感草稿生成带中英组合的随机姓名，全部在 Micro Tools Matrix 页面内完成。",
+        localBadge: "本地运行",
+        sponsor: "赞赏",
+        buyCoffee: "Buy Me a Coffee",
+        themeToggleAria: "切换主题",
+        themeLight: "亮色",
+        themeDark: "深色",
+        themeSystem: "系统",
+        languageAria: "语言",
+        langZhShort: "中",
+        langEnShort: "EN",
+        inputTitle: "生成设置",
+        inputBadge: "输入",
+        outputTitle: "生成结果",
+        outputBadge: "输出",
+        genderLabel: "性别倾向",
+        genderMixed: "随机混合",
+        genderMale: "男",
+        genderFemale: "女",
+        countLabel: "生成数量",
+        countOne: "1 个",
+        countThree: "3 个",
+        countFive: "5 个",
+        countTen: "10 个",
+        styleLabel: "姓名风格",
+        styleBalanced: "自然角色名",
+        styleNickname: "网名倾向",
+        inputHint: "选择性别、数量和风格后点击生成。结果只在当前浏览器内创建。",
+        primaryAction: "生成姓名",
+        secondaryAction: "重置设置",
+        copyAction: "复制结果",
+        clearAction: "清空结果",
+        emptyState: "尚未生成。点击生成后，这里会显示中文姓名、英文姓名和网名组合。",
+        readyStatus: "准备就绪。",
+        generatedStatus: "已生成 {count} 组随机姓名。",
+        copiedStatus: "结果已复制到剪贴板。",
+        copyFailedStatus: "复制失败，请手动选择结果复制。",
+        emptyCopyStatus: "还没有可复制的结果，请先生成姓名。",
+        clearedStatus: "结果已清空。",
+        resetStatus: "设置已重置。",
+        invalidStatus: "设置无效，请重新选择生成数量。",
+        cardChinese: "中文姓名",
+        cardEnglish: "英文姓名",
+        cardNickname: "网名",
+        cardGender: "性别倾向",
+        seoArticle: "随机姓名生成器适合小说设定、游戏角色、产品原型、社交账号和测试数据准备。你可以选择男、女或随机混合，快速得到中文姓名、英文姓名与网名组合，便于为虚构人物建立更完整的身份线索。Micro Tools Matrix 坚持浏览器本地处理，生成过程无需上传文本、无需登录，也不会调用远程接口。这个免费在线开发者工具可用于灵感草稿、界面占位、演示样例和创作练习，帮助你在保持隐私的前提下获得可复制的命名结果。",
+        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
+      },
+      en: {
+        toolName: "Random Name Generator",
+        h1: "Random Name Generator",
+        documentTitle: "Random Name Generator - Micro Tools Matrix",
+        metaDescription: "Create fictional character names and usernames with browser-local processing in Micro Tools Matrix. Choose male or female options and generate bilingual name combinations for free.",
+        metaKeywords: "random name generator,fictional character names,username generator,browser-local processing,free online developer tool,Micro Tools Matrix",
+        eyebrow: "Browser-local processing",
+        intro: "Generate bilingual name combinations for fictional characters, account ideas, and creative drafts directly inside Micro Tools Matrix.",
+        localBadge: "Local",
+        sponsor: "Sponsor",
+        buyCoffee: "Buy Me a Coffee",
+        themeToggleAria: "Toggle theme",
+        themeLight: "Light",
+        themeDark: "Dark",
+        themeSystem: "System",
+        languageAria: "Language",
+        langZhShort: "中",
+        langEnShort: "EN",
+        inputTitle: "Generator Settings",
+        inputBadge: "INPUT",
+        outputTitle: "Generated Results",
+        outputBadge: "OUTPUT",
+        genderLabel: "Gender Preference",
+        genderMixed: "Mixed",
+        genderMale: "Male",
+        genderFemale: "Female",
+        countLabel: "Result Count",
+        countOne: "1 item",
+        countThree: "3 items",
+        countFive: "5 items",
+        countTen: "10 items",
+        styleLabel: "Name Style",
+        styleBalanced: "Natural Character",
+        styleNickname: "Username Friendly",
+        inputHint: "Choose a gender, count, and style, then generate. Results are created only in your current browser.",
+        primaryAction: "Generate Names",
+        secondaryAction: "Reset Settings",
+        copyAction: "Copy Results",
+        clearAction: "Clear Results",
+        emptyState: "No names yet. Generate to see Chinese names, English names, and username combinations here.",
+        readyStatus: "Ready.",
+        generatedStatus: "Generated {count} random name sets.",
+        copiedStatus: "Results copied to the clipboard.",
+        copyFailedStatus: "Copy failed. Please select and copy the results manually.",
+        emptyCopyStatus: "There are no results to copy yet. Generate names first.",
+        clearedStatus: "Results cleared.",
+        resetStatus: "Settings reset.",
+        invalidStatus: "Invalid settings. Please choose a valid result count.",
+        cardChinese: "Chinese Name",
+        cardEnglish: "English Name",
+        cardNickname: "Username",
+        cardGender: "Gender Preference",
+        seoArticle: "The Random Name Generator by Micro Tools Matrix is designed for writers, game designers, product builders, and developers who need quick fictional identities without sending data anywhere. Choose a male, female, or mixed preference, then generate Chinese names, English names, and username-friendly combinations in one click. The tool is useful for character sheets, demo accounts, test data, role-playing drafts, interface mockups, and creative brainstorming. All logic runs with browser-local processing, so there is no upload, login, tracking request, or remote API involved. As a free online developer tool, it keeps the workflow lightweight while still producing names that feel varied enough for prototypes and stories. Use the copy action to move generated results into notes, spreadsheets, design files, or development fixtures while keeping your ideas private inside your own browser.",
+        footer: "Micro Tools Matrix - browser-local processing with no upload."
+      }
+    };
 
-      const data = {
-        surnamesCN: ['林', '沈', '顾', '陆', '江', '苏', '叶', '秦', '许', '宋', '韩', '程', '周', '季', '白', '唐', '洛', '夏', '闻', '司'],
-        maleCN: ['子昂', '景川', '亦辰', '星澜', '承泽', '云深', '明煦', '柏舟', '修远', '凌霄', '知许', '越衡', '言川', '北辰', '临渊'],
-        femaleCN: ['若曦', '清欢', '语棠', '星眠', '南栀', '晚宁', '以沫', '芷晴', '云舒', '书瑶', '念慈', '知夏', '月白', '安歌', '洛笙'],
-        maleEN: ['Ethan', 'Noah', 'Liam', 'Lucas', 'Aiden', 'Leo', 'Felix', 'Arthur', 'Julian', 'Miles', 'Orion', 'Caleb', 'Victor', 'Rowan', 'Silas'],
-        femaleEN: ['Ava', 'Mia', 'Luna', 'Iris', 'Clara', 'Nora', 'Elena', 'Aurora', 'Violet', 'Serena', 'Lyra', 'Evelyn', 'Celia', 'Hazel', 'Freya'],
-        surnamesEN: ['Stone', 'Rivers', 'Hart', 'Winter', 'Blackwood', 'Everett', 'Sterling', 'Hayes', 'Morgan', 'Reed', 'Ashford', 'Vale', 'Knight', 'Gray', 'Wilder'],
-        styleWords: {
-          modern: ['晨光', '微风', '晴空', '简序', '蓝调', '松间', '北岸', '澄明'],
-          fantasy: ['银月', '星誓', '龙语', '暮森', '圣辉', '古曜', '风吟', '霜冠'],
-          cyber: ['零点', '霓虹', '量子', '矩阵', '光栅', '脉冲', '蓝核', '星网'],
-          classic: ['青简', '墨池', '听雨', '兰舟', '疏影', '云归', '竹眠', '问山']
-        },
-        styleEN: {
-          modern: ['Nova', 'Clear', 'Blue', 'Urban', 'Bright', 'Mellow', 'North', 'Aero'],
-          fantasy: ['Moon', 'Elder', 'Dragon', 'Aether', 'Runic', 'Crown', 'Frost', 'Elven'],
-          cyber: ['Neon', 'Quantum', 'Vector', 'Cipher', 'Pulse', 'Nano', 'Matrix', 'Chrome'],
-          classic: ['Poet', 'Ivory', 'Rain', 'Cedar', 'Sage', 'Lyric', 'Aster', 'Muse']
+    const DATA = {
+      surnames: ["林", "周", "顾", "沈", "陆", "许", "梁", "程", "苏", "叶", "江", "唐", "宋", "韩", "秦", "夏", "白", "方", "温", "宁"],
+      maleGiven: ["景行", "亦川", "承安", "明澈", "星野", "修远", "云舟", "知远", "柏然", "言溪", "书尧", "南风", "清和", "子墨", "庭轩"],
+      femaleGiven: ["若晴", "知夏", "安宁", "云舒", "星眠", "予棠", "清欢", "念瑶", "晚晴", "语桐", "以沫", "青禾", "南栀", "初宁", "舒白"],
+      maleEnglishFirst: ["Ethan", "Noah", "Liam", "Lucas", "Mason", "Owen", "Caleb", "Felix", "Julian", "Leo", "Miles", "Theo", "Adrian", "Rowan", "Nolan"],
+      femaleEnglishFirst: ["Ava", "Mia", "Luna", "Iris", "Nora", "Clara", "Elena", "Ruby", "Sophie", "Violet", "Hazel", "Ivy", "Maya", "Alice", "Emma"],
+      englishLast: ["Lin", "Zhou", "Gu", "Shen", "Lu", "Xu", "Liang", "Cheng", "Su", "Ye", "Jiang", "Tang", "Song", "Han", "Qin", "Xia", "Bai", "Fang", "Wen", "Ning"],
+      naturalTags: ["north", "river", "cloud", "quiet", "bright", "field", "paper", "stone", "moon", "garden", "silver", "maple"],
+      nicknameTags: ["pixel", "nova", "echo", "mint", "orbit", "cyan", "ember", "raven", "moss", "lumen", "folio", "drift"]
+    };
+
+    let currentLanguage = "zh";
+    let generatedItems = [];
+    let lastStatusKey = "readyStatus";
+    let lastStatusParams = {};
+
+    function getInitialLanguage() {
+      if (location.pathname.includes("/en/")) return "en";
+      const saved = localStorage.getItem("microToolsLanguage");
+      return saved === "en" || saved === "zh" ? saved : "zh";
+    }
+
+    function setLanguage(lang) {
+      const normalized = lang === "en" ? "en" : "zh";
+      localStorage.setItem("microToolsLanguage", normalized);
+      applyLanguage(normalized);
+    }
+
+    function t(key, params = {}) {
+      const dict = I18N[currentLanguage] || I18N.zh;
+      let value = dict[key] || I18N.zh[key] || "";
+      Object.keys(params).forEach((name) => {
+        value = value.replaceAll(`{${name}}`, String(params[name]));
+      });
+      return value;
+    }
+
+    function applyLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      const dict = I18N[currentLanguage];
+
+      document.documentElement.lang = currentLanguage === "zh" ? "zh-CN" : "en";
+      document.title = dict.documentTitle;
+
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) metaDescription.setAttribute("content", dict.metaDescription);
+
+      const metaKeywords = document.querySelector('meta[name="keywords"]');
+      if (metaKeywords) metaKeywords.setAttribute("content", dict.metaKeywords);
+
+      document.querySelectorAll("[data-i18n]").forEach((node) => {
+        const key = node.getAttribute("data-i18n");
+        if (key && dict[key]) node.textContent = dict[key];
+      });
+
+      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-placeholder");
+        if (key && dict[key]) node.setAttribute("placeholder", dict[key]);
+      });
+
+      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-title");
+        if (key && dict[key]) node.setAttribute("title", dict[key]);
+      });
+
+      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+        const key = node.getAttribute("data-i18n-aria-label");
+        if (key && dict[key]) node.setAttribute("aria-label", dict[key]);
+      });
+
+      const sponsorLabel = document.querySelector("#openSponsorBtn [data-i18n='sponsor']");
+      if (sponsorLabel) sponsorLabel.textContent = dict.sponsor;
+
+      const zhBtn = document.getElementById("langZhBtn");
+      const enBtn = document.getElementById("langEnBtn");
+      if (zhBtn && enBtn) {
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
+        if (currentLanguage === "zh") {
+          zhBtn.classList.add("bg-cyan-400", "text-slate-950");
+          enBtn.classList.add("text-slate-600", "dark:text-slate-400");
+        } else {
+          enBtn.classList.add("bg-cyan-400", "text-slate-950");
+          zhBtn.classList.add("text-slate-600", "dark:text-slate-400");
         }
-      };
+      }
 
-      const countInput = document.getElementById('countInput');
-      const styleSelect = document.getElementById('styleSelect');
-      const generateBtn = document.getElementById('generateBtn');
-      const clearBtn = document.getElementById('clearBtn');
-      const errorBox = document.getElementById('errorBox');
-      const resultGrid = document.getElementById('resultGrid');
-      const resultCount = document.getElementById('resultCount');
-      const toast = document.getElementById('toast');
-      const year = document.getElementById('year');
+      renderResults();
+      setStatus(lastStatusKey, lastStatusParams);
 
-      year.textContent = new Date().getFullYear();
+      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+    }
 
-      const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    function randomItem(list) {
+      return list[Math.floor(Math.random() * list.length)];
+    }
 
-      const showError = (message) => {
-        errorBox.textContent = message;
-        errorBox.classList.remove('hidden');
-      };
+    function decideGender(selected) {
+      if (selected === "male" || selected === "female") return selected;
+      return Math.random() > 0.5 ? "male" : "female";
+    }
 
-      const hideError = () => {
-        errorBox.textContent = '';
-        errorBox.classList.add('hidden');
-      };
+    function buildNickname(chineseName, englishName, style) {
+      const tagList = style === "nickname" ? DATA.nicknameTags : DATA.naturalTags;
+      const tag = randomItem(tagList);
+      const number = Math.floor(10 + Math.random() * 90);
+      const compactEnglish = englishName.split(" ")[0].toLowerCase();
+      const compactChinese = encodeChineseHint(chineseName);
+      return `${tag}-${compactEnglish}-${compactChinese}${number}`;
+    }
 
-      const getGender = () => {
-        const checked = document.querySelector('input[name="gender"]:checked');
-        if (!checked || !['male', 'female', 'random'].includes(checked.value)) return 'random';
-        return checked.value;
-      };
+    function encodeChineseHint(name) {
+      const hints = ["lin", "zhou", "gu", "shen", "lu", "xu", "liang", "cheng", "su", "ye", "jiang", "tang", "song", "han", "qin", "xia", "bai", "fang", "wen", "ning"];
+      const code = name.charCodeAt(0) + name.charCodeAt(name.length - 1);
+      return hints[code % hints.length];
+    }
 
-      const normalizeCount = () => {
-        const raw = String(countInput.value || '').trim();
-        if (raw === '') {
-          showError('Please enterGenerate数量，范围为 1 到 20。');
-          return null;
-        }
-        const num = Number(raw);
-        if (!Number.isFinite(num) || !Number.isInteger(num)) {
-          showError('Generate数量必须是整数，例如 6。');
-          return null;
-        }
-        if (num < 1 || num > 20) {
-          showError('Generate数量超出范围，Please enter 1 到 20 之间的整数。');
-          return null;
-        }
-        return num;
-      };
+    function generateNames() {
+      const genderSelect = document.getElementById("genderSelect");
+      const countSelect = document.getElementById("countSelect");
+      const styleSelect = document.getElementById("styleSelect");
+      const genderValue = genderSelect ? genderSelect.value : "mixed";
+      const styleValue = styleSelect ? styleSelect.value : "balanced";
+      const count = countSelect ? Number(countSelect.value) : 0;
 
-      const makeName = () => {
-        const selectedGender = getGender();
-        const gender = selectedGender === 'random' ? (Math.random() > 0.5 ? 'male' : 'female') : selectedGender;
-        const style = Object.prototype.hasOwnProperty.call(data.styleWords, styleSelect.value) ? styleSelect.value : 'modern';
+      if (!Number.isInteger(count) || count < 1 || count > 10) {
+        generatedItems = [];
+        renderResults();
+        setStatus("invalidStatus");
+        return;
+      }
 
-        const cnGiven = gender === 'male' ? pick(data.maleCN) : pick(data.femaleCN);
-        const enGiven = gender === 'male' ? pick(data.maleEN) : pick(data.femaleEN);
-        const cnName = pick(data.surnamesCN) + cnGiven;
-        const enName = enGiven + ' ' + pick(data.surnamesEN);
-        const cnNick = pick(data.styleWords[style]) + '·' + cnGiven.slice(-1);
-        const enNick = pick(data.styleEN[style]) + '-' + pick(['Echo', 'Soul', 'Vibe', 'Ray', 'Code', 'Dream', 'Quest', 'Verse']);
-
+      generatedItems = Array.from({ length: count }, () => {
+        const gender = decideGender(genderValue);
+        const surnameIndex = Math.floor(Math.random() * DATA.surnames.length);
+        const surname = DATA.surnames[surnameIndex];
+        const chineseGiven = gender === "male" ? randomItem(DATA.maleGiven) : randomItem(DATA.femaleGiven);
+        const englishFirst = gender === "male" ? randomItem(DATA.maleEnglishFirst) : randomItem(DATA.femaleEnglishFirst);
+        const englishLast = DATA.englishLast[surnameIndex] || randomItem(DATA.englishLast);
+        const chineseName = `${surname}${chineseGiven}`;
+        const englishName = `${englishFirst} ${englishLast}`;
         return {
           gender,
-          cnName,
-          enName,
-          cnNick,
-          enNick,
-          fullText: `${cnName} / ${enName}｜昵称：${cnNick} / ${enNick}`
+          chineseName,
+          englishName,
+          nickname: buildNickname(chineseName, englishName, styleValue)
         };
-      };
+      });
 
-      const cardHTML = (item, index) => {
-        const genderLabel = item.gender === 'male' ? '男' : '女';
-        const badgeClass = item.gender === 'male'
-          ? 'border-cyan-300/30 bg-cyan-400/10 text-cyan-100'
-          : 'border-pink-300/30 bg-pink-400/10 text-pink-100';
+      renderResults();
+      setStatus("generatedStatus", { count: generatedItems.length });
+    }
 
+    function renderResults() {
+      const resultList = document.getElementById("resultList");
+      if (!resultList) return;
+
+      if (!generatedItems.length) {
+        resultList.innerHTML = `<div class="rounded-2xl border border-dashed border-gray-200 bg-slate-50 p-4 text-sm leading-7 text-slate-500 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-400">${escapeHtml(t("emptyState"))}</div>`;
+        return;
+      }
+
+      resultList.innerHTML = generatedItems.map((item, index) => {
+        const genderText = item.gender === "male" ? t("genderMale") : t("genderFemale");
         return `
-          <button type="button" data-copy="${escapeAttr(item.fullText)}"
-            class="name-card group rounded-3xl border border-gray-200 dark:border-white/10 bg-white/[0.055] p-5 text-left transition hover:-translate-y-1 hover:border-cyan-300/40 hover:bg-white/[0.085] focus:outline-none focus:ring-4 focus:ring-cyan-300/20 active:scale-[0.99]">
-            <div class="flex items-center justify-between gap-3">
-              <span class="rounded-full border ${badgeClass} px-3 py-1 text-xs font-bold">${genderLabel}</span>
-              <span class="text-xs text-slate-500">#${String(index + 1).padStart(2, '0')}</span>
+          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
+            <div class="mb-3 flex items-center justify-between gap-3">
+              <span class="inline-flex h-7 min-w-7 items-center justify-center rounded-full bg-cyan-400 px-2 text-xs font-black text-slate-950 tabular-nums">${index + 1}</span>
+              <span class="rounded-full border border-gray-200 bg-white px-2.5 py-1 text-xs font-semibold text-slate-600 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-300">${escapeHtml(genderText)}</span>
             </div>
-            <div class="mt-4">
-              <p class="text-2xl font-black tracking-wide text-gray-900 dark:text-white">${escapeHTML(item.cnName)}</p>
-              <p class="mt-1 text-lg font-semibold text-cyan-200">${escapeHTML(item.enName)}</p>
-            </div>
-            <div class="mt-4 rounded-2xl bg-white dark:bg-slate-950/55 p-4">
-              <p class="text-sm text-slate-400">网名 / Nickname</p>
-              <p class="mt-1 font-bold text-slate-900 dark:text-slate-100">${escapeHTML(item.cnNick)} <span class="text-slate-500">/</span> ${escapeHTML(item.enNick)}</p>
-            </div>
-            <p class="mt-4 text-xs text-slate-500 transition group-hover:text-slate-300">点击Copy完整组合</p>
-          </button>
-        `;
-      };
-
-      const escapeHTML = (value) => String(value)
-        .replaceAll('&', '&amp;')
-        .replaceAll('<', '&lt;')
-        .replaceAll('>', '&gt;')
-        .replaceAll('"', '&quot;')
-        .replaceAll("'", '&#039;');
-
-      const escapeAttr = (value) => escapeHTML(value).replaceAll('\n', ' ');
-
-      const showToast = (message) => {
-        toast.textContent = message;
-        toast.classList.remove('hidden');
-        window.clearTimeout(showToast.timer);
-        showToast.timer = window.setTimeout(() => toast.classList.add('hidden'), 1800);
-      };
-
-      const copyText = async (text) => {
-        try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(text);
-          } else {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.setAttribute('readonly', '');
-            textarea.style.position = 'fixed';
-            textarea.style.left = '-9999px';
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-          }
-          showToast('Copied到剪贴板');
-        } catch (err) {
-          showToast('Copy failed，请手动选择文本');
-        }
-      };
-
-      const generate = () => {
-        hideError();
-        const count = normalizeCount();
-        if (count === null) return;
-
-        generateBtn.disabled = true;
-        generateBtn.classList.add('opacity-80');
-
-        const results = Array.from({ length: count }, makeName);
-        resultGrid.innerHTML = results.map(cardHTML).join('');
-        resultCount.textContent = `已Generate ${count} 个`;
-
-        window.setTimeout(() => {
-          generateBtn.disabled = false;
-          generateBtn.classList.remove('opacity-80');
-        }, 180);
-      };
-
-      const clearResults = () => {
-        hideError();
-        resultGrid.innerHTML = `
-          <div class="rounded-3xl border border-dashed border-gray-200 dark:border-white/15 bg-white/[0.03] p-8 text-center text-slate-400 sm:col-span-2">
-            结果已Clear。Please select设置后点击“立即Generate”。
+            <dl class="space-y-2 text-sm">
+              <div class="grid gap-1 sm:grid-cols-[7rem_1fr]">
+                <dt class="font-semibold text-slate-500 dark:text-slate-400">${escapeHtml(t("cardChinese"))}</dt>
+                <dd class="break-words font-bold text-slate-950 dark:text-white">${escapeHtml(item.chineseName)}</dd>
+              </div>
+              <div class="grid gap-1 sm:grid-cols-[7rem_1fr]">
+                <dt class="font-semibold text-slate-500 dark:text-slate-400">${escapeHtml(t("cardEnglish"))}</dt>
+                <dd class="break-words font-bold text-slate-950 dark:text-white">${escapeHtml(item.englishName)}</dd>
+              </div>
+              <div class="grid gap-1 sm:grid-cols-[7rem_1fr]">
+                <dt class="font-semibold text-slate-500 dark:text-slate-400">${escapeHtml(t("cardNickname"))}</dt>
+                <dd class="break-words font-mono text-slate-800 dark:text-slate-100">${escapeHtml(item.nickname)}</dd>
+              </div>
+            </dl>
           </div>
         `;
-        resultCount.textContent = '尚未Generate';
-      };
-
-      generateBtn.addEventListener('click', generate);
-      clearBtn.addEventListener('click', clearResults);
-      countInput.addEventListener('input', hideError);
-
-      resultGrid.addEventListener('click', (event) => {
-        const card = event.target.closest('.name-card');
-        if (!card) return;
-        const text = card.getAttribute('data-copy') || '';
-        const decoded = text
-          .replaceAll('&amp;', '&')
-          .replaceAll('&lt;', '<')
-          .replaceAll('&gt;', '>')
-          .replaceAll('&quot;', '"')
-          .replaceAll('&#039;', "'");
-        if (decoded.trim()) copyText(decoded);
-      });
-
-      generate();
-    })();
-  </script>
-  <!-- pwa-register:start -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch(() => {});
-      });
+      }).join("");
     }
+
+    function setStatus(key, params = {}) {
+      lastStatusKey = key;
+      lastStatusParams = params;
+      const statusText = document.getElementById("statusText");
+      if (statusText) statusText.textContent = t(key, params);
+    }
+
+    function resultsToText() {
+      return generatedItems.map((item, index) => {
+        const genderText = item.gender === "male" ? t("genderMale") : t("genderFemale");
+        return [
+          `${index + 1}.`,
+          `${t("cardGender")}: ${genderText}`,
+          `${t("cardChinese")}: ${item.chineseName}`,
+          `${t("cardEnglish")}: ${item.englishName}`,
+          `${t("cardNickname")}: ${item.nickname}`
+        ].join("\n");
+      }).join("\n\n");
+    }
+
+    async function copyResults() {
+      if (!generatedItems.length) {
+        setStatus("emptyCopyStatus");
+        return;
+      }
+
+      const text = resultsToText();
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const textarea = document.createElement("textarea");
+          textarea.value = text;
+          textarea.setAttribute("readonly", "readonly");
+          textarea.style.position = "fixed";
+          textarea.style.top = "-9999px";
+          document.body.appendChild(textarea);
+          textarea.select();
+          const success = document.execCommand("copy");
+          document.body.removeChild(textarea);
+          if (!success) throw new Error("copy failed");
+        }
+        setStatus("copiedStatus");
+      } catch (error) {
+        setStatus("copyFailedStatus");
+      }
+    }
+
+    function clearResults() {
+      generatedItems = [];
+      renderResults();
+      setStatus("clearedStatus");
+    }
+
+    function resetSettings() {
+      const genderSelect = document.getElementById("genderSelect");
+      const countSelect = document.getElementById("countSelect");
+      const styleSelect = document.getElementById("styleSelect");
+      if (genderSelect) genderSelect.value = "mixed";
+      if (countSelect) countSelect.value = "3";
+      if (styleSelect) styleSelect.value = "balanced";
+      generatedItems = [];
+      renderResults();
+      setStatus("resetStatus");
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
+      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("openSponsorBtn")?.addEventListener("click", () => {
+        if (typeof openSponsorModal === "function") openSponsorModal();
+      });
+      document.getElementById("closeSponsorBtn")?.addEventListener("click", () => {
+        if (typeof closeSponsorModal === "function") closeSponsorModal();
+      });
+      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
+        if (event.target?.id === "sponsorModal" && typeof closeSponsorModal === "function") closeSponsorModal();
+      });
+
+      document.getElementById("generateBtn")?.addEventListener("click", generateNames);
+      document.getElementById("copyBtn")?.addEventListener("click", copyResults);
+      document.getElementById("clearBtn")?.addEventListener("click", clearResults);
+      document.getElementById("resetBtn")?.addEventListener("click", resetSettings);
+
+      applyLanguage(getInitialLanguage());
+    });
   </script>
-  <!-- pwa-register:end -->
+  <script src="../sponsor.js" defer></script>
+  <script src="./theme-toggle.js" defer></script>
 </body>
 </html>
