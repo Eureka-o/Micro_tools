@@ -56,7 +56,7 @@
           <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">System</span>
         </button>
         <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
-          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">¥</span><span data-i18n="sponsor">赞赏</span>
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
         </button>
         <div role="group" data-i18n-aria-label="languageGroupAria" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
           <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="langZhAria" aria-label="Switch to Chinese">中</button>
@@ -135,9 +135,17 @@
         <textarea id="markdownInput" class="min-h-[26rem] w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="markdownPlaceholder" placeholder="Paste Markdown table here"></textarea>
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <button id="markdownSampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="sampleAction">Sample</button>
+          <button id="markdownAddRowBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="addRowAction">Add row</button>
+          <button id="markdownAddColumnBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="addColumnAction">Add column</button>
           <button id="markdownClearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="clearAction">Clear</button>
         </div>
         <p id="markdownStatus" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite"></p>
+        <div class="mt-4 space-y-2 rounded-2xl border border-cyan-200 bg-cyan-50/70 p-4 text-sm leading-6 text-slate-700 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-slate-300">
+          <p class="font-bold text-slate-950 dark:text-white" data-i18n="markdownHelpTitle">Markdown table rules</p>
+          <p data-i18n="markdownHelpStructure">A valid table needs a header row, a separator row, and optional data rows.</p>
+          <p data-i18n="markdownHelpSeparator">The separator row such as |---|---|---| is only used to identify the header. It is skipped in preview data and CSV/XLSX export.</p>
+          <p data-i18n="markdownHelpScope">Text before or after the extracted pipe-table block is ignored during export.</p>
+        </div>
       </section>
 
       <section class="min-w-0 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
@@ -238,7 +246,13 @@
         markdownInputTitle: "Markdown 源码",
         markdownPlaceholder: "可粘贴包含说明文字的内容，工具会自动提取 | 构成的 Markdown 表格区块。",
         sampleAction: "填入示例",
+        addRowAction: "加一行",
+        addColumnAction: "加一列",
         clearAction: "清空",
+        markdownHelpTitle: "Markdown 表格规则",
+        markdownHelpStructure: "合法表格需要表头行、分隔行和可选的数据行。",
+        markdownHelpSeparator: "形如 |---|---|---|、|:---|---:|:---:| 的分隔行只用于识别表头和对齐方式，预览数据与 CSV/XLSX 导出都会跳过这一行。",
+        markdownHelpScope: "如果粘贴内容里还有说明文字，工具只会导出提取到的 | 管道表格区块。",
         previewTitle: "表格预览",
         downloadCsv: "下载 CSV",
         downloadXlsx: "下载 XLSX",
@@ -261,6 +275,10 @@
         markdownNoTable: "未找到合法 Markdown 表格。请确认存在表头和 |---|---| 分隔行。",
         markdownSampleLoaded: "已填入包含说明文字的 Markdown 表格示例。",
         markdownCleared: "Markdown 输入已清空。",
+        markdownRowAdded: "已添加一行。分隔行仍只用于 Markdown 语法，不会导出为数据。",
+        markdownColumnAdded: "已添加一列。分隔行会自动按列数重建，并在导出时跳过。",
+        defaultColumnLabel: "列 {index}",
+        defaultRowLabel: "第 {index} 行",
         csvDownloaded: "CSV 已生成，包含 UTF-8 BOM，适合 Excel 打开。",
         xlsxDownloaded: "XLSX 工作簿已生成。",
         fileIdle: "拖入 .csv 或 .xlsx 文件开始转换。",
@@ -309,7 +327,13 @@
         markdownInputTitle: "Markdown source",
         markdownPlaceholder: "Paste any text that contains a pipe-based Markdown table. The table block will be extracted automatically.",
         sampleAction: "Sample",
+        addRowAction: "Add row",
+        addColumnAction: "Add column",
         clearAction: "Clear",
+        markdownHelpTitle: "Markdown table rules",
+        markdownHelpStructure: "A valid table needs a header row, a separator row, and optional data rows.",
+        markdownHelpSeparator: "Separator rows such as |---|---|---|, |:---|---:|:---:| only identify the header and alignment. They are skipped in preview data and CSV/XLSX export.",
+        markdownHelpScope: "When pasted text includes notes, only the extracted pipe-table block is exported.",
         previewTitle: "Table preview",
         downloadCsv: "Download CSV",
         downloadXlsx: "Download XLSX",
@@ -332,6 +356,10 @@
         markdownNoTable: "No valid Markdown table found. Make sure there is a header and a |---|---| separator row.",
         markdownSampleLoaded: "Loaded a Markdown table sample with surrounding text.",
         markdownCleared: "Markdown input cleared.",
+        markdownRowAdded: "Added one row. The separator row remains Markdown syntax and is not exported as data.",
+        markdownColumnAdded: "Added one column. The separator row is rebuilt for the new width and skipped on export.",
+        defaultColumnLabel: "Column {index}",
+        defaultRowLabel: "Row {index}",
         csvDownloaded: "CSV generated with a UTF-8 BOM for Excel.",
         xlsxDownloaded: "XLSX workbook generated.",
         fileIdle: "Drop a .csv or .xlsx file to convert it.",
@@ -643,6 +671,49 @@
       updateMarkdownStatus("markdownCleared");
     }
 
+    function getEditableMarkdownAoa() {
+      const input = document.getElementById("markdownInput");
+      const rows = markdownToAoa(input?.value || "");
+      if (rows.length) return rows;
+      return [
+        [
+          formatMessage("defaultColumnLabel", { index: 1 }),
+          formatMessage("defaultColumnLabel", { index: 2 }),
+          formatMessage("defaultColumnLabel", { index: 3 })
+        ],
+        ["", "", ""]
+      ];
+    }
+
+    function addMarkdownRow() {
+      const input = document.getElementById("markdownInput");
+      const rows = getEditableMarkdownAoa();
+      const width = Math.max(1, ...rows.map((row) => row.length));
+      const rowNumber = Math.max(1, rows.length);
+      const nextRow = Array(width).fill("");
+      nextRow[0] = formatMessage("defaultRowLabel", { index: rowNumber });
+      rows.push(nextRow);
+      input.value = aoaToMarkdown(rows);
+      updateMarkdownMode("markdownRowAdded");
+      input.focus();
+    }
+
+    function addMarkdownColumn() {
+      const input = document.getElementById("markdownInput");
+      const rows = getEditableMarkdownAoa();
+      const width = Math.max(1, ...rows.map((row) => row.length));
+      const label = formatMessage("defaultColumnLabel", { index: width + 1 });
+      const next = rows.map((row, index) => {
+        const normalized = row.slice(0, width);
+        while (normalized.length < width) normalized.push("");
+        normalized.push(index === 0 ? label : "");
+        return normalized;
+      });
+      input.value = aoaToMarkdown(next);
+      updateMarkdownMode("markdownColumnAdded");
+      input.focus();
+    }
+
     function csvEscape(value) {
       const text = String(value ?? "");
       return /[",\r\n]/.test(text) ? '"' + text.replace(/"/g, '""') + '"' : text;
@@ -899,6 +970,8 @@
       });
       document.getElementById("markdownInput")?.addEventListener("input", () => updateMarkdownMode());
       document.getElementById("markdownSampleBtn")?.addEventListener("click", loadMarkdownSample);
+      document.getElementById("markdownAddRowBtn")?.addEventListener("click", addMarkdownRow);
+      document.getElementById("markdownAddColumnBtn")?.addEventListener("click", addMarkdownColumn);
       document.getElementById("markdownClearBtn")?.addEventListener("click", clearMarkdown);
       document.getElementById("downloadCsvBtn")?.addEventListener("click", downloadCsv);
       document.getElementById("downloadXlsxBtn")?.addEventListener("click", downloadXlsx);
