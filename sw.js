@@ -1,10 +1,11 @@
-const CACHE_NAME = "micro-tools-cache-v20260504-markdown-table-ux-69";
+const CACHE_NAME = "micro-tools-cache-v20260504-og-banner-70";
 const CACHE_ASSETS = [
   "/",
   "/apple-touch-icon.png",
   "/ascii-tree-generator.html",
   "/aspect-ratio-calculator.html",
   "/assets/logo-web.png",
+  "/assets/images/og-banner.png",
   "/assets/logo.png",
   "/assets/qrcode-generator-2.0.4.js",
   "/assets/vendor/fonts/KaTeX_AMS-Regular.ttf",
