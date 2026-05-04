@@ -1,4 +1,4 @@
-const CACHE_NAME = "micro-tools-cache-v20260504-sponsor-copy-67";
+const CACHE_NAME = "micro-tools-cache-v20260504-favicon-svg-68";
 const CACHE_ASSETS = [
   "/",
   "/apple-touch-icon.png",
@@ -155,6 +155,7 @@ const CACHE_ASSETS = [
   "/en/xml-formatter.html",
   "/favicon.ico",
   "/favicon.png",
+  "/favicon.svg",
   "/file-base64-converter.html",
   "/fp-quantization-visualizer.html",
   "/fraction-calculator.html",
