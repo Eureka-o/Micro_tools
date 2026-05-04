@@ -1,4 +1,4 @@
-const CACHE_NAME = "micro-tools-cache-v20260504-offline-vendor-65";
+const CACHE_NAME = "micro-tools-cache-v20260504-sponsor-copy-67";
 const CACHE_ASSETS = [
   "/",
   "/apple-touch-icon.png",

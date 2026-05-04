@@ -5,16 +5,26 @@
   const copy = {
     zh: {
       sponsor: "赞赏",
-      title: "赞赏支持",
-      subtitle: "保持工具免费、快速且无广告。",
+      title: "请开发者喝杯咖啡",
+      body: [
+        "100% 纯本地运行 / 0 隐私泄露 / 极致轻量。",
+        "如果本站的工具为你节省了时间，欢迎请我喝杯咖啡。",
+        "P.S. 支付时可以备注你需要的新工具需求，我会优先安排排期。"
+      ],
+      linkHint: "也可以通过下方链接支持项目",
       close: "关闭赞赏弹窗",
       wechat: "微信",
       alipay: "支付宝"
     },
     en: {
       sponsor: "Sponsor",
-      title: "Sponsor Support",
-      subtitle: "Keep tools free, fast, and ad-free.",
+      title: "Buy the developer a coffee",
+      body: [
+        "100% browser-local / zero privacy leakage / extremely lightweight.",
+        "If these tools saved you time, you can support the project with a coffee.",
+        "P.S. You can leave a note with a tool request when supporting. I will prioritize it in the roadmap."
+      ],
+      linkHint: "You can also support through the link below.",
       close: "Close sponsor modal",
       wechat: "WeChat",
       alipay: "Alipay"
@@ -72,22 +82,27 @@
   function modalMarkup() {
     const t = copy[lang()];
     return `
-      <div id="sponsorPanel" data-state="closed" class="relative mx-auto max-h-[92vh] w-[90vw] max-w-lg translate-y-8 overflow-y-auto rounded-t-3xl border border-cyan-300/15 bg-white p-6 text-slate-900 opacity-0 shadow-[0_0_50px_-12px_rgba(6,182,212,0.5)] backdrop-blur-xl transition-all duration-300 ease-out data-[state=open]:translate-y-0 data-[state=open]:opacity-100 dark:bg-gray-900/90 dark:text-white sm:rounded-3xl sm:p-8" role="dialog" aria-modal="true" aria-labelledby="sponsorTitle">
-        <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-gray-200 bg-white text-lg font-semibold text-slate-700 transition hover:bg-slate-100 active:scale-95 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10" aria-label="${t.close}">X</button>
-        <div class="px-10 text-center sm:px-8">
-          <h2 id="sponsorTitle" class="text-3xl font-bold leading-tight tracking-tight"><span class="bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent">${t.title}</span></h2>
-          <p class="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">${t.subtitle}</p>
+      <div id="sponsorPanel" data-state="closed" class="relative mx-auto flex max-h-[90vh] w-[90vw] max-w-lg translate-y-8 flex-col overflow-hidden rounded-t-3xl border border-cyan-300/15 bg-white text-slate-900 opacity-0 shadow-[0_0_50px_-12px_rgba(6,182,212,0.5)] backdrop-blur-xl transition-all duration-300 ease-out data-[state=open]:translate-y-0 data-[state=open]:opacity-100 dark:bg-gray-900 dark:text-white sm:max-h-[85vh] sm:rounded-3xl" role="dialog" aria-modal="true" aria-labelledby="sponsorTitle">
+        <div class="flex shrink-0 items-center justify-between gap-4 border-b border-gray-200 bg-white px-5 py-4 dark:border-white/10 dark:bg-gray-900 sm:px-7">
+          <h2 id="sponsorTitle" class="text-xl font-bold leading-tight tracking-tight sm:text-2xl"><span class="bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent">${t.title}</span></h2>
+          <button id="closeSponsorBtn" type="button" class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-full border border-gray-200 bg-white text-lg font-semibold text-slate-700 transition hover:bg-slate-100 active:scale-95 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:bg-white/10" aria-label="${t.close}">X</button>
         </div>
-        <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-7 flex min-h-12 w-full items-center justify-center rounded-full bg-yellow-400 px-5 py-4 text-base font-bold text-slate-950 shadow-lg shadow-yellow-500/10 transition hover:bg-yellow-300 active:scale-95 focus:outline-none focus:ring-2 focus:ring-yellow-200">Buy Me a Coffee</a>
-        <div class="mt-8 flex flex-col items-center justify-center gap-6 sm:flex-row">
-          <div class="w-[70%] max-w-[18rem] text-center sm:w-auto">
-            <img id="wechatImg" src="${WECHAT_QR}" alt="${t.wechat} sponsor QR code" class="aspect-square w-full rounded-2xl border border-gray-200 bg-white p-2 object-contain shadow-inner dark:border-white/10 sm:h-40 sm:w-40">
-            <p class="mt-3 text-sm font-medium text-slate-700 dark:text-slate-300">${t.wechat}</p>
+        <div class="min-h-0 flex-1 overflow-y-auto px-5 py-5 sm:px-8 sm:py-6">
+          <div class="space-y-3 text-center text-sm leading-6 text-slate-600 dark:text-slate-400">
+            ${t.body.map((line) => `<p>${line}</p>`).join("")}
           </div>
-          <div class="w-[70%] max-w-[18rem] text-center sm:w-auto">
-            <img id="alipayImg" src="${ALIPAY_QR}" alt="${t.alipay} sponsor QR code" class="aspect-square w-full rounded-2xl border border-gray-200 bg-white p-2 object-contain shadow-inner dark:border-white/10 sm:h-40 sm:w-40">
-            <p class="mt-3 text-sm font-medium text-slate-700 dark:text-slate-300">${t.alipay}</p>
+          <div class="mt-6 flex flex-col items-center justify-center gap-6 sm:flex-row">
+            <div class="w-[70%] max-w-[18rem] text-center sm:w-auto">
+              <img id="wechatImg" src="${WECHAT_QR}" alt="${t.wechat} sponsor QR code" class="aspect-square w-full rounded-2xl border border-gray-200 bg-white p-2 object-contain shadow-inner dark:border-white/10 sm:h-40 sm:w-40">
+              <p class="mt-3 text-sm font-medium text-slate-700 dark:text-slate-300">${t.wechat}</p>
+            </div>
+            <div class="w-[70%] max-w-[18rem] text-center sm:w-auto">
+              <img id="alipayImg" src="${ALIPAY_QR}" alt="${t.alipay} sponsor QR code" class="aspect-square w-full rounded-2xl border border-gray-200 bg-white p-2 object-contain shadow-inner dark:border-white/10 sm:h-40 sm:w-40">
+              <p class="mt-3 text-sm font-medium text-slate-700 dark:text-slate-300">${t.alipay}</p>
+            </div>
           </div>
+          <p class="mt-5 text-center text-xs leading-5 text-slate-500 dark:text-slate-400">${t.linkHint}</p>
+          <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-4 flex min-h-12 w-full items-center justify-center rounded-full bg-yellow-400 px-5 py-4 text-base font-bold text-slate-950 shadow-lg shadow-yellow-500/10 transition hover:bg-yellow-300 active:scale-95 focus:outline-none focus:ring-2 focus:ring-yellow-200">Buy Me a Coffee</a>
         </div>
       </div>`;
   }
@@ -172,4 +187,6 @@
   });
 
   window.MicroToolsSponsor = { openModal, closeModal, refresh: refreshSponsorLanguage };
+  window.openSponsorModal = openModal;
+  window.closeSponsorModal = closeModal;
 })();
