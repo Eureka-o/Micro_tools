@@ -6,6 +6,20 @@ Use it here: [https://mymicrotools.xyz](https://mymicrotools.xyz)
 
 ## Update Notices
 
+### 2026-05-05 - Tool Matrix Focus Cleanup
+
+Upgraded several lightweight pages into engineering-oriented local tools:
+
+- Pomodoro Timer is now an engineering focus sprint timer with task labels, break cycles, local audio cues, and CSV session export.
+- Lorem Ipsum is now a test payload and log fixture generator for JSON, CSV, log lines, and `.env` snippets.
+- Morse, TTS, Fraction, Percentage, and Aspect Ratio pages now target signal encoding, browser diagnostics, PLL ratios, ppm/utilization checks, and framebuffer estimates.
+- Base Converter now uses a selectable input base and simultaneous binary, octal, decimal, hexadecimal, and custom 2-36 outputs backed by BigInt.
+- Meta Tag Generator is now an HTML Head / SEO Tag Auditor with local checks for canonical, Open Graph, Twitter Card, icons, hreflang, JSON-LD, and external-link risk.
+- Removed weak, duplicate, or off-position pages that did not fit the hardware/developer utility direction: BMI, loan, stopwatch, random names, text reverse, Roman numerals, duplicate subnet calculator, and text-to-binary.
+- Kept front-end decoration helpers, the chords generator, UTM builder, and the upgraded Pomodoro timer as intentional retained tools.
+- Added layout clamps for upgraded tools so status blocks, buttons, and generated output panels do not overlap on narrow screens.
+- Added shared local tool logic under `assets/tool-upgrades.js` and cached it for offline use.
+
 ### 2026-05-04 - Homepage Sharing And Social Preview
 
 Added a cleaner sharing experience for the homepage:
@@ -76,7 +90,7 @@ Added site icons for browser tabs and mobile home screens, and improved bilingua
 
 - Convert, format, encode, decode, and inspect common text or data formats.
 - Work with JSON, CSV, Base64, URLs, JWTs, Markdown tables, hashes, timestamps, colors, CSS snippets, and more.
-- Use calculators and helpers for percentages, BMI, loans, aspect ratios, subnets, QR codes, UUIDs, timers, and other quick jobs.
+- Use calculators and helpers for percentages, PLL ratios, aspect ratios, subnets, QR codes, UUIDs, focus timing, and other quick engineering jobs.
 - Switch between Chinese and English pages where available.
 - Use light, dark, or system theme mode.
 

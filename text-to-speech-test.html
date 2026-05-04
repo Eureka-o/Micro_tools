@@ -1,776 +1,122 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="canonical" href="https://mymicrotools.xyz/text-to-speech-test.html">
-  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/text-to-speech-test.html" />
-  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/text-to-speech-test.html" />
-  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/text-to-speech-test.html" />
-  <meta property="og:locale" content="zh_CN" />
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/text-to-speech-test.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/text-to-speech-test.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/text-to-speech-test.html">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>浏览器语音朗读测试 - 开发者工具，纯前端本地运行 | Micro Tools Matrix</title>
-  <meta name="description" content="免费的 浏览器语音朗读测试，用于开发者工具。工具在浏览器本地运行、无后端上传，结合 浏览器语音朗读测试 的相关技术能力快速处理任务，保护开发者隐私。">
-  <meta name="keywords" content="浏览器语音朗读测试, text, to, speech, test, 免费, 纯前端, 本地运行, 无后端, 隐私保护, Micro Tools Matrix">
   <link rel="stylesheet" href="./style.css">
   <script src="./theme-init.js"></script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Browser Text to Speech Test",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Windows, macOS, Android, iOS",
-      "description": "A free browser-local text to speech testing tool powered by the native window.speechSynthesis API.",
-      "url": "https://mymicrotools.xyz/text-to-speech-test.html",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "category": "Free"
-      }
-    }
-  </script>
+  <title>浏览器 TTS 诊断台 | Micro Tools Matrix</title>
+  <meta name="description" content="浏览器原生 SpeechSynthesis 诊断工具，用于检查本机可用语音、语言、速率、音高和语音队列行为。">
+  <meta name="keywords" content="浏览器 TTS 诊断台, Micro Tools Matrix, browser local, offline, no upload">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="浏览器 TTS 诊断台">
+  <meta property="og:description" content="浏览器原生 SpeechSynthesis 诊断工具，用于检查本机可用语音、语言、速率、音高和语音队列行为。">
+  <meta property="og:url" content="https://mymicrotools.xyz/text-to-speech-test.html">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/images/og-banner.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"浏览器 TTS 诊断台","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS, Linux","description":"浏览器原生 SpeechSynthesis 诊断工具，用于检查本机可用语音、语言、速率、音高和语音队列行为。","url":"https://mymicrotools.xyz/text-to-speech-test.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"zh-CN"}</script>
   <style>
-    :root { color-scheme: light dark; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    html, body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
     .tabular-nums { font-variant-numeric: tabular-nums; }
+    .tool-input { width: 100%; border-radius: 1rem; border: 1px solid rgb(229 231 235); background: rgb(248 250 252); padding: 0.75rem 1rem; font-size: 0.875rem; color: rgb(15 23 42); outline: none; transition: border-color .2s, box-shadow .2s; }
+    .tool-input:focus { border-color: rgb(34 211 238); box-shadow: 0 0 0 4px rgba(34,211,238,.12); }
+    .dark .tool-input { border-color: rgba(255,255,255,.1); background: rgba(2,6,23,.72); color: rgb(241 245 249); }
+    .tool-primary { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; border-radius: 999px; background: rgb(34 211 238); padding: .75rem 1.25rem; font-size: .875rem; font-weight: 800; color: rgb(2 6 23); transition: transform .12s, background .2s; }
+    .tool-primary:hover { background: rgb(103 232 249); }
+    .tool-primary:active, .tool-secondary:active { transform: scale(.97); }
+    .tool-secondary { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; border-radius: 999px; border: 1px solid rgb(229 231 235); background: white; padding: .75rem 1.25rem; font-size: .875rem; font-weight: 700; color: rgb(30 41 59); transition: transform .12s, background .2s, border-color .2s; }
+    .tool-secondary:hover { border-color: rgba(34,211,238,.65); background: rgb(236 254 255); }
+    .dark .tool-secondary { border-color: rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: rgb(241 245 249); }
+    .dark .tool-secondary:hover { background: rgba(255,255,255,.08); }
+    .tool-output { min-height: 20rem; width: 100%; resize: vertical; border-radius: 1rem; border: 1px solid rgb(229 231 235); background: rgb(2 6 23); padding: 1rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: .8125rem; line-height: 1.6; color: rgb(226 232 240); outline: none; }
+    .tool-metric { border-radius: 1rem; border: 1px solid rgb(229 231 235); background: rgb(248 250 252); padding: 1rem; }
+    .tool-metric span { display: block; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: rgb(100 116 139); }
+    .tool-metric strong { margin-top: .5rem; display: block; font-size: 1.25rem; color: rgb(15 23 42); }
+    .dark .tool-metric { border-color: rgba(255,255,255,.1); background: rgba(2,6,23,.5); }
+    .dark .tool-metric strong { color: white; }
+    .lang-link, .lang-link-active { display: inline-flex; min-height: 2.25rem; align-items: center; border-radius: 999px; padding: 0 .75rem; font-size: .875rem; font-weight: 700; }
+    .lang-link { color: rgb(71 85 105); }
+    .lang-link-active { background: rgb(34 211 238); color: rgb(2 6 23); }
+    .dark .lang-link { color: rgb(203 213 225); }
   </style>
 </head>
 <body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
-  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
-
   <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
     <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
       <a href="./" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
         <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
-        <span class="min-w-0">
-          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
-          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">浏览器语音朗读测试</span>
-        </span>
+        <span class="min-w-0"><span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span><span class="block truncate text-xs text-slate-600 dark:text-slate-400">浏览器能力诊断</span></span>
       </a>
-      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
-        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeToggleAria" aria-label="切换主题">
-          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline" data-i18n="themeSystem">系统</span>
-        </button>
-        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
-          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
-        </button>
-        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]" data-i18n-aria-label="languageAria">
-          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
-          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
-        </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="tool-secondary" aria-label="Theme"><span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">System</span></button>
+        <button id="openSponsorBtn" type="button" class="tool-secondary"><span aria-hidden="true">☕</span><span>赞赏</span></button>
+        <div role="group" aria-label="Language" class="inline-flex min-h-11 items-center rounded-full border border-gray-200 bg-white p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.06]"><a href="./text-to-speech-test.html" hreflang="zh-CN" class="lang-link-active">中</a><a href="./en/text-to-speech-test.html" hreflang="en" class="lang-link">EN</a></div>
       </div>
     </nav>
   </header>
 
-  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
-    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
-      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-        <div class="min-w-0">
-          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
-          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">浏览器语音朗读测试</h1>
-          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">使用浏览器原生语音合成能力朗读文本，调节语速、音调并选择系统声音。文本只在当前页面内处理，无需上传。</p>
-        </div>
-        <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
-          <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
-            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
-            <span data-i18n="localBadge">本地运行</span>
-          </div>
-          <div id="shareToolMenuRoot" class="relative shrink-0">
-            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
-              <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="18" cy="5" r="3"></circle>
-                <circle cx="6" cy="12" r="3"></circle>
-                <circle cx="18" cy="19" r="3"></circle>
-                <path d="M8.6 10.7 15.4 6.3"></path>
-                <path d="M8.6 13.3 15.4 17.7"></path>
-              </svg>
-              <span data-i18n="share">分享</span>
-              <svg aria-hidden="true" class="h-3.5 w-3.5 transition" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z" clip-rule="evenodd"></path>
-              </svg>
-            </button>
-            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="分享选项">
-              <button type="button" role="menuitem" onclick="shareToolOnly()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
-                <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200">
-                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg>
-                </span>
-                <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">仅分享工具</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span>
-                </span>
-              </button>
-              <button type="button" role="menuitem" onclick="shareWithData()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
-                <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-400/10 dark:text-cyan-300">
-                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
-                </span>
-                <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">分享工具及当前结果</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">将当前输入或结果写入链接参数</span>
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+  <main id="toolApp" data-tool="text-to-speech-test" class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-7">
+      <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 dark:text-cyan-300">浏览器能力诊断</p>
+      <h1 class="max-w-4xl break-words text-2xl font-black tracking-tight text-slate-950 dark:text-white sm:text-4xl">浏览器 TTS 诊断台</h1>
+      <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base">该工具只调用浏览器内建 API，不上传文本，也不引入外部语音服务。</p>
     </section>
 
-    <section class="grid gap-5 lg:grid-cols-2">
-      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+    <section class="grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04]">Local</span>
         </div>
+        <div class="grid gap-4 sm:grid-cols-2"><label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">测试文本</span>
+            <input id="ttsText" type="text" value="This is a local speech synthesis diagnostic."  class="tool-input">
+          </label>
+<label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">语速</span>
+            <input id="rateInput" type="number" value="1" min="0.1" max="3" step="0.1" class="tool-input">
+          </label>
+<label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">音高</span>
+            <input id="pitchInput" type="number" value="1" min="0" max="2" step="0.1" class="tool-input">
+          </label>
+<label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">音量</span>
+            <input id="volumeInput" type="number" value="0.9" min="0" max="1" step="0.1" class="tool-input">
+          </label>
+<label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">语音列表</span>
+            <select id="voiceSelect" class="tool-input"></select>
+          </label></div>
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><button id="refreshVoicesBtn" type="button" class="tool-primary">刷新语音</button>
+<button id="speakBtn" type="button" class="tool-secondary">播放测试</button>
+<button id="stopSpeechBtn" type="button" class="tool-secondary">停止</button>
+<button id="copyOutputBtn" type="button" class="tool-secondary">复制诊断</button>
+<button id="downloadOutputBtn" type="button" class="tool-secondary">下载诊断</button></div>
 
-        <label for="textInput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="textLabel">要朗读的文本</label>
-        <textarea id="textInput" rows="10" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="textPlaceholder" placeholder="输入一段要测试朗读效果的文本。"></textarea>
-
-        <div class="mt-4 grid gap-4 sm:grid-cols-2">
-          <div>
-            <div class="mb-2 flex items-center justify-between gap-3">
-              <label for="rateInput" class="text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="rateLabel">语速</label>
-              <span id="rateValue" class="tabular-nums rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-xs font-semibold text-slate-600 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400">1.0</span>
-            </div>
-            <input id="rateInput" type="range" min="0.5" max="2" step="0.1" value="1" class="w-full accent-cyan-400" data-i18n-aria-label="rateLabel" aria-label="语速">
-          </div>
-          <div>
-            <div class="mb-2 flex items-center justify-between gap-3">
-              <label for="pitchInput" class="text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="pitchLabel">音调</label>
-              <span id="pitchValue" class="tabular-nums rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-xs font-semibold text-slate-600 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400">1.0</span>
-            </div>
-            <input id="pitchInput" type="range" min="0" max="2" step="0.1" value="1" class="w-full accent-cyan-400" data-i18n-aria-label="pitchLabel" aria-label="音调">
-          </div>
-        </div>
-
-        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="speakBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">开始朗读</button>
-          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">填入示例</button>
-          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="clearAction">清空</button>
-        </div>
+        <p id="statusMessage" class="mt-4 min-h-11 rounded-xl border border-cyan-200 bg-cyan-50 px-4 py-3 text-sm leading-6 text-cyan-800 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200" aria-live="polite">就绪。所有处理均在当前浏览器本地运行。</p>
       </section>
-
-      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+      <section class="space-y-4 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">朗读控制</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">输出</h2>
+          <span class="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">Offline</span>
         </div>
-
-        <label for="voiceSelect" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="voiceLabel">系统声音</label>
-        <select id="voiceSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-aria-label="voiceLabel" aria-label="系统声音">
-          <option value="" data-i18n="voiceLoading">正在读取可用声音</option>
-        </select>
-
-        <div class="mt-4 grid gap-3 sm:grid-cols-3">
-          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
-            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="charactersLabel">字符数</p>
-            <p id="charCount" class="mt-2 tabular-nums text-2xl font-black tracking-tight text-slate-950 dark:text-white">0</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
-            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="rateCardLabel">当前语速</p>
-            <p id="rateCard" class="mt-2 tabular-nums text-2xl font-black tracking-tight text-slate-950 dark:text-white">1.0</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
-            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="pitchCardLabel">当前音调</p>
-            <p id="pitchCard" class="mt-2 tabular-nums text-2xl font-black tracking-tight text-slate-950 dark:text-white">1.0</p>
-          </div>
-        </div>
-
-        <div class="mt-4 rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
-          <p class="mb-2 text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="statusTitle">状态</p>
-          <p id="statusText" class="min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="statusReady">准备就绪。请输入文本并开始朗读。</p>
-        </div>
-
-        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="pauseBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="pauseAction">暂停</button>
-          <button id="resumeBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="resumeAction">继续</button>
-          <button id="stopBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="stopAction">停止</button>
-        </div>
+        <textarea id="outputText" class="tool-output" spellcheck="false"></textarea>
       </section>
     </section>
-
-    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">这款浏览器语音朗读测试工具面向开发者、内容创作者和产品测试人员，用于快速验证系统自带文字转语音效果。页面调用浏览器原生 window.speechSynthesis API，可选择可用声音，并调节语速与音调；所有文本都只在当前浏览器内存中处理，无需上传到服务器。你可以用它检查提示词、无障碍朗读、教育内容、客服话术或多语言界面的听感。作为 Micro Tools Matrix 的免费在线开发者工具，本页强调浏览器本地处理、轻量加载与隐私友好，适合在桌面端和移动端直接打开使用。</article>
   </main>
 
-  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
-
-  <script>
-    const I18N = {
-      zh: {
-        htmlLang: "zh-CN",
-        title: "浏览器语音朗读测试 - Micro Tools Matrix 本地工具箱",
-        metaDescription: "Micro Tools Matrix 浏览器语音朗读测试工具，调用浏览器原生 window.speechSynthesis API，将文本转为语音朗读，支持语速、音调和声音选择，无需上传，浏览器本地处理。",
-        metaKeywords: "浏览器语音朗读测试,TTS测试,文字转语音,speechSynthesis,浏览器本地处理,无需上传,Micro Tools Matrix",
-        toolName: "浏览器语音朗读测试",
-        sponsor: "赞赏",
-        buyCoffee: "Buy Me a Coffee",
-        themeToggleAria: "切换主题",
-        themeLight: "亮色",
-        themeDark: "深色",
-        themeSystem: "系统",
-        languageAria: "语言",
-        eyebrow: "浏览器本地处理",
-        h1: "浏览器语音朗读测试",
-        intro: "使用浏览器原生语音合成能力朗读文本，调节语速、音调并选择系统声音。文本只在当前页面内处理，无需上传。",
-        localBadge: "本地运行",
-        share: "分享",
-        shareAria: "打开分享菜单",
-        shareMenuAria: "分享选项",
-        shareToolOnly: "仅分享工具",
-        shareToolOnlyHint: "分享不带参数的工具页面链接",
-        shareWithData: "分享工具及当前结果",
-        shareWithDataHint: "将当前输入或结果写入链接参数",
-        shareCopied: "分享链接已复制到剪贴板！",
-        shareCopyPrompt: "复制此分享链接：",
-        shareCopyFailed: "复制失败，请手动复制地址栏链接。",
-        shareDataTooLarge: "当前数据过大，无法生成分享链接，请直接复制文本结果。",
-        inputTitle: "输入",
-        inputBadge: "输入",
-        outputTitle: "朗读控制",
-        outputBadge: "输出",
-        textLabel: "要朗读的文本",
-        textPlaceholder: "输入一段要测试朗读效果的文本。",
-        rateLabel: "语速",
-        pitchLabel: "音调",
-        primaryAction: "开始朗读",
-        sampleAction: "填入示例",
-        clearAction: "清空",
-        voiceLabel: "系统声音",
-        voiceLoading: "正在读取可用声音",
-        voiceDefault: "浏览器默认声音",
-        voiceNone: "未检测到可选声音",
-        charactersLabel: "字符数",
-        rateCardLabel: "当前语速",
-        pitchCardLabel: "当前音调",
-        statusTitle: "状态",
-        statusReady: "准备就绪。请输入文本并开始朗读。",
-        statusUnsupported: "当前浏览器不支持原生语音合成。请尝试使用新版 Chrome、Edge、Safari 或 Firefox。",
-        statusEmpty: "请输入要朗读的文本。",
-        statusSpeaking: "正在朗读。",
-        statusPaused: "已暂停。",
-        statusResumed: "已继续朗读。",
-        statusStopped: "已停止朗读。",
-        statusFinished: "朗读完成。",
-        statusError: "朗读时出现问题，请更换声音或缩短文本后重试。",
-        statusSample: "已填入示例文本，可直接开始朗读。",
-        statusCleared: "内容已清空。",
-        pauseAction: "暂停",
-        resumeAction: "继续",
-        stopAction: "停止",
-        sampleText: "Micro Tools Matrix 是一个浏览器本地工具箱。这个页面使用系统语音合成能力朗读文本，你可以调节语速和音调来测试不同的听感。",
-        seoArticle: "这款浏览器语音朗读测试工具面向开发者、内容创作者和产品测试人员，用于快速验证系统自带文字转语音效果。页面调用浏览器原生 window.speechSynthesis API，可选择可用声音，并调节语速与音调；所有文本都只在当前浏览器内存中处理，无需上传到服务器。你可以用它检查提示词、无障碍朗读、教育内容、客服话术或多语言界面的听感。作为 Micro Tools Matrix 的免费在线开发者工具，本页强调浏览器本地处理、轻量加载与隐私友好，适合在桌面端和移动端直接打开使用。",
-        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
-      },
-      en: {
-        htmlLang: "en",
-        title: "Browser Text to Speech Test - Micro Tools Matrix",
-        metaDescription: "A Micro Tools Matrix browser text to speech test powered by the native window.speechSynthesis API. Convert text to speech, adjust rate and pitch, choose voices, and keep everything browser-local.",
-        metaKeywords: "browser text to speech test,TTS test,text to speech,speechSynthesis,browser-local processing,free online developer tool,Micro Tools Matrix",
-        toolName: "Browser Text to Speech Test",
-        sponsor: "Sponsor",
-        buyCoffee: "Buy Me a Coffee",
-        themeToggleAria: "Toggle theme",
-        themeLight: "Light",
-        themeDark: "Dark",
-        themeSystem: "System",
-        languageAria: "Language",
-        eyebrow: "Browser-local processing",
-        h1: "Browser Text to Speech Test",
-        intro: "Use the browser native speech synthesis capability to read text aloud, adjust rate and pitch, and choose a system voice. Your text stays inside this page and is never uploaded.",
-        localBadge: "Local",
-        share: "Share",
-        shareAria: "Open share menu",
-        shareMenuAria: "Share options",
-        shareToolOnly: "Share Tool Only",
-        shareToolOnlyHint: "Share the clean tool page link",
-        shareWithData: "Share with Data",
-        shareWithDataHint: "Include current input or result in the link",
-        shareCopied: "Share link copied to clipboard!",
-        shareCopyPrompt: "Copy this share link:",
-        shareCopyFailed: "Copy failed. Please copy the address bar link manually.",
-        shareDataTooLarge: "The current data is too large to create a share link. Please copy the text result directly.",
-        inputTitle: "Input",
-        inputBadge: "INPUT",
-        outputTitle: "Speech Controls",
-        outputBadge: "OUTPUT",
-        textLabel: "Text to read",
-        textPlaceholder: "Enter text to test the speaking result.",
-        rateLabel: "Rate",
-        pitchLabel: "Pitch",
-        primaryAction: "Start speaking",
-        sampleAction: "Use sample",
-        clearAction: "Clear",
-        voiceLabel: "System voice",
-        voiceLoading: "Loading available voices",
-        voiceDefault: "Browser default voice",
-        voiceNone: "No selectable voices detected",
-        charactersLabel: "Characters",
-        rateCardLabel: "Current rate",
-        pitchCardLabel: "Current pitch",
-        statusTitle: "Status",
-        statusReady: "Ready. Enter text and start speaking.",
-        statusUnsupported: "This browser does not support native speech synthesis. Try a recent version of Chrome, Edge, Safari, or Firefox.",
-        statusEmpty: "Enter some text to read aloud.",
-        statusSpeaking: "Speaking now.",
-        statusPaused: "Paused.",
-        statusResumed: "Speaking resumed.",
-        statusStopped: "Speaking stopped.",
-        statusFinished: "Speaking finished.",
-        statusError: "Something went wrong while speaking. Try another voice or a shorter text.",
-        statusSample: "Sample text inserted. You can start speaking now.",
-        statusCleared: "Content cleared.",
-        pauseAction: "Pause",
-        resumeAction: "Resume",
-        stopAction: "Stop",
-        sampleText: "Micro Tools Matrix is a browser-local toolkit. This page uses the system speech synthesis capability to read text aloud, and you can adjust rate and pitch to compare different listening results.",
-        seoArticle: "This browser text to speech test is designed for developers, content creators, accessibility reviewers, and product teams who need a quick way to verify native TTS behavior. The page uses the built-in window.speechSynthesis API, so you can choose available system voices, adjust speaking rate, change pitch, and hear the result immediately. Your input is processed only in browser memory; there is no upload step and no server-side conversion. It is useful for checking onboarding copy, voice prompts, education scripts, accessibility labels, customer support phrases, and multilingual interface text before shipping. As a free online developer tool in Micro Tools Matrix, it focuses on browser-local processing, a lightweight static page, privacy-friendly behavior, and a consistent experience across desktop and mobile browsers. Voice availability still depends on the operating system and browser, making this page a practical diagnostic tool for real user environments.",
-        footer: "Micro Tools Matrix - Browser-local processing with no upload."
-      }
-    };
-
-    let currentLanguage = "zh";
-    let currentStatusKey = "statusReady";
-    let availableVoices = [];
-
-    function getInitialLanguage() {
-      if (location.pathname.includes("/en/")) return "en";
-      const saved = localStorage.getItem("microToolsLanguage");
-      return saved === "en" || saved === "zh" ? saved : "zh";
-    }
-
-    function setLanguage(lang) {
-      const safeLang = lang === "en" ? "en" : "zh";
-      localStorage.setItem("microToolsLanguage", safeLang);
-      applyLanguage(safeLang);
-    }
-
-    function applyLanguage(lang) {
-      const safeLang = lang === "en" ? "en" : "zh";
-      currentLanguage = safeLang;
-      const dict = I18N[safeLang];
-
-      document.documentElement.lang = dict.htmlLang;
-      document.title = dict.title;
-
-      const description = document.querySelector('meta[name="description"]');
-      if (description) description.setAttribute("content", dict.metaDescription);
-
-      const keywords = document.querySelector('meta[name="keywords"]');
-      if (keywords) keywords.setAttribute("content", dict.metaKeywords);
-
-      document.querySelectorAll("[data-i18n]").forEach((node) => {
-        const key = node.getAttribute("data-i18n");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
-          node.textContent = dict[key];
-        }
-      });
-
-      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
-        const key = node.getAttribute("data-i18n-placeholder");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
-          node.setAttribute("placeholder", dict[key]);
-        }
-      });
-
-      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
-        const key = node.getAttribute("data-i18n-title");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
-          node.setAttribute("title", dict[key]);
-        }
-      });
-
-      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
-        const key = node.getAttribute("data-i18n-aria-label");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
-          node.setAttribute("aria-label", dict[key]);
-        }
-      });
-
-      const zhBtn = document.getElementById("langZhBtn");
-      const enBtn = document.getElementById("langEnBtn");
-      if (zhBtn && enBtn) {
-        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (safeLang === "zh" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
-        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (safeLang === "en" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
-      }
-
-      renderVoices();
-      setStatus(currentStatusKey);
-
-      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
-    }
-
-    function isSpeechSupported() {
-      return "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
-    }
-
-    function setStatus(key) {
-      currentStatusKey = key;
-      const statusText = document.getElementById("statusText");
-      if (!statusText) return;
-      const dict = I18N[currentLanguage] || I18N.zh;
-      statusText.textContent = dict[key] || dict.statusReady;
-    }
-
-    function updateMetrics() {
-      const textInput = document.getElementById("textInput");
-      const rateInput = document.getElementById("rateInput");
-      const pitchInput = document.getElementById("pitchInput");
-      const charCount = document.getElementById("charCount");
-      const rateValue = document.getElementById("rateValue");
-      const pitchValue = document.getElementById("pitchValue");
-      const rateCard = document.getElementById("rateCard");
-      const pitchCard = document.getElementById("pitchCard");
-
-      const rate = Number(rateInput?.value || 1).toFixed(1);
-      const pitch = Number(pitchInput?.value || 1).toFixed(1);
-
-      if (charCount) charCount.textContent = String((textInput?.value || "").length);
-      if (rateValue) rateValue.textContent = rate;
-      if (pitchValue) pitchValue.textContent = pitch;
-      if (rateCard) rateCard.textContent = rate;
-      if (pitchCard) pitchCard.textContent = pitch;
-    }
-
-    function loadVoices() {
-      if (!isSpeechSupported()) {
-        availableVoices = [];
-        renderVoices();
-        setStatus("statusUnsupported");
-        return;
-      }
-      availableVoices = window.speechSynthesis.getVoices() || [];
-      renderVoices();
-    }
-
-    function renderVoices() {
-      const voiceSelect = document.getElementById("voiceSelect");
-      if (!voiceSelect) return;
-
-      const dict = I18N[currentLanguage] || I18N.zh;
-      const previousValue = voiceSelect.value;
-      voiceSelect.innerHTML = "";
-
-      const defaultOption = document.createElement("option");
-      defaultOption.value = "";
-      defaultOption.textContent = availableVoices.length ? dict.voiceDefault : (isSpeechSupported() ? dict.voiceNone : dict.statusUnsupported);
-      voiceSelect.appendChild(defaultOption);
-
-      availableVoices.forEach((voice, index) => {
-        const option = document.createElement("option");
-        option.value = String(index);
-        option.textContent = `${voice.name} (${voice.lang})`;
-        voiceSelect.appendChild(option);
-      });
-
-      if ([...voiceSelect.options].some((option) => option.value === previousValue)) {
-        voiceSelect.value = previousValue;
-      }
-    }
-
-    function stopSpeaking(statusKey) {
-      if (isSpeechSupported()) {
-        window.speechSynthesis.cancel();
-      }
-      setStatus(statusKey || "statusStopped");
-    }
-
-    function speakText() {
-      if (!isSpeechSupported()) {
-        setStatus("statusUnsupported");
-        return;
-      }
-
-      const textInput = document.getElementById("textInput");
-      const voiceSelect = document.getElementById("voiceSelect");
-      const rateInput = document.getElementById("rateInput");
-      const pitchInput = document.getElementById("pitchInput");
-      const text = (textInput?.value || "").trim();
-
-      if (!text) {
-        setStatus("statusEmpty");
-        textInput?.focus();
-        return;
-      }
-
-      window.speechSynthesis.cancel();
-
-      const utterance = new SpeechSynthesisUtterance(text);
-      const selectedIndex = voiceSelect?.value;
-      if (selectedIndex !== "" && availableVoices[Number(selectedIndex)]) {
-        utterance.voice = availableVoices[Number(selectedIndex)];
-      }
-      utterance.rate = Number(rateInput?.value || 1);
-      utterance.pitch = Number(pitchInput?.value || 1);
-
-      utterance.onstart = () => setStatus("statusSpeaking");
-      utterance.onend = () => setStatus("statusFinished");
-      utterance.onerror = () => setStatus("statusError");
-
-      window.speechSynthesis.speak(utterance);
-      setStatus("statusSpeaking");
-    }
-
-    function pauseSpeaking() {
-      if (!isSpeechSupported()) {
-        setStatus("statusUnsupported");
-        return;
-      }
-      if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
-        window.speechSynthesis.pause();
-        setStatus("statusPaused");
-      }
-    }
-
-    function resumeSpeaking() {
-      if (!isSpeechSupported()) {
-        setStatus("statusUnsupported");
-        return;
-      }
-      if (window.speechSynthesis.paused) {
-        window.speechSynthesis.resume();
-        setStatus("statusResumed");
-      }
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      const textInput = document.getElementById("textInput");
-      const rateInput = document.getElementById("rateInput");
-      const pitchInput = document.getElementById("pitchInput");
-
-      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
-      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
-      document.getElementById("openSponsorBtn")?.addEventListener("click", () => {
-        if (typeof openSponsorModal === "function") openSponsorModal();
-      });
-      document.getElementById("closeSponsorBtn")?.addEventListener("click", () => {
-        if (typeof closeSponsorModal === "function") closeSponsorModal();
-      });
-      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
-        if (event.target?.id === "sponsorModal" && typeof closeSponsorModal === "function") closeSponsorModal();
-      });
-
-      document.getElementById("speakBtn")?.addEventListener("click", speakText);
-      document.getElementById("pauseBtn")?.addEventListener("click", pauseSpeaking);
-      document.getElementById("resumeBtn")?.addEventListener("click", resumeSpeaking);
-      document.getElementById("stopBtn")?.addEventListener("click", () => stopSpeaking("statusStopped"));
-
-      document.getElementById("sampleBtn")?.addEventListener("click", () => {
-        if (textInput) textInput.value = I18N[currentLanguage].sampleText;
-        updateMetrics();
-        setStatus("statusSample");
-      });
-
-      document.getElementById("clearBtn")?.addEventListener("click", () => {
-        stopSpeaking("statusCleared");
-        if (textInput) textInput.value = "";
-        if (rateInput) rateInput.value = "1";
-        if (pitchInput) pitchInput.value = "1";
-        updateMetrics();
-      });
-
-      textInput?.addEventListener("input", updateMetrics);
-      rateInput?.addEventListener("input", updateMetrics);
-      pitchInput?.addEventListener("input", updateMetrics);
-
-      if (isSpeechSupported()) {
-        loadVoices();
-        window.speechSynthesis.onvoiceschanged = loadVoices;
-      }
-
-      updateMetrics();
-      applyLanguage(getInitialLanguage());
-    });
-
-    window.addEventListener("beforeunload", () => {
-      if (isSpeechSupported()) window.speechSynthesis.cancel();
-    });
-  </script>
-  <script>
-    function getShareMessage(key) {
-      const lang = typeof currentLanguage === "string" ? currentLanguage : (document.documentElement.lang === "en" ? "en" : "zh");
-      const fallback = {
-        zh: {
-          shareDataTooLarge: "当前数据过大，无法生成分享链接，请直接复制文本结果。"
-        },
-        en: {
-          shareDataTooLarge: "The current data is too large to create a share link. Please copy the text result directly."
-        }
-      };
-      const dict = typeof I18N === "object" && I18N[lang] ? I18N[lang] : fallback.zh;
-      return dict[key] || fallback[lang]?.[key] || fallback.zh[key] || "";
-    }
-
-    function closeShareMenu() {
-      const menu = document.getElementById("shareToolMenu");
-      const trigger = document.getElementById("shareToolBtn");
-      if (!menu || !trigger) return;
-      menu.classList.add("hidden");
-      trigger.setAttribute("aria-expanded", "false");
-    }
-
-    function openShareMenu() {
-      const menu = document.getElementById("shareToolMenu");
-      const trigger = document.getElementById("shareToolBtn");
-      if (!menu || !trigger) return;
-      menu.classList.remove("hidden");
-      trigger.setAttribute("aria-expanded", "true");
-    }
-
-    function toggleShareMenu(event) {
-      if (event) event.stopPropagation();
-      const menu = document.getElementById("shareToolMenu");
-      if (!menu) return;
-      if (menu.classList.contains("hidden")) {
-        openShareMenu();
-      } else {
-        closeShareMenu();
-      }
-    }
-
-    function closeShareMenuOnOutsideClick(event) {
-      const root = document.getElementById("shareToolMenuRoot");
-      if (root && !root.contains(event.target)) closeShareMenu();
-    }
-
-    function getCleanShareUrl() {
-      return window.location.href.split("?")[0];
-    }
-
-    function encodeShareText(data) {
-      return encodeURIComponent(btoa(unescape(encodeURIComponent(data))));
-    }
-
-    function decodeShareText(encodedData) {
-      return decodeURIComponent(escape(atob(decodeURIComponent(encodedData))));
-    }
-
-    function getShareableControls() {
-      return Array.from(document.querySelectorAll("main textarea[id], main input[id], main select[id], main [contenteditable='true'][id]")).filter((control) => {
-        const type = (control.getAttribute("type") || control.tagName).toLowerCase();
-        return !control.disabled && !["button", "submit", "reset", "file", "hidden", "image", "password"].includes(type);
-      });
-    }
-
-    function serializeShareControl(control) {
-      const tag = control.tagName.toLowerCase();
-      const type = (control.getAttribute("type") || tag).toLowerCase();
-      const field = { id: control.id, type };
-      if (type === "checkbox" || type === "radio") {
-        field.checked = Boolean(control.checked);
-      } else if (control.isContentEditable) {
-        field.value = control.textContent || "";
-      } else {
-        field.value = control.value || "";
-      }
-      return field;
-    }
-
-    function collectShareState() {
-      const fields = getShareableControls().map(serializeShareControl).filter((field) => {
-        if (field.type === "checkbox" || field.type === "radio") return field.checked;
-        return String(field.value || "").length > 0;
-      });
-      return { version: 1, fields };
-    }
-
-    function shareUrl(url) {
-      const shareData = {
-        title: document.title,
-        url
-      };
-      if (navigator.share) {
-        navigator.share(shareData)
-          .then(() => console.log("分享成功"))
-          .catch((error) => console.log("分享失败", error));
-        return;
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url)
-          .then(() => {
-            alert(getShareMessage("shareCopied"));
-          })
-          .catch((err) => {
-            console.error("复制失败: ", err);
-            window.prompt(getShareMessage("shareCopyPrompt"), url);
-          });
-        return;
-      }
-      window.prompt(getShareMessage("shareCopyPrompt"), url);
-    }
-
-    function shareToolOnly() {
-      closeShareMenu();
-      const cleanUrl = window.location.href.split("?")[0];
-      shareUrl(cleanUrl);
-    }
-
-    function shareWithData() {
-      closeShareMenu();
-      const state = collectShareState();
-      if (!state.fields.length) {
-        shareUrl(getCleanShareUrl());
-        return;
-      }
-      const rawData = JSON.stringify(state);
-      if (rawData.length > 2000) {
-        alert(getShareMessage("shareDataTooLarge"));
-        return;
-      }
-      const encodedData = encodeShareText(rawData);
-      const stateUrl = window.location.href.split("?")[0] + "?d=" + encodedData;
-      shareUrl(stateUrl);
-    }
-
-    function applySharedField(field) {
-      if (!field || !field.id) return;
-      const control = document.getElementById(field.id);
-      if (!control) return;
-      const type = (control.getAttribute("type") || control.tagName).toLowerCase();
-      if (type === "checkbox" || type === "radio") {
-        control.checked = Boolean(field.checked);
-      } else if (control.isContentEditable) {
-        control.textContent = field.value || "";
-      } else if (Object.prototype.hasOwnProperty.call(field, "value")) {
-        control.value = field.value || "";
-      }
-      control.dispatchEvent(new Event("input", { bubbles: true }));
-      control.dispatchEvent(new Event("change", { bubbles: true }));
-    }
-
-    function restoreShareStateFromUrl() {
-      const encodedData = new URLSearchParams(window.location.search).get("d");
-      if (!encodedData) return;
-      try {
-        const state = JSON.parse(decodeShareText(encodedData));
-        if (!state || !Array.isArray(state.fields)) return;
-        state.fields.forEach(applySharedField);
-      } catch (error) {
-        console.warn("Failed to restore shared state", error);
-      }
-    }
-
-    function initializeShareMenu() {
-      document.addEventListener("click", closeShareMenuOnOutsideClick);
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") closeShareMenu();
-      });
-      restoreShareStateFromUrl();
-    }
-
-    function shareTool() {
-      toggleShareMenu();
-    }
-
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", initializeShareMenu);
-    } else {
-      initializeShareMenu();
-    }
-  </script>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+  <script src="./assets/tool-upgrades.js"></script>
   <script src="./sponsor.js" defer></script>
   <script src="./theme-toggle.js" defer></script>
 </body>

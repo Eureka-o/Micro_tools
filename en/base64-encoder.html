@@ -16,6 +16,7 @@
   <meta name="description" content="Free Base64 Encoder for encoding and decoding. Runs browser-local with no backend upload, keeping your data private while handling base64 encoder tasks quickly in Micro Tools Matrix.">
   <meta name="keywords" content="Base64 Encoder, base64, encoder, free, browser local, no backend, privacy friendly, Micro Tools Matrix">
   <link rel="stylesheet" href="../style.css">
+  <script src="../storage.js"></script>
   <script src="./theme-init.js"></script>
   <script type="application/ld+json">
     {
@@ -81,6 +82,10 @@
             <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
             <span data-i18n="localBadge">本地运行</span>
           </div>
+          <button id="favoriteToolBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="favoriteAria" data-i18n-title="favoriteAria" aria-label="收藏工具" title="收藏工具" aria-pressed="false">
+            <span id="favoriteToolIcon" aria-hidden="true" class="text-base leading-none">☆</span>
+            <span id="favoriteToolLabel" data-i18n="favoriteAdd">收藏</span>
+          </button>
           <div id="shareToolMenuRoot" class="relative shrink-0">
             <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
               <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -238,6 +243,9 @@
         shareWithData: "分享工具及当前结果",
         shareWithDataHint: "将当前输入或结果写入链接参数",
         shareCopied: "分享链接已复制到剪贴板！",
+        favoriteAdd: "收藏",
+        favoriteRemove: "已收藏",
+        favoriteAria: "收藏工具",
         shareCopyPrompt: "复制此分享链接：",
         shareCopyFailed: "复制失败，请手动复制地址栏链接。",
         shareDataTooLarge: "当前数据过大，无法生成分享链接，请直接复制文本结果。",
@@ -317,6 +325,9 @@
         shareWithData: "Share with Data",
         shareWithDataHint: "Include current input or result in the link",
         shareCopied: "Share link copied to clipboard!",
+        favoriteAdd: "Favorite",
+        favoriteRemove: "Favorited",
+        favoriteAria: "Save favorite",
         shareCopyPrompt: "Copy this share link:",
         shareCopyFailed: "Copy failed. Please copy the address bar link manually.",
         shareDataTooLarge: "The current data is too large to create a share link. Please copy the text result directly.",
@@ -381,6 +392,34 @@
     let downloadableDataUrl = "";
     let downloadableMime = "";
     let selectedFileSize = 0;
+
+
+    const TOOL_FAVORITE_ID = "base64-encoder";
+
+    function updateFavoriteButton() {
+      const storage = window.MicroToolsStorage;
+      const button = document.getElementById("favoriteToolBtn");
+      const icon = document.getElementById("favoriteToolIcon");
+      const label = document.getElementById("favoriteToolLabel");
+      if (!storage || !button || !icon || !label) return;
+
+      const active = storage.isFavorited(TOOL_FAVORITE_ID);
+      button.setAttribute("aria-pressed", String(active));
+      icon.textContent = active ? "★" : "☆";
+      label.textContent = active ? t("favoriteRemove") : t("favoriteAdd");
+      button.classList.toggle("border-cyan-400/70", active);
+      button.classList.toggle("bg-cyan-400", active);
+      button.classList.toggle("text-slate-950", active);
+      button.classList.toggle("dark:bg-cyan-400", active);
+      button.classList.toggle("dark:text-slate-950", active);
+    }
+
+    function toggleToolFavorite() {
+      const storage = window.MicroToolsStorage;
+      if (!storage) return;
+      storage.toggleFavorite(TOOL_FAVORITE_ID);
+      updateFavoriteButton();
+    }
 
     function getInitialLanguage() {
       if (location.pathname.includes("/en/")) return "en";
@@ -458,6 +497,8 @@
 
       setStatus(lastStatusKey, lastStatusParams);
       updateCounts();
+
+      updateFavoriteButton();
 
       if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
     }
@@ -747,6 +788,7 @@
 
       document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
       document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.getElementById("favoriteToolBtn")?.addEventListener("click", toggleToolFavorite);
       document.getElementById("openSponsorBtn")?.addEventListener("click", () => {
         if (typeof openSponsorModal === "function") openSponsorModal();
       });

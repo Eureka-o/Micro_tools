@@ -1,831 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="canonical" href="https://mymicrotools.xyz/en/fraction-calculator.html">
-  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/fraction-calculator.html" />
-  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/fraction-calculator.html" />
-  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/fraction-calculator.html" />
-  <meta property="og:locale" content="en_US" />
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/fraction-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/fraction-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/fraction-calculator.html">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fraction Calculator - calculation and visualization, browser-local | Micro Tools Matrix</title>
-  <meta name="description" content="Free Fraction Calculator for calculation and visualization. Runs browser-local with no backend upload, keeping your data private while handling fraction calculator tasks quickly in Micro Tools Matrix.">
-  <meta name="keywords" content="Fraction Calculator, fraction, calculator, free, browser local, no backend, privacy friendly, Micro Tools Matrix">
   <link rel="stylesheet" href="../style.css">
-  <script src="./theme-init.js"></script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Fraction Calculator",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Windows, macOS, Android, iOS",
-      "description": "A browser-local fraction calculator for adding, subtracting, multiplying, and dividing two fractions with automatic reduction.",
-      "url": "https://mymicrotools.xyz/fraction-calculator.html",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "category": "Free"
-      }
-    }
-  </script>
+  <script src="../theme-init.js"></script>
+  <title>PLL Divider And Rational Ratio Calculator | Micro Tools Matrix</title>
+  <meta name="description" content="A BigInt-backed rational ratio calculator for PLL divider approximation from source and target clocks, including ppm error.">
+  <meta name="keywords" content="PLL Divider And Rational Ratio Calculator, Micro Tools Matrix, browser local, offline, no upload">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="PLL Divider And Rational Ratio Calculator">
+  <meta property="og:description" content="A BigInt-backed rational ratio calculator for PLL divider approximation from source and target clocks, including ppm error.">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/fraction-calculator.html">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/images/og-banner.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"PLL Divider And Rational Ratio Calculator","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS, Linux","description":"A BigInt-backed rational ratio calculator for PLL divider approximation from source and target clocks, including ppm error.","url":"https://mymicrotools.xyz/en/fraction-calculator.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"en"}</script>
   <style>
-    :root { color-scheme: light dark; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    html, body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
     .tabular-nums { font-variant-numeric: tabular-nums; }
+    .tool-input { width: 100%; border-radius: 1rem; border: 1px solid rgb(229 231 235); background: rgb(248 250 252); padding: 0.75rem 1rem; font-size: 0.875rem; color: rgb(15 23 42); outline: none; transition: border-color .2s, box-shadow .2s; }
+    .tool-input:focus { border-color: rgb(34 211 238); box-shadow: 0 0 0 4px rgba(34,211,238,.12); }
+    .dark .tool-input { border-color: rgba(255,255,255,.1); background: rgba(2,6,23,.72); color: rgb(241 245 249); }
+    .tool-primary { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; border-radius: 999px; background: rgb(34 211 238); padding: .75rem 1.25rem; font-size: .875rem; font-weight: 800; color: rgb(2 6 23); transition: transform .12s, background .2s; }
+    .tool-primary:hover { background: rgb(103 232 249); }
+    .tool-primary:active, .tool-secondary:active { transform: scale(.97); }
+    .tool-secondary { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; border-radius: 999px; border: 1px solid rgb(229 231 235); background: white; padding: .75rem 1.25rem; font-size: .875rem; font-weight: 700; color: rgb(30 41 59); transition: transform .12s, background .2s, border-color .2s; }
+    .tool-secondary:hover { border-color: rgba(34,211,238,.65); background: rgb(236 254 255); }
+    .dark .tool-secondary { border-color: rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: rgb(241 245 249); }
+    .dark .tool-secondary:hover { background: rgba(255,255,255,.08); }
+    .tool-output { min-height: 20rem; width: 100%; resize: vertical; border-radius: 1rem; border: 1px solid rgb(229 231 235); background: rgb(2 6 23); padding: 1rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: .8125rem; line-height: 1.6; color: rgb(226 232 240); outline: none; }
+    .tool-metric { border-radius: 1rem; border: 1px solid rgb(229 231 235); background: rgb(248 250 252); padding: 1rem; }
+    .tool-metric span { display: block; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: rgb(100 116 139); }
+    .tool-metric strong { margin-top: .5rem; display: block; font-size: 1.25rem; color: rgb(15 23 42); }
+    .dark .tool-metric { border-color: rgba(255,255,255,.1); background: rgba(2,6,23,.5); }
+    .dark .tool-metric strong { color: white; }
+    .lang-link, .lang-link-active { display: inline-flex; min-height: 2.25rem; align-items: center; border-radius: 999px; padding: 0 .75rem; font-size: .875rem; font-weight: 700; }
+    .lang-link { color: rgb(71 85 105); }
+    .lang-link-active { background: rgb(34 211 238); color: rgb(2 6 23); }
+    .dark .lang-link { color: rgb(203 213 225); }
   </style>
 </head>
 <body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
-  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
-
   <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
     <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
       <a href="./" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
         <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
-        <span class="min-w-0">
-          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
-          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">分数计算器</span>
-        </span>
+        <span class="min-w-0"><span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span><span class="block truncate text-xs text-slate-600 dark:text-slate-400">BigInt ratio math</span></span>
       </a>
-      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
-        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
-          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
-        </button>
-        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
-          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
-        </button>
-        <div role="group" aria-label="语言" data-i18n-aria-label="language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
-          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
-          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
-        </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="tool-secondary" aria-label="Theme"><span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">System</span></button>
+        <button id="openSponsorBtn" type="button" class="tool-secondary"><span aria-hidden="true">☕</span><span>Sponsor</span></button>
+        <div role="group" aria-label="Language" class="inline-flex min-h-11 items-center rounded-full border border-gray-200 bg-white p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.06]"><a href="../fraction-calculator.html" hreflang="zh-CN" class="lang-link">中</a><a href="./fraction-calculator.html" hreflang="en" class="lang-link-active">EN</a></div>
       </div>
     </nav>
   </header>
 
-  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
-    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
-      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-        <div class="min-w-0">
-          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
-          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">分数计算器</h1>
-          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中输入两个分数，直接完成加减乘除并自动约分为最简分数，所有计算都在浏览器本地完成，无需上传。</p>
-        </div>
-        <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
-          <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
-            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
-            <span data-i18n="localBadge">本地运行</span>
-          </div>
-          <div id="shareToolMenuRoot" class="relative shrink-0">
-            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
-              <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="18" cy="5" r="3"></circle>
-                <circle cx="6" cy="12" r="3"></circle>
-                <circle cx="18" cy="19" r="3"></circle>
-                <path d="M8.6 10.7 15.4 6.3"></path>
-                <path d="M8.6 13.3 15.4 17.7"></path>
-              </svg>
-              <span data-i18n="share">分享</span>
-              <svg aria-hidden="true" class="h-3.5 w-3.5 transition" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z" clip-rule="evenodd"></path>
-              </svg>
-            </button>
-            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="分享选项">
-              <button type="button" role="menuitem" onclick="shareToolOnly()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
-                <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200">
-                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg>
-                </span>
-                <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">仅分享工具</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span>
-                </span>
-              </button>
-              <button type="button" role="menuitem" onclick="shareWithData()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
-                <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-400/10 dark:text-cyan-300">
-                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
-                </span>
-                <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">分享工具及当前结果</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">将当前输入或结果写入链接参数</span>
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+  <main id="toolApp" data-tool="fraction-calculator" class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-7">
+      <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 dark:text-cyan-300">BigInt ratio math</p>
+      <h1 class="max-w-4xl break-words text-2xl font-black tracking-tight text-slate-950 dark:text-white sm:text-4xl">PLL Divider And Rational Ratio Calculator</h1>
+      <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base">Designed for clock trees, audio sample rates, UART baud rates, and divider setup. Fraction reduction uses BigInt to avoid silent integer precision loss.</p>
     </section>
 
-    <section class="grid gap-5 lg:grid-cols-2">
-      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+    <section class="grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">Inputs</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04]">Local</span>
         </div>
+        <div class="grid gap-4 sm:grid-cols-2"><label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Source clock MHz</span>
+            <input id="sourceClock" type="number" value="100" min="0" step="0.000001" class="tool-input">
+          </label>
+<label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Target clock MHz</span>
+            <input id="targetClock" type="number" value="74.25" min="0" step="0.000001" class="tool-input">
+          </label>
+<label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Maximum denominator</span>
+            <input id="maxDenominator" type="number" value="100000" min="1" max="1000000" step="1" class="tool-input">
+          </label></div>
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><button id="calculatePllBtn" type="button" class="tool-primary">Calculate</button>
+<button id="copyOutputBtn" type="button" class="tool-secondary">Copy</button>
+<button id="downloadOutputBtn" type="button" class="tool-secondary">Download</button></div>
 
-        <div class="space-y-5">
-          <div>
-            <label class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="fractionALabel">第一个分数</label>
-            <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-3">
-              <input id="numA" inputmode="numeric" autocomplete="off" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-center text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600 tabular-nums" data-i18n-placeholder="numeratorPlaceholder" placeholder="分子" value="3">
-              <span class="text-lg font-bold text-slate-400 dark:text-slate-500">/</span>
-              <input id="denA" inputmode="numeric" autocomplete="off" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-center text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600 tabular-nums" data-i18n-placeholder="denominatorPlaceholder" placeholder="分母" value="4">
-            </div>
-          </div>
-
-          <div>
-            <label for="operator" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="operatorLabel">运算</label>
-            <select id="operator" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
-              <option value="add" data-i18n="opAdd">加法</option>
-              <option value="sub" data-i18n="opSub">减法</option>
-              <option value="mul" data-i18n="opMul">乘法</option>
-              <option value="div" data-i18n="opDiv">除法</option>
-            </select>
-          </div>
-
-          <div>
-            <label class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="fractionBLabel">第二个分数</label>
-            <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-3">
-              <input id="numB" inputmode="numeric" autocomplete="off" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-center text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600 tabular-nums" data-i18n-placeholder="numeratorPlaceholder" placeholder="分子" value="5">
-              <span class="text-lg font-bold text-slate-400 dark:text-slate-500">/</span>
-              <input id="denB" inputmode="numeric" autocomplete="off" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-center text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600 tabular-nums" data-i18n-placeholder="denominatorPlaceholder" placeholder="分母" value="6">
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="calculateBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">计算</button>
-          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">示例</button>
-          <button id="swapBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="swapAction">交换</button>
-          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
-        </div>
-        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite"></p>
+        <p id="statusMessage" class="mt-4 min-h-11 rounded-xl border border-cyan-200 bg-cyan-50 px-4 py-3 text-sm leading-6 text-cyan-800 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200" aria-live="polite">Ready. All processing runs locally in this browser.</p>
       </section>
-
-      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+      <section class="space-y-4 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">结果</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">Output</h2>
+          <span class="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">Offline</span>
         </div>
-
-        <div class="rounded-3xl border border-gray-200 bg-slate-50 p-5 dark:border-white/10 dark:bg-slate-950/70">
-          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="simplifiedLabel">最简分数</p>
-          <div id="resultFraction" class="mt-3 min-h-14 break-words text-3xl font-black tracking-tight text-slate-950 dark:text-white sm:text-4xl tabular-nums">19/12</div>
-        </div>
-
-        <div class="mt-4 grid gap-3 sm:grid-cols-2">
-          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
-            <p class="text-xs font-semibold text-slate-500 dark:text-slate-500" data-i18n="expressionLabel">算式</p>
-            <p id="expressionText" class="mt-2 break-words text-sm font-semibold text-slate-800 dark:text-slate-200 tabular-nums">3/4 + 5/6</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
-            <p class="text-xs font-semibold text-slate-500 dark:text-slate-500" data-i18n="decimalLabel">小数近似</p>
-            <p id="decimalText" class="mt-2 break-words text-sm font-semibold text-slate-800 dark:text-slate-200 tabular-nums">1.583333333333</p>
-          </div>
-        </div>
-
-        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
-          <button id="copyExpressionBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="copyExpressionAction">复制算式</button>
-        </div>
+        <textarea id="outputText" class="tool-output" spellcheck="false"></textarea>
       </section>
     </section>
-
-    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">这款 Micro Tools Matrix 分数计算器适合日常学习、题目核对、文档校对和开发测试数据准备。你可以输入两个分数，选择加法、减法、乘法或除法，页面会在浏览器本地处理整数分子与分母，并把结果自动约分为最简分数形式。工具不会把输入内容上传到服务器，也无需登录、无需安装扩展，适合在 Windows、macOS、Android 和 iOS 浏览器中直接使用。对于需要快速验证比例、权重、配方、概率或数学表达式的场景，它提供清晰的算式、最简分数和小数近似，帮助你减少手工约分错误。</article>
   </main>
 
-  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
-
-  <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md">
-    <div class="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
-      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" aria-label="关闭赞赏" data-i18n-aria-label="closeSponsor">×</button>
-      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">赞赏支持</h2>
-      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">保持工具免费、快速且无广告。</p>
-      <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="buyCoffee">Buy Me a Coffee</a>
-    </div>
-  </div>
-
-  <script>
-    const I18N = {
-      zh: {
-        documentTitle: "分数计算器 - Micro Tools Matrix 浏览器本地工具",
-        metaDescription: "Micro Tools Matrix 分数计算器在浏览器本地处理两个分数的加减乘除，自动约分为最简分数，无需上传。",
-        metaKeywords: "分数计算器,分数加减乘除,最简分数,约分,浏览器本地处理,无需上传,Micro Tools Matrix",
-        toolName: "分数计算器",
-        sponsor: "赞赏",
-        language: "语言",
-        closeSponsor: "关闭赞赏",
-        sponsorTitle: "赞赏支持",
-        sponsorSubtitle: "保持工具免费、快速且无广告。",
-        buyCoffee: "Buy Me a Coffee",
-        eyebrow: "浏览器本地处理",
-        h1: "分数计算器",
-        intro: "在 Micro Tools Matrix 中输入两个分数，直接完成加减乘除并自动约分为最简分数，所有计算都在浏览器本地完成，无需上传。",
-        localBadge: "本地运行",
-        share: "分享",
-        shareAria: "打开分享菜单",
-        shareMenuAria: "分享选项",
-        shareToolOnly: "仅分享工具",
-        shareToolOnlyHint: "分享不带参数的工具页面链接",
-        shareWithData: "分享工具及当前结果",
-        shareWithDataHint: "将当前输入或结果写入链接参数",
-        shareCopied: "分享链接已复制到剪贴板！",
-        shareCopyPrompt: "复制此分享链接：",
-        shareCopyFailed: "复制失败，请手动复制地址栏链接。",
-        shareDataTooLarge: "当前数据过大，无法生成分享链接，请直接复制文本结果。",
-        inputTitle: "输入",
-        inputBadge: "输入",
-        outputTitle: "结果",
-        outputBadge: "结果",
-        fractionALabel: "第一个分数",
-        fractionBLabel: "第二个分数",
-        numeratorPlaceholder: "分子",
-        denominatorPlaceholder: "分母",
-        operatorLabel: "运算",
-        opAdd: "加法",
-        opSub: "减法",
-        opMul: "乘法",
-        opDiv: "除法",
-        primaryAction: "计算",
-        sampleAction: "示例",
-        swapAction: "交换",
-        secondaryAction: "清空",
-        simplifiedLabel: "最简分数",
-        expressionLabel: "算式",
-        decimalLabel: "小数近似",
-        copyAction: "复制结果",
-        copyExpressionAction: "复制算式",
-        themeLight: "亮色",
-        themeDark: "深色",
-        themeSystem: "系统",
-        statusReady: "已计算并约分为最简分数。",
-        statusCleared: "已清空，请输入两个分数。",
-        statusSample: "已填入示例分数。",
-        statusSwapped: "已交换两个分数。",
-        statusCopied: "已复制结果。",
-        statusExpressionCopied: "已复制算式。",
-        statusCopyFailed: "复制失败，请手动选择结果。",
-        errorInteger: "请输入完整的整数分子和整数分母。",
-        errorDenominatorZero: "分母不能为 0。",
-        errorDivideByZero: "不能除以数值为 0 的分数。",
-        emptyResult: "等待计算",
-        emptyExpression: "请输入分数并计算",
-        emptyDecimal: "等待结果",
-        seoArticle: "这款 Micro Tools Matrix 分数计算器适合日常学习、题目核对、文档校对和开发测试数据准备。你可以输入两个分数，选择加法、减法、乘法或除法，页面会在浏览器本地处理整数分子与分母，并把结果自动约分为最简分数形式。工具不会把输入内容上传到服务器，也无需登录、无需安装扩展，适合在 Windows、macOS、Android 和 iOS 浏览器中直接使用。对于需要快速验证比例、权重、配方、概率或数学表达式的场景，它提供清晰的算式、最简分数和小数近似，帮助你减少手工约分错误。",
-        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
-      },
-      en: {
-        documentTitle: "Fraction Calculator - Micro Tools Matrix Browser-Local Tool",
-        metaDescription: "A Micro Tools Matrix fraction calculator for adding, subtracting, multiplying, and dividing two fractions with automatic reduction, browser-local processing, and no upload.",
-        metaKeywords: "fraction calculator,add fractions,subtract fractions,multiply fractions,divide fractions,simplified fraction,browser-local processing,no upload,free online developer tool,Micro Tools Matrix",
-        toolName: "Fraction Calculator",
-        sponsor: "Sponsor",
-        language: "Language",
-        closeSponsor: "Close sponsor dialog",
-        sponsorTitle: "Sponsor Support",
-        sponsorSubtitle: "Keep the tools free, fast, and ad-free.",
-        buyCoffee: "Buy Me a Coffee",
-        eyebrow: "Browser-local processing",
-        h1: "Fraction Calculator",
-        intro: "Enter two fractions in Micro Tools Matrix, choose an operation, and get a fully reduced result. Everything runs locally in your browser with no upload.",
-        localBadge: "Local",
-        share: "Share",
-        shareAria: "Open share menu",
-        shareMenuAria: "Share options",
-        shareToolOnly: "Share Tool Only",
-        shareToolOnlyHint: "Share the clean tool page link",
-        shareWithData: "Share with Data",
-        shareWithDataHint: "Include current input or result in the link",
-        shareCopied: "Share link copied to clipboard!",
-        shareCopyPrompt: "Copy this share link:",
-        shareCopyFailed: "Copy failed. Please copy the address bar link manually.",
-        shareDataTooLarge: "The current data is too large to create a share link. Please copy the text result directly.",
-        inputTitle: "Input",
-        inputBadge: "Input",
-        outputTitle: "Result",
-        outputBadge: "Output",
-        fractionALabel: "First fraction",
-        fractionBLabel: "Second fraction",
-        numeratorPlaceholder: "Numerator",
-        denominatorPlaceholder: "Denominator",
-        operatorLabel: "Operation",
-        opAdd: "Addition",
-        opSub: "Subtraction",
-        opMul: "Multiplication",
-        opDiv: "Division",
-        primaryAction: "Calculate",
-        sampleAction: "Sample",
-        swapAction: "Swap",
-        secondaryAction: "Clear",
-        simplifiedLabel: "Simplified fraction",
-        expressionLabel: "Expression",
-        decimalLabel: "Decimal approximation",
-        copyAction: "Copy result",
-        copyExpressionAction: "Copy expression",
-        themeLight: "Light",
-        themeDark: "Dark",
-        themeSystem: "System",
-        statusReady: "Calculated and reduced to the simplest form.",
-        statusCleared: "Cleared. Enter two fractions to calculate.",
-        statusSample: "Sample fractions filled in.",
-        statusSwapped: "The two fractions have been swapped.",
-        statusCopied: "Result copied.",
-        statusExpressionCopied: "Expression copied.",
-        statusCopyFailed: "Copy failed. Please select the result manually.",
-        errorInteger: "Please enter complete integer numerators and denominators.",
-        errorDenominatorZero: "A denominator cannot be 0.",
-        errorDivideByZero: "You cannot divide by a fraction whose value is 0.",
-        emptyResult: "Waiting for calculation",
-        emptyExpression: "Enter fractions and calculate",
-        emptyDecimal: "Waiting for result",
-        seoArticle: "This Micro Tools Matrix fraction calculator is a free online developer tool for quick arithmetic with rational numbers. It supports addition, subtraction, multiplication, and division of two fractions, then reduces the answer to its simplest form automatically. The workflow is intentionally direct: enter integer numerators and denominators, choose an operation, and review the expression, simplified fraction, and decimal approximation. All browser-local processing happens in memory, so your input is not uploaded, logged, or sent to a backend service. That makes the tool useful for homework checks, documentation review, recipe ratios, probability notes, unit tests, and small data preparation tasks where exact fractional values matter. Because it is a static Micro Tools Matrix page, it works across Windows, macOS, Android, and iOS browsers without installation or account setup. Use it whenever you need a calm, privacy-friendly way to verify fraction calculations and avoid manual reduction mistakes.",
-        footer: "Micro Tools Matrix - browser-local processing with no upload."
-      }
-    };
-
-    let currentLanguage = "zh";
-    let lastResultText = "19/12";
-    let lastExpressionText = "3/4 + 5/6 = 19/12";
-
-    function getInitialLanguage() {
-      if (location.pathname.includes("/en/")) return "en";
-      try {
-        return localStorage.getItem("microToolsLanguage") || "zh";
-      } catch (error) {
-        return "zh";
-      }
-    }
-
-    function setLanguage(lang) {
-      const nextLang = lang === "en" ? "en" : "zh";
-      try {
-        localStorage.setItem("microToolsLanguage", nextLang);
-      } catch (error) {}
-      applyLanguage(nextLang);
-    }
-
-    function applyLanguage(lang) {
-      currentLanguage = lang === "en" ? "en" : "zh";
-      const dict = I18N[currentLanguage];
-      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
-      document.title = dict.documentTitle;
-
-      const description = document.querySelector('meta[name="description"]');
-      if (description) description.setAttribute("content", dict.metaDescription);
-      const keywords = document.querySelector('meta[name="keywords"]');
-      if (keywords) keywords.setAttribute("content", dict.metaKeywords);
-
-      document.querySelectorAll("[data-i18n]").forEach((node) => {
-        const key = node.getAttribute("data-i18n");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.textContent = dict[key];
-      });
-      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
-        const key = node.getAttribute("data-i18n-placeholder");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("placeholder", dict[key]);
-      });
-      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
-        const key = node.getAttribute("data-i18n-title");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("title", dict[key]);
-      });
-      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
-        const key = node.getAttribute("data-i18n-aria-label");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("aria-label", dict[key]);
-      });
-
-      const themeLabel = document.querySelector("[data-theme-label]");
-      if (themeLabel) themeLabel.textContent = dict.themeSystem;
-
-      const zhBtn = document.getElementById("langZhBtn");
-      const enBtn = document.getElementById("langEnBtn");
-      if (zhBtn && enBtn) {
-        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
-        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
-        if (currentLanguage === "zh") {
-          zhBtn.classList.add("bg-cyan-400", "text-slate-950");
-          enBtn.classList.add("text-slate-600", "dark:text-slate-400");
-          zhBtn.setAttribute("aria-pressed", "true");
-          enBtn.setAttribute("aria-pressed", "false");
-        } else {
-          enBtn.classList.add("bg-cyan-400", "text-slate-950");
-          zhBtn.classList.add("text-slate-600", "dark:text-slate-400");
-          enBtn.setAttribute("aria-pressed", "true");
-          zhBtn.setAttribute("aria-pressed", "false");
-        }
-      }
-
-      const status = document.getElementById("statusText");
-      const result = document.getElementById("resultFraction");
-      const expression = document.getElementById("expressionText");
-      const decimal = document.getElementById("decimalText");
-      if (result && result.dataset.empty === "true") result.textContent = dict.emptyResult;
-      if (expression && expression.dataset.empty === "true") expression.textContent = dict.emptyExpression;
-      if (decimal && decimal.dataset.empty === "true") decimal.textContent = dict.emptyDecimal;
-      if (status && status.dataset.key) status.textContent = dict[status.dataset.key] || "";
-
-      calculateFractions(false);
-      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
-    }
-
-    function setStatus(key) {
-      const status = document.getElementById("statusText");
-      if (!status) return;
-      status.dataset.key = key;
-      status.textContent = I18N[currentLanguage][key] || "";
-    }
-
-    function parseIntegerInput(id) {
-      const value = document.getElementById(id)?.value.trim() || "";
-      if (!/^[+-]?\d+$/.test(value)) throw new Error("errorInteger");
-      return BigInt(value);
-    }
-
-    function absBigInt(value) {
-      return value < 0n ? -value : value;
-    }
-
-    function gcd(a, b) {
-      let x = absBigInt(a);
-      let y = absBigInt(b);
-      while (y !== 0n) {
-        const t = y;
-        y = x % y;
-        x = t;
-      }
-      return x || 1n;
-    }
-
-    function normalizeFraction(num, den) {
-      if (den === 0n) throw new Error("errorDenominatorZero");
-      if (den < 0n) {
-        num = -num;
-        den = -den;
-      }
-      const divisor = gcd(num, den);
-      return { num: num / divisor, den: den / divisor };
-    }
-
-    function formatFraction(fraction) {
-      if (fraction.den === 1n) return fraction.num.toString();
-      return fraction.num.toString() + "/" + fraction.den.toString();
-    }
-
-    function decimalApproximation(fraction) {
-      const numeric = Number(fraction.num) / Number(fraction.den);
-      if (!Number.isFinite(numeric)) return "";
-      return numeric.toLocaleString(currentLanguage === "zh" ? "zh-CN" : "en-US", {
-        maximumFractionDigits: 12,
-        useGrouping: false
-      });
-    }
-
-    function operatorSymbol(operator) {
-      if (operator === "add") return "+";
-      if (operator === "sub") return "−";
-      if (operator === "mul") return "×";
-      return "÷";
-    }
-
-    function calculateFractions(showStatus = true) {
-      const resultNode = document.getElementById("resultFraction");
-      const expressionNode = document.getElementById("expressionText");
-      const decimalNode = document.getElementById("decimalText");
-      const operator = document.getElementById("operator")?.value || "add";
-
-      try {
-        const a = normalizeFraction(parseIntegerInput("numA"), parseIntegerInput("denA"));
-        const b = normalizeFraction(parseIntegerInput("numB"), parseIntegerInput("denB"));
-        let result;
-
-        if (operator === "add") result = normalizeFraction(a.num * b.den + b.num * a.den, a.den * b.den);
-        if (operator === "sub") result = normalizeFraction(a.num * b.den - b.num * a.den, a.den * b.den);
-        if (operator === "mul") result = normalizeFraction(a.num * b.num, a.den * b.den);
-        if (operator === "div") {
-          if (b.num === 0n) throw new Error("errorDivideByZero");
-          result = normalizeFraction(a.num * b.den, a.den * b.num);
-        }
-
-        const left = formatFraction(a);
-        const right = formatFraction(b);
-        const simplified = formatFraction(result);
-        const expression = left + " " + operatorSymbol(operator) + " " + right;
-        lastResultText = simplified;
-        lastExpressionText = expression + " = " + simplified;
-
-        if (resultNode) {
-          resultNode.dataset.empty = "false";
-          resultNode.textContent = simplified;
-        }
-        if (expressionNode) {
-          expressionNode.dataset.empty = "false";
-          expressionNode.textContent = expression;
-        }
-        if (decimalNode) {
-          decimalNode.dataset.empty = "false";
-          decimalNode.textContent = decimalApproximation(result);
-        }
-        if (showStatus) setStatus("statusReady");
-      } catch (error) {
-        const key = I18N[currentLanguage][error.message] ? error.message : "errorInteger";
-        if (resultNode) {
-          resultNode.dataset.empty = "true";
-          resultNode.textContent = I18N[currentLanguage].emptyResult;
-        }
-        if (expressionNode) {
-          expressionNode.dataset.empty = "true";
-          expressionNode.textContent = I18N[currentLanguage].emptyExpression;
-        }
-        if (decimalNode) {
-          decimalNode.dataset.empty = "true";
-          decimalNode.textContent = I18N[currentLanguage].emptyDecimal;
-        }
-        setStatus(key);
-      }
-    }
-
-    async function copyText(text, successKey) {
-      try {
-        await navigator.clipboard.writeText(text);
-        setStatus(successKey);
-      } catch (error) {
-        setStatus("statusCopyFailed");
-      }
-    }
-
-    function clearInputs() {
-      ["numA", "denA", "numB", "denB"].forEach((id) => {
-        const node = document.getElementById(id);
-        if (node) node.value = "";
-      });
-      const resultNode = document.getElementById("resultFraction");
-      const expressionNode = document.getElementById("expressionText");
-      const decimalNode = document.getElementById("decimalText");
-      if (resultNode) {
-        resultNode.dataset.empty = "true";
-        resultNode.textContent = I18N[currentLanguage].emptyResult;
-      }
-      if (expressionNode) {
-        expressionNode.dataset.empty = "true";
-        expressionNode.textContent = I18N[currentLanguage].emptyExpression;
-      }
-      if (decimalNode) {
-        decimalNode.dataset.empty = "true";
-        decimalNode.textContent = I18N[currentLanguage].emptyDecimal;
-      }
-      setStatus("statusCleared");
-    }
-
-    function fillSample() {
-      document.getElementById("numA").value = "7";
-      document.getElementById("denA").value = "12";
-      document.getElementById("operator").value = "add";
-      document.getElementById("numB").value = "5";
-      document.getElementById("denB").value = "18";
-      calculateFractions(false);
-      setStatus("statusSample");
-    }
-
-    function swapFractions() {
-      const numA = document.getElementById("numA");
-      const denA = document.getElementById("denA");
-      const numB = document.getElementById("numB");
-      const denB = document.getElementById("denB");
-      if (!numA || !denA || !numB || !denB) return;
-      const nextNumA = numB.value;
-      const nextDenA = denB.value;
-      numB.value = numA.value;
-      denB.value = denA.value;
-      numA.value = nextNumA;
-      denA.value = nextDenA;
-      calculateFractions(false);
-      setStatus("statusSwapped");
-    }
-
-    function openSponsorModal(event) {
-      if (event?.preventDefault) event.preventDefault();
-      const modal = document.getElementById("sponsorModal");
-      if (!modal) return;
-      modal.classList.remove("hidden");
-      modal.classList.add("flex");
-    }
-
-    function closeSponsorModal() {
-      const modal = document.getElementById("sponsorModal");
-      if (!modal) return;
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
-      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
-      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
-      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
-      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
-        if (event.target?.id === "sponsorModal") closeSponsorModal();
-      });
-
-      document.getElementById("calculateBtn")?.addEventListener("click", () => calculateFractions(true));
-      document.getElementById("sampleBtn")?.addEventListener("click", fillSample);
-      document.getElementById("swapBtn")?.addEventListener("click", swapFractions);
-      document.getElementById("clearBtn")?.addEventListener("click", clearInputs);
-      document.getElementById("copyBtn")?.addEventListener("click", () => copyText(lastResultText, "statusCopied"));
-      document.getElementById("copyExpressionBtn")?.addEventListener("click", () => copyText(lastExpressionText, "statusExpressionCopied"));
-
-      ["numA", "denA", "numB", "denB", "operator"].forEach((id) => {
-        document.getElementById(id)?.addEventListener("input", () => calculateFractions(false));
-        document.getElementById(id)?.addEventListener("change", () => calculateFractions(false));
-      });
-
-      applyLanguage(getInitialLanguage());
-    });
-  </script>
-  <script>
-    function getShareMessage(key) {
-      const lang = typeof currentLanguage === "string" ? currentLanguage : (document.documentElement.lang === "en" ? "en" : "zh");
-      const fallback = {
-        zh: {
-          shareDataTooLarge: "当前数据过大，无法生成分享链接，请直接复制文本结果。"
-        },
-        en: {
-          shareDataTooLarge: "The current data is too large to create a share link. Please copy the text result directly."
-        }
-      };
-      const dict = typeof I18N === "object" && I18N[lang] ? I18N[lang] : fallback.zh;
-      return dict[key] || fallback[lang]?.[key] || fallback.zh[key] || "";
-    }
-
-    function closeShareMenu() {
-      const menu = document.getElementById("shareToolMenu");
-      const trigger = document.getElementById("shareToolBtn");
-      if (!menu || !trigger) return;
-      menu.classList.add("hidden");
-      trigger.setAttribute("aria-expanded", "false");
-    }
-
-    function openShareMenu() {
-      const menu = document.getElementById("shareToolMenu");
-      const trigger = document.getElementById("shareToolBtn");
-      if (!menu || !trigger) return;
-      menu.classList.remove("hidden");
-      trigger.setAttribute("aria-expanded", "true");
-    }
-
-    function toggleShareMenu(event) {
-      if (event) event.stopPropagation();
-      const menu = document.getElementById("shareToolMenu");
-      if (!menu) return;
-      if (menu.classList.contains("hidden")) {
-        openShareMenu();
-      } else {
-        closeShareMenu();
-      }
-    }
-
-    function closeShareMenuOnOutsideClick(event) {
-      const root = document.getElementById("shareToolMenuRoot");
-      if (root && !root.contains(event.target)) closeShareMenu();
-    }
-
-    function getCleanShareUrl() {
-      return window.location.href.split("?")[0];
-    }
-
-    function encodeShareText(data) {
-      return encodeURIComponent(btoa(unescape(encodeURIComponent(data))));
-    }
-
-    function decodeShareText(encodedData) {
-      return decodeURIComponent(escape(atob(decodeURIComponent(encodedData))));
-    }
-
-    function getShareableControls() {
-      return Array.from(document.querySelectorAll("main textarea[id], main input[id], main select[id], main [contenteditable='true'][id]")).filter((control) => {
-        const type = (control.getAttribute("type") || control.tagName).toLowerCase();
-        return !control.disabled && !["button", "submit", "reset", "file", "hidden", "image", "password"].includes(type);
-      });
-    }
-
-    function serializeShareControl(control) {
-      const tag = control.tagName.toLowerCase();
-      const type = (control.getAttribute("type") || tag).toLowerCase();
-      const field = { id: control.id, type };
-      if (type === "checkbox" || type === "radio") {
-        field.checked = Boolean(control.checked);
-      } else if (control.isContentEditable) {
-        field.value = control.textContent || "";
-      } else {
-        field.value = control.value || "";
-      }
-      return field;
-    }
-
-    function collectShareState() {
-      const fields = getShareableControls().map(serializeShareControl).filter((field) => {
-        if (field.type === "checkbox" || field.type === "radio") return field.checked;
-        return String(field.value || "").length > 0;
-      });
-      return { version: 1, fields };
-    }
-
-    function shareUrl(url) {
-      const shareData = {
-        title: document.title,
-        url
-      };
-      if (navigator.share) {
-        navigator.share(shareData)
-          .then(() => console.log("分享成功"))
-          .catch((error) => console.log("分享失败", error));
-        return;
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url)
-          .then(() => {
-            alert(getShareMessage("shareCopied"));
-          })
-          .catch((err) => {
-            console.error("复制失败: ", err);
-            window.prompt(getShareMessage("shareCopyPrompt"), url);
-          });
-        return;
-      }
-      window.prompt(getShareMessage("shareCopyPrompt"), url);
-    }
-
-    function shareToolOnly() {
-      closeShareMenu();
-      const cleanUrl = window.location.href.split("?")[0];
-      shareUrl(cleanUrl);
-    }
-
-    function shareWithData() {
-      closeShareMenu();
-      const state = collectShareState();
-      if (!state.fields.length) {
-        shareUrl(getCleanShareUrl());
-        return;
-      }
-      const rawData = JSON.stringify(state);
-      if (rawData.length > 2000) {
-        alert(getShareMessage("shareDataTooLarge"));
-        return;
-      }
-      const encodedData = encodeShareText(rawData);
-      const stateUrl = window.location.href.split("?")[0] + "?d=" + encodedData;
-      shareUrl(stateUrl);
-    }
-
-    function applySharedField(field) {
-      if (!field || !field.id) return;
-      const control = document.getElementById(field.id);
-      if (!control) return;
-      const type = (control.getAttribute("type") || control.tagName).toLowerCase();
-      if (type === "checkbox" || type === "radio") {
-        control.checked = Boolean(field.checked);
-      } else if (control.isContentEditable) {
-        control.textContent = field.value || "";
-      } else if (Object.prototype.hasOwnProperty.call(field, "value")) {
-        control.value = field.value || "";
-      }
-      control.dispatchEvent(new Event("input", { bubbles: true }));
-      control.dispatchEvent(new Event("change", { bubbles: true }));
-    }
-
-    function restoreShareStateFromUrl() {
-      const encodedData = new URLSearchParams(window.location.search).get("d");
-      if (!encodedData) return;
-      try {
-        const state = JSON.parse(decodeShareText(encodedData));
-        if (!state || !Array.isArray(state.fields)) return;
-        state.fields.forEach(applySharedField);
-      } catch (error) {
-        console.warn("Failed to restore shared state", error);
-      }
-    }
-
-    function initializeShareMenu() {
-      document.addEventListener("click", closeShareMenuOnOutsideClick);
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") closeShareMenu();
-      });
-      restoreShareStateFromUrl();
-    }
-
-    function shareTool() {
-      toggleShareMenu();
-    }
-
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", initializeShareMenu);
-    } else {
-      initializeShareMenu();
-    }
-  </script>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8">Micro Tools Matrix - browser-local processing, no upload required.</footer>
+  <script src="../assets/tool-upgrades.js"></script>
   <script src="../sponsor.js" defer></script>
-  <script src="./theme-toggle.js" defer></script>
+  <script src="../theme-toggle.js" defer></script>
 </body>
 </html>

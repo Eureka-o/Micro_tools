@@ -1,778 +1,116 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="canonical" href="https://mymicrotools.xyz/percentage-calculator.html">
-  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/percentage-calculator.html" />
-  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/percentage-calculator.html" />
-  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/percentage-calculator.html" />
-  <meta property="og:locale" content="zh_CN" />
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/percentage-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/percentage-calculator.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/percentage-calculator.html">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
   <script src="./theme-init.js"></script>
-  <title>百分比计算器 - 计算与可视化，纯前端本地运行 | Micro Tools Matrix</title>
-  <meta name="description" content="免费的 百分比计算器，用于计算与可视化。工具在浏览器本地运行、无后端上传，结合 百分比计算器 的相关技术能力快速处理任务，保护开发者隐私。">
-  <meta name="keywords" content="百分比计算器, percentage, calculator, 免费, 纯前端, 本地运行, 无后端, 隐私保护, Micro Tools Matrix">
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Percentage Calculator",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Windows, macOS, Android, iOS",
-      "description": "A free browser-local percentage calculator for common percentage formulas and step-by-step results.",
-      "url": "https://mymicrotools.xyz/percentage-calculator.html",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "category": "Free"
-      }
-    }
-  </script>
+  <title>工程百分比 / ppm / 利用率计算器 | Micro Tools Matrix</title>
+  <meta name="description" content="用于标称值与实测值误差、ppm 偏差、资源占用率和剩余额度的本地工程计算器。">
+  <meta name="keywords" content="工程百分比 / ppm / 利用率计算器, Micro Tools Matrix, browser local, offline, no upload">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="工程百分比 / ppm / 利用率计算器">
+  <meta property="og:description" content="用于标称值与实测值误差、ppm 偏差、资源占用率和剩余额度的本地工程计算器。">
+  <meta property="og:url" content="https://mymicrotools.xyz/percentage-calculator.html">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/images/og-banner.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"工程百分比 / ppm / 利用率计算器","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS, Linux","description":"用于标称值与实测值误差、ppm 偏差、资源占用率和剩余额度的本地工程计算器。","url":"https://mymicrotools.xyz/percentage-calculator.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"zh-CN"}</script>
   <style>
-    :root { color-scheme: light dark; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    html, body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
     .tabular-nums { font-variant-numeric: tabular-nums; }
+    .tool-input { width: 100%; border-radius: 1rem; border: 1px solid rgb(229 231 235); background: rgb(248 250 252); padding: 0.75rem 1rem; font-size: 0.875rem; color: rgb(15 23 42); outline: none; transition: border-color .2s, box-shadow .2s; }
+    .tool-input:focus { border-color: rgb(34 211 238); box-shadow: 0 0 0 4px rgba(34,211,238,.12); }
+    .dark .tool-input { border-color: rgba(255,255,255,.1); background: rgba(2,6,23,.72); color: rgb(241 245 249); }
+    .tool-primary { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; border-radius: 999px; background: rgb(34 211 238); padding: .75rem 1.25rem; font-size: .875rem; font-weight: 800; color: rgb(2 6 23); transition: transform .12s, background .2s; }
+    .tool-primary:hover { background: rgb(103 232 249); }
+    .tool-primary:active, .tool-secondary:active { transform: scale(.97); }
+    .tool-secondary { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; border-radius: 999px; border: 1px solid rgb(229 231 235); background: white; padding: .75rem 1.25rem; font-size: .875rem; font-weight: 700; color: rgb(30 41 59); transition: transform .12s, background .2s, border-color .2s; }
+    .tool-secondary:hover { border-color: rgba(34,211,238,.65); background: rgb(236 254 255); }
+    .dark .tool-secondary { border-color: rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: rgb(241 245 249); }
+    .dark .tool-secondary:hover { background: rgba(255,255,255,.08); }
+    .tool-output { min-height: 20rem; width: 100%; resize: vertical; border-radius: 1rem; border: 1px solid rgb(229 231 235); background: rgb(2 6 23); padding: 1rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: .8125rem; line-height: 1.6; color: rgb(226 232 240); outline: none; }
+    .tool-metric { border-radius: 1rem; border: 1px solid rgb(229 231 235); background: rgb(248 250 252); padding: 1rem; }
+    .tool-metric span { display: block; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: rgb(100 116 139); }
+    .tool-metric strong { margin-top: .5rem; display: block; font-size: 1.25rem; color: rgb(15 23 42); }
+    .dark .tool-metric { border-color: rgba(255,255,255,.1); background: rgba(2,6,23,.5); }
+    .dark .tool-metric strong { color: white; }
+    .lang-link, .lang-link-active { display: inline-flex; min-height: 2.25rem; align-items: center; border-radius: 999px; padding: 0 .75rem; font-size: .875rem; font-weight: 700; }
+    .lang-link { color: rgb(71 85 105); }
+    .lang-link-active { background: rgb(34 211 238); color: rgb(2 6 23); }
+    .dark .lang-link { color: rgb(203 213 225); }
   </style>
 </head>
 <body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
-  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
-
   <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
     <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
       <a href="./" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
         <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
-        <span class="min-w-0">
-          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
-          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">百分比计算器</span>
-        </span>
+        <span class="min-w-0"><span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span><span class="block truncate text-xs text-slate-600 dark:text-slate-400">误差与利用率</span></span>
       </a>
-      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
-        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeToggleAria" aria-label="切换主题">
-          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
-        </button>
-        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="sponsorAria" aria-label="赞赏">
-          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
-        </button>
-        <div role="group" aria-label="语言" data-i18n-aria-label="languageAria" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
-          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
-          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
-        </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="tool-secondary" aria-label="Theme"><span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">System</span></button>
+        <button id="openSponsorBtn" type="button" class="tool-secondary"><span aria-hidden="true">☕</span><span>赞赏</span></button>
+        <div role="group" aria-label="Language" class="inline-flex min-h-11 items-center rounded-full border border-gray-200 bg-white p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.06]"><a href="./percentage-calculator.html" hreflang="zh-CN" class="lang-link-active">中</a><a href="./en/percentage-calculator.html" hreflang="en" class="lang-link">EN</a></div>
       </div>
     </nav>
   </header>
 
-  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
-    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
-      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-        <div class="min-w-0">
-          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
-          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">百分比计算器</h1>
-          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中快速完成常用百分比计算，实时显示结果与计算过程；所有数字只在浏览器本地处理，无需上传。</p>
-        </div>
-        <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
-          <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
-            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
-            <span data-i18n="localBadge">本地运行</span>
-          </div>
-          <div id="shareToolMenuRoot" class="relative shrink-0">
-            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
-              <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="18" cy="5" r="3"></circle>
-                <circle cx="6" cy="12" r="3"></circle>
-                <circle cx="18" cy="19" r="3"></circle>
-                <path d="M8.6 10.7 15.4 6.3"></path>
-                <path d="M8.6 13.3 15.4 17.7"></path>
-              </svg>
-              <span data-i18n="share">分享</span>
-              <svg aria-hidden="true" class="h-3.5 w-3.5 transition" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z" clip-rule="evenodd"></path>
-              </svg>
-            </button>
-            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="分享选项">
-              <button type="button" role="menuitem" onclick="shareToolOnly()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
-                <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200">
-                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg>
-                </span>
-                <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">仅分享工具</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span>
-                </span>
-              </button>
-              <button type="button" role="menuitem" onclick="shareWithData()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
-                <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-400/10 dark:text-cyan-300">
-                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
-                </span>
-                <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">分享工具及当前结果</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">将当前输入或结果写入链接参数</span>
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+  <main id="toolApp" data-tool="percentage-calculator" class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-7">
+      <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 dark:text-cyan-300">误差与利用率</p>
+      <h1 class="max-w-4xl break-words text-2xl font-black tracking-tight text-slate-950 dark:text-white sm:text-4xl">工程百分比 / ppm / 利用率计算器</h1>
+      <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base">适合频率误差、传感器偏差、电源裕量、显存占用和 CI 指标阈值快速复核。</p>
     </section>
 
-    <section class="grid gap-5 lg:grid-cols-2">
-      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+    <section class="grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04]">Local</span>
         </div>
-
-        <div class="space-y-4">
-          <label class="block">
-            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="modeLabel">计算类型</span>
-            <select id="modeSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
-              <option value="percentOf" data-i18n="modePercentOf">X 是 Y 的百分之几</option>
-              <option value="increaseBy" data-i18n="modeIncreaseBy">X 增加 Y% 是多少</option>
-              <option value="decreaseBy" data-i18n="modeDecreaseBy">X 减少 Y% 是多少</option>
-              <option value="percentValue" data-i18n="modePercentValue">Y% 的 X 是多少</option>
-              <option value="changeRate" data-i18n="modeChangeRate">X 相对 Y 变化了百分之几</option>
-            </select>
+        <div class="grid gap-4 sm:grid-cols-2"><label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">标称值</span>
+            <input id="nominalValue" type="number" value="100" step="any" class="tool-input">
           </label>
+<label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">实测值</span>
+            <input id="measuredValue" type="number" value="100.015" step="any" class="tool-input">
+          </label>
+<label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">已用 / 部分</span>
+            <input id="partValue" type="number" value="768" step="any" class="tool-input">
+          </label>
+<label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">总量</span>
+            <input id="totalValue" type="number" value="1024" step="any" class="tool-input">
+          </label></div>
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><button id="calculatePercentBtn" type="button" class="tool-primary">计算</button>
+<button id="copyOutputBtn" type="button" class="tool-secondary">复制结果</button>
+<button id="downloadOutputBtn" type="button" class="tool-secondary">下载结果</button></div>
 
-          <div class="grid gap-4 sm:grid-cols-2">
-            <label class="block min-w-0">
-              <span id="xLabel" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="xLabel">数值 X</span>
-              <input id="xInput" type="number" inputmode="decimal" step="any" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="xPlaceholder" placeholder="例如 50">
-            </label>
-            <label class="block min-w-0">
-              <span id="yLabel" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="yLabel">数值 Y</span>
-              <input id="yInput" type="number" inputmode="decimal" step="any" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="yPlaceholder" placeholder="例如 200">
-            </label>
-          </div>
-
-          <p id="inputHint" class="min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="inputHint">选择计算类型并输入 X 与 Y，结果会实时更新。</p>
-        </div>
-
-        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">填入示例</button>
-          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
-        </div>
+        <p id="statusMessage" class="mt-4 min-h-11 rounded-xl border border-cyan-200 bg-cyan-50 px-4 py-3 text-sm leading-6 text-cyan-800 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200" aria-live="polite">就绪。所有处理均在当前浏览器本地运行。</p>
       </section>
-
-      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+      <section class="space-y-4 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">结果</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">输出</h2>
+          <span class="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">Offline</span>
         </div>
-
-        <div class="space-y-4">
-          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
-            <p class="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="resultLabel">计算结果</p>
-            <p id="resultValue" class="break-words text-3xl font-black tracking-tight text-slate-950 dark:text-white sm:text-4xl tabular-nums">—</p>
-          </div>
-
-          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
-            <p class="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="processLabel">计算过程</p>
-            <pre id="processText" class="min-h-24 whitespace-pre-wrap break-words text-sm leading-7 text-slate-700 dark:text-slate-300">等待输入数值。</pre>
-          </div>
-
-          <p id="statusText" class="min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400">等待输入。</p>
-        </div>
-
-        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
-          <button id="resetModeBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="resetAction">重置类型</button>
-        </div>
+        <textarea id="outputText" class="tool-output" spellcheck="false"></textarea>
       </section>
     </section>
-
-    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">Micro Tools Matrix 百分比计算器是一款免费在线开发者工具，也适合日常办公、内容运营、财务估算和学习场景。你可以快速计算“X 是 Y 的百分之几”、“X 增加 Y% 后是多少”、“X 减少 Y% 后是多少”、“Y% 的 X 是多少”，并查看清晰的公式过程。工具采用浏览器本地处理，输入的数字不会上传到服务器，也不会发送到第三方服务，适合处理临时价格、增长率、折扣、转化率和对比变化等数据。页面支持浅色、深色和系统主题，并提供中英文界面，保持 Micro Tools Matrix 一贯的轻量、隐私友好与即开即用体验。</article>
   </main>
 
-  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
-
-  <script>
-    const I18N = {
-      zh: {
-        documentTitle: "百分比计算器 - Micro Tools Matrix 浏览器本地工具",
-        metaDescription: "Micro Tools Matrix 百分比计算器支持 X 是 Y 的百分之几、X 增加或减少 Y% 后是多少、Y% 的 X 是多少等常用百分比计算，浏览器本地处理，无需上传。",
-        metaKeywords: "百分比计算器,百分数计算,在线百分比工具,浏览器本地处理,无需上传,Micro Tools Matrix",
-        toolName: "百分比计算器",
-        sponsor: "赞赏",
-        sponsorAria: "赞赏",
-        languageAria: "语言",
-        themeToggleAria: "切换主题",
-        themeLight: "亮色",
-        themeDark: "深色",
-        themeSystem: "系统",
-        buyCoffee: "Buy Me a Coffee",
-        eyebrow: "浏览器本地处理",
-        h1: "百分比计算器",
-        intro: "在 Micro Tools Matrix 中快速完成常用百分比计算，实时显示结果与计算过程；所有数字只在浏览器本地处理，无需上传。",
-        localBadge: "本地运行",
-        share: "分享",
-        shareAria: "打开分享菜单",
-        shareMenuAria: "分享选项",
-        shareToolOnly: "仅分享工具",
-        shareToolOnlyHint: "分享不带参数的工具页面链接",
-        shareWithData: "分享工具及当前结果",
-        shareWithDataHint: "将当前输入或结果写入链接参数",
-        shareCopied: "分享链接已复制到剪贴板！",
-        shareCopyPrompt: "复制此分享链接：",
-        shareCopyFailed: "复制失败，请手动复制地址栏链接。",
-        shareDataTooLarge: "当前数据过大，无法生成分享链接，请直接复制文本结果。",
-        inputTitle: "输入",
-        inputBadge: "输入",
-        outputTitle: "结果",
-        outputBadge: "结果",
-        modeLabel: "计算类型",
-        modePercentOf: "X 是 Y 的百分之几",
-        modeIncreaseBy: "X 增加 Y% 是多少",
-        modeDecreaseBy: "X 减少 Y% 是多少",
-        modePercentValue: "Y% 的 X 是多少",
-        modeChangeRate: "X 相对 Y 变化了百分之几",
-        xLabel: "数值 X",
-        yLabel: "数值 Y",
-        xPlaceholder: "例如 50",
-        yPlaceholder: "例如 200",
-        inputHint: "选择计算类型并输入 X 与 Y，结果会实时更新。",
-        primaryAction: "填入示例",
-        secondaryAction: "清空",
-        resultLabel: "计算结果",
-        processLabel: "计算过程",
-        copyAction: "复制结果",
-        resetAction: "重置类型",
-        waitingProcess: "等待输入数值。",
-        waitingStatus: "等待输入。",
-        invalidNumber: "请输入有效的数字。",
-        divideByZero: "此计算中 Y 不能为 0。",
-        calculated: "已实时计算。",
-        cleared: "已清空。",
-        sampled: "已填入示例。",
-        copied: "结果已复制。",
-        copyFailed: "复制失败，请手动选择结果。",
-        noResultToCopy: "暂无可复制的结果。",
-        resetDone: "已重置为默认计算类型。",
-        percentUnit: "%",
-        formulaPercentOf: "{x} ÷ {y} × 100% = {result}%",
-        formulaIncreaseBy: "{x} × (1 + {y}%) = {result}",
-        formulaDecreaseBy: "{x} × (1 - {y}%) = {result}",
-        formulaPercentValue: "{x} × {y}% = {result}",
-        formulaChangeRate: "({x} - {y}) ÷ {y} × 100% = {result}%",
-        explanationPercentOf: "{x} 是 {y} 的 {result}%。",
-        explanationIncreaseBy: "{x} 增加 {y}% 后是 {result}。",
-        explanationDecreaseBy: "{x} 减少 {y}% 后是 {result}。",
-        explanationPercentValue: "{x} 的 {y}% 是 {result}。",
-        explanationChangeRate: "{x} 相对 {y} 的变化率是 {result}%。",
-        seoArticle: "Micro Tools Matrix 百分比计算器是一款免费在线开发者工具，也适合日常办公、内容运营、财务估算和学习场景。你可以快速计算“X 是 Y 的百分之几”、“X 增加 Y% 后是多少”、“X 减少 Y% 后是多少”、“Y% 的 X 是多少”，并查看清晰的公式过程。工具采用浏览器本地处理，输入的数字不会上传到服务器，也不会发送到第三方服务，适合处理临时价格、增长率、折扣、转化率和对比变化等数据。页面支持浅色、深色和系统主题，并提供中英文界面，保持 Micro Tools Matrix 一贯的轻量、隐私友好与即开即用体验。",
-        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
-      },
-      en: {
-        documentTitle: "Percentage Calculator - Micro Tools Matrix Browser-Local Tool",
-        metaDescription: "A Micro Tools Matrix percentage calculator for common formulas such as X is what percent of Y, X increased or decreased by Y%, and Y% of X, with browser-local processing and no uploads.",
-        metaKeywords: "percentage calculator,percent calculator,online percentage tool,browser-local processing,no upload,free online developer tool,Micro Tools Matrix",
-        toolName: "Percentage Calculator",
-        sponsor: "Sponsor",
-        sponsorAria: "Sponsor",
-        languageAria: "Language",
-        themeToggleAria: "Change theme",
-        themeLight: "Light",
-        themeDark: "Dark",
-        themeSystem: "System",
-        buyCoffee: "Buy Me a Coffee",
-        eyebrow: "Browser-local processing",
-        h1: "Percentage Calculator",
-        intro: "Calculate common percentage questions in Micro Tools Matrix with live answers and clear steps. All numbers stay in your browser memory with no uploads.",
-        localBadge: "Local",
-        share: "Share",
-        shareAria: "Open share menu",
-        shareMenuAria: "Share options",
-        shareToolOnly: "Share Tool Only",
-        shareToolOnlyHint: "Share the clean tool page link",
-        shareWithData: "Share with Data",
-        shareWithDataHint: "Include current input or result in the link",
-        shareCopied: "Share link copied to clipboard!",
-        shareCopyPrompt: "Copy this share link:",
-        shareCopyFailed: "Copy failed. Please copy the address bar link manually.",
-        shareDataTooLarge: "The current data is too large to create a share link. Please copy the text result directly.",
-        inputTitle: "Input",
-        inputBadge: "INPUT",
-        outputTitle: "Result",
-        outputBadge: "OUTPUT",
-        modeLabel: "Calculation type",
-        modePercentOf: "X is what percent of Y",
-        modeIncreaseBy: "X increased by Y%",
-        modeDecreaseBy: "X decreased by Y%",
-        modePercentValue: "Y% of X",
-        modeChangeRate: "Percent change from Y to X",
-        xLabel: "Value X",
-        yLabel: "Value Y",
-        xPlaceholder: "For example 50",
-        yPlaceholder: "For example 200",
-        inputHint: "Choose a calculation type and enter X and Y. Results update instantly.",
-        primaryAction: "Use sample",
-        secondaryAction: "Clear",
-        resultLabel: "Result",
-        processLabel: "Steps",
-        copyAction: "Copy result",
-        resetAction: "Reset type",
-        waitingProcess: "Waiting for numbers.",
-        waitingStatus: "Waiting for input.",
-        invalidNumber: "Please enter valid numbers.",
-        divideByZero: "Y cannot be 0 for this calculation.",
-        calculated: "Calculated live.",
-        cleared: "Cleared.",
-        sampled: "Sample values inserted.",
-        copied: "Result copied.",
-        copyFailed: "Copy failed. Please select the result manually.",
-        noResultToCopy: "There is no result to copy yet.",
-        resetDone: "Reset to the default calculation type.",
-        percentUnit: "%",
-        formulaPercentOf: "{x} ÷ {y} × 100% = {result}%",
-        formulaIncreaseBy: "{x} × (1 + {y}%) = {result}",
-        formulaDecreaseBy: "{x} × (1 - {y}%) = {result}",
-        formulaPercentValue: "{x} × {y}% = {result}",
-        formulaChangeRate: "({x} - {y}) ÷ {y} × 100% = {result}%",
-        explanationPercentOf: "{x} is {result}% of {y}.",
-        explanationIncreaseBy: "{x} increased by {y}% is {result}.",
-        explanationDecreaseBy: "{x} decreased by {y}% is {result}.",
-        explanationPercentValue: "{y}% of {x} is {result}.",
-        explanationChangeRate: "The percent change from {y} to {x} is {result}%.",
-        seoArticle: "The Micro Tools Matrix Percentage Calculator is a free online developer tool for quick percentage math in everyday product, marketing, finance, learning, and reporting workflows. It answers common questions such as “X is what percent of Y”, “what is X increased by Y%”, “what is X decreased by Y%”, “what is Y% of X”, and “what is the percent change from Y to X”. Each calculation updates in real time and includes a readable formula, so you can verify the result before using it in a document, spreadsheet, dashboard, or message. The tool uses browser-local processing: your numbers are handled in memory on the current page, with no upload, no remote API call, and no analytics beacon. It is designed to match the lightweight Micro Tools Matrix experience with responsive layout, light and dark themes, and a privacy-friendly workflow that works on Windows, macOS, Android, and iOS.",
-        footer: "Micro Tools Matrix - Browser-local processing with no uploads."
-      }
-    };
-
-    let currentLanguage = "zh";
-    let latestCopyText = "";
-    let lastStatusKey = "waitingStatus";
-
-    const elements = {};
-
-    function getInitialLanguage() {
-      if (location.pathname.includes("/en/")) return "en";
-      try {
-        return localStorage.getItem("microToolsLanguage") || "zh";
-      } catch (error) {
-        return "zh";
-      }
-    }
-
-    function setLanguage(lang) {
-      const safeLang = lang === "en" ? "en" : "zh";
-      try {
-        localStorage.setItem("microToolsLanguage", safeLang);
-      } catch (error) {}
-      applyLanguage(safeLang);
-    }
-
-    function applyLanguage(lang) {
-      currentLanguage = lang === "en" ? "en" : "zh";
-      const dict = I18N[currentLanguage];
-
-      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
-      document.title = dict.documentTitle;
-
-      const description = document.querySelector('meta[name="description"]');
-      if (description) description.setAttribute("content", dict.metaDescription);
-
-      const keywords = document.querySelector('meta[name="keywords"]');
-      if (keywords) keywords.setAttribute("content", dict.metaKeywords);
-
-      document.querySelectorAll("[data-i18n]").forEach((node) => {
-        const key = node.getAttribute("data-i18n");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.textContent = dict[key];
-      });
-
-      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
-        const key = node.getAttribute("data-i18n-placeholder");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("placeholder", dict[key]);
-      });
-
-      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
-        const key = node.getAttribute("data-i18n-title");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("title", dict[key]);
-      });
-
-      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
-        const key = node.getAttribute("data-i18n-aria-label");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("aria-label", dict[key]);
-      });
-
-      const sponsorText = document.querySelector("#openSponsorBtn [data-i18n='sponsor']");
-      if (sponsorText) sponsorText.textContent = dict.sponsor;
-
-      const zhBtn = document.getElementById("langZhBtn");
-      const enBtn = document.getElementById("langEnBtn");
-      if (zhBtn && enBtn) {
-        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "zh" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
-        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "en" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
-        zhBtn.setAttribute("aria-pressed", currentLanguage === "zh" ? "true" : "false");
-        enBtn.setAttribute("aria-pressed", currentLanguage === "en" ? "true" : "false");
-      }
-
-      updateThemeLabel();
-      calculate();
-
-      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
-    }
-
-    function updateThemeLabel() {
-      const label = document.querySelector("[data-theme-label]");
-      if (!label) return;
-      const dict = I18N[currentLanguage];
-      let theme = "system";
-      try {
-        theme = localStorage.getItem("microToolsTheme") || localStorage.getItem("theme") || "system";
-      } catch (error) {}
-      if (theme === "light") label.textContent = dict.themeLight;
-      else if (theme === "dark") label.textContent = dict.themeDark;
-      else label.textContent = dict.themeSystem;
-    }
-
-    function t(key, values = {}) {
-      const dict = I18N[currentLanguage] || I18N.zh;
-      let text = dict[key] || I18N.zh[key] || "";
-      Object.keys(values).forEach((name) => {
-        text = text.replaceAll("{" + name + "}", values[name]);
-      });
-      return text;
-    }
-
-    function formatNumber(value) {
-      if (!Number.isFinite(value)) return "";
-      const rounded = Math.abs(value) < 1e-12 ? 0 : value;
-      return new Intl.NumberFormat(currentLanguage === "en" ? "en-US" : "zh-CN", {
-        maximumFractionDigits: 10,
-        useGrouping: false
-      }).format(rounded);
-    }
-
-    function parseNumber(input) {
-      const raw = (input.value || "").trim();
-      if (raw === "") return null;
-      const value = Number(raw);
-      return Number.isFinite(value) ? value : NaN;
-    }
-
-    function setStatus(key) {
-      lastStatusKey = key;
-      if (elements.statusText) elements.statusText.textContent = t(key);
-    }
-
-    function setOutput(resultText, processText, statusKey) {
-      if (elements.resultValue) elements.resultValue.textContent = resultText || "—";
-      if (elements.processText) elements.processText.textContent = processText || t("waitingProcess");
-      latestCopyText = resultText && resultText !== "—" ? resultText + "\n" + processText : "";
-      setStatus(statusKey);
-    }
-
-    function calculate() {
-      if (!elements.modeSelect || !elements.xInput || !elements.yInput) return;
-
-      const x = parseNumber(elements.xInput);
-      const y = parseNumber(elements.yInput);
-      if (x === null && y === null) {
-        setOutput("—", t("waitingProcess"), "waitingStatus");
-        return;
-      }
-      if (!Number.isFinite(x) || !Number.isFinite(y)) {
-        setOutput("—", t("invalidNumber"), "invalidNumber");
-        return;
-      }
-
-      const mode = elements.modeSelect.value;
-      if ((mode === "percentOf" || mode === "changeRate") && y === 0) {
-        setOutput("—", t("divideByZero"), "divideByZero");
-        return;
-      }
-
-      let result;
-      let formulaKey;
-      let explanationKey;
-      let displayResult;
-
-      if (mode === "percentOf") {
-        result = (x / y) * 100;
-        formulaKey = "formulaPercentOf";
-        explanationKey = "explanationPercentOf";
-        displayResult = formatNumber(result) + t("percentUnit");
-      } else if (mode === "increaseBy") {
-        result = x * (1 + y / 100);
-        formulaKey = "formulaIncreaseBy";
-        explanationKey = "explanationIncreaseBy";
-        displayResult = formatNumber(result);
-      } else if (mode === "decreaseBy") {
-        result = x * (1 - y / 100);
-        formulaKey = "formulaDecreaseBy";
-        explanationKey = "explanationDecreaseBy";
-        displayResult = formatNumber(result);
-      } else if (mode === "percentValue") {
-        result = x * y / 100;
-        formulaKey = "formulaPercentValue";
-        explanationKey = "explanationPercentValue";
-        displayResult = formatNumber(result);
-      } else {
-        result = ((x - y) / y) * 100;
-        formulaKey = "formulaChangeRate";
-        explanationKey = "explanationChangeRate";
-        displayResult = formatNumber(result) + t("percentUnit");
-      }
-
-      const values = {
-        x: formatNumber(x),
-        y: formatNumber(y),
-        result: formatNumber(result)
-      };
-      const process = t(formulaKey, values) + "\n" + t(explanationKey, values);
-      setOutput(displayResult, process, "calculated");
-    }
-
-    function fillSample() {
-      if (!elements.modeSelect || !elements.xInput || !elements.yInput) return;
-      elements.modeSelect.value = "percentOf";
-      elements.xInput.value = "50";
-      elements.yInput.value = "200";
-      calculate();
-      setStatus("sampled");
-    }
-
-    function clearInputs() {
-      if (!elements.xInput || !elements.yInput) return;
-      elements.xInput.value = "";
-      elements.yInput.value = "";
-      calculate();
-      setStatus("cleared");
-    }
-
-    function resetMode() {
-      if (!elements.modeSelect) return;
-      elements.modeSelect.value = "percentOf";
-      calculate();
-      setStatus("resetDone");
-    }
-
-    async function copyResult() {
-      if (!latestCopyText) {
-        setStatus("noResultToCopy");
-        return;
-      }
-      try {
-        await navigator.clipboard.writeText(latestCopyText);
-        setStatus("copied");
-      } catch (error) {
-        setStatus("copyFailed");
-      }
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      elements.modeSelect = document.getElementById("modeSelect");
-      elements.xInput = document.getElementById("xInput");
-      elements.yInput = document.getElementById("yInput");
-      elements.resultValue = document.getElementById("resultValue");
-      elements.processText = document.getElementById("processText");
-      elements.statusText = document.getElementById("statusText");
-
-      elements.modeSelect?.addEventListener("change", calculate);
-      elements.xInput?.addEventListener("input", calculate);
-      elements.yInput?.addEventListener("input", calculate);
-      document.getElementById("sampleBtn")?.addEventListener("click", fillSample);
-      document.getElementById("clearBtn")?.addEventListener("click", clearInputs);
-      document.getElementById("copyBtn")?.addEventListener("click", copyResult);
-      document.getElementById("resetModeBtn")?.addEventListener("click", resetMode);
-
-      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
-      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
-      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
-      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
-      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
-        if (event.target?.id === "sponsorModal") closeSponsorModal();
-      });
-      applyLanguage(getInitialLanguage());
-    });
-  </script>
-  <script>
-    function getShareMessage(key) {
-      const lang = typeof currentLanguage === "string" ? currentLanguage : (document.documentElement.lang === "en" ? "en" : "zh");
-      const fallback = {
-        zh: {
-          shareDataTooLarge: "当前数据过大，无法生成分享链接，请直接复制文本结果。"
-        },
-        en: {
-          shareDataTooLarge: "The current data is too large to create a share link. Please copy the text result directly."
-        }
-      };
-      const dict = typeof I18N === "object" && I18N[lang] ? I18N[lang] : fallback.zh;
-      return dict[key] || fallback[lang]?.[key] || fallback.zh[key] || "";
-    }
-
-    function closeShareMenu() {
-      const menu = document.getElementById("shareToolMenu");
-      const trigger = document.getElementById("shareToolBtn");
-      if (!menu || !trigger) return;
-      menu.classList.add("hidden");
-      trigger.setAttribute("aria-expanded", "false");
-    }
-
-    function openShareMenu() {
-      const menu = document.getElementById("shareToolMenu");
-      const trigger = document.getElementById("shareToolBtn");
-      if (!menu || !trigger) return;
-      menu.classList.remove("hidden");
-      trigger.setAttribute("aria-expanded", "true");
-    }
-
-    function toggleShareMenu(event) {
-      if (event) event.stopPropagation();
-      const menu = document.getElementById("shareToolMenu");
-      if (!menu) return;
-      if (menu.classList.contains("hidden")) {
-        openShareMenu();
-      } else {
-        closeShareMenu();
-      }
-    }
-
-    function closeShareMenuOnOutsideClick(event) {
-      const root = document.getElementById("shareToolMenuRoot");
-      if (root && !root.contains(event.target)) closeShareMenu();
-    }
-
-    function getCleanShareUrl() {
-      return window.location.href.split("?")[0];
-    }
-
-    function encodeShareText(data) {
-      return encodeURIComponent(btoa(unescape(encodeURIComponent(data))));
-    }
-
-    function decodeShareText(encodedData) {
-      return decodeURIComponent(escape(atob(decodeURIComponent(encodedData))));
-    }
-
-    function getShareableControls() {
-      return Array.from(document.querySelectorAll("main textarea[id], main input[id], main select[id], main [contenteditable='true'][id]")).filter((control) => {
-        const type = (control.getAttribute("type") || control.tagName).toLowerCase();
-        return !control.disabled && !["button", "submit", "reset", "file", "hidden", "image", "password"].includes(type);
-      });
-    }
-
-    function serializeShareControl(control) {
-      const tag = control.tagName.toLowerCase();
-      const type = (control.getAttribute("type") || tag).toLowerCase();
-      const field = { id: control.id, type };
-      if (type === "checkbox" || type === "radio") {
-        field.checked = Boolean(control.checked);
-      } else if (control.isContentEditable) {
-        field.value = control.textContent || "";
-      } else {
-        field.value = control.value || "";
-      }
-      return field;
-    }
-
-    function collectShareState() {
-      const fields = getShareableControls().map(serializeShareControl).filter((field) => {
-        if (field.type === "checkbox" || field.type === "radio") return field.checked;
-        return String(field.value || "").length > 0;
-      });
-      return { version: 1, fields };
-    }
-
-    function shareUrl(url) {
-      const shareData = {
-        title: document.title,
-        url
-      };
-      if (navigator.share) {
-        navigator.share(shareData)
-          .then(() => console.log("分享成功"))
-          .catch((error) => console.log("分享失败", error));
-        return;
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url)
-          .then(() => {
-            alert(getShareMessage("shareCopied"));
-          })
-          .catch((err) => {
-            console.error("复制失败: ", err);
-            window.prompt(getShareMessage("shareCopyPrompt"), url);
-          });
-        return;
-      }
-      window.prompt(getShareMessage("shareCopyPrompt"), url);
-    }
-
-    function shareToolOnly() {
-      closeShareMenu();
-      const cleanUrl = window.location.href.split("?")[0];
-      shareUrl(cleanUrl);
-    }
-
-    function shareWithData() {
-      closeShareMenu();
-      const state = collectShareState();
-      if (!state.fields.length) {
-        shareUrl(getCleanShareUrl());
-        return;
-      }
-      const rawData = JSON.stringify(state);
-      if (rawData.length > 2000) {
-        alert(getShareMessage("shareDataTooLarge"));
-        return;
-      }
-      const encodedData = encodeShareText(rawData);
-      const stateUrl = window.location.href.split("?")[0] + "?d=" + encodedData;
-      shareUrl(stateUrl);
-    }
-
-    function applySharedField(field) {
-      if (!field || !field.id) return;
-      const control = document.getElementById(field.id);
-      if (!control) return;
-      const type = (control.getAttribute("type") || control.tagName).toLowerCase();
-      if (type === "checkbox" || type === "radio") {
-        control.checked = Boolean(field.checked);
-      } else if (control.isContentEditable) {
-        control.textContent = field.value || "";
-      } else if (Object.prototype.hasOwnProperty.call(field, "value")) {
-        control.value = field.value || "";
-      }
-      control.dispatchEvent(new Event("input", { bubbles: true }));
-      control.dispatchEvent(new Event("change", { bubbles: true }));
-    }
-
-    function restoreShareStateFromUrl() {
-      const encodedData = new URLSearchParams(window.location.search).get("d");
-      if (!encodedData) return;
-      try {
-        const state = JSON.parse(decodeShareText(encodedData));
-        if (!state || !Array.isArray(state.fields)) return;
-        state.fields.forEach(applySharedField);
-      } catch (error) {
-        console.warn("Failed to restore shared state", error);
-      }
-    }
-
-    function initializeShareMenu() {
-      document.addEventListener("click", closeShareMenuOnOutsideClick);
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") closeShareMenu();
-      });
-      restoreShareStateFromUrl();
-    }
-
-    function shareTool() {
-      toggleShareMenu();
-    }
-
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", initializeShareMenu);
-    } else {
-      initializeShareMenu();
-    }
-  </script>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+  <script src="./assets/tool-upgrades.js"></script>
   <script src="./sponsor.js" defer></script>
   <script src="./theme-toggle.js" defer></script>
 </body>

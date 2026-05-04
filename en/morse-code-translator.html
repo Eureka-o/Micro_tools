@@ -1,888 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="canonical" href="https://mymicrotools.xyz/en/morse-code-translator.html">
-  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/morse-code-translator.html" />
-  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/morse-code-translator.html" />
-  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/morse-code-translator.html" />
-  <meta property="og:locale" content="en_US" />
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/morse-code-translator.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/morse-code-translator.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/morse-code-translator.html">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../style.css">
-  <script src="./theme-init.js"></script>
-  <title>Morse Code Translator - encoding and decoding, browser-local | Micro Tools Matrix</title>
-  <meta name="description" content="Free Morse Code Translator for encoding and decoding. Runs browser-local with no backend upload, keeping your data private while handling morse code translator tasks quickly in Micro Tools Matrix.">
-  <meta name="keywords" content="Morse Code Translator, morse, code, translator, free, browser local, no backend, privacy friendly, Micro Tools Matrix">
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Morse Code Translator",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Windows, macOS, Android, iOS",
-      "description": "A browser-local Morse code translator for converting English text to dots and dashes, decoding Morse code, and playing simple Morse tones.",
-      "url": "https://mymicrotools.xyz/morse-code-translator.html",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "description": "Free"
-      }
-    }
-  </script>
+  <script src="../theme-init.js"></script>
+  <title>Morse Signal Encoding Lab | Micro Tools Matrix</title>
+  <meta name="description" content="A pure front-end Morse encoder, decoder, and local audio player with adjustable WPM and tone frequency for signal demos.">
+  <meta name="keywords" content="Morse Signal Encoding Lab, Micro Tools Matrix, browser local, offline, no upload">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Morse Signal Encoding Lab">
+  <meta property="og:description" content="A pure front-end Morse encoder, decoder, and local audio player with adjustable WPM and tone frequency for signal demos.">
+  <meta property="og:url" content="https://mymicrotools.xyz/en/morse-code-translator.html">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/images/og-banner.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Morse Signal Encoding Lab","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS, Linux","description":"A pure front-end Morse encoder, decoder, and local audio player with adjustable WPM and tone frequency for signal demos.","url":"https://mymicrotools.xyz/en/morse-code-translator.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"en"}</script>
   <style>
-    :root { color-scheme: light dark; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    html, body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
     .tabular-nums { font-variant-numeric: tabular-nums; }
+    .tool-input { width: 100%; border-radius: 1rem; border: 1px solid rgb(229 231 235); background: rgb(248 250 252); padding: 0.75rem 1rem; font-size: 0.875rem; color: rgb(15 23 42); outline: none; transition: border-color .2s, box-shadow .2s; }
+    .tool-input:focus { border-color: rgb(34 211 238); box-shadow: 0 0 0 4px rgba(34,211,238,.12); }
+    .dark .tool-input { border-color: rgba(255,255,255,.1); background: rgba(2,6,23,.72); color: rgb(241 245 249); }
+    .tool-primary { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; border-radius: 999px; background: rgb(34 211 238); padding: .75rem 1.25rem; font-size: .875rem; font-weight: 800; color: rgb(2 6 23); transition: transform .12s, background .2s; }
+    .tool-primary:hover { background: rgb(103 232 249); }
+    .tool-primary:active, .tool-secondary:active { transform: scale(.97); }
+    .tool-secondary { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; border-radius: 999px; border: 1px solid rgb(229 231 235); background: white; padding: .75rem 1.25rem; font-size: .875rem; font-weight: 700; color: rgb(30 41 59); transition: transform .12s, background .2s, border-color .2s; }
+    .tool-secondary:hover { border-color: rgba(34,211,238,.65); background: rgb(236 254 255); }
+    .dark .tool-secondary { border-color: rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: rgb(241 245 249); }
+    .dark .tool-secondary:hover { background: rgba(255,255,255,.08); }
+    .tool-output { min-height: 20rem; width: 100%; resize: vertical; border-radius: 1rem; border: 1px solid rgb(229 231 235); background: rgb(2 6 23); padding: 1rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: .8125rem; line-height: 1.6; color: rgb(226 232 240); outline: none; }
+    .tool-metric { border-radius: 1rem; border: 1px solid rgb(229 231 235); background: rgb(248 250 252); padding: 1rem; }
+    .tool-metric span { display: block; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: rgb(100 116 139); }
+    .tool-metric strong { margin-top: .5rem; display: block; font-size: 1.25rem; color: rgb(15 23 42); }
+    .dark .tool-metric { border-color: rgba(255,255,255,.1); background: rgba(2,6,23,.5); }
+    .dark .tool-metric strong { color: white; }
+    .lang-link, .lang-link-active { display: inline-flex; min-height: 2.25rem; align-items: center; border-radius: 999px; padding: 0 .75rem; font-size: .875rem; font-weight: 700; }
+    .lang-link { color: rgb(71 85 105); }
+    .lang-link-active { background: rgb(34 211 238); color: rgb(2 6 23); }
+    .dark .lang-link { color: rgb(203 213 225); }
   </style>
 </head>
 <body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
-  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
-
   <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
     <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
       <a href="./" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
         <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
-        <span class="min-w-0">
-          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
-          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">摩斯密码翻译器</span>
-        </span>
+        <span class="min-w-0"><span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span><span class="block truncate text-xs text-slate-600 dark:text-slate-400">Signal encoding</span></span>
       </a>
-      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
-        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeAria" data-i18n-title="themeTitle" aria-label="切换主题" title="切换主题">
-          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
-        </button>
-        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="sponsorAria" aria-label="赞赏">
-          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
-        </button>
-        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
-          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="langZhAria" aria-label="切换到中文">中</button>
-          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="langEnAria" aria-label="切换到英文">EN</button>
-        </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="tool-secondary" aria-label="Theme"><span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">System</span></button>
+        <button id="openSponsorBtn" type="button" class="tool-secondary"><span aria-hidden="true">☕</span><span>Sponsor</span></button>
+        <div role="group" aria-label="Language" class="inline-flex min-h-11 items-center rounded-full border border-gray-200 bg-white p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.06]"><a href="../morse-code-translator.html" hreflang="zh-CN" class="lang-link">中</a><a href="./morse-code-translator.html" hreflang="en" class="lang-link-active">EN</a></div>
       </div>
     </nav>
   </header>
 
-  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
-    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
-      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-        <div class="min-w-0">
-          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
-          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">摩斯密码翻译器</h1>
-          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中将英文文本与摩斯密码双向转换，并通过浏览器本地 Web Audio API 播放简单提示音，无需上传任何内容。</p>
-        </div>
-        <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
-          <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
-            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
-            <span data-i18n="localBadge">本地运行</span>
-          </div>
-          <div id="shareToolMenuRoot" class="relative shrink-0">
-            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
-              <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="18" cy="5" r="3"></circle>
-                <circle cx="6" cy="12" r="3"></circle>
-                <circle cx="18" cy="19" r="3"></circle>
-                <path d="M8.6 10.7 15.4 6.3"></path>
-                <path d="M8.6 13.3 15.4 17.7"></path>
-              </svg>
-              <span data-i18n="share">分享</span>
-              <svg aria-hidden="true" class="h-3.5 w-3.5 transition" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z" clip-rule="evenodd"></path>
-              </svg>
-            </button>
-            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="分享选项">
-              <button type="button" role="menuitem" onclick="shareToolOnly()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
-                <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200">
-                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg>
-                </span>
-                <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">仅分享工具</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span>
-                </span>
-              </button>
-              <button type="button" role="menuitem" onclick="shareWithData()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
-                <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-400/10 dark:text-cyan-300">
-                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
-                </span>
-                <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">分享工具及当前结果</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">将当前输入或结果写入链接参数</span>
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+  <main id="toolApp" data-tool="morse-code-translator" class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-7">
+      <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 dark:text-cyan-300">Signal encoding</p>
+      <h1 class="max-w-4xl break-words text-2xl font-black tracking-tight text-slate-950 dark:text-white sm:text-4xl">Morse Signal Encoding Lab</h1>
+      <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base">Input stays in the browser. Audio is synthesized locally with the Web Audio API and uses no remote audio files.</p>
     </section>
 
-    <section class="grid gap-5 lg:grid-cols-2">
-      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+    <section class="grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">Inputs</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04]">Local</span>
         </div>
+        <div class="grid gap-4 sm:grid-cols-2"><label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Text or Morse code</span>
+            <input id="morseInput" type="text" value="SOS TEST 123"  class="tool-input">
+          </label>
+<label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">WPM</span>
+            <input id="wpmInput" type="number" value="18" min="5" max="40" step="1" class="tool-input">
+          </label>
+<label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">Tone Hz</span>
+            <input id="toneInput" type="number" value="650" min="300" max="1200" step="10" class="tool-input">
+          </label></div>
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><button id="encodeBtn" type="button" class="tool-primary">Encode</button>
+<button id="decodeBtn" type="button" class="tool-secondary">Decode</button>
+<button id="playMorseBtn" type="button" class="tool-secondary">Play</button>
+<button id="stopMorseBtn" type="button" class="tool-secondary">Stop</button>
+<button id="copyOutputBtn" type="button" class="tool-secondary">Copy</button>
+<button id="downloadOutputBtn" type="button" class="tool-secondary">Download</button></div>
 
-        <div class="space-y-4">
-          <label for="modeSelect" class="block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="modeLabel">转换方向</label>
-          <select id="modeSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-aria-label="modeAria" aria-label="转换方向">
-            <option value="textToMorse" data-i18n="modeTextToMorse">英文文本转摩斯密码</option>
-            <option value="morseToText" data-i18n="modeMorseToText">摩斯密码转英文文本</option>
-          </select>
-
-          <label for="inputText" class="block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="inputLabel">文本内容</label>
-          <textarea id="inputText" rows="12" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="inputPlaceholder" data-i18n-aria-label="inputAria" placeholder="输入英文文本，例如 SOS HELP" aria-label="输入文本"></textarea>
-
-          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/40">
-            <div class="grid gap-3 sm:grid-cols-2">
-              <div>
-                <label for="frequencyInput" class="mb-2 block text-xs font-semibold text-slate-600 dark:text-slate-400" data-i18n="frequencyLabel">提示音频率</label>
-                <input id="frequencyInput" type="number" min="200" max="1200" step="10" value="700" class="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-aria-label="frequencyAria" aria-label="提示音频率">
-              </div>
-              <div>
-                <label for="speedInput" class="mb-2 block text-xs font-semibold text-slate-600 dark:text-slate-400" data-i18n="speedLabel">点长毫秒</label>
-                <input id="speedInput" type="number" min="40" max="300" step="10" value="100" class="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-aria-label="speedAria" aria-label="点长毫秒">
-              </div>
-            </div>
-            <p class="mt-3 text-xs leading-6 text-slate-500 dark:text-slate-400" data-i18n="audioHint">播放仅使用浏览器本地音频合成，点为一拍，划为三拍。</p>
-          </div>
-        </div>
-
-        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="convertBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">转换</button>
-          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">示例</button>
-          <button id="swapBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="swapAction">交换方向</button>
-          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
-        </div>
+        <p id="statusMessage" class="mt-4 min-h-11 rounded-xl border border-cyan-200 bg-cyan-50 px-4 py-3 text-sm leading-6 text-cyan-800 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200" aria-live="polite">Ready. All processing runs locally in this browser.</p>
       </section>
-
-      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+      <section class="space-y-4 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">Output</h2>
+          <span class="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">Offline</span>
         </div>
-
-        <div class="space-y-4">
-          <label for="outputText" class="block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="outputLabel">转换结果</label>
-          <textarea id="outputText" rows="12" readonly class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="outputPlaceholder" data-i18n-aria-label="outputAria" placeholder="转换结果会显示在这里" aria-label="转换结果"></textarea>
-
-          <div class="grid gap-3 sm:grid-cols-3">
-            <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/40">
-              <p class="text-xs font-semibold text-slate-500 dark:text-slate-500" data-i18n="statChars">字符数</p>
-              <p id="charCount" class="mt-1 text-lg font-black tabular-nums text-slate-950 dark:text-white">0</p>
-            </div>
-            <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/40">
-              <p class="text-xs font-semibold text-slate-500 dark:text-slate-500" data-i18n="statTokens">摩斯符号</p>
-              <p id="tokenCount" class="mt-1 text-lg font-black tabular-nums text-slate-950 dark:text-white">0</p>
-            </div>
-            <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/40">
-              <p class="text-xs font-semibold text-slate-500 dark:text-slate-500" data-i18n="statWords">单词</p>
-              <p id="wordCount" class="mt-1 text-lg font-black tabular-nums text-slate-950 dark:text-white">0</p>
-            </div>
-          </div>
-
-          <p id="statusText" class="min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite" data-i18n="statusReady">准备就绪。</p>
-        </div>
-
-        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="playBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="playAction">播放提示音</button>
-          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="copyAction">复制结果</button>
-          <button id="downloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadAction">下载文本</button>
-        </div>
+        <textarea id="morseOutput" class="tool-output" spellcheck="false"></textarea>
       </section>
     </section>
-
-    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">这款 Micro Tools Matrix 摩斯密码翻译器适合学习通信编码、制作课堂示例、校验短消息或快速生成 SOS 等点划序列。工具支持英文文本转摩斯密码，也支持把用空格分隔的点划代码还原为英文字符；单词可用斜杠分隔，常见数字与标点也会被识别。所有处理都在浏览器本地完成，无需上传文本、无需账号、无需连接后端服务。播放功能使用 Web Audio API 在当前设备上合成简单提示音，便于检查点和划的节奏。作为一个免费的在线开发者工具，它强调轻量、隐私和稳定体验，适合在桌面与手机浏览器中随时使用。</article>
   </main>
 
-  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
-
-  <script>
-    const I18N = {
-      zh: {
-        documentTitle: "摩斯密码翻译器 - Micro Tools Matrix",
-        metaDescription: "Micro Tools Matrix 摩斯密码双向翻译器，支持英文文本与点划摩斯密码互转，并可在浏览器本地播放提示音，无需上传。",
-        metaKeywords: "摩斯密码翻译器, Morse code translator, 浏览器本地处理, 无需上传, Micro Tools Matrix",
-        toolName: "摩斯密码翻译器",
-        sponsor: "赞赏",
-        sponsorAria: "赞赏",
-        buyCoffee: "Buy Me a Coffee",
-        themeAria: "切换主题",
-        themeTitle: "切换主题",
-        themeLight: "亮色",
-        themeDark: "深色",
-        themeSystem: "系统",
-        langZhAria: "切换到中文",
-        langEnAria: "切换到英文",
-        eyebrow: "浏览器本地处理",
-        h1: "摩斯密码翻译器",
-        intro: "在 Micro Tools Matrix 中将英文文本与摩斯密码双向转换，并通过浏览器本地 Web Audio API 播放简单提示音，无需上传任何内容。",
-        localBadge: "本地运行",
-        share: "分享",
-        shareAria: "打开分享菜单",
-        shareMenuAria: "分享选项",
-        shareToolOnly: "仅分享工具",
-        shareToolOnlyHint: "分享不带参数的工具页面链接",
-        shareWithData: "分享工具及当前结果",
-        shareWithDataHint: "将当前输入或结果写入链接参数",
-        shareCopied: "分享链接已复制到剪贴板！",
-        shareCopyPrompt: "复制此分享链接：",
-        shareCopyFailed: "复制失败，请手动复制地址栏链接。",
-        shareDataTooLarge: "当前数据过大，无法生成分享链接，请直接复制文本结果。",
-        inputTitle: "输入",
-        inputBadge: "输入",
-        outputTitle: "结果",
-        outputBadge: "输出",
-        modeLabel: "转换方向",
-        modeAria: "转换方向",
-        modeTextToMorse: "英文文本转摩斯密码",
-        modeMorseToText: "摩斯密码转英文文本",
-        inputLabel: "文本内容",
-        inputPlaceholder: "输入英文文本，例如 SOS HELP",
-        inputAria: "输入文本",
-        frequencyLabel: "提示音频率",
-        frequencyAria: "提示音频率",
-        speedLabel: "点长毫秒",
-        speedAria: "点长毫秒",
-        audioHint: "播放仅使用浏览器本地音频合成，点为一拍，划为三拍。",
-        primaryAction: "转换",
-        sampleAction: "示例",
-        swapAction: "交换方向",
-        secondaryAction: "清空",
-        outputLabel: "转换结果",
-        outputPlaceholder: "转换结果会显示在这里",
-        outputAria: "转换结果",
-        statChars: "字符数",
-        statTokens: "摩斯符号",
-        statWords: "单词",
-        statusReady: "准备就绪。",
-        playAction: "播放提示音",
-        copyAction: "复制结果",
-        downloadAction: "下载文本",
-        statusConverted: "转换完成。",
-        statusEmpty: "请输入需要转换的内容。",
-        statusUnsupported: "已跳过无法转换的字符：{chars}",
-        statusInvalidMorse: "发现无法识别的摩斯片段：{tokens}",
-        statusCopied: "结果已复制到剪贴板。",
-        statusCopyFailed: "复制失败，请手动选择结果文本。",
-        statusCleared: "已清空输入和结果。",
-        statusSampleLoaded: "已填入示例内容。",
-        statusSwapped: "已交换转换方向。",
-        statusNoAudio: "请先生成摩斯密码结果再播放。",
-        statusAudioStarted: "正在播放提示音。",
-        statusAudioFailed: "当前浏览器无法启动音频播放。",
-        statusDownloaded: "已下载文本文件。",
-        sampleText: "SOS HELP 123",
-        sampleMorse: "... --- ... / .... . .-.. .--. / .---- ..--- ...--",
-        seoArticle: "这款 Micro Tools Matrix 摩斯密码翻译器适合学习通信编码、制作课堂示例、校验短消息或快速生成 SOS 等点划序列。工具支持英文文本转摩斯密码，也支持把用空格分隔的点划代码还原为英文字符；单词可用斜杠分隔，常见数字与标点也会被识别。所有处理都在浏览器本地完成，无需上传文本、无需账号、无需连接后端服务。播放功能使用 Web Audio API 在当前设备上合成简单提示音，便于检查点和划的节奏。作为一个免费的在线开发者工具，它强调轻量、隐私和稳定体验，适合在桌面与手机浏览器中随时使用。",
-        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
-      },
-      en: {
-        documentTitle: "Morse Code Translator - Micro Tools Matrix",
-        metaDescription: "A Micro Tools Matrix browser-local Morse code translator for converting English text to dots and dashes, decoding Morse code, and playing simple tones without uploads.",
-        metaKeywords: "Morse code translator, text to Morse, Morse decoder, browser-local processing, free online developer tool, Micro Tools Matrix",
-        toolName: "Morse Code Translator",
-        sponsor: "Sponsor",
-        sponsorAria: "Sponsor",
-        buyCoffee: "Buy Me a Coffee",
-        themeAria: "Switch theme",
-        themeTitle: "Switch theme",
-        themeLight: "Light",
-        themeDark: "Dark",
-        themeSystem: "System",
-        langZhAria: "Switch to Chinese",
-        langEnAria: "Switch to English",
-        eyebrow: "Browser-local processing",
-        h1: "Morse Code Translator",
-        intro: "Convert English text and Morse code in both directions with Micro Tools Matrix, then play simple tones through the browser-local Web Audio API without uploading anything.",
-        localBadge: "Local",
-        share: "Share",
-        shareAria: "Open share menu",
-        shareMenuAria: "Share options",
-        shareToolOnly: "Share Tool Only",
-        shareToolOnlyHint: "Share the clean tool page link",
-        shareWithData: "Share with Data",
-        shareWithDataHint: "Include current input or result in the link",
-        shareCopied: "Share link copied to clipboard!",
-        shareCopyPrompt: "Copy this share link:",
-        shareCopyFailed: "Copy failed. Please copy the address bar link manually.",
-        shareDataTooLarge: "The current data is too large to create a share link. Please copy the text result directly.",
-        inputTitle: "Input",
-        inputBadge: "INPUT",
-        outputTitle: "Result",
-        outputBadge: "OUTPUT",
-        modeLabel: "Direction",
-        modeAria: "Conversion direction",
-        modeTextToMorse: "English text to Morse code",
-        modeMorseToText: "Morse code to English text",
-        inputLabel: "Content",
-        inputPlaceholder: "Enter English text, for example SOS HELP",
-        inputAria: "Input text",
-        frequencyLabel: "Tone frequency",
-        frequencyAria: "Tone frequency",
-        speedLabel: "Dot length in milliseconds",
-        speedAria: "Dot length in milliseconds",
-        audioHint: "Playback uses local browser audio synthesis only. A dot is one unit and a dash is three units.",
-        primaryAction: "Convert",
-        sampleAction: "Sample",
-        swapAction: "Swap direction",
-        secondaryAction: "Clear",
-        outputLabel: "Converted result",
-        outputPlaceholder: "The converted result will appear here",
-        outputAria: "Converted result",
-        statChars: "Characters",
-        statTokens: "Morse marks",
-        statWords: "Words",
-        statusReady: "Ready.",
-        playAction: "Play tones",
-        copyAction: "Copy result",
-        downloadAction: "Download text",
-        statusConverted: "Conversion complete.",
-        statusEmpty: "Enter content to convert.",
-        statusUnsupported: "Skipped unsupported characters: {chars}",
-        statusInvalidMorse: "Unrecognized Morse fragments found: {tokens}",
-        statusCopied: "Result copied to the clipboard.",
-        statusCopyFailed: "Copy failed. Please select the result text manually.",
-        statusCleared: "Input and result cleared.",
-        statusSampleLoaded: "Sample content loaded.",
-        statusSwapped: "Conversion direction swapped.",
-        statusNoAudio: "Generate a Morse code result before playing tones.",
-        statusAudioStarted: "Playing tones.",
-        statusAudioFailed: "This browser could not start audio playback.",
-        statusDownloaded: "Text file downloaded.",
-        sampleText: "SOS HELP 123",
-        sampleMorse: "... --- ... / .... . .-.. .--. / .---- ..--- ...--",
-        seoArticle: "This Micro Tools Matrix Morse Code Translator is a free online developer tool for learning communication codes, preparing classroom examples, checking short messages, or generating familiar sequences such as SOS. It converts English text into dots and dashes, and it can decode Morse code back into readable characters when symbols are separated by spaces and words are separated by slashes. Common numbers and punctuation are supported, while unsupported input is reported with a friendly message instead of interrupting your work. The tool is designed for browser-local processing: your text stays in memory on the current page, with no upload, account, analytics, or backend request. The playback feature uses the Web Audio API to synthesize simple tones on your own device, making it easier to hear the rhythm of dots, dashes, character gaps, and word gaps. Like other Micro Tools Matrix utilities, it keeps a restrained interface, clear actions, and dependable behavior across desktop and mobile browsers.",
-        footer: "Micro Tools Matrix - Browser-local processing with no uploads."
-      }
-    };
-
-    const MORSE = {
-      "A": ".-", "B": "-...", "C": "-.-.", "D": "-..", "E": ".", "F": "..-.", "G": "--.", "H": "....", "I": "..", "J": ".---",
-      "K": "-.-", "L": ".-..", "M": "--", "N": "-.", "O": "---", "P": ".--.", "Q": "--.-", "R": ".-.", "S": "...", "T": "-",
-      "U": "..-", "V": "...-", "W": ".--", "X": "-..-", "Y": "-.--", "Z": "--..",
-      "0": "-----", "1": ".----", "2": "..---", "3": "...--", "4": "....-", "5": ".....", "6": "-....", "7": "--...", "8": "---..", "9": "----.",
-      ".": ".-.-.-", ",": "--..--", "?": "..--..", "'": ".----.", "!": "-.-.--", "/": "-..-.", "(": "-.--.", ")": "-.--.-",
-      "&": ".-...", ":": "---...", ";": "-.-.-.", "=": "-...-", "+": ".-.-.", "-": "-....-", "_": "..--.-", "\"": ".-..-.", "$": "...-..-", "@": ".--.-."
-    };
-    const REVERSE_MORSE = Object.fromEntries(Object.entries(MORSE).map(([key, value]) => [value, key]));
-
-    let currentLanguage = "zh";
-    let currentStatusKey = "statusReady";
-    let currentStatusArgs = {};
-    let activeAudioContext = null;
-
-    function getInitialLanguage() {
-      if (location.pathname.includes("/en/")) return "en";
-      return localStorage.getItem("microToolsLanguage") || "zh";
-    }
-
-    function formatMessage(template, args = {}) {
-      return String(template || "").replace(/\{(\w+)\}/g, (_, key) => args[key] ?? "");
-    }
-
-    function setStatus(key, args = {}) {
-      currentStatusKey = key;
-      currentStatusArgs = args;
-      const statusText = document.getElementById("statusText");
-      if (statusText) statusText.textContent = formatMessage(I18N[currentLanguage][key], args);
-    }
-
-    function applyLanguage(lang) {
-      currentLanguage = lang === "en" ? "en" : "zh";
-      const dict = I18N[currentLanguage];
-      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
-      document.title = dict.documentTitle;
-
-      const description = document.querySelector('meta[name="description"]');
-      if (description) description.setAttribute("content", dict.metaDescription);
-      const keywords = document.querySelector('meta[name="keywords"]');
-      if (keywords) keywords.setAttribute("content", dict.metaKeywords);
-
-      document.querySelectorAll("[data-i18n]").forEach((node) => {
-        const key = node.getAttribute("data-i18n");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.textContent = dict[key];
-      });
-      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
-        const key = node.getAttribute("data-i18n-placeholder");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("placeholder", dict[key]);
-      });
-      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
-        const key = node.getAttribute("data-i18n-aria-label");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("aria-label", dict[key]);
-      });
-      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
-        const key = node.getAttribute("data-i18n-title");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("title", dict[key]);
-      });
-
-      const themeLabel = document.querySelector("[data-theme-label]");
-      if (themeLabel && !themeLabel.textContent.trim()) themeLabel.textContent = dict.themeSystem;
-
-      const zhBtn = document.getElementById("langZhBtn");
-      const enBtn = document.getElementById("langEnBtn");
-      if (zhBtn && enBtn) {
-        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
-        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
-        if (currentLanguage === "zh") {
-          zhBtn.classList.add("bg-cyan-400", "text-slate-950");
-          enBtn.classList.add("text-slate-600", "dark:text-slate-400");
-        } else {
-          enBtn.classList.add("bg-cyan-400", "text-slate-950");
-          zhBtn.classList.add("text-slate-600", "dark:text-slate-400");
-        }
-      }
-
-      setStatus(currentStatusKey, currentStatusArgs);
-      updateModePlaceholder();
-      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
-    }
-
-    function setLanguage(lang) {
-      const safeLang = lang === "en" ? "en" : "zh";
-      localStorage.setItem("microToolsLanguage", safeLang);
-      applyLanguage(safeLang);
-    }
-
-    function updateModePlaceholder() {
-      const mode = document.getElementById("modeSelect")?.value || "textToMorse";
-      const input = document.getElementById("inputText");
-      if (!input) return;
-      if (mode === "morseToText") {
-        input.setAttribute("placeholder", currentLanguage === "en" ? "... --- ... / .... . .-.. .--." : "... --- ... / .... . .-.. .--.");
-      } else {
-        input.setAttribute("placeholder", I18N[currentLanguage].inputPlaceholder);
-      }
-    }
-
-    function textToMorse(text) {
-      const unsupported = new Set();
-      const words = text.trim().toUpperCase().split(/\s+/).filter(Boolean);
-      const resultWords = words.map((word) => {
-        return Array.from(word).map((char) => {
-          if (MORSE[char]) return MORSE[char];
-          unsupported.add(char);
-          return "";
-        }).filter(Boolean).join(" ");
-      }).filter(Boolean);
-      return { result: resultWords.join(" / "), unsupported: Array.from(unsupported) };
-    }
-
-    function morseToText(code) {
-      const invalid = new Set();
-      const normalized = code.trim().replace(/[—–]/g, "-").replace(/[·•]/g, ".").replace(/\s*\/\s*/g, " / ");
-      if (!normalized) return { result: "", invalid: [] };
-      const words = normalized.split(/\s+\/\s+/);
-      const decoded = words.map((word) => {
-        return word.trim().split(/\s+/).filter(Boolean).map((token) => {
-          if (REVERSE_MORSE[token]) return REVERSE_MORSE[token];
-          invalid.add(token);
-          return "";
-        }).join("");
-      }).join(" ");
-      return { result: decoded, invalid: Array.from(invalid) };
-    }
-
-    function updateStats() {
-      const output = document.getElementById("outputText")?.value || "";
-      const charCount = document.getElementById("charCount");
-      const tokenCount = document.getElementById("tokenCount");
-      const wordCount = document.getElementById("wordCount");
-      if (charCount) charCount.textContent = String(output.length);
-      if (tokenCount) tokenCount.textContent = String((output.match(/[.-]+/g) || []).length);
-      if (wordCount) wordCount.textContent = String(output.trim() ? output.trim().split(/\s+/).filter(Boolean).length : 0);
-    }
-
-    function convert() {
-      const input = document.getElementById("inputText");
-      const output = document.getElementById("outputText");
-      const mode = document.getElementById("modeSelect")?.value || "textToMorse";
-      if (!input || !output) return;
-
-      const raw = input.value;
-      if (!raw.trim()) {
-        output.value = "";
-        updateStats();
-        setStatus("statusEmpty");
-        return;
-      }
-
-      if (mode === "textToMorse") {
-        const converted = textToMorse(raw);
-        output.value = converted.result;
-        updateStats();
-        if (converted.unsupported.length) {
-          setStatus("statusUnsupported", { chars: converted.unsupported.join(" ") });
-        } else {
-          setStatus("statusConverted");
-        }
-      } else {
-        const converted = morseToText(raw);
-        output.value = converted.result;
-        updateStats();
-        if (converted.invalid.length) {
-          setStatus("statusInvalidMorse", { tokens: converted.invalid.join(" ") });
-        } else {
-          setStatus("statusConverted");
-        }
-      }
-    }
-
-    async function copyResult() {
-      const output = document.getElementById("outputText");
-      if (!output || !output.value) {
-        setStatus("statusEmpty");
-        return;
-      }
-      try {
-        if (navigator.clipboard?.writeText) {
-          await navigator.clipboard.writeText(output.value);
-        } else {
-          output.focus();
-          output.select();
-          document.execCommand("copy");
-          output.setSelectionRange(0, 0);
-        }
-        setStatus("statusCopied");
-      } catch (_) {
-        setStatus("statusCopyFailed");
-      }
-    }
-
-    function clearAll() {
-      const input = document.getElementById("inputText");
-      const output = document.getElementById("outputText");
-      if (input) input.value = "";
-      if (output) output.value = "";
-      updateStats();
-      setStatus("statusCleared");
-    }
-
-    function loadSample() {
-      const mode = document.getElementById("modeSelect")?.value || "textToMorse";
-      const input = document.getElementById("inputText");
-      if (!input) return;
-      input.value = mode === "morseToText" ? I18N[currentLanguage].sampleMorse : I18N[currentLanguage].sampleText;
-      convert();
-      setStatus("statusSampleLoaded");
-    }
-
-    function swapDirection() {
-      const mode = document.getElementById("modeSelect");
-      const input = document.getElementById("inputText");
-      const output = document.getElementById("outputText");
-      if (!mode || !input || !output) return;
-      mode.value = mode.value === "textToMorse" ? "morseToText" : "textToMorse";
-      const oldInput = input.value;
-      input.value = output.value || oldInput;
-      output.value = "";
-      updateModePlaceholder();
-      updateStats();
-      setStatus("statusSwapped");
-      if (input.value.trim()) convert();
-    }
-
-    function getMorseForPlayback() {
-      const mode = document.getElementById("modeSelect")?.value || "textToMorse";
-      const input = document.getElementById("inputText")?.value || "";
-      const output = document.getElementById("outputText")?.value || "";
-      if (mode === "textToMorse") return output.trim() || textToMorse(input).result;
-      return input.trim();
-    }
-
-    function playTone(audioContext, start, duration, frequency) {
-      const oscillator = audioContext.createOscillator();
-      const gain = audioContext.createGain();
-      oscillator.type = "sine";
-      oscillator.frequency.setValueAtTime(frequency, start);
-      gain.gain.setValueAtTime(0.0001, start);
-      gain.gain.exponentialRampToValueAtTime(0.18, start + 0.01);
-      gain.gain.setValueAtTime(0.18, Math.max(start + 0.01, start + duration - 0.02));
-      gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
-      oscillator.connect(gain);
-      gain.connect(audioContext.destination);
-      oscillator.start(start);
-      oscillator.stop(start + duration + 0.03);
-    }
-
-    async function playMorse() {
-      const morse = getMorseForPlayback();
-      if (!/[.-]/.test(morse)) {
-        setStatus("statusNoAudio");
-        return;
-      }
-
-      const frequencyValue = Number(document.getElementById("frequencyInput")?.value || 700);
-      const speedValue = Number(document.getElementById("speedInput")?.value || 100);
-      const frequency = Math.min(1200, Math.max(200, Number.isFinite(frequencyValue) ? frequencyValue : 700));
-      const unitMs = Math.min(300, Math.max(40, Number.isFinite(speedValue) ? speedValue : 100));
-      const unit = unitMs / 1000;
-
-      try {
-        if (activeAudioContext) {
-          await activeAudioContext.close();
-          activeAudioContext = null;
-        }
-        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-        if (!AudioContextClass) throw new Error("AudioContext unavailable");
-        const audioContext = new AudioContextClass();
-        activeAudioContext = audioContext;
-        if (audioContext.state === "suspended") await audioContext.resume();
-
-        let time = audioContext.currentTime + 0.08;
-        const words = morse.trim().replace(/[—–]/g, "-").replace(/[·•]/g, ".").split(/\s+\/\s+/);
-        words.forEach((word, wordIndex) => {
-          const letters = word.trim().split(/\s+/).filter(Boolean);
-          letters.forEach((letter, letterIndex) => {
-            Array.from(letter).forEach((mark, markIndex) => {
-              if (mark !== "." && mark !== "-") return;
-              const duration = mark === "." ? unit : unit * 3;
-              playTone(audioContext, time, duration, frequency);
-              time += duration;
-              if (markIndex < letter.length - 1) time += unit;
-            });
-            if (letterIndex < letters.length - 1) time += unit * 3;
-          });
-          if (wordIndex < words.length - 1) time += unit * 7;
-        });
-
-        setStatus("statusAudioStarted");
-      } catch (_) {
-        setStatus("statusAudioFailed");
-      }
-    }
-
-    function downloadResult() {
-      const output = document.getElementById("outputText")?.value || "";
-      if (!output.trim()) {
-        setStatus("statusEmpty");
-        return;
-      }
-      const blob = new Blob([output], { type: "text/plain;charset=utf-8" });
-      const url = URL.createObjectURL(blob);
-      const anchor = document.createElement("a");
-      anchor.href = url;
-      anchor.download = "morse-code.txt";
-      document.body.appendChild(anchor);
-      anchor.click();
-      anchor.remove();
-      URL.revokeObjectURL(url);
-      setStatus("statusDownloaded");
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
-      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
-      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
-      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
-      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
-        if (event.target?.id === "sponsorModal") closeSponsorModal();
-      });
-      document.getElementById("convertBtn")?.addEventListener("click", convert);
-      document.getElementById("copyBtn")?.addEventListener("click", copyResult);
-      document.getElementById("clearBtn")?.addEventListener("click", clearAll);
-      document.getElementById("sampleBtn")?.addEventListener("click", loadSample);
-      document.getElementById("swapBtn")?.addEventListener("click", swapDirection);
-      document.getElementById("playBtn")?.addEventListener("click", playMorse);
-      document.getElementById("downloadBtn")?.addEventListener("click", downloadResult);
-      document.getElementById("modeSelect")?.addEventListener("change", () => {
-        updateModePlaceholder();
-        setStatus("statusReady");
-      });
-      document.getElementById("inputText")?.addEventListener("input", () => {
-        if (document.getElementById("outputText")?.value) convert();
-      });
-      applyLanguage(getInitialLanguage());
-      updateStats();
-    });
-  </script>
-  <script>
-    function getShareMessage(key) {
-      const lang = typeof currentLanguage === "string" ? currentLanguage : (document.documentElement.lang === "en" ? "en" : "zh");
-      const fallback = {
-        zh: {
-          shareDataTooLarge: "当前数据过大，无法生成分享链接，请直接复制文本结果。"
-        },
-        en: {
-          shareDataTooLarge: "The current data is too large to create a share link. Please copy the text result directly."
-        }
-      };
-      const dict = typeof I18N === "object" && I18N[lang] ? I18N[lang] : fallback.zh;
-      return dict[key] || fallback[lang]?.[key] || fallback.zh[key] || "";
-    }
-
-    function closeShareMenu() {
-      const menu = document.getElementById("shareToolMenu");
-      const trigger = document.getElementById("shareToolBtn");
-      if (!menu || !trigger) return;
-      menu.classList.add("hidden");
-      trigger.setAttribute("aria-expanded", "false");
-    }
-
-    function openShareMenu() {
-      const menu = document.getElementById("shareToolMenu");
-      const trigger = document.getElementById("shareToolBtn");
-      if (!menu || !trigger) return;
-      menu.classList.remove("hidden");
-      trigger.setAttribute("aria-expanded", "true");
-    }
-
-    function toggleShareMenu(event) {
-      if (event) event.stopPropagation();
-      const menu = document.getElementById("shareToolMenu");
-      if (!menu) return;
-      if (menu.classList.contains("hidden")) {
-        openShareMenu();
-      } else {
-        closeShareMenu();
-      }
-    }
-
-    function closeShareMenuOnOutsideClick(event) {
-      const root = document.getElementById("shareToolMenuRoot");
-      if (root && !root.contains(event.target)) closeShareMenu();
-    }
-
-    function getCleanShareUrl() {
-      return window.location.href.split("?")[0];
-    }
-
-    function encodeShareText(data) {
-      return encodeURIComponent(btoa(unescape(encodeURIComponent(data))));
-    }
-
-    function decodeShareText(encodedData) {
-      return decodeURIComponent(escape(atob(decodeURIComponent(encodedData))));
-    }
-
-    function getShareableControls() {
-      return Array.from(document.querySelectorAll("main textarea[id], main input[id], main select[id], main [contenteditable='true'][id]")).filter((control) => {
-        const type = (control.getAttribute("type") || control.tagName).toLowerCase();
-        return !control.disabled && !["button", "submit", "reset", "file", "hidden", "image", "password"].includes(type);
-      });
-    }
-
-    function serializeShareControl(control) {
-      const tag = control.tagName.toLowerCase();
-      const type = (control.getAttribute("type") || tag).toLowerCase();
-      const field = { id: control.id, type };
-      if (type === "checkbox" || type === "radio") {
-        field.checked = Boolean(control.checked);
-      } else if (control.isContentEditable) {
-        field.value = control.textContent || "";
-      } else {
-        field.value = control.value || "";
-      }
-      return field;
-    }
-
-    function collectShareState() {
-      const fields = getShareableControls().map(serializeShareControl).filter((field) => {
-        if (field.type === "checkbox" || field.type === "radio") return field.checked;
-        return String(field.value || "").length > 0;
-      });
-      return { version: 1, fields };
-    }
-
-    function shareUrl(url) {
-      const shareData = {
-        title: document.title,
-        url
-      };
-      if (navigator.share) {
-        navigator.share(shareData)
-          .then(() => console.log("分享成功"))
-          .catch((error) => console.log("分享失败", error));
-        return;
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url)
-          .then(() => {
-            alert(getShareMessage("shareCopied"));
-          })
-          .catch((err) => {
-            console.error("复制失败: ", err);
-            window.prompt(getShareMessage("shareCopyPrompt"), url);
-          });
-        return;
-      }
-      window.prompt(getShareMessage("shareCopyPrompt"), url);
-    }
-
-    function shareToolOnly() {
-      closeShareMenu();
-      const cleanUrl = window.location.href.split("?")[0];
-      shareUrl(cleanUrl);
-    }
-
-    function shareWithData() {
-      closeShareMenu();
-      const state = collectShareState();
-      if (!state.fields.length) {
-        shareUrl(getCleanShareUrl());
-        return;
-      }
-      const rawData = JSON.stringify(state);
-      if (rawData.length > 2000) {
-        alert(getShareMessage("shareDataTooLarge"));
-        return;
-      }
-      const encodedData = encodeShareText(rawData);
-      const stateUrl = window.location.href.split("?")[0] + "?d=" + encodedData;
-      shareUrl(stateUrl);
-    }
-
-    function applySharedField(field) {
-      if (!field || !field.id) return;
-      const control = document.getElementById(field.id);
-      if (!control) return;
-      const type = (control.getAttribute("type") || control.tagName).toLowerCase();
-      if (type === "checkbox" || type === "radio") {
-        control.checked = Boolean(field.checked);
-      } else if (control.isContentEditable) {
-        control.textContent = field.value || "";
-      } else if (Object.prototype.hasOwnProperty.call(field, "value")) {
-        control.value = field.value || "";
-      }
-      control.dispatchEvent(new Event("input", { bubbles: true }));
-      control.dispatchEvent(new Event("change", { bubbles: true }));
-    }
-
-    function restoreShareStateFromUrl() {
-      const encodedData = new URLSearchParams(window.location.search).get("d");
-      if (!encodedData) return;
-      try {
-        const state = JSON.parse(decodeShareText(encodedData));
-        if (!state || !Array.isArray(state.fields)) return;
-        state.fields.forEach(applySharedField);
-      } catch (error) {
-        console.warn("Failed to restore shared state", error);
-      }
-    }
-
-    function initializeShareMenu() {
-      document.addEventListener("click", closeShareMenuOnOutsideClick);
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") closeShareMenu();
-      });
-      restoreShareStateFromUrl();
-    }
-
-    function shareTool() {
-      toggleShareMenu();
-    }
-
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", initializeShareMenu);
-    } else {
-      initializeShareMenu();
-    }
-  </script>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8">Micro Tools Matrix - browser-local processing, no upload required.</footer>
+  <script src="../assets/tool-upgrades.js"></script>
   <script src="../sponsor.js" defer></script>
-  <script src="./theme-toggle.js" defer></script>
+  <script src="../theme-toggle.js" defer></script>
 </body>
 </html>

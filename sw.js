@@ -1,4 +1,4 @@
-const CACHE_NAME = "micro-tools-cache-v20260504-category-motion-72";
+const CACHE_NAME = "micro-tools-cache-v20260505-tool-refine-55";
 const CACHE_ASSETS = [
   "/",
   "/apple-touch-icon.png",
@@ -8,6 +8,7 @@ const CACHE_ASSETS = [
   "/assets/images/og-banner.png",
   "/assets/logo.png",
   "/assets/qrcode-generator-2.0.4.js",
+  "/assets/tool-upgrades.js",
   "/assets/vendor/fonts/KaTeX_AMS-Regular.ttf",
   "/assets/vendor/fonts/KaTeX_AMS-Regular.woff",
   "/assets/vendor/fonts/KaTeX_AMS-Regular.woff2",
@@ -78,7 +79,7 @@ const CACHE_ASSETS = [
   "/binary-decimal-converter.html",
   "/binary-text-converter.html",
   "/bland-altman-plot.html",
-  "/bmi-calculator.html",
+
   "/box-shadow-generator.html",
   "/case-converter.html",
   "/chords-generator.html",
@@ -94,7 +95,7 @@ const CACHE_ASSETS = [
   "/en/binary-decimal-converter.html",
   "/en/binary-text-converter.html",
   "/en/bland-altman-plot.html",
-  "/en/bmi-calculator.html",
+
   "/en/box-shadow-generator.html",
   "/en/case-converter.html",
   "/en/chords-generator.html",
@@ -122,7 +123,7 @@ const CACHE_ASSETS = [
   "/en/latex-formula-editor.html",
   "/en/linux-command-cheatsheet.html",
   "/en/llm-npu-memory-calculator.html",
-  "/en/loan-calculator.html",
+
   "/en/lorem-ipsum-generator.html",
   "/en/margin-padding-generator.html",
   "/en/markdown-table-generator.html",
@@ -133,23 +134,24 @@ const CACHE_ASSETS = [
   "/en/percentage-calculator.html",
   "/en/pomodoro-timer.html",
   "/en/qr-code-generator.html",
-  "/en/random-name-generator.html",
+
   "/en/regex-tester.html",
   "/en/register-bitfield-debugger.html",
-  "/en/roman-numeral-converter.html",
+
   "/en/sql-formatter.html",
-  "/en/stopwatch.html",
-  "/en/subnets-calculator.html",
+
+
   "/en/svg-to-base64.html",
   "/en/text-diff-checker.html",
-  "/en/text-reverser.html",
-  "/en/text-to-binary.html",
+
+
   "/en/text-to-speech-test.html",
   "/en/theme-init.js",
   "/en/theme-toggle.js",
   "/en/unix-timestamp-converter.html",
   "/en/url-encoder.html",
   "/en/utm-builder.html",
+
   "/en/uuid-v4-generator.html",
   "/en/word-counter.html",
   "/en/yaml-json-converter.html",
@@ -178,7 +180,7 @@ const CACHE_ASSETS = [
   "/latex-formula-editor.html",
   "/linux-command-cheatsheet.html",
   "/llm-npu-memory-calculator.html",
-  "/loan-calculator.html",
+
   "/lorem-ipsum-generator.html",
   "/margin-padding-generator.html",
   "/markdown-table-generator.html",
@@ -189,25 +191,27 @@ const CACHE_ASSETS = [
   "/percentage-calculator.html",
   "/pomodoro-timer.html",
   "/qr-code-generator.html",
-  "/random-name-generator.html",
+
   "/regex-tester.html",
   "/register-bitfield-debugger.html",
-  "/roman-numeral-converter.html",
+
   "/sponsor.js",
+  "/storage.js",
   "/sql-formatter.html",
-  "/stopwatch.html",
+
   "/style.css",
-  "/subnets-calculator.html",
+
   "/svg-to-base64.html",
   "/text-diff-checker.html",
-  "/text-reverser.html",
-  "/text-to-binary.html",
+
+
   "/text-to-speech-test.html",
   "/theme-init.js",
   "/theme-toggle.js",
   "/unix-timestamp-converter.html",
   "/url-encoder.html",
   "/utm-builder.html",
+
   "/uuid-v4-generator.html",
   "/word-counter.html",
   "/yaml-json-converter.html",

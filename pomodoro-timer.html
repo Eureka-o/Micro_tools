@@ -1,851 +1,135 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="canonical" href="https://mymicrotools.xyz/pomodoro-timer.html">
-  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/pomodoro-timer.html" />
-  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/pomodoro-timer.html" />
-  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/pomodoro-timer.html" />
-  <meta property="og:locale" content="zh_CN" />
+  <link rel="alternate" hreflang="zh-CN" href="https://mymicrotools.xyz/pomodoro-timer.html">
+  <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/pomodoro-timer.html">
+  <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/pomodoro-timer.html">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="./style.css">
   <script src="./theme-init.js"></script>
-  <title>番茄计时器 - 时间效率，纯前端本地运行 | Micro Tools Matrix</title>
-  <meta name="description" content="免费的 番茄计时器，用于时间效率。工具在浏览器本地运行、无后端上传，结合 番茄计时器 的相关技术能力快速处理任务，保护开发者隐私。">
-  <meta name="keywords" content="番茄计时器, pomodoro, timer, 免费, 纯前端, 本地运行, 无后端, 隐私保护, Micro Tools Matrix">
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Pomodoro Timer",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Windows, macOS, Android, iOS",
-      "description": "A browser-local Pomodoro timer by Micro Tools Matrix with work and break countdowns, browser title updates, and a local end sound.",
-      "url": "https://mymicrotools.xyz/pomodoro-timer.html",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "description": "Free"
-      }
-    }
-  </script>
+  <title>工程专注冲刺计时器 | Micro Tools Matrix</title>
+  <meta name="description" content="浏览器本地运行的工程专注冲刺计时器，支持专注、短休息、长休息、任务标签、本地提示音和 CSV 会话记录导出。">
+  <meta name="keywords" content="工程专注冲刺计时器, Micro Tools Matrix, browser local, offline, no upload">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="工程专注冲刺计时器">
+  <meta property="og:description" content="浏览器本地运行的工程专注冲刺计时器，支持专注、短休息、长休息、任务标签、本地提示音和 CSV 会话记录导出。">
+  <meta property="og:url" content="https://mymicrotools.xyz/pomodoro-timer.html">
+  <meta property="og:image" content="https://mymicrotools.xyz/assets/images/og-banner.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"工程专注冲刺计时器","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS, Linux","description":"浏览器本地运行的工程专注冲刺计时器，支持专注、短休息、长休息、任务标签、本地提示音和 CSV 会话记录导出。","url":"https://mymicrotools.xyz/pomodoro-timer.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"inLanguage":"zh-CN"}</script>
   <style>
-    :root { color-scheme: light dark; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
+    html, body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
     .tabular-nums { font-variant-numeric: tabular-nums; }
+    .tool-input { width: 100%; border-radius: 1rem; border: 1px solid rgb(229 231 235); background: rgb(248 250 252); padding: 0.75rem 1rem; font-size: 0.875rem; color: rgb(15 23 42); outline: none; transition: border-color .2s, box-shadow .2s; }
+    .tool-input:focus { border-color: rgb(34 211 238); box-shadow: 0 0 0 4px rgba(34,211,238,.12); }
+    .dark .tool-input { border-color: rgba(255,255,255,.1); background: rgba(2,6,23,.72); color: rgb(241 245 249); }
+    .tool-primary { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; border-radius: 999px; background: rgb(34 211 238); padding: .75rem 1.25rem; font-size: .875rem; font-weight: 800; color: rgb(2 6 23); transition: transform .12s, background .2s; }
+    .tool-primary:hover { background: rgb(103 232 249); }
+    .tool-primary:active, .tool-secondary:active { transform: scale(.97); }
+    .tool-secondary { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; border-radius: 999px; border: 1px solid rgb(229 231 235); background: white; padding: .75rem 1.25rem; font-size: .875rem; font-weight: 700; color: rgb(30 41 59); transition: transform .12s, background .2s, border-color .2s; }
+    .tool-secondary:hover { border-color: rgba(34,211,238,.65); background: rgb(236 254 255); }
+    .dark .tool-secondary { border-color: rgba(255,255,255,.1); background: rgba(255,255,255,.04); color: rgb(241 245 249); }
+    .dark .tool-secondary:hover { background: rgba(255,255,255,.08); }
+    .tool-output { min-height: 20rem; width: 100%; resize: vertical; border-radius: 1rem; border: 1px solid rgb(229 231 235); background: rgb(2 6 23); padding: 1rem; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: .8125rem; line-height: 1.6; color: rgb(226 232 240); outline: none; }
+    .tool-metric { border-radius: 1rem; border: 1px solid rgb(229 231 235); background: rgb(248 250 252); padding: 1rem; }
+    .tool-metric span { display: block; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: rgb(100 116 139); }
+    .tool-metric strong { margin-top: .5rem; display: block; font-size: 1.25rem; color: rgb(15 23 42); }
+    .dark .tool-metric { border-color: rgba(255,255,255,.1); background: rgba(2,6,23,.5); }
+    .dark .tool-metric strong { color: white; }
+    .lang-link, .lang-link-active { display: inline-flex; min-height: 2.25rem; align-items: center; border-radius: 999px; padding: 0 .75rem; font-size: .875rem; font-weight: 700; }
+    .lang-link { color: rgb(71 85 105); }
+    .lang-link-active { background: rgb(34 211 238); color: rgb(2 6 23); }
+    .dark .lang-link { color: rgb(203 213 225); }
   </style>
 </head>
 <body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
-  <div class="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(6,182,212,0.12),transparent_34rem)]"></div>
-
   <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
     <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
       <a href="./" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
         <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
-        <span class="min-w-0">
-          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
-          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">番茄计时器</span>
-        </span>
+        <span class="min-w-0"><span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span><span class="block truncate text-xs text-slate-600 dark:text-slate-400">本地时间盒</span></span>
       </a>
-      <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
-        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
-          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
-        </button>
-        <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
-          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
-        </button>
-        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
-          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
-          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
-        </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="tool-secondary" aria-label="Theme"><span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">System</span></button>
+        <button id="openSponsorBtn" type="button" class="tool-secondary"><span aria-hidden="true">☕</span><span>赞赏</span></button>
+        <div role="group" aria-label="Language" class="inline-flex min-h-11 items-center rounded-full border border-gray-200 bg-white p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.06]"><a href="./pomodoro-timer.html" hreflang="zh-CN" class="lang-link-active">中</a><a href="./en/pomodoro-timer.html" hreflang="en" class="lang-link">EN</a></div>
       </div>
     </nav>
   </header>
 
-  <main class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
-    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
-      <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-        <div class="min-w-0">
-          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
-          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">番茄计时器</h1>
-          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中使用极简番茄工作法网页计时器，工作与休息倒计时全部在浏览器本地运行，标题栏同步显示剩余时间，结束时播放本地提示音。</p>
-        </div>
-        <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
-          <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
-            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
-            <span data-i18n="localBadge">本地运行</span>
-          </div>
-          <div id="shareToolMenuRoot" class="relative shrink-0">
-            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
-              <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="18" cy="5" r="3"></circle>
-                <circle cx="6" cy="12" r="3"></circle>
-                <circle cx="18" cy="19" r="3"></circle>
-                <path d="M8.6 10.7 15.4 6.3"></path>
-                <path d="M8.6 13.3 15.4 17.7"></path>
-              </svg>
-              <span data-i18n="share">分享</span>
-              <svg aria-hidden="true" class="h-3.5 w-3.5 transition" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z" clip-rule="evenodd"></path>
-              </svg>
-            </button>
-            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="分享选项">
-              <button type="button" role="menuitem" onclick="shareToolOnly()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
-                <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200">
-                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg>
-                </span>
-                <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">仅分享工具</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span>
-                </span>
-              </button>
-              <button type="button" role="menuitem" onclick="shareWithData()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
-                <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-400/10 dark:text-cyan-300">
-                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
-                </span>
-                <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">分享工具及当前结果</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">将当前输入或结果写入链接参数</span>
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+  <main id="toolApp" data-tool="pomodoro-timer" class="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
+    <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-7">
+      <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 dark:text-cyan-300">本地时间盒</p>
+      <h1 class="max-w-4xl break-words text-2xl font-black tracking-tight text-slate-950 dark:text-white sm:text-4xl">工程专注冲刺计时器</h1>
+      <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base">为写代码、调试板卡、跑验证和复盘设计的轻量时间盒。所有计时状态只存在当前浏览器标签页，导出记录使用 Blob 本地下载。</p>
     </section>
 
-    <section class="grid gap-5 lg:grid-cols-2">
-      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+    <section class="grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
+      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">设置</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">设置</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">输入</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04]">Local</span>
         </div>
-
-        <div class="grid gap-4 sm:grid-cols-2">
-          <label class="block min-w-0">
-            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="workLabel">工作时长（分钟）</span>
-            <input id="workMinutesInput" type="number" min="1" max="180" step="1" value="25" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-aria-label="workAria">
+        <div class="grid gap-4 sm:grid-cols-2"><label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">任务标签</span>
+            <input id="taskInput" type="text" value="FPGA bring-up / log review"  class="tool-input">
           </label>
-          <label class="block min-w-0">
-            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="breakLabel">休息时长（分钟）</span>
-            <input id="breakMinutesInput" type="number" min="1" max="180" step="1" value="5" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-aria-label="breakAria">
+<label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">专注分钟</span>
+            <input id="focusMinutes" type="number" value="25" min="1" max="240" step="1" class="tool-input">
           </label>
+<label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">短休息分钟</span>
+            <input id="shortBreakMinutes" type="number" value="5" min="1" max="120" step="1" class="tool-input">
+          </label>
+<label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">长休息分钟</span>
+            <input id="longBreakMinutes" type="number" value="15" min="1" max="180" step="1" class="tool-input">
+          </label>
+<label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">长休息间隔轮次</span>
+            <input id="longBreakEvery" type="number" value="4" min="1" max="12" step="1" class="tool-input">
+          </label></div>
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><button id="startPauseBtn" type="button" class="tool-primary">开始</button>
+<button id="resetBtn" type="button" class="tool-secondary">重置</button>
+<button id="skipBtn" type="button" class="tool-secondary">切换阶段</button>
+<button id="testSoundBtn" type="button" class="tool-secondary">试听提示音</button>
+<button id="exportLogBtn" type="button" class="tool-secondary">导出 CSV</button></div>
+        <div class="grid gap-3 sm:grid-cols-3">
+          <button type="button" data-preset="25,5,15" class="tool-secondary">25 / 5 / 15</button>
+          <button type="button" data-preset="50,10,30" class="tool-secondary">50 / 10 / 30</button>
+          <button type="button" data-preset="90,15,30" class="tool-secondary">90 / 15 / 30</button>
         </div>
-
-        <div class="mt-4 rounded-2xl border border-gray-200 bg-slate-50 p-4 text-sm leading-6 text-slate-600 dark:border-white/10 dark:bg-slate-950/50 dark:text-slate-400">
-          <p data-i18n="settingsHint">默认使用 25 分钟专注和 5 分钟休息。开始后仍可暂停；修改时长会重置当前倒计时。</p>
-        </div>
-
-        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="startPauseBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="startAction">开始</button>
-          <button id="resetBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="resetAction">重置</button>
-          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">恢复默认</button>
-        </div>
-
-        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" aria-live="polite">准备开始 25 分钟专注。</p>
+        <p id="statusMessage" class="mt-4 min-h-11 rounded-xl border border-cyan-200 bg-cyan-50 px-4 py-3 text-sm leading-6 text-cyan-800 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200" aria-live="polite">就绪。所有处理均在当前浏览器本地运行。</p>
       </section>
-
-      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+      <section class="space-y-4 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">计时</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">倒计时</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">输出</h2>
+          <span class="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">Offline</span>
         </div>
-
-        <div class="rounded-3xl border border-gray-200 bg-slate-50 p-5 text-center dark:border-white/10 dark:bg-slate-950/50 sm:p-8">
-          <p id="modeText" class="text-sm font-bold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300">专注</p>
-          <div id="timerDisplay" class="mt-5 break-words text-6xl font-black tracking-tighter text-slate-950 dark:text-white tabular-nums sm:text-7xl lg:text-8xl" aria-live="polite">25:00</div>
-          <p id="nextText" class="mt-5 text-sm leading-6 text-slate-500 dark:text-slate-400">下一段：5 分钟休息。</p>
+        <div class="rounded-2xl border border-gray-200 bg-slate-50 p-5 text-center dark:border-white/10 dark:bg-slate-950/50">
+          <p id="modeText" class="text-sm font-bold uppercase tracking-[0.18em] text-cyan-700 dark:text-cyan-300">专注</p>
+          <div id="timerDisplay" class="mt-4 text-6xl font-black tracking-tight text-slate-950 dark:text-white tabular-nums sm:text-7xl">25:00</div>
+          <div class="mt-5 h-3 overflow-hidden rounded-full bg-slate-200 dark:bg-white/10"><div id="progressBar" class="h-full w-0 rounded-full bg-cyan-400 transition-all"></div></div>
         </div>
-
-        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="skipBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="skipAction">切换阶段</button>
-          <button id="testSoundBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="testSoundAction">试听提示音</button>
+        <div class="grid gap-3 sm:grid-cols-2">
+          <div class="tool-metric"><span>当前轮次</span><strong id="cycleText">1</strong></div>
+          <div class="tool-metric"><span>日志预览</span><strong>CSV</strong></div>
         </div>
-
-        <div class="mt-4 grid gap-3 sm:grid-cols-2">
-          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
-            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="sessionLabel">当前阶段</p>
-            <p id="sessionValue" class="mt-2 text-sm font-bold text-slate-800 dark:text-slate-100">专注</p>
-          </div>
-          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
-            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="titleLabel">标题栏</p>
-            <p id="titleValue" class="mt-2 text-sm font-bold text-slate-800 dark:text-slate-100">同步显示倒计时</p>
-          </div>
-        </div>
+        <pre id="logList" class="min-h-32 overflow-auto rounded-2xl border border-gray-200 bg-slate-950 p-4 text-xs leading-5 text-slate-100 dark:border-white/10"></pre>
       </section>
     </section>
-
-    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">番茄计时器是 Micro Tools Matrix 提供的免费浏览器本地处理工具，适合写代码、整理文档、学习复盘或处理细碎任务。页面默认采用 25 分钟工作与 5 分钟休息的番茄工作法节奏，你也可以按自己的节奏调整分钟数。所有计时状态只保存在当前浏览器内存中，无需上传账号、任务内容或任何个人数据。倒计时会同步显示在浏览器标题栏，便于切换标签页后继续查看剩余时间；阶段结束时提示音同样在本地生成，不依赖远程服务。这个 free online developer tool 保持轻量、无广告、快速打开，适合作为日常专注、结对编程和远程会议前的简洁时间管理页面。</article>
   </main>
 
-  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
-
-  <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md">
-    <div class="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
-      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor">×</button>
-      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">赞赏支持</h2>
-      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">保持工具免费、快速且无广告。</p>
-      <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="buyCoffee">Buy Me a Coffee</a>
-    </div>
-  </div>
-
-  <script>
-    const I18N = {
-      zh: {
-        documentTitle: "番茄计时器 - Micro Tools Matrix 浏览器本地工具",
-        metaDescription: "Micro Tools Matrix 番茄工作法网页计时器，25 分钟工作与 5 分钟休息倒计时，浏览器标题栏显示时间，结束时本地播放提示音，无需上传。",
-        metaKeywords: "番茄计时器, 番茄工作法, 网页倒计时, 本地运行, 无需上传, Micro Tools Matrix",
-        toolName: "番茄计时器",
-        sponsor: "赞赏",
-        eyebrow: "浏览器本地处理",
-        h1: "番茄计时器",
-        intro: "在 Micro Tools Matrix 中使用极简番茄工作法网页计时器，工作与休息倒计时全部在浏览器本地运行，标题栏同步显示剩余时间，结束时播放本地提示音。",
-        localBadge: "本地运行",
-        share: "分享",
-        shareAria: "打开分享菜单",
-        shareMenuAria: "分享选项",
-        shareToolOnly: "仅分享工具",
-        shareToolOnlyHint: "分享不带参数的工具页面链接",
-        shareWithData: "分享工具及当前结果",
-        shareWithDataHint: "将当前输入或结果写入链接参数",
-        shareCopied: "分享链接已复制到剪贴板！",
-        shareCopyPrompt: "复制此分享链接：",
-        shareCopyFailed: "复制失败，请手动复制地址栏链接。",
-        shareDataTooLarge: "当前数据过大，无法生成分享链接，请直接复制文本结果。",
-        inputTitle: "设置",
-        inputBadge: "设置",
-        outputTitle: "计时",
-        outputBadge: "倒计时",
-        workLabel: "工作时长（分钟）",
-        breakLabel: "休息时长（分钟）",
-        workAria: "工作时长分钟数",
-        breakAria: "休息时长分钟数",
-        settingsHint: "默认使用 25 分钟专注和 5 分钟休息。开始后仍可暂停；修改时长会重置当前倒计时。",
-        startAction: "开始",
-        pauseAction: "暂停",
-        resumeAction: "继续",
-        resetAction: "重置",
-        sampleAction: "恢复默认",
-        skipAction: "切换阶段",
-        testSoundAction: "试听提示音",
-        sessionLabel: "当前阶段",
-        titleLabel: "标题栏",
-        titleValue: "同步显示倒计时",
-        workMode: "专注",
-        breakMode: "休息",
-        nextWork: "下一段：{minutes} 分钟专注。",
-        nextBreak: "下一段：{minutes} 分钟休息。",
-        readyWork: "准备开始 {minutes} 分钟专注。",
-        readyBreak: "准备开始 {minutes} 分钟休息。",
-        runningWork: "专注计时中，标题栏正在同步显示剩余时间。",
-        runningBreak: "休息计时中，标题栏正在同步显示剩余时间。",
-        paused: "已暂停。再次点击继续当前阶段。",
-        resetDone: "已重置当前阶段。",
-        defaultDone: "已恢复默认 25 分钟专注和 5 分钟休息。",
-        switchedToWork: "已切换到专注阶段。",
-        switchedToBreak: "已切换到休息阶段。",
-        finishedWork: "专注阶段完成。提示音已播放，可以开始休息。",
-        finishedBreak: "休息阶段完成。提示音已播放，可以开始下一轮专注。",
-        soundTested: "已播放本地提示音。",
-        invalidMinutes: "请输入 1 到 180 之间的整数分钟数。",
-        titleRunning: "{time} · {mode} · 番茄计时器",
-        titlePaused: "{time} · 已暂停 · 番茄计时器",
-        titleReady: "番茄计时器 - Micro Tools Matrix 浏览器本地工具",
-        themeLight: "亮色",
-        themeDark: "深色",
-        themeSystem: "系统",
-        closeSponsor: "关闭赞赏窗口",
-        sponsorTitle: "赞赏支持",
-        sponsorSubtitle: "保持工具免费、快速且无广告。",
-        buyCoffee: "Buy Me a Coffee",
-        seoArticle: "番茄计时器是 Micro Tools Matrix 提供的免费浏览器本地处理工具，适合写代码、整理文档、学习复盘或处理细碎任务。页面默认采用 25 分钟工作与 5 分钟休息的番茄工作法节奏，你也可以按自己的节奏调整分钟数。所有计时状态只保存在当前浏览器内存中，无需上传账号、任务内容或任何个人数据。倒计时会同步显示在浏览器标题栏，便于切换标签页后继续查看剩余时间；阶段结束时提示音同样在本地生成，不依赖远程服务。这个 free online developer tool 保持轻量、无广告、快速打开，适合作为日常专注、结对编程和远程会议前的简洁时间管理页面。",
-        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
-      },
-      en: {
-        documentTitle: "Pomodoro Timer - Micro Tools Matrix Browser-Local Tool",
-        metaDescription: "A Micro Tools Matrix Pomodoro timer with 25-minute work and 5-minute break countdowns, browser title updates, and a local end sound. No upload required.",
-        metaKeywords: "Pomodoro timer, Pomodoro technique, web countdown timer, browser-local processing, no upload, Micro Tools Matrix",
-        toolName: "Pomodoro Timer",
-        sponsor: "Sponsor",
-        eyebrow: "Browser-local processing",
-        h1: "Pomodoro Timer",
-        intro: "Use a minimal Pomodoro timer in Micro Tools Matrix. Work and break countdowns run locally in your browser, the remaining time appears in the tab title, and a local sound plays when a session ends.",
-        localBadge: "Local",
-        share: "Share",
-        shareAria: "Open share menu",
-        shareMenuAria: "Share options",
-        shareToolOnly: "Share Tool Only",
-        shareToolOnlyHint: "Share the clean tool page link",
-        shareWithData: "Share with Data",
-        shareWithDataHint: "Include current input or result in the link",
-        shareCopied: "Share link copied to clipboard!",
-        shareCopyPrompt: "Copy this share link:",
-        shareCopyFailed: "Copy failed. Please copy the address bar link manually.",
-        shareDataTooLarge: "The current data is too large to create a share link. Please copy the text result directly.",
-        inputTitle: "Settings",
-        inputBadge: "Settings",
-        outputTitle: "Timer",
-        outputBadge: "Countdown",
-        workLabel: "Work length (minutes)",
-        breakLabel: "Break length (minutes)",
-        workAria: "Work length in minutes",
-        breakAria: "Break length in minutes",
-        settingsHint: "The default rhythm is 25 minutes of focus and 5 minutes of rest. You can pause after starting; changing a duration resets the current countdown.",
-        startAction: "Start",
-        pauseAction: "Pause",
-        resumeAction: "Resume",
-        resetAction: "Reset",
-        sampleAction: "Restore defaults",
-        skipAction: "Switch session",
-        testSoundAction: "Test sound",
-        sessionLabel: "Current session",
-        titleLabel: "Tab title",
-        titleValue: "Shows the countdown",
-        workMode: "Focus",
-        breakMode: "Break",
-        nextWork: "Next: {minutes} minutes of focus.",
-        nextBreak: "Next: {minutes} minutes of rest.",
-        readyWork: "Ready for {minutes} minutes of focus.",
-        readyBreak: "Ready for {minutes} minutes of rest.",
-        runningWork: "Focus timer is running, and the tab title is showing the remaining time.",
-        runningBreak: "Break timer is running, and the tab title is showing the remaining time.",
-        paused: "Paused. Click again to continue the current session.",
-        resetDone: "The current session has been reset.",
-        defaultDone: "Defaults restored to 25 minutes of focus and 5 minutes of rest.",
-        switchedToWork: "Switched to the focus session.",
-        switchedToBreak: "Switched to the break session.",
-        finishedWork: "Focus session complete. The sound has played; you can start your break.",
-        finishedBreak: "Break session complete. The sound has played; you can begin the next focus round.",
-        soundTested: "Local notification sound played.",
-        invalidMinutes: "Enter whole minutes between 1 and 180.",
-        titleRunning: "{time} · {mode} · Pomodoro Timer",
-        titlePaused: "{time} · Paused · Pomodoro Timer",
-        titleReady: "Pomodoro Timer - Micro Tools Matrix Browser-Local Tool",
-        themeLight: "Light",
-        themeDark: "Dark",
-        themeSystem: "System",
-        closeSponsor: "Close sponsor dialog",
-        sponsorTitle: "Sponsor Support",
-        sponsorSubtitle: "Keep the tools free, fast, and ad-free.",
-        buyCoffee: "Buy Me a Coffee",
-        seoArticle: "The Pomodoro Timer from Micro Tools Matrix is a free online developer tool for structured focus sessions, writing sprints, documentation work, study blocks, and lightweight task batching. It follows the familiar 25-minute work and 5-minute break rhythm by default, while still letting you adjust the minutes to match your own routine. Everything uses browser-local processing: the countdown state stays in memory on this page, no task names are requested, and no personal data is uploaded. The remaining time is mirrored in the browser tab title, so you can switch to an editor, design file, or meeting note and still glance at the active session. When a session ends, the page generates a short local notification sound without relying on a remote service. This Micro Tools Matrix timer is intentionally minimal, fast to open, privacy-friendly, and useful for developers, makers, students, and remote teams who want a clean web countdown without accounts, ads, or unnecessary setup.",
-        footer: "Micro Tools Matrix - Browser-local processing with no upload required."
-      }
-    };
-
-    let currentLanguage = "zh";
-    let mode = "work";
-    let isRunning = false;
-    let hasStarted = false;
-    let timerId = null;
-    let remainingSeconds = 25 * 60;
-    let audioContext = null;
-    let lastStatusKey = "readyWork";
-
-    function getInitialLanguage() {
-      if (location.pathname.includes("/en/")) return "en";
-      try {
-        const saved = localStorage.getItem("microToolsLanguage");
-        return saved === "en" || saved === "zh" ? saved : "zh";
-      } catch (error) {
-        return "zh";
-      }
-    }
-
-    function setLanguage(lang) {
-      const safeLang = lang === "en" ? "en" : "zh";
-      try {
-        localStorage.setItem("microToolsLanguage", safeLang);
-      } catch (error) {}
-      applyLanguage(safeLang);
-    }
-
-    function applyLanguage(lang) {
-      currentLanguage = lang === "en" ? "en" : "zh";
-      const dict = I18N[currentLanguage];
-      document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
-
-      document.querySelectorAll("[data-i18n]").forEach((node) => {
-        const key = node.getAttribute("data-i18n");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
-          node.textContent = dict[key];
-        }
-      });
-
-      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
-        const key = node.getAttribute("data-i18n-placeholder");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
-          node.setAttribute("placeholder", dict[key]);
-        }
-      });
-
-      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
-        const key = node.getAttribute("data-i18n-title");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
-          node.setAttribute("title", dict[key]);
-        }
-      });
-
-      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
-        const key = node.getAttribute("data-i18n-aria-label");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
-          node.setAttribute("aria-label", dict[key]);
-        }
-      });
-
-      document.title = dict.documentTitle;
-      const description = document.querySelector('meta[name="description"]');
-      const keywords = document.querySelector('meta[name="keywords"]');
-      if (description) description.setAttribute("content", dict.metaDescription);
-      if (keywords) keywords.setAttribute("content", dict.metaKeywords);
-
-      const zhBtn = document.getElementById("langZhBtn");
-      const enBtn = document.getElementById("langEnBtn");
-      if (zhBtn && enBtn) {
-        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
-        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95";
-        if (currentLanguage === "zh") {
-          zhBtn.classList.add("bg-cyan-400", "text-slate-950");
-          enBtn.classList.add("text-slate-600", "dark:text-slate-400");
-        } else {
-          enBtn.classList.add("bg-cyan-400", "text-slate-950");
-          zhBtn.classList.add("text-slate-600", "dark:text-slate-400");
-        }
-      }
-
-      updateStaticTimerText();
-      updateControls();
-      updateTimerDisplay();
-      updateStatus(lastStatusKey);
-
-      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
-    }
-
-    function t(key, params) {
-      const dict = I18N[currentLanguage] || I18N.zh;
-      let text = dict[key] || I18N.zh[key] || "";
-      if (params) {
-        Object.keys(params).forEach((name) => {
-          text = text.replaceAll("{" + name + "}", String(params[name]));
-        });
-      }
-      return text;
-    }
-
-    function getWorkMinutes() {
-      return Number(document.getElementById("workMinutesInput")?.value || 25);
-    }
-
-    function getBreakMinutes() {
-      return Number(document.getElementById("breakMinutesInput")?.value || 5);
-    }
-
-    function validateSettings() {
-      const work = getWorkMinutes();
-      const rest = getBreakMinutes();
-      const valid = Number.isInteger(work) && Number.isInteger(rest) && work >= 1 && work <= 180 && rest >= 1 && rest <= 180;
-      if (!valid) {
-        updateStatus("invalidMinutes");
-        return false;
-      }
-      return true;
-    }
-
-    function secondsForMode(targetMode) {
-      return (targetMode === "work" ? getWorkMinutes() : getBreakMinutes()) * 60;
-    }
-
-    function formatTime(seconds) {
-      const safeSeconds = Math.max(0, Math.floor(seconds));
-      const minutes = Math.floor(safeSeconds / 60);
-      const secs = safeSeconds % 60;
-      return String(minutes).padStart(2, "0") + ":" + String(secs).padStart(2, "0");
-    }
-
-    function updateStatus(key) {
-      lastStatusKey = key || lastStatusKey;
-      const status = document.getElementById("statusText");
-      if (!status) return;
-      const minutes = mode === "work" ? getWorkMinutes() : getBreakMinutes();
-      status.textContent = t(lastStatusKey, { minutes });
-    }
-
-    function updateStaticTimerText() {
-      const modeText = document.getElementById("modeText");
-      const sessionValue = document.getElementById("sessionValue");
-      const nextText = document.getElementById("nextText");
-      const titleValue = document.getElementById("titleValue");
-
-      const modeLabel = mode === "work" ? t("workMode") : t("breakMode");
-      if (modeText) modeText.textContent = modeLabel;
-      if (sessionValue) sessionValue.textContent = modeLabel;
-      if (titleValue) titleValue.textContent = t("titleValue");
-      if (nextText) {
-        if (mode === "work") {
-          nextText.textContent = t("nextBreak", { minutes: getBreakMinutes() });
-        } else {
-          nextText.textContent = t("nextWork", { minutes: getWorkMinutes() });
-        }
-      }
-    }
-
-    function updateControls() {
-      const startPauseBtn = document.getElementById("startPauseBtn");
-      if (!startPauseBtn) return;
-      if (isRunning) {
-        startPauseBtn.textContent = t("pauseAction");
-      } else if (hasStarted) {
-        startPauseBtn.textContent = t("resumeAction");
-      } else {
-        startPauseBtn.textContent = t("startAction");
-      }
-    }
-
-    function updateTimerDisplay() {
-      const display = document.getElementById("timerDisplay");
-      const time = formatTime(remainingSeconds);
-      if (display) display.textContent = time;
-
-      if (isRunning) {
-        document.title = t("titleRunning", { time, mode: mode === "work" ? t("workMode") : t("breakMode") });
-      } else if (hasStarted) {
-        document.title = t("titlePaused", { time });
-      } else {
-        document.title = t("titleReady");
-      }
-    }
-
-    function resetCurrentSession(statusKey) {
-      stopInterval();
-      hasStarted = false;
-      remainingSeconds = secondsForMode(mode);
-      updateStaticTimerText();
-      updateControls();
-      updateTimerDisplay();
-      updateStatus(statusKey || (mode === "work" ? "readyWork" : "readyBreak"));
-    }
-
-    function stopInterval() {
-      if (timerId) {
-        window.clearInterval(timerId);
-        timerId = null;
-      }
-      isRunning = false;
-    }
-
-    function tick() {
-      remainingSeconds -= 1;
-      if (remainingSeconds <= 0) {
-        remainingSeconds = 0;
-        updateTimerDisplay();
-        completeSession();
-        return;
-      }
-      updateTimerDisplay();
-    }
-
-    function startTimer() {
-      if (!validateSettings()) return;
-      if (isRunning) {
-        stopInterval();
-        hasStarted = true;
-        updateControls();
-        updateTimerDisplay();
-        updateStatus("paused");
-        return;
-      }
-      isRunning = true;
-      hasStarted = true;
-      updateControls();
-      updateStatus(mode === "work" ? "runningWork" : "runningBreak");
-      updateTimerDisplay();
-      timerId = window.setInterval(tick, 1000);
-    }
-
-    function completeSession() {
-      stopInterval();
-      playBeep();
-      const completedMode = mode;
-      mode = mode === "work" ? "break" : "work";
-      hasStarted = false;
-      remainingSeconds = secondsForMode(mode);
-      updateStaticTimerText();
-      updateControls();
-      updateTimerDisplay();
-      updateStatus(completedMode === "work" ? "finishedWork" : "finishedBreak");
-    }
-
-    function switchSession() {
-      if (!validateSettings()) return;
-      mode = mode === "work" ? "break" : "work";
-      resetCurrentSession(mode === "work" ? "switchedToWork" : "switchedToBreak");
-    }
-
-    function restoreDefaults() {
-      const workInput = document.getElementById("workMinutesInput");
-      const breakInput = document.getElementById("breakMinutesInput");
-      if (workInput) workInput.value = "25";
-      if (breakInput) breakInput.value = "5";
-      mode = "work";
-      resetCurrentSession("defaultDone");
-    }
-
-    function handleDurationChange() {
-      if (!validateSettings()) return;
-      resetCurrentSession(mode === "work" ? "readyWork" : "readyBreak");
-    }
-
-    function playBeep() {
-      try {
-        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-        if (!AudioContextClass) return;
-        if (!audioContext) audioContext = new AudioContextClass();
-        if (audioContext.state === "suspended") audioContext.resume();
-
-        const now = audioContext.currentTime;
-        const gain = audioContext.createGain();
-        gain.gain.setValueAtTime(0.0001, now);
-        gain.gain.exponentialRampToValueAtTime(0.18, now + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.85);
-        gain.connect(audioContext.destination);
-
-        [0, 0.28].forEach((offset) => {
-          const oscillator = audioContext.createOscillator();
-          oscillator.type = "sine";
-          oscillator.frequency.setValueAtTime(880, now + offset);
-          oscillator.connect(gain);
-          oscillator.start(now + offset);
-          oscillator.stop(now + offset + 0.18);
-        });
-      } catch (error) {}
-    }
-
-    function openSponsorModal(event) {
-      if (event && typeof event.preventDefault === "function") event.preventDefault();
-      const modal = document.getElementById("sponsorModal");
-      if (!modal) return;
-      modal.classList.remove("hidden");
-      modal.classList.add("flex");
-    }
-
-    function closeSponsorModal() {
-      const modal = document.getElementById("sponsorModal");
-      if (!modal) return;
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
-      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
-      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
-      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
-      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
-        if (event.target?.id === "sponsorModal") closeSponsorModal();
-      });
-
-      document.getElementById("startPauseBtn")?.addEventListener("click", startTimer);
-      document.getElementById("resetBtn")?.addEventListener("click", () => resetCurrentSession("resetDone"));
-      document.getElementById("sampleBtn")?.addEventListener("click", restoreDefaults);
-      document.getElementById("skipBtn")?.addEventListener("click", switchSession);
-      document.getElementById("testSoundBtn")?.addEventListener("click", () => {
-        playBeep();
-        updateStatus("soundTested");
-      });
-      document.getElementById("workMinutesInput")?.addEventListener("change", handleDurationChange);
-      document.getElementById("breakMinutesInput")?.addEventListener("change", handleDurationChange);
-
-      applyLanguage(getInitialLanguage());
-    });
-  </script>
-  <script>
-    function getShareMessage(key) {
-      const lang = typeof currentLanguage === "string" ? currentLanguage : (document.documentElement.lang === "en" ? "en" : "zh");
-      const fallback = {
-        zh: {
-          shareDataTooLarge: "当前数据过大，无法生成分享链接，请直接复制文本结果。"
-        },
-        en: {
-          shareDataTooLarge: "The current data is too large to create a share link. Please copy the text result directly."
-        }
-      };
-      const dict = typeof I18N === "object" && I18N[lang] ? I18N[lang] : fallback.zh;
-      return dict[key] || fallback[lang]?.[key] || fallback.zh[key] || "";
-    }
-
-    function closeShareMenu() {
-      const menu = document.getElementById("shareToolMenu");
-      const trigger = document.getElementById("shareToolBtn");
-      if (!menu || !trigger) return;
-      menu.classList.add("hidden");
-      trigger.setAttribute("aria-expanded", "false");
-    }
-
-    function openShareMenu() {
-      const menu = document.getElementById("shareToolMenu");
-      const trigger = document.getElementById("shareToolBtn");
-      if (!menu || !trigger) return;
-      menu.classList.remove("hidden");
-      trigger.setAttribute("aria-expanded", "true");
-    }
-
-    function toggleShareMenu(event) {
-      if (event) event.stopPropagation();
-      const menu = document.getElementById("shareToolMenu");
-      if (!menu) return;
-      if (menu.classList.contains("hidden")) {
-        openShareMenu();
-      } else {
-        closeShareMenu();
-      }
-    }
-
-    function closeShareMenuOnOutsideClick(event) {
-      const root = document.getElementById("shareToolMenuRoot");
-      if (root && !root.contains(event.target)) closeShareMenu();
-    }
-
-    function getCleanShareUrl() {
-      return window.location.href.split("?")[0];
-    }
-
-    function encodeShareText(data) {
-      return encodeURIComponent(btoa(unescape(encodeURIComponent(data))));
-    }
-
-    function decodeShareText(encodedData) {
-      return decodeURIComponent(escape(atob(decodeURIComponent(encodedData))));
-    }
-
-    function getShareableControls() {
-      return Array.from(document.querySelectorAll("main textarea[id], main input[id], main select[id], main [contenteditable='true'][id]")).filter((control) => {
-        const type = (control.getAttribute("type") || control.tagName).toLowerCase();
-        return !control.disabled && !["button", "submit", "reset", "file", "hidden", "image", "password"].includes(type);
-      });
-    }
-
-    function serializeShareControl(control) {
-      const tag = control.tagName.toLowerCase();
-      const type = (control.getAttribute("type") || tag).toLowerCase();
-      const field = { id: control.id, type };
-      if (type === "checkbox" || type === "radio") {
-        field.checked = Boolean(control.checked);
-      } else if (control.isContentEditable) {
-        field.value = control.textContent || "";
-      } else {
-        field.value = control.value || "";
-      }
-      return field;
-    }
-
-    function collectShareState() {
-      const fields = getShareableControls().map(serializeShareControl).filter((field) => {
-        if (field.type === "checkbox" || field.type === "radio") return field.checked;
-        return String(field.value || "").length > 0;
-      });
-      return { version: 1, fields };
-    }
-
-    function shareUrl(url) {
-      const shareData = {
-        title: document.title,
-        url
-      };
-      if (navigator.share) {
-        navigator.share(shareData)
-          .then(() => console.log("分享成功"))
-          .catch((error) => console.log("分享失败", error));
-        return;
-      }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url)
-          .then(() => {
-            alert(getShareMessage("shareCopied"));
-          })
-          .catch((err) => {
-            console.error("复制失败: ", err);
-            window.prompt(getShareMessage("shareCopyPrompt"), url);
-          });
-        return;
-      }
-      window.prompt(getShareMessage("shareCopyPrompt"), url);
-    }
-
-    function shareToolOnly() {
-      closeShareMenu();
-      const cleanUrl = window.location.href.split("?")[0];
-      shareUrl(cleanUrl);
-    }
-
-    function shareWithData() {
-      closeShareMenu();
-      const state = collectShareState();
-      if (!state.fields.length) {
-        shareUrl(getCleanShareUrl());
-        return;
-      }
-      const rawData = JSON.stringify(state);
-      if (rawData.length > 2000) {
-        alert(getShareMessage("shareDataTooLarge"));
-        return;
-      }
-      const encodedData = encodeShareText(rawData);
-      const stateUrl = window.location.href.split("?")[0] + "?d=" + encodedData;
-      shareUrl(stateUrl);
-    }
-
-    function applySharedField(field) {
-      if (!field || !field.id) return;
-      const control = document.getElementById(field.id);
-      if (!control) return;
-      const type = (control.getAttribute("type") || control.tagName).toLowerCase();
-      if (type === "checkbox" || type === "radio") {
-        control.checked = Boolean(field.checked);
-      } else if (control.isContentEditable) {
-        control.textContent = field.value || "";
-      } else if (Object.prototype.hasOwnProperty.call(field, "value")) {
-        control.value = field.value || "";
-      }
-      control.dispatchEvent(new Event("input", { bubbles: true }));
-      control.dispatchEvent(new Event("change", { bubbles: true }));
-    }
-
-    function restoreShareStateFromUrl() {
-      const encodedData = new URLSearchParams(window.location.search).get("d");
-      if (!encodedData) return;
-      try {
-        const state = JSON.parse(decodeShareText(encodedData));
-        if (!state || !Array.isArray(state.fields)) return;
-        state.fields.forEach(applySharedField);
-      } catch (error) {
-        console.warn("Failed to restore shared state", error);
-      }
-    }
-
-    function initializeShareMenu() {
-      document.addEventListener("click", closeShareMenuOnOutsideClick);
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") closeShareMenu();
-      });
-      restoreShareStateFromUrl();
-    }
-
-    function shareTool() {
-      toggleShareMenu();
-    }
-
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", initializeShareMenu);
-    } else {
-      initializeShareMenu();
-    }
-  </script>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+  <script src="./assets/tool-upgrades.js"></script>
   <script src="./sponsor.js" defer></script>
   <script src="./theme-toggle.js" defer></script>
 </body>
