@@ -6,6 +6,14 @@ Use it here: [https://mymicrotools.xyz](https://mymicrotools.xyz)
 
 ## Update Notices
 
+### 2026-05-04 - Homepage Sharing And Social Preview
+
+Added a cleaner sharing experience for the homepage:
+
+- Added a homepage share action for quickly sending the site to friends or teammates.
+- Added a dedicated social preview image for shared links.
+- Kept the homepage layout clean by using the preview image for social cards instead of visible page content.
+
 ### 2026-05-04 - Markdown / Excel / CSV Converter Upgrade
 
 Upgraded the Markdown table tool into a browser-local bidirectional workstation:

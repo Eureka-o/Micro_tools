@@ -107,6 +107,14 @@
         <div class="max-w-4xl lg:flex-1">
           <h1 class="break-words text-3xl font-black leading-tight sm:text-5xl lg:text-6xl xl:text-7xl"><span class="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Micro Tools Matrix</span> 开发者生产力与冷门工具箱</h1>
           <p class="mt-5 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300 md:text-lg md:leading-8">集合常用格式转换、编码解码、文本处理、前端样式生成、效率计算与可视化工具，打开即用，无需安装。</p>
+          <div class="mt-6 flex flex-wrap items-center gap-3">
+            <button id="shareHomeBtn" type="button" class="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white/90 px-4 text-sm font-semibold text-slate-900 shadow-sm shadow-black/10 transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.06] dark:text-slate-100 dark:shadow-black/30" aria-label="分享网站">
+              <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M8.5 12.5L15.5 16.5M15.5 7.5L8.5 11.5M18 8.5C19.3807 8.5 20.5 7.38071 20.5 6C20.5 4.61929 19.3807 3.5 18 3.5C16.6193 3.5 15.5 4.61929 15.5 6C15.5 7.38071 16.6193 8.5 18 8.5ZM6 14.5C7.38071 14.5 8.5 13.3807 8.5 12C8.5 10.6193 7.38071 9.5 6 9.5C4.61929 9.5 3.5 10.6193 3.5 12C3.5 13.3807 4.61929 14.5 6 14.5ZM18 20.5C19.3807 20.5 20.5 19.3807 20.5 18C20.5 16.6193 19.3807 15.5 18 15.5C16.6193 15.5 15.5 16.6193 15.5 18C15.5 19.3807 16.6193 20.5 18 20.5Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>分享网站</span>
+            </button>
+          </div>
         </div>
         <div class="w-full rounded-3xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.035] p-2.5 shadow-2xl shadow-black/30 backdrop-blur-md lg:w-[26rem]">
           <div class="grid grid-cols-3 gap-2.5 text-center sm:gap-3">
@@ -398,6 +406,50 @@
       });
 
       window.MicroToolsSponsor = { openModal, closeModal };
+    })();
+  </script>
+  <script>
+    (() => {
+      const shareButton = document.getElementById('shareHomeBtn');
+      if (!shareButton) return;
+
+      function getCleanShareUrl() {
+        return document.querySelector('link[rel="canonical"]')?.href || window.location.href.split('?')[0];
+      }
+
+      async function copyShareUrl(url) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(url);
+          alert('网站链接已复制到剪贴板！');
+          return;
+        }
+        window.prompt('复制此网站链接：', url);
+      }
+
+      async function shareHomePage() {
+        const url = getCleanShareUrl();
+        const shareData = {
+          title: document.title,
+          url
+        };
+
+        if (navigator.share) {
+          try {
+            await navigator.share(shareData);
+            return;
+          } catch (error) {
+            if (error && error.name === 'AbortError') return;
+          }
+        }
+
+        try {
+          await copyShareUrl(url);
+        } catch (error) {
+          window.prompt('复制此网站链接：', url);
+        }
+      }
+
+      shareButton.addEventListener('click', shareHomePage);
     })();
   </script>
   <!-- pwa-register:start -->
