@@ -11,29 +11,27 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Markdown 表格生成器 - Micro Tools Matrix</title>
-  <meta name="description" content="Micro Tools Matrix 的 Markdown 表格生成器在浏览器本地处理内容，可视化编辑行列并实时生成标准 Markdown 表格代码，无需上传。">
-  <meta name="keywords" content="Markdown 表格生成器, Markdown table generator, 浏览器本地处理, 无需上传, Micro Tools Matrix, developer tool">
+  <title>Markdown / Excel / CSV Converter - Micro Tools Matrix</title>
+  <meta name="description" content="A browser-local Markdown, Excel, and CSV conversion workstation for extracting Markdown tables, exporting CSV/XLSX, and turning local CSV/XLSX files into valid Markdown tables.">
+  <meta name="keywords" content="Markdown Excel converter, Markdown CSV converter, SheetJS, CSV to Markdown, XLSX to Markdown, browser-local tool">
   <link rel="stylesheet" href="../style.css">
   <script src="./theme-init.js"></script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Markdown Table Generator",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Windows, macOS, Android, iOS",
-      "url": "https://mymicrotools.xyz/markdown-table-generator.html",
-      "description": "A browser-local Markdown table generator for visually editing rows and columns and producing standard Markdown table code.",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "description": "Free"
-      }
+  <script type="application/ld+json">{
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Markdown / Excel / CSV Converter",
+    "applicationCategory": "DeveloperApplication",
+    "operatingSystem": "Windows, macOS, Android, iOS",
+    "url": "https://mymicrotools.xyz/en/markdown-table-generator.html",
+    "description": "A browser-local Markdown, Excel, and CSV conversion workstation for extracting Markdown tables, exporting CSV/XLSX, and turning local CSV/XLSX files into valid Markdown tables.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD",
+      "availability": "https://schema.org/InStock",
+      "description": "Free"
     }
-  </script>
+  }</script>
   <style>
     :root { color-scheme: light dark; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
@@ -49,19 +47,19 @@
         <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
         <span class="min-w-0">
           <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
-          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">Markdown 表格生成器</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">Markdown / Excel / CSV Converter</span>
         </span>
       </a>
       <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
-        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
-          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline"></span>
+        <button id="themeToggleBtn" type="button" data-theme-toggle class="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-3 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="themeToggleAria" aria-label="Toggle theme">
+          <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">System</span>
         </button>
         <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
-          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">¥</span><span data-i18n="sponsor">Sponsor</span>
         </button>
-        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
-          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
-          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
+        <div role="group" data-i18n-aria-label="languageGroupAria" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="langZhAria" aria-label="Switch to Chinese">中</button>
+          <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="langEnAria" aria-label="Switch to English">EN</button>
         </div>
       </div>
     </nav>
@@ -71,9 +69,9 @@
     <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
       <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div class="min-w-0">
-          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
-          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">Markdown 表格生成器</h1>
-          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中可视化编辑 Markdown 表格，添加行列、填写单元格后实时生成标准代码；所有内容仅在浏览器本地处理，无需上传。</p>
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">Browser-local SheetJS workstation</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">Markdown / Excel / CSV Converter</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">Convert Markdown tables to CSV/XLSX, or drag local CSV/XLSX files into the page and generate clean Markdown tables. File parsing happens in browser memory only.</p>
         </div>
         <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
           <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
@@ -81,7 +79,7 @@
             <span data-i18n="localBadge">本地运行</span>
           </div>
           <div id="shareToolMenuRoot" class="relative shrink-0">
-            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
+            <button id="shareToolBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
               <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="18" cy="5" r="3"></circle>
                 <circle cx="6" cy="12" r="3"></circle>
@@ -95,7 +93,7 @@
               </svg>
             </button>
             <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="分享选项">
-              <button type="button" role="menuitem" onclick="shareToolOnly()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
+              <button id="shareToolOnlyBtn" type="button" role="menuitem" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
                 <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200">
                   <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg>
                 </span>
@@ -104,7 +102,7 @@
                   <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span>
                 </span>
               </button>
-              <button type="button" role="menuitem" onclick="shareWithData()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
+              <button id="shareWithDataBtn" type="button" role="menuitem" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
                 <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-400/10 dark:text-cyan-300">
                   <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
                 </span>
@@ -119,106 +117,101 @@
       </div>
     </section>
 
-    <section class="grid gap-5 lg:grid-cols-2">
-      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+    <section class="mb-5 flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white p-3 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:flex-row sm:items-center sm:justify-between">
+      <div role="tablist" data-i18n-aria-label="modeTabsAria" aria-label="Conversion mode" class="grid w-full grid-cols-2 gap-2 sm:w-auto">
+        <button id="markdownTab" type="button" role="tab" aria-controls="markdownPanel" aria-selected="true" class="min-h-11 rounded-full px-4 text-sm font-bold transition active:scale-95" data-mode-tab="markdown" data-i18n="markdownTab">Markdown to table</button>
+        <button id="fileTab" type="button" role="tab" aria-controls="filePanel" aria-selected="false" class="min-h-11 rounded-full px-4 text-sm font-bold transition active:scale-95" data-mode-tab="file" data-i18n="fileTab">File to Markdown</button>
+      </div>
+      <p class="text-xs leading-6 text-slate-500 dark:text-slate-400" data-i18n="privacyLine">Files are read with FileReader in browser memory. Nothing is uploaded.</p>
+    </section>
+
+    <section id="markdownPanel" role="tabpanel" aria-labelledby="markdownTab" class="grid min-w-0 gap-5 lg:grid-cols-2">
+      <section class="min-w-0 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">可视化表格</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="markdownInputTitle">Markdown source</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500">MD</span>
         </div>
-
-        <div class="grid gap-3 sm:grid-cols-2">
-          <label class="block">
-            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="columnCountLabel">列数</span>
-            <input id="columnCount" type="number" min="1" max="12" inputmode="numeric" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" value="3" data-i18n-aria-label="columnCountLabel">
-          </label>
-          <label class="block">
-            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="rowCountLabel">数据行数</span>
-            <input id="rowCount" type="number" min="1" max="30" inputmode="numeric" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" value="3" data-i18n-aria-label="rowCountLabel">
-          </label>
-        </div>
-
+        <textarea id="markdownInput" class="min-h-[26rem] w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="markdownPlaceholder" placeholder="Paste Markdown table here"></textarea>
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="addColumnBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="addColumn">增加列</button>
-          <button id="addRowBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="addRow">增加行</button>
-          <button id="removeColumnBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="removeColumn">删除列</button>
-          <button id="removeRowBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="removeRow">删除行</button>
+          <button id="markdownSampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="sampleAction">Sample</button>
+          <button id="markdownClearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="clearAction">Clear</button>
         </div>
-
-        <div class="mt-5 overflow-x-auto rounded-2xl border border-gray-200 bg-slate-50 dark:border-white/10 dark:bg-slate-950/50">
-          <table class="w-full min-w-[520px] border-collapse text-sm">
-            <thead id="tableHead"></thead>
-            <tbody id="tableBody"></tbody>
-          </table>
-        </div>
-
-        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">填入示例</button>
-          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空内容</button>
-        </div>
-
-        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite">已生成 3 列、3 行数据的 Markdown 表格。</p>
+        <p id="markdownStatus" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite"></p>
       </section>
 
-      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
+      <section class="min-w-0 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">Markdown 代码</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="previewTitle">Table preview</h2>
+          <span id="markdownStats" class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500">0 x 0</span>
         </div>
-
-        <label class="block">
-          <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="outputLabel">实时生成结果</span>
-          <textarea id="markdownOutput" rows="18" readonly class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="outputPlaceholder" placeholder="Markdown 表格代码将在这里显示"></textarea>
-        </label>
-
-        <div class="mt-4 grid gap-3 rounded-2xl border border-gray-200 bg-slate-50 p-4 text-sm text-slate-600 dark:border-white/10 dark:bg-slate-950/50 dark:text-slate-400 sm:grid-cols-3">
-          <div>
-            <div class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="statColumns">列</div>
-            <div id="statColumnsValue" class="mt-1 tabular-nums text-lg font-black text-slate-950 dark:text-white">3</div>
-          </div>
-          <div>
-            <div class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="statRows">数据行</div>
-            <div id="statRowsValue" class="mt-1 tabular-nums text-lg font-black text-slate-950 dark:text-white">3</div>
-          </div>
-          <div>
-            <div class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="statChars">字符</div>
-            <div id="statCharsValue" class="mt-1 tabular-nums text-lg font-black text-slate-950 dark:text-white">0</div>
-          </div>
-        </div>
-
+        <div id="markdownPreview" class="min-h-[26rem] overflow-auto rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-slate-950/50"></div>
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制代码</button>
-          <button id="downloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadAction">下载文件</button>
+          <button id="downloadCsvBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50" data-i18n="downloadCsv" disabled>Download CSV</button>
+          <button id="downloadXlsxBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadXlsx" disabled>Download XLSX</button>
         </div>
       </section>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">Markdown 表格生成器是 Micro Tools Matrix 提供的免费在线开发者工具，适合快速制作 README、技术文档、知识库和工单说明中的表格。你可以像编辑普通表格一样增加行列、填写表头与单元格，页面会实时输出标准 Markdown 代码，减少手动对齐分隔符带来的错误。所有内容都通过浏览器本地处理完成，无需上传文本、无需登录，也不会调用远程接口。无论你在 Windows、macOS、Android 或 iOS 上整理项目清单、参数说明、接口字段或发布记录，都可以用这个 browser-local processing 工具安全生成可复制的 Markdown table。</article>
+    <section id="filePanel" role="tabpanel" aria-labelledby="fileTab" class="hidden grid min-w-0 gap-5 lg:grid-cols-2">
+      <section class="min-w-0 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="fileInputTitle">Drop CSV/XLSX</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500">FILE</span>
+        </div>
+        <label id="dropZone" for="fileInput" class="flex min-h-[20rem] cursor-pointer flex-col items-center justify-center rounded-3xl border-2 border-dashed border-cyan-300 bg-cyan-50/60 px-6 py-10 text-center transition hover:border-cyan-400 hover:bg-cyan-50 dark:border-cyan-400/30 dark:bg-cyan-400/10 dark:hover:bg-cyan-400/15">
+          <input id="fileInput" type="file" accept=".csv,.xlsx,.xls" class="sr-only">
+          <svg aria-hidden="true" class="mb-5 h-12 w-12 text-cyan-600 dark:text-cyan-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>
+          <span class="text-lg font-black tracking-tight text-slate-950 dark:text-white" data-i18n="dropTitle">Drop a CSV or XLSX file here</span>
+          <span class="mt-3 max-w-md text-sm leading-6 text-slate-600 dark:text-slate-400" data-i18n="dropHint">The file is read locally with FileReader ArrayBuffer, then parsed by SheetJS.</span>
+          <span class="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300" data-i18n="chooseFile">Choose file</span>
+        </label>
+        <p id="fileStatus" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="min-w-0 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+        <div class="mb-4 flex items-center justify-between gap-3">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="markdownOutputTitle">Generated Markdown</h2>
+          <span id="fileStats" class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500">0 x 0</span>
+        </div>
+        <textarea id="fileMarkdownOutput" class="min-h-[14rem] w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="generatedMarkdownPlaceholder" placeholder="Generated Markdown table"></textarea>
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <button id="copyMdBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50" data-i18n="copyMarkdown" disabled>Copy Markdown</button>
+          <button id="downloadMdBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadMarkdown" disabled>Download .md</button>
+        </div>
+        <div id="filePreview" class="mt-4 min-h-[10rem] overflow-auto rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-slate-950/50"></div>
+      </section>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">This browser-local Markdown, Excel, and CSV converter uses SheetJS in the front end to parse local table files without uploading user data. It can extract Markdown tables from surrounding prose, ignore alignment rows during export, write CSV with a UTF-8 BOM for Excel, export XLSX workbooks, and create valid Markdown tables from CSV or XLSX files with the required separator row.</article>
   </main>
 
-  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理的免费在线开发者工具。</footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - Browser-local utilities for developers and data cleanup.</footer>
 
   <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md">
     <div class="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
-      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor">×</button>
-      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">赞赏支持</h2>
-      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">保持工具免费、快速且无广告。</p>
-      <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="buyCoffee">Buy Me a Coffee</a>
+      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsorAria" aria-label="Close">X</button>
+      <h2 class="pr-12 text-xl font-black" data-i18n="sponsorTitle">Sponsor Micro Tools Matrix</h2>
+      <p class="mt-3 text-sm leading-6 text-slate-300" data-i18n="sponsorSubtitle">Keep these tools free, fast, and ad-free.</p>
+      <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-yellow-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-yellow-300" data-i18n="buyCoffee">Buy Me a Coffee</a>
     </div>
   </div>
 
   <script>
+    const initialLanguage = "en";
+    let currentLanguage = initialLanguage;
+
     const I18N = {
       zh: {
         htmlLang: "zh-CN",
-        documentTitle: "Markdown 表格生成器 - Micro Tools Matrix",
-        metaDescription: "Micro Tools Matrix 的 Markdown 表格生成器在浏览器本地处理内容，可视化编辑行列并实时生成标准 Markdown 表格代码，无需上传。",
-        metaKeywords: "Markdown 表格生成器, Markdown table generator, 浏览器本地处理, 无需上传, Micro Tools Matrix, developer tool",
-        toolName: "Markdown 表格生成器",
+        documentTitle: "Markdown / Excel / CSV 双向转换工作站 - Micro Tools Matrix",
+        metaDescription: "纯本地 Markdown、Excel 和 CSV 双向转换工作站，支持从粘贴文本智能提取 Markdown 表格、导出 CSV/XLSX，并将本地 CSV/XLSX 文件解析为合法 Markdown 表格。",
+        metaKeywords: "Markdown Excel 转换, Markdown CSV 转换, 表格转 Markdown, CSV 转 Markdown, XLSX 转 Markdown, 浏览器本地处理",
+        toolName: "Markdown / Excel / CSV 双向转换工作站",
         sponsor: "赞赏",
-        eyebrow: "浏览器本地处理",
-        h1: "Markdown 表格生成器",
-        intro: "在 Micro Tools Matrix 中可视化编辑 Markdown 表格，添加行列、填写单元格后实时生成标准代码；所有内容仅在浏览器本地处理，无需上传。",
-        localBadge: "本地运行",
+        eyebrow: "浏览器本地 SheetJS 工作站",
+        h1: "Markdown / Excel / CSV 双向转换工作站",
+        intro: "把 Markdown 表格导出为 CSV/XLSX，或拖入本地 CSV/XLSX 文件生成标准 Markdown 表格。文件读取和解析只在浏览器内存中完成。",
+        localBadge: "纯本地运行",
         share: "分享",
         shareAria: "打开分享菜单",
         shareMenuAria: "分享选项",
@@ -230,68 +223,66 @@
         shareCopyPrompt: "复制此分享链接：",
         shareCopyFailed: "复制失败，请手动复制地址栏链接。",
         shareDataTooLarge: "当前数据过大，无法生成分享链接，请直接复制文本结果。",
-        inputTitle: "可视化表格",
-        inputBadge: "输入",
-        outputTitle: "Markdown 代码",
-        outputBadge: "输出",
-        columnCountLabel: "列数",
-        rowCountLabel: "数据行数",
-        addColumn: "增加列",
-        addRow: "增加行",
-        removeColumn: "删除列",
-        removeRow: "删除行",
-        primaryAction: "填入示例",
-        secondaryAction: "清空内容",
-        outputLabel: "实时生成结果",
-        outputPlaceholder: "Markdown 表格代码将在这里显示",
-        statColumns: "列",
-        statRows: "数据行",
-        statChars: "字符",
-        copyAction: "复制代码",
-        downloadAction: "下载文件",
-        closeSponsor: "关闭赞赏窗口",
-        sponsorTitle: "赞赏支持",
-        sponsorSubtitle: "保持工具免费、快速且无广告。",
-        buyCoffee: "Buy Me a Coffee",
-        seoArticle: "Markdown 表格生成器是 Micro Tools Matrix 提供的免费在线开发者工具，适合快速制作 README、技术文档、知识库和工单说明中的表格。你可以像编辑普通表格一样增加行列、填写表头与单元格，页面会实时输出标准 Markdown 代码，减少手动对齐分隔符带来的错误。所有内容都通过浏览器本地处理完成，无需上传文本、无需登录，也不会调用远程接口。无论你在 Windows、macOS、Android 或 iOS 上整理项目清单、参数说明、接口字段或发布记录，都可以用这个 browser-local processing 工具安全生成可复制的 Markdown table。",
-        footer: "Micro Tools Matrix - 浏览器本地处理的免费在线开发者工具。",
-        headerPrefix: "表头",
-        cellPrefix: "单元格",
-        headerPlaceholder: "表头",
-        cellPlaceholder: "内容",
-        generatedStatus: "已生成 {columns} 列、{rows} 行数据的 Markdown 表格。",
-        copiedStatus: "Markdown 表格代码已复制到剪贴板。",
-        copyFailedStatus: "复制失败，请手动选择代码并复制。",
-        clearedStatus: "内容已清空，表格结构保留。",
-        sampleStatus: "示例表格已填入，可继续编辑。",
-        downloadedStatus: "Markdown 文件已下载。",
-        minColumnStatus: "至少需要保留 1 列。",
-        minRowStatus: "至少需要保留 1 行数据。",
-        maxColumnStatus: "最多支持 12 列，适合移动端编辑。",
-        maxRowStatus: "最多支持 30 行数据，避免页面过长。",
-        invalidCountStatus: "请输入有效的行列数量。",
-        downloadFileName: "markdown-table.md",
-        sampleHeaders: ["项目", "状态", "负责人"],
-        sampleRows: [
-          ["文档结构", "进行中", "林同学"],
-          ["接口说明", "已完成", "周同学"],
-          ["发布检查", "待确认", "陈同学"]
-        ],
+        languageGroupAria: "语言",
+        langZhAria: "切换到中文",
+        langEnAria: "切换到英文",
+        themeToggleAria: "切换主题",
         themeLight: "亮色",
         themeDark: "深色",
-        themeSystem: "系统"
+        themeSystem: "系统",
+        modeTabsAria: "转换模式",
+        markdownTab: "Markdown 转表格",
+        fileTab: "文件转 Markdown",
+        privacyLine: "文件通过 FileReader 在浏览器内存读取，不会上传。",
+        markdownInputTitle: "Markdown 源码",
+        markdownPlaceholder: "可粘贴包含说明文字的内容，工具会自动提取 | 构成的 Markdown 表格区块。",
+        sampleAction: "填入示例",
+        clearAction: "清空",
+        previewTitle: "表格预览",
+        downloadCsv: "下载 CSV",
+        downloadXlsx: "下载 XLSX",
+        fileInputTitle: "拖入 CSV/XLSX",
+        dropTitle: "把 CSV 或 XLSX 文件拖到这里",
+        dropHint: "文件会以 ArrayBuffer 读取，然后由 SheetJS 在本地解析为二维数组。",
+        chooseFile: "选择文件",
+        markdownOutputTitle: "生成的 Markdown",
+        generatedMarkdownPlaceholder: "这里会生成带 |---|---| 分隔行的合法 Markdown 表格。",
+        copyMarkdown: "复制 Markdown",
+        downloadMarkdown: "下载 .md",
+        sponsorTitle: "赞赏支持 Micro Tools Matrix",
+        sponsorSubtitle: "让这些工具保持免费、快速和无广告。",
+        buyCoffee: "Buy Me a Coffee",
+        closeSponsorAria: "关闭赞赏弹窗",
+        seoArticle: "这个 Markdown、Excel 与 CSV 双向转换工具使用前端 SheetJS 解析本地表格文件，不上传用户数据。它可以从带说明文字的粘贴内容中提取 Markdown 表格，导出时过滤对齐分隔行，写出带 UTF-8 BOM 的 CSV，导出 XLSX 工作簿，并把 CSV/XLSX 文件转换为带合法分隔行的 Markdown 表格。",
+        footer: "Micro Tools Matrix - 浏览器本地处理的开发者与数据整理工具。",
+        markdownReady: "粘贴 Markdown 表格，或使用示例开始。",
+        markdownParsed: "已提取 {rows} 行、{columns} 列，可下载 CSV 或 XLSX。",
+        markdownNoTable: "未找到合法 Markdown 表格。请确认存在表头和 |---|---| 分隔行。",
+        markdownSampleLoaded: "已填入包含说明文字的 Markdown 表格示例。",
+        markdownCleared: "Markdown 输入已清空。",
+        csvDownloaded: "CSV 已生成，包含 UTF-8 BOM，适合 Excel 打开。",
+        xlsxDownloaded: "XLSX 工作簿已生成。",
+        fileIdle: "拖入 .csv 或 .xlsx 文件开始转换。",
+        fileParsed: "已从 {file} 读取 {rows} 行、{columns} 列，并生成 Markdown 表格。",
+        fileInvalid: "请选择 .csv、.xlsx 或 .xls 表格文件。",
+        fileEmpty: "没有读取到可转换的表格数据。",
+        fileError: "无法解析该文件，请确认它是有效的 CSV/XLSX 表格。",
+        markdownCopied: "Markdown 已复制到剪贴板。",
+        markdownCopyFailed: "复制失败，请手动选择文本复制。",
+        markdownDownloaded: "Markdown 文件已下载。",
+        sheetJsMissing: "本地 SheetJS 库尚未加载，请确认 ./js/xlsx.mini.min.js 存在后重试。"
       },
       en: {
         htmlLang: "en",
-        documentTitle: "Markdown Table Generator - Micro Tools Matrix",
-        metaDescription: "A Micro Tools Matrix Markdown table generator with browser-local processing. Visually edit rows and columns, then generate standard Markdown table code without uploads.",
-        metaKeywords: "Markdown table generator, free online developer tool, browser-local processing, no upload, Micro Tools Matrix, Markdown table",
-        toolName: "Markdown Table Generator",
+        documentTitle: "Markdown / Excel / CSV Converter - Micro Tools Matrix",
+        metaDescription: "A browser-local Markdown, Excel, and CSV conversion workstation for extracting Markdown tables, exporting CSV/XLSX, and turning local CSV/XLSX files into valid Markdown tables.",
+        metaKeywords: "Markdown Excel converter, Markdown CSV converter, SheetJS, CSV to Markdown, XLSX to Markdown, browser-local tool",
+        toolName: "Markdown / Excel / CSV Converter",
         sponsor: "Sponsor",
-        eyebrow: "Browser-local processing",
-        h1: "Markdown Table Generator",
-        intro: "Visually build Markdown tables in Micro Tools Matrix. Add rows or columns, edit cells, and generate standard Markdown code in real time with browser-local processing and no uploads.",
-        localBadge: "Local",
+        eyebrow: "Browser-local SheetJS workstation",
+        h1: "Markdown / Excel / CSV Converter",
+        intro: "Convert Markdown tables to CSV/XLSX, or drag local CSV/XLSX files into the page and generate clean Markdown tables. File parsing happens in browser memory only.",
+        localBadge: "Local only",
         share: "Share",
         shareAria: "Open share menu",
         shareMenuAria: "Share options",
@@ -303,78 +294,80 @@
         shareCopyPrompt: "Copy this share link:",
         shareCopyFailed: "Copy failed. Please copy the address bar link manually.",
         shareDataTooLarge: "The current data is too large to create a share link. Please copy the text result directly.",
-        inputTitle: "Visual Table",
-        inputBadge: "INPUT",
-        outputTitle: "Markdown Code",
-        outputBadge: "OUTPUT",
-        columnCountLabel: "Columns",
-        rowCountLabel: "Data rows",
-        addColumn: "Add column",
-        addRow: "Add row",
-        removeColumn: "Remove column",
-        removeRow: "Remove row",
-        primaryAction: "Load sample",
-        secondaryAction: "Clear cells",
-        outputLabel: "Live result",
-        outputPlaceholder: "Markdown table code will appear here",
-        statColumns: "Columns",
-        statRows: "Data rows",
-        statChars: "Characters",
-        copyAction: "Copy code",
-        downloadAction: "Download file",
-        closeSponsor: "Close sponsor dialog",
-        sponsorTitle: "Sponsor this project",
-        sponsorSubtitle: "Keep these tools free, fast, and ad-free.",
-        buyCoffee: "Buy Me a Coffee",
-        seoArticle: "The Markdown Table Generator from Micro Tools Matrix is a free online developer tool for writing clean tables in README files, technical documentation, knowledge bases, release notes, and issue templates. Instead of manually counting pipes and separator rows, you can edit a compact visual grid, add rows or columns with buttons, and receive standard Markdown table code instantly. The workflow is designed for browser-local processing: your table headings, notes, project data, API fields, and task lists stay in memory on your device and are never uploaded to a server. This makes the tool practical for everyday documentation on Windows, macOS, Android, and iOS, especially when you need a quick Markdown table generator that is private, lightweight, and easy to copy into GitHub, GitLab, Notion-compatible exports, static site content, or developer handoff notes. Micro Tools Matrix focuses on small, focused utilities that solve common work without accounts, tracking, or remote APIs.",
-        footer: "Micro Tools Matrix - Free online developer tools with browser-local processing.",
-        headerPrefix: "Header",
-        cellPrefix: "Cell",
-        headerPlaceholder: "Header",
-        cellPlaceholder: "Content",
-        generatedStatus: "Generated a Markdown table with {columns} columns and {rows} data rows.",
-        copiedStatus: "Markdown table code copied to the clipboard.",
-        copyFailedStatus: "Copy failed. Please select the code and copy it manually.",
-        clearedStatus: "Cells cleared. The table structure was kept.",
-        sampleStatus: "Sample table loaded. You can keep editing it.",
-        downloadedStatus: "Markdown file downloaded.",
-        minColumnStatus: "Keep at least 1 column.",
-        minRowStatus: "Keep at least 1 data row.",
-        maxColumnStatus: "Up to 12 columns are supported for mobile-friendly editing.",
-        maxRowStatus: "Up to 30 data rows are supported to keep the page manageable.",
-        invalidCountStatus: "Enter valid row and column counts.",
-        downloadFileName: "markdown-table.md",
-        sampleHeaders: ["Project", "Status", "Owner"],
-        sampleRows: [
-          ["Documentation", "In progress", "Avery"],
-          ["API notes", "Done", "Morgan"],
-          ["Release check", "Pending", "Taylor"]
-        ],
+        languageGroupAria: "Language",
+        langZhAria: "Switch to Chinese",
+        langEnAria: "Switch to English",
+        themeToggleAria: "Toggle theme",
         themeLight: "Light",
         themeDark: "Dark",
-        themeSystem: "System"
+        themeSystem: "System",
+        modeTabsAria: "Conversion mode",
+        markdownTab: "Markdown to table",
+        fileTab: "File to Markdown",
+        privacyLine: "Files are read with FileReader in browser memory. Nothing is uploaded.",
+        markdownInputTitle: "Markdown source",
+        markdownPlaceholder: "Paste any text that contains a pipe-based Markdown table. The table block will be extracted automatically.",
+        sampleAction: "Sample",
+        clearAction: "Clear",
+        previewTitle: "Table preview",
+        downloadCsv: "Download CSV",
+        downloadXlsx: "Download XLSX",
+        fileInputTitle: "Drop CSV/XLSX",
+        dropTitle: "Drop a CSV or XLSX file here",
+        dropHint: "The file is read as an ArrayBuffer, then parsed locally by SheetJS into a 2D array.",
+        chooseFile: "Choose file",
+        markdownOutputTitle: "Generated Markdown",
+        generatedMarkdownPlaceholder: "A valid Markdown table with the required |---|---| separator row appears here.",
+        copyMarkdown: "Copy Markdown",
+        downloadMarkdown: "Download .md",
+        sponsorTitle: "Support Micro Tools Matrix",
+        sponsorSubtitle: "Keep these tools free, fast, and ad-free.",
+        buyCoffee: "Buy Me a Coffee",
+        closeSponsorAria: "Close sponsor dialog",
+        seoArticle: "This browser-local Markdown, Excel, and CSV converter uses SheetJS in the front end to parse local table files without uploading user data. It can extract Markdown tables from surrounding prose, ignore alignment rows during export, write CSV with a UTF-8 BOM for Excel, export XLSX workbooks, and create valid Markdown tables from CSV or XLSX files with the required separator row.",
+        footer: "Micro Tools Matrix - Browser-local utilities for developers and data cleanup.",
+        markdownReady: "Paste a Markdown table or load the sample.",
+        markdownParsed: "Extracted {rows} rows and {columns} columns. CSV/XLSX downloads are ready.",
+        markdownNoTable: "No valid Markdown table found. Make sure there is a header and a |---|---| separator row.",
+        markdownSampleLoaded: "Loaded a Markdown table sample with surrounding text.",
+        markdownCleared: "Markdown input cleared.",
+        csvDownloaded: "CSV generated with a UTF-8 BOM for Excel.",
+        xlsxDownloaded: "XLSX workbook generated.",
+        fileIdle: "Drop a .csv or .xlsx file to convert it.",
+        fileParsed: "Read {rows} rows and {columns} columns from {file}, then generated Markdown.",
+        fileInvalid: "Choose a .csv, .xlsx, or .xls table file.",
+        fileEmpty: "No convertible table data was found.",
+        fileError: "Could not parse this file. Make sure it is a valid CSV/XLSX table.",
+        markdownCopied: "Markdown copied to the clipboard.",
+        markdownCopyFailed: "Copy failed. Please select the text manually.",
+        markdownDownloaded: "Markdown file downloaded.",
+        sheetJsMissing: "Local SheetJS has not loaded yet. Confirm ./js/xlsx.mini.min.js exists and try again."
       }
     };
 
     const state = {
-      lang: "zh",
-      headers: ["", "", ""],
-      rows: [
-        ["", "", ""],
-        ["", "", ""],
-        ["", "", ""]
-      ],
-      lastStatusKey: "generatedStatus"
+      mode: "markdown",
+      markdownAoa: [],
+      fileAoa: [],
+      lastMarkdownStatus: "markdownReady",
+      lastFileStatus: "fileIdle",
+      currentFileName: ""
     };
 
-    function getInitialLanguage() {
-      if (location.pathname.includes("/en/")) return "en";
-      const saved = localStorage.getItem("microToolsLanguage");
-      return saved === "en" ? "en" : "zh";
-    }
+    const markdownSample = [
+      "Release checklist:",
+      "",
+      "| 模块 | 状态 | Owner |",
+      "|---|---|---|",
+      "| 登录 | Done | Lin |",
+      "| 报表 | In review | Chen |",
+      "| 导出 | Pending | Morgan |",
+      "",
+      "以上说明文字不会被导出。"
+    ].join("\n");
 
     function t(key) {
-      return (I18N[state.lang] && I18N[state.lang][key]) || I18N.zh[key] || "";
+      return (I18N[currentLanguage] && I18N[currentLanguage][key]) || I18N.zh[key] || "";
     }
 
     function formatMessage(key, values) {
@@ -385,22 +378,22 @@
       return message;
     }
 
-    function setLanguage(lang) {
-      const nextLang = lang === "en" ? "en" : "zh";
-      localStorage.setItem("microToolsLanguage", nextLang);
-      applyLanguage(nextLang);
+    function getInitialLanguage() {
+      return location.pathname.includes("/en/") ? "en" : "zh";
     }
 
-    function applyLanguage(lang) {
-      state.lang = lang === "en" ? "en" : "zh";
-      const dict = I18N[state.lang];
+    function setLanguage(lang) {
+      currentLanguage = lang === "en" ? "en" : "zh";
+      try { localStorage.setItem("microToolsLanguage", currentLanguage); } catch {}
+      applyLanguage();
+    }
 
+    function applyLanguage() {
+      const dict = I18N[currentLanguage];
       document.documentElement.lang = dict.htmlLang;
       document.title = dict.documentTitle;
-
       const metaDescription = document.querySelector('meta[name="description"]');
       if (metaDescription) metaDescription.setAttribute("content", dict.metaDescription);
-
       const metaKeywords = document.querySelector('meta[name="keywords"]');
       if (metaKeywords) metaKeywords.setAttribute("content", dict.metaKeywords);
 
@@ -408,17 +401,14 @@
         const key = node.getAttribute("data-i18n");
         if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.textContent = dict[key];
       });
-
       document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
         const key = node.getAttribute("data-i18n-placeholder");
         if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("placeholder", dict[key]);
       });
-
       document.querySelectorAll("[data-i18n-title]").forEach((node) => {
         const key = node.getAttribute("data-i18n-title");
         if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("title", dict[key]);
       });
-
       document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
         const key = node.getAttribute("data-i18n-aria-label");
         if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("aria-label", dict[key]);
@@ -427,260 +417,449 @@
       const zhBtn = document.getElementById("langZhBtn");
       const enBtn = document.getElementById("langEnBtn");
       if (zhBtn && enBtn) {
-        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (state.lang === "zh" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
-        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (state.lang === "en" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
-        zhBtn.setAttribute("aria-pressed", state.lang === "zh" ? "true" : "false");
-        enBtn.setAttribute("aria-pressed", state.lang === "en" ? "true" : "false");
+        zhBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "zh" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+        enBtn.className = "min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95 " + (currentLanguage === "en" ? "bg-cyan-400 text-slate-950" : "text-slate-600 dark:text-slate-400");
+        zhBtn.setAttribute("aria-pressed", currentLanguage === "zh" ? "true" : "false");
+        enBtn.setAttribute("aria-pressed", currentLanguage === "en" ? "true" : "false");
       }
 
-      window.microToolsThemeLabels = {
-        light: dict.themeLight,
-        dark: dict.themeDark,
-        system: dict.themeSystem
-      };
-
-      renderTable();
-      updateMarkdown(state.lastStatusKey);
-
+      window.microToolsThemeLabels = { light: dict.themeLight, dark: dict.themeDark, system: dict.themeSystem };
       if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
+
+      updateTabs();
+      updateMarkdownStatus(state.lastMarkdownStatus);
+      updateFileStatus(state.lastFileStatus);
+      renderPreview("markdownPreview", state.markdownAoa, "markdownNoTable");
+      renderPreview("filePreview", state.fileAoa, "fileIdle");
     }
 
-    function normalizeTable() {
-      const columns = Math.min(12, Math.max(1, Number.parseInt(document.getElementById("columnCount")?.value || state.headers.length, 10) || state.headers.length || 1));
-      const rows = Math.min(30, Math.max(1, Number.parseInt(document.getElementById("rowCount")?.value || state.rows.length, 10) || state.rows.length || 1));
-
-      while (state.headers.length < columns) state.headers.push("");
-      state.headers = state.headers.slice(0, columns);
-
-      while (state.rows.length < rows) state.rows.push(Array(columns).fill(""));
-      state.rows = state.rows.slice(0, rows).map((row) => {
-        const next = row.slice(0, columns);
-        while (next.length < columns) next.push("");
-        return next;
-      });
-
-      const columnCount = document.getElementById("columnCount");
-      const rowCount = document.getElementById("rowCount");
-      if (columnCount) columnCount.value = String(columns);
-      if (rowCount) rowCount.value = String(rows);
+    function switchMode(mode) {
+      state.mode = mode === "file" ? "file" : "markdown";
+      updateTabs();
     }
 
-    function renderTable() {
-      normalizeTable();
-      const head = document.getElementById("tableHead");
-      const body = document.getElementById("tableBody");
-      if (!head || !body) return;
+    function updateTabs() {
+      const markdownPanel = document.getElementById("markdownPanel");
+      const filePanel = document.getElementById("filePanel");
+      const markdownTab = document.getElementById("markdownTab");
+      const fileTab = document.getElementById("fileTab");
+      const activeClass = "min-h-11 rounded-full bg-cyan-400 px-4 text-sm font-bold text-slate-950 shadow-sm transition active:scale-95";
+      const idleClass = "min-h-11 rounded-full border border-gray-200 bg-white px-4 text-sm font-bold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-300 dark:hover:bg-white/[0.08]";
+      const markdownActive = state.mode === "markdown";
+      markdownPanel?.classList.toggle("hidden", !markdownActive);
+      filePanel?.classList.toggle("hidden", markdownActive);
+      markdownTab.className = markdownActive ? activeClass : idleClass;
+      fileTab.className = markdownActive ? idleClass : activeClass;
+      markdownTab.setAttribute("aria-selected", markdownActive ? "true" : "false");
+      fileTab.setAttribute("aria-selected", markdownActive ? "false" : "true");
+    }
 
-      head.innerHTML = "";
-      body.innerHTML = "";
-
-      const headerRow = document.createElement("tr");
-      state.headers.forEach((value, index) => {
-        const th = document.createElement("th");
-        th.className = "border-b border-r border-gray-200 p-2 last:border-r-0 dark:border-white/10";
-        const label = document.createElement("label");
-        label.className = "block";
-        const labelText = document.createElement("span");
-        labelText.className = "mb-1 block text-xs font-semibold text-slate-500 dark:text-slate-400";
-        labelText.textContent = t("headerPrefix") + " " + (index + 1);
-        const input = document.createElement("input");
-        input.type = "text";
-        input.value = value;
-        input.placeholder = t("headerPlaceholder") + " " + (index + 1);
-        input.setAttribute("aria-label", t("headerPrefix") + " " + (index + 1));
-        input.className = "w-full rounded-2xl border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600";
-        input.addEventListener("input", () => {
-          state.headers[index] = input.value;
-          updateMarkdown("generatedStatus");
-        });
-        label.appendChild(labelText);
-        label.appendChild(input);
-        th.appendChild(label);
-        headerRow.appendChild(th);
-      });
-      head.appendChild(headerRow);
-
-      state.rows.forEach((row, rowIndex) => {
-        const tr = document.createElement("tr");
-        row.forEach((value, columnIndex) => {
-          const td = document.createElement("td");
-          td.className = "border-b border-r border-gray-200 p-2 last:border-r-0 dark:border-white/10";
-          const input = document.createElement("input");
-          input.type = "text";
-          input.value = value;
-          input.placeholder = t("cellPlaceholder");
-          input.setAttribute("aria-label", t("cellPrefix") + " " + (rowIndex + 1) + "-" + (columnIndex + 1));
-          input.className = "w-full rounded-2xl border border-gray-200 bg-white px-3 py-2 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600";
-          input.addEventListener("input", () => {
-            state.rows[rowIndex][columnIndex] = input.value;
-            updateMarkdown("generatedStatus");
-          });
-          td.appendChild(input);
-          tr.appendChild(td);
-        });
-        body.appendChild(tr);
-      });
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
     }
 
     function escapeMarkdownCell(value) {
-      return String(value || "")
+      return String(value ?? "")
         .replace(/\\/g, "\\\\")
         .replace(/\|/g, "\\|")
         .replace(/\r?\n/g, "<br>")
         .trim();
     }
 
-    function generateMarkdown() {
-      normalizeTable();
-      const headers = state.headers.map((value, index) => escapeMarkdownCell(value) || (t("headerPrefix") + " " + (index + 1)));
-      const separator = headers.map(() => "---");
-      const bodyRows = state.rows.map((row) => row.map((value) => escapeMarkdownCell(value)));
-      const lines = [
-        "| " + headers.join(" | ") + " |",
+    function unescapeMarkdownCell(value) {
+      return String(value ?? "")
+        .replace(/<br\s*\/?>/gi, "\n")
+        .replace(/\\\|/g, "|")
+        .replace(/\\\\/g, "\\")
+        .trim();
+    }
+
+    function splitMarkdownRow(line) {
+      let text = String(line || "").trim();
+      if (text.startsWith("|")) text = text.slice(1);
+      if (text.endsWith("|") && !text.endsWith("\\|")) text = text.slice(0, -1);
+      const cells = [];
+      let buffer = "";
+      let escaped = false;
+      for (const char of text) {
+        if (escaped) {
+          buffer += char;
+          escaped = false;
+        } else if (char === "\\") {
+          escaped = true;
+        } else if (char === "|") {
+          cells.push(unescapeMarkdownCell(buffer));
+          buffer = "";
+        } else {
+          buffer += char;
+        }
+      }
+      cells.push(unescapeMarkdownCell(buffer));
+      return cells;
+    }
+
+    function isAlignmentRow(cells) {
+      return cells.length > 0 && cells.every((cell) => /^:?-{3,}:?$/.test(String(cell || "").trim()));
+    }
+
+    function extractMarkdownTableBlock(text) {
+      const normalized = String(text || "").replace(/\r\n?/g, "\n");
+      const tableBlockPattern = /(?:^|\n)((?:[^\n]*\|[^\n]*(?:\n|$)){2,})/g;
+      let fallback = "";
+      let match;
+      while ((match = tableBlockPattern.exec(normalized)) !== null) {
+        const block = match[1].trim();
+        const lines = block.split("\n").map((line) => line.trim()).filter(Boolean);
+        if (lines.length < 2) continue;
+        if (!fallback) fallback = lines.join("\n");
+        for (let i = 0; i < lines.length - 1; i += 1) {
+          const header = splitMarkdownRow(lines[i]);
+          const separator = splitMarkdownRow(lines[i + 1]);
+          if (header.length >= 2 && isAlignmentRow(separator)) {
+            return lines.slice(i).join("\n");
+          }
+        }
+      }
+      return fallback;
+    }
+
+    function normalizeAoa(rows) {
+      const cleaned = (rows || []).map((row) => Array.isArray(row) ? row.map((cell) => String(cell ?? "").trim()) : []);
+      while (cleaned.length && cleaned[cleaned.length - 1].every((cell) => cell === "")) cleaned.pop();
+      const columnCount = Math.max(0, ...cleaned.map((row) => row.length));
+      let lastColumn = columnCount - 1;
+      while (lastColumn >= 0 && cleaned.every((row) => String(row[lastColumn] ?? "").trim() === "")) lastColumn -= 1;
+      const width = Math.max(0, lastColumn + 1);
+      return cleaned.map((row) => {
+        const next = row.slice(0, width);
+        while (next.length < width) next.push("");
+        return next;
+      }).filter((row) => row.some((cell) => String(cell).trim() !== ""));
+    }
+
+    function markdownToAoa(text) {
+      const block = extractMarkdownTableBlock(text);
+      if (!block) return [];
+      const rows = block.split("\n")
+        .map((line) => line.trim())
+        .filter((line) => line.includes("|"))
+        .map(splitMarkdownRow)
+        .filter((row) => row.length && row.some((cell) => String(cell).trim() !== ""))
+        .filter((row) => !isAlignmentRow(row));
+      return normalizeAoa(rows);
+    }
+
+    function aoaToMarkdown(aoa) {
+      const rows = normalizeAoa(aoa);
+      if (!rows.length) return "";
+      const width = Math.max(1, ...rows.map((row) => row.length));
+      const normalized = rows.map((row) => {
+        const next = row.slice(0, width);
+        while (next.length < width) next.push("");
+        return next;
+      });
+      const header = normalized[0].map(escapeMarkdownCell);
+      const separator = Array(width).fill("---");
+      const body = normalized.slice(1).map((row) => row.map(escapeMarkdownCell));
+      return [
+        "| " + header.join(" | ") + " |",
         "| " + separator.join(" | ") + " |",
-        ...bodyRows.map((row) => "| " + row.join(" | ") + " |")
-      ];
-      return lines.join("\n");
+        ...body.map((row) => "| " + row.join(" | ") + " |")
+      ].join("\n");
     }
 
-    function updateMarkdown(statusKey) {
-      normalizeTable();
-      state.lastStatusKey = statusKey || "generatedStatus";
-      const markdown = generateMarkdown();
-      const output = document.getElementById("markdownOutput");
-      if (output) output.value = markdown;
-
-      const statColumns = document.getElementById("statColumnsValue");
-      const statRows = document.getElementById("statRowsValue");
-      const statChars = document.getElementById("statCharsValue");
-      if (statColumns) statColumns.textContent = String(state.headers.length);
-      if (statRows) statRows.textContent = String(state.rows.length);
-      if (statChars) statChars.textContent = String(markdown.length);
-
-      const status = document.getElementById("statusText");
-      if (status) {
-        if (state.lastStatusKey === "generatedStatus") {
-          status.textContent = formatMessage("generatedStatus", { columns: state.headers.length, rows: state.rows.length });
-        } else {
-          status.textContent = t(state.lastStatusKey);
-        }
-      }
-    }
-
-    function setCountsFromInputs() {
-      const columnInput = document.getElementById("columnCount");
-      const rowInput = document.getElementById("rowCount");
-      const columns = Number.parseInt(columnInput?.value || "", 10);
-      const rows = Number.parseInt(rowInput?.value || "", 10);
-
-      if (!Number.isFinite(columns) || !Number.isFinite(rows) || columns < 1 || rows < 1) {
-        updateMarkdown("invalidCountStatus");
+    function renderPreview(containerId, aoa, emptyKey) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      const rows = normalizeAoa(aoa);
+      const stats = containerId === "markdownPreview" ? document.getElementById("markdownStats") : document.getElementById("fileStats");
+      if (stats) stats.textContent = rows.length ? (rows.length + " x " + rows[0].length) : "0 x 0";
+      if (!rows.length) {
+        container.innerHTML = '<div class="flex min-h-[12rem] items-center justify-center rounded-2xl border border-dashed border-gray-200 bg-white px-4 text-center text-sm leading-6 text-slate-500 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-400">' + escapeHtml(t(emptyKey)) + '</div>';
         return;
       }
-
-      if (columns > 12) {
-        if (columnInput) columnInput.value = "12";
-        updateMarkdown("maxColumnStatus");
-      }
-      if (rows > 30) {
-        if (rowInput) rowInput.value = "30";
-        updateMarkdown("maxRowStatus");
-      }
-
-      renderTable();
-      updateMarkdown("generatedStatus");
+      const head = rows[0];
+      const body = rows.slice(1);
+      container.innerHTML = '<table class="w-full min-w-[32rem] border-collapse text-sm"><thead><tr>' +
+        head.map((cell) => '<th class="border border-gray-200 bg-white px-3 py-2 text-left font-bold text-slate-950 dark:border-white/10 dark:bg-white/[0.06] dark:text-white">' + escapeHtml(cell) + '</th>').join("") +
+        '</tr></thead><tbody>' +
+        body.map((row) => '<tr>' + row.map((cell) => '<td class="border border-gray-200 bg-white px-3 py-2 text-slate-700 dark:border-white/10 dark:bg-slate-950/40 dark:text-slate-300">' + escapeHtml(cell) + '</td>').join("") + '</tr>').join("") +
+        '</tbody></table>';
     }
 
-    function addColumn() {
-      if (state.headers.length >= 12) {
-        updateMarkdown("maxColumnStatus");
-        return;
-      }
-      state.headers.push("");
-      state.rows = state.rows.map((row) => [...row, ""]);
-      renderTable();
-      updateMarkdown("generatedStatus");
-    }
-
-    function addRow() {
-      if (state.rows.length >= 30) {
-        updateMarkdown("maxRowStatus");
-        return;
-      }
-      state.rows.push(Array(state.headers.length).fill(""));
-      renderTable();
-      updateMarkdown("generatedStatus");
-    }
-
-    function removeColumn() {
-      if (state.headers.length <= 1) {
-        updateMarkdown("minColumnStatus");
-        return;
-      }
-      state.headers.pop();
-      state.rows = state.rows.map((row) => row.slice(0, state.headers.length));
-      renderTable();
-      updateMarkdown("generatedStatus");
-    }
-
-    function removeRow() {
-      if (state.rows.length <= 1) {
-        updateMarkdown("minRowStatus");
-        return;
-      }
-      state.rows.pop();
-      renderTable();
-      updateMarkdown("generatedStatus");
-    }
-
-    function loadSample() {
-      state.headers = t("sampleHeaders").slice();
-      state.rows = t("sampleRows").map((row) => row.slice());
-      renderTable();
-      updateMarkdown("sampleStatus");
-    }
-
-    function clearCells() {
-      state.headers = state.headers.map(() => "");
-      state.rows = state.rows.map((row) => row.map(() => ""));
-      renderTable();
-      updateMarkdown("clearedStatus");
-    }
-
-    async function copyMarkdown() {
-      const output = document.getElementById("markdownOutput");
-      const text = output ? output.value : generateMarkdown();
-      try {
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(text);
-        } else {
-          output?.focus();
-          output?.select();
-          const ok = document.execCommand("copy");
-          if (!ok) throw new Error("copy failed");
-          window.getSelection()?.removeAllRanges();
-        }
-        updateMarkdown("copiedStatus");
-      } catch (error) {
-        updateMarkdown("copyFailedStatus");
+    function updateMarkdownStatus(key) {
+      state.lastMarkdownStatus = key || state.lastMarkdownStatus || "markdownReady";
+      const status = document.getElementById("markdownStatus");
+      if (!status) return;
+      if (state.lastMarkdownStatus === "markdownParsed") {
+        status.textContent = formatMessage("markdownParsed", { rows: state.markdownAoa.length, columns: state.markdownAoa[0]?.length || 0 });
+      } else {
+        status.textContent = t(state.lastMarkdownStatus);
       }
     }
 
-    function downloadMarkdown() {
-      const blob = new Blob([generateMarkdown()], { type: "text/markdown;charset=utf-8" });
+    function updateFileStatus(key) {
+      state.lastFileStatus = key || state.lastFileStatus || "fileIdle";
+      const status = document.getElementById("fileStatus");
+      if (!status) return;
+      if (state.lastFileStatus === "fileParsed") {
+        status.textContent = formatMessage("fileParsed", { file: state.currentFileName || "table", rows: state.fileAoa.length, columns: state.fileAoa[0]?.length || 0 });
+      } else {
+        status.textContent = t(state.lastFileStatus);
+      }
+    }
+
+    function setExportEnabled(enabled) {
+      document.getElementById("downloadCsvBtn").disabled = !enabled;
+      document.getElementById("downloadXlsxBtn").disabled = !enabled;
+    }
+
+    function setFileOutputEnabled(enabled) {
+      document.getElementById("copyMdBtn").disabled = !enabled;
+      document.getElementById("downloadMdBtn").disabled = !enabled;
+    }
+
+    function updateMarkdownMode(statusKey) {
+      const input = document.getElementById("markdownInput");
+      const aoa = markdownToAoa(input?.value || "");
+      state.markdownAoa = aoa;
+      renderPreview("markdownPreview", aoa, "markdownNoTable");
+      const ok = aoa.length > 0 && (aoa[0]?.length || 0) > 0;
+      setExportEnabled(ok);
+      updateMarkdownStatus(statusKey || (ok ? "markdownParsed" : "markdownNoTable"));
+    }
+
+    function loadMarkdownSample() {
+      document.getElementById("markdownInput").value = markdownSample;
+      updateMarkdownMode("markdownSampleLoaded");
+    }
+
+    function clearMarkdown() {
+      document.getElementById("markdownInput").value = "";
+      state.markdownAoa = [];
+      renderPreview("markdownPreview", [], "markdownNoTable");
+      setExportEnabled(false);
+      updateMarkdownStatus("markdownCleared");
+    }
+
+    function csvEscape(value) {
+      const text = String(value ?? "");
+      return /[",\r\n]/.test(text) ? '"' + text.replace(/"/g, '""') + '"' : text;
+    }
+
+    function aoaToCsv(aoa) {
+      return normalizeAoa(aoa).map((row) => row.map(csvEscape).join(",")).join("\r\n");
+    }
+
+    function downloadBlob(content, type, filename) {
+      const blob = new Blob([content], { type });
       const url = URL.createObjectURL(blob);
       const anchor = document.createElement("a");
       anchor.href = url;
-      anchor.download = t("downloadFileName");
+      anchor.download = filename;
       document.body.appendChild(anchor);
       anchor.click();
       anchor.remove();
       URL.revokeObjectURL(url);
-      updateMarkdown("downloadedStatus");
+    }
+
+    let sheetJsPromise = null;
+
+    function loadSheetJS() {
+      if (typeof XLSX !== "undefined") return Promise.resolve(XLSX);
+      if (sheetJsPromise) return sheetJsPromise;
+      sheetJsPromise = new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = "./js/xlsx.mini.min.js";
+        script.async = true;
+        script.onload = () => {
+          if (typeof XLSX !== "undefined") resolve(XLSX);
+          else reject(new Error("SheetJS global missing"));
+        };
+        script.onerror = () => reject(new Error("SheetJS local file failed to load"));
+        document.head.appendChild(script);
+      }).catch((error) => {
+        sheetJsPromise = null;
+        alert(t("sheetJsMissing"));
+        throw error;
+      });
+      return sheetJsPromise;
+    }
+
+    function downloadCsv() {
+      if (!state.markdownAoa.length) return;
+      downloadBlob("\uFEFF" + aoaToCsv(state.markdownAoa), "text/csv;charset=utf-8", "markdown-table.csv");
+      updateMarkdownStatus("csvDownloaded");
+    }
+
+    async function downloadXlsx() {
+      if (!state.markdownAoa.length) return;
+      await loadSheetJS();
+      const worksheet = XLSX.utils.aoa_to_sheet(state.markdownAoa);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Table");
+      XLSX.writeFile(workbook, "markdown-table.xlsx");
+      updateMarkdownStatus("xlsxDownloaded");
+    }
+
+    function validateFile(file) {
+      return Boolean(file && /\.(csv|xlsx|xls)$/i.test(file.name || ""));
+    }
+
+    function decodeCsvArrayBuffer(buffer) {
+      const bytes = new Uint8Array(buffer || new ArrayBuffer(0));
+      if (bytes.length >= 3 && bytes[0] === 0xef && bytes[1] === 0xbb && bytes[2] === 0xbf) {
+        return new TextDecoder("utf-8").decode(bytes.subarray(3));
+      }
+      if (bytes.length >= 2 && bytes[0] === 0xff && bytes[1] === 0xfe) {
+        return new TextDecoder("utf-16le").decode(bytes.subarray(2));
+      }
+      try {
+        return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+      } catch (error) {
+        try {
+          return new TextDecoder("gb18030").decode(bytes);
+        } catch (fallbackError) {
+          return new TextDecoder().decode(bytes);
+        }
+      }
+    }
+
+    function parseCsvText(text) {
+      const normalized = String(text || "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+      const rows = [];
+      let row = [];
+      let cell = "";
+      let inQuotes = false;
+      for (let index = 0; index < normalized.length; index += 1) {
+        const char = normalized[index];
+        if (char === '"') {
+          if (inQuotes && normalized[index + 1] === '"') {
+            cell += '"';
+            index += 1;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (char === "," && !inQuotes) {
+          row.push(cell);
+          cell = "";
+        } else if (char === "\n" && !inQuotes) {
+          row.push(cell);
+          rows.push(row);
+          row = [];
+          cell = "";
+        } else {
+          cell += char;
+        }
+      }
+      row.push(cell);
+      rows.push(row);
+      return rows;
+    }
+
+    function shouldUseCsvFallback(csvText, sheetRows) {
+      if (!/[^\x00-\x7F]/.test(csvText || "")) return false;
+      const parsedText = (sheetRows || []).flat().map((cell) => String(cell ?? "")).join("");
+      return !/[^\x00-\x7F]/.test(parsedText) || /\?{2,}/.test(parsedText);
+    }
+
+    async function handleFile(file) {
+      if (!validateFile(file)) {
+        alert(t("fileInvalid"));
+        updateFileStatus("fileInvalid");
+        return;
+      }
+      try {
+        await loadSheetJS();
+      } catch (error) {
+        console.error(error);
+        updateFileStatus("fileError");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onerror = () => {
+        alert(t("fileError"));
+        updateFileStatus("fileError");
+      };
+      reader.onload = () => {
+        try {
+          const isCsv = /\.csv$/i.test(file.name || "");
+          const csvText = isCsv ? decodeCsvArrayBuffer(reader.result) : "";
+          const workbook = isCsv ? XLSX.read(csvText, { type: "string" }) : XLSX.read(reader.result, { type: "array" });
+          const firstSheetName = workbook.SheetNames[0];
+          if (!firstSheetName) throw new Error("empty workbook");
+          const worksheet = workbook.Sheets[firstSheetName];
+          let rawRows = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: "" });
+          if (isCsv && shouldUseCsvFallback(csvText, rawRows)) rawRows = parseCsvText(csvText);
+          const aoa = normalizeAoa(rawRows);
+          if (!aoa.length) {
+            alert(t("fileEmpty"));
+            updateFileStatus("fileEmpty");
+            return;
+          }
+          state.fileAoa = aoa;
+          state.currentFileName = file.name;
+          const markdown = aoaToMarkdown(aoa);
+          const output = document.getElementById("fileMarkdownOutput");
+          output.value = markdown;
+          renderPreview("filePreview", aoa, "fileIdle");
+          setFileOutputEnabled(true);
+          updateFileStatus("fileParsed");
+        } catch (error) {
+          console.error(error);
+          alert(t("fileError"));
+          updateFileStatus("fileError");
+        }
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    function updateFileMarkdownFromText() {
+      const output = document.getElementById("fileMarkdownOutput");
+      const aoa = markdownToAoa(output?.value || "");
+      state.fileAoa = aoa;
+      renderPreview("filePreview", aoa, "fileIdle");
+      setFileOutputEnabled(Boolean((output?.value || "").trim()));
+    }
+
+    async function copyGeneratedMarkdown() {
+      const output = document.getElementById("fileMarkdownOutput");
+      const text = output?.value || "";
+      if (!text.trim()) return;
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          output.focus();
+          output.select();
+          const ok = document.execCommand("copy");
+          if (!ok) throw new Error("copy failed");
+          window.getSelection()?.removeAllRanges();
+        }
+        updateFileStatus("markdownCopied");
+      } catch (error) {
+        updateFileStatus("markdownCopyFailed");
+      }
+    }
+
+    function downloadGeneratedMarkdown() {
+      const output = document.getElementById("fileMarkdownOutput");
+      const text = output?.value || "";
+      if (!text.trim()) return;
+      downloadBlob(text, "text/markdown;charset=utf-8", "table.md");
+      updateFileStatus("markdownDownloaded");
     }
 
     function openSponsorModal(event) {
       if (event && typeof event.preventDefault === "function") event.preventDefault();
+      try {
+        if (window.MicroToolsSponsor && typeof window.MicroToolsSponsor.openModal === "function") {
+          window.MicroToolsSponsor.openModal(event);
+          return;
+        }
+      } catch (error) {
+        console.warn("Sponsor modal failed to open", error);
+      }
       const modal = document.getElementById("sponsorModal");
       if (modal) {
         modal.classList.remove("hidden");
@@ -688,7 +867,16 @@
       }
     }
 
-    function closeSponsorModal() {
+    function closeSponsorModal(event) {
+      if (event && typeof event.preventDefault === "function") event.preventDefault();
+      try {
+        if (window.MicroToolsSponsor && typeof window.MicroToolsSponsor.closeModal === "function") {
+          window.MicroToolsSponsor.closeModal(event);
+          return;
+        }
+      } catch (error) {
+        console.warn("Sponsor modal failed to close", error);
+      }
       const modal = document.getElementById("sponsorModal");
       if (modal) {
         modal.classList.add("hidden");
@@ -697,26 +885,51 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
+      currentLanguage = getInitialLanguage();
       document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
       document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
+      document.querySelectorAll("[data-mode-tab]").forEach((button) => {
+        button.addEventListener("click", () => switchMode(button.dataset.modeTab));
+      });
       document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
       document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
       document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
-        if (event.target?.id === "sponsorModal") closeSponsorModal();
+        if (event.target?.id === "sponsorModal") closeSponsorModal(event);
       });
+      document.getElementById("markdownInput")?.addEventListener("input", () => updateMarkdownMode());
+      document.getElementById("markdownSampleBtn")?.addEventListener("click", loadMarkdownSample);
+      document.getElementById("markdownClearBtn")?.addEventListener("click", clearMarkdown);
+      document.getElementById("downloadCsvBtn")?.addEventListener("click", downloadCsv);
+      document.getElementById("downloadXlsxBtn")?.addEventListener("click", downloadXlsx);
+      document.getElementById("fileInput")?.addEventListener("change", (event) => {
+        const file = event.target.files && event.target.files[0];
+        if (file) handleFile(file);
+      });
+      const dropZone = document.getElementById("dropZone");
+      ["dragenter", "dragover"].forEach((name) => {
+        dropZone?.addEventListener(name, (event) => {
+          event.preventDefault();
+          dropZone.classList.add("border-cyan-500", "bg-cyan-100", "dark:bg-cyan-400/20");
+        });
+      });
+      ["dragleave", "drop"].forEach((name) => {
+        dropZone?.addEventListener(name, (event) => {
+          event.preventDefault();
+          dropZone.classList.remove("border-cyan-500", "bg-cyan-100", "dark:bg-cyan-400/20");
+        });
+      });
+      dropZone?.addEventListener("drop", (event) => {
+        const file = event.dataTransfer?.files && event.dataTransfer.files[0];
+        if (file) handleFile(file);
+      });
+      document.getElementById("fileMarkdownOutput")?.addEventListener("input", updateFileMarkdownFromText);
+      document.getElementById("copyMdBtn")?.addEventListener("click", copyGeneratedMarkdown);
+      document.getElementById("downloadMdBtn")?.addEventListener("click", downloadGeneratedMarkdown);
 
-      document.getElementById("columnCount")?.addEventListener("change", setCountsFromInputs);
-      document.getElementById("rowCount")?.addEventListener("change", setCountsFromInputs);
-      document.getElementById("addColumnBtn")?.addEventListener("click", addColumn);
-      document.getElementById("addRowBtn")?.addEventListener("click", addRow);
-      document.getElementById("removeColumnBtn")?.addEventListener("click", removeColumn);
-      document.getElementById("removeRowBtn")?.addEventListener("click", removeRow);
-      document.getElementById("sampleBtn")?.addEventListener("click", loadSample);
-      document.getElementById("clearBtn")?.addEventListener("click", clearCells);
-      document.getElementById("copyBtn")?.addEventListener("click", copyMarkdown);
-      document.getElementById("downloadBtn")?.addEventListener("click", downloadMarkdown);
-
-      applyLanguage(getInitialLanguage());
+      document.getElementById("markdownInput").value = markdownSample;
+      updateMarkdownMode("markdownSampleLoaded");
+      setFileOutputEnabled(false);
+      applyLanguage();
     });
   </script>
   <script>
@@ -754,11 +967,8 @@
       if (event) event.stopPropagation();
       const menu = document.getElementById("shareToolMenu");
       if (!menu) return;
-      if (menu.classList.contains("hidden")) {
-        openShareMenu();
-      } else {
-        closeShareMenu();
-      }
+      if (menu.classList.contains("hidden")) openShareMenu();
+      else closeShareMenu();
     }
 
     function closeShareMenuOnOutsideClick(event) {
@@ -789,13 +999,9 @@
       const tag = control.tagName.toLowerCase();
       const type = (control.getAttribute("type") || tag).toLowerCase();
       const field = { id: control.id, type };
-      if (type === "checkbox" || type === "radio") {
-        field.checked = Boolean(control.checked);
-      } else if (control.isContentEditable) {
-        field.value = control.textContent || "";
-      } else {
-        field.value = control.value || "";
-      }
+      if (type === "checkbox" || type === "radio") field.checked = Boolean(control.checked);
+      else if (control.isContentEditable) field.value = control.textContent || "";
+      else field.value = control.value || "";
       return field;
     }
 
@@ -808,25 +1014,16 @@
     }
 
     function shareUrl(url) {
-      const shareData = {
-        title: document.title,
-        url
-      };
+      const shareData = { title: document.title, url };
       if (navigator.share) {
-        navigator.share(shareData)
-          .then(() => console.log("分享成功"))
-          .catch((error) => console.log("分享失败", error));
+        navigator.share(shareData).then(() => console.log("share ok")).catch((error) => console.log("share failed", error));
         return;
       }
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url)
-          .then(() => {
-            alert(getShareMessage("shareCopied"));
-          })
-          .catch((err) => {
-            console.error("复制失败: ", err);
-            window.prompt(getShareMessage("shareCopyPrompt"), url);
-          });
+        navigator.clipboard.writeText(url).then(() => alert(getShareMessage("shareCopied"))).catch((err) => {
+          console.error("copy failed: ", err);
+          window.prompt(getShareMessage("shareCopyPrompt"), url);
+        });
         return;
       }
       window.prompt(getShareMessage("shareCopyPrompt"), url);
@@ -834,8 +1031,7 @@
 
     function shareToolOnly() {
       closeShareMenu();
-      const cleanUrl = window.location.href.split("?")[0];
-      shareUrl(cleanUrl);
+      shareUrl(getCleanShareUrl());
     }
 
     function shareWithData() {
@@ -850,9 +1046,7 @@
         alert(getShareMessage("shareDataTooLarge"));
         return;
       }
-      const encodedData = encodeShareText(rawData);
-      const stateUrl = window.location.href.split("?")[0] + "?d=" + encodedData;
-      shareUrl(stateUrl);
+      shareUrl(getCleanShareUrl() + "?d=" + encodeShareText(rawData));
     }
 
     function applySharedField(field) {
@@ -860,13 +1054,9 @@
       const control = document.getElementById(field.id);
       if (!control) return;
       const type = (control.getAttribute("type") || control.tagName).toLowerCase();
-      if (type === "checkbox" || type === "radio") {
-        control.checked = Boolean(field.checked);
-      } else if (control.isContentEditable) {
-        control.textContent = field.value || "";
-      } else if (Object.prototype.hasOwnProperty.call(field, "value")) {
-        control.value = field.value || "";
-      }
+      if (type === "checkbox" || type === "radio") control.checked = Boolean(field.checked);
+      else if (control.isContentEditable) control.textContent = field.value || "";
+      else if (Object.prototype.hasOwnProperty.call(field, "value")) control.value = field.value || "";
       control.dispatchEvent(new Event("input", { bubbles: true }));
       control.dispatchEvent(new Event("change", { bubbles: true }));
     }
@@ -884,6 +1074,9 @@
     }
 
     function initializeShareMenu() {
+      document.getElementById("shareToolBtn")?.addEventListener("click", toggleShareMenu);
+      document.getElementById("shareToolOnlyBtn")?.addEventListener("click", shareToolOnly);
+      document.getElementById("shareWithDataBtn")?.addEventListener("click", shareWithData);
       document.addEventListener("click", closeShareMenuOnOutsideClick);
       document.addEventListener("keydown", (event) => {
         if (event.key === "Escape") closeShareMenu();

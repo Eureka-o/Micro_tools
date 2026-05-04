@@ -6,6 +6,14 @@ Use it here: [https://mymicrotools.xyz](https://mymicrotools.xyz)
 
 ## Update Notices
 
+### 2026-05-04 - Markdown / Excel / CSV Converter Upgrade
+
+Upgraded the Markdown table tool into a browser-local bidirectional workstation:
+
+- Extract Markdown tables from pasted text and export CSV/XLSX.
+- Convert local CSV/XLSX files into valid Markdown tables.
+- Keep file parsing in browser memory with SheetJS and FileReader.
+
 ### 2026-05-04 - YAML/JSON And LLM/NPU Tools
 
 Added two new browser-based tools:
