@@ -139,6 +139,13 @@
 
   <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 md:py-14 lg:px-8">
     <section class="rounded-[2rem] border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.035] p-3 shadow-2xl shadow-black/20 backdrop-blur-md sm:p-4 md:p-5" aria-label="Tool search">
+      <div class="mb-4 flex w-full justify-end">
+        <button id="favoriteFilterBtn" type="button" class="favorite-filter inline-flex min-h-11 w-auto shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-300 dark:hover:bg-white/[0.08]" data-category-filter="favorites" aria-pressed="false">
+          <span aria-hidden="true" data-favorite-tab-icon class="text-base leading-none">☆</span>
+          <span>Favorites</span>
+          <span id="favoriteFilterCount" class="inline-flex min-h-6 min-w-6 items-center justify-center rounded-full bg-cyan-100 px-2 text-xs font-bold text-cyan-700 dark:bg-cyan-400/10 dark:text-cyan-300">0</span>
+        </button>
+      </div>
       <label for="searchInput" class="sr-only">Search tools</label>
       <div class="flex w-full flex-col items-stretch gap-4 md:flex-row md:items-center">
         <div class="relative min-w-0 md:flex-1">
@@ -153,16 +160,6 @@
         </div>
     </div>
           <div id="categoryTabs" class="mt-5 flex flex-wrap gap-2 overflow-visible pb-0" aria-label="Tool categories"><button type="button" class="category-tab min-h-10 min-w-0 whitespace-nowrap rounded-full border px-3 py-2 text-sm transition-all duration-300 sm:px-4 sm:py-1.5 border-cyan-500/50 bg-white dark:bg-white/10 text-gray-900 dark:text-white font-medium shadow-[0_0_22px_-12px_rgba(6,182,212,0.9)]" data-category-filter="all" aria-pressed="true">All</button><button type="button" class="category-tab min-h-10 min-w-0 whitespace-nowrap rounded-full border px-3 py-2 text-sm transition-all duration-300 sm:px-4 sm:py-1.5 border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white" data-category-filter="text" aria-pressed="false">Text</button><button type="button" class="category-tab min-h-10 min-w-0 whitespace-nowrap rounded-full border px-3 py-2 text-sm transition-all duration-300 sm:px-4 sm:py-1.5 border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white" data-category-filter="data" aria-pressed="false">Data</button><button type="button" class="category-tab min-h-10 min-w-0 whitespace-nowrap rounded-full border px-3 py-2 text-sm transition-all duration-300 sm:px-4 sm:py-1.5 border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white" data-category-filter="crypto" aria-pressed="false">Crypto</button><button type="button" class="category-tab min-h-10 min-w-0 whitespace-nowrap rounded-full border px-3 py-2 text-sm transition-all duration-300 sm:px-4 sm:py-1.5 border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white" data-category-filter="dev" aria-pressed="false">Dev</button></div>
-    </section>
-
-    <section id="pinned-section" class="mt-10 hidden rounded-[2rem] border border-cyan-400/20 bg-cyan-50/60 p-4 shadow-xl shadow-cyan-950/5 backdrop-blur-md dark:bg-cyan-400/[0.04] sm:p-5" aria-label="Favorite tools">
-      <div class="mb-4 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-        <div class="min-w-0">
-          <h2 class="text-lg font-bold text-slate-950 dark:text-white">Favorites</h2>
-          <p class="mt-1 text-xs leading-5 text-slate-500 dark:text-slate-500">Favorite data is stored only in this browser on your current device. No cloud tracking. Clearing browser data or switching devices will remove these favorites.</p>
-        </div>
-      </div>
-      <div id="pinned-grid" class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
     </section>
 
     <section id="toolGrid" class="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" aria-label="Tool list">
@@ -260,14 +257,38 @@
       return String(value || '').toLowerCase().replace(/[-_\s]+/g, '');
     }
 
+    const favoriteCopy = {"add":"Favorite","remove":"Remove","added":"Added to favorites","removed":"Removed from favorites","saveAria":"Save favorite","removeAria":"Remove favorite","emptyNormal":"No matching tools. Try a shorter keyword.","emptyFavorites":"No matching favorite tools yet. Tap ☆ on a card to add one.","storageFallback":"Favorites are unavailable. Please allow local storage in this browser."};
+    let pendingFavoriteAction = null;
+    let favoriteToastTimer = null;
+
+    function getFavoritesStorage() {
+      return window.MicroToolsStorage || null;
+    }
+
+    function createFavoriteButton(tool) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.dataset.favoriteToggle = tool.name;
+      button.className = 'favorite-toggle absolute left-4 top-4 z-20 inline-flex min-h-10 min-w-10 items-center justify-center gap-1 rounded-full border border-gray-200 bg-white/95 px-3 text-sm font-bold text-slate-700 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-cyan-400/70 hover:bg-cyan-50 hover:text-cyan-700 active:scale-95 dark:border-white/10 dark:bg-slate-950/90 dark:text-slate-200 dark:hover:bg-cyan-400/10 dark:hover:text-cyan-200';
+      button.setAttribute('aria-label', favoriteCopy.saveAria);
+      button.setAttribute('title', favoriteCopy.saveAria);
+      button.setAttribute('aria-pressed', 'false');
+      button.innerHTML = '<span data-favorite-icon aria-hidden="true" class="text-base leading-none">☆</span><span data-favorite-label class="hidden sm:inline">' + favoriteCopy.add + '</span>';
+      return button;
+    }
+
     function createCard(tool) {
+      const shell = document.createElement('article');
+      shell.className = 'tool-card relative h-full transition-all duration-300';
+      shell.dataset.toolId = tool.name;
+      shell.dataset.category = tool.category || 'data';
+      shell.dataset.search = normalizeText(tool.name + ' ' + (tool.displayName || '') + ' ' + tool.description);
+
       const link = document.createElement('a');
       link.href = './' + tool.name;
       link.title = (document.documentElement.lang || '').startsWith('zh') ? `打开在线 ${tool.displayName || tool.name} 解决方案，无需上传，浏览器本地处理` : `Open ${tool.displayName || tool.name} online tool, no upload required`;
-      link.className = 'card group relative flex h-full min-h-48 flex-col rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.035] p-6 pt-11 shadow-2xl shadow-black/10 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/50 hover:bg-white dark:hover:bg-white/[0.06] hover:shadow-[0_0_30px_-10px_rgba(6,182,212,0.3)] active:scale-95 focus:outline-none focus:ring-2 focus:ring-cyan-300/50 md:p-8 md:pt-12';
-      link.dataset.toolId = tool.name;
-      link.dataset.category = tool.category || 'data';
-      link.dataset.search = normalizeText(tool.name + ' ' + (tool.displayName || '') + ' ' + tool.description);
+      link.className = 'card group relative flex h-full min-h-48 flex-col rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.035] p-6 pt-16 shadow-2xl shadow-black/10 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/50 hover:bg-white dark:hover:bg-white/[0.06] hover:shadow-[0_0_30px_-10px_rgba(6,182,212,0.3)] active:scale-95 focus:outline-none focus:ring-2 focus:ring-cyan-300/50 md:p-8 md:pt-16';
+      link.dataset.toolLink = tool.name;
 
       const localBadge = document.createElement('span');
       localBadge.className = 'absolute right-4 top-4 inline-flex items-center gap-1 rounded-md border border-gray-200 bg-gray-50 px-2 py-0.5 text-[10px] text-gray-500 transition-colors group-hover:border-emerald-500/30 dark:border-white/5 dark:bg-white/5';
@@ -284,44 +305,148 @@
       link.appendChild(localBadge);
       link.appendChild(title);
       link.appendChild(description);
-      return link;
+      shell.appendChild(link);
+      shell.appendChild(createFavoriteButton(tool));
+      return shell;
     }
 
-
-    function removeCloneIds(node) {
-      if (!node || node.nodeType !== 1) return;
-      node.removeAttribute('id');
-      node.querySelectorAll('[id]').forEach(child => child.removeAttribute('id'));
-    }
-
-    function renderPinnedFavorites() {
-      const storage = window.MicroToolsStorage;
-      const section = document.getElementById('pinned-section');
-      const pinnedGrid = document.getElementById('pinned-grid');
-      if (!storage || !section || !pinnedGrid || !grid) return;
-
-      pinnedGrid.innerHTML = '';
-      const favorites = storage.getFavorites();
-      if (!favorites.length) {
-        section.classList.add('hidden');
-        return;
+    function setCardFavoriteVisual(card, active) {
+      if (!card) return;
+      const link = card.querySelector('a.card');
+      const button = card.querySelector('[data-favorite-toggle]');
+      if (link) {
+        link.classList.toggle('border-cyan-400/60', active);
+        link.classList.toggle('bg-cyan-50/70', active);
+        link.classList.toggle('dark:bg-cyan-400/[0.06]', active);
+        link.classList.toggle('ring-1', active);
+        link.classList.toggle('ring-cyan-300/35', active);
       }
+      if (button) {
+        const icon = button.querySelector('[data-favorite-icon]');
+        const label = button.querySelector('[data-favorite-label]');
+        button.setAttribute('aria-pressed', String(active));
+        button.setAttribute('aria-label', active ? favoriteCopy.removeAria : favoriteCopy.saveAria);
+        button.setAttribute('title', active ? favoriteCopy.removeAria : favoriteCopy.saveAria);
+        if (icon) icon.textContent = active ? '★' : '☆';
+        if (label) label.textContent = active ? favoriteCopy.remove : favoriteCopy.add;
+        button.classList.toggle('border-cyan-400/70', active);
+        button.classList.toggle('bg-cyan-400', active);
+        button.classList.toggle('text-slate-950', active);
+        button.classList.toggle('shadow-[0_0_24px_-10px_rgba(6,182,212,0.9)]', active);
+        button.classList.toggle('dark:bg-cyan-400', active);
+        button.classList.toggle('dark:text-slate-950', active);
+      }
+    }
 
-      const cards = Array.from(grid.querySelectorAll('a.card'));
-      const fragment = document.createDocumentFragment();
-      favorites.forEach(id => {
-        const source = cards.find(card => card.dataset.toolId === id);
-        if (!source) return;
-
-        const clone = source.cloneNode(true);
-        removeCloneIds(clone);
-        clone.classList.remove('hidden');
-        clone.dataset.pinnedClone = 'true';
-        fragment.appendChild(clone);
+    function refreshFavoriteState() {
+      const storage = getFavoritesStorage();
+      if (!storage) return;
+      const favorites = storage.getFavorites();
+      const favoriteSet = new Set(favorites);
+      document.querySelectorAll('[data-tool-id]').forEach(card => {
+        setCardFavoriteVisual(card, favoriteSet.has(card.dataset.toolId));
       });
+      const count = document.getElementById('favoriteFilterCount');
+      if (count) count.textContent = String(favorites.length);
+      const tabIcon = document.querySelector('[data-favorite-tab-icon]');
+      if (tabIcon) tabIcon.textContent = favorites.length ? '★' : '☆';
+    }
 
-      pinnedGrid.appendChild(fragment);
-      section.classList.toggle('hidden', pinnedGrid.children.length === 0);
+    function showFavoriteToast(message) {
+      const toast = document.getElementById('favoriteToast');
+      if (!toast) return;
+      window.clearTimeout(favoriteToastTimer);
+      toast.textContent = message;
+      toast.classList.remove('hidden');
+      favoriteToastTimer = window.setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 2600);
+    }
+
+    function showFavoriteNotice(action) {
+      pendingFavoriteAction = action || null;
+      const modal = document.getElementById('favoriteNoticeModal');
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      modal.setAttribute('aria-hidden', 'false');
+      document.getElementById('favoriteNoticeOkBtn')?.focus();
+    }
+
+    function closeFavoriteNotice() {
+      pendingFavoriteAction = null;
+      const modal = document.getElementById('favoriteNoticeModal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    function acknowledgeFavoriteNotice() {
+      const storage = getFavoritesStorage();
+      if (storage?.markFavoriteNoticeSeen) storage.markFavoriteNoticeSeen();
+      const action = pendingFavoriteAction;
+      closeFavoriteNotice();
+      if (action?.type === 'toggle') applyFavoriteToggle(action.id);
+      if (action?.type === 'filter') applyCategoryFilter('favorites');
+    }
+
+    function requireFavoriteNotice(action) {
+      const storage = getFavoritesStorage();
+      if (!storage) {
+        showFavoriteToast(favoriteCopy.storageFallback);
+        return true;
+      }
+      if (storage.hasSeenFavoriteNotice && !storage.hasSeenFavoriteNotice()) {
+        showFavoriteNotice(action);
+        return true;
+      }
+      return false;
+    }
+
+    function applyFavoriteToggle(id) {
+      const storage = getFavoritesStorage();
+      if (!storage || !id) return;
+      const active = storage.toggleFavorite(id);
+      refreshFavoriteState();
+      filterTools();
+      showFavoriteToast(active ? favoriteCopy.added : favoriteCopy.removed);
+    }
+
+    function handleFavoriteClick(event) {
+      const button = event.target.closest('[data-favorite-toggle]');
+      if (!button) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const id = button.dataset.favoriteToggle;
+      if (requireFavoriteNotice({ type: 'toggle', id })) return;
+      applyFavoriteToggle(id);
+    }
+
+    function applyCategoryFilter(category) {
+      activeCategory = category || 'all';
+      updateCategoryTabs();
+      filterTools();
+    }
+
+    function updateCategoryTabs() {
+      if (!categoryTabs) return;
+      const tabMotionClass = 'hover:-translate-y-1 hover:border-cyan-500/50 hover:shadow-[0_0_30px_-10px_rgba(6,182,212,0.3)] active:scale-95';
+      const activeTabClass = `category-tab min-h-10 min-w-0 whitespace-nowrap rounded-full border px-3 py-2 text-sm transition-all duration-300 ${tabMotionClass} sm:px-4 sm:py-1.5 border-cyan-500/50 bg-white dark:bg-white/10 text-gray-900 dark:text-white font-medium shadow-[0_0_22px_-12px_rgba(6,182,212,0.9)]`;
+      const idleTabClass = `category-tab min-h-10 min-w-0 whitespace-nowrap rounded-full border px-3 py-2 text-sm transition-all duration-300 ${tabMotionClass} sm:px-4 sm:py-1.5 border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white`;
+      categoryTabs.querySelectorAll('[data-category-filter]').forEach(tab => {
+        const selected = tab.dataset.categoryFilter === activeCategory;
+        tab.setAttribute('aria-pressed', String(selected));
+        tab.className = selected ? activeTabClass : idleTabClass;
+      });
+      const favoriteButton = document.getElementById('favoriteFilterBtn');
+      if (favoriteButton) {
+        const favoriteActive = activeCategory === 'favorites';
+        favoriteButton.setAttribute('aria-pressed', String(favoriteActive));
+        favoriteButton.className = favoriteActive
+          ? 'favorite-filter inline-flex min-h-11 w-auto shrink-0 items-center justify-center gap-2 rounded-full border border-cyan-500/60 bg-white px-4 text-sm font-bold text-slate-950 shadow-[0_0_28px_-14px_rgba(6,182,212,0.95)] transition-all duration-300 hover:-translate-y-0.5 hover:border-cyan-400/70 active:scale-95 dark:bg-white/10 dark:text-white'
+          : 'favorite-filter inline-flex min-h-11 w-auto shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-300 dark:hover:bg-white/[0.08]';
+      }
     }
 
     function renderTools() {
@@ -331,43 +456,56 @@
       grid.appendChild(fragment);
       totalCount.textContent = String(tools.length);
       totalCountHero.textContent = String(tools.length);
+      refreshFavoriteState();
       filterTools();
-      renderPinnedFavorites();
     }
 
     function filterTools() {
+      const storage = getFavoritesStorage();
+      const favoriteSet = new Set(storage ? storage.getFavorites() : []);
       const query = normalizeText(searchInput.value);
       let count = 0;
       Array.from(grid.children).forEach(card => {
         const matchedSearch = !query || card.dataset.search.includes(query);
-        const matchedCategory = activeCategory === 'all' || card.dataset.category === activeCategory;
+        const matchedCategory = activeCategory === 'all' || (activeCategory === 'favorites' ? favoriteSet.has(card.dataset.toolId) : card.dataset.category === activeCategory);
         const matched = matchedSearch && matchedCategory;
         card.classList.toggle('hidden', !matched);
         if (matched) count += 1;
       });
       visibleCount.textContent = String(count);
-      emptyState.classList.toggle('hidden', count !== 0);
+      if (emptyState) {
+        emptyState.textContent = activeCategory === 'favorites' ? favoriteCopy.emptyFavorites : favoriteCopy.emptyNormal;
+        emptyState.classList.toggle('hidden', count !== 0);
+      }
+      refreshFavoriteState();
     }
 
     if (categoryTabs) {
-      const tabMotionClass = 'hover:-translate-y-1 hover:border-cyan-500/50 hover:shadow-[0_0_30px_-10px_rgba(6,182,212,0.3)] active:scale-95';
-      const activeTabClass = `category-tab min-h-10 min-w-0 whitespace-nowrap rounded-full border px-3 py-2 text-sm transition-all duration-300 ${tabMotionClass} sm:px-4 sm:py-1.5 border-cyan-500/50 bg-white dark:bg-white/10 text-gray-900 dark:text-white font-medium shadow-[0_0_22px_-12px_rgba(6,182,212,0.9)]`;
-      const idleTabClass = `category-tab min-h-10 min-w-0 whitespace-nowrap rounded-full border px-3 py-2 text-sm transition-all duration-300 ${tabMotionClass} sm:px-4 sm:py-1.5 border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white`;
-      categoryTabs.querySelectorAll('[data-category-filter]').forEach(tab => {
-        tab.classList.add(...tabMotionClass.split(' '));
-      });
+      updateCategoryTabs();
       categoryTabs.addEventListener('click', (event) => {
         const button = event.target.closest('[data-category-filter]');
         if (!button) return;
-        activeCategory = button.dataset.categoryFilter || 'all';
-        categoryTabs.querySelectorAll('[data-category-filter]').forEach(tab => {
-          const selected = tab === button;
-          tab.setAttribute('aria-pressed', String(selected));
-          tab.className = selected ? activeTabClass : idleTabClass;
-        });
-        filterTools();
+        const nextCategory = button.dataset.categoryFilter || 'all';
+        applyCategoryFilter(nextCategory);
       });
     }
+    document.getElementById('favoriteFilterBtn')?.addEventListener('click', () => {
+      if (activeCategory === 'favorites') {
+        applyCategoryFilter('all');
+        return;
+      }
+      if (requireFavoriteNotice({ type: 'filter' })) return;
+      applyCategoryFilter('favorites');
+    });
+
+    grid.addEventListener('click', handleFavoriteClick);
+    document.addEventListener('click', (event) => {
+      if (event.target.closest('#favoriteNoticeOkBtn')) {
+        acknowledgeFavoriteNotice();
+        return;
+      }
+      if (event.target?.id === 'favoriteNoticeModal') closeFavoriteNotice();
+    });
 
     searchInput.addEventListener('input', filterTools);
     document.addEventListener('keydown', (event) => {
@@ -379,6 +517,19 @@
     });
     renderTools();
   </script>
+  <div id="favoriteNoticeModal" class="fixed inset-0 z-[120] hidden items-end justify-center bg-slate-950/70 px-4 py-4 backdrop-blur-xl sm:items-center sm:py-8" aria-hidden="true">
+    <div class="w-full max-w-md rounded-3xl border border-cyan-300/20 bg-white p-5 text-slate-900 shadow-2xl shadow-cyan-950/25 dark:bg-slate-950 dark:text-white sm:p-6" role="dialog" aria-modal="true" aria-labelledby="favoriteNoticeTitle">
+      <div class="flex items-start gap-3">
+        <span aria-hidden="true" class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-cyan-400 text-xl font-black text-slate-950 shadow-sm">★</span>
+        <div class="min-w-0">
+          <h2 id="favoriteNoticeTitle" class="text-lg font-black tracking-tight">Favorites stay in this browser</h2>
+          <p class="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">Favorites use browser local storage on this device. They are not uploaded and they do not sync across devices. Clearing browser data, private mode, or switching devices may remove them.</p>
+        </div>
+      </div>
+      <button id="favoriteNoticeOkBtn" type="button" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95">I Understand</button>
+    </div>
+  </div>
+  <div id="favoriteToast" class="fixed left-1/2 bottom-5 z-[130] hidden w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 rounded-2xl border border-cyan-300/30 bg-slate-950 px-4 py-3 text-center text-sm font-semibold text-white shadow-2xl shadow-cyan-950/30 transition sm:bottom-8" role="status" aria-live="polite"></div>
     <div id="sponsorModal" class="fixed inset-0 z-[100] hidden items-end justify-center bg-black/70 px-4 py-4 backdrop-blur-xl transition-opacity duration-300 sm:items-center sm:py-8" aria-hidden="true">
     <div id="sponsorPanel" data-state="closed" class="relative mx-auto flex max-h-[90vh] w-[90vw] max-w-lg translate-y-8 flex-col overflow-hidden rounded-t-3xl border border-cyan-300/15 bg-white text-gray-900 opacity-0 shadow-[0_0_50px_-12px_rgba(6,182,212,0.5)] backdrop-blur-xl transition-all duration-300 ease-out data-[state=open]:translate-y-0 data-[state=open]:opacity-100 dark:bg-gray-900 dark:text-white sm:max-h-[85vh] sm:rounded-3xl" role="dialog" aria-modal="true" aria-labelledby="sponsorTitle">
       <div class="flex shrink-0 items-center justify-between gap-4 border-b border-gray-200 bg-white px-5 py-4 dark:border-white/10 dark:bg-gray-900 sm:px-7">

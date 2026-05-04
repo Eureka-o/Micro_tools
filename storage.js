@@ -2,6 +2,7 @@
   "use strict";
 
   const FAV_STORAGE_KEY = "micro_tools_fav_v1";
+  const FAV_NOTICE_KEY = "micro_tools_fav_notice_ack_v1";
 
   function normalizeFavoriteId(id) {
     return String(id || "").trim();
@@ -51,6 +52,23 @@
     return getFavorites().includes(target);
   }
 
+  function hasSeenFavoriteNotice() {
+    try {
+      return window.localStorage.getItem(FAV_NOTICE_KEY) === "1";
+    } catch (error) {
+      return true;
+    }
+  }
+
+  function markFavoriteNoticeSeen() {
+    try {
+      window.localStorage.setItem(FAV_NOTICE_KEY, "1");
+    } catch (error) {
+      return false;
+    }
+    return true;
+  }
+
   function toggleFavorite(id) {
     const target = normalizeFavoriteId(id);
     if (!target) return false;
@@ -64,8 +82,11 @@
 
   window.MicroToolsStorage = Object.freeze({
     FAV_STORAGE_KEY,
+    FAV_NOTICE_KEY,
     getFavorites,
     toggleFavorite,
-    isFavorited
+    isFavorited,
+    hasSeenFavoriteNotice,
+    markFavoriteNoticeSeen
   });
 })();

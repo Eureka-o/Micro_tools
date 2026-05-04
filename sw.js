@@ -1,4 +1,4 @@
-const CACHE_NAME = "micro-tools-cache-v20260505-tool-refine-55";
+const CACHE_NAME = "micro-tools-cache-v20260505-favorites-all-55";
 const CACHE_ASSETS = [
   "/",
   "/apple-touch-icon.png",
@@ -8,6 +8,7 @@ const CACHE_ASSETS = [
   "/assets/images/og-banner.png",
   "/assets/logo.png",
   "/assets/qrcode-generator-2.0.4.js",
+  "/assets/favorites.js",
   "/assets/tool-upgrades.js",
   "/assets/vendor/fonts/KaTeX_AMS-Regular.ttf",
   "/assets/vendor/fonts/KaTeX_AMS-Regular.woff",

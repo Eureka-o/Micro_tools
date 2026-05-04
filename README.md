@@ -19,6 +19,7 @@ Upgraded several lightweight pages into engineering-oriented local tools:
 - Kept front-end decoration helpers, the chords generator, UTM builder, and the upgraded Pomodoro timer as intentional retained tools.
 - Added layout clamps for upgraded tools so status blocks, buttons, and generated output panels do not overlap on narrow screens.
 - Added shared local tool logic under `assets/tool-upgrades.js` and cached it for offline use.
+- Added browser-local favorites across the homepage and individual tool pages, including a favorite-only filter, first-use storage notice, and local add/remove feedback.
 
 ### 2026-05-04 - Homepage Sharing And Social Preview
 
