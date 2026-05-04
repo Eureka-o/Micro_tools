@@ -13,6 +13,7 @@ Added a cleaner sharing experience for the homepage:
 - Added a homepage share action for quickly sending the site to friends or teammates.
 - Added a dedicated social preview image for shared links.
 - Kept the homepage layout clean by using the preview image for social cards instead of visible page content.
+- Optimized some animation effects.
 
 ### 2026-05-04 - Markdown / Excel / CSV Converter Upgrade
 
