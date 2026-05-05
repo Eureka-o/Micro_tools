@@ -10,6 +10,8 @@ Use it here: [https://mymicrotools.xyz](https://mymicrotools.xyz)
 
 Upgraded several lightweight pages into engineering-oriented local tools:
 
+- Chord Generator is now a Chord Workbench with chord tones, inversions, guitar fretboard highlights, piano keyboard highlights, common progressions, and click-to-play Web Audio preview.
+- Refreshed nine older homepage listings so Regex, Hash, QR, SQL, .htaccess, SVG Base64, CSV table, Keycode, and CSS spacing tools use current engineering-oriented names and descriptions.
 - Pomodoro Timer is now an engineering focus sprint timer with task labels, break cycles, local audio cues, and CSV session export.
 - Lorem Ipsum is now a test payload and log fixture generator for JSON, CSV, log lines, and `.env` snippets.
 - Morse, TTS, Fraction, Percentage, and Aspect Ratio pages now target signal encoding, browser diagnostics, PLL ratios, ppm/utilization checks, and framebuffer estimates.

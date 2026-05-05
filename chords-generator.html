@@ -12,9 +12,9 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>和弦生成器 - 开发者工具，纯前端本地运行 | Micro Tools Matrix</title>
-  <meta name="description" content="免费的 和弦生成器，用于开发者工具。工具在浏览器本地运行、无后端上传，结合 和弦生成器 的相关技术能力快速处理任务，保护开发者隐私。">
-  <meta name="keywords" content="和弦生成器, chords, generator, 免费, 纯前端, 本地运行, 无后端, 隐私保护, Micro Tools Matrix">
+  <title>和弦工作台 - Micro Tools Matrix 本地工具箱</title>
+  <meta name="description" content="Micro Tools Matrix 和弦工作台在浏览器本地生成和弦组成音、转位、吉他品格、钢琴键盘、常见进行与 Web Audio 试听，无需上传、断网可用。">
+  <meta name="keywords" content="和弦工作台, 和弦生成器, 吉他和弦, 钢琴和弦, 和弦转位, 浏览器本地处理, Micro Tools Matrix">
   <link rel="stylesheet" href="./style.css">
   <script src="./storage.js"></script>
   <script src="./theme-init.js"></script>
@@ -22,10 +22,10 @@
     {
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
-      "name": "Chords Generator",
+      "name": "和弦工作台",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "Windows, macOS, Android, iOS",
-      "description": "A browser-local basic chord dictionary for guitar and piano chord tones.",
+      "description": "纯前端和弦工作台，支持组成音、转位、吉他品格、钢琴键盘、常见进行与本地试听。",
       "url": "https://mymicrotools.xyz/chords-generator.html",
       "offers": {
         "@type": "Offer",
@@ -40,6 +40,62 @@
     :root { color-scheme: light dark; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
     .tabular-nums { font-variant-numeric: tabular-nums; }
+    .chord-fretboard {
+      display: grid;
+      grid-template-columns: 3.25rem repeat(13, minmax(2.25rem, 1fr));
+      min-width: 43rem;
+    }
+    .chord-fret-cell {
+      min-height: 2.75rem;
+      border-right: 1px solid rgba(148, 163, 184, 0.34);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.28);
+    }
+    .chord-fret-string {
+      min-height: 2.75rem;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.28);
+    }
+    .chord-marker {
+      display: inline-flex;
+      min-width: 2rem;
+      height: 2rem;
+      align-items: center;
+      justify-content: center;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .piano-grid {
+      display: grid;
+      grid-template-columns: repeat(24, minmax(2.2rem, 1fr));
+      gap: 0.25rem;
+      min-width: 46rem;
+    }
+    .piano-key {
+      display: flex;
+      min-height: 7.5rem;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 0.35rem;
+      border-radius: 0.65rem;
+      padding: 0.55rem 0.25rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+    .piano-key.black {
+      min-height: 5.4rem;
+      background: #0f172a;
+      color: #e2e8f0;
+    }
+    .piano-key.white {
+      background: #f8fafc;
+      color: #334155;
+    }
+    .dark .piano-key.white {
+      background: rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+    }
   </style>
 </head>
 <body class="min-h-screen bg-white text-slate-900 antialiased dark:bg-[#030712] dark:text-slate-100">
@@ -51,7 +107,7 @@
         <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
         <span class="min-w-0">
           <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
-          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">和弦生成器</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">和弦工作台</span>
         </span>
       </a>
       <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
@@ -73,364 +129,720 @@
     <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
       <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div class="min-w-0">
-          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
-          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">和弦生成器</h1>
-          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">选择根音、和弦类型和乐器视角，Micro Tools Matrix 会在浏览器内计算基础和弦组成音，无需上传任何输入。</p>
+          <p class="mb-3 text-xs font-semibold uppercase text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地和声工具</p>
+          <h1 class="max-w-full break-words text-2xl font-black text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">和弦工作台</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">选择根音、和弦类型、转位和乐器视角，在浏览器本地生成组成音、音程、吉他品格、钢琴键盘与常见进行，不上传任何输入。</p>
         </div>
         <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
-          <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
-            <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
-            <span data-i18n="localBadge">本地运行</span>
+          <div class="flex flex-wrap gap-2">
+            <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
+              <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
+              <span data-i18n="localBadge">本地运行</span>
+            </div>
+            <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-4 text-sm font-semibold text-amber-800 shadow-sm dark:border-amber-400/20 dark:bg-amber-400/10 dark:text-amber-200">
+              <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18"/><path d="M12 3v18"/><path d="M7 7l10 10"/><path d="M17 7L7 17"/></svg>
+              <span data-i18n="noNetworkBadge">零外联</span>
+            </div>
           </div>
           <div id="shareToolMenuRoot" class="relative shrink-0">
-            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
-              <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="18" cy="5" r="3"></circle>
-                <circle cx="6" cy="12" r="3"></circle>
-                <circle cx="18" cy="19" r="3"></circle>
-                <path d="M8.6 10.7 15.4 6.3"></path>
-                <path d="M8.6 13.3 15.4 17.7"></path>
-              </svg>
+            <button id="shareToolBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
+              <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="M8.6 10.7 15.4 6.3"></path><path d="M8.6 13.3 15.4 17.7"></path></svg>
               <span data-i18n="share">分享</span>
-              <svg aria-hidden="true" class="h-3.5 w-3.5 transition" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z" clip-rule="evenodd"></path>
-              </svg>
             </button>
             <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="分享选项">
-              <button type="button" role="menuitem" onclick="shareToolOnly()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
-                <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200">
-                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg>
-                </span>
-                <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">仅分享工具</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span>
-                </span>
-              </button>
-              <button type="button" role="menuitem" onclick="shareWithData()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
-                <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-400/10 dark:text-cyan-300">
-                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
-                </span>
-                <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">分享工具及当前结果</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">将当前输入或结果写入链接参数</span>
-                </span>
-              </button>
+              <button id="shareToolOnlyOption" type="button" role="menuitem" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]"><span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg></span><span class="min-w-0"><span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">仅分享工具</span><span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span></span></button>
+              <button id="shareWithDataOption" type="button" role="menuitem" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]"><span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-cyan-100 text-cyan-700 dark:bg-cyan-400/10 dark:text-cyan-300"><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg></span><span class="min-w-0"><span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">分享工具及当前结果</span><span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">将当前输入或结果写入链接参数</span></span></button>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="grid gap-5 lg:grid-cols-2">
+    <section class="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
       <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">选择和弦</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">和弦参数</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
         </div>
-
-        <div class="space-y-4">
-          <label class="block">
-            <span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="rootLabel">根音</span>
-            <select id="rootSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" aria-label="根音" data-i18n-aria-label="rootLabel">
-              <option value="C">C</option>
-              <option value="C#">C#</option>
-              <option value="Db">Db</option>
-              <option value="D">D</option>
-              <option value="D#">D#</option>
-              <option value="Eb">Eb</option>
-              <option value="E">E</option>
-              <option value="F">F</option>
-              <option value="F#">F#</option>
-              <option value="Gb">Gb</option>
-              <option value="G">G</option>
-              <option value="G#">G#</option>
-              <option value="Ab">Ab</option>
-              <option value="A">A</option>
-              <option value="A#">A#</option>
-              <option value="Bb">Bb</option>
-              <option value="B">B</option>
-            </select>
-          </label>
-
-          <label class="block">
-            <span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="typeLabel">和弦类型</span>
-            <select id="typeSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" aria-label="和弦类型" data-i18n-aria-label="typeLabel">
-              <option value="maj" data-i18n="typeMaj">大三和弦</option>
-              <option value="min" data-i18n="typeMin">小三和弦</option>
-              <option value="dim" data-i18n="typeDim">减三和弦</option>
-              <option value="aug" data-i18n="typeAug">增三和弦</option>
-              <option value="sus2" data-i18n="typeSus2">挂二和弦</option>
-              <option value="sus4" data-i18n="typeSus4">挂四和弦</option>
-              <option value="6" data-i18n="type6">六和弦</option>
-              <option value="m6" data-i18n="typeM6">小六和弦</option>
-              <option value="7" data-i18n="type7">属七和弦</option>
-              <option value="maj7" data-i18n="typeMaj7">大七和弦</option>
-              <option value="m7" data-i18n="typeM7">小七和弦</option>
-              <option value="m7b5" data-i18n="typeM7b5">半减七和弦</option>
-              <option value="dim7" data-i18n="typeDim7">减七和弦</option>
-              <option value="add9" data-i18n="typeAdd9">加九和弦</option>
-              <option value="9" data-i18n="type9">九和弦</option>
-            </select>
-          </label>
-
-          <label class="block">
-            <span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="instrumentLabel">乐器视角</span>
-            <select id="instrumentSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" aria-label="乐器视角" data-i18n-aria-label="instrumentLabel">
-              <option value="guitar" data-i18n="instrumentGuitar">吉他</option>
-              <option value="piano" data-i18n="instrumentPiano">钢琴</option>
-            </select>
-          </label>
-
-          <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 text-sm leading-6 text-slate-600 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-400">
-            <p class="font-semibold text-slate-800 dark:text-slate-200" data-i18n="tipTitle">基础说明</p>
-            <p class="mt-1" data-i18n="tipBody">本工具用于快速查询组成音与基础演奏提示，不替代完整乐谱或复杂转位指法。</p>
-          </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="block"><span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="rootLabel">根音</span><select id="rootSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100" aria-label="根音" data-i18n-aria-label="rootLabel"><option value="C">C</option>
+                <option value="C#">C#</option>
+                <option value="Db">Db</option>
+                <option value="D">D</option>
+                <option value="D#">D#</option>
+                <option value="Eb">Eb</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+                <option value="F#">F#</option>
+                <option value="Gb">Gb</option>
+                <option value="G">G</option>
+                <option value="G#">G#</option>
+                <option value="Ab">Ab</option>
+                <option value="A">A</option>
+                <option value="A#">A#</option>
+                <option value="Bb">Bb</option>
+                <option value="B">B</option></select></label>
+          <label class="block"><span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="typeLabel">和弦类型</span><select id="typeSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100" aria-label="和弦类型" data-i18n-aria-label="typeLabel"><option value="6" data-i18n="type6">六和弦</option>
+                <option value="7" data-i18n="type7">属七和弦</option>
+                <option value="9" data-i18n="type9">九和弦</option>
+                <option value="11" data-i18n="type11">十一和弦</option>
+                <option value="13" data-i18n="type13">十三和弦</option>
+                <option value="maj" data-i18n="typeMaj">大三和弦</option>
+                <option value="min" data-i18n="typeMin">小三和弦</option>
+                <option value="dim" data-i18n="typeDim">减三和弦</option>
+                <option value="aug" data-i18n="typeAug">增三和弦</option>
+                <option value="sus2" data-i18n="typeSus2">挂二和弦</option>
+                <option value="sus4" data-i18n="typeSus4">挂四和弦</option>
+                <option value="m6" data-i18n="typeM6">小六和弦</option>
+                <option value="maj7" data-i18n="typeMaj7">大七和弦</option>
+                <option value="m7" data-i18n="typeM7">小七和弦</option>
+                <option value="m7b5" data-i18n="typeM7b5">半减七和弦</option>
+                <option value="dim7" data-i18n="typeDim7">减七和弦</option>
+                <option value="add9" data-i18n="typeAdd9">加九和弦</option>
+                <option value="maj9" data-i18n="typeMaj9">大九和弦</option>
+                <option value="m9" data-i18n="typeM9">小九和弦</option></select></label>
+          <label class="block"><span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="inversionLabel">转位</span><select id="inversionSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100" aria-label="转位" data-i18n-aria-label="inversionLabel"><option value="0" data-i18n="inversionRoot">原位</option><option value="1" data-i18n="inversionFirst">第一转位</option><option value="2" data-i18n="inversionSecond">第二转位</option><option value="3" data-i18n="inversionThird">第三转位</option><option value="4" data-i18n="inversionFourth">第四转位</option></select></label>
+          <label class="block"><span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="voicingLabel">排列</span><select id="voicingSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100" aria-label="排列" data-i18n-aria-label="voicingLabel"><option value="close" data-i18n="voicingClose">密集排列</option><option value="spread" data-i18n="voicingSpread">开放排列</option><option value="drop2" data-i18n="voicingDrop2">Drop 2</option></select></label>
+          <label class="block"><span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="instrumentLabel">乐器视角</span><select id="instrumentSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100" aria-label="乐器视角" data-i18n-aria-label="instrumentLabel"><option value="overview" data-i18n="instrumentOverview">吉他 + 钢琴</option><option value="guitar" data-i18n="instrumentGuitar">吉他</option><option value="piano" data-i18n="instrumentPiano">钢琴</option></select></label>
+          <label class="block"><span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="modeLabel">调式</span><select id="modeSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100" aria-label="调式" data-i18n-aria-label="modeLabel"><option value="major" data-i18n="modeMajor">大调</option><option value="minor" data-i18n="modeMinor">小调</option></select></label>
+          <label class="block sm:col-span-2"><span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="progressionLabel">进行模板</span><select id="progressionSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100" aria-label="进行模板" data-i18n-aria-label="progressionLabel"><option value="pop" data-i18n="progressionPop">I-V-vi-IV / i-VI-III-VII</option><option value="jazz" data-i18n="progressionJazz">ii-V-I / ii°-V-i</option><option value="blues" data-i18n="progressionBlues">I-IV-V / i-iv-V</option><option value="circle" data-i18n="progressionCircle">vi-ii-V-I / VI-ii°-V-i</option></select></label>
         </div>
-
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="generateBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">生成</button>
+          <button id="generateBtn" type="button" class="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95"><svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18"/><path d="M3 12h18"/></svg><span data-i18n="primaryAction">生成</span></button>
+          <button id="playBtn" type="button" class="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-5 text-sm font-bold text-emerald-800 transition hover:border-emerald-300 hover:bg-emerald-100 active:scale-95 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-200"><svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg><span data-i18n="playAction">试听</span></button>
           <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">示例</button>
           <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">重置</button>
         </div>
-
-        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite">请选择根音与类型，然后生成和弦组成音。</p>
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite">请选择参数，点击生成或直接切换选项查看结果。</p>
       </section>
 
       <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
-        <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">和弦结果</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">结果</span>
-        </div>
-
+        <div class="mb-4 flex items-center justify-between gap-3"><h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果总览</h2><span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span></div>
         <div class="space-y-4">
-          <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
-            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="chordNameLabel">和弦名称</p>
-            <p id="chordNameOutput" class="mt-2 break-words text-2xl font-black tracking-tight text-slate-950 dark:text-white">Cmaj7</p>
-          </div>
-
-          <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
-            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="notesLabel">组成音</p>
-            <div id="notesOutput" class="mt-3 flex flex-wrap gap-2"></div>
-          </div>
-
-          <div class="grid gap-4 sm:grid-cols-2">
-            <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
-              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="intervalsLabel">音程</p>
-              <p id="intervalsOutput" class="mt-2 break-words text-sm leading-7 text-slate-700 dark:text-slate-300">1 · 3 · 5 · 7</p>
-            </div>
-            <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
-              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500" data-i18n="instrumentOutputLabel">演奏提示</p>
-              <p id="instrumentOutput" class="mt-2 break-words text-sm leading-7 text-slate-700 dark:text-slate-300">吉他可从低音弦寻找根音，按顺序保留 1、3、5、7。</p>
-            </div>
-          </div>
-
-          <label class="block">
-            <span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="copyLabel">可复制文本</span>
-            <textarea id="copyText" rows="6" readonly class="w-full resize-none rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" aria-label="可复制文本" data-i18n-aria-label="copyLabel"></textarea>
-          </label>
+          <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70"><p class="text-xs font-semibold uppercase text-slate-500 dark:text-slate-500" data-i18n="chordNameLabel">和弦名称</p><p id="chordNameOutput" class="mt-2 break-words text-3xl font-black text-slate-950 dark:text-white">C</p></div>
+          <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70"><p class="text-xs font-semibold uppercase text-slate-500 dark:text-slate-500" data-i18n="notesLabel">组成音</p><div id="notesOutput" class="mt-3 flex flex-wrap gap-2"></div></div>
+          <div class="grid gap-4 sm:grid-cols-3"><div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70"><p class="text-xs font-semibold uppercase text-slate-500 dark:text-slate-500" data-i18n="intervalsLabel">音程</p><p id="intervalsOutput" class="mt-2 break-words text-sm leading-7 text-slate-700 dark:text-slate-300">1 · 3 · 5</p></div><div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70"><p class="text-xs font-semibold uppercase text-slate-500 dark:text-slate-500" data-i18n="inversionOutputLabel">当前低音</p><p id="inversionOutput" class="mt-2 break-words text-sm leading-7 text-slate-700 dark:text-slate-300">C4</p></div><div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70"><p class="text-xs font-semibold uppercase text-slate-500 dark:text-slate-500" data-i18n="formulaLabel">音级公式</p><p id="noteFormulaOutput" class="mt-2 break-words text-sm leading-7 text-slate-700 dark:text-slate-300">1 3 5</p></div></div>
+          <label class="block"><span class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="copyLabel">可复制文本</span><textarea id="copyText" rows="6" readonly class="w-full resize-none rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100" aria-label="可复制文本" data-i18n-aria-label="copyLabel"></textarea></label>
         </div>
-
-        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
-          <button id="downloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadAction">下载文本</button>
-        </div>
+        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95"><svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span data-i18n="copyAction">复制结果</span></button><button id="downloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]"><svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg><span data-i18n="downloadAction">下载文本</span></button></div>
       </section>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">Micro Tools Matrix 和弦生成器是一款免费的浏览器本地处理工具，适合吉他、钢琴初学者和需要快速核对和声素材的创作者。你只需选择根音与和弦类型，即可看到基础组成音、音程结构和简洁演奏提示。整个过程无需上传文本、无需登录，也不会调用远程接口，输入只在当前页面内存中计算。它适用于查询 Cmaj7、Am7、G7、Dsus4 等常见和弦，帮助你在编曲、扒谱、练习转位或制作教学资料时快速确认音名。此基础版专注清晰可靠的和弦字典体验，保持轻量、隐私友好，并与 Micro Tools Matrix 的本地工具箱风格一致。</article>
+    <section class="mt-5 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+      <div class="mb-4 flex items-center justify-between gap-3"><h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="visualTitle">乐器视图</h2><span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="visualBadge">图示</span></div>
+      <p class="mb-4 text-sm leading-6 text-slate-600 dark:text-slate-400" data-i18n="visualSummary">高亮圆点为当前和弦音，青色为根音。</p>
+      <div id="guitarPanel" class="mb-5"><div class="mb-3 flex flex-wrap items-center justify-between gap-2"><h3 class="text-sm font-bold text-slate-900 dark:text-white" data-i18n="guitarLabel">吉他品格 0-12</h3><p id="fretboardSummary" class="text-xs text-slate-500 dark:text-slate-400"></p></div><div class="overflow-x-auto rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-slate-950/70"><div id="guitarDiagram" class="chord-fretboard"></div></div></div>
+      <div id="pianoPanel"><div class="mb-3 flex flex-wrap items-center justify-between gap-2"><h3 class="text-sm font-bold text-slate-900 dark:text-white" data-i18n="pianoLabel">钢琴键盘 C4-B5</h3><p id="keyboardSummary" class="text-xs text-slate-500 dark:text-slate-400"></p></div><div class="overflow-x-auto rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-slate-950/70"><div id="pianoDiagram" class="piano-grid"></div></div></div>
+    </section>
+
+    <section class="mt-5 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+      <div class="mb-4 flex items-center justify-between gap-3"><h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="progressionTitle">常见进行</h2><span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="progressionBadge">参考</span></div>
+      <p class="mb-4 text-sm leading-6 text-slate-600 dark:text-slate-400" data-i18n="progressionHint">按当前根音与调式生成，可作为练习或编配起点。</p>
+      <div id="progressionOutput" class="flex flex-wrap gap-2"></div>
+    </section>
+
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">Micro Tools Matrix 和弦工作台是一款纯前端、断网可用的和声速查工具。它可以从根音与和弦类型出发，在本地计算组成音、音程公式、转位低音、吉他 0-12 品格高亮、钢琴 C4-B5 键盘高亮以及常见级数进行。页面不引入外部 CDN，不上传输入，也不依赖服务器计算；试听功能只在用户点击时调用浏览器 Web Audio API。适合在编曲、扒谱、练琴、教学材料准备或快速核对 Cmaj9、Am7、G7、Dsus4 等和弦时使用。</article>
   </main>
 
   <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
 
   <script>
     const I18N = {
-      zh: {
-        toolName: "和弦生成器",
-        sponsor: "赞赏",
-        buyCoffee: "Buy Me a Coffee",
-        languageGroup: "语言",
-        themeLight: "亮色",
-        themeDark: "深色",
-        themeSystem: "系统",
-        eyebrow: "浏览器本地处理",
-        h1: "和弦生成器",
-        intro: "选择根音、和弦类型和乐器视角，Micro Tools Matrix 会在浏览器内计算基础和弦组成音，无需上传任何输入。",
-        localBadge: "本地运行",
-        share: "分享",
-        shareAria: "打开分享菜单",
-        shareMenuAria: "分享选项",
-        shareToolOnly: "仅分享工具",
-        shareToolOnlyHint: "分享不带参数的工具页面链接",
-        shareWithData: "分享工具及当前结果",
-        shareWithDataHint: "将当前输入或结果写入链接参数",
-        shareCopied: "分享链接已复制到剪贴板！",
-        shareCopyPrompt: "复制此分享链接：",
-        shareCopyFailed: "复制失败，请手动复制地址栏链接。",
-        shareDataTooLarge: "当前数据过大，无法生成分享链接，请直接复制文本结果。",
-        inputTitle: "选择和弦",
-        inputBadge: "输入",
-        outputTitle: "和弦结果",
-        outputBadge: "结果",
-        rootLabel: "根音",
-        typeLabel: "和弦类型",
-        instrumentLabel: "乐器视角",
-        instrumentGuitar: "吉他",
-        instrumentPiano: "钢琴",
-        typeMaj: "大三和弦",
-        typeMin: "小三和弦",
-        typeDim: "减三和弦",
-        typeAug: "增三和弦",
-        typeSus2: "挂二和弦",
-        typeSus4: "挂四和弦",
-        type6: "六和弦",
-        typeM6: "小六和弦",
-        type7: "属七和弦",
-        typeMaj7: "大七和弦",
-        typeM7: "小七和弦",
-        typeM7b5: "半减七和弦",
-        typeDim7: "减七和弦",
-        typeAdd9: "加九和弦",
-        type9: "九和弦",
-        tipTitle: "基础说明",
-        tipBody: "本工具用于快速查询组成音与基础演奏提示，不替代完整乐谱或复杂转位指法。",
-        primaryAction: "生成",
-        sampleAction: "示例",
-        secondaryAction: "重置",
-        statusReady: "请选择根音与类型，然后生成和弦组成音。",
-        statusGenerated: "已生成 {chord} 的组成音。",
-        statusSample: "已填入示例和弦。",
-        statusReset: "已重置为默认和弦。",
-        statusCopied: "结果已复制到剪贴板。",
-        statusDownloaded: "文本文件已下载。",
-        errorInvalidRoot: "请选择有效的根音。",
-        errorInvalidType: "请选择有效的和弦类型。",
-        errorCopy: "无法自动复制，请手动选择文本复制。",
-        chordNameLabel: "和弦名称",
-        notesLabel: "组成音",
-        intervalsLabel: "音程",
-        instrumentOutputLabel: "演奏提示",
-        copyLabel: "可复制文本",
-        copyAction: "复制结果",
-        downloadAction: "下载文本",
-        guitarHint: "吉他可从低音弦寻找根音，按音程保留这些组成音；开放和弦或封闭把位都可按同一音名调整。",
-        pianoHint: "钢琴可左手弹根音，右手按顺序叠放组成音；需要更顺手时可把高音移低或低音移高形成转位。",
-        copyTemplate: "和弦：{chord}\n根音：{root}\n类型：{type}\n组成音：{notes}\n音程：{intervals}\n乐器视角：{instrument}\n提示：{hint}",
-        documentTitle: "和弦生成器 - Micro Tools Matrix 本地工具箱",
-        metaDescription: "Micro Tools Matrix 和弦生成器在浏览器本地处理根音与和弦类型，快速查看吉他和钢琴基础和弦组成音，无需上传。",
-        metaKeywords: "和弦生成器, 吉他和弦, 钢琴和弦, 和弦组成音, 浏览器本地处理, Micro Tools Matrix",
-        seoArticle: "Micro Tools Matrix 和弦生成器是一款免费的浏览器本地处理工具，适合吉他、钢琴初学者和需要快速核对和声素材的创作者。你只需选择根音与和弦类型，即可看到基础组成音、音程结构和简洁演奏提示。整个过程无需上传文本、无需登录，也不会调用远程接口，输入只在当前页面内存中计算。它适用于查询 Cmaj7、Am7、G7、Dsus4 等常见和弦，帮助你在编曲、扒谱、练习转位或制作教学资料时快速确认音名。此基础版专注清晰可靠的和弦字典体验，保持轻量、隐私友好，并与 Micro Tools Matrix 的本地工具箱风格一致。",
-        footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
+      "zh": {
+            "toolName": "和弦工作台",
+            "sponsor": "赞赏",
+            "buyCoffee": "Buy Me a Coffee",
+            "languageGroup": "语言",
+            "themeLight": "亮色",
+            "themeDark": "深色",
+            "themeSystem": "系统",
+            "eyebrow": "浏览器本地和声工具",
+            "h1": "和弦工作台",
+            "intro": "选择根音、和弦类型、转位和乐器视角，在浏览器本地生成组成音、音程、吉他品格、钢琴键盘与常见进行，不上传任何输入。",
+            "localBadge": "本地运行",
+            "noNetworkBadge": "零外联",
+            "share": "分享",
+            "shareAria": "打开分享菜单",
+            "shareMenuAria": "分享选项",
+            "shareToolOnly": "仅分享工具",
+            "shareToolOnlyHint": "分享不带参数的工具页面链接",
+            "shareWithData": "分享工具及当前结果",
+            "shareWithDataHint": "将当前输入或结果写入链接参数",
+            "shareCopied": "分享链接已复制到剪贴板！",
+            "shareCopyPrompt": "复制此分享链接：",
+            "shareCopyFailed": "复制失败，请手动复制地址栏链接。",
+            "shareDataTooLarge": "当前数据过大，无法生成分享链接，请直接复制文本结果。",
+            "inputTitle": "和弦参数",
+            "inputBadge": "输入",
+            "outputTitle": "结果总览",
+            "outputBadge": "输出",
+            "visualTitle": "乐器视图",
+            "visualBadge": "图示",
+            "progressionTitle": "常见进行",
+            "progressionBadge": "参考",
+            "rootLabel": "根音",
+            "typeLabel": "和弦类型",
+            "inversionLabel": "转位",
+            "voicingLabel": "排列",
+            "instrumentLabel": "乐器视角",
+            "modeLabel": "调式",
+            "progressionLabel": "进行模板",
+            "instrumentOverview": "吉他 + 钢琴",
+            "instrumentGuitar": "吉他",
+            "instrumentPiano": "钢琴",
+            "inversionRoot": "原位",
+            "inversionFirst": "第一转位",
+            "inversionSecond": "第二转位",
+            "inversionThird": "第三转位",
+            "inversionFourth": "第四转位",
+            "voicingClose": "密集排列",
+            "voicingSpread": "开放排列",
+            "voicingDrop2": "Drop 2",
+            "modeMajor": "大调",
+            "modeMinor": "小调",
+            "progressionPop": "I-V-vi-IV / i-VI-III-VII",
+            "progressionJazz": "ii-V-I / ii°-V-i",
+            "progressionBlues": "I-IV-V / i-iv-V",
+            "progressionCircle": "vi-ii-V-I / VI-ii°-V-i",
+            "typeMaj": "大三和弦",
+            "typeMin": "小三和弦",
+            "typeDim": "减三和弦",
+            "typeAug": "增三和弦",
+            "typeSus2": "挂二和弦",
+            "typeSus4": "挂四和弦",
+            "type6": "六和弦",
+            "typeM6": "小六和弦",
+            "type7": "属七和弦",
+            "typeMaj7": "大七和弦",
+            "typeM7": "小七和弦",
+            "typeM7b5": "半减七和弦",
+            "typeDim7": "减七和弦",
+            "typeAdd9": "加九和弦",
+            "type9": "九和弦",
+            "typeMaj9": "大九和弦",
+            "typeM9": "小九和弦",
+            "type11": "十一和弦",
+            "type13": "十三和弦",
+            "primaryAction": "生成",
+            "playAction": "试听",
+            "sampleAction": "示例",
+            "secondaryAction": "重置",
+            "statusReady": "请选择参数，点击生成或直接切换选项查看结果。",
+            "statusGenerated": "已生成 {chord}：{notes}。",
+            "statusSample": "已填入 Cmaj9 的钢琴示例。",
+            "statusReset": "已重置为 C 大三和弦。",
+            "statusCopied": "结果已复制到剪贴板。",
+            "statusDownloaded": "文本文件已下载。",
+            "statusPlayed": "已播放当前和弦试听。",
+            "sponsorUnavailable": "赞赏入口暂不可用，但和弦功能不受影响。",
+            "errorMissingInput": "请先选择根音与和弦类型。",
+            "errorInvalidRoot": "请选择有效的根音。",
+            "errorInvalidType": "请选择有效的和弦类型。",
+            "errorRender": "生成失败，请检查输入后重试。",
+            "errorCopy": "无法自动复制，请手动选择文本复制。",
+            "errorAudio": "当前浏览器无法播放试听，和弦结果仍可正常使用。",
+            "chordNameLabel": "和弦名称",
+            "notesLabel": "组成音",
+            "intervalsLabel": "音程",
+            "inversionOutputLabel": "当前低音",
+            "formulaLabel": "音级公式",
+            "guitarLabel": "吉他品格 0-12",
+            "pianoLabel": "钢琴键盘 C4-B5",
+            "progressionOutputLabel": "推荐进行",
+            "copyLabel": "可复制文本",
+            "copyAction": "复制结果",
+            "downloadAction": "下载文本",
+            "rootTone": "根音",
+            "chordTone": "和弦音",
+            "notChordTone": "非和弦音",
+            "fretHeader": "品",
+            "stringHeader": "弦",
+            "bassTemplate": "低音：{bass}，排列：{voicing}",
+            "visualSummary": "高亮圆点为当前和弦音，青色为根音。",
+            "progressionHint": "按当前根音与调式生成，可作为练习或编配起点。",
+            "copyTemplate": "和弦：{chord}\n根音：{root}\n类型：{type}\n组成音：{notes}\n音程：{intervals}\n转位：{inversion}\n排列：{voicing}\n当前低音：{bass}\n进行：{progression}",
+            "documentTitle": "和弦工作台 - Micro Tools Matrix 本地工具箱",
+            "metaDescription": "Micro Tools Matrix 和弦工作台在浏览器本地生成和弦组成音、转位、吉他品格、钢琴键盘、常见进行与 Web Audio 试听，无需上传、断网可用。",
+            "metaKeywords": "和弦工作台, 和弦生成器, 吉他和弦, 钢琴和弦, 和弦转位, 浏览器本地处理, Micro Tools Matrix",
+            "seoArticle": "Micro Tools Matrix 和弦工作台是一款纯前端、断网可用的和声速查工具。它可以从根音与和弦类型出发，在本地计算组成音、音程公式、转位低音、吉他 0-12 品格高亮、钢琴 C4-B5 键盘高亮以及常见级数进行。页面不引入外部 CDN，不上传输入，也不依赖服务器计算；试听功能只在用户点击时调用浏览器 Web Audio API。适合在编曲、扒谱、练琴、教学材料准备或快速核对 Cmaj9、Am7、G7、Dsus4 等和弦时使用。",
+            "footer": "Micro Tools Matrix - 浏览器本地处理，无需上传。"
       },
-      en: {
-        toolName: "Chords Generator",
-        sponsor: "Sponsor",
-        buyCoffee: "Buy Me a Coffee",
-        languageGroup: "Language",
-        themeLight: "Light",
-        themeDark: "Dark",
-        themeSystem: "System",
-        eyebrow: "Browser-local processing",
-        h1: "Chords Generator",
-        intro: "Choose a root, chord type, and instrument view. Micro Tools Matrix calculates basic chord tones in your browser without uploading any input.",
-        localBadge: "Local",
-        share: "Share",
-        shareAria: "Open share menu",
-        shareMenuAria: "Share options",
-        shareToolOnly: "Share Tool Only",
-        shareToolOnlyHint: "Share the clean tool page link",
-        shareWithData: "Share with Data",
-        shareWithDataHint: "Include current input or result in the link",
-        shareCopied: "Share link copied to clipboard!",
-        shareCopyPrompt: "Copy this share link:",
-        shareCopyFailed: "Copy failed. Please copy the address bar link manually.",
-        shareDataTooLarge: "The current data is too large to create a share link. Please copy the text result directly.",
-        inputTitle: "Choose Chord",
-        inputBadge: "Input",
-        outputTitle: "Chord Result",
-        outputBadge: "Output",
-        rootLabel: "Root note",
-        typeLabel: "Chord type",
-        instrumentLabel: "Instrument view",
-        instrumentGuitar: "Guitar",
-        instrumentPiano: "Piano",
-        typeMaj: "Major triad",
-        typeMin: "Minor triad",
-        typeDim: "Diminished triad",
-        typeAug: "Augmented triad",
-        typeSus2: "Suspended second",
-        typeSus4: "Suspended fourth",
-        type6: "Sixth chord",
-        typeM6: "Minor sixth chord",
-        type7: "Dominant seventh",
-        typeMaj7: "Major seventh",
-        typeM7: "Minor seventh",
-        typeM7b5: "Half-diminished seventh",
-        typeDim7: "Diminished seventh",
-        typeAdd9: "Added ninth",
-        type9: "Ninth chord",
-        tipTitle: "Basic note",
-        tipBody: "This tool is for quick chord-tone lookup and simple playing hints. It does not replace full scores or advanced voicing charts.",
-        primaryAction: "Generate",
-        sampleAction: "Sample",
-        secondaryAction: "Reset",
-        statusReady: "Choose a root and type, then generate the chord tones.",
-        statusGenerated: "Generated chord tones for {chord}.",
-        statusSample: "Sample chord loaded.",
-        statusReset: "Reset to the default chord.",
-        statusCopied: "Result copied to the clipboard.",
-        statusDownloaded: "Text file downloaded.",
-        errorInvalidRoot: "Please choose a valid root note.",
-        errorInvalidType: "Please choose a valid chord type.",
-        errorCopy: "Automatic copy failed. Please select the text and copy it manually.",
-        chordNameLabel: "Chord name",
-        notesLabel: "Chord tones",
-        intervalsLabel: "Intervals",
-        instrumentOutputLabel: "Playing hint",
-        copyLabel: "Copyable text",
-        copyAction: "Copy Result",
-        downloadAction: "Download Text",
-        guitarHint: "On guitar, find the root on a lower string and keep these tones by interval; open shapes and closed positions can both be adjusted by the same note names.",
-        pianoHint: "On piano, play the root with the left hand and stack the tones with the right hand; move high tones down or low tones up when you need a smoother inversion.",
-        copyTemplate: "Chord: {chord}\nRoot: {root}\nType: {type}\nChord tones: {notes}\nIntervals: {intervals}\nInstrument view: {instrument}\nHint: {hint}",
-        documentTitle: "Chords Generator - Micro Tools Matrix Local Toolkit",
-        metaDescription: "Micro Tools Matrix Chords Generator uses browser-local processing to show basic guitar and piano chord tones from a selected root and chord type with no upload.",
-        metaKeywords: "chords generator, guitar chords, piano chords, chord tones, browser-local processing, free online developer tool, Micro Tools Matrix",
-        seoArticle: "Micro Tools Matrix Chords Generator is a free online developer tool for fast, browser-local processing of basic chord formulas. Select a root note and a chord type, then view the chord name, chord tones, interval structure, and a concise guitar or piano playing hint. Nothing is uploaded, no account is required, and the calculation stays in the memory of the current page. The tool is useful when checking common chords such as Cmaj7, Am7, G7, Dsus4, or Fadd9 while arranging music, learning harmony, preparing teaching notes, or validating a quick voicing idea. This basic dictionary focuses on clear note names rather than complex fingering diagrams, so it works well as a lightweight reference beside a DAW, score editor, or practice notebook. Like the rest of Micro Tools Matrix, it keeps the interface minimal, responsive, privacy-friendly, and consistent across desktop and mobile screens.",
-        footer: "Micro Tools Matrix - Browser-local processing with no upload."
+      "en": {
+            "toolName": "Chord Workbench",
+            "sponsor": "Sponsor",
+            "buyCoffee": "Buy Me a Coffee",
+            "languageGroup": "Language",
+            "themeLight": "Light",
+            "themeDark": "Dark",
+            "themeSystem": "System",
+            "eyebrow": "Browser-local harmony tool",
+            "h1": "Chord Workbench",
+            "intro": "Choose a root, chord type, inversion, and instrument view to generate chord tones, intervals, guitar frets, piano keys, and common progressions locally in your browser.",
+            "localBadge": "Local",
+            "noNetworkBadge": "Offline-first",
+            "share": "Share",
+            "shareAria": "Open share menu",
+            "shareMenuAria": "Share options",
+            "shareToolOnly": "Share Tool Only",
+            "shareToolOnlyHint": "Share the clean tool page link",
+            "shareWithData": "Share with Data",
+            "shareWithDataHint": "Include current input or result in the link",
+            "shareCopied": "Share link copied to clipboard!",
+            "shareCopyPrompt": "Copy this share link:",
+            "shareCopyFailed": "Copy failed. Please copy the address bar link manually.",
+            "shareDataTooLarge": "The current data is too large to create a share link. Please copy the text result directly.",
+            "inputTitle": "Chord Parameters",
+            "inputBadge": "Input",
+            "outputTitle": "Result Overview",
+            "outputBadge": "Output",
+            "visualTitle": "Instrument View",
+            "visualBadge": "Diagram",
+            "progressionTitle": "Common Progressions",
+            "progressionBadge": "Reference",
+            "rootLabel": "Root note",
+            "typeLabel": "Chord type",
+            "inversionLabel": "Inversion",
+            "voicingLabel": "Voicing",
+            "instrumentLabel": "Instrument view",
+            "modeLabel": "Mode",
+            "progressionLabel": "Progression template",
+            "instrumentOverview": "Guitar + Piano",
+            "instrumentGuitar": "Guitar",
+            "instrumentPiano": "Piano",
+            "inversionRoot": "Root position",
+            "inversionFirst": "First inversion",
+            "inversionSecond": "Second inversion",
+            "inversionThird": "Third inversion",
+            "inversionFourth": "Fourth inversion",
+            "voicingClose": "Close voicing",
+            "voicingSpread": "Open voicing",
+            "voicingDrop2": "Drop 2",
+            "modeMajor": "Major",
+            "modeMinor": "Minor",
+            "progressionPop": "I-V-vi-IV / i-VI-III-VII",
+            "progressionJazz": "ii-V-I / ii°-V-i",
+            "progressionBlues": "I-IV-V / i-iv-V",
+            "progressionCircle": "vi-ii-V-I / VI-ii°-V-i",
+            "typeMaj": "Major triad",
+            "typeMin": "Minor triad",
+            "typeDim": "Diminished triad",
+            "typeAug": "Augmented triad",
+            "typeSus2": "Suspended second",
+            "typeSus4": "Suspended fourth",
+            "type6": "Sixth chord",
+            "typeM6": "Minor sixth chord",
+            "type7": "Dominant seventh",
+            "typeMaj7": "Major seventh",
+            "typeM7": "Minor seventh",
+            "typeM7b5": "Half-diminished seventh",
+            "typeDim7": "Diminished seventh",
+            "typeAdd9": "Added ninth",
+            "type9": "Ninth chord",
+            "typeMaj9": "Major ninth",
+            "typeM9": "Minor ninth",
+            "type11": "Eleventh chord",
+            "type13": "Thirteenth chord",
+            "primaryAction": "Generate",
+            "playAction": "Play",
+            "sampleAction": "Sample",
+            "secondaryAction": "Reset",
+            "statusReady": "Choose parameters, then generate or change any option to refresh the result.",
+            "statusGenerated": "Generated {chord}: {notes}.",
+            "statusSample": "Loaded a Cmaj9 piano sample.",
+            "statusReset": "Reset to C major.",
+            "statusCopied": "Result copied to the clipboard.",
+            "statusDownloaded": "Text file downloaded.",
+            "statusPlayed": "Played the current chord preview.",
+            "sponsorUnavailable": "Sponsor panel is unavailable, but the chord tool is still working.",
+            "errorMissingInput": "Please choose a root note and chord type first.",
+            "errorInvalidRoot": "Please choose a valid root note.",
+            "errorInvalidType": "Please choose a valid chord type.",
+            "errorRender": "Generation failed. Please check the inputs and try again.",
+            "errorCopy": "Automatic copy failed. Please select the text and copy it manually.",
+            "errorAudio": "This browser cannot play the preview, but the chord result is still available.",
+            "chordNameLabel": "Chord name",
+            "notesLabel": "Chord tones",
+            "intervalsLabel": "Intervals",
+            "inversionOutputLabel": "Current bass",
+            "formulaLabel": "Scale-degree formula",
+            "guitarLabel": "Guitar frets 0-12",
+            "pianoLabel": "Piano keys C4-B5",
+            "progressionOutputLabel": "Suggested progression",
+            "copyLabel": "Copyable text",
+            "copyAction": "Copy Result",
+            "downloadAction": "Download Text",
+            "rootTone": "Root",
+            "chordTone": "Chord tone",
+            "notChordTone": "Outside",
+            "fretHeader": "Fret",
+            "stringHeader": "String",
+            "bassTemplate": "Bass: {bass}, voicing: {voicing}",
+            "visualSummary": "Highlighted dots are chord tones; cyan marks the root.",
+            "progressionHint": "Generated from the current root and mode as a practice or arranging starter.",
+            "copyTemplate": "Chord: {chord}\nRoot: {root}\nType: {type}\nChord tones: {notes}\nIntervals: {intervals}\nInversion: {inversion}\nVoicing: {voicing}\nCurrent bass: {bass}\nProgression: {progression}",
+            "documentTitle": "Chord Workbench - Micro Tools Matrix Local Toolkit",
+            "metaDescription": "Micro Tools Matrix Chord Workbench generates chord tones, inversions, guitar frets, piano keys, common progressions, and Web Audio previews locally in the browser with no upload.",
+            "metaKeywords": "chord workbench, chords generator, guitar chords, piano chords, chord inversions, browser-local processing, Micro Tools Matrix",
+            "seoArticle": "Micro Tools Matrix Chord Workbench is a pure front-end harmony reference that works offline after the page is cached. It calculates chord tones, interval formulas, inversion bass notes, guitar fret highlights from 0 to 12, piano-key highlights from C4 to B5, and common Roman-numeral progressions from the selected root. The page uses no external CDN and sends nothing to a server; audio preview is created only after the user clicks Play through the browser Web Audio API. It is useful beside a DAW, score editor, lesson plan, or practice notebook when checking chords such as Cmaj9, Am7, G7, Dsus4, or Fadd9.",
+            "footer": "Micro Tools Matrix - Browser-local processing with no upload."
       }
-    };
-
+};
     const CHORD_TYPES = {
-      maj: { suffix: "", intervals: [0, 4, 7], names: ["1", "3", "5"], labelKey: "typeMaj" },
-      min: { suffix: "m", intervals: [0, 3, 7], names: ["1", "♭3", "5"], labelKey: "typeMin" },
-      dim: { suffix: "dim", intervals: [0, 3, 6], names: ["1", "♭3", "♭5"], labelKey: "typeDim" },
-      aug: { suffix: "aug", intervals: [0, 4, 8], names: ["1", "3", "♯5"], labelKey: "typeAug" },
-      sus2: { suffix: "sus2", intervals: [0, 2, 7], names: ["1", "2", "5"], labelKey: "typeSus2" },
-      sus4: { suffix: "sus4", intervals: [0, 5, 7], names: ["1", "4", "5"], labelKey: "typeSus4" },
-      "6": { suffix: "6", intervals: [0, 4, 7, 9], names: ["1", "3", "5", "6"], labelKey: "type6" },
-      m6: { suffix: "m6", intervals: [0, 3, 7, 9], names: ["1", "♭3", "5", "6"], labelKey: "typeM6" },
-      "7": { suffix: "7", intervals: [0, 4, 7, 10], names: ["1", "3", "5", "♭7"], labelKey: "type7" },
-      maj7: { suffix: "maj7", intervals: [0, 4, 7, 11], names: ["1", "3", "5", "7"], labelKey: "typeMaj7" },
-      m7: { suffix: "m7", intervals: [0, 3, 7, 10], names: ["1", "♭3", "5", "♭7"], labelKey: "typeM7" },
-      m7b5: { suffix: "m7♭5", intervals: [0, 3, 6, 10], names: ["1", "♭3", "♭5", "♭7"], labelKey: "typeM7b5" },
-      dim7: { suffix: "dim7", intervals: [0, 3, 6, 9], names: ["1", "♭3", "♭5", "𝄫7"], labelKey: "typeDim7" },
-      add9: { suffix: "add9", intervals: [0, 4, 7, 14], names: ["1", "3", "5", "9"], labelKey: "typeAdd9" },
-      "9": { suffix: "9", intervals: [0, 4, 7, 10, 14], names: ["1", "3", "5", "♭7", "9"], labelKey: "type9" }
-    };
-
+      "6": {
+            "suffix": "6",
+            "intervals": [
+                  0,
+                  4,
+                  7,
+                  9
+            ],
+            "names": [
+                  "1",
+                  "3",
+                  "5",
+                  "6"
+            ],
+            "labelKey": "type6"
+      },
+      "7": {
+            "suffix": "7",
+            "intervals": [
+                  0,
+                  4,
+                  7,
+                  10
+            ],
+            "names": [
+                  "1",
+                  "3",
+                  "5",
+                  "b7"
+            ],
+            "labelKey": "type7"
+      },
+      "9": {
+            "suffix": "9",
+            "intervals": [
+                  0,
+                  4,
+                  7,
+                  10,
+                  14
+            ],
+            "names": [
+                  "1",
+                  "3",
+                  "5",
+                  "b7",
+                  "9"
+            ],
+            "labelKey": "type9"
+      },
+      "11": {
+            "suffix": "11",
+            "intervals": [
+                  0,
+                  4,
+                  7,
+                  10,
+                  14,
+                  17
+            ],
+            "names": [
+                  "1",
+                  "3",
+                  "5",
+                  "b7",
+                  "9",
+                  "11"
+            ],
+            "labelKey": "type11"
+      },
+      "13": {
+            "suffix": "13",
+            "intervals": [
+                  0,
+                  4,
+                  7,
+                  10,
+                  14,
+                  21
+            ],
+            "names": [
+                  "1",
+                  "3",
+                  "5",
+                  "b7",
+                  "9",
+                  "13"
+            ],
+            "labelKey": "type13"
+      },
+      "maj": {
+            "suffix": "",
+            "intervals": [
+                  0,
+                  4,
+                  7
+            ],
+            "names": [
+                  "1",
+                  "3",
+                  "5"
+            ],
+            "labelKey": "typeMaj"
+      },
+      "min": {
+            "suffix": "m",
+            "intervals": [
+                  0,
+                  3,
+                  7
+            ],
+            "names": [
+                  "1",
+                  "b3",
+                  "5"
+            ],
+            "labelKey": "typeMin"
+      },
+      "dim": {
+            "suffix": "dim",
+            "intervals": [
+                  0,
+                  3,
+                  6
+            ],
+            "names": [
+                  "1",
+                  "b3",
+                  "b5"
+            ],
+            "labelKey": "typeDim"
+      },
+      "aug": {
+            "suffix": "aug",
+            "intervals": [
+                  0,
+                  4,
+                  8
+            ],
+            "names": [
+                  "1",
+                  "3",
+                  "#5"
+            ],
+            "labelKey": "typeAug"
+      },
+      "sus2": {
+            "suffix": "sus2",
+            "intervals": [
+                  0,
+                  2,
+                  7
+            ],
+            "names": [
+                  "1",
+                  "2",
+                  "5"
+            ],
+            "labelKey": "typeSus2"
+      },
+      "sus4": {
+            "suffix": "sus4",
+            "intervals": [
+                  0,
+                  5,
+                  7
+            ],
+            "names": [
+                  "1",
+                  "4",
+                  "5"
+            ],
+            "labelKey": "typeSus4"
+      },
+      "m6": {
+            "suffix": "m6",
+            "intervals": [
+                  0,
+                  3,
+                  7,
+                  9
+            ],
+            "names": [
+                  "1",
+                  "b3",
+                  "5",
+                  "6"
+            ],
+            "labelKey": "typeM6"
+      },
+      "maj7": {
+            "suffix": "maj7",
+            "intervals": [
+                  0,
+                  4,
+                  7,
+                  11
+            ],
+            "names": [
+                  "1",
+                  "3",
+                  "5",
+                  "7"
+            ],
+            "labelKey": "typeMaj7"
+      },
+      "m7": {
+            "suffix": "m7",
+            "intervals": [
+                  0,
+                  3,
+                  7,
+                  10
+            ],
+            "names": [
+                  "1",
+                  "b3",
+                  "5",
+                  "b7"
+            ],
+            "labelKey": "typeM7"
+      },
+      "m7b5": {
+            "suffix": "m7b5",
+            "intervals": [
+                  0,
+                  3,
+                  6,
+                  10
+            ],
+            "names": [
+                  "1",
+                  "b3",
+                  "b5",
+                  "b7"
+            ],
+            "labelKey": "typeM7b5"
+      },
+      "dim7": {
+            "suffix": "dim7",
+            "intervals": [
+                  0,
+                  3,
+                  6,
+                  9
+            ],
+            "names": [
+                  "1",
+                  "b3",
+                  "b5",
+                  "bb7"
+            ],
+            "labelKey": "typeDim7"
+      },
+      "add9": {
+            "suffix": "add9",
+            "intervals": [
+                  0,
+                  4,
+                  7,
+                  14
+            ],
+            "names": [
+                  "1",
+                  "3",
+                  "5",
+                  "9"
+            ],
+            "labelKey": "typeAdd9"
+      },
+      "maj9": {
+            "suffix": "maj9",
+            "intervals": [
+                  0,
+                  4,
+                  7,
+                  11,
+                  14
+            ],
+            "names": [
+                  "1",
+                  "3",
+                  "5",
+                  "7",
+                  "9"
+            ],
+            "labelKey": "typeMaj9"
+      },
+      "m9": {
+            "suffix": "m9",
+            "intervals": [
+                  0,
+                  3,
+                  7,
+                  10,
+                  14
+            ],
+            "names": [
+                  "1",
+                  "b3",
+                  "5",
+                  "b7",
+                  "9"
+            ],
+            "labelKey": "typeM9"
+      }
+};
     const SHARP_NOTES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
     const FLAT_NOTES = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
-    const ROOT_TO_INDEX = {
-      C: 0, "C#": 1, Db: 1, D: 2, "D#": 3, Eb: 3, E: 4, F: 5,
-      "F#": 6, Gb: 6, G: 7, "G#": 8, Ab: 8, A: 9, "A#": 10, Bb: 10, B: 11
+    const ROOT_TO_INDEX = { C: 0, "C#": 1, Db: 1, D: 2, "D#": 3, Eb: 3, E: 4, F: 5, "F#": 6, Gb: 6, G: 7, "G#": 8, Ab: 8, A: 9, "A#": 10, Bb: 10, B: 11 };
+    const INVERSION_KEYS = ["inversionRoot", "inversionFirst", "inversionSecond", "inversionThird", "inversionFourth"];
+    const GUITAR_STRINGS = [
+      { label: "E4", index: 4 }, { label: "B3", index: 11 }, { label: "G3", index: 7 },
+      { label: "D3", index: 2 }, { label: "A2", index: 9 }, { label: "E2", index: 4 }
+    ];
+    const WHITE_INDEXES = new Set([0, 2, 4, 5, 7, 9, 11]);
+    const PROGRESSIONS = {
+      major: {
+        pop: ["I", "V", "vi", "IV"],
+        jazz: ["ii", "V", "I"],
+        blues: ["I", "IV", "V", "I"],
+        circle: ["vi", "ii", "V", "I"]
+      },
+      minor: {
+        pop: ["i", "VI", "III", "VII"],
+        jazz: ["ii°", "V", "i"],
+        blues: ["i", "iv", "V", "i"],
+        circle: ["VI", "ii°", "V", "i"]
+      }
     };
+    const DEGREE_MAP = {
+      major: {
+        I: { degree: 0, type: "maj" }, ii: { degree: 1, type: "min" }, iii: { degree: 2, type: "min" }, IV: { degree: 3, type: "maj" }, V: { degree: 4, type: "7" }, vi: { degree: 5, type: "min" }, "vii°": { degree: 6, type: "dim" }
+      },
+      minor: {
+        i: { degree: 0, type: "min" }, "ii°": { degree: 1, type: "dim" }, III: { degree: 2, type: "maj" }, iv: { degree: 3, type: "min" }, v: { degree: 4, type: "min" }, V: { degree: 4, type: "7" }, VI: { degree: 5, type: "maj" }, VII: { degree: 6, type: "maj" }
+      }
+    };
+    const SCALE_STEPS = { major: [0, 2, 4, 5, 7, 9, 11], minor: [0, 2, 3, 5, 7, 8, 10] };
 
     let currentLanguage = "zh";
     let lastResult = null;
+    let audioContext = null;
 
     function getInitialLanguage() {
       if (location.pathname.includes("/en/")) return "en";
       return localStorage.getItem("microToolsLanguage") || "zh";
+    }
+
+    function translate(key, replacements = {}) {
+      let value = (I18N[currentLanguage] && I18N[currentLanguage][key]) || I18N.zh[key] || "";
+      Object.entries(replacements).forEach(function(entry) {
+        value = value.replaceAll("{" + entry[0] + "}", String(entry[1]));
+      });
+      return value;
     }
 
     function setLanguage(lang) {
@@ -442,50 +854,32 @@
     function applyLanguage(lang) {
       currentLanguage = lang === "en" ? "en" : "zh";
       const dict = I18N[currentLanguage];
-
       document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
       document.title = dict.documentTitle;
-
       const description = document.querySelector('meta[name="description"]');
       if (description) description.setAttribute("content", dict.metaDescription);
-
       const keywords = document.querySelector('meta[name="keywords"]');
       if (keywords) keywords.setAttribute("content", dict.metaKeywords);
-
-      document.querySelectorAll("[data-i18n]").forEach((node) => {
+      document.querySelectorAll("[data-i18n]").forEach(function(node) {
         const key = node.getAttribute("data-i18n");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
-          node.textContent = dict[key];
-        }
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.textContent = dict[key];
       });
-
-      document.querySelectorAll("[data-i18n-placeholder]").forEach((node) => {
+      document.querySelectorAll("[data-i18n-placeholder]").forEach(function(node) {
         const key = node.getAttribute("data-i18n-placeholder");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
-          node.setAttribute("placeholder", dict[key]);
-        }
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("placeholder", dict[key]);
       });
-
-      document.querySelectorAll("[data-i18n-title]").forEach((node) => {
+      document.querySelectorAll("[data-i18n-title]").forEach(function(node) {
         const key = node.getAttribute("data-i18n-title");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
-          node.setAttribute("title", dict[key]);
-        }
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("title", dict[key]);
       });
-
-      document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+      document.querySelectorAll("[data-i18n-aria-label]").forEach(function(node) {
         const key = node.getAttribute("data-i18n-aria-label");
-        if (key && Object.prototype.hasOwnProperty.call(dict, key)) {
-          node.setAttribute("aria-label", dict[key]);
-        }
+        if (key && Object.prototype.hasOwnProperty.call(dict, key)) node.setAttribute("aria-label", dict[key]);
       });
-
       const sponsorLabel = document.querySelector("#openSponsorBtn [data-i18n='sponsor']");
       if (sponsorLabel) sponsorLabel.textContent = dict.sponsor;
-
       const themeLabel = document.querySelector("[data-theme-label]");
       if (themeLabel && !themeLabel.textContent.trim()) themeLabel.textContent = dict.themeSystem;
-
       const zhBtn = document.getElementById("langZhBtn");
       const enBtn = document.getElementById("langEnBtn");
       if (zhBtn && enBtn) {
@@ -499,43 +893,38 @@
           zhBtn.classList.add("text-slate-600", "dark:text-slate-400");
         }
       }
-
-      if (lastResult) {
-        renderResult(lastResult, false);
-      } else {
-        setStatus("statusReady");
-        generateChord(false);
-      }
-
-      if (window.microToolsTheme?.refresh) window.microToolsTheme.refresh();
-    }
-
-    function translate(key, replacements = {}) {
-      let value = I18N[currentLanguage][key] || "";
-      Object.entries(replacements).forEach(([name, replacement]) => {
-        value = value.replaceAll(`{${name}}`, replacement);
-      });
-      return value;
+      if (lastResult) renderResult(lastResult, false); else generateChord(false);
+      if (window.microToolsTheme && window.microToolsTheme.refresh) window.microToolsTheme.refresh();
     }
 
     function setStatus(key, replacements = {}, isError = false) {
       const status = document.getElementById("statusText");
       if (!status) return;
       status.textContent = translate(key, replacements);
-      status.className = isError
-        ? "mt-4 min-h-6 text-sm leading-6 text-rose-600 dark:text-rose-300"
-        : "mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400";
+      status.className = isError ? "mt-4 min-h-6 text-sm leading-6 text-rose-600 dark:text-rose-300" : "mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400";
+    }
+
+    function normalizeIndex(index) {
+      return ((index % 12) + 12) % 12;
+    }
+
+    function getNoteSet(root) {
+      return String(root || "").includes("b") ? FLAT_NOTES : SHARP_NOTES;
+    }
+
+    function midiToFrequency(midi) {
+      return 440 * Math.pow(2, (midi - 69) / 12);
+    }
+
+    function midiToNoteName(midi, noteSet) {
+      const note = noteSet[normalizeIndex(midi)];
+      const octave = Math.floor(midi / 12) - 1;
+      return note + octave;
     }
 
     function getChordName(root, typeKey) {
       const type = CHORD_TYPES[typeKey];
-      return `${root}${type.suffix}`;
-    }
-
-    function getNotes(root, intervals) {
-      const rootIndex = ROOT_TO_INDEX[root];
-      const noteSet = root.includes("b") ? FLAT_NOTES : SHARP_NOTES;
-      return intervals.map((interval) => noteSet[(rootIndex + interval) % 12]);
+      return root + (type ? type.suffix : "");
     }
 
     function getTypeLabel(typeKey) {
@@ -543,61 +932,158 @@
       return type ? translate(type.labelKey) : "";
     }
 
-    function getInstrumentLabel(instrument) {
-      return instrument === "piano" ? translate("instrumentPiano") : translate("instrumentGuitar");
+    function getVoicingLabel(voicing) {
+      if (voicing === "spread") return translate("voicingSpread");
+      if (voicing === "drop2") return translate("voicingDrop2");
+      return translate("voicingClose");
     }
 
-    function generateChord(showStatus = true) {
-      const root = document.getElementById("rootSelect")?.value;
-      const typeKey = document.getElementById("typeSelect")?.value;
-      const instrument = document.getElementById("instrumentSelect")?.value || "guitar";
+    function getInversionLabel(inversion) {
+      return translate(INVERSION_KEYS[Math.max(0, Math.min(INVERSION_KEYS.length - 1, inversion))] || "inversionRoot");
+    }
 
-      if (!Object.prototype.hasOwnProperty.call(ROOT_TO_INDEX, root)) {
-        setStatus("errorInvalidRoot", {}, true);
-        return;
+    function buildChordPitches(rootIndex, intervals, inversion, voicing) {
+      const rootMidi = 60 + rootIndex;
+      let pitches = intervals.map(function(interval) { return rootMidi + interval; }).sort(function(a, b) { return a - b; });
+      const maxInversion = Math.max(0, Math.min(Number(inversion) || 0, pitches.length - 1));
+      for (let i = 0; i < maxInversion; i += 1) {
+        const shifted = pitches.shift() + 12;
+        pitches.push(shifted);
       }
-
-      if (!Object.prototype.hasOwnProperty.call(CHORD_TYPES, typeKey)) {
-        setStatus("errorInvalidType", {}, true);
-        return;
+      pitches.sort(function(a, b) { return a - b; });
+      if (voicing === "spread") {
+        pitches = pitches.map(function(pitch, index) { return index % 2 === 1 ? pitch + 12 : pitch; }).sort(function(a, b) { return a - b; });
+      } else if (voicing === "drop2" && pitches.length >= 4) {
+        const copy = pitches.slice().sort(function(a, b) { return a - b; });
+        copy[copy.length - 2] -= 12;
+        pitches = copy.sort(function(a, b) { return a - b; });
       }
+      return pitches;
+    }
 
-      const chordType = CHORD_TYPES[typeKey];
-      const result = {
-        root,
-        typeKey,
-        instrument,
-        chord: getChordName(root, typeKey),
-        notes: getNotes(root, chordType.intervals),
-        intervals: chordType.names
-      };
-      lastResult = result;
-      renderResult(result, showStatus);
+    function buildProgression(root, mode, progressionId) {
+      const rootIndex = ROOT_TO_INDEX[root];
+      const noteSet = getNoteSet(root);
+      const pattern = (PROGRESSIONS[mode] && PROGRESSIONS[mode][progressionId]) || PROGRESSIONS.major.pop;
+      const degreeMap = DEGREE_MAP[mode] || DEGREE_MAP.major;
+      const steps = SCALE_STEPS[mode] || SCALE_STEPS.major;
+      return pattern.map(function(roman) {
+        const degree = degreeMap[roman];
+        if (!degree) return { roman: roman, chord: roman };
+        const chordRoot = noteSet[normalizeIndex(rootIndex + steps[degree.degree])];
+        return { roman: roman, chord: getChordName(chordRoot, degree.type) };
+      });
+    }
+
+    function createChip(text, toneType) {
+      const chip = document.createElement("span");
+      chip.className = toneType === "root" ? "inline-flex min-h-11 items-center justify-center rounded-full border border-cyan-200 bg-cyan-50 px-4 text-sm font-black text-cyan-800 shadow-sm dark:border-cyan-300/20 dark:bg-cyan-300/10 dark:text-cyan-200" : "inline-flex min-h-11 items-center justify-center rounded-full border border-amber-200 bg-amber-50 px-4 text-sm font-black text-amber-800 shadow-sm dark:border-amber-300/20 dark:bg-amber-300/10 dark:text-amber-200";
+      chip.textContent = text;
+      return chip;
+    }
+
+    function renderNotes(result) {
+      const notesOutput = document.getElementById("notesOutput");
+      if (!notesOutput) return;
+      notesOutput.textContent = "";
+      result.notes.forEach(function(note, index) {
+        notesOutput.appendChild(createChip(note, index === 0 ? "root" : "tone"));
+      });
+    }
+
+    function renderGuitar(result) {
+      const panel = document.getElementById("guitarPanel");
+      const diagram = document.getElementById("guitarDiagram");
+      if (!panel || !diagram) return;
+      panel.classList.toggle("hidden", result.instrument === "piano");
+      if (result.instrument === "piano") return;
+      diagram.textContent = "";
+      const header = document.createElement("div");
+      header.className = "chord-fret-string flex items-center justify-center text-xs font-bold text-slate-500 dark:text-slate-400";
+      header.textContent = translate("stringHeader");
+      diagram.appendChild(header);
+      for (let fret = 0; fret <= 12; fret += 1) {
+        const cell = document.createElement("div");
+        cell.className = "chord-fret-cell flex items-center justify-center text-xs font-bold text-slate-500 dark:text-slate-400";
+        cell.textContent = fret === 0 ? "0" : String(fret);
+        diagram.appendChild(cell);
+      }
+      GUITAR_STRINGS.forEach(function(stringInfo) {
+        const label = document.createElement("div");
+        label.className = "chord-fret-string flex items-center justify-center text-xs font-black text-slate-700 dark:text-slate-200";
+        label.textContent = stringInfo.label;
+        diagram.appendChild(label);
+        for (let fret = 0; fret <= 12; fret += 1) {
+          const noteIndex = normalizeIndex(stringInfo.index + fret);
+          const noteName = result.noteSet[noteIndex];
+          const tone = result.toneMap[noteIndex];
+          const cell = document.createElement("div");
+          cell.className = "chord-fret-cell flex items-center justify-center bg-white/60 dark:bg-white/[0.02]";
+          if (tone) {
+            const marker = document.createElement("span");
+            marker.className = noteIndex === result.rootIndex ? "chord-marker bg-cyan-400 text-slate-950 shadow-sm" : "chord-marker bg-amber-300 text-slate-950 shadow-sm";
+            marker.title = noteName + " " + tone;
+            marker.textContent = tone;
+            cell.appendChild(marker);
+          }
+          diagram.appendChild(cell);
+        }
+      });
+      const summary = document.getElementById("fretboardSummary");
+      if (summary) summary.textContent = translate("rootTone") + ": " + result.root;
+    }
+
+    function renderPiano(result) {
+      const panel = document.getElementById("pianoPanel");
+      const diagram = document.getElementById("pianoDiagram");
+      if (!panel || !diagram) return;
+      panel.classList.toggle("hidden", result.instrument === "guitar");
+      if (result.instrument === "guitar") return;
+      diagram.textContent = "";
+      for (let midi = 60; midi < 84; midi += 1) {
+        const index = normalizeIndex(midi);
+        const note = midiToNoteName(midi, result.noteSet);
+        const tone = result.toneMap[index];
+        const key = document.createElement("div");
+        const isWhite = WHITE_INDEXES.has(index);
+        key.className = "piano-key " + (isWhite ? "white border border-gray-200 dark:border-white/10" : "black") + (tone ? " ring-2 ring-cyan-300" : "");
+        const noteLabel = document.createElement("span");
+        noteLabel.textContent = note;
+        key.appendChild(noteLabel);
+        if (tone) {
+          const toneLabel = document.createElement("span");
+          toneLabel.className = index === result.rootIndex ? "rounded-full bg-cyan-400 px-2 py-1 text-[10px] font-black text-slate-950" : "rounded-full bg-amber-300 px-2 py-1 text-[10px] font-black text-slate-950";
+          toneLabel.textContent = tone;
+          key.appendChild(toneLabel);
+        }
+        diagram.appendChild(key);
+      }
+      const summary = document.getElementById("keyboardSummary");
+      if (summary) summary.textContent = translate("bassTemplate", { bass: result.bass, voicing: result.voicingLabel });
+    }
+
+    function renderProgression(result) {
+      const output = document.getElementById("progressionOutput");
+      if (!output) return;
+      output.textContent = "";
+      result.progression.forEach(function(item) {
+        const chip = document.createElement("span");
+        chip.className = "inline-flex min-h-10 items-center gap-2 rounded-full border border-gray-200 bg-slate-50 px-4 text-sm font-semibold text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-200";
+        chip.innerHTML = '<span class="text-cyan-700 dark:text-cyan-300">' + item.roman + '</span><span>' + item.chord + '</span>';
+        output.appendChild(chip);
+      });
     }
 
     function renderResult(result, showStatus = true) {
-      const chordNameOutput = document.getElementById("chordNameOutput");
-      const notesOutput = document.getElementById("notesOutput");
-      const intervalsOutput = document.getElementById("intervalsOutput");
-      const instrumentOutput = document.getElementById("instrumentOutput");
+      document.getElementById("chordNameOutput").textContent = result.chord;
+      document.getElementById("intervalsOutput").textContent = result.intervals.join(" · ");
+      document.getElementById("inversionOutput").textContent = result.bass;
+      document.getElementById("noteFormulaOutput").textContent = result.formula;
+      renderNotes(result);
+      renderGuitar(result);
+      renderPiano(result);
+      renderProgression(result);
       const copyText = document.getElementById("copyText");
-
-      const hint = result.instrument === "piano" ? translate("pianoHint") : translate("guitarHint");
-
-      if (chordNameOutput) chordNameOutput.textContent = result.chord;
-      if (intervalsOutput) intervalsOutput.textContent = result.intervals.join(" · ");
-      if (instrumentOutput) instrumentOutput.textContent = hint;
-
-      if (notesOutput) {
-        notesOutput.textContent = "";
-        result.notes.forEach((note) => {
-          const chip = document.createElement("span");
-          chip.className = "inline-flex min-h-11 items-center justify-center rounded-full border border-cyan-200 bg-cyan-50 px-4 text-sm font-black text-cyan-800 shadow-sm dark:border-cyan-300/20 dark:bg-cyan-300/10 dark:text-cyan-200";
-          chip.textContent = note;
-          notesOutput.appendChild(chip);
-        });
-      }
-
       if (copyText) {
         copyText.value = translate("copyTemplate", {
           chord: result.chord,
@@ -605,29 +1091,97 @@
           type: getTypeLabel(result.typeKey),
           notes: result.notes.join(", "),
           intervals: result.intervals.join(" · "),
-          instrument: getInstrumentLabel(result.instrument),
-          hint
+          inversion: result.inversionLabel,
+          voicing: result.voicingLabel,
+          bass: result.bass,
+          progression: result.progression.map(function(item) { return item.roman + " " + item.chord; }).join(" - ")
         });
       }
+      if (showStatus) setStatus("statusGenerated", { chord: result.chord, notes: result.notes.join(", ") });
+    }
 
-      if (showStatus) setStatus("statusGenerated", { chord: result.chord });
+    function generateChord(showStatus = true) {
+      try {
+        const root = document.getElementById("rootSelect")?.value || "";
+        const typeKey = document.getElementById("typeSelect")?.value || "";
+        const instrument = document.getElementById("instrumentSelect")?.value || "overview";
+        const voicing = document.getElementById("voicingSelect")?.value || "close";
+        const mode = document.getElementById("modeSelect")?.value || "major";
+        const progressionId = document.getElementById("progressionSelect")?.value || "pop";
+        if (!root || !typeKey) {
+          setStatus("errorMissingInput", {}, true);
+          if (showStatus) alert(translate("errorMissingInput"));
+          return null;
+        }
+        if (!Object.prototype.hasOwnProperty.call(ROOT_TO_INDEX, root)) {
+          setStatus("errorInvalidRoot", {}, true);
+          if (showStatus) alert(translate("errorInvalidRoot"));
+          return null;
+        }
+        if (!Object.prototype.hasOwnProperty.call(CHORD_TYPES, typeKey)) {
+          setStatus("errorInvalidType", {}, true);
+          if (showStatus) alert(translate("errorInvalidType"));
+          return null;
+        }
+        const chordType = CHORD_TYPES[typeKey];
+        const rootIndex = ROOT_TO_INDEX[root];
+        const noteSet = getNoteSet(root);
+        const maxInversion = Math.max(0, chordType.intervals.length - 1);
+        const requestedInversion = Number(document.getElementById("inversionSelect")?.value || 0);
+        const inversion = Math.min(Math.max(0, requestedInversion), maxInversion);
+        const inversionSelect = document.getElementById("inversionSelect");
+        if (inversionSelect && String(inversion) !== inversionSelect.value) inversionSelect.value = String(inversion);
+        const notes = chordType.intervals.map(function(interval) { return noteSet[normalizeIndex(rootIndex + interval)]; });
+        const toneMap = {};
+        chordType.intervals.forEach(function(interval, index) {
+          toneMap[normalizeIndex(rootIndex + interval)] = chordType.names[index];
+        });
+        const pitches = buildChordPitches(rootIndex, chordType.intervals, inversion, voicing);
+        const progression = buildProgression(root, mode, progressionId);
+        const result = {
+          root: root,
+          rootIndex: rootIndex,
+          typeKey: typeKey,
+          instrument: instrument,
+          chord: getChordName(root, typeKey),
+          notes: notes,
+          intervals: chordType.names,
+          formula: chordType.names.join(" "),
+          noteSet: noteSet,
+          toneMap: toneMap,
+          pitches: pitches,
+          bass: midiToNoteName(pitches[0], noteSet),
+          inversionLabel: getInversionLabel(inversion),
+          voicingLabel: getVoicingLabel(voicing),
+          progression: progression
+        };
+        lastResult = result;
+        renderResult(result, showStatus);
+        return result;
+      } catch (error) {
+        console.error("Chord generation failed", error);
+        setStatus("errorRender", {}, true);
+        if (showStatus) alert(translate("errorRender"));
+        return null;
+      }
     }
 
     async function copyResult() {
+      if (!lastResult) generateChord(false);
       const copyText = document.getElementById("copyText");
-      if (!copyText || !copyText.value.trim()) {
-        generateChord(false);
-      }
-
+      if (!copyText || !copyText.value.trim()) return;
       try {
-        await navigator.clipboard.writeText(document.getElementById("copyText").value);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(copyText.value);
+        } else {
+          copyText.focus();
+          copyText.select();
+          document.execCommand("copy");
+        }
         setStatus("statusCopied");
       } catch (error) {
-        const textArea = document.getElementById("copyText");
-        if (textArea) {
-          textArea.focus();
-          textArea.select();
-        }
+        copyText.focus();
+        copyText.select();
         setStatus("errorCopy", {}, true);
       }
     }
@@ -639,9 +1193,9 @@
       const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
-      const safeName = (lastResult?.chord || "chord").replace(/[^\w#♭-]+/g, "-");
+      const safeName = (lastResult?.chord || "chord").replace(/[^a-z0-9#-]+/gi, "-");
       link.href = url;
-      link.download = `${safeName}.txt`;
+      link.download = safeName + ".txt";
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -649,48 +1203,104 @@
       setStatus("statusDownloaded");
     }
 
+    async function playCurrentChord() {
+      try {
+        const result = lastResult || generateChord(false);
+        if (!result) return;
+        const AudioCtor = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtor) {
+          setStatus("errorAudio", {}, true);
+          alert(translate("errorAudio"));
+          return;
+        }
+        audioContext = audioContext || new AudioCtor();
+        if (audioContext.state === "suspended") await audioContext.resume();
+        const now = audioContext.currentTime + 0.04;
+        const master = audioContext.createGain();
+        master.gain.setValueAtTime(0.0001, now);
+        master.gain.exponentialRampToValueAtTime(0.18, now + 0.05);
+        master.gain.exponentialRampToValueAtTime(0.0001, now + 1.65);
+        master.connect(audioContext.destination);
+        result.pitches.forEach(function(midi, index) {
+          const osc = audioContext.createOscillator();
+          const gain = audioContext.createGain();
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(midiToFrequency(midi), now);
+          gain.gain.setValueAtTime(0.0001, now + index * 0.055);
+          gain.gain.exponentialRampToValueAtTime(0.26 / Math.max(1, result.pitches.length), now + 0.08 + index * 0.055);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.55);
+          osc.connect(gain).connect(master);
+          osc.start(now + index * 0.055);
+          osc.stop(now + 1.7);
+        });
+        setStatus("statusPlayed");
+      } catch (error) {
+        console.warn("Audio preview failed", error);
+        setStatus("errorAudio", {}, true);
+        alert(translate("errorAudio"));
+      }
+    }
+
     function loadSample() {
-      const root = document.getElementById("rootSelect");
-      const type = document.getElementById("typeSelect");
-      const instrument = document.getElementById("instrumentSelect");
-      if (root) root.value = "C";
-      if (type) type.value = "maj7";
-      if (instrument) instrument.value = "piano";
+      document.getElementById("rootSelect").value = "C";
+      document.getElementById("typeSelect").value = "maj9";
+      document.getElementById("inversionSelect").value = "1";
+      document.getElementById("voicingSelect").value = "spread";
+      document.getElementById("instrumentSelect").value = "piano";
+      document.getElementById("modeSelect").value = "major";
+      document.getElementById("progressionSelect").value = "jazz";
       generateChord(false);
       setStatus("statusSample");
     }
 
     function resetTool() {
-      const root = document.getElementById("rootSelect");
-      const type = document.getElementById("typeSelect");
-      const instrument = document.getElementById("instrumentSelect");
-      if (root) root.value = "C";
-      if (type) type.value = "maj";
-      if (instrument) instrument.value = "guitar";
+      document.getElementById("rootSelect").value = "C";
+      document.getElementById("typeSelect").value = "maj";
+      document.getElementById("inversionSelect").value = "0";
+      document.getElementById("voicingSelect").value = "close";
+      document.getElementById("instrumentSelect").value = "overview";
+      document.getElementById("modeSelect").value = "major";
+      document.getElementById("progressionSelect").value = "pop";
       generateChord(false);
       setStatus("statusReset");
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      document.getElementById("langZhBtn")?.addEventListener("click", () => setLanguage("zh"));
-      document.getElementById("langEnBtn")?.addEventListener("click", () => setLanguage("en"));
-      document.getElementById("openSponsorBtn")?.addEventListener("click", openSponsorModal);
-      document.getElementById("closeSponsorBtn")?.addEventListener("click", closeSponsorModal);
-      document.getElementById("sponsorModal")?.addEventListener("click", (event) => {
-        if (event.target?.id === "sponsorModal") closeSponsorModal();
+    function bindSponsorButton() {
+      const sponsorButton = document.getElementById("openSponsorBtn");
+      if (!sponsorButton) return;
+      sponsorButton.addEventListener("click", function() {
+        try {
+          if (typeof window.openSponsorModal === "function") {
+            window.openSponsorModal();
+          } else {
+            setStatus("sponsorUnavailable");
+          }
+        } catch (error) {
+          console.warn("Sponsor modal failed", error);
+          setStatus("sponsorUnavailable");
+        }
       });
+    }
 
-      document.getElementById("generateBtn")?.addEventListener("click", () => generateChord(true));
-      document.getElementById("sampleBtn")?.addEventListener("click", loadSample);
-      document.getElementById("clearBtn")?.addEventListener("click", resetTool);
-      document.getElementById("copyBtn")?.addEventListener("click", copyResult);
-      document.getElementById("downloadBtn")?.addEventListener("click", downloadResult);
-
-      document.getElementById("rootSelect")?.addEventListener("change", () => generateChord(true));
-      document.getElementById("typeSelect")?.addEventListener("change", () => generateChord(true));
-      document.getElementById("instrumentSelect")?.addEventListener("change", () => generateChord(true));
-
-      applyLanguage(getInitialLanguage());
+    document.addEventListener("DOMContentLoaded", function() {
+      try {
+        document.getElementById("langZhBtn")?.addEventListener("click", function() { setLanguage("zh"); });
+        document.getElementById("langEnBtn")?.addEventListener("click", function() { setLanguage("en"); });
+        bindSponsorButton();
+        document.getElementById("generateBtn")?.addEventListener("click", function() { generateChord(true); });
+        document.getElementById("playBtn")?.addEventListener("click", playCurrentChord);
+        document.getElementById("sampleBtn")?.addEventListener("click", loadSample);
+        document.getElementById("clearBtn")?.addEventListener("click", resetTool);
+        document.getElementById("copyBtn")?.addEventListener("click", copyResult);
+        document.getElementById("downloadBtn")?.addEventListener("click", downloadResult);
+        ["rootSelect", "typeSelect", "inversionSelect", "voicingSelect", "instrumentSelect", "modeSelect", "progressionSelect"].forEach(function(id) {
+          document.getElementById(id)?.addEventListener("change", function() { generateChord(true); });
+        });
+        applyLanguage(getInitialLanguage());
+      } catch (error) {
+        console.error("Chord workbench initialization failed", error);
+        alert((I18N[currentLanguage] && I18N[currentLanguage].errorRender) || I18N.zh.errorRender);
+      }
     });
   </script>
   <script>
@@ -698,9 +1308,13 @@
       const lang = typeof currentLanguage === "string" ? currentLanguage : (document.documentElement.lang === "en" ? "en" : "zh");
       const fallback = {
         zh: {
+          shareCopied: "分享链接已复制到剪贴板！",
+          shareCopyPrompt: "复制此分享链接：",
           shareDataTooLarge: "当前数据过大，无法生成分享链接，请直接复制文本结果。"
         },
         en: {
+          shareCopied: "Share link copied to clipboard!",
+          shareCopyPrompt: "Copy this share link:",
           shareDataTooLarge: "The current data is too large to create a share link. Please copy the text result directly."
         }
       };
@@ -728,11 +1342,7 @@
       if (event) event.stopPropagation();
       const menu = document.getElementById("shareToolMenu");
       if (!menu) return;
-      if (menu.classList.contains("hidden")) {
-        openShareMenu();
-      } else {
-        closeShareMenu();
-      }
+      if (menu.classList.contains("hidden")) openShareMenu(); else closeShareMenu();
     }
 
     function closeShareMenuOnOutsideClick(event) {
@@ -753,7 +1363,7 @@
     }
 
     function getShareableControls() {
-      return Array.from(document.querySelectorAll("main textarea[id], main input[id], main select[id], main [contenteditable='true'][id]")).filter((control) => {
+      return Array.from(document.querySelectorAll("main textarea[id], main input[id], main select[id], main [contenteditable='true'][id]")).filter(function(control) {
         const type = (control.getAttribute("type") || control.tagName).toLowerCase();
         return !control.disabled && !["button", "submit", "reset", "file", "hidden", "image", "password"].includes(type);
       });
@@ -762,45 +1372,33 @@
     function serializeShareControl(control) {
       const tag = control.tagName.toLowerCase();
       const type = (control.getAttribute("type") || tag).toLowerCase();
-      const field = { id: control.id, type };
-      if (type === "checkbox" || type === "radio") {
-        field.checked = Boolean(control.checked);
-      } else if (control.isContentEditable) {
-        field.value = control.textContent || "";
-      } else {
-        field.value = control.value || "";
-      }
+      const field = { id: control.id, type: type };
+      if (type === "checkbox" || type === "radio") field.checked = Boolean(control.checked);
+      else if (control.isContentEditable) field.value = control.textContent || "";
+      else field.value = control.value || "";
       return field;
     }
 
     function collectShareState() {
-      const fields = getShareableControls().map(serializeShareControl).filter((field) => {
+      const fields = getShareableControls().map(serializeShareControl).filter(function(field) {
         if (field.type === "checkbox" || field.type === "radio") return field.checked;
         return String(field.value || "").length > 0;
       });
-      return { version: 1, fields };
+      return { version: 1, fields: fields };
     }
 
     function shareUrl(url) {
-      const shareData = {
-        title: document.title,
-        url
-      };
+      const shareData = { title: document.title, url: url };
       if (navigator.share) {
-        navigator.share(shareData)
-          .then(() => console.log("分享成功"))
-          .catch((error) => console.log("分享失败", error));
+        navigator.share(shareData).catch(function(error) { console.log("Share failed", error); });
         return;
       }
       if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(url)
-          .then(() => {
-            alert(getShareMessage("shareCopied"));
-          })
-          .catch((err) => {
-            console.error("复制失败: ", err);
-            window.prompt(getShareMessage("shareCopyPrompt"), url);
-          });
+        navigator.clipboard.writeText(url).then(function() {
+          alert(getShareMessage("shareCopied"));
+        }).catch(function() {
+          window.prompt(getShareMessage("shareCopyPrompt"), url);
+        });
         return;
       }
       window.prompt(getShareMessage("shareCopyPrompt"), url);
@@ -808,8 +1406,7 @@
 
     function shareToolOnly() {
       closeShareMenu();
-      const cleanUrl = window.location.href.split("?")[0];
-      shareUrl(cleanUrl);
+      shareUrl(getCleanShareUrl());
     }
 
     function shareWithData() {
@@ -824,9 +1421,7 @@
         alert(getShareMessage("shareDataTooLarge"));
         return;
       }
-      const encodedData = encodeShareText(rawData);
-      const stateUrl = window.location.href.split("?")[0] + "?d=" + encodedData;
-      shareUrl(stateUrl);
+      shareUrl(getCleanShareUrl() + "?d=" + encodeShareText(rawData));
     }
 
     function applySharedField(field) {
@@ -834,13 +1429,9 @@
       const control = document.getElementById(field.id);
       if (!control) return;
       const type = (control.getAttribute("type") || control.tagName).toLowerCase();
-      if (type === "checkbox" || type === "radio") {
-        control.checked = Boolean(field.checked);
-      } else if (control.isContentEditable) {
-        control.textContent = field.value || "";
-      } else if (Object.prototype.hasOwnProperty.call(field, "value")) {
-        control.value = field.value || "";
-      }
+      if (type === "checkbox" || type === "radio") control.checked = Boolean(field.checked);
+      else if (control.isContentEditable) control.textContent = field.value || "";
+      else if (Object.prototype.hasOwnProperty.call(field, "value")) control.value = field.value || "";
       control.dispatchEvent(new Event("input", { bubbles: true }));
       control.dispatchEvent(new Event("change", { bubbles: true }));
     }
@@ -858,22 +1449,15 @@
     }
 
     function initializeShareMenu() {
+      document.getElementById("shareToolBtn")?.addEventListener("click", toggleShareMenu);
+      document.getElementById("shareToolOnlyOption")?.addEventListener("click", shareToolOnly);
+      document.getElementById("shareWithDataOption")?.addEventListener("click", shareWithData);
       document.addEventListener("click", closeShareMenuOnOutsideClick);
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") closeShareMenu();
-      });
+      document.addEventListener("keydown", function(event) { if (event.key === "Escape") closeShareMenu(); });
       restoreShareStateFromUrl();
     }
 
-    function shareTool() {
-      toggleShareMenu();
-    }
-
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", initializeShareMenu);
-    } else {
-      initializeShareMenu();
-    }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", initializeShareMenu); else initializeShareMenu();
   </script>
   <script src="./sponsor.js" defer></script>
   <script src="./theme-toggle.js" defer></script>  <script src="./assets/favorites.js" defer></script>

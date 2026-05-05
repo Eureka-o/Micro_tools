@@ -1,4 +1,4 @@
-const CACHE_NAME = "micro-tools-cache-v20260505-favorites-all-55";
+const CACHE_NAME = "micro-tools-cache-v20260505-listing-refresh-55";
 const CACHE_ASSETS = [
   "/",
   "/apple-touch-icon.png",
