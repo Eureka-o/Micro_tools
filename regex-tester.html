@@ -12,27 +12,13 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>正则测试器 - 开发调试，纯前端本地运行 | Micro Tools Matrix</title>
-  <meta name="description" content="免费的 正则测试器，用于开发调试。工具在浏览器本地运行、无后端上传，结合 正则测试器 的相关技术能力快速处理任务，保护开发者隐私。">
-  <meta name="keywords" content="正则测试器, regex, tester, 免费, 纯前端, 本地运行, 无后端, 隐私保护, Micro Tools Matrix">
+  <title>正则表达式调试器 - 本地工具 | Micro Tools Matrix</title>
+  <meta name="description" content="浏览器本地正则调试器，支持实时匹配、高亮分组、常用表达式片段和多行测试文本，适合日志、表单与配置校验。">
+  <meta name="keywords" content="正则表达式调试器,正则测试,Regex Debugger,匹配高亮,日志调试,表单校验,浏览器本地处理,Micro Tools Matrix">
   <link rel="stylesheet" href="./style.css">
   <script src="./storage.js"></script>
   <script src="./theme-init.js"></script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Regex Tester",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Windows, macOS, Android, iOS",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "description": "Free"
-      }
-    }
-  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"正则表达式调试器","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS, Linux","description":"浏览器本地正则调试器，支持实时匹配、高亮分组、常用表达式片段和多行测试文本，适合日志、表单与配置校验。","url":"https://mymicrotools.xyz/regex-tester.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock"},"inLanguage":"zh-CN"}</script>
   <style>
     :root { color-scheme: light dark; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
@@ -50,7 +36,7 @@
         <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
         <span class="min-w-0">
           <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
-          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">正则测试器</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">正则表达式调试器</span>
         </span>
       </a>
       <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
@@ -73,8 +59,8 @@
       <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div class="min-w-0">
           <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
-          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">正则测试器</h1>
-          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中本地测试正则表达式，实时高亮匹配结果，并可快速插入常用片段，无需上传文本。</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">正则表达式调试器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">浏览器本地正则调试器，支持实时匹配、高亮分组、常用表达式片段和多行测试文本，适合日志、表单与配置校验。</p>
         </div>
         <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
           <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
@@ -377,6 +363,28 @@
         themeSystem: "System"
       }
     };
+    // Micro Tools Matrix page refresh overrides
+    Object.assign(I18N.zh, {
+          "toolName": "正则表达式调试器",
+          "h1": "正则表达式调试器",
+          "documentTitle": "正则表达式调试器 - 本地工具 | Micro Tools Matrix",
+          "docTitle": "正则表达式调试器 - 本地工具 | Micro Tools Matrix",
+          "title": "正则表达式调试器 - 本地工具 | Micro Tools Matrix",
+          "metaDescription": "浏览器本地正则调试器，支持实时匹配、高亮分组、常用表达式片段和多行测试文本，适合日志、表单与配置校验。",
+          "metaKeywords": "正则表达式调试器,正则测试,Regex Debugger,匹配高亮,日志调试,表单校验,浏览器本地处理,Micro Tools Matrix",
+          "intro": "浏览器本地正则调试器，支持实时匹配、高亮分组、常用表达式片段和多行测试文本，适合日志、表单与配置校验。"
+    });
+    Object.assign(I18N.en, {
+          "toolName": "Regex Debugger",
+          "h1": "Regex Debugger",
+          "documentTitle": "Regex Debugger - Local Tool | Micro Tools Matrix",
+          "docTitle": "Regex Debugger - Local Tool | Micro Tools Matrix",
+          "title": "Regex Debugger - Local Tool | Micro Tools Matrix",
+          "metaDescription": "Browser-local regex debugger with live matching, capture highlights, reusable pattern snippets, and multiline test text for logs, forms, and config validation.",
+          "metaKeywords": "regex debugger,regex tester,live matching,capture highlights,log parsing,form validation,browser-local,Micro Tools Matrix",
+          "intro": "Browser-local regex debugger with live matching, capture highlights, reusable pattern snippets, and multiline test text for logs, forms, and config validation."
+    });
+    // End Micro Tools Matrix page refresh overrides
 
     let currentLanguage = "zh";
     let lastMatches = [];

@@ -12,27 +12,13 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Regex Tester - developer debugging, browser-local | Micro Tools Matrix</title>
-  <meta name="description" content="Free Regex Tester for developer debugging. Runs browser-local with no backend upload, keeping your data private while handling regex tester tasks quickly in Micro Tools Matrix.">
-  <meta name="keywords" content="Regex Tester, regex, tester, free, browser local, no backend, privacy friendly, Micro Tools Matrix">
+  <title>Regex Debugger - Local Tool | Micro Tools Matrix</title>
+  <meta name="description" content="Browser-local regex debugger with live matching, capture highlights, reusable pattern snippets, and multiline test text for logs, forms, and config validation.">
+  <meta name="keywords" content="regex debugger,regex tester,live matching,capture highlights,log parsing,form validation,browser-local,Micro Tools Matrix">
   <link rel="stylesheet" href="../style.css">
   <script src="../storage.js"></script>
   <script src="./theme-init.js"></script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Regex Tester",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Windows, macOS, Android, iOS",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "description": "Free"
-      }
-    }
-  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Regex Debugger","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS, Linux","description":"Browser-local regex debugger with live matching, capture highlights, reusable pattern snippets, and multiline test text for logs, forms, and config validation.","url":"https://mymicrotools.xyz/en/regex-tester.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock"},"inLanguage":"en"}</script>
   <style>
     :root { color-scheme: light dark; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
@@ -50,7 +36,7 @@
         <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
         <span class="min-w-0">
           <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
-          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">正则测试器</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">Regex Debugger</span>
         </span>
       </a>
       <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
@@ -58,7 +44,7 @@
           <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline"></span>
         </button>
         <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
-          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">Sponsor</span>
         </button>
         <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
           <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
@@ -72,17 +58,17 @@
     <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
       <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div class="min-w-0">
-          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
-          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">正则测试器</h1>
-          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中本地测试正则表达式，实时高亮匹配结果，并可快速插入常用片段，无需上传文本。</p>
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">Browser-local processing</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">Regex Debugger</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">Browser-local regex debugger with live matching, capture highlights, reusable pattern snippets, and multiline test text for logs, forms, and config validation.</p>
         </div>
         <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
           <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
             <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
-            <span data-i18n="localBadge">本地运行</span>
+            <span data-i18n="localBadge">Local</span>
           </div>
           <div id="shareToolMenuRoot" class="relative shrink-0">
-            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
+            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="Open share menu" title="Open share menu" aria-haspopup="menu" aria-expanded="false">
               <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="18" cy="5" r="3"></circle>
                 <circle cx="6" cy="12" r="3"></circle>
@@ -90,19 +76,19 @@
                 <path d="M8.6 10.7 15.4 6.3"></path>
                 <path d="M8.6 13.3 15.4 17.7"></path>
               </svg>
-              <span data-i18n="share">分享</span>
+              <span data-i18n="share">Share</span>
               <svg aria-hidden="true" class="h-3.5 w-3.5 transition" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z" clip-rule="evenodd"></path>
               </svg>
             </button>
-            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="分享选项">
+            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="Share options">
               <button type="button" role="menuitem" onclick="shareToolOnly()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
                 <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200">
                   <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg>
                 </span>
                 <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">仅分享工具</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span>
+                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">Share Tool Only</span>
+                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">Share the clean tool page link</span>
                 </span>
               </button>
               <button type="button" role="menuitem" onclick="shareWithData()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
@@ -110,8 +96,8 @@
                   <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
                 </span>
                 <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">分享工具及当前结果</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">将当前输入或结果写入链接参数</span>
+                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">Share with Data</span>
+                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">Include current input or result in the link</span>
                 </span>
               </button>
             </div>
@@ -123,103 +109,103 @@
     <section class="grid gap-5 lg:grid-cols-2">
       <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">Input</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">Input</span>
         </div>
 
-        <label for="patternInput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="patternLabel">正则表达式</label>
+        <label for="patternInput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="patternLabel">Regular expression</label>
         <div class="flex flex-col gap-3 sm:flex-row">
-          <input id="patternInput" type="text" spellcheck="false" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="patternPlaceholder" placeholder="输入正则，例如 \b\w+@\w+\.\w+\b">
-          <select id="snippetSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 sm:max-w-[13rem]" data-i18n-aria-label="snippetAria" aria-label="常用片段">
-            <option value="" data-i18n="snippetDefault">插入常用片段</option>
-            <option value="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}" data-i18n="snippetEmail">邮箱地址</option>
-            <option value="1[3-9]\d{9}" data-i18n="snippetPhone">中国手机号</option>
-            <option value="https?:\/\/[^\s]+" data-i18n="snippetUrl">网址</option>
-            <option value="\b\d{4}-\d{2}-\d{2}\b" data-i18n="snippetDate">日期</option>
-            <option value="\b(?:\d{1,3}\.){3}\d{1,3}\b" data-i18n="snippetIp">IPv4 地址</option>
+          <input id="patternInput" type="text" spellcheck="false" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="patternPlaceholder" placeholder="Enter a pattern, for example \b\w+@\w+\.\w+\b">
+          <select id="snippetSelect" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 sm:max-w-[13rem]" data-i18n-aria-label="snippetAria" aria-label="Common snippets">
+            <option value="" data-i18n="snippetDefault">Insert a snippet</option>
+            <option value="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}" data-i18n="snippetEmail">Email address</option>
+            <option value="1[3-9]\d{9}" data-i18n="snippetPhone">Chinese mobile number</option>
+            <option value="https?:\/\/[^\s]+" data-i18n="snippetUrl">URL</option>
+            <option value="\b\d{4}-\d{2}-\d{2}\b" data-i18n="snippetDate">Date</option>
+            <option value="\b(?:\d{1,3}\.){3}\d{1,3}\b" data-i18n="snippetIp">IPv4 address</option>
           </select>
         </div>
 
         <div class="mt-4 grid gap-3 sm:grid-cols-3">
           <label class="flex min-h-11 items-center gap-2 rounded-2xl border border-gray-200 bg-slate-50 px-3 text-sm font-semibold text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">
             <input id="flagG" type="checkbox" checked class="h-4 w-4 accent-cyan-400">
-            <span data-i18n="flagGlobal">全局匹配</span>
+            <span data-i18n="flagGlobal">Global match</span>
           </label>
           <label class="flex min-h-11 items-center gap-2 rounded-2xl border border-gray-200 bg-slate-50 px-3 text-sm font-semibold text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">
             <input id="flagI" type="checkbox" class="h-4 w-4 accent-cyan-400">
-            <span data-i18n="flagIgnoreCase">忽略大小写</span>
+            <span data-i18n="flagIgnoreCase">Ignore case</span>
           </label>
           <label class="flex min-h-11 items-center gap-2 rounded-2xl border border-gray-200 bg-slate-50 px-3 text-sm font-semibold text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">
             <input id="flagM" type="checkbox" class="h-4 w-4 accent-cyan-400">
-            <span data-i18n="flagMultiline">多行模式</span>
+            <span data-i18n="flagMultiline">Multiline mode</span>
           </label>
         </div>
 
-        <label for="testText" class="mb-2 mt-5 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="textLabel">测试文本</label>
-        <textarea id="testText" rows="12" spellcheck="false" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="textPlaceholder" placeholder="粘贴需要测试的文本"></textarea>
+        <label for="testText" class="mb-2 mt-5 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="textLabel">Test text</label>
+        <textarea id="testText" rows="12" spellcheck="false" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="textPlaceholder" placeholder="Paste the text you want to test"></textarea>
 
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="testBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">测试匹配</button>
-          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">示例</button>
-          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+          <button id="testBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">Test matches</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">Sample</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">Clear</button>
         </div>
-        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="statusReady">输入表达式和文本后开始测试。</p>
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="statusReady">Enter a pattern and text to start testing.</p>
       </section>
 
       <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">结果</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">Output</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">Output</span>
         </div>
 
         <div class="grid gap-3 sm:grid-cols-3">
           <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
-            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="matchCountLabel">匹配数</p>
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="matchCountLabel">Matches</p>
             <p id="matchCount" class="mt-2 text-2xl font-black tabular-nums text-slate-950 dark:text-white">0</p>
           </div>
           <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
-            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="flagLabel">标志</p>
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="flagLabel">Flags</p>
             <p id="activeFlags" class="mt-2 break-words text-2xl font-black tabular-nums text-slate-950 dark:text-white">g</p>
           </div>
           <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
-            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="firstIndexLabel">首个位置</p>
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-500" data-i18n="firstIndexLabel">First index</p>
             <p id="firstIndex" class="mt-2 text-2xl font-black tabular-nums text-slate-950 dark:text-white">-</p>
           </div>
         </div>
 
         <div class="mt-5">
           <div class="mb-2 flex items-center justify-between gap-3">
-            <h2 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="highlightTitle">高亮预览</h2>
+            <h2 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="highlightTitle">Highlighted preview</h2>
           </div>
-          <div id="highlightOutput" class="regex-highlight min-h-[10rem] max-h-[26rem] overflow-auto whitespace-pre-wrap break-words rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-900 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100" data-i18n="emptyHighlight">匹配结果会显示在这里。</div>
+          <div id="highlightOutput" class="regex-highlight min-h-[10rem] max-h-[26rem] overflow-auto whitespace-pre-wrap break-words rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm leading-6 text-slate-900 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100" data-i18n="emptyHighlight">Matched results will appear here.</div>
         </div>
 
         <div class="mt-5">
           <div class="mb-2 flex items-center justify-between gap-3">
-            <h2 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="matchesTitle">匹配列表</h2>
+            <h2 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="matchesTitle">Match list</h2>
           </div>
           <div id="matchesList" class="max-h-80 overflow-auto rounded-2xl border border-gray-200 bg-slate-50 p-3 text-sm dark:border-white/10 dark:bg-slate-950/70">
-            <p class="text-slate-500 dark:text-slate-400" data-i18n="emptyMatches">暂无匹配项。</p>
+            <p class="text-slate-500 dark:text-slate-400" data-i18n="emptyMatches">No matches yet.</p>
           </div>
         </div>
 
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="copyMatchesBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyMatches">复制匹配项</button>
-          <button id="copyPatternBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="copyPattern">复制表达式</button>
+          <button id="copyMatchesBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyMatches">Copy matches</button>
+          <button id="copyPatternBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="copyPattern">Copy pattern</button>
         </div>
       </section>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">这款正则表达式在线测试工具属于 Micro Tools Matrix 的浏览器本地处理工具集，适合前端、后端、测试与运营人员快速验证匹配规则。你可以输入正则和测试文本，页面会即时高亮命中内容，并列出每个匹配项的位置，便于排查边界条件。工具内置邮箱、手机号、网址、日期、IPv4 等常用正则片段，可一键插入后继续调整。所有文本仅在当前浏览器内存中处理，无需上传到服务器，也不会调用远程接口，适合作为免费在线开发工具在日常调试、数据清洗和表单校验前验证使用。</article>
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">This regex tester is part of the Micro Tools Matrix collection of browser-local processing utilities. It is designed for frontend engineers, backend developers, QA specialists, technical writers, and operations teams who need a fast way to validate regular expressions before using them in code, forms, logs, or data-cleaning workflows. Enter a pattern and sample text, then review highlighted matches, match counts, first indexes, and a copyable list of results. Built-in snippets for email addresses, Chinese mobile numbers, URLs, dates, and IPv4 addresses help you start quickly while still allowing full manual editing. All processing happens in your current browser session; your pattern and text are not uploaded, and no remote API is called. As a free online developer tool, it supports practical debugging, privacy-aware validation, and repeatable regex experimentation inside Micro Tools Matrix.</article>
   </main>
 
-  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - Browser-local processing with no upload.</footer>
 
   <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md">
     <div class="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
-      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor" aria-label="关闭赞赏弹窗">×</button>
-      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">赞赏支持</h2>
-      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">保持工具免费、快速且无广告。</p>
+      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor" aria-label="Close sponsor dialog">×</button>
+      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">Sponsor support</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">Keep the tools free, fast, and ad-free.</p>
       <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="buyCoffee">Buy Me a Coffee</a>
     </div>
   </div>
@@ -377,6 +363,28 @@
         themeSystem: "System"
       }
     };
+    // Micro Tools Matrix page refresh overrides
+    Object.assign(I18N.zh, {
+          "toolName": "正则表达式调试器",
+          "h1": "正则表达式调试器",
+          "documentTitle": "正则表达式调试器 - 本地工具 | Micro Tools Matrix",
+          "docTitle": "正则表达式调试器 - 本地工具 | Micro Tools Matrix",
+          "title": "正则表达式调试器 - 本地工具 | Micro Tools Matrix",
+          "metaDescription": "浏览器本地正则调试器，支持实时匹配、高亮分组、常用表达式片段和多行测试文本，适合日志、表单与配置校验。",
+          "metaKeywords": "正则表达式调试器,正则测试,Regex Debugger,匹配高亮,日志调试,表单校验,浏览器本地处理,Micro Tools Matrix",
+          "intro": "浏览器本地正则调试器，支持实时匹配、高亮分组、常用表达式片段和多行测试文本，适合日志、表单与配置校验。"
+    });
+    Object.assign(I18N.en, {
+          "toolName": "Regex Debugger",
+          "h1": "Regex Debugger",
+          "documentTitle": "Regex Debugger - Local Tool | Micro Tools Matrix",
+          "docTitle": "Regex Debugger - Local Tool | Micro Tools Matrix",
+          "title": "Regex Debugger - Local Tool | Micro Tools Matrix",
+          "metaDescription": "Browser-local regex debugger with live matching, capture highlights, reusable pattern snippets, and multiline test text for logs, forms, and config validation.",
+          "metaKeywords": "regex debugger,regex tester,live matching,capture highlights,log parsing,form validation,browser-local,Micro Tools Matrix",
+          "intro": "Browser-local regex debugger with live matching, capture highlights, reusable pattern snippets, and multiline test text for logs, forms, and config validation."
+    });
+    // End Micro Tools Matrix page refresh overrides
 
     let currentLanguage = "zh";
     let lastMatches = [];

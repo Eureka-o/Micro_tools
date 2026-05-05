@@ -12,30 +12,13 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Uuid V4 Generator - developer utility, browser-local | Micro Tools Matrix</title>
-  <meta name="description" content="Free Uuid V4 Generator for developer utility. Runs browser-local with no backend upload, keeping your data private while handling uuid v4 generator tasks quickly in Micro Tools Matrix.">
-  <meta name="keywords" content="Uuid V4 Generator, uuid, v4, generator, free, browser local, no backend, privacy friendly, Micro Tools Matrix">
+  <title>UUID v4 Batch Generator - Micro Tools Matrix Local Developer Tool</title>
+  <meta name="description" content="Micro Tools Matrix UUID v4 batch generator creates 1 to 100 standard UUIDs with browser-local processing, no upload, and a free online developer tool workflow.">
+  <meta name="keywords" content="UUID v4 generator, UUID batch generator, GUID generator, browser-local processing, no upload, free online developer tool, Micro Tools Matrix">
   <link rel="stylesheet" href="../style.css">
   <script src="../storage.js"></script>
   <script src="./theme-init.js"></script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "UUID v4 Generator",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Windows, macOS, Android, iOS",
-      "description": "A browser-local UUID v4 batch generator by Micro Tools Matrix.",
-      "url": "https://mymicrotools.xyz/uuid-v4-generator.html",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "description": "Free"
-      }
-    }
-  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"UUID v4 Batch Generator","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS","description":"Micro Tools Matrix UUID v4 batch generator creates 1 to 100 standard UUIDs with browser-local processing, no upload, and a free online developer tool workflow.","url":"https://mymicrotools.xyz/en/uuid-v4-generator.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock","description":"Free"},"inLanguage":"en"}</script>
   <style>
     :root { color-scheme: light dark; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
@@ -51,7 +34,7 @@
         <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
         <span class="min-w-0">
           <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
-          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">UUID v4 批量生成器</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">UUID v4 Batch Generator</span>
         </span>
       </a>
       <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
@@ -59,10 +42,10 @@
           <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
         </button>
         <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
-          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">Sponsor</span>
         </button>
-        <div role="group" aria-label="语言" data-i18n-aria-label="languageGroup" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
-          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langZh">中</button>
+        <div role="group" aria-label="Language" data-i18n-aria-label="languageGroup" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langZh">ZH</button>
           <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langEn">EN</button>
         </div>
       </div>
@@ -73,17 +56,17 @@
     <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
       <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div class="min-w-0">
-          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
-          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">UUID v4 批量生成器</h1>
-          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中一次生成 1 到 100 个标准 UUID v4。所有随机值都在浏览器本地创建，无需上传任何内容。</p>
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">Browser-local processing</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">UUID v4 Batch Generator</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">Generate 1 to 100 standard UUID v4 values in Micro Tools Matrix. Random values are created locally in your browser, with no upload required.</p>
         </div>
         <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
           <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
             <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
-            <span data-i18n="localBadge">本地运行</span>
+            <span data-i18n="localBadge">Local</span>
           </div>
           <div id="shareToolMenuRoot" class="relative shrink-0">
-            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
+            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="Open share menu" title="Open share menu" aria-haspopup="menu" aria-expanded="false">
               <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="18" cy="5" r="3"></circle>
                 <circle cx="6" cy="12" r="3"></circle>
@@ -91,19 +74,19 @@
                 <path d="M8.6 10.7 15.4 6.3"></path>
                 <path d="M8.6 13.3 15.4 17.7"></path>
               </svg>
-              <span data-i18n="share">分享</span>
+              <span data-i18n="share">Share</span>
               <svg aria-hidden="true" class="h-3.5 w-3.5 transition" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z" clip-rule="evenodd"></path>
               </svg>
             </button>
-            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="分享选项">
+            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="Share options">
               <button type="button" role="menuitem" onclick="shareToolOnly()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
                 <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200">
                   <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg>
                 </span>
                 <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">仅分享工具</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span>
+                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">Share Tool Only</span>
+                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">Share the clean tool page link</span>
                 </span>
               </button>
               <button type="button" role="menuitem" onclick="shareWithData()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
@@ -111,8 +94,8 @@
                   <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
                 </span>
                 <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">分享工具及当前结果</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">将当前输入或结果写入链接参数</span>
+                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">Share with Data</span>
+                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">Include current input or result in the link</span>
                 </span>
               </button>
             </div>
@@ -124,64 +107,64 @@
     <section class="grid gap-5 lg:grid-cols-2">
       <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">Input</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">INPUT</span>
         </div>
 
-        <label for="uuidCount" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="countLabel">生成数量</label>
-        <input id="uuidCount" type="number" min="1" max="100" step="1" inputmode="numeric" value="10" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-aria-label="countLabel" aria-label="生成数量">
-        <p class="mt-3 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="countHelp">请输入 1 到 100 之间的整数。每个结果都是标准 8-4-4-4-12 格式。</p>
+        <label for="uuidCount" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="countLabel">Quantity</label>
+        <input id="uuidCount" type="number" min="1" max="100" step="1" inputmode="numeric" value="10" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-aria-label="countLabel" aria-label="Quantity">
+        <p class="mt-3 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="countHelp">Enter an integer from 1 to 100. Every result uses the standard 8-4-4-4-12 format.</p>
 
         <div class="mt-5 rounded-2xl border border-cyan-200 bg-cyan-50/70 p-4 text-sm leading-6 text-cyan-900 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-100">
-          <p class="font-semibold" data-i18n="privacyTitle">隐私说明</p>
-          <p class="mt-1" data-i18n="privacyText">UUID 由当前页面直接生成，结果只保存在浏览器内存中，不会发送到服务器。</p>
+          <p class="font-semibold" data-i18n="privacyTitle">Privacy note</p>
+          <p class="mt-1" data-i18n="privacyText">UUIDs are generated directly on this page. Results stay in browser memory and are never sent to a server.</p>
         </div>
 
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="generateBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">生成 UUID</button>
-          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">示例数量</button>
+          <button id="generateBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">Generate UUIDs</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">Use sample</button>
         </div>
         <p id="inputStatus" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite"></p>
       </section>
 
       <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">Result</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">OUTPUT</span>
         </div>
 
-        <label for="uuidOutput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="outputLabel">UUID 列表</label>
-        <textarea id="uuidOutput" readonly rows="13" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="outputPlaceholder" data-i18n-aria-label="outputLabel" placeholder="生成的 UUID 会显示在这里。" aria-label="UUID 列表"></textarea>
+        <label for="uuidOutput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="outputLabel">UUID list</label>
+        <textarea id="uuidOutput" readonly rows="13" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="outputPlaceholder" data-i18n-aria-label="outputLabel" placeholder="Generated UUIDs will appear here." aria-label="UUID list"></textarea>
 
         <div class="mt-3 flex flex-col gap-2 rounded-2xl border border-gray-200 bg-slate-50 p-4 text-sm leading-6 text-slate-600 dark:border-white/10 dark:bg-slate-950/40 dark:text-slate-400">
           <div class="flex items-center justify-between gap-3">
-            <span data-i18n="resultCountLabel">当前数量</span>
+            <span data-i18n="resultCountLabel">Current count</span>
             <strong id="resultCount" class="tabular-nums text-slate-950 dark:text-white">0</strong>
           </div>
           <div class="flex items-center justify-between gap-3">
-            <span data-i18n="formatLabel">格式</span>
+            <span data-i18n="formatLabel">Format</span>
             <strong class="text-right text-slate-950 dark:text-white">xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx</strong>
           </div>
         </div>
 
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAll">复制全部</button>
-          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="clearResults">清空结果</button>
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAll">Copy all</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="clearResults">Clear results</button>
         </div>
         <p id="outputStatus" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite"></p>
       </section>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">UUID v4 批量生成器是 Micro Tools Matrix 为开发、测试、数据库建模和接口调试准备的免费在线开发者工具。你可以一次生成 1 到 100 个标准 UUID，适合创建临时主键、模拟数据、配置样例或排查分布式系统中的标识字段。整个过程采用浏览器本地处理，随机字节在当前页面内生成，结果无需上传，也不会经过远程接口。工具保持简洁、快速、无广告，并支持浅色与深色主题，方便在桌面和移动设备上随时使用。</article>
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">The UUID v4 Batch Generator in Micro Tools Matrix is a free online developer tool for testing, database modeling, API debugging, mock data creation, and configuration examples. It creates between 1 and 100 standard UUID v4 values at once, using the familiar 8-4-4-4-12 layout required by most frameworks and databases. The workflow is intentionally simple: choose a quantity, generate the list, and copy every result with one button. All generation happens with browser-local processing, so the values are produced on the current page and no input or output is uploaded to a remote service. This makes the tool convenient for privacy-sensitive development tasks, quick QA sessions, and mobile use. Like the rest of Micro Tools Matrix, it is lightweight, ad-free, theme-aware, and designed to remain fast without external runtime libraries.</article>
   </main>
 
-  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理的免费开发者工具。</footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - free developer tools with browser-local processing.</footer>
 
   <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md">
     <div class="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
-      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor" aria-label="关闭赞赏窗口">×</button>
-      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">赞赏支持</h2>
-      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">保持工具免费、快速且无广告。</p>
+      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor" aria-label="Close sponsor dialog">×</button>
+      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">Sponsor support</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">Keep the tools free, fast, and ad-free.</p>
       <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="buyCoffee">Buy Me a Coffee</a>
     </div>
   </div>

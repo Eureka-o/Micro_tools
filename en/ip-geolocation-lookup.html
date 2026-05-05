@@ -12,30 +12,13 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IP Geolocation Lookup - network analysis, browser-local | Micro Tools Matrix</title>
-  <meta name="description" content="Free IP Geolocation Lookup for network analysis. Runs browser-local with no backend upload, keeping your data private while handling ip geolocation lookup tasks quickly in Micro Tools Matrix.">
-  <meta name="keywords" content="IP Geolocation Lookup, ip, geolocation, lookup, free, browser local, no backend, privacy friendly, Micro Tools Matrix">
+  <title>IP Geolocation Lookup - Micro Tools Matrix Browser Tool</title>
+  <meta name="description" content="Micro Tools Matrix IP Geolocation Lookup can fetch your public IP and look up country, city, ISP, timezone, and related data through third-party APIs from your browser; this site does not collect any data.">
+  <meta name="keywords" content="IP geolocation lookup,public IP,my IP,IP location,ISP lookup,third-party APIs,does not collect any data,Micro Tools Matrix">
   <link rel="stylesheet" href="../style.css">
   <script src="../storage.js"></script>
   <script src="./theme-init.js"></script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "IP Geolocation Lookup",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Windows, macOS, Android, iOS",
-      "description": "Micro Tools Matrix IP Geolocation Lookup can fetch your public IP and look up country, city, ISP, timezone, and related data through third-party APIs from your browser; this site does not collect any data.",
-      "url": "https://mymicrotools.xyz/en/ip-geolocation-lookup.html",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "category": "Free"
-      }
-    }
-  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"IP Geolocation Lookup","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS","description":"Micro Tools Matrix IP Geolocation Lookup can fetch your public IP and look up country, city, ISP, timezone, and related data through third-party APIs from your browser; this site does not collect any data.","url":"https://mymicrotools.xyz/en/ip-geolocation-lookup.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock","category":"Free"},"inLanguage":"en"}</script>
   <style>
     :root { color-scheme: light dark; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
@@ -62,7 +45,7 @@
           <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">Sponsor</span>
         </button>
         <div role="group" aria-label="Language" data-i18n-aria-label="languageGroupAria" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
-          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="langZhAria" aria-label="切换到中文">中</button>
+          <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="langZhAria" aria-label="Switch to Chinese">中</button>
           <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n-aria-label="langEnAria" aria-label="Switch to English">EN</button>
         </div>
       </div>
@@ -79,10 +62,10 @@
         <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
           <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
             <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
-            <span data-i18n="localBadge">本地运行</span>
+            <span data-i18n="localBadge">Local</span>
           </div>
           <div id="shareToolMenuRoot" class="relative shrink-0">
-            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
+            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="Open share menu" title="Open share menu" aria-haspopup="menu" aria-expanded="false">
               <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="18" cy="5" r="3"></circle>
                 <circle cx="6" cy="12" r="3"></circle>
@@ -90,19 +73,19 @@
                 <path d="M8.6 10.7 15.4 6.3"></path>
                 <path d="M8.6 13.3 15.4 17.7"></path>
               </svg>
-              <span data-i18n="share">分享</span>
+              <span data-i18n="share">Share</span>
               <svg aria-hidden="true" class="h-3.5 w-3.5 transition" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z" clip-rule="evenodd"></path>
               </svg>
             </button>
-            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="分享选项">
+            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="Share options">
               <button type="button" role="menuitem" onclick="shareToolOnly()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
                 <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200">
                   <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg>
                 </span>
                 <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">仅分享工具</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span>
+                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">Share Tool Only</span>
+                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">Share the clean tool page link</span>
                 </span>
               </button>
               <button type="button" role="menuitem" onclick="shareWithData()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
@@ -110,8 +93,8 @@
                   <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
                 </span>
                 <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">分享工具及当前结果</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">将当前输入或结果写入链接参数</span>
+                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">Share with Data</span>
+                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">Include current input or result in the link</span>
                 </span>
               </button>
             </div>
@@ -123,62 +106,62 @@
     <section class="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
       <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">查询</h2>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">Lookup</h2>
           <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">IP</span>
         </div>
         <label class="block">
-          <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="ipLabel">IP 地址</span>
-          <input id="ipInput" type="text" autocomplete="off" spellcheck="false" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="ipPlaceholder" placeholder="例如：8.8.8.8">
+          <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="ipLabel">IP address</span>
+          <input id="ipInput" type="text" autocomplete="off" spellcheck="false" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="ipPlaceholder" placeholder="Example: 8.8.8.8">
         </label>
         <div class="mt-4 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-7 text-amber-900 dark:border-amber-300/20 dark:bg-amber-300/10 dark:text-amber-100">
-          <p class="font-bold" data-i18n="privacyTitle">隐私免责声明</p>
-          <p class="mt-1" data-i18n="privacyText">数据仅通过浏览器直连第三方API，本站不收集任何数据。查询结果由第三方接口返回，可能存在缓存、延迟或定位误差。</p>
+          <p class="font-bold" data-i18n="privacyTitle">Privacy Notice</p>
+          <p class="mt-1" data-i18n="privacyText">Data is sent directly from your browser to third-party IP geolocation APIs. This site does not collect any data. Results are returned by third-party services and may include cache, delay, or location inaccuracy.</p>
         </div>
         <div class="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="getMyIpBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="getMyIpAction">获取本机真实公网 IP</button>
-          <button id="lookupBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="lookupAction">查询归属地</button>
-          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="clearAction">清空</button>
+          <button id="getMyIpBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="getMyIpAction">Get My Public IP</button>
+          <button id="lookupBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="lookupAction">Look Up Location</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="clearAction">Clear</button>
         </div>
-        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="readyStatus">输入 IP 或先获取本机公网 IP。</p>
+        <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="readyStatus">Enter an IP address or fetch your public IP first.</p>
       </section>
 
       <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">第三方 API</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">Results</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">Third-party APIs</span>
         </div>
         <div class="overflow-hidden rounded-2xl border border-gray-200 dark:border-white/10">
           <dl class="divide-y divide-gray-200 dark:divide-white/10">
             <div class="grid gap-1 bg-slate-50 dark:bg-slate-950/50 p-4 sm:grid-cols-[10rem_1fr] sm:gap-4">
-              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="ipLabelOut">ipLabelOut</dt>
+              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="ipLabelOut">IP</dt>
               <dd id="ipOutput" class="break-words font-mono text-sm tabular-nums text-slate-900 dark:text-slate-100">-</dd>
             </div>
             <div class="grid gap-1 bg-white dark:bg-transparent p-4 sm:grid-cols-[10rem_1fr] sm:gap-4">
-              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="countryLabel">countryLabel</dt>
+              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="countryLabel">Country / Region</dt>
               <dd id="countryOutput" class="break-words font-mono text-sm tabular-nums text-slate-900 dark:text-slate-100">-</dd>
             </div>
             <div class="grid gap-1 bg-slate-50 dark:bg-slate-950/50 p-4 sm:grid-cols-[10rem_1fr] sm:gap-4">
-              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="regionCityLabel">regionCityLabel</dt>
+              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="regionCityLabel">Region / City</dt>
               <dd id="regionCityOutput" class="break-words font-mono text-sm tabular-nums text-slate-900 dark:text-slate-100">-</dd>
             </div>
             <div class="grid gap-1 bg-white dark:bg-transparent p-4 sm:grid-cols-[10rem_1fr] sm:gap-4">
-              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="ispLabel">ispLabel</dt>
+              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="ispLabel">ISP / Organization</dt>
               <dd id="ispOutput" class="break-words font-mono text-sm tabular-nums text-slate-900 dark:text-slate-100">-</dd>
             </div>
             <div class="grid gap-1 bg-slate-50 dark:bg-slate-950/50 p-4 sm:grid-cols-[10rem_1fr] sm:gap-4">
-              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="asnLabel">asnLabel</dt>
+              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="asnLabel">ASN</dt>
               <dd id="asnOutput" class="break-words font-mono text-sm tabular-nums text-slate-900 dark:text-slate-100">-</dd>
             </div>
             <div class="grid gap-1 bg-white dark:bg-transparent p-4 sm:grid-cols-[10rem_1fr] sm:gap-4">
-              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="timezoneLabel">timezoneLabel</dt>
+              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="timezoneLabel">Timezone</dt>
               <dd id="timezoneOutput" class="break-words font-mono text-sm tabular-nums text-slate-900 dark:text-slate-100">-</dd>
             </div>
             <div class="grid gap-1 bg-slate-50 dark:bg-slate-950/50 p-4 sm:grid-cols-[10rem_1fr] sm:gap-4">
-              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="postalLabel">postalLabel</dt>
+              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="postalLabel">Postal code</dt>
               <dd id="postalOutput" class="break-words font-mono text-sm tabular-nums text-slate-900 dark:text-slate-100">-</dd>
             </div>
             <div class="grid gap-1 bg-white dark:bg-transparent p-4 sm:grid-cols-[10rem_1fr] sm:gap-4">
-              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="coordinatesLabel">coordinatesLabel</dt>
+              <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-500" data-i18n="coordinatesLabel">Coordinates</dt>
               <dd id="coordinatesOutput" class="break-words font-mono text-sm tabular-nums text-slate-900 dark:text-slate-100">-</dd>
             </div>
           </dl>
@@ -186,7 +169,7 @@
       </section>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">这款 IP 归属地查询与本机 IP 探测器适合开发者、站长和运维人员快速确认公网出口地址。</article>
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">This IP geolocation lookup and public IP detector helps developers, site owners, and operations teams quickly check public egress IP, country, region, city, ISP, ASN, timezone, postal code, and coordinates. The page only uses browser-side fetch calls: Cloudflare trace for public IP detection, FreeIPAPI as the primary geolocation source, and GeoJS plus IPLocation as public fallbacks. This site has no backend receiving these lookups and does not collect or store your IP query data.</article>
   </main>
   <script>
     const I18N = {

@@ -12,30 +12,13 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SQL Formatter - developer debugging, browser-local | Micro Tools Matrix</title>
-  <meta name="description" content="Free SQL Formatter for developer debugging. Runs browser-local with no backend upload, keeping your data private while handling sql formatter tasks quickly in Micro Tools Matrix.">
-  <meta name="keywords" content="SQL Formatter, sql, formatter, free, browser local, no backend, privacy friendly, Micro Tools Matrix">
+  <title>SQL Formatter and Reviewer - Local Tool | Micro Tools Matrix</title>
+  <meta name="description" content="Local SQL formatter and review helper for indentation cleanup, keyword emphasis, clause splitting, and query-structure inspection before code review.">
+  <meta name="keywords" content="SQL formatter and reviewer,SQL beautifier,keyword emphasis,clause splitting,query review,browser-local,Micro Tools Matrix">
   <link rel="stylesheet" href="../style.css">
   <script src="../storage.js"></script>
   <script src="./theme-init.js"></script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "SQL Formatter",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Windows, macOS, Android, iOS",
-      "description": "A browser-local SQL formatting and keyword highlighting tool from Micro Tools Matrix.",
-      "url": "https://mymicrotools.xyz/sql-formatter.html",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "description": "Free"
-      }
-    }
-  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"SQL Formatter and Reviewer","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS, Linux","description":"Local SQL formatter and review helper for indentation cleanup, keyword emphasis, clause splitting, and query-structure inspection before code review.","url":"https://mymicrotools.xyz/en/sql-formatter.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock"},"inLanguage":"en"}</script>
   <style>
     :root { color-scheme: light dark; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
@@ -59,7 +42,7 @@
         <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
         <span class="min-w-0">
           <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
-          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">SQL 格式化工具</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">SQL Formatter and Reviewer</span>
         </span>
       </a>
       <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
@@ -67,7 +50,7 @@
           <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
         </button>
         <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
-          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">Sponsor</span>
         </button>
         <div role="group" aria-label="Language" data-i18n-aria-label="languageAria" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
           <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
@@ -81,17 +64,17 @@
     <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
       <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div class="min-w-0">
-          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
-          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">SQL 格式化工具</h1>
-          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中将混乱的单行 SQL 语句整理为清晰缩进，并在浏览器本地完成关键字高亮，无需上传文本。</p>
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">Browser-local processing</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">SQL Formatter and Reviewer</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">Local SQL formatter and review helper for indentation cleanup, keyword emphasis, clause splitting, and query-structure inspection before code review.</p>
         </div>
         <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
           <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
             <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
-            <span data-i18n="localBadge">本地运行</span>
+            <span data-i18n="localBadge">Local</span>
           </div>
           <div id="shareToolMenuRoot" class="relative shrink-0">
-            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
+            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="Open share menu" title="Open share menu" aria-haspopup="menu" aria-expanded="false">
               <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="18" cy="5" r="3"></circle>
                 <circle cx="6" cy="12" r="3"></circle>
@@ -99,19 +82,19 @@
                 <path d="M8.6 10.7 15.4 6.3"></path>
                 <path d="M8.6 13.3 15.4 17.7"></path>
               </svg>
-              <span data-i18n="share">分享</span>
+              <span data-i18n="share">Share</span>
               <svg aria-hidden="true" class="h-3.5 w-3.5 transition" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z" clip-rule="evenodd"></path>
               </svg>
             </button>
-            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="分享选项">
+            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="Share options">
               <button type="button" role="menuitem" onclick="shareToolOnly()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
                 <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200">
                   <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg>
                 </span>
                 <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">仅分享工具</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span>
+                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">Share Tool Only</span>
+                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">Share the clean tool page link</span>
                 </span>
               </button>
               <button type="button" role="menuitem" onclick="shareWithData()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
@@ -119,8 +102,8 @@
                   <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
                 </span>
                 <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">分享工具及当前结果</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">将当前输入或结果写入链接参数</span>
+                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">Share with Data</span>
+                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">Include current input or result in the link</span>
                 </span>
               </button>
             </div>
@@ -132,80 +115,80 @@
     <section class="grid gap-5 lg:grid-cols-2">
       <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">Input</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">INPUT</span>
         </div>
 
-        <label for="sqlInput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="inputLabel">粘贴 SQL 语句</label>
-        <textarea id="sqlInput" rows="15" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="inputPlaceholder" placeholder="例如：select u.id,u.name from users u where u.status='active' order by u.id desc;"></textarea>
+        <label for="sqlInput" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="inputLabel">Paste SQL statement</label>
+        <textarea id="sqlInput" rows="15" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="inputPlaceholder" placeholder="Example: select u.id,u.name from users u where u.status='active' order by u.id desc;"></textarea>
 
         <div class="mt-4 grid gap-3 sm:grid-cols-2">
           <div>
-            <label for="indentSize" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="indentLabel">缩进空格</label>
+            <label for="indentSize" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="indentLabel">Indent spaces</label>
             <select id="indentSize" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
-              <option value="2" data-i18n="indentTwo">2 个空格</option>
-              <option value="4" data-i18n="indentFour">4 个空格</option>
+              <option value="2" data-i18n="indentTwo">2 spaces</option>
+              <option value="4" data-i18n="indentFour">4 spaces</option>
             </select>
           </div>
           <div>
-            <label for="keywordCase" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="caseLabel">关键字大小写</label>
+            <label for="keywordCase" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="caseLabel">Keyword case</label>
             <select id="keywordCase" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
-              <option value="upper" data-i18n="caseUpper">大写</option>
-              <option value="lower" data-i18n="caseLower">小写</option>
-              <option value="preserve" data-i18n="casePreserve">保持原样</option>
+              <option value="upper" data-i18n="caseUpper">Uppercase</option>
+              <option value="lower" data-i18n="caseLower">Lowercase</option>
+              <option value="preserve" data-i18n="casePreserve">Preserve</option>
             </select>
           </div>
         </div>
 
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="formatBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">格式化</button>
-          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">填入示例</button>
-          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+          <button id="formatBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">Format</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">Load sample</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">Clear</button>
         </div>
-        <p id="inputStatus" class="mt-3 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="readyStatus">准备就绪。输入 SQL 后点击格式化。</p>
+        <p id="inputStatus" class="mt-3 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="readyStatus">Ready. Enter SQL and run formatting.</p>
       </section>
 
       <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">Output</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">OUTPUT</span>
         </div>
 
         <div class="overflow-hidden rounded-2xl border border-gray-200 bg-slate-50 dark:border-white/10 dark:bg-slate-950/70">
-          <pre class="min-h-[24rem] max-h-[34rem] overflow-auto p-4 text-sm leading-6"><code id="sqlOutput" class="font-mono text-slate-800 dark:text-slate-100" data-i18n="outputEmpty">格式化后的 SQL 将显示在这里。</code></pre>
+          <pre class="min-h-[24rem] max-h-[34rem] overflow-auto p-4 text-sm leading-6"><code id="sqlOutput" class="font-mono text-slate-800 dark:text-slate-100" data-i18n="outputEmpty">Formatted SQL will appear here.</code></pre>
         </div>
 
         <div class="mt-4 grid grid-cols-2 gap-3 text-xs text-slate-500 dark:text-slate-400 sm:grid-cols-4">
           <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-white/[0.04]">
-            <span class="block font-semibold" data-i18n="statChars">字符</span>
+            <span class="block font-semibold" data-i18n="statChars">Chars</span>
             <span id="charCount" class="mt-1 block font-mono text-base font-bold text-slate-800 dark:text-slate-200 tabular-nums">0</span>
           </div>
           <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-white/[0.04]">
-            <span class="block font-semibold" data-i18n="statLines">行数</span>
+            <span class="block font-semibold" data-i18n="statLines">Lines</span>
             <span id="lineCount" class="mt-1 block font-mono text-base font-bold text-slate-800 dark:text-slate-200 tabular-nums">0</span>
           </div>
           <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-white/[0.04]">
-            <span class="block font-semibold" data-i18n="statKeywords">关键字</span>
+            <span class="block font-semibold" data-i18n="statKeywords">Keywords</span>
             <span id="keywordCount" class="mt-1 block font-mono text-base font-bold text-slate-800 dark:text-slate-200 tabular-nums">0</span>
           </div>
           <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-white/[0.04]">
-            <span class="block font-semibold" data-i18n="statTables">表名</span>
+            <span class="block font-semibold" data-i18n="statTables">Tables</span>
             <span id="tableCount" class="mt-1 block font-mono text-base font-bold text-slate-800 dark:text-slate-200 tabular-nums">0</span>
           </div>
         </div>
 
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
-          <button id="downloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadAction">下载 SQL</button>
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">Copy result</button>
+          <button id="downloadBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="downloadAction">Download SQL</button>
         </div>
-        <p id="outputStatus" class="mt-3 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="outputReady">结果仅保存在当前浏览器内存中。</p>
+        <p id="outputStatus" class="mt-3 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="outputReady">The result stays only in current browser memory.</p>
       </section>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">SQL 格式化工具是 Micro Tools Matrix 提供的免费在线开发者工具，适合在排查查询语句、整理数据库脚本、编写文档或代码评审前快速统一 SQL 风格。你可以把压缩成一行或缩进混乱的 SELECT、JOIN、WHERE、GROUP BY、ORDER BY 等语句粘贴进来，页面会在浏览器本地处理文本，输出更易阅读的层级排版，并对常见关键字进行高亮。整个过程无需上传、无需登录，也不会把 SQL 内容发送到服务器，适合处理包含表名、字段名或业务条件的敏感片段。工具支持复制结果、下载 .sql 文件、示例填充和清空重置，帮助你用轻量方式完成 SQL 美化与格式化。</article>
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">This SQL Formatter from Micro Tools Matrix is a free online developer tool for cleaning up database queries before debugging, documentation, code review, or sharing with teammates. Paste a compressed or poorly indented statement, and the page formats common clauses such as SELECT, FROM, JOIN, WHERE, GROUP BY, HAVING, ORDER BY, INSERT, UPDATE, and DELETE into a more readable structure. The tool also highlights SQL keywords so you can scan complex conditions, joins, and nested expressions faster. All browser-local processing happens in memory: your table names, column names, filters, and business logic are not uploaded to a server, and no account is required. You can copy the formatted output, download it as a .sql file, load a realistic sample, or clear the workspace at any time. It is designed as a lightweight Micro Tools Matrix utility for quick SQL beautification when you need a private, reliable, and fast formatting workflow.</article>
   </main>
 
-  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理的免费开发者工具。</footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - free developer tools with browser-local processing.</footer>
 
   <script>
     const I18N = {
@@ -342,6 +325,28 @@
         sampleSql: "select u.id,u.name,u.email,o.order_no,o.total_amount from users u inner join orders o on u.id=o.user_id where u.status='active' and o.created_at>='2024-01-01' group by u.id,u.name,u.email,o.order_no,o.total_amount having sum(o.total_amount)>100 order by o.created_at desc limit 20;"
       }
     };
+    // Micro Tools Matrix page refresh overrides
+    Object.assign(I18N.zh, {
+          "toolName": "SQL 格式化与审阅器",
+          "h1": "SQL 格式化与审阅器",
+          "documentTitle": "SQL 格式化与审阅器 - 本地工具 | Micro Tools Matrix",
+          "docTitle": "SQL 格式化与审阅器 - 本地工具 | Micro Tools Matrix",
+          "title": "SQL 格式化与审阅器 - 本地工具 | Micro Tools Matrix",
+          "metaDescription": "本地 SQL 格式化与审阅工具，可整理缩进、突出关键字、拆分子句，方便排查查询结构与粘贴到代码评审。",
+          "metaKeywords": "SQL格式化与审阅器,SQL formatter,SQL美化,关键字高亮,查询结构审阅,浏览器本地处理,Micro Tools Matrix",
+          "intro": "本地 SQL 格式化与审阅工具，可整理缩进、突出关键字、拆分子句，方便排查查询结构与粘贴到代码评审。"
+    });
+    Object.assign(I18N.en, {
+          "toolName": "SQL Formatter and Reviewer",
+          "h1": "SQL Formatter and Reviewer",
+          "documentTitle": "SQL Formatter and Reviewer - Local Tool | Micro Tools Matrix",
+          "docTitle": "SQL Formatter and Reviewer - Local Tool | Micro Tools Matrix",
+          "title": "SQL Formatter and Reviewer - Local Tool | Micro Tools Matrix",
+          "metaDescription": "Local SQL formatter and review helper for indentation cleanup, keyword emphasis, clause splitting, and query-structure inspection before code review.",
+          "metaKeywords": "SQL formatter and reviewer,SQL beautifier,keyword emphasis,clause splitting,query review,browser-local,Micro Tools Matrix",
+          "intro": "Local SQL formatter and review helper for indentation cleanup, keyword emphasis, clause splitting, and query-structure inspection before code review."
+    });
+    // End Micro Tools Matrix page refresh overrides
 
     const SQL_KEYWORDS = new Set([
       "SELECT","FROM","WHERE","AND","OR","NOT","NULL","IS","IN","LIKE","BETWEEN","EXISTS",

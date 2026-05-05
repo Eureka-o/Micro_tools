@@ -12,13 +12,13 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register Bitfield Debugger - calculation and visualization, browser-local | Micro Tools Matrix</title>
-  <meta name="description" content="Free Register Bitfield Debugger for calculation and visualization. Runs browser-local with no backend upload, keeping your data private while handling register bitfield debugger tasks quickly in Micro Tools Matrix.">
-  <meta name="keywords" content="Register Bitfield Debugger, register, bitfield, debugger, free, browser local, no backend, privacy friendly, Micro Tools Matrix">
+  <title>Register Bitfield Debugger - Micro Tools Matrix Browser-Local Tool</title>
+  <meta name="description" content="Debug 32/64-bit register bitfields with BigInt-safe state, drag range selection, and generated C/Verilog snippets.">
+  <meta name="keywords" content="Register Bitfield Debugger,hardware developer tool,bitfield,FP32,WaveDrom,Micro Tools Matrix">
   <link rel="stylesheet" href="../style.css">
   <script src="../storage.js"></script>
   <script src="./theme-init.js"></script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Register Bitfield Debugger","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS","description":"Debug 32/64-bit register bitfields with BigInt-safe state, drag range selection, and generated C/Verilog snippets.","url":"https://mymicrotools.xyz/en/register-bitfield-debugger.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock","category":"Free"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Register Bitfield Debugger","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS","description":"Debug 32/64-bit register bitfields with BigInt-safe state, drag range selection, and generated C/Verilog snippets.","url":"https://mymicrotools.xyz/en/register-bitfield-debugger.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock","category":"Free"},"inLanguage":"en"}</script>
   <style>
     :root { color-scheme: light dark; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
@@ -59,18 +59,18 @@
     <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
       <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div class="min-w-0">
-          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">Browser-local hardware lab</p>
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">BigInt 64-bit register sandbox</p>
           <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">Register Bitfield Debugger</h1>
-          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">Debug 32/64-bit register bitfields with BigInt-safe state, drag range selection, and generated C/Verilog snippets.</p>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">Keep the full 64-bit register state in BigInt, click, drag, or Shift-select bits, sync Hex/Dec live, and generate C macros plus Verilog extraction code.</p>
         </div>
         
           <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
             <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
               <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
-              <span data-i18n="localBadge">本地运行</span>
+              <span data-i18n="localBadge">Local</span>
             </div>
             <div id="shareToolMenuRoot" class="relative shrink-0">
-              <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
+              <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="Open share menu" title="Open share menu" aria-haspopup="menu" aria-expanded="false">
                 <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <circle cx="18" cy="5" r="3"></circle>
                   <circle cx="6" cy="12" r="3"></circle>
@@ -78,19 +78,19 @@
                   <path d="M8.6 10.7 15.4 6.3"></path>
                   <path d="M8.6 13.3 15.4 17.7"></path>
                 </svg>
-                <span data-i18n="share">分享</span>
+                <span data-i18n="share">Share</span>
                 <svg aria-hidden="true" class="h-3.5 w-3.5 transition" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z" clip-rule="evenodd"></path>
                 </svg>
               </button>
-              <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="分享选项">
+              <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="Share options">
                 <button type="button" role="menuitem" onclick="shareToolOnly()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
                   <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200">
                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg>
                   </span>
                   <span class="min-w-0">
-                    <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">仅分享工具</span>
-                    <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span>
+                    <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">Share Tool Only</span>
+                    <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">Share the clean tool page link</span>
                   </span>
                 </button>
                 <button type="button" role="menuitem" onclick="shareWithData()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
@@ -98,8 +98,8 @@
                     <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
                   </span>
                   <span class="min-w-0">
-                    <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">分享工具及当前结果</span>
-                    <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">将当前输入或结果写入链接参数</span>
+                    <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">Share with Data</span>
+                    <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">Include current input or result in the link</span>
                   </span>
                 </button>
               </div>
@@ -111,7 +111,7 @@
     <section class="grid min-w-0 gap-5 xl:grid-cols-[1fr_22rem]">
       <section class="min-w-0 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
         <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="bitTitle">64 位寄存器</h2>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="bitTitle">64-Bit Register</h2>
           <div class="inline-flex w-fit rounded-full border border-gray-200 bg-slate-50 p-1 text-sm dark:border-white/10 dark:bg-white/[0.04]">
             <button id="width64Btn" type="button" class="rounded-full px-3 py-1.5 font-semibold">64</button>
             <button id="width32Btn" type="button" class="rounded-full px-3 py-1.5 font-semibold">32</button>
@@ -131,27 +131,27 @@
           </label>
         </div>
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n="clearAction">清零</button>
-          <button id="fillBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="fillAction">全置 1</button>
-          <p id="statusText" class="flex min-h-11 items-center text-sm text-slate-500 dark:text-slate-400" data-i18n="statusReady">拖拽 bit 或 Shift 点击可选择连续位段。</p>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n="clearAction">Clear</button>
+          <button id="fillBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="fillAction">Set All</button>
+          <p id="statusText" class="flex min-h-11 items-center text-sm text-slate-500 dark:text-slate-400" data-i18n="statusReady">Drag bits or Shift-click to select a continuous bitfield.</p>
         </div>
       </section>
 
       <aside class="min-w-0 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
-        <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="fieldTitle">选中字段</h2>
+        <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="fieldTitle">Selected Field</h2>
         <div class="mt-4 grid grid-cols-2 gap-3 text-sm">
           <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-slate-950/60"><div class="text-xs text-slate-500 dark:text-slate-400">MSB</div><div id="fieldMsb" class="font-mono text-lg font-bold">-</div></div>
           <div class="rounded-2xl border border-gray-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-slate-950/60"><div class="text-xs text-slate-500 dark:text-slate-400">LSB</div><div id="fieldLsb" class="font-mono text-lg font-bold">-</div></div>
         </div>
         <label class="mt-4 block">
-          <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="cMacroLabel">C 宏定义</span>
+          <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="cMacroLabel">C Macros</span>
           <textarea id="cMacroOutput" readonly class="min-h-40 w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-xs leading-5 text-slate-900 outline-none dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100"></textarea>
         </label>
         <label class="mt-4 block">
-          <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="verilogLabel">Verilog 提取</span>
+          <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="verilogLabel">Verilog Extract</span>
           <textarea id="verilogOutput" readonly class="min-h-28 w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-xs leading-5 text-slate-900 outline-none dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100"></textarea>
         </label>
-        <button id="copyCodeBtn" type="button" class="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制代码</button>
+        <button id="copyCodeBtn" type="button" class="mt-4 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">Copy Code</button>
       </aside>
     </section>
 

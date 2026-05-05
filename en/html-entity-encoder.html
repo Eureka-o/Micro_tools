@@ -12,30 +12,13 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HTML Entity Encoder - encoding and decoding, browser-local | Micro Tools Matrix</title>
-  <meta name="description" content="Free HTML Entity Encoder for encoding and decoding. Runs browser-local with no backend upload, keeping your data private while handling html entity encoder tasks quickly in Micro Tools Matrix.">
-  <meta name="keywords" content="HTML Entity Encoder, html, entity, encoder, free, browser local, no backend, privacy friendly, Micro Tools Matrix">
+  <title>HTML Entity Encoder - Micro Tools Matrix</title>
+  <meta name="description" content="A free HTML entity encoder that escapes special characters in your browser to help reduce XSS risk. Browser-local processing with no text upload.">
+  <meta name="keywords" content="HTML entity encoder, HTML escape tool, XSS prevention, browser-local processing, free online developer tool, Micro Tools Matrix">
   <link rel="stylesheet" href="../style.css">
   <script src="../storage.js"></script>
   <script src="./theme-init.js"></script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "HTML Entity Encoder",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Windows, macOS, Android, iOS",
-      "description": "A free browser-local HTML entity encoder for escaping special characters such as less-than, greater-than, ampersand, quotes, and apostrophes.",
-      "url": "https://mymicrotools.xyz/html-entity-encoder.html",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "category": "Free"
-      }
-    }
-  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"HTML Entity Encoder","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS","description":"A free HTML entity encoder that escapes special characters in your browser to help reduce XSS risk. Browser-local processing with no text upload.","url":"https://mymicrotools.xyz/en/html-entity-encoder.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock","category":"Free"},"inLanguage":"en"}</script>
   <style>
     :root { color-scheme: light dark; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
@@ -51,7 +34,7 @@
         <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
         <span class="min-w-0">
           <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
-          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">HTML 实体转义工具</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">HTML Entity Encoder</span>
         </span>
       </a>
       <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
@@ -59,9 +42,9 @@
           <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
         </button>
         <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
-          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">Sponsor</span>
         </button>
-        <div role="group" aria-label="语言" data-i18n-aria-label="languageControl" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+        <div role="group" aria-label="Language" data-i18n-aria-label="languageControl" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
           <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
           <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
         </div>
@@ -73,17 +56,17 @@
     <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
       <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div class="min-w-0">
-          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
-          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">HTML 实体转义工具</h1>
-          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中本地转义 HTML 特殊字符，把小于号、大于号、与号、引号等转换为实体代码，帮助安全展示用户输入，无需上传文本。</p>
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">Browser-local processing</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">HTML Entity Encoder</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">Escape HTML special characters locally in Micro Tools Matrix. Convert less-than, greater-than, ampersands, quotes, and apostrophes into entities so user input can be displayed more safely without uploading text.</p>
         </div>
         <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
           <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
             <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
-            <span data-i18n="localBadge">本地运行</span>
+            <span data-i18n="localBadge">Local</span>
           </div>
           <div id="shareToolMenuRoot" class="relative shrink-0">
-            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
+            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="Open share menu" title="Open share menu" aria-haspopup="menu" aria-expanded="false">
               <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="18" cy="5" r="3"></circle>
                 <circle cx="6" cy="12" r="3"></circle>
@@ -91,19 +74,19 @@
                 <path d="M8.6 10.7 15.4 6.3"></path>
                 <path d="M8.6 13.3 15.4 17.7"></path>
               </svg>
-              <span data-i18n="share">分享</span>
+              <span data-i18n="share">Share</span>
               <svg aria-hidden="true" class="h-3.5 w-3.5 transition" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z" clip-rule="evenodd"></path>
               </svg>
             </button>
-            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="分享选项">
+            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="Share options">
               <button type="button" role="menuitem" onclick="shareToolOnly()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
                 <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200">
                   <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg>
                 </span>
                 <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">仅分享工具</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span>
+                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">Share Tool Only</span>
+                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">Share the clean tool page link</span>
                 </span>
               </button>
               <button type="button" role="menuitem" onclick="shareWithData()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
@@ -111,8 +94,8 @@
                   <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
                 </span>
                 <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">分享工具及当前结果</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">将当前输入或结果写入链接参数</span>
+                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">Share with Data</span>
+                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">Include current input or result in the link</span>
                 </span>
               </button>
             </div>
@@ -124,82 +107,82 @@
     <section class="grid gap-5 lg:grid-cols-2">
       <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">Input</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">INPUT</span>
         </div>
 
-        <label for="sourceText" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="sourceLabel">需要转义的 HTML 或文本</label>
+        <label for="sourceText" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="sourceLabel">HTML or text to escape</label>
         <textarea id="sourceText" rows="12" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="sourcePlaceholder" placeholder="粘贴包含 <、>、&、引号或用户输入的 HTML 片段"></textarea>
 
         <div class="mt-4 grid gap-3">
           <label class="flex min-h-11 cursor-pointer items-start gap-3 rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 transition hover:border-cyan-400/60 dark:border-white/10 dark:bg-slate-950/50 dark:text-slate-300">
             <input id="encodeQuotes" type="checkbox" checked class="mt-1 h-4 w-4 rounded border-gray-300 text-cyan-500 focus:ring-cyan-400 dark:border-white/20">
             <span class="min-w-0">
-              <span class="block font-semibold" data-i18n="quotesLabel">转义单双引号</span>
-              <span class="mt-1 block text-xs leading-5 text-slate-500 dark:text-slate-500" data-i18n="quotesHelp">将双引号和单引号分别转换为 &amp;quot; 与 &amp;#39;。</span>
+              <span class="block font-semibold" data-i18n="quotesLabel">Escape single and double quotes</span>
+              <span class="mt-1 block text-xs leading-5 text-slate-500 dark:text-slate-500" data-i18n="quotesHelp">Convert double quotes and apostrophes to &amp;quot; and &amp;#39;.</span>
             </span>
           </label>
           <label class="flex min-h-11 cursor-pointer items-start gap-3 rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 transition hover:border-cyan-400/60 dark:border-white/10 dark:bg-slate-950/50 dark:text-slate-300">
             <input id="encodeNonAscii" type="checkbox" class="mt-1 h-4 w-4 rounded border-gray-300 text-cyan-500 focus:ring-cyan-400 dark:border-white/20">
             <span class="min-w-0">
-              <span class="block font-semibold" data-i18n="nonAsciiLabel">转义非 ASCII 字符</span>
-              <span class="mt-1 block text-xs leading-5 text-slate-500 dark:text-slate-500" data-i18n="nonAsciiHelp">可选将中文、符号和表情转换为十进制数字实体。</span>
+              <span class="block font-semibold" data-i18n="nonAsciiLabel">Escape non-ASCII characters</span>
+              <span class="mt-1 block text-xs leading-5 text-slate-500 dark:text-slate-500" data-i18n="nonAsciiHelp">Optionally convert Chinese characters, symbols, and emoji into decimal numeric entities.</span>
             </span>
           </label>
         </div>
 
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="encodeBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">转义</button>
-          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">填入示例</button>
-          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+          <button id="encodeBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">Encode</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">Load sample</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">Clear</button>
         </div>
 
-        <p id="inputStatus" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="readyStatus">输入文本后点击转义，结果只在当前浏览器内生成。</p>
+        <p id="inputStatus" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="readyStatus">Enter text and encode it. The result is generated only in this browser.</p>
       </section>
 
       <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">Result</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">OUTPUT</span>
         </div>
 
-        <label for="resultText" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="resultLabel">HTML 实体结果</label>
-        <textarea id="resultText" rows="12" readonly class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="resultPlaceholder" placeholder="转义结果会显示在这里"></textarea>
+        <label for="resultText" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="resultLabel">HTML entity result</label>
+        <textarea id="resultText" rows="12" readonly class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="resultPlaceholder" placeholder="The escaped result will appear here"></textarea>
 
         <div class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
           <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
-            <p class="text-xs font-semibold text-slate-500 dark:text-slate-500" data-i18n="inputCountLabel">输入字符</p>
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-500" data-i18n="inputCountLabel">Input chars</p>
             <p id="inputCount" class="mt-1 text-xl font-black tabular-nums text-slate-950 dark:text-white">0</p>
           </div>
           <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
-            <p class="text-xs font-semibold text-slate-500 dark:text-slate-500" data-i18n="outputCountLabel">输出字符</p>
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-500" data-i18n="outputCountLabel">Output chars</p>
             <p id="outputCount" class="mt-1 text-xl font-black tabular-nums text-slate-950 dark:text-white">0</p>
           </div>
           <div class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
-            <p class="text-xs font-semibold text-slate-500 dark:text-slate-500" data-i18n="escapedCountLabel">已转义项</p>
+            <p class="text-xs font-semibold text-slate-500 dark:text-slate-500" data-i18n="escapedCountLabel">Escaped items</p>
             <p id="escapedCount" class="mt-1 text-xl font-black tabular-nums text-slate-950 dark:text-white">0</p>
           </div>
         </div>
 
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制结果</button>
-          <button id="decodeBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="decodeAction">反向还原</button>
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">Copy result</button>
+          <button id="decodeBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="decodeAction">Decode back</button>
         </div>
 
-        <p id="outputStatus" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="outputReadyStatus">结果可复制到模板、文档或代码片段中使用。</p>
+        <p id="outputStatus" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="outputReadyStatus">Copy the result into templates, documents, or code snippets.</p>
       </section>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">HTML 实体转义工具用于把 &lt;、&gt;、&amp;、引号等特殊字符转换为安全的 HTML 实体代码，适合在页面中展示用户提交内容、代码片段或模板文本时使用。所有处理都在浏览器本地完成，无需上传文本，也不会调用后端接口。通过浏览器本地处理，你可以更放心地检查评论、表单内容、日志片段或邮件模板，减少未转义字符被浏览器当作标签或脚本解析的风险。Micro Tools Matrix 提供这个免费在线开发者工具，帮助前端、后端和内容编辑在日常工作中快速完成 HTML entity encoding 与基础 XSS 防护检查。</article>
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">The HTML Entity Encoder in Micro Tools Matrix is a free online developer tool for escaping text before it is displayed inside an HTML document. It converts special characters such as less-than, greater-than, ampersands, double quotes, and apostrophes into safe HTML entities, making snippets, comments, logs, and template values easier to review without being interpreted as markup. The tool runs with browser-local processing only: your input stays in memory on the current page, with no upload, no backend call, and no analytics request. This makes it useful for quick checks during frontend development, backend debugging, content editing, documentation writing, and basic XSS prevention workflows. While proper contextual escaping should still be handled in your application framework, this lightweight encoder helps you inspect and prepare examples quickly. Use it when you need a fast, private, and consistent HTML escape utility that fits naturally into the Micro Tools Matrix local toolkit.</article>
   </main>
 
-  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - Browser-local processing with no upload.</footer>
 
   <div id="sponsorModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 px-4 backdrop-blur-md">
     <div class="relative w-full max-w-md rounded-3xl border border-white/10 bg-slate-950 p-6 text-white shadow-2xl">
-      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor" aria-label="关闭赞赏弹窗">×</button>
-      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">赞赏支持</h2>
-      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">保持工具免费、快速且无广告。</p>
+      <button id="closeSponsorBtn" type="button" class="absolute right-4 top-4 inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-300 transition hover:bg-white/10 active:scale-95" data-i18n-aria-label="closeSponsor" aria-label="Close sponsor dialog">×</button>
+      <h2 class="pr-12 text-2xl font-black tracking-tight" data-i18n="sponsorTitle">Sponsor Support</h2>
+      <p class="mt-2 text-sm leading-6 text-slate-400" data-i18n="sponsorSubtitle">Keep the tools free, fast, and ad-free.</p>
       <a href="https://buymeacoffee.com/Eureka_link" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="buyCoffee">Buy Me a Coffee</a>
     </div>
   </div>
@@ -265,7 +248,7 @@
         themeLight: "亮色",
         themeDark: "深色",
         themeSystem: "系统",
-        sampleText: "<div class=\"card\" data-user=\"Alice & Bob\">欢迎 <script>alert('xss')</script> \"安全展示\"</div>",
+        sampleText: "<div class=\"card\" data-user=\"Alice & Bob\">欢迎 <script>alert('xss')<\/script> \"安全展示\"</div>",
         seoArticle: "HTML 实体转义工具用于把 <、>、&、引号等特殊字符转换为安全的 HTML 实体代码，适合在页面中展示用户提交内容、代码片段或模板文本时使用。所有处理都在浏览器本地完成，无需上传文本，也不会调用后端接口。通过浏览器本地处理，你可以更放心地检查评论、表单内容、日志片段或邮件模板，减少未转义字符被浏览器当作标签或脚本解析的风险。Micro Tools Matrix 提供这个免费在线开发者工具，帮助前端、后端和内容编辑在日常工作中快速完成 HTML entity encoding 与基础 XSS 防护检查。",
         footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
       },
@@ -328,7 +311,7 @@
         themeLight: "Light",
         themeDark: "Dark",
         themeSystem: "System",
-        sampleText: "<div class=\"card\" data-user=\"Alice & Bob\">Hello <script>alert('xss')</script> \"safe display\"</div>",
+        sampleText: "<div class=\"card\" data-user=\"Alice & Bob\">Hello <script>alert('xss')<\/script> \"safe display\"</div>",
         seoArticle: "The HTML Entity Encoder in Micro Tools Matrix is a free online developer tool for escaping text before it is displayed inside an HTML document. It converts special characters such as less-than, greater-than, ampersands, double quotes, and apostrophes into safe HTML entities, making snippets, comments, logs, and template values easier to review without being interpreted as markup. The tool runs with browser-local processing only: your input stays in memory on the current page, with no upload, no backend call, and no analytics request. This makes it useful for quick checks during frontend development, backend debugging, content editing, documentation writing, and basic XSS prevention workflows. While proper contextual escaping should still be handled in your application framework, this lightweight encoder helps you inspect and prepare examples quickly. Use it when you need a fast, private, and consistent HTML escape utility that fits naturally into the Micro Tools Matrix local toolkit.",
         footer: "Micro Tools Matrix - Browser-local processing with no upload."
       }

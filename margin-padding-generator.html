@@ -12,30 +12,13 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CSS 边距可视化工具 - 开发者工具，纯前端本地运行 | Micro Tools Matrix</title>
-  <meta name="description" content="免费的 CSS 边距可视化工具，用于开发者工具。工具在浏览器本地运行、无后端上传，结合 CSS 边距可视化工具 的相关技术能力快速处理任务，保护开发者隐私。">
-  <meta name="keywords" content="CSS 边距可视化工具, margin, padding, generator, 免费, 纯前端, 本地运行, 无后端, 隐私保护, Micro Tools Matrix">
+  <title>CSS 盒模型间距调试器 - 本地工具 | Micro Tools Matrix</title>
+  <meta name="description" content="CSS 盒模型间距调试器，用滑块实时调整 margin 与 padding，预览布局变化并生成可复制的间距代码。">
+  <meta name="keywords" content="CSS盒模型间距调试器,margin,padding,CSS spacing,盒模型,前端调试,浏览器本地处理,Micro Tools Matrix">
   <link rel="stylesheet" href="./style.css">
   <script src="./storage.js"></script>
   <script src="./theme-init.js"></script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Margin Padding Generator",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Windows, macOS, Android, iOS",
-      "description": "A browser-local CSS margin and padding visualizer that previews the box model and generates CSS code.",
-      "url": "https://mymicrotools.xyz/margin-padding-generator.html",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "category": "Free"
-      }
-    }
-  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"CSS 盒模型间距调试器","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS, Linux","description":"CSS 盒模型间距调试器，用滑块实时调整 margin 与 padding，预览布局变化并生成可复制的间距代码。","url":"https://mymicrotools.xyz/margin-padding-generator.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock"},"inLanguage":"zh-CN"}</script>
   <style>
     :root { color-scheme: light dark; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
@@ -52,7 +35,7 @@
         <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
         <span class="min-w-0">
           <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
-          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">CSS 边距可视化工具</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">CSS 盒模型间距调试器</span>
         </span>
       </a>
       <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
@@ -62,7 +45,7 @@
         <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
           <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
         </button>
-        <div role="group" aria-label="Language" data-i18n-aria-label="languageControl" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+        <div role="group" aria-label="语言" data-i18n-aria-label="languageControl" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
           <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
           <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
         </div>
@@ -75,8 +58,8 @@
       <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div class="min-w-0">
           <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
-          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">CSS 边距可视化工具</h1>
-          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中本地调整 CSS margin 与 padding，实时查看盒模型变化并生成可复制代码，无需上传任何内容。</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">CSS 盒模型间距调试器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">CSS 盒模型间距调试器，用滑块实时调整 margin 与 padding，预览布局变化并生成可复制的间距代码。</p>
         </div>
         <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
           <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
@@ -393,6 +376,28 @@
         buyCoffee: "Buy Me a Coffee"
       }
     };
+    // Micro Tools Matrix page refresh overrides
+    Object.assign(I18N.zh, {
+          "toolName": "CSS 盒模型间距调试器",
+          "h1": "CSS 盒模型间距调试器",
+          "documentTitle": "CSS 盒模型间距调试器 - 本地工具 | Micro Tools Matrix",
+          "docTitle": "CSS 盒模型间距调试器 - 本地工具 | Micro Tools Matrix",
+          "title": "CSS 盒模型间距调试器 - 本地工具 | Micro Tools Matrix",
+          "metaDescription": "CSS 盒模型间距调试器，用滑块实时调整 margin 与 padding，预览布局变化并生成可复制的间距代码。",
+          "metaKeywords": "CSS盒模型间距调试器,margin,padding,CSS spacing,盒模型,前端调试,浏览器本地处理,Micro Tools Matrix",
+          "intro": "CSS 盒模型间距调试器，用滑块实时调整 margin 与 padding，预览布局变化并生成可复制的间距代码。"
+    });
+    Object.assign(I18N.en, {
+          "toolName": "CSS Box Spacing Debugger",
+          "h1": "CSS Box Spacing Debugger",
+          "documentTitle": "CSS Box Spacing Debugger - Local Tool | Micro Tools Matrix",
+          "docTitle": "CSS Box Spacing Debugger - Local Tool | Micro Tools Matrix",
+          "title": "CSS Box Spacing Debugger - Local Tool | Micro Tools Matrix",
+          "metaDescription": "CSS box-spacing debugger with live margin and padding controls, layout preview, and copy-ready spacing code for front-end tuning.",
+          "metaKeywords": "CSS box spacing debugger,margin,padding,CSS spacing,box model,front-end tuning,browser-local,Micro Tools Matrix",
+          "intro": "CSS box-spacing debugger with live margin and padding controls, layout preview, and copy-ready spacing code for front-end tuning."
+    });
+    // End Micro Tools Matrix page refresh overrides
 
     const sliderIds = [
       "marginTop", "marginRight", "marginBottom", "marginLeft",

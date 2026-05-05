@@ -12,30 +12,13 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>键盘键值捕获器 - 开发者工具，纯前端本地运行 | Micro Tools Matrix</title>
-  <meta name="description" content="免费的 键盘键值捕获器，用于开发者工具。工具在浏览器本地运行、无后端上传，结合 键盘键值捕获器 的相关技术能力快速处理任务，保护开发者隐私。">
-  <meta name="keywords" content="键盘键值捕获器, keycode, info, 免费, 纯前端, 本地运行, 无后端, 隐私保护, Micro Tools Matrix">
+  <title>键盘事件捕获器 - 本地工具 | Micro Tools Matrix</title>
+  <meta name="description" content="浏览器本地键盘事件捕获器，实时显示 event.key、event.code、keyCode 和修饰键状态，适合快捷键与输入兼容性调试。">
+  <meta name="keywords" content="键盘事件捕获器,Keyboard Event,event.key,event.code,keyCode,快捷键调试,浏览器本地处理,Micro Tools Matrix">
   <link rel="stylesheet" href="./style.css">
   <script src="./storage.js"></script>
   <script src="./theme-init.js"></script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Keycode Info",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Windows, macOS, Android, iOS",
-      "description": "A browser-local keyboard keycode capture tool that displays event.keyCode, event.key, and event.code.",
-      "url": "https://mymicrotools.xyz/keycode-info.html",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "category": "Free"
-      }
-    }
-  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"键盘事件捕获器","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS, Linux","description":"浏览器本地键盘事件捕获器，实时显示 event.key、event.code、keyCode 和修饰键状态，适合快捷键与输入兼容性调试。","url":"https://mymicrotools.xyz/keycode-info.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock"},"inLanguage":"zh-CN"}</script>
   <style>
     :root { color-scheme: light dark; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
@@ -51,7 +34,7 @@
         <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
         <span class="min-w-0">
           <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
-          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">键盘键值捕获器</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">键盘事件捕获器</span>
         </span>
       </a>
       <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
@@ -61,7 +44,7 @@
         <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="sponsorAria">
           <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
         </button>
-        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]" data-i18n-aria-label="languageAria">
+        <div role="group" aria-label="语言" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]" data-i18n-aria-label="languageAria">
           <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langZh">中</button>
           <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langEn">EN</button>
         </div>
@@ -74,8 +57,8 @@
       <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div class="min-w-0">
           <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
-          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">键盘键值捕获器</h1>
-          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">按下任意键，Micro Tools Matrix 会在浏览器本地显示该按键的 event.keyCode、event.key 和 event.code，无需上传任何输入。</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">键盘事件捕获器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">浏览器本地键盘事件捕获器，实时显示 event.key、event.code、keyCode 和修饰键状态，适合快捷键与输入兼容性调试。</p>
         </div>
         <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
           <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
@@ -312,6 +295,28 @@
         footer: "Micro Tools Matrix - Browser-local processing with no upload."
       }
     };
+    // Micro Tools Matrix page refresh overrides
+    Object.assign(I18N.zh, {
+          "toolName": "键盘事件捕获器",
+          "h1": "键盘事件捕获器",
+          "documentTitle": "键盘事件捕获器 - 本地工具 | Micro Tools Matrix",
+          "docTitle": "键盘事件捕获器 - 本地工具 | Micro Tools Matrix",
+          "title": "键盘事件捕获器 - 本地工具 | Micro Tools Matrix",
+          "metaDescription": "浏览器本地键盘事件捕获器，实时显示 event.key、event.code、keyCode 和修饰键状态，适合快捷键与输入兼容性调试。",
+          "metaKeywords": "键盘事件捕获器,Keyboard Event,event.key,event.code,keyCode,快捷键调试,浏览器本地处理,Micro Tools Matrix",
+          "intro": "浏览器本地键盘事件捕获器，实时显示 event.key、event.code、keyCode 和修饰键状态，适合快捷键与输入兼容性调试。"
+    });
+    Object.assign(I18N.en, {
+          "toolName": "Keyboard Event Inspector",
+          "h1": "Keyboard Event Inspector",
+          "documentTitle": "Keyboard Event Inspector - Local Tool | Micro Tools Matrix",
+          "docTitle": "Keyboard Event Inspector - Local Tool | Micro Tools Matrix",
+          "title": "Keyboard Event Inspector - Local Tool | Micro Tools Matrix",
+          "metaDescription": "Browser-local keyboard event inspector for event.key, event.code, keyCode, and modifier states during shortcut and input-compatibility debugging.",
+          "metaKeywords": "keyboard event inspector,event.key,event.code,keyCode,modifier keys,shortcut debugging,browser-local,Micro Tools Matrix",
+          "intro": "Browser-local keyboard event inspector for event.key, event.code, keyCode, and modifier states during shortcut and input-compatibility debugging."
+    });
+    // End Micro Tools Matrix page refresh overrides
 
     let currentLanguage = "zh";
     let lastKeyInfo = null;

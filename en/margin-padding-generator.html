@@ -12,30 +12,13 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Margin Padding Generator - developer utility, browser-local | Micro Tools Matrix</title>
-  <meta name="description" content="Free Margin Padding Generator for developer utility. Runs browser-local with no backend upload, keeping your data private while handling margin padding generator tasks quickly in Micro Tools Matrix.">
-  <meta name="keywords" content="Margin Padding Generator, margin, padding, generator, free, browser local, no backend, privacy friendly, Micro Tools Matrix">
+  <title>CSS Box Spacing Debugger - Local Tool | Micro Tools Matrix</title>
+  <meta name="description" content="CSS box-spacing debugger with live margin and padding controls, layout preview, and copy-ready spacing code for front-end tuning.">
+  <meta name="keywords" content="CSS box spacing debugger,margin,padding,CSS spacing,box model,front-end tuning,browser-local,Micro Tools Matrix">
   <link rel="stylesheet" href="../style.css">
   <script src="../storage.js"></script>
   <script src="./theme-init.js"></script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "Margin Padding Generator",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Windows, macOS, Android, iOS",
-      "description": "A browser-local CSS margin and padding visualizer that previews the box model and generates CSS code.",
-      "url": "https://mymicrotools.xyz/margin-padding-generator.html",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "category": "Free"
-      }
-    }
-  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"CSS Box Spacing Debugger","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS, Linux","description":"CSS box-spacing debugger with live margin and padding controls, layout preview, and copy-ready spacing code for front-end tuning.","url":"https://mymicrotools.xyz/en/margin-padding-generator.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock"},"inLanguage":"en"}</script>
   <style>
     :root { color-scheme: light dark; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
@@ -52,7 +35,7 @@
         <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
         <span class="min-w-0">
           <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
-          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">CSS 边距可视化工具</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">CSS Box Spacing Debugger</span>
         </span>
       </a>
       <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
@@ -60,7 +43,7 @@
           <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline">系统</span>
         </button>
         <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
-          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">Sponsor</span>
         </button>
         <div role="group" aria-label="Language" data-i18n-aria-label="languageControl" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
           <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
@@ -74,17 +57,17 @@
     <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
       <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div class="min-w-0">
-          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
-          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">CSS 边距可视化工具</h1>
-          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中本地调整 CSS margin 与 padding，实时查看盒模型变化并生成可复制代码，无需上传任何内容。</p>
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">Browser-local processing</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">CSS Box Spacing Debugger</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">CSS box-spacing debugger with live margin and padding controls, layout preview, and copy-ready spacing code for front-end tuning.</p>
         </div>
         <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
           <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
             <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
-            <span data-i18n="localBadge">本地运行</span>
+            <span data-i18n="localBadge">Local</span>
           </div>
           <div id="shareToolMenuRoot" class="relative shrink-0">
-            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
+            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="Open share menu" title="Open share menu" aria-haspopup="menu" aria-expanded="false">
               <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="18" cy="5" r="3"></circle>
                 <circle cx="6" cy="12" r="3"></circle>
@@ -92,19 +75,19 @@
                 <path d="M8.6 10.7 15.4 6.3"></path>
                 <path d="M8.6 13.3 15.4 17.7"></path>
               </svg>
-              <span data-i18n="share">分享</span>
+              <span data-i18n="share">Share</span>
               <svg aria-hidden="true" class="h-3.5 w-3.5 transition" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z" clip-rule="evenodd"></path>
               </svg>
             </button>
-            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="分享选项">
+            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="Share options">
               <button type="button" role="menuitem" onclick="shareToolOnly()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
                 <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200">
                   <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg>
                 </span>
                 <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">仅分享工具</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span>
+                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">Share Tool Only</span>
+                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">Share the clean tool page link</span>
                 </span>
               </button>
               <button type="button" role="menuitem" onclick="shareWithData()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
@@ -112,8 +95,8 @@
                   <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
                 </span>
                 <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">分享工具及当前结果</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">将当前输入或结果写入链接参数</span>
+                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">Share with Data</span>
+                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">Include current input or result in the link</span>
                 </span>
               </button>
             </div>
@@ -125,136 +108,136 @@
     <section class="grid gap-5 lg:grid-cols-2">
       <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">Input</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">Input</span>
         </div>
 
         <div class="grid gap-5">
           <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/40">
             <div class="mb-4 flex items-center justify-between gap-3">
-              <h2 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="marginTitle">外边距</h2>
+              <h2 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="marginTitle">Margin</h2>
               <span class="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-slate-500 ring-1 ring-gray-200 dark:bg-white/[0.04] dark:ring-white/10">margin</span>
             </div>
             <div class="grid gap-4">
               <label class="block">
                 <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
-                  <span data-i18n="top">上</span>
-                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="marginTopValue">24</span> <span data-i18n="unitPx">像素</span></span>
+                  <span data-i18n="top">Top</span>
+                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="marginTopValue">24</span> <span data-i18n="unitPx">px</span></span>
                 </span>
-                <input id="marginTop" type="range" min="0" max="80" value="24" class="w-full" data-i18n-aria-label="marginTopLabel" aria-label="上外边距">
+                <input id="marginTop" type="range" min="0" max="80" value="24" class="w-full" data-i18n-aria-label="marginTopLabel" aria-label="Top margin">
               </label>
               <label class="block">
                 <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
-                  <span data-i18n="right">右</span>
-                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="marginRightValue">24</span> <span data-i18n="unitPx">像素</span></span>
+                  <span data-i18n="right">Right</span>
+                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="marginRightValue">24</span> <span data-i18n="unitPx">px</span></span>
                 </span>
-                <input id="marginRight" type="range" min="0" max="80" value="24" class="w-full" data-i18n-aria-label="marginRightLabel" aria-label="右外边距">
+                <input id="marginRight" type="range" min="0" max="80" value="24" class="w-full" data-i18n-aria-label="marginRightLabel" aria-label="Right margin">
               </label>
               <label class="block">
                 <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
-                  <span data-i18n="bottom">下</span>
-                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="marginBottomValue">24</span> <span data-i18n="unitPx">像素</span></span>
+                  <span data-i18n="bottom">Bottom</span>
+                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="marginBottomValue">24</span> <span data-i18n="unitPx">px</span></span>
                 </span>
-                <input id="marginBottom" type="range" min="0" max="80" value="24" class="w-full" data-i18n-aria-label="marginBottomLabel" aria-label="下外边距">
+                <input id="marginBottom" type="range" min="0" max="80" value="24" class="w-full" data-i18n-aria-label="marginBottomLabel" aria-label="Bottom margin">
               </label>
               <label class="block">
                 <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
-                  <span data-i18n="left">左</span>
-                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="marginLeftValue">24</span> <span data-i18n="unitPx">像素</span></span>
+                  <span data-i18n="left">Left</span>
+                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="marginLeftValue">24</span> <span data-i18n="unitPx">px</span></span>
                 </span>
-                <input id="marginLeft" type="range" min="0" max="80" value="24" class="w-full" data-i18n-aria-label="marginLeftLabel" aria-label="左外边距">
+                <input id="marginLeft" type="range" min="0" max="80" value="24" class="w-full" data-i18n-aria-label="marginLeftLabel" aria-label="Left margin">
               </label>
             </div>
           </div>
 
           <div class="rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/40">
             <div class="mb-4 flex items-center justify-between gap-3">
-              <h2 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="paddingTitle">内边距</h2>
+              <h2 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="paddingTitle">Padding</h2>
               <span class="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-slate-500 ring-1 ring-gray-200 dark:bg-white/[0.04] dark:ring-white/10">padding</span>
             </div>
             <div class="grid gap-4">
               <label class="block">
                 <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
-                  <span data-i18n="top">上</span>
-                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="paddingTopValue">20</span> <span data-i18n="unitPx">像素</span></span>
+                  <span data-i18n="top">Top</span>
+                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="paddingTopValue">20</span> <span data-i18n="unitPx">px</span></span>
                 </span>
-                <input id="paddingTop" type="range" min="0" max="80" value="20" class="w-full" data-i18n-aria-label="paddingTopLabel" aria-label="上内边距">
+                <input id="paddingTop" type="range" min="0" max="80" value="20" class="w-full" data-i18n-aria-label="paddingTopLabel" aria-label="Top padding">
               </label>
               <label class="block">
                 <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
-                  <span data-i18n="right">右</span>
-                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="paddingRightValue">28</span> <span data-i18n="unitPx">像素</span></span>
+                  <span data-i18n="right">Right</span>
+                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="paddingRightValue">28</span> <span data-i18n="unitPx">px</span></span>
                 </span>
-                <input id="paddingRight" type="range" min="0" max="80" value="28" class="w-full" data-i18n-aria-label="paddingRightLabel" aria-label="右内边距">
+                <input id="paddingRight" type="range" min="0" max="80" value="28" class="w-full" data-i18n-aria-label="paddingRightLabel" aria-label="Right padding">
               </label>
               <label class="block">
                 <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
-                  <span data-i18n="bottom">下</span>
-                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="paddingBottomValue">20</span> <span data-i18n="unitPx">像素</span></span>
+                  <span data-i18n="bottom">Bottom</span>
+                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="paddingBottomValue">20</span> <span data-i18n="unitPx">px</span></span>
                 </span>
-                <input id="paddingBottom" type="range" min="0" max="80" value="20" class="w-full" data-i18n-aria-label="paddingBottomLabel" aria-label="下内边距">
+                <input id="paddingBottom" type="range" min="0" max="80" value="20" class="w-full" data-i18n-aria-label="paddingBottomLabel" aria-label="Bottom padding">
               </label>
               <label class="block">
                 <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
-                  <span data-i18n="left">左</span>
-                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="paddingLeftValue">28</span> <span data-i18n="unitPx">像素</span></span>
+                  <span data-i18n="left">Left</span>
+                  <span class="tabular-nums text-slate-500 dark:text-slate-400"><span id="paddingLeftValue">28</span> <span data-i18n="unitPx">px</span></span>
                 </span>
-                <input id="paddingLeft" type="range" min="0" max="80" value="28" class="w-full" data-i18n-aria-label="paddingLeftLabel" aria-label="左内边距">
+                <input id="paddingLeft" type="range" min="0" max="80" value="28" class="w-full" data-i18n-aria-label="paddingLeftLabel" aria-label="Left padding">
               </label>
             </div>
           </div>
         </div>
 
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">应用示例</button>
-          <button id="resetBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">重置</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">Apply sample</button>
+          <button id="resetBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">Reset</button>
         </div>
       </section>
 
       <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">Result</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">Output</span>
         </div>
 
         <div class="overflow-hidden rounded-3xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/40">
           <div class="mb-3 flex items-center justify-between gap-3">
-            <h2 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="previewTitle">实时预览</h2>
-            <span class="rounded-full border border-cyan-200 bg-cyan-50 px-2.5 py-1 text-xs font-semibold text-cyan-700 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-300" data-i18n="boxModel">盒模型</span>
+            <h2 class="text-sm font-bold text-slate-950 dark:text-white" data-i18n="previewTitle">Live preview</h2>
+            <span class="rounded-full border border-cyan-200 bg-cyan-50 px-2.5 py-1 text-xs font-semibold text-cyan-700 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-300" data-i18n="boxModel">Box model</span>
           </div>
           <div class="max-w-full overflow-auto rounded-2xl border border-dashed border-slate-300 bg-white p-4 dark:border-white/10 dark:bg-[#020617]">
             <div id="marginLayer" class="mx-auto w-fit max-w-full rounded-2xl border border-dashed border-amber-400/80 bg-amber-100/50 transition-all dark:bg-amber-300/10" style="padding: 24px 24px 24px 24px;">
               <div id="paddingLayer" class="rounded-2xl border border-cyan-400/80 bg-cyan-100/70 transition-all dark:bg-cyan-400/15" style="padding: 20px 28px 20px 28px;">
                 <div class="flex h-24 w-36 items-center justify-center rounded-xl border border-slate-300 bg-white text-center text-xs font-bold text-slate-700 shadow-sm dark:border-white/10 dark:bg-slate-900 dark:text-slate-200 sm:h-28 sm:w-44">
-                  <span data-i18n="contentBox">内容区域</span>
+                  <span data-i18n="contentBox">Content box</span>
                 </div>
               </div>
             </div>
           </div>
           <div class="mt-3 grid gap-2 text-xs text-slate-500 dark:text-slate-400 sm:grid-cols-3">
-            <div class="rounded-2xl border border-gray-200 bg-white px-3 py-2 dark:border-white/10 dark:bg-white/[0.04]"><span data-i18n="legendMargin">橙色代表外边距</span></div>
-            <div class="rounded-2xl border border-gray-200 bg-white px-3 py-2 dark:border-white/10 dark:bg-white/[0.04]"><span data-i18n="legendPadding">青色代表内边距</span></div>
-            <div class="rounded-2xl border border-gray-200 bg-white px-3 py-2 dark:border-white/10 dark:bg-white/[0.04]"><span data-i18n="legendContent">白色代表内容</span></div>
+            <div class="rounded-2xl border border-gray-200 bg-white px-3 py-2 dark:border-white/10 dark:bg-white/[0.04]"><span data-i18n="legendMargin">Orange shows margin</span></div>
+            <div class="rounded-2xl border border-gray-200 bg-white px-3 py-2 dark:border-white/10 dark:bg-white/[0.04]"><span data-i18n="legendPadding">Cyan shows padding</span></div>
+            <div class="rounded-2xl border border-gray-200 bg-white px-3 py-2 dark:border-white/10 dark:bg-white/[0.04]"><span data-i18n="legendContent">White shows content</span></div>
           </div>
         </div>
 
         <div class="mt-5">
-          <label for="cssOutput" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="codeTitle">生成代码</label>
-          <textarea id="cssOutput" readonly rows="8" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-aria-label="codeAria" aria-label="生成的 CSS 代码"></textarea>
+          <label for="cssOutput" class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300" data-i18n="codeTitle">Generated code</label>
+          <textarea id="cssOutput" readonly rows="8" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 font-mono text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-aria-label="codeAria" aria-label="Generated CSS code"></textarea>
         </div>
 
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">复制代码</button>
-          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="clearAction">清零</button>
+          <button id="copyBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="copyAction">Copy code</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="clearAction">Set to zero</button>
         </div>
-        <p id="statusText" class="mt-3 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="statusReady">拖动滑块即可实时生成 CSS。</p>
+        <p id="statusText" class="mt-3 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" data-i18n="statusReady">Drag the sliders to generate CSS in real time.</p>
       </section>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">CSS 边距可视化工具帮助前端开发者、设计师和学习者直观看懂盒模型。你可以分别调整上下左右的 margin 与 padding，中心盒子会在浏览器本地实时变化，并同步生成可复制的 CSS 代码。整个过程无需上传、无需登录，也不会把样式数据发送到服务器。作为 Micro Tools Matrix 的免费在线开发者工具，它适合快速验证间距方案、编写组件样式、制作教学示例，或在移动端检查小尺寸布局。通过浏览器本地处理，你可以安全地尝试不同数值，减少反复切换设计稿和编辑器的时间。</article>
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">The CSS Spacing Visualizer is a free online developer tool for understanding and tuning the CSS box model without leaving the browser. It lets you control the top, right, bottom, and left values for both margin and padding, then shows the result immediately in a clear visual preview. The generated CSS stays synchronized with every slider movement, so you can copy a reliable snippet into a component, documentation page, design system prototype, or teaching example. All processing is browser-local: Micro Tools Matrix does not upload your values, does not require an account, and does not call a remote API. This makes the tool useful for quick layout experiments, privacy-conscious workflows, and mobile checks where opening a full editor would be slow. Whether you are learning how spacing works or refining production UI details, the page offers a focused way to compare spacing decisions and keep CSS output consistent.</article>
   </main>
 
-  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - browser-local processing, no uploads.</footer>
 
   <script>
     const I18N = {
@@ -393,6 +376,28 @@
         buyCoffee: "Buy Me a Coffee"
       }
     };
+    // Micro Tools Matrix page refresh overrides
+    Object.assign(I18N.zh, {
+          "toolName": "CSS 盒模型间距调试器",
+          "h1": "CSS 盒模型间距调试器",
+          "documentTitle": "CSS 盒模型间距调试器 - 本地工具 | Micro Tools Matrix",
+          "docTitle": "CSS 盒模型间距调试器 - 本地工具 | Micro Tools Matrix",
+          "title": "CSS 盒模型间距调试器 - 本地工具 | Micro Tools Matrix",
+          "metaDescription": "CSS 盒模型间距调试器，用滑块实时调整 margin 与 padding，预览布局变化并生成可复制的间距代码。",
+          "metaKeywords": "CSS盒模型间距调试器,margin,padding,CSS spacing,盒模型,前端调试,浏览器本地处理,Micro Tools Matrix",
+          "intro": "CSS 盒模型间距调试器，用滑块实时调整 margin 与 padding，预览布局变化并生成可复制的间距代码。"
+    });
+    Object.assign(I18N.en, {
+          "toolName": "CSS Box Spacing Debugger",
+          "h1": "CSS Box Spacing Debugger",
+          "documentTitle": "CSS Box Spacing Debugger - Local Tool | Micro Tools Matrix",
+          "docTitle": "CSS Box Spacing Debugger - Local Tool | Micro Tools Matrix",
+          "title": "CSS Box Spacing Debugger - Local Tool | Micro Tools Matrix",
+          "metaDescription": "CSS box-spacing debugger with live margin and padding controls, layout preview, and copy-ready spacing code for front-end tuning.",
+          "metaKeywords": "CSS box spacing debugger,margin,padding,CSS spacing,box model,front-end tuning,browser-local,Micro Tools Matrix",
+          "intro": "CSS box-spacing debugger with live margin and padding controls, layout preview, and copy-ready spacing code for front-end tuning."
+    });
+    // End Micro Tools Matrix page refresh overrides
 
     const sliderIds = [
       "marginTop", "marginRight", "marginBottom", "marginLeft",

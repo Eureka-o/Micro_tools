@@ -12,28 +12,13 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SVG 转 Base64 背景图 - 编码解码，纯前端本地运行 | Micro Tools Matrix</title>
-  <meta name="description" content="免费的 SVG 转 Base64 背景图，用于编码解码。工具在浏览器本地运行、无后端上传，结合 SVG 转 Base64 背景图 的相关技术能力快速处理任务，保护开发者隐私。">
-  <meta name="keywords" content="SVG 转 Base64 背景图, svg, to, base64, 免费, 纯前端, 本地运行, 无后端, 隐私保护, Micro Tools Matrix">
+  <title>SVG Base64 背景图编码器 - 本地工具 | Micro Tools Matrix</title>
+  <meta name="description" content="前端本地 SVG Base64 编码器，将 SVG 源码转换为 CSS background-image 可用的数据 URI，并保留预览与复制输出。">
+  <meta name="keywords" content="SVG Base64背景图编码器,SVG转Base64,data URI,CSS background-image,前端工具,浏览器本地处理,Micro Tools Matrix">
   <link rel="stylesheet" href="./style.css">
   <script src="./storage.js"></script>
   <script src="./theme-init.js"></script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "SVG to Base64 Background Image",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Windows, macOS, Android, iOS",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "description": "Free"
-      }
-    }
-  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"SVG Base64 背景图编码器","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS, Linux","description":"前端本地 SVG Base64 编码器，将 SVG 源码转换为 CSS background-image 可用的数据 URI，并保留预览与复制输出。","url":"https://mymicrotools.xyz/svg-to-base64.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock"},"inLanguage":"zh-CN"}</script>
   <style>
     :root { color-scheme: light dark; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
@@ -49,7 +34,7 @@
         <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
         <span class="min-w-0">
           <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
-          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">SVG 转 Base64 背景图</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">SVG Base64 背景图编码器</span>
         </span>
       </a>
       <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
@@ -59,7 +44,7 @@
         <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
           <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
         </button>
-        <div role="group" aria-label="Language" data-i18n-aria-label="languageGroup" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
+        <div role="group" aria-label="语言" data-i18n-aria-label="languageGroup" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
           <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
           <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">EN</button>
         </div>
@@ -72,8 +57,8 @@
       <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div class="min-w-0">
           <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
-          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">SVG 转 Base64 背景图</h1>
-          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">将 SVG 代码转换为可直接粘贴到 CSS background-image 的 Base64 data URI。Micro Tools Matrix 在浏览器本地处理内容，无需上传文件或文本。</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">SVG Base64 背景图编码器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">前端本地 SVG Base64 编码器，将 SVG 源码转换为 CSS background-image 可用的数据 URI，并保留预览与复制输出。</p>
         </div>
         <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
           <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
@@ -322,6 +307,28 @@
         outputStatsKb: "{kb} KB"
       }
     };
+    // Micro Tools Matrix page refresh overrides
+    Object.assign(I18N.zh, {
+          "toolName": "SVG Base64 背景图编码器",
+          "h1": "SVG Base64 背景图编码器",
+          "documentTitle": "SVG Base64 背景图编码器 - 本地工具 | Micro Tools Matrix",
+          "docTitle": "SVG Base64 背景图编码器 - 本地工具 | Micro Tools Matrix",
+          "title": "SVG Base64 背景图编码器 - 本地工具 | Micro Tools Matrix",
+          "metaDescription": "前端本地 SVG Base64 编码器，将 SVG 源码转换为 CSS background-image 可用的数据 URI，并保留预览与复制输出。",
+          "metaKeywords": "SVG Base64背景图编码器,SVG转Base64,data URI,CSS background-image,前端工具,浏览器本地处理,Micro Tools Matrix",
+          "intro": "前端本地 SVG Base64 编码器，将 SVG 源码转换为 CSS background-image 可用的数据 URI，并保留预览与复制输出。"
+    });
+    Object.assign(I18N.en, {
+          "toolName": "SVG Base64 Background Encoder",
+          "h1": "SVG Base64 Background Encoder",
+          "documentTitle": "SVG Base64 Background Encoder - Local Tool | Micro Tools Matrix",
+          "docTitle": "SVG Base64 Background Encoder - Local Tool | Micro Tools Matrix",
+          "title": "SVG Base64 Background Encoder - Local Tool | Micro Tools Matrix",
+          "metaDescription": "Front-end local SVG Base64 encoder that turns SVG source into CSS background-image data URIs with preview and copy-ready output.",
+          "metaKeywords": "SVG Base64 background encoder,SVG to Base64,data URI,CSS background-image,front-end tool,browser-local,Micro Tools Matrix",
+          "intro": "Front-end local SVG Base64 encoder that turns SVG source into CSS background-image data URIs with preview and copy-ready output."
+    });
+    // End Micro Tools Matrix page refresh overrides
 
     const SAMPLE_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
   <rect width="160" height="160" rx="32" fill="#ecfeff"/>

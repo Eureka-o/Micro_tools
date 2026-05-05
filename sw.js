@@ -1,4 +1,4 @@
-const CACHE_NAME = "micro-tools-cache-v20260505-pomodoro-audio-56";
+const CACHE_NAME = "micro-tools-cache-v20260505-page-refresh-57";
 const CACHE_ASSETS = [
   "/",
   "/apple-touch-icon.png",

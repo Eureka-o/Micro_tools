@@ -12,31 +12,14 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QR Code Generator - QR generation, browser-local | Micro Tools Matrix</title>
-  <meta name="description" content="Free QR Code Generator for QR generation. Runs browser-local with no backend upload, keeping your data private while handling qr code generator tasks quickly in Micro Tools Matrix.">
-  <meta name="keywords" content="QR Code Generator, qr, code, generator, free, browser local, no backend, privacy friendly, Micro Tools Matrix">
+  <title>QR Code Workbench - Local Tool | Micro Tools Matrix</title>
+  <meta name="description" content="Offline-capable QR code workbench that uses the local QR library to render URLs or text as downloadable PNGs with size, error-correction, and color controls.">
+  <meta name="keywords" content="QR code workbench,QR generator,downloadable PNG,error correction,local QR library,offline capable,browser-local,Micro Tools Matrix">
   <link rel="stylesheet" href="../style.css">
   <script src="../storage.js"></script>
   <script src="./theme-init.js"></script>
   <script src="../assets/qrcode-generator-2.0.4.js"></script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "QR Code Generator",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Windows, macOS, Android, iOS",
-      "description": "A browser-local QR code generator for creating PNG QR codes from URLs or text.",
-      "url": "https://mymicrotools.xyz/qr-code-generator.html",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "category": "Free"
-      }
-    }
-  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"QR Code Workbench","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS, Linux","description":"Offline-capable QR code workbench that uses the local QR library to render URLs or text as downloadable PNGs with size, error-correction, and color controls.","url":"https://mymicrotools.xyz/en/qr-code-generator.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock"},"inLanguage":"en"}</script>
   <style>
     :root { color-scheme: light dark; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
@@ -52,7 +35,7 @@
         <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
         <span class="min-w-0">
           <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
-          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">二维码生成器</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">QR Code Workbench</span>
         </span>
       </a>
       <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
@@ -60,7 +43,7 @@
           <span data-theme-sun>☀</span><span data-theme-moon>☾</span><span data-theme-label class="hidden sm:inline"></span>
         </button>
         <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
-          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
+          <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">Sponsor</span>
         </button>
         <div role="group" aria-label="Language" data-i18n-aria-label="languageGroup" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]">
           <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95">中</button>
@@ -74,17 +57,17 @@
     <section class="mb-6 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:mb-8 sm:p-7">
       <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div class="min-w-0">
-          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
-          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">二维码生成器</h1>
-          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中将 URL 或文本转换为二维码，生成过程完全在浏览器内完成，无需上传内容。</p>
+          <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">Browser-local processing</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">QR Code Workbench</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">Offline-capable QR code workbench that uses the local QR library to render URLs or text as downloadable PNGs with size, error-correction, and color controls.</p>
         </div>
         <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
           <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
             <svg aria-hidden="true" viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 4v5c0 5-3.4 8.7-7 9-3.6-.3-7-4-7-9V7l7-4z"/><path d="M9 12l2 2 4-5"/></svg>
-            <span data-i18n="localBadge">本地运行</span>
+            <span data-i18n="localBadge">Local</span>
           </div>
           <div id="shareToolMenuRoot" class="relative shrink-0">
-            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="打开分享菜单" title="打开分享菜单" aria-haspopup="menu" aria-expanded="false">
+            <button id="shareToolBtn" type="button" onclick="toggleShareMenu(event)" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100" data-i18n-aria-label="shareAria" data-i18n-title="shareAria" aria-label="Open share menu" title="Open share menu" aria-haspopup="menu" aria-expanded="false">
               <svg aria-hidden="true" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="18" cy="5" r="3"></circle>
                 <circle cx="6" cy="12" r="3"></circle>
@@ -92,19 +75,19 @@
                 <path d="M8.6 10.7 15.4 6.3"></path>
                 <path d="M8.6 13.3 15.4 17.7"></path>
               </svg>
-              <span data-i18n="share">分享</span>
+              <span data-i18n="share">Share</span>
               <svg aria-hidden="true" class="h-3.5 w-3.5 transition" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08Z" clip-rule="evenodd"></path>
               </svg>
             </button>
-            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="分享选项">
+            <div id="shareToolMenu" role="menu" class="absolute right-0 z-30 mt-2 hidden w-72 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl border border-gray-200 bg-white p-1.5 text-sm shadow-xl shadow-slate-950/10 ring-1 ring-slate-950/5 dark:border-white/10 dark:bg-slate-950 dark:shadow-black/40" data-i18n-aria-label="shareMenuAria" aria-label="Share options">
               <button type="button" role="menuitem" onclick="shareToolOnly()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
                 <span aria-hidden="true" class="mt-0.5 inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700 dark:bg-white/[0.08] dark:text-slate-200">
                   <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.72-1.71"></path></svg>
                 </span>
                 <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">仅分享工具</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">分享不带参数的工具页面链接</span>
+                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareToolOnly">Share Tool Only</span>
+                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareToolOnlyHint">Share the clean tool page link</span>
                 </span>
               </button>
               <button type="button" role="menuitem" onclick="shareWithData()" class="flex w-full items-start gap-3 rounded-xl px-3 py-3 text-left transition hover:bg-cyan-50 focus:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] dark:focus:bg-white/[0.06]">
@@ -112,8 +95,8 @@
                   <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M7 10l5 5 5-5"></path><path d="M12 15V3"></path></svg>
                 </span>
                 <span class="min-w-0">
-                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">分享工具及当前结果</span>
-                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">将当前输入或结果写入链接参数</span>
+                  <span class="block font-semibold text-slate-950 dark:text-white" data-i18n="shareWithData">Share with Data</span>
+                  <span class="mt-0.5 block text-xs leading-5 text-slate-500 dark:text-slate-400" data-i18n="shareWithDataHint">Include current input or result in the link</span>
                 </span>
               </button>
             </div>
@@ -125,16 +108,16 @@
     <section class="grid gap-5 lg:grid-cols-2">
       <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">输入</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">输入</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="inputTitle">Input</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="inputBadge">Input</span>
         </div>
 
-        <label for="qrText" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="textLabel">URL 或文本</label>
-        <textarea id="qrText" rows="8" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="textPlaceholder" placeholder="输入要编码为二维码的链接、说明或任意文本"></textarea>
+        <label for="qrText" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="textLabel">URL or text</label>
+        <textarea id="qrText" rows="8" class="w-full resize-y rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600" data-i18n-placeholder="textPlaceholder" placeholder="Enter a link, note, or any text to encode as a QR code"></textarea>
 
-        <div class="mt-4 grid gap-4 sm:grid-cols-2">
+        <div class="mt-4 grid gap-4 sm:grid-cols-3">
           <div>
-            <label for="qrSize" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="sizeLabel">图片尺寸</label>
+            <label for="qrSize" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="sizeLabel">Image size</label>
             <select id="qrSize" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
               <option value="256">256 px</option>
               <option value="384" selected>384 px</option>
@@ -144,20 +127,29 @@
             </select>
           </div>
           <div>
-            <label for="qrColor" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="colorLabel">前景色</label>
+            <label for="qrEcLevel" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="ecLevelLabel">Error correction</label>
+            <select id="qrEcLevel" class="w-full rounded-2xl border border-gray-200 bg-slate-50 px-4 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-cyan-400 focus:ring-4 focus:ring-cyan-400/10 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-100 dark:placeholder:text-slate-600">
+              <option value="L" data-i18n="ecLevelL">L - about 7%</option>
+              <option value="M" selected data-i18n="ecLevelM">M - about 15%</option>
+              <option value="Q" data-i18n="ecLevelQ">Q - about 25%</option>
+              <option value="H" data-i18n="ecLevelH">H - about 30%</option>
+            </select>
+          </div>
+          <div>
+            <label for="qrColor" class="mb-2 block text-sm font-semibold text-slate-800 dark:text-slate-200" data-i18n="colorLabel">Foreground color</label>
             <div class="flex min-h-11 items-center gap-3 rounded-2xl border border-gray-200 bg-slate-50 px-3 py-2 dark:border-white/10 dark:bg-slate-950/70">
-              <input id="qrColor" type="color" value="#0f172a" class="h-8 w-12 shrink-0 cursor-pointer rounded-lg border border-gray-200 bg-transparent p-0 dark:border-white/10" data-i18n-aria-label="colorAria" aria-label="选择前景色">
-              <input id="qrColorText" type="text" value="#0f172a" class="min-w-0 flex-1 bg-transparent text-sm font-semibold text-slate-900 outline-none dark:text-slate-100" data-i18n-aria-label="colorTextAria" aria-label="前景色十六进制值">
+              <input id="qrColor" type="color" value="#0f172a" class="h-8 w-12 shrink-0 cursor-pointer rounded-lg border border-gray-200 bg-transparent p-0 dark:border-white/10" data-i18n-aria-label="colorAria" aria-label="Choose foreground color">
+              <input id="qrColorText" type="text" value="#0f172a" class="min-w-0 flex-1 bg-transparent text-sm font-semibold text-slate-900 outline-none dark:text-slate-100" data-i18n-aria-label="colorTextAria" aria-label="Foreground color hex value">
             </div>
           </div>
         </div>
 
-        <p class="mt-3 text-xs leading-6 text-slate-500 dark:text-slate-400" data-i18n="limitHint">支持常见 URL 与短文本；过长内容会提示精简。</p>
+        <p class="mt-3 text-xs leading-6 text-slate-500 dark:text-slate-400" data-i18n="limitHint">Supports common URLs and short text; tune size, color, and error correction for print or labels.</p>
 
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="generateBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">生成二维码</button>
-          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">填入示例</button>
-          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">清空</button>
+          <button id="generateBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95" data-i18n="primaryAction">Generate QR Code</button>
+          <button id="sampleBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="sampleAction">Use Sample</button>
+          <button id="clearBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="secondaryAction">Clear</button>
         </div>
 
         <p id="statusText" class="mt-4 min-h-6 text-sm leading-6 text-slate-500 dark:text-slate-400" role="status" aria-live="polite"></p>
@@ -165,41 +157,41 @@
 
       <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm transition hover:border-cyan-300/70 dark:border-white/10 dark:bg-white/[0.04] dark:hover:border-cyan-400/40 sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
-          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">结果</h2>
-          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">输出</span>
+          <h2 class="text-base font-bold text-slate-950 dark:text-white" data-i18n="outputTitle">Result</h2>
+          <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-500" data-i18n="outputBadge">Output</span>
         </div>
 
         <div class="flex min-h-[320px] items-center justify-center rounded-3xl border border-dashed border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/70">
-          <div id="emptyState" class="max-w-xs text-center text-sm leading-7 text-slate-500 dark:text-slate-400" data-i18n="emptyState">输入内容后生成二维码，预览会显示在这里。</div>
-          <canvas id="qrCanvas" class="hidden max-h-full max-w-full rounded-2xl bg-white p-3 shadow-sm ring-1 ring-gray-200 dark:ring-white/10" width="384" height="384" data-i18n-aria-label="canvasAria" aria-label="生成的二维码"></canvas>
+          <div id="emptyState" class="max-w-xs text-center text-sm leading-7 text-slate-500 dark:text-slate-400" data-i18n="emptyState">Generate a QR code after entering content. The preview will appear here.</div>
+          <canvas id="qrCanvas" class="hidden max-h-full max-w-full rounded-2xl bg-white p-3 shadow-sm ring-1 ring-gray-200 dark:ring-white/10" width="384" height="384" data-i18n-aria-label="canvasAria" aria-label="Generated QR code"></canvas>
         </div>
 
         <div class="mt-4 grid gap-3 rounded-2xl border border-gray-200 bg-slate-50 p-4 text-sm text-slate-600 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-400">
           <div class="flex items-center justify-between gap-3">
-            <span data-i18n="encodedBytesLabel">编码字节</span>
+            <span data-i18n="encodedBytesLabel">Encoded bytes</span>
             <span id="byteCount" class="tabular-nums font-semibold text-slate-900 dark:text-slate-100">0</span>
           </div>
           <div class="flex items-center justify-between gap-3">
-            <span data-i18n="qrVersionLabel">二维码版本</span>
+            <span data-i18n="qrVersionLabel">QR version</span>
             <span id="versionText" class="tabular-nums font-semibold text-slate-900 dark:text-slate-100">-</span>
           </div>
           <div class="flex items-center justify-between gap-3">
-            <span data-i18n="imageSizeLabel">导出尺寸</span>
+            <span data-i18n="imageSizeLabel">Export size</span>
             <span id="imageSizeText" class="tabular-nums font-semibold text-slate-900 dark:text-slate-100">384 px</span>
           </div>
         </div>
 
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <button id="downloadBtn" type="button" disabled class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50" data-i18n="downloadAction">下载 PNG</button>
-          <button id="regenerateBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="refreshAction">刷新预览</button>
+          <button id="downloadBtn" type="button" disabled class="inline-flex min-h-11 items-center justify-center rounded-full bg-cyan-400 px-5 text-sm font-bold text-slate-950 transition hover:bg-cyan-300 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50" data-i18n="downloadAction">Download PNG</button>
+          <button id="regenerateBtn" type="button" class="inline-flex min-h-11 items-center justify-center rounded-full border border-gray-200 bg-white px-5 text-sm font-semibold text-slate-800 transition hover:border-cyan-400/60 hover:bg-cyan-50 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100 dark:hover:bg-white/[0.08]" data-i18n="refreshAction">Refresh Preview</button>
         </div>
       </section>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">Micro Tools Matrix 二维码生成器是一款免费的在线开发者工具，适合把网站链接、活动说明、联系方式或短文本快速转换为可下载的 PNG 二维码。所有编码、绘制与导出都在浏览器本地处理，无需上传输入内容，也不会把 URL 或文本发送到服务器。你可以选择常用图片尺寸，设置二维码前景色，并在同一页面即时预览结果。对于运营、设计、开发和测试场景，这个轻量工具能帮助你快速制作可分享、可打印、可嵌入文档的二维码，同时保持简洁、安全和跨设备可用。</article>
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">The Micro Tools Matrix QR Code Generator is a free online developer tool for turning URLs, campaign notes, contact details, or short text into downloadable PNG QR codes. It is designed for browser-local processing: the text you enter is encoded, rendered, and exported directly in your current page, with no upload and no server-side conversion. You can choose practical image sizes, adjust the foreground color, and preview the QR code before saving it. This makes the tool useful for developers, designers, marketers, educators, and support teams who need quick QR assets for documents, posters, websites, prototypes, and testing workflows. Because the page is static and lightweight, it works across desktop and mobile browsers while keeping the interface consistent with the rest of Micro Tools Matrix.</article>
   </main>
 
-  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
+  <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - Browser-local processing with no upload.</footer>
 
   <script>
     const I18N = {
@@ -324,6 +316,40 @@
         themeSystem: "System"
       }
     };
+    // Micro Tools Matrix page refresh overrides
+    Object.assign(I18N.zh, {
+          "toolName": "二维码生成工作台",
+          "h1": "二维码生成工作台",
+          "documentTitle": "二维码生成工作台 - 本地工具 | Micro Tools Matrix",
+          "docTitle": "二维码生成工作台 - 本地工具 | Micro Tools Matrix",
+          "title": "二维码生成工作台 - 本地工具 | Micro Tools Matrix",
+          "metaDescription": "离线可用二维码生成工作台，使用本地二维码库把 URL 或文本渲染为可下载 PNG，并支持尺寸、纠错等级和颜色调整。",
+          "metaKeywords": "二维码生成工作台,QR Code,二维码 PNG,纠错等级,本地二维码库,离线可用,浏览器本地处理,Micro Tools Matrix",
+          "intro": "离线可用二维码生成工作台，使用本地二维码库把 URL 或文本渲染为可下载 PNG，并支持尺寸、纠错等级和颜色调整。",
+          "ecLevelLabel": "纠错等级",
+          "ecLevelL": "L - 约 7%",
+          "ecLevelM": "M - 约 15%",
+          "ecLevelQ": "Q - 约 25%",
+          "ecLevelH": "H - 约 30%",
+          "limitHint": "支持常见 URL 与短文本；可按打印或贴纸场景调整尺寸、颜色和纠错等级。"
+    });
+    Object.assign(I18N.en, {
+          "toolName": "QR Code Workbench",
+          "h1": "QR Code Workbench",
+          "documentTitle": "QR Code Workbench - Local Tool | Micro Tools Matrix",
+          "docTitle": "QR Code Workbench - Local Tool | Micro Tools Matrix",
+          "title": "QR Code Workbench - Local Tool | Micro Tools Matrix",
+          "metaDescription": "Offline-capable QR code workbench that uses the local QR library to render URLs or text as downloadable PNGs with size, error-correction, and color controls.",
+          "metaKeywords": "QR code workbench,QR generator,downloadable PNG,error correction,local QR library,offline capable,browser-local,Micro Tools Matrix",
+          "intro": "Offline-capable QR code workbench that uses the local QR library to render URLs or text as downloadable PNGs with size, error-correction, and color controls.",
+          "ecLevelLabel": "Error correction",
+          "ecLevelL": "L - about 7%",
+          "ecLevelM": "M - about 15%",
+          "ecLevelQ": "Q - about 25%",
+          "ecLevelH": "H - about 30%",
+          "limitHint": "Supports common URLs and short text; tune size, color, and error correction for print or labels."
+    });
+    // End Micro Tools Matrix page refresh overrides
 
     let currentLanguage = "zh";
     let currentStatusKey = "statusReady";
@@ -658,12 +684,12 @@
       setModule(qr, size - 8, 8, true, true);
     }
 
-    function createQrMatrix(text) {
+    function createQrMatrix(text, correctionLevel = "M") {
       const bytes = Array.from(new TextEncoder().encode(text));
       if (typeof qrcode !== "function") throw new Error("library-missing");
 
       try {
-        const qr = qrcode(0, "M");
+        const qr = qrcode(0, correctionLevel);
         qr.addData(text, "Byte");
         qr.make();
         const moduleCount = qr.getModuleCount();
@@ -719,6 +745,7 @@
       const colorInput = document.getElementById("qrColorText").value;
       const color = normalizeHexColor(colorInput);
       const size = Number(document.getElementById("qrSize").value) || 384;
+      const correctionLevel = document.getElementById("qrEcLevel")?.value || "M";
 
       if (!text) {
         updateStatus("errorEmpty", "error");
@@ -734,7 +761,7 @@
       document.getElementById("qrColorText").value = color;
 
       try {
-        const result = createQrMatrix(text);
+        const result = createQrMatrix(text, correctionLevel);
         renderQr(result, color, size);
       } catch (error) {
         if (error.message === "too-long") updateStatus("errorTooLong", "error");
@@ -747,6 +774,7 @@
       document.getElementById("qrColor").value = "#0f172a";
       document.getElementById("qrColorText").value = "#0f172a";
       document.getElementById("qrSize").value = "384";
+      document.getElementById("qrEcLevel").value = "M";
       document.getElementById("byteCount").textContent = "0";
       document.getElementById("versionText").textContent = "-";
       document.getElementById("imageSizeText").textContent = "384 px";
@@ -811,6 +839,10 @@
 
       document.getElementById("qrSize")?.addEventListener("change", () => {
         updateMetricsLabels();
+        if (lastGenerated) generateQr();
+      });
+
+      document.getElementById("qrEcLevel")?.addEventListener("change", () => {
         if (lastGenerated) generateQr();
       });
 

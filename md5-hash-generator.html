@@ -12,30 +12,13 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MD5 哈希生成器 - 安全与加密，纯前端本地运行 | Micro Tools Matrix</title>
-  <meta name="description" content="免费的 MD5 哈希生成器，用于安全与加密。工具在浏览器本地运行、无后端上传，结合 MD5 哈希生成器 的相关技术能力快速处理任务，保护开发者隐私。">
-  <meta name="keywords" content="MD5 哈希生成器, md5, hash, generator, 免费, 纯前端, 本地运行, 无后端, 隐私保护, Micro Tools Matrix">
+  <title>哈希摘要生成器 - 本地工具 | Micro Tools Matrix</title>
+  <meta name="description" content="纯前端 MD5、SHA-1、SHA-256 摘要生成器，支持实时文本哈希、复制结果和本地校验流程，不上传任何输入。">
+  <meta name="keywords" content="哈希摘要生成器,MD5,SHA-1,SHA-256,文本哈希,本地校验,浏览器本地处理,Micro Tools Matrix">
   <link rel="stylesheet" href="./style.css">
   <script src="./storage.js"></script>
   <script src="./theme-init.js"></script>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "MD5 Hash Generator",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "Windows, macOS, Android, iOS",
-      "description": "A browser-local MD5, SHA-1 and SHA-256 hash generator by Micro Tools Matrix.",
-      "url": "https://mymicrotools.xyz/md5-hash-generator.html",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock",
-        "description": "Free"
-      }
-    }
-  </script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"哈希摘要生成器","applicationCategory":"SecurityApplication","operatingSystem":"Windows, macOS, Android, iOS, Linux","description":"纯前端 MD5、SHA-1、SHA-256 摘要生成器，支持实时文本哈希、复制结果和本地校验流程，不上传任何输入。","url":"https://mymicrotools.xyz/md5-hash-generator.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock"},"inLanguage":"zh-CN"}</script>
   <style>
     :root { color-scheme: light dark; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
@@ -51,7 +34,7 @@
         <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
         <span class="min-w-0">
           <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
-          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">MD5 哈希生成器</span>
+          <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">哈希摘要生成器</span>
         </span>
       </a>
       <div class="flex max-w-full items-center gap-2 overflow-x-auto pb-1 lg:justify-end lg:overflow-visible lg:pb-0">
@@ -61,7 +44,7 @@
         <button id="openSponsorBtn" type="button" class="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-900 shadow-sm transition hover:border-cyan-400/60 hover:bg-cyan-400 hover:text-slate-950 active:scale-95 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-100">
           <span aria-hidden="true" class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-yellow-300 text-base leading-none text-slate-950 shadow-sm ring-1 ring-yellow-200/80">☕</span><span data-i18n="sponsor">赞赏</span>
         </button>
-        <div role="group" aria-label="Language" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]" data-i18n-aria-label="languageGroup">
+        <div role="group" aria-label="语言" class="inline-flex min-h-11 shrink-0 items-center rounded-full border border-gray-200 bg-slate-50 p-1 shadow-sm dark:border-white/10 dark:bg-white/[0.04]" data-i18n-aria-label="languageGroup">
           <button id="langZhBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langZh">中</button>
           <button id="langEnBtn" type="button" class="min-h-9 rounded-full px-3 text-sm font-semibold transition active:scale-95" data-i18n="langEn">EN</button>
         </div>
@@ -74,8 +57,8 @@
       <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div class="min-w-0">
           <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地处理</p>
-          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">MD5 哈希生成器</h1>
-          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">在 Micro Tools Matrix 中输入文本，即可在浏览器内实时生成 MD5、SHA-1 与 SHA-256 哈希值，无需上传任何内容。</p>
+          <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">哈希摘要生成器</h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">纯前端 MD5、SHA-1、SHA-256 摘要生成器，支持实时文本哈希、复制结果和本地校验流程，不上传任何输入。</p>
         </div>
         <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
           <div class="inline-flex min-h-11 w-fit shrink-0 items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 text-sm font-semibold text-emerald-700 shadow-sm dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">
@@ -337,6 +320,30 @@
         footer: "Micro Tools Matrix - Browser-local processing for free developer micro tools."
       }
     };
+    // Micro Tools Matrix page refresh overrides
+    Object.assign(I18N.zh, {
+          "toolName": "哈希摘要生成器",
+          "h1": "哈希摘要生成器",
+          "documentTitle": "哈希摘要生成器 - 本地工具 | Micro Tools Matrix",
+          "docTitle": "哈希摘要生成器 - 本地工具 | Micro Tools Matrix",
+          "title": "哈希摘要生成器 - 本地工具 | Micro Tools Matrix",
+          "metaDescription": "纯前端 MD5、SHA-1、SHA-256 摘要生成器，支持实时文本哈希、复制结果和本地校验流程，不上传任何输入。",
+          "metaKeywords": "哈希摘要生成器,MD5,SHA-1,SHA-256,文本哈希,本地校验,浏览器本地处理,Micro Tools Matrix",
+          "intro": "纯前端 MD5、SHA-1、SHA-256 摘要生成器，支持实时文本哈希、复制结果和本地校验流程，不上传任何输入。",
+          "md5Label": "MD5"
+    });
+    Object.assign(I18N.en, {
+          "toolName": "Hash Digest Generator",
+          "h1": "Hash Digest Generator",
+          "documentTitle": "Hash Digest Generator - Local Tool | Micro Tools Matrix",
+          "docTitle": "Hash Digest Generator - Local Tool | Micro Tools Matrix",
+          "title": "Hash Digest Generator - Local Tool | Micro Tools Matrix",
+          "metaDescription": "Pure front-end MD5, SHA-1, and SHA-256 digest generator for live text hashing, local verification, and quick copy workflows with no upload.",
+          "metaKeywords": "hash digest generator,MD5,SHA-1,SHA-256,text hashing,local verification,browser-local,Micro Tools Matrix",
+          "intro": "Pure front-end MD5, SHA-1, and SHA-256 digest generator for live text hashing, local verification, and quick copy workflows with no upload.",
+          "md5Label": "MD5"
+    });
+    // End Micro Tools Matrix page refresh overrides
 
     let currentLanguage = "zh";
     let currentStatusKey = "emptyStatus";
