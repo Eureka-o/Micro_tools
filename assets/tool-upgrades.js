@@ -50,7 +50,9 @@
       "#toolApp .tool-primary,#toolApp .tool-secondary{max-width:100%;white-space:normal;text-align:center;overflow-wrap:anywhere}",
       "#toolApp #statusMessage{width:100%;max-width:100%;overflow-wrap:anywhere}",
       "#toolApp>section.grid{grid-template-columns:minmax(0,1fr)}",
-      "@media (min-width:1024px){#toolApp>section.grid{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)!important}}"
+      "@media (min-width:1024px){#toolApp:not([data-tool='pomodoro-timer'])>section.grid{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)!important}}",
+      "@media (min-width:1280px){#toolApp[data-tool='pomodoro-timer']>section.grid{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)!important}}",
+      "#toolApp[data-tool='pomodoro-timer'] .pomodoro-actions .tool-primary,#toolApp[data-tool='pomodoro-timer'] .pomodoro-actions .tool-secondary,#toolApp[data-tool='pomodoro-timer'] .pomodoro-presets .tool-secondary{width:100%;min-height:2.75rem}"
     ].join("\n");
     document.head.append(style);
   }
@@ -128,9 +130,12 @@
   function initPomodoro() {
     const originalTitle = document.title;
     const labels = {
-      zh: { focus: "专注", short: "短休息", long: "长休息", start: "开始", pause: "暂停", ready: "准备开始", done: "阶段完成", exported: "专注记录已生成。" },
-      en: { focus: "Focus", short: "Short Break", long: "Long Break", start: "Start", pause: "Pause", ready: "Ready", done: "Phase complete", exported: "Focus log generated." },
+      zh: { focus: "专注", short: "短休息", long: "长休息", start: "开始", pause: "暂停", ready: "准备开始", done: "阶段完成", exported: "专注记录已生成。", soundPlayed: "提示音已按当前设置播放。", soundMuted: "提示音已静音。", soundSaved: "提示音设置已更新。" },
+      en: { focus: "Focus", short: "Short Break", long: "Long Break", start: "Start", pause: "Pause", ready: "Ready", done: "Phase complete", exported: "Focus log generated.", soundPlayed: "Tone played with the current settings.", soundMuted: "Tone is muted.", soundSaved: "Tone settings updated." },
     };
+    const soundStorageKey = "micro_tools_pomodoro_sound_v1";
+    const soundModes = new Set(["auto", "soft", "double", "focus", "break", "mute"]);
+    let audioContext = null;
     const state = {
       mode: "focus",
       cycle: 1,
@@ -154,6 +159,50 @@
         longEvery: intValue("longBreakEvery", 1, 12),
         task: ($("taskInput")?.value || "").trim(),
       };
+    }
+
+    function clampNumber(value, min, max, fallback) {
+      const numeric = Number(value);
+      if (!Number.isFinite(numeric)) return fallback;
+      return Math.max(min, Math.min(max, numeric));
+    }
+
+    function readSoundSettings() {
+      const select = $("soundMode");
+      const range = $("soundVolume");
+      const selected = soundModes.has(select?.value) ? select.value : "auto";
+      const percent = clampNumber(range?.value, 0, 100, 45);
+      return {
+        mode: selected,
+        percent,
+        volume: percent / 100,
+      };
+    }
+
+    function updateSoundVolumeDisplay() {
+      const settings = readSoundSettings();
+      if ($("soundVolumeValue")) $("soundVolumeValue").textContent = Math.round(settings.percent) + "%";
+    }
+
+    function saveSoundSettings() {
+      const settings = readSoundSettings();
+      try {
+        window.localStorage.setItem(soundStorageKey, JSON.stringify({ mode: settings.mode, volume: settings.percent }));
+      } catch {
+        // Local preferences are optional; the timer remains fully functional without storage.
+      }
+      updateSoundVolumeDisplay();
+    }
+
+    function restoreSoundSettings() {
+      try {
+        const parsed = JSON.parse(window.localStorage.getItem(soundStorageKey) || "{}");
+        if (soundModes.has(parsed.mode) && $("soundMode")) $("soundMode").value = parsed.mode;
+        if (Number.isFinite(Number(parsed.volume)) && $("soundVolume")) $("soundVolume").value = String(clampNumber(parsed.volume, 0, 100, 45));
+      } catch {
+        // Ignore malformed preference data.
+      }
+      updateSoundVolumeDisplay();
     }
 
     function secondsFor(mode, s = settings()) {
@@ -239,8 +288,9 @@
 
     function completePhase(reason) {
       stopInterval();
+      const completedMode = state.mode;
       appendLog(reason);
-      beep();
+      playCue(completedMode);
       state.mode = nextMode();
       state.total = secondsFor(state.mode);
       state.remaining = state.total;
@@ -248,24 +298,79 @@
       render();
     }
 
-    function beep() {
+    async function ensureAudioContext() {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) throw new Error("No audio");
+      if (!audioContext || audioContext.state === "closed") audioContext = new AudioContext();
+      if (audioContext.state === "suspended") await audioContext.resume();
+      return audioContext;
+    }
+
+    async function primeAudio() {
       try {
-        const AudioContext = window.AudioContext || window.webkitAudioContext;
-        if (!AudioContext) return;
-        const ctx = new AudioContext();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = "sine";
-        osc.frequency.value = 880;
-        gain.gain.setValueAtTime(0.001, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.16, ctx.currentTime + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.55);
-        osc.connect(gain).connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.6);
+        const settings = readSoundSettings();
+        if (settings.mode === "mute" || settings.volume <= 0) return;
+        await ensureAudioContext();
       } catch {
-        setStatus(COPY[lang()].audioBlocked, "warn");
+        // The visible warning is reserved for explicit test playback or phase completion.
       }
+    }
+
+    function scheduleTone(ctx, options) {
+      const start = ctx.currentTime + (options.at || 0);
+      const duration = Math.max(0.06, options.duration || 0.2);
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = options.type || "sine";
+      osc.frequency.setValueAtTime(Math.max(1, options.frequency || 660), start);
+      if (options.slideTo) osc.frequency.exponentialRampToValueAtTime(Math.max(1, options.slideTo), start + duration);
+      gain.gain.setValueAtTime(0.001, ctx.currentTime);
+      gain.gain.setValueAtTime(0.001, start);
+      gain.gain.exponentialRampToValueAtTime(Math.max(0.001, options.gain || 0.08), start + 0.018);
+      gain.gain.exponentialRampToValueAtTime(0.001, start + duration);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(start);
+      osc.stop(start + duration + 0.04);
+    }
+
+    function resolvedCueMode(selected, completedMode) {
+      if (selected === "auto") return completedMode === "focus" ? "focus" : "break";
+      return selected;
+    }
+
+    async function playSelectedCue(completedMode = state.mode, announce = false) {
+      const settings = readSoundSettings();
+      const cue = resolvedCueMode(settings.mode, completedMode);
+      if (cue === "mute" || settings.volume <= 0) {
+        if (announce) setStatus(t("soundMuted"), "info");
+        return;
+      }
+
+      const ctx = await ensureAudioContext();
+      const gain = Math.max(0.018, Math.min(0.22, settings.volume * 0.22));
+      if (cue === "soft") {
+        scheduleTone(ctx, { frequency: 660, duration: 0.5, type: "sine", gain });
+      } else if (cue === "double") {
+        scheduleTone(ctx, { frequency: 740, duration: 0.13, type: "triangle", gain });
+        scheduleTone(ctx, { at: 0.22, frequency: 940, duration: 0.15, type: "triangle", gain });
+      } else if (cue === "break") {
+        scheduleTone(ctx, { frequency: 880, slideTo: 784, duration: 0.14, type: "sine", gain });
+        scheduleTone(ctx, { at: 0.18, frequency: 698, duration: 0.16, type: "sine", gain: gain * 0.9 });
+        scheduleTone(ctx, { at: 0.38, frequency: 523, duration: 0.34, type: "triangle", gain: gain * 0.8 });
+      } else {
+        scheduleTone(ctx, { frequency: 523, duration: 0.16, type: "sine", gain });
+        scheduleTone(ctx, { at: 0.16, frequency: 659, duration: 0.17, type: "sine", gain });
+        scheduleTone(ctx, { at: 0.34, frequency: 784, duration: 0.38, type: "triangle", gain });
+        scheduleTone(ctx, { at: 0.36, frequency: 1568, duration: 0.2, type: "sine", gain: gain * 0.28 });
+      }
+
+      if (announce) setStatus(t("soundPlayed"), "ok");
+    }
+
+    function playCue(completedMode = state.mode, announce = false) {
+      playSelectedCue(completedMode, announce).catch(() => {
+        setStatus(COPY[lang()].audioBlocked, "warn");
+      });
     }
 
     $("startPauseBtn")?.addEventListener("click", () => {
@@ -277,6 +382,7 @@
           render();
           return;
         }
+        primeAudio();
         startInterval();
         setStatus(text("计时已开始，所有状态仅保存在当前浏览器内存。", "Timer started. State stays in this browser tab."), "ok");
       } catch {
@@ -289,7 +395,7 @@
       setStatus(t("ready"), "info");
     });
     $("skipBtn")?.addEventListener("click", () => completePhase("skipped"));
-    $("testSoundBtn")?.addEventListener("click", beep);
+    $("testSoundBtn")?.addEventListener("click", () => playCue(state.mode, true));
     $("exportLogBtn")?.addEventListener("click", () => {
       const header = "time,mode,cycle,planned_minutes,task,reason";
       const rows = state.log.map((entry) => [entry.time, entry.mode, entry.cycle, entry.plannedMinutes, entry.task, entry.reason].map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(","));
@@ -308,6 +414,13 @@
     ["focusMinutes", "shortBreakMinutes", "longBreakMinutes", "longBreakEvery"].forEach((id) => {
       $(id)?.addEventListener("change", () => resetTo(state.mode));
     });
+    $("soundMode")?.addEventListener("change", () => {
+      saveSoundSettings();
+      setStatus(t("soundSaved"), "ok");
+    });
+    $("soundVolume")?.addEventListener("input", saveSoundSettings);
+    $("soundVolume")?.addEventListener("change", () => setStatus(t("soundSaved"), "ok"));
+    restoreSoundSettings();
     resetTo("focus");
   }
 

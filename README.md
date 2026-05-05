@@ -12,6 +12,9 @@ Upgraded several lightweight pages into engineering-oriented local tools:
 
 - Chord Generator is now a Chord Workbench with chord tones, inversions, guitar fretboard highlights, piano keyboard highlights, common progressions, and click-to-play Web Audio preview.
 - Refreshed nine older homepage listings so Regex, Hash, QR, SQL, .htaccess, SVG Base64, CSV table, Keycode, and CSS spacing tools use current engineering-oriented names and descriptions.
+- Replaced the remaining generic English homepage descriptions with specific local-workflow wording across conversion, crypto, text, CSS, and image tools.
+- Converted WaveDrom and js-yaml pages to local lazy loading so heavy vendor scripts load only after render or conversion actions.
+- Tightened the Pomodoro Timer layout at tablet and desktop widths, and expanded local Web Audio cues with tone selection, volume control, and mute persistence.
 - Pomodoro Timer is now an engineering focus sprint timer with task labels, break cycles, local audio cues, and CSV session export.
 - Lorem Ipsum is now a test payload and log fixture generator for JSON, CSV, log lines, and `.env` snippets.
 - Morse, TTS, Fraction, Percentage, and Aspect Ratio pages now target signal encoding, browser diagnostics, PLL ratios, ppm/utilization checks, and framebuffer estimates.

@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="./style.css">
   <script src="./storage.js"></script>
   <script src="./theme-init.js"></script>
-  <script src="./assets/vendor/js-yaml.min.js"></script>
+
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "YAML / JSON 双向转换器", "applicationCategory": "DeveloperApplication", "operatingSystem": "Windows, macOS, Android, iOS", "description": "YAML 与 JSON 双向互转工作站，支持实时转换、JSON 格式化/压缩，以及带行号的本地错误提示。", "url": "https://mymicrotools.xyz/yaml-json-converter.html", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "category": "Free"}}</script>
   <style>
     :root { color-scheme: light dark; }
@@ -210,7 +210,7 @@
             "convertAction": "转换",
             "validStatus": "转换完成。",
             "emptyStatus": "请输入 YAML 或 JSON 内容。",
-            "libraryMissing": "js-yaml 尚未加载，请检查网络或稍后重试。",
+            "libraryMissing": "本地 js-yaml 运行库加载失败，请刷新页面后重试。",
             "errorTitle": "错误定位",
             "noError": "暂无错误。",
             "lineText": "行",
@@ -269,7 +269,7 @@
             "convertAction": "Convert",
             "validStatus": "Converted.",
             "emptyStatus": "Enter YAML or JSON content.",
-            "libraryMissing": "js-yaml has not loaded yet. Check the network and try again.",
+            "libraryMissing": "The local js-yaml runtime could not be loaded. Refresh the page and try again.",
             "errorTitle": "Error Location",
             "noError": "No errors.",
             "lineText": "Line",
@@ -354,7 +354,52 @@
       return location + (error && error.message ? error.message : String(error));
     }
 
-    function convertYamlJson() {
+        const yamlVendorBase = location.pathname.includes("/en/") ? "../assets/vendor/" : "./assets/vendor/";
+    let yamlLibraryPromise = null;
+    let yamlConvertToken = 0;
+
+    function loadLocalScriptOnce(src, globalName) {
+      if (globalName && window[globalName]) return Promise.resolve(window[globalName]);
+      const existing = document.querySelector('script[data-local-src="' + src + '"]');
+      if (existing && existing.dataset.loaded === "true") return Promise.resolve(globalName ? window[globalName] : true);
+      if (existing && existing.dataset.loading === "true") {
+        return new Promise((resolve, reject) => {
+          existing.addEventListener("load", () => resolve(globalName ? window[globalName] : true), { once: true });
+          existing.addEventListener("error", reject, { once: true });
+        });
+      }
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.defer = true;
+        script.dataset.localSrc = src;
+        script.dataset.loading = "true";
+        script.addEventListener("load", () => {
+          script.dataset.loaded = "true";
+          script.dataset.loading = "false";
+          resolve(globalName ? window[globalName] : true);
+        }, { once: true });
+        script.addEventListener("error", () => reject(new Error(src + " failed to load")), { once: true });
+        document.head.appendChild(script);
+      });
+    }
+
+    function ensureYamlLibrary() {
+      if (window.jsyaml) return Promise.resolve(window.jsyaml);
+      if (!yamlLibraryPromise) {
+        yamlLibraryPromise = loadLocalScriptOnce(yamlVendorBase + "js-yaml.min.js", "jsyaml").then((api) => {
+          if (!api || !api.load || !api.dump) throw new Error("js-yaml global is unavailable");
+          return api;
+        }).catch((error) => {
+          yamlLibraryPromise = null;
+          throw error;
+        });
+      }
+      return yamlLibraryPromise;
+    }
+
+async function convertYamlJson() {
+      const token = ++yamlConvertToken;
       const raw = sourceInput.value.trim();
       if (!raw) {
         resultOutput.value = "";
@@ -362,18 +407,23 @@
         setStatus("emptyStatus");
         return;
       }
-      if (typeof jsyaml === "undefined") {
+      let yamlApi;
+      try {
+        yamlApi = await ensureYamlLibrary();
+      } catch (error) {
+        if (token !== yamlConvertToken) return;
         markError(t("libraryMissing"));
         setStatus("libraryMissing", true);
         return;
       }
+      if (token !== yamlConvertToken) return;
       try {
         if (yamlMode.value === "yaml-json") {
-          const parsed = jsyaml.load(raw);
+          const parsed = yamlApi.load(raw);
           resultOutput.value = JSON.stringify(parsed, null, 2);
         } else {
           const parsed = JSON.parse(raw);
-          resultOutput.value = jsyaml.dump(parsed, { lineWidth: 100, noRefs: true });
+          resultOutput.value = yamlApi.dump(parsed, { lineWidth: 100, noRefs: true });
         }
         markError("");
         setStatus("validStatus");

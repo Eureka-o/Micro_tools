@@ -72,8 +72,8 @@
       <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base">为写代码、调试板卡、跑验证和复盘设计的轻量时间盒。所有计时状态只存在当前浏览器标签页，导出记录使用 Blob 本地下载。</p>
     </section>
 
-    <section class="grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
-      <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+    <section class="grid gap-5 xl:grid-cols-[0.95fr_1.05fr]">
+      <section class="min-w-0 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
           <h2 class="text-base font-bold text-slate-950 dark:text-white">输入</h2>
           <span class="rounded-full border border-gray-200 bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500 dark:border-white/10 dark:bg-white/[0.04]">Local</span>
@@ -98,19 +98,36 @@
             <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">长休息间隔轮次</span>
             <input id="longBreakEvery" type="number" value="4" min="1" max="12" step="1" class="tool-input">
           </label></div>
-        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap"><button id="startPauseBtn" type="button" class="tool-primary">开始</button>
+        <div class="mt-5 grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(12rem,0.75fr)]">
+          <label class="block min-w-0">
+            <span class="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">提示音类型</span>
+            <select id="soundMode" class="tool-input">
+              <option value="auto">智能阶段提示</option>
+              <option value="soft">柔和单音</option>
+              <option value="double">双短蜂鸣</option>
+              <option value="focus">专注完成铃</option>
+              <option value="break">休息结束铃</option>
+              <option value="mute">静音</option>
+            </select>
+          </label>
+          <label class="block min-w-0">
+            <span class="mb-2 flex items-center justify-between gap-3 text-sm font-semibold text-slate-700 dark:text-slate-300"><span>提示音音量</span><span id="soundVolumeValue" class="tabular-nums text-xs text-slate-500 dark:text-slate-400">45%</span></span>
+            <input id="soundVolume" type="range" min="0" max="100" step="5" value="45" class="h-11 w-full accent-cyan-500">
+          </label>
+        </div>
+        <div class="pomodoro-actions mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3"><button id="startPauseBtn" type="button" class="tool-primary">开始</button>
 <button id="resetBtn" type="button" class="tool-secondary">重置</button>
 <button id="skipBtn" type="button" class="tool-secondary">切换阶段</button>
 <button id="testSoundBtn" type="button" class="tool-secondary">试听提示音</button>
 <button id="exportLogBtn" type="button" class="tool-secondary">导出 CSV</button></div>
-        <div class="grid gap-3 sm:grid-cols-3">
+        <div class="pomodoro-presets mt-4 grid gap-3 sm:grid-cols-3">
           <button type="button" data-preset="25,5,15" class="tool-secondary">25 / 5 / 15</button>
           <button type="button" data-preset="50,10,30" class="tool-secondary">50 / 10 / 30</button>
           <button type="button" data-preset="90,15,30" class="tool-secondary">90 / 15 / 30</button>
         </div>
         <p id="statusMessage" class="mt-4 min-h-11 rounded-xl border border-cyan-200 bg-cyan-50 px-4 py-3 text-sm leading-6 text-cyan-800 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200" aria-live="polite">就绪。所有处理均在当前浏览器本地运行。</p>
       </section>
-      <section class="space-y-4 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+      <section class="min-w-0 space-y-4 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
         <div class="mb-4 flex items-center justify-between gap-3">
           <h2 class="text-base font-bold text-slate-950 dark:text-white">输出</h2>
           <span class="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-300">Offline</span>

@@ -18,9 +18,9 @@
   <link rel="stylesheet" href="./style.css">
   <script src="./storage.js"></script>
   <script src="./theme-init.js"></script>
-  <script src="./assets/vendor/skins/default.js"></script>
-  <script src="./assets/vendor/wavedrom.min.js"></script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"时序波形生成器","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS","description":"纯前端硬件时序波形图手绘板，通过 WaveDrom CDN 渲染 I2C/SPI 等总线波形，并支持 SVG/PNG 下载。","url":"https://mymicrotools.xyz/hardware-timing-diagram.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock","category":"Free"}}</script>
+
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"时序波形生成器","applicationCategory":"DeveloperApplication","operatingSystem":"Windows, macOS, Android, iOS","description":"纯前端硬件时序波形图手绘板，通过本地 WaveDrom 运行库渲染 I2C/SPI 等总线波形，并支持 SVG/PNG 下载。","url":"https://mymicrotools.xyz/hardware-timing-diagram.html","offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock","category":"Free"}}</script>
   <style>
     :root { color-scheme: light dark; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
@@ -63,7 +63,7 @@
         <div class="min-w-0">
           <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-600 dark:text-cyan-300" data-i18n="eyebrow">浏览器本地硬件实验台</p>
           <h1 class="max-w-full break-words text-2xl font-black tracking-tighter text-slate-950 dark:text-white sm:text-3xl lg:text-4xl" data-i18n="h1">时序波形生成器</h1>
-          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">纯前端硬件时序波形图手绘板，通过 WaveDrom CDN 渲染 I2C/SPI 等总线波形，并支持 SVG/PNG 下载。</p>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-400 sm:text-base" data-i18n="intro">纯前端硬件时序波形图手绘板，通过本地 WaveDrom 运行库渲染 I2C/SPI 等总线波形，并支持 SVG/PNG 下载。</p>
         </div>
         
           <div class="flex w-full flex-wrap items-start justify-between gap-3 lg:w-auto lg:flex-col-reverse lg:items-end lg:justify-start">
@@ -136,7 +136,7 @@
       </section>
     </section>
 
-    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">时序波形生成器通过公共 CDN 加载 WaveDrom，在浏览器内把标准 WaveDrom JSON 渲染为 SVG 波形图。它适合硬件文档、接口说明、调试记录和 I2C/SPI 等总线时序草图。</article>
+    <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">时序波形生成器按需加载本地 WaveDrom 运行库，在浏览器内把标准 WaveDrom JSON 渲染为 SVG 波形图。它适合硬件文档、接口说明、调试记录和 I2C/SPI 等总线时序草图。</article>
   </main>
 
     <script>
@@ -164,13 +164,57 @@
       }
     }
 
-    function renderWave() {
+        const waveVendorBase = location.pathname.includes("/en/") ? "../assets/vendor/" : "./assets/vendor/";
+    let waveDromLibraryPromise = null;
+
+    function loadLocalScriptOnce(src, globalName) {
+      if (globalName && window[globalName]) return Promise.resolve(window[globalName]);
+      const existing = document.querySelector('script[data-local-src="' + src + '"]');
+      if (existing && existing.dataset.loaded === "true") return Promise.resolve(globalName ? window[globalName] : true);
+      if (existing && existing.dataset.loading === "true") {
+        return new Promise((resolve, reject) => {
+          existing.addEventListener("load", () => resolve(globalName ? window[globalName] : true), { once: true });
+          existing.addEventListener("error", reject, { once: true });
+        });
+      }
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = src;
+        script.defer = true;
+        script.dataset.localSrc = src;
+        script.dataset.loading = "true";
+        script.addEventListener("load", () => {
+          script.dataset.loaded = "true";
+          script.dataset.loading = "false";
+          resolve(globalName ? window[globalName] : true);
+        }, { once: true });
+        script.addEventListener("error", () => reject(new Error(src + " failed to load")), { once: true });
+        document.head.appendChild(script);
+      });
+    }
+
+    function ensureWaveDromLibraries() {
+      if (window.WaveDrom && typeof window.WaveDrom.RenderWaveForm === "function") return Promise.resolve(window.WaveDrom);
+      if (!waveDromLibraryPromise) {
+        waveDromLibraryPromise = loadLocalScriptOnce(waveVendorBase + "skins/default.js")
+          .then(() => loadLocalScriptOnce(waveVendorBase + "wavedrom.min.js", "WaveDrom"))
+          .then((api) => {
+            if (!api || typeof api.RenderWaveForm !== "function") throw new Error("WaveDrom global is unavailable");
+            return api;
+          })
+          .catch((error) => {
+            waveDromLibraryPromise = null;
+            error.isWaveDromLoadError = true;
+            throw error;
+          });
+      }
+      return waveDromLibraryPromise;
+    }
+
+async function renderWave() {
       const preview = document.getElementById("wavePreview");
       try {
-        if (!window.WaveDrom || typeof window.WaveDrom.RenderWaveForm !== "function") {
-          setTimingStatus("statusLibMissing");
-          return;
-        }
+        await ensureWaveDromLibraries();
         const source = parseLooseWaveJson(document.getElementById("waveInput").value);
         preview.innerHTML = '<div id="WaveDrom_Display_0"></div>';
         window.WaveDrom.RenderWaveForm(0, source, "WaveDrom_Display_");
@@ -178,7 +222,7 @@
       } catch (error) {
         preview.innerHTML = '<pre class="whitespace-pre-wrap text-sm leading-6 text-rose-600 dark:text-rose-300"></pre>';
         preview.querySelector("pre").textContent = error.message;
-        setTimingStatus("statusError");
+        setTimingStatus(error && error.isWaveDromLoadError ? "statusLibMissing" : "statusError");
       }
     }
 
@@ -243,12 +287,12 @@
         clearTimeout(waveTimer);
         waveTimer = setTimeout(renderWave, 350);
       });
-      setTimeout(renderWave, 500);
+      setTimingStatus("statusReady");
     }
   </script>
   
   <script>
-    const I18N = {"zh":{"htmlLang":"zh-CN","canonical":"https://mymicrotools.xyz/hardware-timing-diagram.html","locale":"zh_CN","title":"时序波形生成器 - Micro Tools Matrix 浏览器本地工具","metaDescription":"纯前端硬件时序波形图手绘板，通过 WaveDrom CDN 渲染 I2C/SPI 等总线波形，并支持 SVG/PNG 下载。","keywords":"时序波形生成器,硬件开发工具,寄存器位段,FP32,WaveDrom,Micro Tools Matrix","toolName":"时序波形生成器","eyebrow":"WaveDrom 前端渲染","introDefault":"纯前端硬件时序波形图手绘板，通过 WaveDrom CDN 渲染 I2C/SPI 等总线波形，并支持 SVG/PNG 下载。","localBadge":"本地运行","sponsor":"赞赏","themeToggleAria":"切换主题","themeSystem":"系统","languageGroupAria":"语言","langZhAria":"切换到中文","langEnAria":"切换到英文","share":"分享","shareAria":"打开分享菜单","shareMenuAria":"分享选项","shareToolOnly":"仅分享工具","shareToolOnlyHint":"分享不带参数的工具页面链接","shareWithData":"分享工具及当前结果","shareWithDataHint":"将当前输入或结果写入链接参数","shareCopied":"分享链接已复制到剪贴板！","shareCopyPrompt":"复制此分享链接：","shareCopyFailed":"复制失败，请手动复制地址栏链接。","shareDataTooLarge":"当前数据过大，无法生成分享链接，请直接复制文本结果。","footer":"Micro Tools Matrix - 浏览器本地处理，无需上传。","h1":"时序波形生成器","intro":"左侧输入 WaveDrom JSON，右侧实时渲染硬件时序 SVG。适合快速绘制 I2C、SPI、握手信号和寄存器时序说明图。","sourceTitle":"WaveDrom 源码","previewTitle":"波形预览","renderAction":"渲染","sampleAction":"I2C 示例","saveSvgAction":"保存 SVG","savePngAction":"保存 PNG","statusReady":"修改源码后会自动刷新预览。","statusRendered":"波形已渲染。","statusError":"JSON 或 WaveDrom 语法有误。","statusNoSvg":"没有可下载的 SVG。","statusLibMissing":"WaveDrom CDN 暂不可用，请检查网络后刷新。","seoArticle":"时序波形生成器通过公共 CDN 加载 WaveDrom，在浏览器内把标准 WaveDrom JSON 渲染为 SVG 波形图。它适合硬件文档、接口说明、调试记录和 I2C/SPI 等总线时序草图。"},"en":{"htmlLang":"en","canonical":"https://mymicrotools.xyz/en/hardware-timing-diagram.html","locale":"en_US","title":"Hardware Timing Diagram - Micro Tools Matrix Browser-Local Tool","metaDescription":"Render hardware timing diagrams with WaveDrom in the browser for I2C/SPI waveforms, with SVG and PNG export.","keywords":"Hardware Timing Diagram,hardware developer tool,bitfield,FP32,WaveDrom,Micro Tools Matrix","toolName":"Hardware Timing Diagram","eyebrow":"WaveDrom front-end rendering","introDefault":"Render hardware timing diagrams with WaveDrom in the browser for I2C/SPI waveforms, with SVG and PNG export.","localBadge":"Local","sponsor":"Sponsor","themeToggleAria":"Theme","themeSystem":"System","languageGroupAria":"Language","langZhAria":"Switch to Chinese","langEnAria":"Switch to English","share":"Share","shareAria":"Open share menu","shareMenuAria":"Share options","shareToolOnly":"Share Tool Only","shareToolOnlyHint":"Share the clean tool page link","shareWithData":"Share with Data","shareWithDataHint":"Include current input or result in the link","shareCopied":"Share link copied to clipboard!","shareCopyPrompt":"Copy this share link:","shareCopyFailed":"Copy failed. Please copy the address bar link manually.","shareDataTooLarge":"The current data is too large to create a share link. Please copy the text result directly.","footer":"Micro Tools Matrix - browser-local tools, no upload required.","h1":"Hardware Timing Diagram","intro":"Enter WaveDrom JSON on the left and render hardware timing SVG on the right. Useful for I2C, SPI, handshake signals, and register timing notes.","sourceTitle":"WaveDrom Source","previewTitle":"Wave Preview","renderAction":"Render","sampleAction":"I2C Sample","saveSvgAction":"Save SVG","savePngAction":"Save PNG","statusReady":"The preview refreshes automatically after source edits.","statusRendered":"Waveform rendered.","statusError":"Invalid JSON or WaveDrom syntax.","statusNoSvg":"No SVG is available to download.","statusLibMissing":"WaveDrom CDN is unavailable. Check the network and refresh.","seoArticle":"The Hardware Timing Diagram tool loads WaveDrom from a public CDN and renders standard WaveDrom JSON into SVG waveforms in the browser. It is useful for hardware documentation, interface specs, debug notes, and I2C/SPI timing sketches."}};
+    const I18N = {"zh":{"htmlLang":"zh-CN","canonical":"https://mymicrotools.xyz/hardware-timing-diagram.html","locale":"zh_CN","title":"时序波形生成器 - Micro Tools Matrix 浏览器本地工具","metaDescription":"纯前端硬件时序波形图手绘板，通过本地 WaveDrom 运行库渲染 I2C/SPI 等总线波形，并支持 SVG/PNG 下载。","keywords":"时序波形生成器,硬件开发工具,寄存器位段,FP32,WaveDrom,Micro Tools Matrix","toolName":"时序波形生成器","eyebrow":"WaveDrom 前端渲染","introDefault":"纯前端硬件时序波形图手绘板，通过本地 WaveDrom 运行库渲染 I2C/SPI 等总线波形，并支持 SVG/PNG 下载。","localBadge":"本地运行","sponsor":"赞赏","themeToggleAria":"切换主题","themeSystem":"系统","languageGroupAria":"语言","langZhAria":"切换到中文","langEnAria":"切换到英文","share":"分享","shareAria":"打开分享菜单","shareMenuAria":"分享选项","shareToolOnly":"仅分享工具","shareToolOnlyHint":"分享不带参数的工具页面链接","shareWithData":"分享工具及当前结果","shareWithDataHint":"将当前输入或结果写入链接参数","shareCopied":"分享链接已复制到剪贴板！","shareCopyPrompt":"复制此分享链接：","shareCopyFailed":"复制失败，请手动复制地址栏链接。","shareDataTooLarge":"当前数据过大，无法生成分享链接，请直接复制文本结果。","footer":"Micro Tools Matrix - 浏览器本地处理，无需上传。","h1":"时序波形生成器","intro":"左侧输入 WaveDrom JSON，右侧实时渲染硬件时序 SVG。适合快速绘制 I2C、SPI、握手信号和寄存器时序说明图。","sourceTitle":"WaveDrom 源码","previewTitle":"波形预览","renderAction":"渲染","sampleAction":"I2C 示例","saveSvgAction":"保存 SVG","savePngAction":"保存 PNG","statusReady":"修改源码后会自动刷新预览。","statusRendered":"波形已渲染。","statusError":"JSON 或 WaveDrom 语法有误。","statusNoSvg":"没有可下载的 SVG。","statusLibMissing":"本地 WaveDrom 运行库加载失败，请刷新页面后重试。","seoArticle":"时序波形生成器按需加载本地 WaveDrom 运行库，在浏览器内把标准 WaveDrom JSON 渲染为 SVG 波形图。它适合硬件文档、接口说明、调试记录和 I2C/SPI 等总线时序草图。"},"en":{"htmlLang":"en","canonical":"https://mymicrotools.xyz/en/hardware-timing-diagram.html","locale":"en_US","title":"Hardware Timing Diagram - Micro Tools Matrix Browser-Local Tool","metaDescription":"Render hardware timing diagrams with WaveDrom in the browser for I2C/SPI waveforms, with SVG and PNG export.","keywords":"Hardware Timing Diagram,hardware developer tool,bitfield,FP32,WaveDrom,Micro Tools Matrix","toolName":"Hardware Timing Diagram","eyebrow":"WaveDrom front-end rendering","introDefault":"Render hardware timing diagrams with WaveDrom in the browser for I2C/SPI waveforms, with SVG and PNG export.","localBadge":"Local","sponsor":"Sponsor","themeToggleAria":"Theme","themeSystem":"System","languageGroupAria":"Language","langZhAria":"Switch to Chinese","langEnAria":"Switch to English","share":"Share","shareAria":"Open share menu","shareMenuAria":"Share options","shareToolOnly":"Share Tool Only","shareToolOnlyHint":"Share the clean tool page link","shareWithData":"Share with Data","shareWithDataHint":"Include current input or result in the link","shareCopied":"Share link copied to clipboard!","shareCopyPrompt":"Copy this share link:","shareCopyFailed":"Copy failed. Please copy the address bar link manually.","shareDataTooLarge":"The current data is too large to create a share link. Please copy the text result directly.","footer":"Micro Tools Matrix - browser-local tools, no upload required.","h1":"Hardware Timing Diagram","intro":"Enter WaveDrom JSON on the left and render hardware timing SVG on the right. Useful for I2C, SPI, handshake signals, and register timing notes.","sourceTitle":"WaveDrom Source","previewTitle":"Wave Preview","renderAction":"Render","sampleAction":"I2C Sample","saveSvgAction":"Save SVG","savePngAction":"Save PNG","statusReady":"The preview refreshes automatically after source edits.","statusRendered":"Waveform rendered.","statusError":"Invalid JSON or WaveDrom syntax.","statusNoSvg":"No SVG is available to download.","statusLibMissing":"The local WaveDrom runtime could not be loaded. Refresh the page and try again.","seoArticle":"The Hardware Timing Diagram tool loads the local WaveDrom runtime on demand and renders standard WaveDrom JSON into SVG waveforms in the browser. It is useful for hardware documentation, interface specs, debug notes, and I2C/SPI timing sketches."}};
     let currentLanguage = document.documentElement.lang === "en" ? "en" : "zh";
 
     function applyLanguage(lang) {
