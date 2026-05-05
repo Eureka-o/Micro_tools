@@ -269,7 +269,7 @@
       const button = document.createElement('button');
       button.type = 'button';
       button.dataset.favoriteToggle = tool.name;
-      button.className = 'favorite-toggle absolute left-4 top-4 z-20 inline-flex min-h-10 min-w-10 items-center justify-center gap-1 rounded-full border border-gray-200 bg-white/95 px-3 text-sm font-bold text-slate-700 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-cyan-400/70 hover:bg-cyan-50 hover:text-cyan-700 active:scale-95 dark:border-white/10 dark:bg-slate-950/90 dark:text-slate-200 dark:hover:bg-cyan-400/10 dark:hover:text-cyan-200';
+      button.className = 'favorite-toggle absolute left-4 top-4 z-20 inline-flex min-h-10 min-w-10 items-center justify-center gap-1 rounded-full border border-gray-200 bg-white/95 px-3 text-sm font-bold text-slate-700 shadow-sm transition-all duration-300 hover:border-cyan-400/70 hover:bg-cyan-50 hover:text-cyan-700 active:scale-95 dark:border-white/10 dark:bg-slate-950/90 dark:text-slate-200 dark:hover:bg-cyan-400/10 dark:hover:text-cyan-200';
       button.setAttribute('aria-label', favoriteCopy.saveAria);
       button.setAttribute('title', favoriteCopy.saveAria);
       button.setAttribute('aria-pressed', 'false');
@@ -279,7 +279,7 @@
 
     function createCard(tool) {
       const shell = document.createElement('article');
-      shell.className = 'tool-card relative h-full transition-all duration-300';
+      shell.className = 'tool-card group relative h-full transition-all duration-300 hover:-translate-y-1 active:scale-[0.99]';
       shell.dataset.toolId = tool.name;
       shell.dataset.category = tool.category || 'data';
       shell.dataset.search = normalizeText(tool.name + ' ' + (tool.displayName || '') + ' ' + tool.description);
@@ -287,7 +287,7 @@
       const link = document.createElement('a');
       link.href = './' + tool.name;
       link.title = (document.documentElement.lang || '').startsWith('zh') ? `打开在线 ${tool.displayName || tool.name} 解决方案，无需上传，浏览器本地处理` : `Open ${tool.displayName || tool.name} online tool, no upload required`;
-      link.className = 'card group relative flex h-full min-h-48 flex-col rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.035] p-6 pt-16 shadow-2xl shadow-black/10 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/50 hover:bg-white dark:hover:bg-white/[0.06] hover:shadow-[0_0_30px_-10px_rgba(6,182,212,0.3)] active:scale-95 focus:outline-none focus:ring-2 focus:ring-cyan-300/50 md:p-8 md:pt-16';
+      link.className = 'card relative flex h-full min-h-48 flex-col rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-white/[0.035] p-6 pt-16 shadow-2xl shadow-black/10 backdrop-blur-md transition-all duration-300 group-hover:border-cyan-500/50 group-hover:bg-white dark:group-hover:bg-white/[0.06] group-hover:shadow-[0_0_30px_-10px_rgba(6,182,212,0.3)] focus:outline-none focus:ring-2 focus:ring-cyan-300/50 md:p-8 md:pt-16';
       link.dataset.toolLink = tool.name;
 
       const localBadge = document.createElement('span');
