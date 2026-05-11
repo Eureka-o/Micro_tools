@@ -6,6 +6,15 @@ Use it here: [https://mymicrotools.xyz](https://mymicrotools.xyz)
 
 ## Update Notices
 
+### 2026-05-11 - SEO Content, Site Structure, and Discovery Updates
+
+- Added richer English and Chinese guidance sections to ten priority tools: LLM/NPU memory, FP quantization, register bitfields, timing diagrams, Bland-Altman plots, PLL ratios, ASCII trees, LaTeX formulas, JSON to CSV, and JWT decoding.
+- Added six bilingual topic collection pages for JSON, CSS, privacy-first local tools, hardware engineering, LLM engineering, and local developer workflows.
+- Added local-only analytics event plumbing for page views, UI actions, copy/download/share clicks, search terms, and favorite changes without loading external analytics scripts.
+- Added clearer Suggest a tool and Report bug entry points on the homepage, footer, and tool pages.
+- Improved tool-page navigation with explicit homepage labels in the header, clearer category links, and more useful collection page calls to action.
+- Normalized English homepage URL metadata to /en/ and refreshed sitemap/service-worker assets for the new SEO pages.
+
 ### 2026-05-05 - Tool Matrix Focus Cleanup
 
 Upgraded several lightweight pages into engineering-oriented local tools:
@@ -14,7 +23,7 @@ Upgraded several lightweight pages into engineering-oriented local tools:
 - Refreshed nine older homepage listings and their tool pages so Regex, Hash, QR, SQL, .htaccess, SVG Base64, CSV table, Keycode, and CSS spacing tools use current engineering-oriented names and descriptions.
 - Replaced the remaining generic English homepage and tool-page descriptions with specific local-workflow wording across conversion, crypto, text, CSS, and image tools.
 - Added QR error-correction controls and rechecked generated QR canvases with a decoder so the output is scannable, not just visually non-empty.
-- Clamped Pomodoro Timer navigation controls to the shared 44 px pill height so theme, sponsor, and language buttons stay aligned.
+- Clamped Pomodoro Timer navigation controls to the shared 44 px pill height so header action and language buttons stay aligned.
 - Converted WaveDrom and js-yaml pages to local lazy loading so heavy vendor scripts load only after render or conversion actions.
 - Tightened the Pomodoro Timer layout at tablet and desktop widths, and expanded local Web Audio cues with tone selection, volume control, and mute persistence.
 - Pomodoro Timer is now an engineering focus sprint timer with task labels, break cycles, local audio cues, and CSV session export.
@@ -122,8 +131,6 @@ Each tool is a standalone page, so you can bookmark the ones you use often.
 The site supports Chinese and English tool pages. Language controls are available on tool pages, and English pages are also available under `/en/`.
 
 ## Support
-
-If Micro Tools Matrix saves you time, you can support ongoing maintenance from the Sponsor button on the site.
 
 Feedback, bug reports, and suggestions are welcome through the project repository:
 [https://github.com/Eureka-o/Micro_tools](https://github.com/Eureka-o/Micro_tools)

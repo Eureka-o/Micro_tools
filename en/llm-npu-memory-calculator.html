@@ -6,14 +6,15 @@
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/llm-npu-memory-calculator.html" />
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/llm-npu-memory-calculator.html" />
   <meta property="og:locale" content="en_US" />
+  <meta property="og:url" content="https://mymicrotools.xyz/en/llm-npu-memory-calculator.html" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LLM / NPU Memory Calculator - Micro Tools Matrix Browser-Local Tool</title>
-  <meta name="description" content="Estimate LLM and NPU inference memory from parameter count, batch size, sequence length, layers, hidden size, and quantization precision.">
+  <title>LLM / NPU Memory Calculator - Browser-local Inference VRAM Estimator | Micro Tools Matrix</title>
+  <meta name="description" content="Estimate LLM and NPU inference memory, KV cache, weight size, and precision impact locally in your browser. No model data is uploaded.">
   <meta name="keywords" content="LLM memory calculator,NPU memory estimate,KV Cache calculator,model parameters,quantization memory,INT4,FP16,Micro Tools Matrix">
   <link rel="stylesheet" href="../style.css">
   <script src="../storage.js"></script>
@@ -30,10 +31,10 @@
 
   <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
     <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
-      <a href="./" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+      <a href="./" class="flex max-w-full min-w-0 items-center gap-3 rounded-2xl px-1 py-1 transition hover:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] focus:ring-2 focus:ring-cyan-400/60" aria-label="Go to website home" data-home-nav-button>
         <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
         <span class="min-w-0">
-          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span class="flex min-w-0 flex-wrap items-center gap-2"><span class="truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span><span class="shrink-0 rounded-md border border-cyan-200 bg-cyan-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.16em] text-cyan-800 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200">Home</span></span>
           <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">LLM / NPU Memory Calculator</span>
         </span>
       </a>
@@ -152,6 +153,116 @@
     </section>
 
     <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">The LLM / NPU Memory Calculator helps estimate whether a large model can fit on a local GPU, NPU, or edge inference device. It separates model weights from KV Cache and reports MB/GB plus approximate prefill FLOPs so FP32, FP16, INT8, and INT4 deployments can be compared quickly. All calculations run locally in JavaScript.</article>
+  <!-- seo-content:start -->
+    <section class="mt-8 grid gap-5 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]" aria-labelledby="seoContentTitle">
+      <article class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+        <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 dark:text-cyan-300">Practical guide</p>
+        <h2 id="seoContentTitle" class="text-xl font-black tracking-tight text-slate-950 dark:text-white">LLM / NPU Memory Calculator</h2>
+        <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">Estimate whether a model configuration fits an accelerator before you start a run, buy hardware, or change quantization settings.</p>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">How to use</h3>
+        <ol class="mt-3 list-decimal space-y-2 pl-5 text-sm leading-7 text-slate-600 dark:text-slate-400">
+          <li>Enter the parameter count in billions, the precision used for weights, batch size, sequence length, layer count, and hidden size.</li>
+<li>Review the separated weight memory, KV cache memory, total estimate, and rough compute figure.</li>
+<li>Change precision or sequence length to compare the pressure from FP16, INT8, INT4, long context, or larger batches.</li>
+<li>Copy the result into a hardware note, sizing spreadsheet, or deployment checklist.</li>
+        </ol>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">Common use cases</h3>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-slate-600 dark:text-slate-400">
+          <li>Checking whether a 7B or 13B model can fit on a local NPU, mobile accelerator, or single GPU.</li>
+<li>Explaining why long-context inference grows quickly because KV cache scales with batch, layers, sequence length, and hidden size.</li>
+<li>Comparing FP16, INT8, and INT4 assumptions before building a benchmark or purchasing memory capacity.</li>
+        </ul>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">Privacy note</h3>
+        <p class="mt-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm leading-7 text-emerald-900 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-200">All values are numbers typed into the page and all calculations run in browser memory. The tool does not send model names, sizing assumptions, or hardware notes to a server.</p>
+      </article>
+
+      <aside class="space-y-5">
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h3 class="text-base font-bold text-slate-950 dark:text-white">Examples</h3>
+          <div class="mt-4 grid gap-4">
+            <div>
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Example input</p>
+              <pre class="max-h-64 overflow-auto rounded-2xl border border-gray-200 bg-slate-50 p-4 text-xs leading-6 text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">Parameters: 7B
+Precision: FP16
+Batch: 1
+Sequence length: 4096
+Layers: 32
+Hidden size: 4096</pre>
+            </div>
+            <div>
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Example output</p>
+              <pre class="max-h-64 overflow-auto rounded-2xl border border-gray-200 bg-slate-50 p-4 text-xs leading-6 text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">Weights: about 13.0 GiB
+KV cache: about 2.0 GiB
+Total: about 15.0 GiB plus runtime overhead</pre>
+            </div>
+          </div>
+        </section>
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h3 class="text-base font-bold text-slate-950 dark:text-white">FAQ</h3>
+          <div class="mt-4 space-y-3">
+            <details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">Is this a replacement for a full serving benchmark?</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">No. It is a planning estimate. Runtime frameworks, paged attention, activation buffers, adapters, and allocator overhead can add extra memory.</p>
+          </details>
+<details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">Why does KV cache matter so much?</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">Every generated token stores attention keys and values per layer. Longer context and larger batches increase that cache even when the model weights stay the same.</p>
+          </details>
+<details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">Can I use it for quantized models?</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">Yes. Use INT8 or INT4 to compare the weight-memory effect, then leave room for runtime overhead and any dequantization buffers.</p>
+          </details>
+          </div>
+        </section>
+      </aside>
+    </section>
+<!-- seo-content:end -->
+
+<!-- tool-growth:start -->
+    <section class="mt-8 grid gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]" aria-label="Related tools">
+      <div class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+        <div class="grid gap-5 md:grid-cols-2">
+          <div>
+            <h2 class="text-base font-bold text-slate-950 dark:text-white">Related tools</h2>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./fp-quantization-visualizer.html">FP Quantization Visualizer</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./hardware-timing-diagram.html">Hardware Timing Diagram</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./register-bitfield-debugger.html">Register Bitfield Debugger</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./fraction-calculator.html">PLL Divider / Rational Ratio Calculator</a>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-950 dark:text-white">Popular local tools</h2>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./json-to-csv.html">JSON to CSV</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./jwt-decoder.html">JWT Decoder</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./qr-code-generator.html">QR Code Workbench</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./base64-encoder.html">Base64 Encoder</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./regex-tester.html">Regex Debugger</a>
+            </div>
+          </div>
+        </div>
+        <a class="mt-5 inline-flex min-h-11 items-center justify-center rounded-full border border-cyan-200 bg-cyan-50 px-4 text-sm font-bold text-cyan-800 transition hover:border-cyan-400 hover:bg-cyan-100 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200" href="./llm-engineering-tools.html">Go to category: LLM Engineering Tools</a>
+      </div>
+
+      <aside class="space-y-5">
+        <section class="min-h-32 rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-5 dark:border-white/10 dark:bg-white/[0.03] sm:p-6" aria-label="Sponsor this tool">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">Sponsor this tool</h2>
+        </section>
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">Suggest a tool</h2>
+          <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">Need another browser-local utility, a workflow fix, or a bug repair? Open a GitHub issue and describe the local tool you need.</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="inline-flex min-h-10 items-center rounded-full bg-cyan-400 px-4 text-sm font-bold text-slate-950 transition hover:bg-cyan-300" href="https://github.com/Eureka-o/Micro_tools/issues/new?title=Tool%20request%3A%20&amp;labels=enhancement" target="_blank" rel="noopener noreferrer">Suggest a tool</a>
+            <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200" href="https://github.com/Eureka-o/Micro_tools/issues/new?title=Bug%20report%3A%20&amp;labels=bug" target="_blank" rel="noopener noreferrer">Report a bug</a>
+          </div>
+        </section>
+      </aside>
+    </section>
+<!-- tool-growth:end -->
   </main>
 
   <footer class="mx-auto max-w-6xl px-4 pb-8 text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8">
@@ -198,8 +309,8 @@
             "h1": "LLM / NPU 显存估算器",
             "eyebrow": "模型部署估算",
             "intro": "按参数量、Batch、序列长度、层数、隐藏维度和量化精度估算权重显存、KV Cache 与近似计算量，全部在浏览器本地完成。",
-            "documentTitle": "LLM / NPU 显存估算器 - Micro Tools Matrix 浏览器本地工具",
-            "metaDescription": "大模型与 NPU 推理显存估算器，按参数量、批大小、序列长度、层数、隐藏维度和量化精度实时估算权重、KV Cache 与计算量。",
+            "documentTitle": "LLM / NPU ????? - ??????? KV Cache ?? | Micro Tools Matrix",
+            "metaDescription": "???????????? NPU ????????KV Cache?????????????????????????",
             "metaKeywords": "LLM显存估算,NPU显存计算,KV Cache计算,模型参数量,量化显存,INT4,FP16,Micro Tools Matrix",
             "paramLabel": "模型参数量（B）",
             "batchLabel": "Batch Size",
@@ -258,8 +369,8 @@
             "h1": "LLM / NPU Memory Calculator",
             "eyebrow": "Model deployment estimate",
             "intro": "Estimate model weight memory, KV Cache, and approximate prefill compute from parameters, batch, sequence length, layers, hidden size, and precision.",
-            "documentTitle": "LLM / NPU Memory Calculator - Micro Tools Matrix Browser-Local Tool",
-            "metaDescription": "Estimate LLM and NPU inference memory from parameter count, batch size, sequence length, layers, hidden size, and quantization precision.",
+            "documentTitle": "LLM / NPU Memory Calculator - Browser-local Inference VRAM Estimator | Micro Tools Matrix",
+            "metaDescription": "Estimate LLM and NPU inference memory, KV cache, weight size, and precision impact locally in your browser. No model data is uploaded.",
             "metaKeywords": "LLM memory calculator,NPU memory estimate,KV Cache calculator,model parameters,quantization memory,INT4,FP16,Micro Tools Matrix",
             "paramLabel": "Model Parameters (B)",
             "batchLabel": "Batch Size",
@@ -290,10 +401,7 @@
       document.querySelectorAll("[data-i18n]").forEach((el) => { el.textContent = t(el.dataset.i18n); });
       document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => { el.setAttribute("placeholder", t(el.dataset.i18nPlaceholder)); });
       document.querySelectorAll("[data-i18n-aria-label]").forEach((el) => { el.setAttribute("aria-label", t(el.dataset.i18nAriaLabel)); });
-      document.querySelectorAll("[data-i18n-title]").forEach((el) => { el.setAttribute("title", t(el.dataset.i18nTitle)); });
-      document.title = t("documentTitle");
-      const metaDescription = document.querySelector('meta[name="description"]');
-      if (metaDescription) metaDescription.setAttribute("content", t("metaDescription"));
+      document.querySelectorAll("[data-i18n-title]").forEach((el) => { el.setAttribute("title", t(el.dataset.i18nTitle)); });
       const metaKeywords = document.querySelector('meta[name="keywords"]');
       if (metaKeywords) metaKeywords.setAttribute("content", t("metaKeywords"));
       document.getElementById("langZhBtn")?.classList.toggle("bg-cyan-400", currentLanguage === "zh");
@@ -576,5 +684,6 @@
   </script>
   <script src="../sponsor.js" defer></script>
   <script src="./theme-toggle.js" defer></script>  <script src="../assets/favorites.js" defer></script>
+  <script src="../assets/analytics-events.js" defer></script>
 </body>
 </html>

@@ -6,14 +6,15 @@
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/latex-formula-editor.html" />
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/latex-formula-editor.html" />
   <meta property="og:locale" content="zh_CN" />
+  <meta property="og:url" content="https://mymicrotools.xyz/latex-formula-editor.html" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LaTeX 公式编辑器 - 计算与可视化，纯前端本地运行 | Micro Tools Matrix</title>
-  <meta name="description" content="免费的 LaTeX 公式编辑器，用于计算与可视化。工具在浏览器本地运行、无后端上传，结合 LaTeX 公式编辑器 的相关技术能力快速处理任务，保护开发者隐私。">
+  <title>本地 LaTeX 公式渲染器 - 离线 KaTeX 数学公式工具 | Micro Tools Matrix</title>
+  <meta name="description" content="使用本地 KaTeX 资源渲染 LaTeX 公式、矩阵、积分和求和表达式，浏览器本地预览与导出，不上传。">
   <meta name="keywords" content="LaTeX 公式编辑器, latex, formula, editor, 免费, 纯前端, 本地运行, 无后端, 隐私保护, Micro Tools Matrix">
   <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="./assets/vendor/katex.min.css">
@@ -27,7 +28,7 @@
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "Windows, macOS, Android, iOS",
       "description": "A free browser-local LaTeX formula editor for matrix and complex formula preview.",
-      "url": "https://mymicrotools.xyz/latex-formula-editor.html",
+      "url":"https://mymicrotools.xyz/latex-formula-editor.html",
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -51,10 +52,10 @@
 
   <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
     <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
-      <a href="./" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+      <a href="./" class="flex max-w-full min-w-0 items-center gap-3 rounded-2xl px-1 py-1 transition hover:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] focus:ring-2 focus:ring-cyan-400/60" aria-label="前往网站主页" data-home-nav-button>
         <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
         <span class="min-w-0">
-          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span class="flex min-w-0 flex-wrap items-center gap-2"><span class="truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span><span class="shrink-0 rounded-md border border-cyan-200 bg-cyan-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.16em] text-cyan-800 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200">返回主页</span></span>
           <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">LaTeX 公式编辑器</span>
         </span>
       </a>
@@ -169,6 +170,109 @@
     </section>
 
     <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">这款 LaTeX 公式编辑器面向需要快速检查矩阵、积分、求和与分式结构的开发者、学生和内容作者。工具在 Micro Tools Matrix 页面内完成浏览器本地处理，输入内容只保存在当前页面内存中，无需上传到服务器，适合整理笔记、编写 Markdown 文档、准备教学材料或校验博客中的数学表达式。你可以使用预设按钮插入 2×2 矩阵、积分公式和求和公式，也可以直接粘贴常见 LaTeX 片段进行可视化预览。遇到括号不匹配或环境书写错误时，页面会显示清晰的语法解析错误提示，而不会白屏或中断。作为一个 free online developer tool，它保持轻量、快速、无广告，并与 Micro Tools Matrix 的本地隐私理念一致。</article>
+  <!-- seo-content:start -->
+    <section class="mt-8 grid gap-5 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]" aria-labelledby="seoContentTitle">
+      <article class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+        <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 dark:text-cyan-300">实用指南</p>
+        <h2 id="seoContentTitle" class="text-xl font-black tracking-tight text-slate-950 dark:text-white">本地 LaTeX 公式渲染器</h2>
+        <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">用本地 KaTeX 文件预览公式，离线检查数学笔记、论文片段和教学示例。</p>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">使用方法</h3>
+        <ol class="mt-3 list-decimal space-y-2 pl-5 text-sm leading-7 text-slate-600 dark:text-slate-400">
+          <li>在编辑器中输入或粘贴 LaTeX 公式。</li>
+<li>使用内置本地 KaTeX 运行库和字体预览渲染结果。</li>
+<li>调整 display mode、矩阵语法或复杂表达式，直到输出符合文档需要。</li>
+<li>复制或导出公式，用于笔记、Markdown、幻灯片或说明文档。</li>
+        </ol>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">常见场景</h3>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-slate-600 dark:text-slate-400">
+          <li>把公式写进 Markdown、LaTeX 或静态站点前先检查显示效果。</li>
+<li>在本地渲染矩阵、求和、积分和对齐公式。</li>
+<li>离线准备透明背景公式图片。</li>
+        </ul>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">本地运行说明</h3>
+        <p class="mt-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm leading-7 text-emerald-900 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-200">公式在浏览器内渲染，草稿、课堂笔记和论文片段不会上传。</p>
+      </article>
+
+      <aside class="space-y-5">
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h3 class="text-base font-bold text-slate-950 dark:text-white">示例输入输出</h3>
+          <div class="mt-4 grid gap-4">
+            <div>
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">示例输入</p>
+              <pre class="max-h-64 overflow-auto rounded-2xl border border-gray-200 bg-slate-50 p-4 text-xs leading-6 text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">\\int_0^1 x^2 \, dx = \\frac{1}{3}</pre>
+            </div>
+            <div>
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">示例输出</p>
+              <pre class="max-h-64 overflow-auto rounded-2xl border border-gray-200 bg-slate-50 p-4 text-xs leading-6 text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">使用本地 KaTeX 字体渲染出的积分公式。</pre>
+            </div>
+          </div>
+        </section>
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h3 class="text-base font-bold text-slate-950 dark:text-white">常见问题</h3>
+          <div class="mt-4 space-y-3">
+            <details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">它依赖 KaTeX CDN 吗？</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">不依赖。JavaScript、CSS 和字体文件都存放在本地 assets/vendor 目录。</p>
+          </details>
+<details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">为什么离线还需要字体文件？</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">KaTeX 依赖专用字体保证字形和间距正确，字体已本地打包。</p>
+          </details>
+<details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">能编译完整 LaTeX 文档吗？</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">不能。它用于公式渲染，不是完整 TeX 工程编译器。</p>
+          </details>
+          </div>
+        </section>
+      </aside>
+    </section>
+<!-- seo-content:end -->
+
+<!-- tool-growth:start -->
+    <section class="mt-8 grid gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]" aria-label="相关工具">
+      <div class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+        <div class="grid gap-5 md:grid-cols-2">
+          <div>
+            <h2 class="text-base font-bold text-slate-950 dark:text-white">相关工具</h2>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./markdown-table-generator.html">Markdown / CSV 表格工具</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./ascii-tree-generator.html">ASCII 目录树生成器</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./svg-to-base64.html">SVG Base64 编码器</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./image-compressor.html">图片压缩器</a>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-950 dark:text-white">热门本地工具</h2>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./json-to-csv.html">JSON 转 CSV</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./jwt-decoder.html">JWT 本地解码器</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./qr-code-generator.html">二维码工作台</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./base64-encoder.html">Base64 编解码器</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./regex-tester.html">正则表达式调试器</a>
+            </div>
+          </div>
+        </div>
+        <a class="mt-5 inline-flex min-h-11 items-center justify-center rounded-full border border-cyan-200 bg-cyan-50 px-4 text-sm font-bold text-cyan-800 transition hover:border-cyan-400 hover:bg-cyan-100 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200" href="./local-developer-tools.html">前往分类: 本地开发者工具合集</a>
+      </div>
+
+      <aside class="space-y-5">
+        <section class="min-h-32 rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-5 dark:border-white/10 dark:bg-white/[0.03] sm:p-6" aria-label="赞助这个工具">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">赞助这个工具</h2>
+        </section>
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">建议新工具 / Suggest a tool</h2>
+          <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">如果你需要新的浏览器本地工具、流程改进或 bug 修复，可以通过 GitHub issue 描述需求。 Need a local browser tool, workflow fix, or bug repair? Open a GitHub issue.</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="inline-flex min-h-10 items-center rounded-full bg-cyan-400 px-4 text-sm font-bold text-slate-950 transition hover:bg-cyan-300" href="https://github.com/Eureka-o/Micro_tools/issues/new?title=%E5%B7%A5%E5%85%B7%E5%BB%BA%E8%AE%AE%3A%20&amp;labels=enhancement" target="_blank" rel="noopener noreferrer">建议新工具 / Suggest a tool</a>
+            <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200" href="https://github.com/Eureka-o/Micro_tools/issues/new?title=%E9%97%AE%E9%A2%98%E5%8F%8D%E9%A6%88%3A%20&amp;labels=bug" target="_blank" rel="noopener noreferrer">问题反馈 / Report a bug</a>
+          </div>
+        </section>
+      </aside>
+    </section>
+<!-- tool-growth:end -->
   </main>
 
   <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
@@ -185,8 +289,8 @@
   <script>
     const I18N = {
       zh: {
-        documentTitle: "LaTeX 公式编辑器 - Micro Tools Matrix",
-        metaDescription: "Micro Tools Matrix 提供免费的 LaTeX 矩阵与复杂公式在线可视化编辑器，支持浏览器本地处理，无需上传公式内容。",
+        documentTitle: "?? LaTeX ????? - ?? KaTeX ?????? | Micro Tools Matrix",
+        metaDescription: "???? KaTeX ???? LaTeX ??????????????????????????????",
         metaKeywords: "LaTeX公式编辑器,矩阵公式,在线公式预览,浏览器本地处理,无需上传,Micro Tools Matrix",
         toolName: "LaTeX 公式编辑器",
         sponsor: "赞赏",
@@ -234,7 +338,7 @@
         sampleStatus: "示例已填入。",
         closeSponsor: "关闭赞赏窗口",
         sponsorTitle: "赞赏支持",
-        sponsorSubtitle: "保持工具免费、快速且无广告。",
+        sponsorSubtitle: "?? LaTeX ????? - ?? KaTeX ?????? | Micro Tools Matrix",
         buyCoffee: "Buy Me a Coffee",
         themeLight: "亮色",
         themeDark: "深色",
@@ -243,8 +347,8 @@
         footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。"
       },
       en: {
-        documentTitle: "LaTeX Formula Editor - Micro Tools Matrix",
-        metaDescription: "A free LaTeX matrix and complex formula visual editor from Micro Tools Matrix with browser-local processing and no formula upload.",
+        documentTitle: "Local LaTeX Formula Renderer - Offline KaTeX Equation Tool | Micro Tools Matrix",
+        metaDescription: "Render LaTeX formulas, matrices, integrals, and summations with local KaTeX assets. Browser-local preview and export, no upload.",
         metaKeywords: "LaTeX formula editor,matrix formula,online formula preview,browser-local processing,no upload,free online developer tool,Micro Tools Matrix",
         toolName: "LaTeX Formula Editor",
         sponsor: "Sponsor",
@@ -292,7 +396,7 @@
         sampleStatus: "Sample loaded.",
         closeSponsor: "Close sponsor dialog",
         sponsorTitle: "Sponsor support",
-        sponsorSubtitle: "Keep the tools free, fast, and ad-free.",
+        sponsorSubtitle: "Local LaTeX Formula Renderer - Offline KaTeX Equation Tool | Micro Tools Matrix",
         buyCoffee: "Buy Me a Coffee",
         themeLight: "Light",
         themeDark: "Dark",
@@ -351,11 +455,8 @@
     function applyLanguage(lang) {
       currentLanguage = I18N[lang] ? lang : "zh";
       const dict = I18N[currentLanguage];
-      document.documentElement.lang = currentLanguage === "zh" ? "zh-CN" : "en";
-      document.title = dict.documentTitle;
-      const description = document.querySelector('meta[name="description"]');
+      document.documentElement.lang = currentLanguage === "zh" ? "zh-CN" : "en";
       const keywords = document.querySelector('meta[name="keywords"]');
-      if (description) description.setAttribute("content", dict.metaDescription);
       if (keywords) keywords.setAttribute("content", dict.metaKeywords);
 
       document.querySelectorAll("[data-i18n]").forEach((node) => {
@@ -739,5 +840,6 @@
   </script>
   <script src="./sponsor.js" defer></script>
   <script src="./theme-toggle.js" defer></script>  <script src="./assets/favorites.js" defer></script>
+  <script src="./assets/analytics-events.js" defer></script>
 </body>
 </html>

@@ -6,19 +6,20 @@
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/llm-npu-memory-calculator.html" />
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/llm-npu-memory-calculator.html" />
   <meta property="og:locale" content="zh_CN" />
+  <meta property="og:url" content="https://mymicrotools.xyz/llm-npu-memory-calculator.html" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LLM / NPU 显存估算器 - 计算与可视化，纯前端本地运行 | Micro Tools Matrix</title>
-  <meta name="description" content="免费的 LLM / NPU 显存估算器，用于计算与可视化。工具在浏览器本地运行、无后端上传，结合 LLM / NPU 显存估算器 的相关技术能力快速处理任务，保护开发者隐私。">
+  <title>LLM / NPU 显存估算器 - 本地推理内存与 KV Cache 计算 | Micro Tools Matrix</title>
+  <meta name="description" content="在浏览器本地估算大模型和 NPU 推理的权重显存、KV Cache、总内存与量化影响，不上传任何模型参数或硬件信息。">
   <meta name="keywords" content="LLM / NPU 显存估算器, llm, npu, memory, calculator, 免费, 纯前端, 本地运行, 无后端, 隐私保护, Micro Tools Matrix">
   <link rel="stylesheet" href="./style.css">
   <script src="./storage.js"></script>
   <script src="./theme-init.js"></script>
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "LLM / NPU 显存估算器", "applicationCategory": "DeveloperApplication", "operatingSystem": "Windows, macOS, Android, iOS", "description": "大模型与 NPU 推理显存估算器，按参数量、批大小、序列长度、层数、隐藏维度和量化精度实时估算权重、KV Cache 与计算量。", "url": "https://mymicrotools.xyz/llm-npu-memory-calculator.html", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "category": "Free"}}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "SoftwareApplication", "name": "LLM / NPU 显存估算器", "applicationCategory": "DeveloperApplication", "operatingSystem": "Windows, macOS, Android, iOS", "description": "大模型与 NPU 推理显存估算器，按参数量、批大小、序列长度、层数、隐藏维度和量化精度实时估算权重、KV Cache 与计算量。", "url":"https://mymicrotools.xyz/llm-npu-memory-calculator.html", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock", "category": "Free"}}</script>
   <style>
     :root { color-scheme: light dark; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif; }
@@ -30,10 +31,10 @@
 
   <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
     <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
-      <a href="./" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+      <a href="./" class="flex max-w-full min-w-0 items-center gap-3 rounded-2xl px-1 py-1 transition hover:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] focus:ring-2 focus:ring-cyan-400/60" aria-label="前往网站主页" data-home-nav-button>
         <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
         <span class="min-w-0">
-          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span class="flex min-w-0 flex-wrap items-center gap-2"><span class="truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span><span class="shrink-0 rounded-md border border-cyan-200 bg-cyan-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.16em] text-cyan-800 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200">返回主页</span></span>
           <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName"></span>
         </span>
       </a>
@@ -152,6 +153,116 @@
     </section>
 
     <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle"></article>
+  <!-- seo-content:start -->
+    <section class="mt-8 grid gap-5 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]" aria-labelledby="seoContentTitle">
+      <article class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+        <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 dark:text-cyan-300">实用指南</p>
+        <h2 id="seoContentTitle" class="text-xl font-black tracking-tight text-slate-950 dark:text-white">LLM / NPU 显存估算器</h2>
+        <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">在真正跑推理、买硬件或切换量化方案之前，先粗估模型配置是否能放进目标显存或片上内存预算。</p>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">使用方法</h3>
+        <ol class="mt-3 list-decimal space-y-2 pl-5 text-sm leading-7 text-slate-600 dark:text-slate-400">
+          <li>输入参数量、权重量化精度、batch size、序列长度、层数和隐藏维度。</li>
+<li>查看权重显存、KV Cache、总估算值和粗略计算量输出。</li>
+<li>切换 FP16、INT8、INT4 或修改上下文长度，比较不同配置对内存的影响。</li>
+<li>把结果复制到硬件选型记录、部署 checklist 或测试报告中。</li>
+        </ol>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">常见场景</h3>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-slate-600 dark:text-slate-400">
+          <li>判断 7B、13B 模型是否适合本地 NPU、移动端加速器或单卡 GPU。</li>
+<li>解释长上下文推理为什么会因为 KV Cache 快速吃掉内存。</li>
+<li>在做 benchmark 或采购内存容量前，对比 FP16、INT8、INT4 的估算差异。</li>
+        </ul>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">本地运行说明</h3>
+        <p class="mt-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm leading-7 text-emerald-900 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-200">输入只是数字和配置假设，计算完全在当前浏览器内存中完成。工具不会上传模型名称、硬件信息或部署笔记。</p>
+      </article>
+
+      <aside class="space-y-5">
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h3 class="text-base font-bold text-slate-950 dark:text-white">示例输入输出</h3>
+          <div class="mt-4 grid gap-4">
+            <div>
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">示例输入</p>
+              <pre class="max-h-64 overflow-auto rounded-2xl border border-gray-200 bg-slate-50 p-4 text-xs leading-6 text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">参数量：7B
+精度：FP16
+Batch：1
+序列长度：4096
+层数：32
+隐藏维度：4096</pre>
+            </div>
+            <div>
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">示例输出</p>
+              <pre class="max-h-64 overflow-auto rounded-2xl border border-gray-200 bg-slate-50 p-4 text-xs leading-6 text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">权重显存：约 13.0 GiB
+KV Cache：约 2.0 GiB
+总计：约 15.0 GiB，实际部署还需预留运行时开销</pre>
+            </div>
+          </div>
+        </section>
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h3 class="text-base font-bold text-slate-950 dark:text-white">常见问题</h3>
+          <div class="mt-4 space-y-3">
+            <details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">它能替代完整推理压测吗？</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">不能。它用于前期估算，实际框架、分页注意力、激活缓存、LoRA、allocator 开销都会带来额外内存。</p>
+          </details>
+<details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">为什么 KV Cache 这么重要？</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">每生成 token 都会在每层保存 key/value。上下文越长、batch 越大，KV Cache 增长越明显。</p>
+          </details>
+<details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">量化模型可以估算吗？</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">可以。选择 INT8 或 INT4 观察权重显存变化，但仍要给运行时和反量化缓冲留余量。</p>
+          </details>
+          </div>
+        </section>
+      </aside>
+    </section>
+<!-- seo-content:end -->
+
+<!-- tool-growth:start -->
+    <section class="mt-8 grid gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]" aria-label="相关工具">
+      <div class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+        <div class="grid gap-5 md:grid-cols-2">
+          <div>
+            <h2 class="text-base font-bold text-slate-950 dark:text-white">相关工具</h2>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./fp-quantization-visualizer.html">FP/量化可视化器</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./hardware-timing-diagram.html">硬件时序图生成器</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./register-bitfield-debugger.html">寄存器位段调试器</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./fraction-calculator.html">PLL 分频与有理数近似计算器</a>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-950 dark:text-white">热门本地工具</h2>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./json-to-csv.html">JSON 转 CSV</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./jwt-decoder.html">JWT 本地解码器</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./qr-code-generator.html">二维码工作台</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./base64-encoder.html">Base64 编解码器</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./regex-tester.html">正则表达式调试器</a>
+            </div>
+          </div>
+        </div>
+        <a class="mt-5 inline-flex min-h-11 items-center justify-center rounded-full border border-cyan-200 bg-cyan-50 px-4 text-sm font-bold text-cyan-800 transition hover:border-cyan-400 hover:bg-cyan-100 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200" href="./llm-engineering-tools.html">前往分类: 大模型/推理工程工具合集</a>
+      </div>
+
+      <aside class="space-y-5">
+        <section class="min-h-32 rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-5 dark:border-white/10 dark:bg-white/[0.03] sm:p-6" aria-label="赞助这个工具">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">赞助这个工具</h2>
+        </section>
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">建议新工具 / Suggest a tool</h2>
+          <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">如果你需要新的浏览器本地工具、流程改进或 bug 修复，可以通过 GitHub issue 描述需求。 Need a local browser tool, workflow fix, or bug repair? Open a GitHub issue.</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="inline-flex min-h-10 items-center rounded-full bg-cyan-400 px-4 text-sm font-bold text-slate-950 transition hover:bg-cyan-300" href="https://github.com/Eureka-o/Micro_tools/issues/new?title=%E5%B7%A5%E5%85%B7%E5%BB%BA%E8%AE%AE%3A%20&amp;labels=enhancement" target="_blank" rel="noopener noreferrer">建议新工具 / Suggest a tool</a>
+            <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200" href="https://github.com/Eureka-o/Micro_tools/issues/new?title=%E9%97%AE%E9%A2%98%E5%8F%8D%E9%A6%88%3A%20&amp;labels=bug" target="_blank" rel="noopener noreferrer">问题反馈 / Report a bug</a>
+          </div>
+        </section>
+      </aside>
+    </section>
+<!-- tool-growth:end -->
   </main>
 
   <footer class="mx-auto max-w-6xl px-4 pb-8 text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8">
@@ -198,8 +309,8 @@
             "h1": "LLM / NPU 显存估算器",
             "eyebrow": "模型部署估算",
             "intro": "按参数量、Batch、序列长度、层数、隐藏维度和量化精度估算权重显存、KV Cache 与近似计算量，全部在浏览器本地完成。",
-            "documentTitle": "LLM / NPU 显存估算器 - Micro Tools Matrix 浏览器本地工具",
-            "metaDescription": "大模型与 NPU 推理显存估算器，按参数量、批大小、序列长度、层数、隐藏维度和量化精度实时估算权重、KV Cache 与计算量。",
+            "documentTitle": "LLM / NPU ????? - ??????? KV Cache ?? | Micro Tools Matrix",
+            "metaDescription": "???????????? NPU ????????KV Cache?????????????????????????",
             "metaKeywords": "LLM显存估算,NPU显存计算,KV Cache计算,模型参数量,量化显存,INT4,FP16,Micro Tools Matrix",
             "paramLabel": "模型参数量（B）",
             "batchLabel": "Batch Size",
@@ -258,8 +369,8 @@
             "h1": "LLM / NPU Memory Calculator",
             "eyebrow": "Model deployment estimate",
             "intro": "Estimate model weight memory, KV Cache, and approximate prefill compute from parameters, batch, sequence length, layers, hidden size, and precision.",
-            "documentTitle": "LLM / NPU Memory Calculator - Micro Tools Matrix Browser-Local Tool",
-            "metaDescription": "Estimate LLM and NPU inference memory from parameter count, batch size, sequence length, layers, hidden size, and quantization precision.",
+            "documentTitle": "LLM / NPU Memory Calculator - Browser-local Inference VRAM Estimator | Micro Tools Matrix",
+            "metaDescription": "Estimate LLM and NPU inference memory, KV cache, weight size, and precision impact locally in your browser. No model data is uploaded.",
             "metaKeywords": "LLM memory calculator,NPU memory estimate,KV Cache calculator,model parameters,quantization memory,INT4,FP16,Micro Tools Matrix",
             "paramLabel": "Model Parameters (B)",
             "batchLabel": "Batch Size",
@@ -290,10 +401,7 @@
       document.querySelectorAll("[data-i18n]").forEach((el) => { el.textContent = t(el.dataset.i18n); });
       document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => { el.setAttribute("placeholder", t(el.dataset.i18nPlaceholder)); });
       document.querySelectorAll("[data-i18n-aria-label]").forEach((el) => { el.setAttribute("aria-label", t(el.dataset.i18nAriaLabel)); });
-      document.querySelectorAll("[data-i18n-title]").forEach((el) => { el.setAttribute("title", t(el.dataset.i18nTitle)); });
-      document.title = t("documentTitle");
-      const metaDescription = document.querySelector('meta[name="description"]');
-      if (metaDescription) metaDescription.setAttribute("content", t("metaDescription"));
+      document.querySelectorAll("[data-i18n-title]").forEach((el) => { el.setAttribute("title", t(el.dataset.i18nTitle)); });
       const metaKeywords = document.querySelector('meta[name="keywords"]');
       if (metaKeywords) metaKeywords.setAttribute("content", t("metaKeywords"));
       document.getElementById("langZhBtn")?.classList.toggle("bg-cyan-400", currentLanguage === "zh");
@@ -576,5 +684,6 @@
   </script>
   <script src="./sponsor.js" defer></script>
   <script src="./theme-toggle.js" defer></script>  <script src="./assets/favorites.js" defer></script>
+  <script src="./assets/analytics-events.js" defer></script>
 </body>
 </html>

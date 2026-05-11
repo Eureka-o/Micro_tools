@@ -6,14 +6,15 @@
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/ascii-tree-generator.html" />
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/ascii-tree-generator.html" />
   <meta property="og:locale" content="zh_CN" />
+  <meta property="og:url" content="https://mymicrotools.xyz/ascii-tree-generator.html" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ASCII 目录树生成器 - 开发者工具，纯前端本地运行 | Micro Tools Matrix</title>
-  <meta name="description" content="免费的 ASCII 目录树生成器，用于开发者工具。工具在浏览器本地运行、无后端上传，结合 ASCII 目录树生成器 的相关技术能力快速处理任务，保护开发者隐私。">
+  <title>ASCII 目录树生成器 - 本地 README 文件结构工具 | Micro Tools Matrix</title>
+  <meta name="description" content="从缩进文本、路径列表或层级笔记生成 README 风格 ASCII 目录树，浏览器本地处理，复制即用。">
   <meta name="keywords" content="ASCII 目录树生成器, ascii, tree, generator, 免费, 纯前端, 本地运行, 无后端, 隐私保护, Micro Tools Matrix">
   <link rel="stylesheet" href="./style.css">
   <script src="./storage.js"></script>
@@ -25,7 +26,7 @@
   "applicationCategory": "DeveloperApplication",
   "operatingSystem": "Windows, macOS, Android, iOS",
   "description": "项目目录树生成与还原工具，把缩进层级文本转为 README 风格树状图，也可反向清洗。",
-  "url": "https://mymicrotools.xyz/ascii-tree-generator.html",
+  "url":"https://mymicrotools.xyz/ascii-tree-generator.html",
   "offers": {
     "@type": "Offer",
     "price": "0",
@@ -45,10 +46,10 @@
 
   <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
     <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
-      <a href="./" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+      <a href="./" class="flex max-w-full min-w-0 items-center gap-3 rounded-2xl px-1 py-1 transition hover:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] focus:ring-2 focus:ring-cyan-400/60" aria-label="前往网站主页" data-home-nav-button>
         <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
         <span class="min-w-0">
-          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span class="flex min-w-0 flex-wrap items-center gap-2"><span class="truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span><span class="shrink-0 rounded-md border border-cyan-200 bg-cyan-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.16em] text-cyan-800 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200">返回主页</span></span>
           <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">ASCII 目录树生成器</span>
         </span>
       </a>
@@ -153,6 +154,117 @@
     </section>
 
     <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">ASCII 目录树生成器适合编写 GitHub README、项目文档或交接说明。你只需要用空格或 Tab 写出层级文本，工具会根据父子关系自动生成带有 ├──、└── 和 │ 的标准目录树。反向清洗功能可以把复制来的树状图还原为缩进层级，便于继续编辑。所有转换逻辑都在本地 JavaScript 中完成。</article>
+  <!-- seo-content:start -->
+    <section class="mt-8 grid gap-5 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]" aria-labelledby="seoContentTitle">
+      <article class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+        <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 dark:text-cyan-300">实用指南</p>
+        <h2 id="seoContentTitle" class="text-xl font-black tracking-tight text-slate-950 dark:text-white">ASCII 目录树生成器</h2>
+        <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">为 README、issue、教程和架构说明生成清晰的目录结构文本。</p>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">使用方法</h3>
+        <ol class="mt-3 list-decimal space-y-2 pl-5 text-sm leading-7 text-slate-600 dark:text-slate-400">
+          <li>把缩进列表、路径列表或粗略层级粘贴到输入框。</li>
+<li>生成带分支符号和统一缩进的目录树。</li>
+<li>检查名称和空格后复制到 Markdown 或纯文本中。</li>
+<li>如果树结构比较乱，可以使用清理或反向转换思路重新整理。</li>
+        </ol>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">常见场景</h3>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-slate-600 dark:text-slate-400">
+          <li>不运行终端命令，也能在 README 中展示仓库结构。</li>
+<li>为教程、课程作业或项目说明记录文件夹层级。</li>
+<li>在提交 bug report 前清理粘贴的文件列表。</li>
+        </ul>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">本地运行说明</h3>
+        <p class="mt-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm leading-7 text-emerald-900 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-200">页面只处理你粘贴的文本，内容不会离开浏览器。</p>
+      </article>
+
+      <aside class="space-y-5">
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h3 class="text-base font-bold text-slate-950 dark:text-white">示例输入输出</h3>
+          <div class="mt-4 grid gap-4">
+            <div>
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">示例输入</p>
+              <pre class="max-h-64 overflow-auto rounded-2xl border border-gray-200 bg-slate-50 p-4 text-xs leading-6 text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">src
+  components
+    Button.tsx
+  utils
+    format.ts</pre>
+            </div>
+            <div>
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">示例输出</p>
+              <pre class="max-h-64 overflow-auto rounded-2xl border border-gray-200 bg-slate-50 p-4 text-xs leading-6 text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">src
+├── components
+│   └── Button.tsx
+└── utils
+    └── format.ts</pre>
+            </div>
+          </div>
+        </section>
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h3 class="text-base font-bold text-slate-950 dark:text-white">常见问题</h3>
+          <div class="mt-4 space-y-3">
+            <details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">它会自动读取本地文件夹吗？</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">不会。你需要粘贴文本，浏览器不会扫描你的文件系统。</p>
+          </details>
+<details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">输出能放进 Markdown 吗？</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">可以，建议放在代码块里保持格式稳定。</p>
+          </details>
+<details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">支持 Windows 路径吗？</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">支持路径列表清理，但混合分隔符时可能需要人工检查。</p>
+          </details>
+          </div>
+        </section>
+      </aside>
+    </section>
+<!-- seo-content:end -->
+
+<!-- tool-growth:start -->
+    <section class="mt-8 grid gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]" aria-label="相关工具">
+      <div class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+        <div class="grid gap-5 md:grid-cols-2">
+          <div>
+            <h2 class="text-base font-bold text-slate-950 dark:text-white">相关工具</h2>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./markdown-table-generator.html">Markdown / CSV 表格工具</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./linux-command-cheatsheet.html">Linux 命令速查</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./text-diff-checker.html">文本对比工具</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./json-to-csv.html">JSON 转 CSV</a>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-950 dark:text-white">热门本地工具</h2>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./json-to-csv.html">JSON 转 CSV</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./jwt-decoder.html">JWT 本地解码器</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./qr-code-generator.html">二维码工作台</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./base64-encoder.html">Base64 编解码器</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./regex-tester.html">正则表达式调试器</a>
+            </div>
+          </div>
+        </div>
+        <a class="mt-5 inline-flex min-h-11 items-center justify-center rounded-full border border-cyan-200 bg-cyan-50 px-4 text-sm font-bold text-cyan-800 transition hover:border-cyan-400 hover:bg-cyan-100 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200" href="./local-developer-tools.html">前往分类: 本地开发者工具合集</a>
+      </div>
+
+      <aside class="space-y-5">
+        <section class="min-h-32 rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-5 dark:border-white/10 dark:bg-white/[0.03] sm:p-6" aria-label="赞助这个工具">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">赞助这个工具</h2>
+        </section>
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">建议新工具 / Suggest a tool</h2>
+          <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">如果你需要新的浏览器本地工具、流程改进或 bug 修复，可以通过 GitHub issue 描述需求。 Need a local browser tool, workflow fix, or bug repair? Open a GitHub issue.</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="inline-flex min-h-10 items-center rounded-full bg-cyan-400 px-4 text-sm font-bold text-slate-950 transition hover:bg-cyan-300" href="https://github.com/Eureka-o/Micro_tools/issues/new?title=%E5%B7%A5%E5%85%B7%E5%BB%BA%E8%AE%AE%3A%20&amp;labels=enhancement" target="_blank" rel="noopener noreferrer">建议新工具 / Suggest a tool</a>
+            <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200" href="https://github.com/Eureka-o/Micro_tools/issues/new?title=%E9%97%AE%E9%A2%98%E5%8F%8D%E9%A6%88%3A%20&amp;labels=bug" target="_blank" rel="noopener noreferrer">问题反馈 / Report a bug</a>
+          </div>
+        </section>
+      </aside>
+    </section>
+<!-- tool-growth:end -->
   </main>
 
   <script>
@@ -204,8 +316,8 @@
         h1: "ASCII 目录树生成器",
         eyebrow: "README 目录结构",
         intro: "用缩进输入文件层级，实时生成 ├── / └── 风格目录树；也可把树状图反向还原为纯层级文本。",
-        documentTitle: "ASCII 目录树生成器 - Micro Tools Matrix 浏览器本地工具",
-        metaDescription: "项目目录树生成与还原工具，把缩进层级文本转为 README 风格树状图，也可反向清洗。",
+        documentTitle: "ASCII ?????? - ?? README ?????? | Micro Tools Matrix",
+        metaDescription: "????????????????? README ?? ASCII ?????????????????",
         metaKeywords: "ASCII目录树,README目录结构,目录树生成,目录树还原,Micro Tools Matrix",
         seoArticle: "ASCII 目录树生成器适合编写 GitHub README、项目文档或交接说明。你只需要用空格或 Tab 写出层级文本，工具会根据父子关系自动生成带有 ├──、└── 和 │ 的标准目录树。反向清洗功能可以把复制来的树状图还原为缩进层级，便于继续编辑。所有转换逻辑都在本地 JavaScript 中完成。"
       },
@@ -256,8 +368,8 @@
         h1: "ASCII Tree Generator",
         eyebrow: "README directory structure",
         intro: "Enter an indented file hierarchy to generate a README-style tree, or clean a tree back into plain hierarchy text.",
-        documentTitle: "ASCII Tree Generator - Micro Tools Matrix Browser-Local Tool",
-        metaDescription: "Generate README-style ASCII directory trees from indented text and clean trees back into hierarchy text.",
+        documentTitle: "ASCII Tree Generator - Browser-local README Directory Tree Tool | Micro Tools Matrix",
+        metaDescription: "Generate README-style ASCII directory trees locally from indented text, paths, or hierarchy notes, with clean copy output.",
         metaKeywords: "ASCII tree,README directory tree,project structure generator,tree cleaner,Micro Tools Matrix",
         seoArticle: "The ASCII Tree Generator is useful for GitHub READMEs, project documentation, and handoff notes. Type a hierarchy with spaces or tabs and the tool generates a standard tree with branch connectors. The reverse cleaner turns an existing tree back into editable indented text. All conversion logic runs locally in JavaScript."
       }
@@ -292,9 +404,6 @@
       currentLanguage = lang === "en" ? "en" : "zh";
       const dict = I18N[currentLanguage] || I18N.zh;
       document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
-      document.title = dict.documentTitle || document.title;
-      const description = document.querySelector('meta[name="description"]');
-      if (description && dict.metaDescription) description.setAttribute("content", dict.metaDescription);
       const keywords = document.querySelector('meta[name="keywords"]');
       if (keywords && dict.metaKeywords) keywords.setAttribute("content", dict.metaKeywords);
       document.querySelectorAll("[data-i18n]").forEach((node) => {
@@ -625,6 +734,7 @@
   </script>
   <script src="./sponsor.js" defer></script>
   <script src="./theme-toggle.js" defer></script>  <script src="./assets/favorites.js" defer></script>
+  <script src="./assets/analytics-events.js" defer></script>
 </body>
 </html>
 

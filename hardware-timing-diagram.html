@@ -6,14 +6,15 @@
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/hardware-timing-diagram.html" />
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/hardware-timing-diagram.html" />
   <meta property="og:locale" content="zh_CN" />
+  <meta property="og:url" content="https://mymicrotools.xyz/hardware-timing-diagram.html" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>时序波形生成器 - 计算与可视化，纯前端本地运行 | Micro Tools Matrix</title>
-  <meta name="description" content="免费的 时序波形生成器，用于计算与可视化。工具在浏览器本地运行、无后端上传，结合 时序波形生成器 的相关技术能力快速处理任务，保护开发者隐私。">
+  <title>硬件时序图生成器 - 离线 WaveDrom SVG 渲染 | Micro Tools Matrix</title>
+  <meta name="description" content="使用本地 WaveDrom 运行库渲染 I2C、SPI、握手和寄存器时序图，支持断网 SVG/PNG 导出。">
   <meta name="keywords" content="时序波形生成器, hardware, timing, diagram, 免费, 纯前端, 本地运行, 无后端, 隐私保护, Micro Tools Matrix">
   <link rel="stylesheet" href="./style.css">
   <script src="./storage.js"></script>
@@ -35,10 +36,10 @@
 
   <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
     <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
-      <a href="./" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+      <a href="./" class="flex max-w-full min-w-0 items-center gap-3 rounded-2xl px-1 py-1 transition hover:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] focus:ring-2 focus:ring-cyan-400/60" aria-label="前往网站主页" data-home-nav-button>
         <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
         <span class="min-w-0">
-          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span class="flex min-w-0 flex-wrap items-center gap-2"><span class="truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span><span class="shrink-0 rounded-md border border-cyan-200 bg-cyan-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.16em] text-cyan-800 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200">返回主页</span></span>
           <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">时序波形生成器</span>
         </span>
       </a>
@@ -137,6 +138,112 @@
     </section>
 
     <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">时序波形生成器按需加载本地 WaveDrom 运行库，在浏览器内把标准 WaveDrom JSON 渲染为 SVG 波形图。它适合硬件文档、接口说明、调试记录和 I2C/SPI 等总线时序草图。</article>
+  <!-- seo-content:start -->
+    <section class="mt-8 grid gap-5 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]" aria-labelledby="seoContentTitle">
+      <article class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+        <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 dark:text-cyan-300">实用指南</p>
+        <h2 id="seoContentTitle" class="text-xl font-black tracking-tight text-slate-950 dark:text-white">硬件时序图生成器</h2>
+        <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">把 WaveDrom 风格的时序描述转换成清晰的总线波形图，用于硬件文档、调试记录和评审材料。</p>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">使用方法</h3>
+        <ol class="mt-3 list-decimal space-y-2 pl-5 text-sm leading-7 text-slate-600 dark:text-slate-400">
+          <li>在源码编辑器中编写或粘贴 WaveDrom JSON。</li>
+<li>点击渲染，或先载入示例查看波形预览。</li>
+<li>导出 SVG 用于文档，或导出 PNG 用于 issue、实验记录和沟通截图。</li>
+<li>把 JSON 片段和设计说明放在一起，后续可以重新生成同一张波形。</li>
+        </ol>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">常见场景</h3>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-slate-600 dark:text-slate-400">
+          <li>记录 I2C、SPI、reset、interrupt、valid-ready 等常见时序。</li>
+<li>在固件或硬件评审中共享波形，不依赖厂商工具截图。</li>
+<li>把时序示例写进 Markdown 设计笔记。</li>
+        </ul>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">本地运行说明</h3>
+        <p class="mt-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm leading-7 text-emerald-900 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-200">时序 JSON 和导出的图片都在本地生成，站点不会上传或记录波形内容。</p>
+      </article>
+
+      <aside class="space-y-5">
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h3 class="text-base font-bold text-slate-950 dark:text-white">示例输入输出</h3>
+          <div class="mt-4 grid gap-4">
+            <div>
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">示例输入</p>
+              <pre class="max-h-64 overflow-auto rounded-2xl border border-gray-200 bg-slate-50 p-4 text-xs leading-6 text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">{ signal: [
+  { name: &quot;SCL&quot;, wave: &quot;p.....&quot; },
+  { name: &quot;SDA&quot;, wave: &quot;10.1.0&quot; }
+] }</pre>
+            </div>
+            <div>
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">示例输出</p>
+              <pre class="max-h-64 overflow-auto rounded-2xl border border-gray-200 bg-slate-50 p-4 text-xs leading-6 text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">页面会生成带信号名称和跳变的 SVG 时序波形图。</pre>
+            </div>
+          </div>
+        </section>
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h3 class="text-base font-bold text-slate-950 dark:text-white">常见问题</h3>
+          <div class="mt-4 space-y-3">
+            <details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">渲染需要联网吗？</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">不需要。WaveDrom 从本地 vendor 目录按需加载。</p>
+          </details>
+<details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">结果可以保存吗？</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">可以。SVG 适合文档，PNG 适合快速分享。</p>
+          </details>
+<details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">JSON 写错会怎样？</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">页面会给出友好错误提示，而不是静默无反应。</p>
+          </details>
+          </div>
+        </section>
+      </aside>
+    </section>
+<!-- seo-content:end -->
+
+<!-- tool-growth:start -->
+    <section class="mt-8 grid gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]" aria-label="相关工具">
+      <div class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+        <div class="grid gap-5 md:grid-cols-2">
+          <div>
+            <h2 class="text-base font-bold text-slate-950 dark:text-white">相关工具</h2>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./register-bitfield-debugger.html">寄存器位段调试器</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./fp-quantization-visualizer.html">FP/量化可视化器</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./fraction-calculator.html">PLL 分频与有理数近似计算器</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./llm-npu-memory-calculator.html">LLM / NPU 显存估算器</a>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-950 dark:text-white">热门本地工具</h2>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./json-to-csv.html">JSON 转 CSV</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./jwt-decoder.html">JWT 本地解码器</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./qr-code-generator.html">二维码工作台</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./base64-encoder.html">Base64 编解码器</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./regex-tester.html">正则表达式调试器</a>
+            </div>
+          </div>
+        </div>
+        <a class="mt-5 inline-flex min-h-11 items-center justify-center rounded-full border border-cyan-200 bg-cyan-50 px-4 text-sm font-bold text-cyan-800 transition hover:border-cyan-400 hover:bg-cyan-100 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200" href="./hardware-engineering-tools.html">前往分类: 硬件工程工具合集</a>
+      </div>
+
+      <aside class="space-y-5">
+        <section class="min-h-32 rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-5 dark:border-white/10 dark:bg-white/[0.03] sm:p-6" aria-label="赞助这个工具">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">赞助这个工具</h2>
+        </section>
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">建议新工具 / Suggest a tool</h2>
+          <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">如果你需要新的浏览器本地工具、流程改进或 bug 修复，可以通过 GitHub issue 描述需求。 Need a local browser tool, workflow fix, or bug repair? Open a GitHub issue.</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="inline-flex min-h-10 items-center rounded-full bg-cyan-400 px-4 text-sm font-bold text-slate-950 transition hover:bg-cyan-300" href="https://github.com/Eureka-o/Micro_tools/issues/new?title=%E5%B7%A5%E5%85%B7%E5%BB%BA%E8%AE%AE%3A%20&amp;labels=enhancement" target="_blank" rel="noopener noreferrer">建议新工具 / Suggest a tool</a>
+            <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200" href="https://github.com/Eureka-o/Micro_tools/issues/new?title=%E9%97%AE%E9%A2%98%E5%8F%8D%E9%A6%88%3A%20&amp;labels=bug" target="_blank" rel="noopener noreferrer">问题反馈 / Report a bug</a>
+          </div>
+        </section>
+      </aside>
+    </section>
+<!-- tool-growth:end -->
   </main>
 
     <script>
@@ -292,7 +399,7 @@ async function renderWave() {
   </script>
   
   <script>
-    const I18N = {"zh":{"htmlLang":"zh-CN","canonical":"https://mymicrotools.xyz/hardware-timing-diagram.html","locale":"zh_CN","title":"时序波形生成器 - Micro Tools Matrix 浏览器本地工具","metaDescription":"纯前端硬件时序波形图手绘板，通过本地 WaveDrom 运行库渲染 I2C/SPI 等总线波形，并支持 SVG/PNG 下载。","keywords":"时序波形生成器,硬件开发工具,寄存器位段,FP32,WaveDrom,Micro Tools Matrix","toolName":"时序波形生成器","eyebrow":"WaveDrom 前端渲染","introDefault":"纯前端硬件时序波形图手绘板，通过本地 WaveDrom 运行库渲染 I2C/SPI 等总线波形，并支持 SVG/PNG 下载。","localBadge":"本地运行","sponsor":"赞赏","themeToggleAria":"切换主题","themeSystem":"系统","languageGroupAria":"语言","langZhAria":"切换到中文","langEnAria":"切换到英文","share":"分享","shareAria":"打开分享菜单","shareMenuAria":"分享选项","shareToolOnly":"仅分享工具","shareToolOnlyHint":"分享不带参数的工具页面链接","shareWithData":"分享工具及当前结果","shareWithDataHint":"将当前输入或结果写入链接参数","shareCopied":"分享链接已复制到剪贴板！","shareCopyPrompt":"复制此分享链接：","shareCopyFailed":"复制失败，请手动复制地址栏链接。","shareDataTooLarge":"当前数据过大，无法生成分享链接，请直接复制文本结果。","footer":"Micro Tools Matrix - 浏览器本地处理，无需上传。","h1":"时序波形生成器","intro":"左侧输入 WaveDrom JSON，右侧实时渲染硬件时序 SVG。适合快速绘制 I2C、SPI、握手信号和寄存器时序说明图。","sourceTitle":"WaveDrom 源码","previewTitle":"波形预览","renderAction":"渲染","sampleAction":"I2C 示例","saveSvgAction":"保存 SVG","savePngAction":"保存 PNG","statusReady":"修改源码后会自动刷新预览。","statusRendered":"波形已渲染。","statusError":"JSON 或 WaveDrom 语法有误。","statusNoSvg":"没有可下载的 SVG。","statusLibMissing":"本地 WaveDrom 运行库加载失败，请刷新页面后重试。","seoArticle":"时序波形生成器按需加载本地 WaveDrom 运行库，在浏览器内把标准 WaveDrom JSON 渲染为 SVG 波形图。它适合硬件文档、接口说明、调试记录和 I2C/SPI 等总线时序草图。"},"en":{"htmlLang":"en","canonical":"https://mymicrotools.xyz/en/hardware-timing-diagram.html","locale":"en_US","title":"Hardware Timing Diagram - Micro Tools Matrix Browser-Local Tool","metaDescription":"Render hardware timing diagrams with WaveDrom in the browser for I2C/SPI waveforms, with SVG and PNG export.","keywords":"Hardware Timing Diagram,hardware developer tool,bitfield,FP32,WaveDrom,Micro Tools Matrix","toolName":"Hardware Timing Diagram","eyebrow":"WaveDrom front-end rendering","introDefault":"Render hardware timing diagrams with WaveDrom in the browser for I2C/SPI waveforms, with SVG and PNG export.","localBadge":"Local","sponsor":"Sponsor","themeToggleAria":"Theme","themeSystem":"System","languageGroupAria":"Language","langZhAria":"Switch to Chinese","langEnAria":"Switch to English","share":"Share","shareAria":"Open share menu","shareMenuAria":"Share options","shareToolOnly":"Share Tool Only","shareToolOnlyHint":"Share the clean tool page link","shareWithData":"Share with Data","shareWithDataHint":"Include current input or result in the link","shareCopied":"Share link copied to clipboard!","shareCopyPrompt":"Copy this share link:","shareCopyFailed":"Copy failed. Please copy the address bar link manually.","shareDataTooLarge":"The current data is too large to create a share link. Please copy the text result directly.","footer":"Micro Tools Matrix - browser-local tools, no upload required.","h1":"Hardware Timing Diagram","intro":"Enter WaveDrom JSON on the left and render hardware timing SVG on the right. Useful for I2C, SPI, handshake signals, and register timing notes.","sourceTitle":"WaveDrom Source","previewTitle":"Wave Preview","renderAction":"Render","sampleAction":"I2C Sample","saveSvgAction":"Save SVG","savePngAction":"Save PNG","statusReady":"The preview refreshes automatically after source edits.","statusRendered":"Waveform rendered.","statusError":"Invalid JSON or WaveDrom syntax.","statusNoSvg":"No SVG is available to download.","statusLibMissing":"The local WaveDrom runtime could not be loaded. Refresh the page and try again.","seoArticle":"The Hardware Timing Diagram tool loads the local WaveDrom runtime on demand and renders standard WaveDrom JSON into SVG waveforms in the browser. It is useful for hardware documentation, interface specs, debug notes, and I2C/SPI timing sketches."}};
+    const I18N = {"zh":{"htmlLang":"zh-CN","canonical":"https://mymicrotools.xyz/hardware-timing-diagram.html","locale":"zh_CN","title":"???????? - ?? WaveDrom SVG ?? | Micro Tools Matrix","metaDescription":"???? WaveDrom ????? I2C?SPI??????????????? SVG/PNG ???","keywords":"时序波形生成器,硬件开发工具,寄存器位段,FP32,WaveDrom,Micro Tools Matrix","toolName":"时序波形生成器","eyebrow":"WaveDrom 前端渲染","introDefault":"纯前端硬件时序波形图手绘板，通过本地 WaveDrom 运行库渲染 I2C/SPI 等总线波形，并支持 SVG/PNG 下载。","localBadge":"本地运行","sponsor":"赞赏","themeToggleAria":"切换主题","themeSystem":"系统","languageGroupAria":"语言","langZhAria":"切换到中文","langEnAria":"切换到英文","share":"分享","shareAria":"打开分享菜单","shareMenuAria":"分享选项","shareToolOnly":"仅分享工具","shareToolOnlyHint":"分享不带参数的工具页面链接","shareWithData":"分享工具及当前结果","shareWithDataHint":"将当前输入或结果写入链接参数","shareCopied":"分享链接已复制到剪贴板！","shareCopyPrompt":"复制此分享链接：","shareCopyFailed":"复制失败，请手动复制地址栏链接。","shareDataTooLarge":"当前数据过大，无法生成分享链接，请直接复制文本结果。","footer":"Micro Tools Matrix - 浏览器本地处理，无需上传。","h1":"时序波形生成器","intro":"左侧输入 WaveDrom JSON，右侧实时渲染硬件时序 SVG。适合快速绘制 I2C、SPI、握手信号和寄存器时序说明图。","sourceTitle":"WaveDrom 源码","previewTitle":"波形预览","renderAction":"渲染","sampleAction":"I2C 示例","saveSvgAction":"保存 SVG","savePngAction":"保存 PNG","statusReady":"修改源码后会自动刷新预览。","statusRendered":"波形已渲染。","statusError":"JSON 或 WaveDrom 语法有误。","statusNoSvg":"没有可下载的 SVG。","statusLibMissing":"本地 WaveDrom 运行库加载失败，请刷新页面后重试。","seoArticle":"时序波形生成器按需加载本地 WaveDrom 运行库，在浏览器内把标准 WaveDrom JSON 渲染为 SVG 波形图。它适合硬件文档、接口说明、调试记录和 I2C/SPI 等总线时序草图。"},"en":{"htmlLang":"en","canonical":"https://mymicrotools.xyz/en/hardware-timing-diagram.html","locale":"en_US","title":"Hardware Timing Diagram - Offline WaveDrom SVG Renderer | Micro Tools Matrix","metaDescription":"Render I2C, SPI, handshake, and register timing diagrams with a local WaveDrom runtime, then export SVG or PNG offline.","keywords":"Hardware Timing Diagram,hardware developer tool,bitfield,FP32,WaveDrom,Micro Tools Matrix","toolName":"Hardware Timing Diagram","eyebrow":"WaveDrom front-end rendering","introDefault":"Render hardware timing diagrams with WaveDrom in the browser for I2C/SPI waveforms, with SVG and PNG export.","localBadge":"Local","sponsor":"Sponsor","themeToggleAria":"Theme","themeSystem":"System","languageGroupAria":"Language","langZhAria":"Switch to Chinese","langEnAria":"Switch to English","share":"Share","shareAria":"Open share menu","shareMenuAria":"Share options","shareToolOnly":"Share Tool Only","shareToolOnlyHint":"Share the clean tool page link","shareWithData":"Share with Data","shareWithDataHint":"Include current input or result in the link","shareCopied":"Share link copied to clipboard!","shareCopyPrompt":"Copy this share link:","shareCopyFailed":"Copy failed. Please copy the address bar link manually.","shareDataTooLarge":"The current data is too large to create a share link. Please copy the text result directly.","footer":"Micro Tools Matrix - browser-local tools, no upload required.","h1":"Hardware Timing Diagram","intro":"Enter WaveDrom JSON on the left and render hardware timing SVG on the right. Useful for I2C, SPI, handshake signals, and register timing notes.","sourceTitle":"WaveDrom Source","previewTitle":"Wave Preview","renderAction":"Render","sampleAction":"I2C Sample","saveSvgAction":"Save SVG","savePngAction":"Save PNG","statusReady":"The preview refreshes automatically after source edits.","statusRendered":"Waveform rendered.","statusError":"Invalid JSON or WaveDrom syntax.","statusNoSvg":"No SVG is available to download.","statusLibMissing":"The local WaveDrom runtime could not be loaded. Refresh the page and try again.","seoArticle":"The Hardware Timing Diagram tool loads the local WaveDrom runtime on demand and renders standard WaveDrom JSON into SVG waveforms in the browser. It is useful for hardware documentation, interface specs, debug notes, and I2C/SPI timing sketches."}};
     let currentLanguage = document.documentElement.lang === "en" ? "en" : "zh";
 
     function applyLanguage(lang) {
@@ -458,5 +565,6 @@ async function renderWave() {
   <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
   <script src="./sponsor.js" defer></script>
   <script src="./theme-toggle.js" defer></script>  <script src="./assets/favorites.js" defer></script>
+  <script src="./assets/analytics-events.js" defer></script>
 </body>
 </html>

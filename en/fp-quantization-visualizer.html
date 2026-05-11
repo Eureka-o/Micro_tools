@@ -6,14 +6,15 @@
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/fp-quantization-visualizer.html" />
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/fp-quantization-visualizer.html" />
   <meta property="og:locale" content="en_US" />
+  <meta property="og:url" content="https://mymicrotools.xyz/en/fp-quantization-visualizer.html" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FP Quantization Visualizer - Micro Tools Matrix Browser-Local Tool</title>
-  <meta name="description" content="Visualize FP32, FP16, BFloat16, and INT8 bit maps with live bit flipping, hex output, and decimal recomputation.">
+  <title>FP Quantization Visualizer - Browser-local Float and INT Bit Explorer | Micro Tools Matrix</title>
+  <meta name="description" content="Visualize FP32, FP16, BFloat16, and INT8 bit layouts locally with hex output, bit flipping, and decimal recomputation.">
   <meta name="keywords" content="FP Quantization Visualizer,hardware developer tool,bitfield,FP32,WaveDrom,Micro Tools Matrix">
   <link rel="stylesheet" href="../style.css">
   <script src="../storage.js"></script>
@@ -33,10 +34,10 @@
 
   <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
     <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
-      <a href="./" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+      <a href="./" class="flex max-w-full min-w-0 items-center gap-3 rounded-2xl px-1 py-1 transition hover:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] focus:ring-2 focus:ring-cyan-400/60" aria-label="Go to website home" data-home-nav-button>
         <img src="../assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
         <span class="min-w-0">
-          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span class="flex min-w-0 flex-wrap items-center gap-2"><span class="truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span><span class="shrink-0 rounded-md border border-cyan-200 bg-cyan-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.16em] text-cyan-800 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200">Home</span></span>
           <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">FP Quantization Visualizer</span>
         </span>
       </a>
@@ -168,6 +169,113 @@
     </section>
 
     <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">The FP Quantization Visualizer helps inspect IEEE 754 floating-point and INT8 quantization bit patterns. It runs entirely in the browser for chip validation, model quantization, driver debugging, and binary protocol checks.</article>
+  <!-- seo-content:start -->
+    <section class="mt-8 grid gap-5 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]" aria-labelledby="seoContentTitle">
+      <article class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+        <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 dark:text-cyan-300">Practical guide</p>
+        <h2 id="seoContentTitle" class="text-xl font-black tracking-tight text-slate-950 dark:text-white">FP Quantization Visualizer</h2>
+        <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">Inspect how sign, exponent, mantissa, and integer quantization bits affect numeric values without sending any data out of the browser.</p>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">How to use</h3>
+        <ol class="mt-3 list-decimal space-y-2 pl-5 text-sm leading-7 text-slate-600 dark:text-slate-400">
+          <li>Choose a numeric format such as FP32, FP16, BFloat16, or INT8.</li>
+<li>Enter a decimal value or edit the bit pattern directly to see the recomputed representation.</li>
+<li>Flip bits to observe sign changes, exponent movement, mantissa precision, saturation, and rounding behavior.</li>
+<li>Copy the hexadecimal or binary representation for documentation, debugging notes, or low-level tests.</li>
+        </ol>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">Common use cases</h3>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-slate-600 dark:text-slate-400">
+          <li>Teaching how floating-point formats divide a value into sign, exponent, and fraction fields.</li>
+<li>Debugging quantization edge cases around zero, denormals, saturation, or small magnitude changes.</li>
+<li>Preparing examples for NPU, DSP, shader, or inference documentation.</li>
+        </ul>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">Privacy note</h3>
+        <p class="mt-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm leading-7 text-emerald-900 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-200">Entered numbers and bit patterns stay inside browser memory. The page does not upload values, logs, or examples.</p>
+      </article>
+
+      <aside class="space-y-5">
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h3 class="text-base font-bold text-slate-950 dark:text-white">Examples</h3>
+          <div class="mt-4 grid gap-4">
+            <div>
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Example input</p>
+              <pre class="max-h-64 overflow-auto rounded-2xl border border-gray-200 bg-slate-50 p-4 text-xs leading-6 text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">Format: FP16
+Value: 1.5</pre>
+            </div>
+            <div>
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">Example output</p>
+              <pre class="max-h-64 overflow-auto rounded-2xl border border-gray-200 bg-slate-50 p-4 text-xs leading-6 text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">Sign: 0
+Exponent: 01111
+Mantissa: 1000000000
+Hex: 0x3E00</pre>
+            </div>
+          </div>
+        </section>
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h3 class="text-base font-bold text-slate-950 dark:text-white">FAQ</h3>
+          <div class="mt-4 space-y-3">
+            <details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">Does this tool emulate every hardware rounding mode?</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">No. It is a visualization aid for common layouts. Hardware-specific rounding, NaN payloads, and fused operations can differ.</p>
+          </details>
+<details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">Why are some decimal values not exact?</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">Binary floating point cannot represent every decimal fraction exactly, so nearby representable values are shown.</p>
+          </details>
+<details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">Can I use it offline?</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">Yes. The visualization logic is built into the page and runs locally.</p>
+          </details>
+          </div>
+        </section>
+      </aside>
+    </section>
+<!-- seo-content:end -->
+
+<!-- tool-growth:start -->
+    <section class="mt-8 grid gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]" aria-label="Related tools">
+      <div class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+        <div class="grid gap-5 md:grid-cols-2">
+          <div>
+            <h2 class="text-base font-bold text-slate-950 dark:text-white">Related tools</h2>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./llm-npu-memory-calculator.html">LLM / NPU Memory Calculator</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./register-bitfield-debugger.html">Register Bitfield Debugger</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./binary-decimal-converter.html">Base Converter</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./fraction-calculator.html">PLL Divider / Rational Ratio Calculator</a>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-950 dark:text-white">Popular local tools</h2>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./json-to-csv.html">JSON to CSV</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./jwt-decoder.html">JWT Decoder</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./qr-code-generator.html">QR Code Workbench</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./base64-encoder.html">Base64 Encoder</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./regex-tester.html">Regex Debugger</a>
+            </div>
+          </div>
+        </div>
+        <a class="mt-5 inline-flex min-h-11 items-center justify-center rounded-full border border-cyan-200 bg-cyan-50 px-4 text-sm font-bold text-cyan-800 transition hover:border-cyan-400 hover:bg-cyan-100 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200" href="./hardware-engineering-tools.html">Go to category: Hardware Engineering Tools</a>
+      </div>
+
+      <aside class="space-y-5">
+        <section class="min-h-32 rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-5 dark:border-white/10 dark:bg-white/[0.03] sm:p-6" aria-label="Sponsor this tool">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">Sponsor this tool</h2>
+        </section>
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">Suggest a tool</h2>
+          <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">Need another browser-local utility, a workflow fix, or a bug repair? Open a GitHub issue and describe the local tool you need.</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="inline-flex min-h-10 items-center rounded-full bg-cyan-400 px-4 text-sm font-bold text-slate-950 transition hover:bg-cyan-300" href="https://github.com/Eureka-o/Micro_tools/issues/new?title=Tool%20request%3A%20&amp;labels=enhancement" target="_blank" rel="noopener noreferrer">Suggest a tool</a>
+            <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200" href="https://github.com/Eureka-o/Micro_tools/issues/new?title=Bug%20report%3A%20&amp;labels=bug" target="_blank" rel="noopener noreferrer">Report a bug</a>
+          </div>
+        </section>
+      </aside>
+    </section>
+<!-- tool-growth:end -->
   </main>
 
     <script>
@@ -398,7 +506,7 @@
   </script>
   
   <script>
-    const I18N = {"zh":{"htmlLang":"zh-CN","canonical":"https://mymicrotools.xyz/fp-quantization-visualizer.html","locale":"zh_CN","title":"FP/量化可视化器 - Micro Tools Matrix 浏览器本地工具","metaDescription":"多精度浮点数与量化可视化器，支持 FP32、FP16、BFloat16 和 INT8 的位图翻转、Hex 与十进制同步重算。","keywords":"FP/量化可视化器,硬件开发工具,寄存器位段,FP32,WaveDrom,Micro Tools Matrix","toolName":"FP/量化可视化器","eyebrow":"浏览器本地硬件实验台","introDefault":"多精度浮点数与量化可视化器，支持 FP32、FP16、BFloat16 和 INT8 的位图翻转、Hex 与十进制同步重算。","localBadge":"本地运行","sponsor":"赞赏","themeToggleAria":"切换主题","themeSystem":"系统","languageGroupAria":"语言","langZhAria":"切换到中文","langEnAria":"切换到英文","share":"分享","shareAria":"打开分享菜单","shareMenuAria":"分享选项","shareToolOnly":"仅分享工具","shareToolOnlyHint":"分享不带参数的工具页面链接","shareWithData":"分享工具及当前结果","shareWithDataHint":"将当前输入或结果写入链接参数","shareCopied":"分享链接已复制到剪贴板！","shareCopyPrompt":"复制此分享链接：","shareCopyFailed":"复制失败，请手动复制地址栏链接。","shareDataTooLarge":"当前数据过大，无法生成分享链接，请直接复制文本结果。","footer":"Micro Tools Matrix - 浏览器本地处理，无需上传。","h1":"FP/量化可视化器","intro":"面向硬件验证和量化调试的位级可视化器。切换 FP32、FP16、BFloat16 或 INT8，点击任意 bit 即可重算 Hex、二进制字段和真实数值。","inputTitle":"格式与数值","formatLabel":"数值格式","decimalLabel":"十进制输入","hexLabel":"十六进制输入","bitMapTitle":"交互式 Bit Map","outputTitle":"字段解析","signLabel":"符号位","exponentLabel":"指数位","mantissaLabel":"尾数位","int8Label":"INT8 有符号值","binaryLabel":"二进制","copyAction":"复制 Hex","sampleAction":"示例","resetAction":"重置","statusReady":"点击 bit 方块可立即翻转并重算。","statusCopied":"Hex 已复制。","statusInvalid":"输入格式不合法。","seoArticle":"FP/量化可视化器用于快速检查 IEEE 754 浮点数和 INT8 量化值的底层位模式。页面完全在浏览器内运行，适合芯片验证、模型量化、驱动调试和二进制协议排查。"},"en":{"htmlLang":"en","canonical":"https://mymicrotools.xyz/en/fp-quantization-visualizer.html","locale":"en_US","title":"FP Quantization Visualizer - Micro Tools Matrix Browser-Local Tool","metaDescription":"Visualize FP32, FP16, BFloat16, and INT8 bit maps with live bit flipping, hex output, and decimal recomputation.","keywords":"FP Quantization Visualizer,hardware developer tool,bitfield,FP32,WaveDrom,Micro Tools Matrix","toolName":"FP Quantization Visualizer","eyebrow":"Browser-local hardware lab","introDefault":"Visualize FP32, FP16, BFloat16, and INT8 bit maps with live bit flipping, hex output, and decimal recomputation.","localBadge":"Local","sponsor":"Sponsor","themeToggleAria":"Theme","themeSystem":"System","languageGroupAria":"Language","langZhAria":"Switch to Chinese","langEnAria":"Switch to English","share":"Share","shareAria":"Open share menu","shareMenuAria":"Share options","shareToolOnly":"Share Tool Only","shareToolOnlyHint":"Share the clean tool page link","shareWithData":"Share with Data","shareWithDataHint":"Include current input or result in the link","shareCopied":"Share link copied to clipboard!","shareCopyPrompt":"Copy this share link:","shareCopyFailed":"Copy failed. Please copy the address bar link manually.","shareDataTooLarge":"The current data is too large to create a share link. Please copy the text result directly.","footer":"Micro Tools Matrix - browser-local tools, no upload required.","h1":"FP Quantization Visualizer","intro":"A bit-level visualizer for hardware validation and quantization debugging. Switch FP32, FP16, BFloat16, or INT8, then flip any bit to recompute hex, fields, and real value.","inputTitle":"Format And Value","formatLabel":"Number format","decimalLabel":"Decimal input","hexLabel":"Hex input","bitMapTitle":"Interactive Bit Map","outputTitle":"Field Decode","signLabel":"Sign","exponentLabel":"Exponent","mantissaLabel":"Mantissa","int8Label":"INT8 signed value","binaryLabel":"Binary","copyAction":"Copy Hex","sampleAction":"Sample","resetAction":"Reset","statusReady":"Click any bit cell to flip and recompute instantly.","statusCopied":"Hex copied.","statusInvalid":"Invalid input format.","seoArticle":"The FP Quantization Visualizer helps inspect IEEE 754 floating-point and INT8 quantization bit patterns. It runs entirely in the browser for chip validation, model quantization, driver debugging, and binary protocol checks."}};
+    const I18N = {"zh":{"htmlLang":"zh-CN","canonical":"https://mymicrotools.xyz/fp-quantization-visualizer.html","locale":"zh_CN","title":"FP/?????? - ????? INT ???? | Micro Tools Matrix","metaDescription":"???????? FP32?FP16?BFloat16 ? INT8 ??????????????????????","keywords":"FP/量化可视化器,硬件开发工具,寄存器位段,FP32,WaveDrom,Micro Tools Matrix","toolName":"FP/量化可视化器","eyebrow":"浏览器本地硬件实验台","introDefault":"多精度浮点数与量化可视化器，支持 FP32、FP16、BFloat16 和 INT8 的位图翻转、Hex 与十进制同步重算。","localBadge":"本地运行","sponsor":"赞赏","themeToggleAria":"切换主题","themeSystem":"系统","languageGroupAria":"语言","langZhAria":"切换到中文","langEnAria":"切换到英文","share":"分享","shareAria":"打开分享菜单","shareMenuAria":"分享选项","shareToolOnly":"仅分享工具","shareToolOnlyHint":"分享不带参数的工具页面链接","shareWithData":"分享工具及当前结果","shareWithDataHint":"将当前输入或结果写入链接参数","shareCopied":"分享链接已复制到剪贴板！","shareCopyPrompt":"复制此分享链接：","shareCopyFailed":"复制失败，请手动复制地址栏链接。","shareDataTooLarge":"当前数据过大，无法生成分享链接，请直接复制文本结果。","footer":"Micro Tools Matrix - 浏览器本地处理，无需上传。","h1":"FP/量化可视化器","intro":"面向硬件验证和量化调试的位级可视化器。切换 FP32、FP16、BFloat16 或 INT8，点击任意 bit 即可重算 Hex、二进制字段和真实数值。","inputTitle":"格式与数值","formatLabel":"数值格式","decimalLabel":"十进制输入","hexLabel":"十六进制输入","bitMapTitle":"交互式 Bit Map","outputTitle":"字段解析","signLabel":"符号位","exponentLabel":"指数位","mantissaLabel":"尾数位","int8Label":"INT8 有符号值","binaryLabel":"二进制","copyAction":"复制 Hex","sampleAction":"示例","resetAction":"重置","statusReady":"点击 bit 方块可立即翻转并重算。","statusCopied":"Hex 已复制。","statusInvalid":"输入格式不合法。","seoArticle":"FP/量化可视化器用于快速检查 IEEE 754 浮点数和 INT8 量化值的底层位模式。页面完全在浏览器内运行，适合芯片验证、模型量化、驱动调试和二进制协议排查。"},"en":{"htmlLang":"en","canonical":"https://mymicrotools.xyz/en/fp-quantization-visualizer.html","locale":"en_US","title":"FP Quantization Visualizer - Browser-local Float and INT Bit Explorer | Micro Tools Matrix","metaDescription":"Visualize FP32, FP16, BFloat16, and INT8 bit layouts locally with hex output, bit flipping, and decimal recomputation.","keywords":"FP Quantization Visualizer,hardware developer tool,bitfield,FP32,WaveDrom,Micro Tools Matrix","toolName":"FP Quantization Visualizer","eyebrow":"Browser-local hardware lab","introDefault":"Visualize FP32, FP16, BFloat16, and INT8 bit maps with live bit flipping, hex output, and decimal recomputation.","localBadge":"Local","sponsor":"Sponsor","themeToggleAria":"Theme","themeSystem":"System","languageGroupAria":"Language","langZhAria":"Switch to Chinese","langEnAria":"Switch to English","share":"Share","shareAria":"Open share menu","shareMenuAria":"Share options","shareToolOnly":"Share Tool Only","shareToolOnlyHint":"Share the clean tool page link","shareWithData":"Share with Data","shareWithDataHint":"Include current input or result in the link","shareCopied":"Share link copied to clipboard!","shareCopyPrompt":"Copy this share link:","shareCopyFailed":"Copy failed. Please copy the address bar link manually.","shareDataTooLarge":"The current data is too large to create a share link. Please copy the text result directly.","footer":"Micro Tools Matrix - browser-local tools, no upload required.","h1":"FP Quantization Visualizer","intro":"A bit-level visualizer for hardware validation and quantization debugging. Switch FP32, FP16, BFloat16, or INT8, then flip any bit to recompute hex, fields, and real value.","inputTitle":"Format And Value","formatLabel":"Number format","decimalLabel":"Decimal input","hexLabel":"Hex input","bitMapTitle":"Interactive Bit Map","outputTitle":"Field Decode","signLabel":"Sign","exponentLabel":"Exponent","mantissaLabel":"Mantissa","int8Label":"INT8 signed value","binaryLabel":"Binary","copyAction":"Copy Hex","sampleAction":"Sample","resetAction":"Reset","statusReady":"Click any bit cell to flip and recompute instantly.","statusCopied":"Hex copied.","statusInvalid":"Invalid input format.","seoArticle":"The FP Quantization Visualizer helps inspect IEEE 754 floating-point and INT8 quantization bit patterns. It runs entirely in the browser for chip validation, model quantization, driver debugging, and binary protocol checks."}};
     let currentLanguage = document.documentElement.lang === "en" ? "en" : "zh";
 
     function applyLanguage(lang) {
@@ -564,5 +672,6 @@
   <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - browser-local tools, no upload required.</footer>
   <script src="../sponsor.js" defer></script>
   <script src="./theme-toggle.js" defer></script>  <script src="../assets/favorites.js" defer></script>
+  <script src="../assets/analytics-events.js" defer></script>
 </body>
 </html>

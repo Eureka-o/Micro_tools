@@ -6,14 +6,15 @@
   <link rel="alternate" hreflang="en" href="https://mymicrotools.xyz/en/jwt-decoder.html" />
   <link rel="alternate" hreflang="x-default" href="https://mymicrotools.xyz/en/jwt-decoder.html" />
   <meta property="og:locale" content="zh_CN" />
+  <meta property="og:url" content="https://mymicrotools.xyz/jwt-decoder.html" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.png" type="image/png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JWT 本地解码器 - 安全与加密，纯前端本地运行 | Micro Tools Matrix</title>
-  <meta name="description" content="免费的 JWT 本地解码器，用于安全与加密。工具在浏览器本地运行、无后端上传，结合 JWT 本地解码器 的相关技术能力快速处理任务，保护开发者隐私。">
+  <title>JWT 本地解码器 - 浏览器内 Header/Payload 检查工具 | Micro Tools Matrix</title>
+  <meta name="description" content="在浏览器本地解码 JWT Header 和 Payload，适合安全调试；不上传 token、不存储、不声称验证签名。">
   <meta name="keywords" content="JWT 本地解码器, jwt, decoder, 免费, 纯前端, 本地运行, 无后端, 隐私保护, Micro Tools Matrix">
   <link rel="stylesheet" href="./style.css">
   <script src="./storage.js"></script>
@@ -26,7 +27,7 @@
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "Windows, macOS, Android, iOS",
       "description": "A browser-local JWT decoder for inspecting JSON Web Token header and payload without uploading data.",
-      "url": "https://mymicrotools.xyz/jwt-decoder.html",
+      "url":"https://mymicrotools.xyz/jwt-decoder.html",
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -47,10 +48,10 @@
 
   <header class="mx-auto max-w-6xl px-4 pt-4 sm:px-6 sm:pt-6 lg:px-8">
     <nav class="flex flex-col gap-3 rounded-3xl border border-gray-200 bg-white/90 p-3 shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-white/[0.04] sm:p-4 lg:flex-row lg:items-center lg:justify-between">
-      <a href="./" class="flex min-w-0 items-center gap-3 rounded-2xl focus:outline-none focus:ring-2 focus:ring-cyan-400/70" aria-label="Micro Tools Matrix">
+      <a href="./" class="flex max-w-full min-w-0 items-center gap-3 rounded-2xl px-1 py-1 transition hover:bg-cyan-50 focus:outline-none dark:hover:bg-white/[0.06] focus:ring-2 focus:ring-cyan-400/60" aria-label="前往网站主页" data-home-nav-button>
         <img src="./assets/logo-web.png" alt="Micro Tools Matrix logo" width="40" height="40" class="h-10 w-10 shrink-0 rounded-2xl bg-white object-contain p-1 shadow-sm ring-1 ring-gray-200 dark:bg-white/[0.06] dark:ring-white/10">
         <span class="min-w-0">
-          <span class="block truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span>
+          <span class="flex min-w-0 flex-wrap items-center gap-2"><span class="truncate text-sm font-semibold tracking-tight text-slate-950 dark:text-white">Micro Tools Matrix</span><span class="shrink-0 rounded-md border border-cyan-200 bg-cyan-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.16em] text-cyan-800 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200">返回主页</span></span>
           <span id="navToolName" class="block truncate text-xs text-slate-600 dark:text-slate-400" data-i18n="toolName">JWT 本地解码器</span>
         </span>
       </a>
@@ -192,6 +193,116 @@
     </section>
 
     <article class="mt-8 rounded-3xl border border-gray-200 bg-white p-5 text-sm leading-7 text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-400 sm:p-6" data-i18n="seoArticle">JWT 本地解码器是 Micro Tools Matrix 为开发者准备的免费在线开发者工具，用于快速查看 JSON Web Token 的 Header 与 Payload。你可以把登录态调试、接口联调或权限排查中的 JWT 粘贴到页面中，工具会在浏览器本地处理并格式化 JSON，帮助你确认 alg、typ、iss、sub、aud、exp、iat 等字段。整个过程无需上传、无需注册，也不会把令牌内容发送到服务器，适合处理敏感测试数据。请注意，本工具只负责解码展示，不验证签名真伪，也不判断令牌是否可信；在生产环境排查安全问题时，仍应结合后端密钥、证书与授权策略进行校验。</article>
+  <!-- seo-content:start -->
+    <section class="mt-8 grid gap-5 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]" aria-labelledby="seoContentTitle">
+      <article class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+        <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 dark:text-cyan-300">实用指南</p>
+        <h2 id="seoContentTitle" class="text-xl font-black tracking-tight text-slate-950 dark:text-white">JWT 本地解码器</h2>
+        <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">在开发调试中查看 token claims，同时让原始 token 留在浏览器内。</p>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">使用方法</h3>
+        <ol class="mt-3 list-decimal space-y-2 pl-5 text-sm leading-7 text-slate-600 dark:text-slate-400">
+          <li>粘贴由三段点号分隔的 JWT。</li>
+<li>点击解码，解析 Base64URL 编码的 Header 和 Payload。</li>
+<li>检查 alg、typ、iss、sub、aud、exp、nbf、iat 等字段。</li>
+<li>复制格式化后的 Header、Payload、Signature 或完整摘要。</li>
+        </ol>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">常见场景</h3>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-sm leading-7 text-slate-600 dark:text-slate-400">
+          <li>调试前端、API 网关和后端服务之间的登录鉴权流程。</li>
+<li>在联调测试中检查过期时间、签发方、受众和用户主体。</li>
+<li>教学 JWT 结构时，不把示例 token 发给远程工具。</li>
+        </ul>
+
+        <h3 class="mt-6 text-base font-bold text-slate-950 dark:text-white">本地运行说明</h3>
+        <p class="mt-3 rounded-2xl border border-emerald-200 bg-emerald-50 p-4 text-sm leading-7 text-emerald-900 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-200">token 在本地解码，不会发送到服务器。检查敏感字段后建议点击清空。</p>
+      </article>
+
+      <aside class="space-y-5">
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h3 class="text-base font-bold text-slate-950 dark:text-white">示例输入输出</h3>
+          <div class="mt-4 grid gap-4">
+            <div>
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">示例输入</p>
+              <pre class="max-h-64 overflow-auto rounded-2xl border border-gray-200 bg-slate-50 p-4 text-xs leading-6 text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjMiLCJleHAiOjE3MDAwMDAwMDB9.signature</pre>
+            </div>
+            <div>
+              <p class="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">示例输出</p>
+              <pre class="max-h-64 overflow-auto rounded-2xl border border-gray-200 bg-slate-50 p-4 text-xs leading-6 text-slate-700 dark:border-white/10 dark:bg-slate-950/70 dark:text-slate-300">{
+  &quot;alg&quot;: &quot;HS256&quot;,
+  &quot;typ&quot;: &quot;JWT&quot;
+}
+{
+  &quot;sub&quot;: &quot;123&quot;,
+  &quot;exp&quot;: 1700000000
+}</pre>
+            </div>
+          </div>
+        </section>
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h3 class="text-base font-bold text-slate-950 dark:text-white">常见问题</h3>
+          <div class="mt-4 space-y-3">
+            <details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">它会验证 JWT 签名吗？</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">不会。它只负责解码查看。生产环境的信任判断必须由后端用正确密钥和 claims 规则验证。</p>
+          </details>
+<details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">能粘贴生产 token 吗？</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">不建议随意处理生产密钥。页面不上传 token，但截图、剪贴板和浏览器环境仍需你自己管理。</p>
+          </details>
+<details class="rounded-2xl border border-gray-200 bg-slate-50 p-4 dark:border-white/10 dark:bg-slate-950/50">
+            <summary class="cursor-pointer text-sm font-bold text-slate-950 dark:text-white">为什么有些 token 解不开？</summary>
+            <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">Base64URL 段格式错误、payload 不是 JSON 或缺少 header.payload.signature 结构都可能失败。</p>
+          </details>
+          </div>
+        </section>
+      </aside>
+    </section>
+<!-- seo-content:end -->
+
+<!-- tool-growth:start -->
+    <section class="mt-8 grid gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]" aria-label="相关工具">
+      <div class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+        <div class="grid gap-5 md:grid-cols-2">
+          <div>
+            <h2 class="text-base font-bold text-slate-950 dark:text-white">相关工具</h2>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./base64-encoder.html">Base64 编解码器</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./json-minify.html">JSON 格式化 / 压缩</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./md5-hash-generator.html">哈希摘要生成器</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./crypto-security-suite.html">加解密与密钥套件</a>
+            </div>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-950 dark:text-white">热门本地工具</h2>
+            <div class="mt-4 flex flex-wrap gap-2">
+              <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./json-to-csv.html">JSON 转 CSV</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./qr-code-generator.html">二维码工作台</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./base64-encoder.html">Base64 编解码器</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./regex-tester.html">正则表达式调试器</a>
+<a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 hover:text-cyan-800 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200 dark:hover:bg-white/[0.08]" href="./llm-npu-memory-calculator.html">LLM / NPU 显存估算器</a>
+            </div>
+          </div>
+        </div>
+        <a class="mt-5 inline-flex min-h-11 items-center justify-center rounded-full border border-cyan-200 bg-cyan-50 px-4 text-sm font-bold text-cyan-800 transition hover:border-cyan-400 hover:bg-cyan-100 dark:border-cyan-400/20 dark:bg-cyan-400/10 dark:text-cyan-200" href="./privacy-first-tools.html">前往分类: 隐私优先本地工具合集</a>
+      </div>
+
+      <aside class="space-y-5">
+        <section class="min-h-32 rounded-3xl border border-dashed border-slate-300 bg-slate-50 p-5 dark:border-white/10 dark:bg-white/[0.03] sm:p-6" aria-label="赞助这个工具">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">赞助这个工具</h2>
+        </section>
+        <section class="rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
+          <h2 class="text-base font-bold text-slate-950 dark:text-white">建议新工具 / Suggest a tool</h2>
+          <p class="mt-3 text-sm leading-7 text-slate-600 dark:text-slate-400">如果你需要新的浏览器本地工具、流程改进或 bug 修复，可以通过 GitHub issue 描述需求。 Need a local browser tool, workflow fix, or bug repair? Open a GitHub issue.</p>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a class="inline-flex min-h-10 items-center rounded-full bg-cyan-400 px-4 text-sm font-bold text-slate-950 transition hover:bg-cyan-300" href="https://github.com/Eureka-o/Micro_tools/issues/new?title=%E5%B7%A5%E5%85%B7%E5%BB%BA%E8%AE%AE%3A%20&amp;labels=enhancement" target="_blank" rel="noopener noreferrer">建议新工具 / Suggest a tool</a>
+            <a class="inline-flex min-h-10 items-center rounded-full border border-gray-200 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:border-cyan-400/60 hover:bg-cyan-50 dark:border-white/10 dark:bg-white/[0.04] dark:text-slate-200" href="https://github.com/Eureka-o/Micro_tools/issues/new?title=%E9%97%AE%E9%A2%98%E5%8F%8D%E9%A6%88%3A%20&amp;labels=bug" target="_blank" rel="noopener noreferrer">问题反馈 / Report a bug</a>
+          </div>
+        </section>
+      </aside>
+    </section>
+<!-- tool-growth:end -->
   </main>
 
   <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-xs leading-6 text-slate-500 dark:text-slate-500 sm:px-6 lg:px-8" data-i18n="footer">Micro Tools Matrix - 浏览器本地处理，无需上传。</footer>
@@ -208,8 +319,8 @@
   <script>
     const I18N = {
       zh: {
-        documentTitle: "JWT 本地解码器 - Micro Tools Matrix",
-        metaDescription: "Micro Tools Matrix 的 JWT 本地解码器可在浏览器内解析 JSON Web Token 的 Header 和 Payload，无需上传，适合安全检查与开发调试。",
+        documentTitle: "JWT ????? - ???? Header/Payload ???? | Micro Tools Matrix",
+        metaDescription: "???????? JWT Header ? Payload??????????? token?????????????",
         metaKeywords: "JWT 本地解码器, JSON Web Token, JWT decoder, 浏览器本地处理, 无需上传, Micro Tools Matrix, 免费开发者工具",
         toolName: "JWT 本地解码器",
         h1: "JWT 本地解码器",
@@ -262,15 +373,15 @@
         emptyOutput: "等待解码结果。",
         noSignature: "未提供 Signature。",
         sponsorTitle: "赞赏支持",
-        sponsorSubtitle: "保持工具免费、快速且无广告。",
+        sponsorSubtitle: "JWT ????? - ???? Header/Payload ???? | Micro Tools Matrix",
         closeSponsor: "关闭赞赏窗口",
         buyCoffee: "Buy Me a Coffee",
         footer: "Micro Tools Matrix - 浏览器本地处理，无需上传。",
         seoArticle: "JWT 本地解码器是 Micro Tools Matrix 为开发者准备的免费在线开发者工具，用于快速查看 JSON Web Token 的 Header 与 Payload。你可以把登录态调试、接口联调或权限排查中的 JWT 粘贴到页面中，工具会在浏览器本地处理并格式化 JSON，帮助你确认 alg、typ、iss、sub、aud、exp、iat 等字段。整个过程无需上传、无需注册，也不会把令牌内容发送到服务器，适合处理敏感测试数据。请注意，本工具只负责解码展示，不验证签名真伪，也不判断令牌是否可信；在生产环境排查安全问题时，仍应结合后端密钥、证书与授权策略进行校验。"
       },
       en: {
-        documentTitle: "JWT Local Decoder - Micro Tools Matrix",
-        metaDescription: "Decode a JSON Web Token header and payload with Micro Tools Matrix. Browser-local processing, no upload, and a free online developer tool for secure debugging.",
+        documentTitle: "JWT Decoder - Browser-local Header and Payload Inspector | Micro Tools Matrix",
+        metaDescription: "Decode JWT header and payload JSON locally for secure debugging. No token upload, storage, or signature verification claim.",
         metaKeywords: "JWT local decoder, JSON Web Token, JWT decoder, browser-local processing, no upload, Micro Tools Matrix, free online developer tool",
         toolName: "JWT Local Decoder",
         h1: "JWT Local Decoder",
@@ -323,7 +434,7 @@
         emptyOutput: "Waiting for decoded output.",
         noSignature: "No Signature provided.",
         sponsorTitle: "Sponsor support",
-        sponsorSubtitle: "Keep the tools free, fast, and ad-free.",
+        sponsorSubtitle: "JWT Decoder - Browser-local Header and Payload Inspector | Micro Tools Matrix",
         closeSponsor: "Close sponsor dialog",
         buyCoffee: "Buy Me a Coffee",
         footer: "Micro Tools Matrix - Browser-local processing with no upload.",
@@ -350,11 +461,7 @@
       currentLanguage = safeLang;
       const dict = I18N[safeLang];
 
-      document.documentElement.lang = safeLang === "en" ? "en" : "zh-CN";
-      document.title = dict.documentTitle;
-
-      const metaDescription = document.querySelector('meta[name="description"]');
-      if (metaDescription) metaDescription.setAttribute("content", dict.metaDescription);
+      document.documentElement.lang = safeLang === "en" ? "en" : "zh-CN";
 
       const metaKeywords = document.querySelector('meta[name="keywords"]');
       if (metaKeywords) metaKeywords.setAttribute("content", dict.metaKeywords);
@@ -777,5 +884,6 @@
   </script>
   <script src="./sponsor.js" defer></script>
   <script src="./theme-toggle.js" defer></script>  <script src="./assets/favorites.js" defer></script>
+  <script src="./assets/analytics-events.js" defer></script>
 </body>
 </html>
