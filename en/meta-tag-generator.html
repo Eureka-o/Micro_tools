@@ -193,8 +193,7 @@
       function parseHead() {
         const raw = $("headInput").value.trim();
         const parser = new DOMParser();
-        const wrapped = raw.includes("<head") ? raw : "<!doctype html><html><head>" + raw + "</head><body>  <script src="../assets/analytics-events.js" defer></script>
-</body></html>";
+        const wrapped = raw.includes("<head") ? raw : "<!doctype html><html><head>" + raw + "</head><body>  <script src=\"../assets/analytics-events.js\" defer><\\/script>\n</body></html>";
         return parser.parseFromString(wrapped, "text/html");
       }
 

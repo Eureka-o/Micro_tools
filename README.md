@@ -6,6 +6,12 @@ Use it here: [https://mymicrotools.xyz](https://mymicrotools.xyz)
 
 ## Update Notices
 
+### 2026-05-11 - Bilingual Tool Page Switching Fix
+
+- Fixed tool-page language switching so English pages now route to their matching Chinese pages, and Chinese pages route back to matching English pages.
+- Kept related tools, popular local tools, category links, and feedback buttons in the correct page language after switching.
+- Escaped embedded script tags in generated HTML preview helpers to prevent browser script parsing from stopping early.
+
 ### 2026-05-11 - SEO Content, Site Structure, and Discovery Updates
 
 - Added richer English and Chinese guidance sections to ten priority tools: LLM/NPU memory, FP quantization, register bitfields, timing diagrams, Bland-Altman plots, PLL ratios, ASCII trees, LaTeX formulas, JSON to CSV, and JWT decoding.

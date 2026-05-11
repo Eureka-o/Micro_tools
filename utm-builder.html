@@ -711,5 +711,40 @@
   <script src="./sponsor.js" defer></script>
   <script src="./theme-toggle.js" defer></script>  <script src="./assets/favorites.js" defer></script>
   <script src="./assets/analytics-events.js" defer></script>
+
+  <!-- tool-language-router:start -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const languageButtons = { langZhBtn: "zh", langEnBtn: "en" };
+
+      const routeToLanguagePage = (lang) => {
+        const nextLang = lang === "en" ? "en" : "zh";
+        try {
+          localStorage.setItem("microToolsLanguage", nextLang);
+        } catch (error) {}
+
+        const path = window.location.pathname;
+        const isEnglishPage = /\/en\//.test(path);
+        if ((nextLang === "en" && isEnglishPage) || (nextLang === "zh" && !isEnglishPage)) {
+          return false;
+        }
+
+        const file = path.split("/").filter(Boolean).pop() || "index.html";
+        const suffix = window.location.search + window.location.hash;
+        window.location.href = nextLang === "en" ? `./en/${file}${suffix}` : `../${file}${suffix}`;
+        return true;
+      };
+
+      document.addEventListener("click", (event) => {
+        const button = event.target.closest ? event.target.closest("#langZhBtn, #langEnBtn") : null;
+        if (!button) return;
+        const lang = languageButtons[button.id];
+        if (!lang || !routeToLanguagePage(lang)) return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+      }, true);
+    });
+  </script>
+  <!-- tool-language-router:end -->
 </body>
 </html>
